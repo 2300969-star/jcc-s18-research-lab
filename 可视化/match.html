@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>比赛模式 · 金铲铲 S18</title>
+<style>
+:root {
+  --plane:#f9f9f7; --surface:#fcfcfb; --ink:#0b0b0b; --ink2:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --border:rgba(11,11,11,.12);
+  --s1:#2a78d6; --s2:#1baf7a; --s3:#eda100; --s5:#4a3aa7; --s6:#e34948;
+}
+:root[data-theme="dark"] {
+  --plane:#0d0d0d; --surface:#1a1a19; --ink:#fff; --ink2:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --border:rgba(255,255,255,.12);
+  --s1:#3987e5; --s2:#199e70; --s3:#c98500; --s5:#9085e9; --s6:#e66767;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --plane:#0d0d0d; --surface:#1a1a19; --ink:#fff; --ink2:#c3c2b7; --muted:#898781;
+    --grid:#2c2c2a; --border:rgba(255,255,255,.12);
+    --s1:#3987e5; --s2:#199e70; --s3:#c98500; --s5:#9085e9; --s6:#e66767;
+  }
+}
+* { box-sizing:border-box; margin:0; }
+html, body { height:100%; overflow:hidden; }
+body { background:var(--plane); color:var(--ink); font:18px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif; }
+button, input { font:inherit; }
+.app { height:100vh; display:grid; grid-template-rows:auto auto 1fr; gap:12px; padding:16px; max-width:1280px; margin:0 auto; }
+.top { display:grid; grid-template-columns:minmax(0,1fr) auto auto; gap:10px; align-items:center; }
+.voice { height:62px; border:2px solid var(--s2); border-radius:12px; background:var(--surface); color:var(--ink); padding:0 18px; font-size:24px; outline:none; }
+.bigBtn { min-height:58px; border:1px solid var(--border); border-radius:12px; background:var(--surface); color:var(--ink); padding:0 18px; cursor:pointer; font-weight:800; }
+.new { background:var(--s6); color:#fff; border-color:var(--s6); }
+.theme { color:var(--ink2); }
+.banner { position:fixed; left:50%; top:16px; transform:translateX(-50%); z-index:5; background:var(--s2); color:#fff;
+  padding:10px 18px; border-radius:999px; font-weight:900; box-shadow:0 10px 30px rgba(0,0,0,.24); opacity:0; pointer-events:none; transition:opacity .18s; }
+.banner.show { opacity:1; }
+.status { display:grid; grid-template-columns:1fr; gap:8px; min-height:94px; }
+.pending, .signals { display:flex; gap:8px; flex-wrap:wrap; align-items:center; min-height:42px; }
+.label { color:var(--muted); font-size:15px; font-weight:800; margin-right:2px; }
+.chip, .candidate { min-height:44px; border:1px solid var(--border); border-radius:999px; background:var(--surface); color:var(--ink); padding:6px 14px; cursor:pointer; font-size:18px; }
+.chip { border-color:color-mix(in srgb, var(--s2) 55%, var(--border)); }
+.candidate { border-color:color-mix(in srgb, var(--s3) 65%, var(--border)); }
+.drop { min-width:44px; padding:6px 12px; color:var(--s6); }
+.main { min-height:0; display:grid; grid-template-columns:minmax(0,1fr); }
+.routeView, .augView { min-height:0; border:1px solid var(--border); border-radius:16px; background:var(--surface); padding:20px; display:grid; grid-template-rows:auto auto 1fr; gap:12px; }
+.rankTop { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; align-items:start; }
+.routeName { font-size:32px; font-weight:950; line-height:1.18; overflow-wrap:anywhere; }
+.score { font-size:34px; font-weight:950; color:var(--s2); white-space:nowrap; }
+.subRank { color:var(--ink2); font-size:17px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.actions { display:grid; gap:10px; align-content:start; margin-top:6px; }
+.action { min-height:50px; border-left:5px solid var(--s2); background:color-mix(in srgb, var(--surface) 88%, var(--s2) 12%);
+  border-radius:10px; padding:10px 14px; font-size:22px; font-weight:850; }
+.meta { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin-top:8px; }
+.metric { border:1px solid var(--grid); border-radius:10px; padding:9px 11px; min-width:0; }
+.metric .lb { color:var(--muted); font-size:14px; display:flex; justify-content:space-between; gap:8px; }
+.metric .bar { height:7px; border-radius:999px; background:color-mix(in srgb, var(--s2) 14%, transparent); overflow:hidden; margin-top:6px; }
+.metric .bar i { display:block; height:100%; border-radius:999px; background:var(--s2); }
+.metric.item .bar i { background:var(--s1); }
+.metric.aug .bar i { background:var(--s3); }
+.augCards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; min-height:0; }
+.augCard { border:2px solid var(--border); border-radius:16px; background:var(--surface); padding:18px; cursor:pointer; display:grid; gap:10px; align-content:start; }
+.augCard.best { border-color:var(--s2); background:color-mix(in srgb, var(--surface) 88%, var(--s2) 12%); }
+.augName { font-size:28px; font-weight:950; }
+.augVerdict { font-size:21px; color:var(--ink2); }
+.augScore { font-size:28px; font-weight:950; color:var(--s2); }
+.empty { height:100%; display:grid; place-items:center; color:var(--muted); font-size:24px; text-align:center; padding:20px; }
+.hidden { display:none !important; }
+@media (max-width: 900px) {
+  .app { padding:10px; }
+  .top { grid-template-columns:1fr; }
+  .voice { font-size:21px; }
+  .rankTop, .meta, .augCards { grid-template-columns:1fr; }
+  .routeName { font-size:28px; }
+}
+</style>
+</head>
+<body>
+<div class="banner" id="switchBanner"></div>
+<div class="app">
+  <div class="top">
+    <input id="voiceInput" class="voice" autofocus placeholder="直接说：来了个安妮还有波比拿了养刀">
+    <button id="newGame" class="bigBtn new">新的一局</button>
+    <button id="themeBtn" class="bigBtn theme">切换明暗</button>
+  </div>
+  <div class="status">
+    <div class="pending" id="pending"></div>
+    <div class="signals" id="signals"></div>
+  </div>
+  <main class="main">
+    <section class="routeView" id="routeView"></section>
+    <section class="augView hidden" id="augView"></section>
+  </main>
+</div>
+
+<script src="data.js?v=match-20260706a"></script>
+<script src="stage2-matcher-data.js?v=stage2-20260705b"></script>
+<script src="matcher-core.js?v=match-20260706a"></script>
+<script src="signal-parser.js?v=match-20260706a"></script>
+<script>
+"use strict";
+const LS = "jcc-match-";
+const $ = id => document.getElementById(id);
+const esc = MatcherCore.escText;
+const savedTheme = localStorage.getItem(LS + "theme");
+if (savedTheme) document.documentElement.dataset.theme = savedTheme;
+
+let signals = [];
+let pending = [];
+let augChoices = null;
+let inputTimer = null;
+let lastTop = "";
+let bannerTimer = null;
+
+function load() {
+  try { signals = JSON.parse(localStorage.getItem(LS + "signals") || "[]"); } catch (e) { signals = []; }
+}
+function save() {
+  localStorage.setItem(LS + "signals", JSON.stringify(signals));
+}
+function signalKey(s) { return `${s.kind}|${s.value}`; }
+function addSignal(s) {
+  if (!s || !s.kind || !s.value) return;
+  if (!signals.some(x => signalKey(x) === signalKey(s))) signals.push({ kind: s.kind, value: s.value, label: s.label || s.value });
+  save();
+}
+function removeSignal(s) {
+  signals = signals.filter(x => signalKey(x) !== signalKey(s));
+  save();
+}
+function clearGame() {
+  signals = [];
+  pending = [];
+  augChoices = null;
+  save();
+  render();
+  focusInput();
+}
+function selectedObj() {
+  return MatcherCore.selectedFromSignals(signals);
+}
+function focusInput() {
+  setTimeout(() => $("voiceInput").focus(), 0);
+}
+function showBanner(text) {
+  const box = $("switchBanner");
+  box.textContent = text;
+  box.classList.add("show");
+  clearTimeout(bannerTimer);
+  bannerTimer = setTimeout(() => box.classList.remove("show"), 3000);
+}
+function applyParse(parsed) {
+  if (parsed.clear) {
+    clearGame();
+    return;
+  }
+  (parsed.remove || []).forEach(removeSignal);
+  if (parsed.augTriple && parsed.augTriple.length) {
+    augChoices = parsed.augTriple;
+    pending = parsed.pending || [];
+  } else {
+    (parsed.add || []).forEach(addSignal);
+    pending = parsed.pending || [];
+  }
+  save();
+  render();
+}
+function parseInput() {
+  const input = $("voiceInput");
+  const raw = input.value.trim();
+  if (!raw) return;
+  applyParse(SignalParser.parse(raw, signals));
+  input.value = "";
+}
+function renderSignals() {
+  const box = $("signals");
+  box.innerHTML = `<span class="label">信号</span>` + (signals.length
+    ? signals.map(s => `<button class="chip" data-k="${esc(s.kind)}" data-v="${esc(s.value)}">${esc(s.value)} ×</button>`).join("")
+    : `<span class="label">还没识别到信号</span>`);
+  box.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => {
+    removeSignal({ kind: btn.dataset.k, value: btn.dataset.v });
+    render();
+  }));
+}
+function renderPending() {
+  const box = $("pending");
+  if (!pending.length) {
+    box.innerHTML = "";
+    return;
+  }
+  box.innerHTML = `<span class="label">待确认</span>` + pending.map((p, pi) =>
+    `<span class="label">${esc(p.raw)}</span>` +
+    (p.candidates || []).map((c, ci) => `<button class="candidate" data-p="${pi}" data-c="${ci}">${esc(c.value)}</button>`).join("") +
+    `<button class="candidate drop" data-drop="${pi}">×</button>`
+  ).join("");
+  box.querySelectorAll("[data-c]").forEach(btn => btn.addEventListener("click", () => {
+    const c = pending[Number(btn.dataset.p)].candidates[Number(btn.dataset.c)];
+    addSignal({ kind: c.kind, value: c.value, label: c.value });
+    pending.splice(Number(btn.dataset.p), 1);
+    render();
+  }));
+  box.querySelectorAll("[data-drop]").forEach(btn => btn.addEventListener("click", () => {
+    pending.splice(Number(btn.dataset.drop), 1);
+    render();
+  }));
+}
+function rankedRoutes() {
+  return MatcherCore.rank(STAGE2_MATCHER.templates, selectedObj(), STAGE2_MATCHER.weights, 5);
+}
+function renderRoute() {
+  $("augView").classList.add("hidden");
+  $("routeView").classList.remove("hidden");
+  const box = $("routeView");
+  const ranked = rankedRoutes();
+  if (!signals.length || !ranked.length) {
+    box.innerHTML = `<div class="empty">说出这把看到的棋子、装备、符文。<br>例如：安妮波比养刀，或者符文无情连打DD街区团队建设。</div>`;
+    lastTop = "";
+    return;
+  }
+  const top = ranked[0], second = ranked[1], third = ranked[2], t = top.template;
+  if (lastTop && lastTop !== t.name) showBanner(`路线切换 ${lastTop} → ${t.name}`);
+  lastTop = t.name;
+  const delta = second ? top.score - second.score : top.score;
+  const actions = MatcherCore.actionLines(t, selectedObj(), top);
+  box.innerHTML = `
+    <div>
+      <div class="rankTop">
+        <div class="routeName">#1 ${esc(t.name)}</div>
+        <div class="score">${top.score}分</div>
+      </div>
+      <div class="subRank">领先#2 ${delta}分 ｜ #2 ${second ? esc(second.template.name) + " " + second.score + "分" : "-"} ｜ #3 ${third ? esc(third.template.name) + " " + third.score + "分" : "-"}</div>
+      ${MatcherCore.signalTowerHtml(top).replaceAll("s2SignalTower", "meta").replaceAll("s2Signal", "metric")}
+    </div>
+    <div class="actions">${actions.map(x => `<div class="action">${esc(x)}</div>`).join("")}</div>
+    <div></div>
+  `;
+}
+function augOptionInfo(sig) {
+  const name = sig.value;
+  const routeHits = STAGE2_MATCHER.templates.filter(t => (t.augmentPrefs || []).includes(name));
+  const hot = (MODEL.augRank || []).find(a => a.name === name);
+  const option = ((STAGE2_MATCHER.options.augmentSearch || STAGE2_MATCHER.options.augments) || []).find(x => x.name === name) || {};
+  const hero = (option.cats || []).includes("英雄强化");
+  const score = routeHits.length * 20 + (hot ? hot.score * 5 : 0) + (hero ? 12 : 0);
+  let verdict = "通用符文，按当前路线权重判断。";
+  if (routeHits.length) verdict = `命中 ${routeHits.slice(0, 2).map(t => t.name).join("、")} 推荐位。`;
+  if (hero) verdict = "英雄强化，可能改变阵容方向。";
+  if (hot && !routeHits.length) verdict = `通用热度 ${hot.score} 分，适合保底。`;
+  return { name, routeHits, hot, hero, score: Math.round(score), verdict };
+}
+function renderAugTriple() {
+  $("routeView").classList.add("hidden");
+  $("augView").classList.remove("hidden");
+  const rows = (augChoices || []).map(augOptionInfo).sort((a, b) => b.score - a.score);
+  $("augView").innerHTML = `
+    <div>
+      <div class="routeName">符文三选一</div>
+      <div class="subRank">点击选择一张，加入信号池后自动回到路线。</div>
+    </div>
+    <div class="augCards">${rows.map((r, i) => `
+      <button class="augCard ${i === 0 ? "best" : ""}" data-name="${esc(r.name)}">
+        <div class="augName">${esc(r.name)}</div>
+        <div class="augVerdict">${esc(r.verdict)}</div>
+        <div class="augScore">${r.score}分</div>
+      </button>`).join("")}</div>
+    <div></div>
+  `;
+  $("augView").querySelectorAll(".augCard").forEach(btn => btn.addEventListener("click", () => {
+    addSignal({ kind: "augments", value: btn.dataset.name, label: btn.dataset.name });
+    augChoices = null;
+    render();
+  }));
+}
+function render() {
+  renderSignals();
+  renderPending();
+  if (augChoices && augChoices.length) renderAugTriple();
+  else renderRoute();
+}
+
+$("voiceInput").addEventListener("input", () => {
+  clearTimeout(inputTimer);
+  inputTimer = setTimeout(parseInput, 400);
+});
+$("voiceInput").addEventListener("blur", () => setTimeout(focusInput, 1000));
+$("newGame").addEventListener("click", clearGame);
+$("themeBtn").addEventListener("click", () => {
+  const cur = document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  const next = cur === "dark" ? "light" : "dark";
+  document.documentElement.dataset.theme = next;
+  localStorage.setItem(LS + "theme", next);
+  focusInput();
+});
+
+load();
+render();
+focusInput();
+</script>
+</body>
+</html>

@@ -343,7 +343,7 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
 
   <div class="card stage2Lab" id="sec-stage2">
     <h2>二阶段交互匹配器：直接输入你这把的信号</h2>
-    <div class="desc">把二阶段已经看到的棋子、装备、符文写进搜索框，系统会直接匹配路线；按钮只作为补充选择，不需要一个个翻。</div>
+    <div class="desc">把二阶段已经看到的棋子、装备、符文写进搜索框，系统会直接匹配路线；按钮只作为补充选择，不需要一个个翻。<a href="match.html">进入比赛模式</a></div>
     <div class="stage2Intro">
       <div class="stage2Search">
         <label for="stage2-query">搜索 / 粘贴信号</label>
@@ -635,6 +635,7 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
 <script src="reinvent-data.js?v=reinvent-20260706a"></script>
 <script src="mecha-branch-data.js?v=mecha-20260706a"></script>
 <script src="stage2-matcher-data.js?v=stage2-20260705b"></script>
+<script src="matcher-core.js?v=match-20260706a"></script>
 <script src="audit-data.js?v=tiers-20260705b"></script>
 <script>
 "use strict";
@@ -1056,37 +1057,10 @@ function renderStage2Matcher() {
     if (out) out.value = text;
   }
   function buildOutput(ranked) {
-    if (!ranked || !ranked.length) return "输入棋子、装备、符文后，这里会输出可复制的路线结论。";
-    const selected = selectedObj();
-    const signals = [...selected.units, ...selected.items, ...selected.augmentCats, ...selected.augments].join("、") || "无";
-    const top = ranked[0];
-    const t = top.template;
-    const backups = ranked.slice(1, 4).map(r => `${r.template.name}(${r.score}分)`).join(" / ") || "无";
-    return [
-      `信号：${signals}`,
-      `首选：${t.name}（${top.score}分，信心${confidence(top.score)}）`,
-      `权重：英雄${top.shares?.hero || 0}% / 装备${top.shares?.item || 0}% / 符文${top.shares?.augment || 0}%`,
-      `路线：${(t.route || []).join(" -> ")}`,
-      `留牌：${(t.actions.keep || []).slice(0, 8).join("、")}`,
-      `装备：${t.actions.item || "-"}`,
-      `判断：${t.actions.checkpoint || "-"}`,
-      `止损：${t.actions.stopLoss || "-"}`,
-      `备选：${backups}`,
-    ].join("\n");
+    return MatcherCore.buildOutput(ranked, selectedObj());
   }
   function signalTowerHtml(r) {
-    const s = r.shares || {};
-    const b = r.breakdown || {};
-    const rows = [
-      ["hero", "英雄", s.hero || 0, b.hero || 0],
-      ["item", "装备", s.item || 0, b.item || 0],
-      ["aug", "符文", s.augment || 0, b.augment || 0],
-    ];
-    return `<div class="s2SignalTower">${rows.map(([cls, label, pct, pts]) => `
-      <div class="s2Signal ${cls}">
-        <div class="lb"><span>${label}</span><span>${pct}% · ${pts}分</span></div>
-        <div class="bar"><i style="width:${Math.max(0, Math.min(100, pct))}%"></i></div>
-      </div>`).join("")}</div>`;
+    return MatcherCore.signalTowerHtml(r);
   }
   function openStage2Detail(r, idx) {
     const t = r.template;
@@ -1184,65 +1158,10 @@ function renderStage2Matcher() {
     });
   }
   function scoreTemplate(t, selected) {
-    const units = new Set(selected.units || []);
-    const items = new Set(selected.items || []);
-    const augments = new Set(selected.augments || []);
-    const augCats = new Set(selected.augmentCats || []);
-    const w = MATCHER.weights || { baseS: 18, baseA: 10, baseB: 4, earlyUnit: 14, midUnit: 10, coreUnit: 7, coreItem: 21, component: 12, looseComponent: 2, augment: 24, augmentSignal: 8, attackSynergy: 16, conflictPenalty: 16, tankPenalty: 5 };
-    const base = t.quality === "S" ? w.baseS : t.quality === "A" ? w.baseA : w.baseB;
-    let score = base;
-    const breakdown = { base, hero: 0, item: 0, augment: 0, synergy: 0, penalty: 0 };
-    const evidence = [], missing = [], penalties = [];
-    units.forEach(u => {
-      if ((t.earlyUnits || []).includes(u)) { score += w.earlyUnit; breakdown.hero += w.earlyUnit; evidence.push(`${u} 命中前期底座`); }
-      else if ((t.midUnits || []).includes(u)) { score += w.midUnit; breakdown.hero += w.midUnit; evidence.push(`${u} 可中期承接`); }
-      else if ((t.coreUnits || []).includes(u)) { score += w.coreUnit; breakdown.hero += w.coreUnit; evidence.push(`${u} 是后续核心`); }
-    });
-    items.forEach(it => {
-      if ((t.completedPrefs || []).includes(it)) { score += w.coreItem; breakdown.item += w.coreItem; evidence.push(`${it} 命中核心成装`); }
-      else if ((t.componentPrefs || []).includes(it)) { score += w.component; breakdown.item += w.component; evidence.push(`${it} 命中散件优先级`); }
-      else if (COMPONENTS2.includes(it)) { score += w.looseComponent; breakdown.item += w.looseComponent; }
-    });
-    augments.forEach(h => {
-      if ((t.augmentPrefs || []).includes(h)) { score += w.augment; breakdown.augment += w.augment; evidence.push(`${h} 命中推荐符文`); }
-    });
-    augCats.forEach(c => {
-      if ((t.augmentCats || []).includes(c)) { score += w.augmentSignal; breakdown.augment += w.augmentSignal; evidence.push(`${c}符文匹配路线`); }
-    });
-    const selectedAttack = [...items].filter(x => ATTACK2.includes(x)).length;
-    const selectedAp = [...items].filter(x => AP2.includes(x)).length;
-    const selectedTank = [...items].filter(x => TANK2.includes(x)).length;
-    if (selectedAttack >= 2 && t.role === "法系") { score -= w.conflictPenalty; breakdown.penalty -= w.conflictPenalty; penalties.push("装备偏普攻，法系终局降权"); }
-    if (selectedAp >= 2 && t.role === "普攻") { const p = Math.round(w.conflictPenalty * .78); score -= p; breakdown.penalty -= p; penalties.push("装备偏法系，普攻C降权"); }
-    if (selectedTank >= 2 && t.role !== "九五") { score -= w.tankPenalty; breakdown.penalty -= w.tankPenalty; penalties.push("肉装多，需要确认输出装来源"); }
-    if (selectedAttack >= 2 && t.id === "manual-gadget-jax") { score += w.attackSynergy; breakdown.synergy += w.attackSynergy; }
-    if (selectedAttack >= 2 && t.id === "manual-gadget-ap") { score -= w.conflictPenalty; breakdown.penalty -= w.conflictPenalty; }
-    if (t.id === "manual-gadget-jax" && selectedAttack < 2 && !["贾克斯", "德莱文", "孙悟空"].some(u => units.has(u))) {
-      const p = Math.round(w.conflictPenalty * .65);
-      score -= p;
-      breakdown.penalty -= p;
-      penalties.push("只有小天才牌、没有普攻装备/机甲核心，先按小天才判断");
-    }
-    const selectedUnitCount = [...units].filter(u => (t.earlyUnits || []).includes(u)).length;
-    if (units.size && selectedUnitCount === 0) missing.push("当前来牌没有命中前期底座");
-    const coreMissing = (t.coreUnits || []).filter(x => !units.has(x)).slice(0, 4);
-    if (coreMissing.length) missing.push(`后续关键牌：${coreMissing.join("、")}`);
-    if (!items.size) missing.push("还没选择装备，路线暂按来牌判断");
-    if (!augments.size && !augCats.size) missing.push("还没选择符文，符文权重未生效");
-    const signalTotal = breakdown.hero + breakdown.item + breakdown.augment + breakdown.synergy;
-    const shares = signalTotal > 0 ? {
-      hero: Math.round(breakdown.hero / signalTotal * 100),
-      item: Math.round(breakdown.item / signalTotal * 100),
-      augment: Math.round(breakdown.augment / signalTotal * 100),
-      synergy: Math.round(breakdown.synergy / signalTotal * 100),
-    } : { hero: 0, item: 0, augment: 0, synergy: 0 };
-    return { score: Math.max(0, Math.round(score)), breakdown, shares, evidence: [...new Set(evidence)].slice(0, 6), missing: [...new Set(missing)].slice(0, 4), penalties: [...new Set(penalties)].slice(0, 4) };
+    return MatcherCore.scoreTemplate(t, selected, MATCHER.weights);
   }
   function confidence(score) {
-    if (score >= 85) return "高";
-    if (score >= 60) return "中高";
-    if (score >= 40) return "中";
-    return "低";
+    return MatcherCore.confidence(score);
   }
   function drawSelected() {
     const all = [
