@@ -159,9 +159,9 @@ button, input { font:inherit; }
 
 <script src="data.js?v=match-20260706c"></script>
 <script src="stage2-matcher-data.js?v=stage2-20260705b"></script>
-<script src="odds-data.js?v=match-20260706c"></script>
-<script src="matcher-core.js?v=match-20260706d"></script>
-<script src="signal-parser.js?v=match-20260706c"></script>
+<script src="odds-data.js?v=match-20260706e"></script>
+<script src="matcher-core.js?v=match-20260706e"></script>
+<script src="signal-parser.js?v=match-20260706e"></script>
 <script src="llm-lane.js?v=match-20260706c"></script>
 <script>
 "use strict";
@@ -174,11 +174,14 @@ const $ = id => document.getElementById(id);
 const esc = MatcherCore.escText;
 const UNIT_PRICES = Object.fromEntries((STAGE2_MATCHER.options.unitSearch || []).map(x => [x.name, x.price]));
 const DEFAULT_LEVEL = MatcherCore.DEFAULT_LEVEL || 6;
+const MIN_LEVEL = MatcherCore.MIN_LEVEL || 1;
+const MAX_LEVEL = MatcherCore.MAX_LEVEL || 9;
+const LEVEL_CHOICES = Array.from({ length: MAX_LEVEL - MIN_LEVEL + 1 }, (_, i) => MIN_LEVEL + i);
 const savedTheme = localStorage.getItem(LS + "theme");
 if (savedTheme) document.documentElement.dataset.theme = savedTheme;
 
 let signals = [];
-let currentLevel = Number(localStorage.getItem(LS + "level")) || DEFAULT_LEVEL;
+let currentLevel = normalizeLevel(localStorage.getItem(LS + "level"));
 let pending = [];
 let unheard = [];
 let augChoices = null;
@@ -198,8 +201,11 @@ function save() {
   localStorage.setItem(LS + "signals", JSON.stringify(signals));
   localStorage.setItem(LS + "level", String(currentLevel));
 }
+function normalizeLevel(level) {
+  return Math.max(MIN_LEVEL, Math.min(MAX_LEVEL, Number(level) || DEFAULT_LEVEL));
+}
 function setLevel(level) {
-  const n = Math.max(4, Math.min(9, Number(level) || DEFAULT_LEVEL));
+  const n = normalizeLevel(level);
   currentLevel = n;
   save();
   render();
@@ -383,7 +389,7 @@ function renderSignals() {
 }
 function renderLevel() {
   const box = $("levelRow");
-  box.innerHTML = `<span class="label">等级</span>` + [4, 5, 6, 7, 8, 9].map(n =>
+  box.innerHTML = `<span class="label">等级</span>` + LEVEL_CHOICES.map(n =>
     `<button class="levelChip ${n === currentLevel ? "on" : ""}" data-level="${n}">等级${n}</button>`
   ).join("");
   box.querySelectorAll("[data-level]").forEach(btn => btn.addEventListener("click", () => setLevel(Number(btn.dataset.level))));

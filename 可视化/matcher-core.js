@@ -57,6 +57,8 @@
   // 低等级只评估下一段承接牌，容忍度略高，避免把合法过渡线过早打死。
   const LOW_STAGE_REACHABILITY_GOLD_CAP = 90;
   const REACHABILITY_MIN = 0.2;
+  const MIN_LEVEL = 1;
+  const MAX_LEVEL = 9;
   const DEFAULT_LEVEL = 6;
 
   const fallbackWeights = {
@@ -447,7 +449,7 @@
   }
 
   function expectedCostForUnit(name, targetCopies, selected, opts) {
-    const level = clamp(Number(selected.level) || DEFAULT_LEVEL, 4, 9);
+    const level = clamp(Number(selected.level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
     const oddsData = opts && opts.oddsData || {};
     const shopOdds = oddsData.shopOdds || {};
     const unitCounts = oddsData.unitCounts || {};
@@ -487,7 +489,7 @@
 
   function reachabilityForTemplate(t, selected, opts) {
     if (!opts || !opts.oddsData) return null;
-    const level = clamp(Number(selected.level) || DEFAULT_LEVEL, 4, 9);
+    const level = clamp(Number(selected.level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
     const owned = ownedCopyMap(selected);
     const lowStage = level <= 6;
     const costedNames = lowStage ? uniq(t.midUnits || []) : reachabilityUnits(t);
@@ -729,7 +731,7 @@
 
   function runTests() {
     const odds = {
-      shopOdds: { 6: [25, 40, 30, 5, 0], 8: [18, 25, 32, 22, 3] },
+      shopOdds: { 1: [100, 0, 0, 0, 0], 2: [100, 0, 0, 0, 0], 3: [75, 25, 0, 0, 0], 6: [25, 40, 30, 5, 0], 8: [18, 25, 32, 22, 3] },
       unitCounts: { 1: 10, 2: 10, 3: 10, 4: 10, 5: 10 },
       poolCopies: { 1: 29, 2: 22, 3: 18, 4: 12, 5: 10 },
     };
@@ -750,6 +752,9 @@
     assertNoBadNumbers(JSON.stringify(lowRows.reachability), "可达性对象不应有坏数字");
     const lowMidOnly = rank([{ id: "low-mid", name: "低级承接", quality: "S", coreUnits: [], midUnits: ["D"], earlyUnits: [], actions: {} }], low, fallbackWeights, 1, { oddsData: odds, unitPrices })[0];
     assert(lowMidOnly.reachability.lateTargets.includes("D"), "0概率承接牌也应进入后期目标");
+    const levelOne = selectedFromSignals([{ kind: "levels", value: "1", level: 1 }]);
+    const firstCost = expectedCostForUnit("A", 1, levelOne, { oddsData: odds, unitPrices });
+    assert(firstCost.oddsPct === 100 && firstCost.available, "1级应按一费100%概率计算");
 
     const stickyTemplates = [
       { id: "old", name: "旧路线", quality: "S", coreUnits: [], earlyUnits: [], midUnits: [], completedPrefs: [], componentPrefs: [], augmentPrefs: [], augmentCats: [], actions: {} },
@@ -786,6 +791,8 @@
     fallbackWeights,
     STICKY_MIN_LEAD,
     STICKY_RELATIVE_LEAD,
+    MIN_LEVEL,
+    MAX_LEVEL,
     STAGE_LEVEL_RULES,
     COMPONENT_DIRECTION_BONUS,
     STAR_SCORE_MULTIPLIERS,

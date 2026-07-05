@@ -265,11 +265,18 @@
 
   function parseLevelAt(text, i) {
     let offset = 0;
-    if (text.startsWith("我", i)) offset = 1;
+    let allowMissingSuffix = false;
+    if (text.startsWith("等级", i)) {
+      offset = 2;
+      allowMissingSuffix = true;
+    } else if (text.startsWith("我", i)) {
+      offset = 1;
+    }
     const n = parseNumberAt(text, i + offset);
     if (!n) return null;
-    if (!text.startsWith("级", i + offset + n.len)) return null;
-    if (n.count < 4 || n.count > 9) return null;
+    const hasSuffix = text.startsWith("级", i + offset + n.len);
+    if (!hasSuffix && !allowMissingSuffix) return null;
+    if (n.count < 1 || n.count > 9) return null;
     return {
       entry: {
         kind: "levels",
@@ -277,7 +284,7 @@
         label: `等级${n.count}`,
         level: n.count,
       },
-      len: offset + n.len + 1,
+      len: offset + n.len + (hasSuffix ? 1 : 0),
       method: "level",
     };
   }
@@ -553,6 +560,8 @@
     assertStar(parse("波比三星", []).add, "波比", 3);
     assertStar(parse("3星安妮", []).add, "安妮", 3);
     assertLevel(parse("我6级", []).add, 6);
+    assertLevel(parse("三级", []).add, 3);
+    assertLevel(parse("等级2", []).add, 2);
     console.log("signal-parser assertions passed");
   }
 
