@@ -28,7 +28,7 @@ html, body { height:100%; overflow:hidden; }
 body { background:var(--plane); color:var(--ink); font:18px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif; }
 button, input { font:inherit; }
 .app { height:100vh; display:grid; grid-template-rows:auto auto 1fr; gap:12px; padding:16px; max-width:1280px; margin:0 auto; }
-.top { display:grid; grid-template-columns:minmax(0,1fr) auto auto auto auto; gap:10px; align-items:center; }
+.top { display:grid; grid-template-columns:minmax(0,1fr) auto auto auto auto auto; gap:10px; align-items:center; }
 .voice { height:62px; border:2px solid var(--s2); border-radius:12px; background:var(--surface); color:var(--ink); padding:0 18px; font-size:24px; outline:none; }
 .bigBtn { min-height:58px; border:1px solid var(--border); border-radius:12px; background:var(--surface); color:var(--ink); padding:0 18px; cursor:pointer; font-weight:800; }
 .new { background:var(--s6); color:#fff; border-color:var(--s6); }
@@ -44,9 +44,12 @@ button, input { font:inherit; }
 .banner.show { opacity:1; }
 .status { display:grid; grid-template-columns:1fr; gap:8px; min-height:94px; }
 .pending, .signals { display:flex; gap:8px; flex-wrap:wrap; align-items:center; min-height:42px; }
+.levelRow { display:flex; gap:8px; flex-wrap:wrap; align-items:center; min-height:38px; }
 .label { color:var(--muted); font-size:15px; font-weight:800; margin-right:2px; }
 .chip, .candidate { min-height:44px; border:1px solid var(--border); border-radius:999px; background:var(--surface); color:var(--ink); padding:6px 14px; cursor:pointer; font-size:18px; }
 .chip { border-color:color-mix(in srgb, var(--s2) 55%, var(--border)); }
+.levelChip { min-height:36px; border:1px solid var(--border); border-radius:999px; background:var(--plane); color:var(--ink2); padding:4px 11px; cursor:pointer; font-size:16px; font-weight:850; }
+.levelChip.on { background:var(--s2); border-color:var(--s2); color:#fff; }
 .candidate { border-color:color-mix(in srgb, var(--s3) 65%, var(--border)); }
 .drop { min-width:44px; padding:6px 12px; color:var(--s6); }
 .main { min-height:0; display:grid; grid-template-columns:minmax(0,1fr); }
@@ -55,6 +58,8 @@ button, input { font:inherit; }
 .routeName { font-size:32px; font-weight:950; line-height:1.18; overflow-wrap:anywhere; }
 .score { font-size:34px; font-weight:950; color:var(--s2); white-space:nowrap; }
 .subRank { color:var(--ink2); font-size:17px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.scoreBreak, .stickyNote { color:var(--ink2); font-size:16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:4px; }
+.stickyNote { color:var(--muted); }
 .actions { display:grid; gap:10px; align-content:start; margin-top:6px; }
 .action { min-height:50px; border-left:5px solid var(--s2); background:color-mix(in srgb, var(--surface) 88%, var(--s2) 12%);
   border-radius:10px; padding:10px 14px; font-size:22px; font-weight:850; }
@@ -81,6 +86,12 @@ button, input { font:inherit; }
 .settingsActions { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
 .smallBtn { min-height:42px; border:1px solid var(--border); border-radius:10px; background:var(--plane); color:var(--ink); padding:0 12px; cursor:pointer; font-weight:850; }
 .testState { color:var(--muted); font-size:14px; font-weight:800; }
+.logPanel { position:fixed; right:16px; bottom:16px; z-index:7; width:min(660px, calc(100vw - 32px)); max-height:56vh; border:1px solid var(--border); border-radius:16px; background:var(--surface); box-shadow:0 18px 46px rgba(0,0,0,.25); overflow:hidden; }
+.logHead { min-height:48px; display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 14px; border-bottom:1px solid var(--border); font-weight:950; }
+.logBody { max-height:calc(56vh - 48px); overflow:auto; padding:10px 14px; display:grid; gap:8px; font-size:14px; color:var(--ink2); }
+.logEntry { border:1px solid var(--grid); border-radius:10px; padding:8px 10px; display:grid; gap:3px; }
+.logRaw { color:var(--ink); font-weight:850; }
+.logMeta { color:var(--muted); }
 .hidden { display:none !important; }
 @media (max-width: 900px) {
   .app { padding:10px; }
@@ -98,11 +109,13 @@ button, input { font:inherit; }
     <input id="voiceInput" class="voice" autofocus placeholder="直接说：来了个安妮还有波比拿了养刀">
     <button id="newGame" class="bigBtn new">新的一局</button>
     <button id="themeBtn" class="bigBtn theme">切换明暗</button>
+    <button id="logBtn" class="bigBtn theme">记录</button>
     <span id="llmDot" class="llmDot fail" title="LLM慢车道"></span>
     <button id="settingsBtn" class="bigBtn settingsBtn" title="设置">⚙</button>
   </div>
   <div class="status">
     <div class="pending" id="pending"></div>
+    <div class="levelRow" id="levelRow"></div>
     <div class="signals" id="signals"></div>
   </div>
   <main class="main">
@@ -129,28 +142,44 @@ button, input { font:inherit; }
     <span id="llmTestState" class="testState"></span>
   </div>
 </section>
+<section id="logPanel" class="logPanel hidden" aria-label="对局沟通记录">
+  <div class="logHead">
+    <span>对局沟通记录</span>
+    <button id="logClose" class="smallBtn">收起</button>
+  </div>
+  <div id="logBody" class="logBody"></div>
+</section>
 
-<script src="data.js?v=match-20260706a"></script>
+<script src="data.js?v=match-20260706c"></script>
 <script src="stage2-matcher-data.js?v=stage2-20260705b"></script>
-<script src="matcher-core.js?v=match-20260706a"></script>
-<script src="signal-parser.js?v=match-20260706a"></script>
-<script src="llm-lane.js?v=match-20260706a"></script>
+<script src="odds-data.js?v=match-20260706c"></script>
+<script src="matcher-core.js?v=match-20260706c"></script>
+<script src="signal-parser.js?v=match-20260706c"></script>
+<script src="llm-lane.js?v=match-20260706c"></script>
 <script>
 "use strict";
 const LS = "jcc-match-";
 const LLM_LS = "jcc-match-llm-";
 const UNHEARD_LOG_KEY = "jcc-match-unheard-log";
+const MATCH_LOG_KEY = "jcc-match-log";
+const MATCH_LOG_HISTORY_KEY = "jcc-match-log-history";
 const $ = id => document.getElementById(id);
 const esc = MatcherCore.escText;
+const UNIT_PRICES = Object.fromEntries((STAGE2_MATCHER.options.unitSearch || []).map(x => [x.name, x.price]));
+const DEFAULT_LEVEL = MatcherCore.DEFAULT_LEVEL || 6;
 const savedTheme = localStorage.getItem(LS + "theme");
 if (savedTheme) document.documentElement.dataset.theme = savedTheme;
 
 let signals = [];
+let currentLevel = Number(localStorage.getItem(LS + "level")) || DEFAULT_LEVEL;
 let pending = [];
 let unheard = [];
 let augChoices = null;
 let inputTimer = null;
 let lastTop = "";
+let lastTopId = "";
+let previousOrder = [];
+let lastRenderedTop = null;
 let bannerTimer = null;
 let llmSeq = 0;
 
@@ -159,11 +188,50 @@ function load() {
 }
 function save() {
   localStorage.setItem(LS + "signals", JSON.stringify(signals));
+  localStorage.setItem(LS + "level", String(currentLevel));
 }
-function signalKey(s) { return `${s.kind}|${s.value}|${s.kind === "traits" ? (s.count || "") : ""}`; }
+function setLevel(level) {
+  const n = Math.max(4, Math.min(9, Number(level) || DEFAULT_LEVEL));
+  currentLevel = n;
+  save();
+  render();
+}
+function signalKey(s) {
+  if (s.kind === "units") return `units|${s.value}`;
+  return `${s.kind}|${s.value}|${s.kind === "traits" ? (s.count || "") : ""}`;
+}
+function normalizeSignal(s) {
+  const value = s && (s.value || s.name || s.label);
+  const star = Number(s && s.star) || 0;
+  return {
+    kind: s && s.kind,
+    value,
+    label: s && s.kind === "units" && star ? `${value}·${star}星` : (s && s.label || value),
+    count: s && s.count,
+    star: star || undefined,
+    via: s && s.via,
+  };
+}
 function addSignal(s) {
-  if (!s || !s.kind || !s.value) return;
-  if (!signals.some(x => signalKey(x) === signalKey(s))) signals.push({ kind: s.kind, value: s.value, label: s.label || s.value, count: s.count, via: s.via });
+  if (!s || !s.kind) return;
+  if (s.kind === "levels") {
+    setLevel(Number(s.level || s.value));
+    return;
+  }
+  const next = normalizeSignal(s);
+  if (!next.value) return;
+  const existing = signals.find(x => signalKey(x) === signalKey(next));
+  if (existing) {
+    if (next.kind === "units" && Number(next.star || 0) > Number(existing.star || 0)) {
+      existing.star = next.star;
+      existing.label = next.label;
+      existing.via = next.via || existing.via;
+    } else if (next.via === "llm") {
+      existing.via = "llm";
+    }
+  } else {
+    signals.push(next);
+  }
   save();
 }
 function removeSignal(s) {
@@ -174,17 +242,77 @@ function removeByValue(value) {
   signals = signals.filter(s => s.value !== value && s.label !== value);
   save();
 }
+function readMatchLog() {
+  try { return JSON.parse(localStorage.getItem(MATCH_LOG_KEY) || "[]"); } catch (e) { return []; }
+}
+function writeMatchLog(rows) {
+  localStorage.setItem(MATCH_LOG_KEY, JSON.stringify(rows || []));
+}
+function readMatchHistory() {
+  try { return JSON.parse(localStorage.getItem(MATCH_LOG_HISTORY_KEY) || "[]"); } catch (e) { return []; }
+}
+function writeMatchHistory(rows) {
+  localStorage.setItem(MATCH_LOG_HISTORY_KEY, JSON.stringify((rows || []).slice(0, 10)));
+}
+function archiveMatchLog() {
+  const rows = readMatchLog();
+  if (!rows.length) return;
+  const history = readMatchHistory();
+  history.unshift({ time: new Date().toISOString(), rows });
+  writeMatchHistory(history);
+  writeMatchLog([]);
+}
+function signalText(rows) {
+  return (rows || []).map(s => {
+    if (!s) return "";
+    if (s.kind === "traits") return `${s.count}${s.value}`;
+    if (s.kind === "levels") return `等级${s.level || s.value}`;
+    if (s.kind === "units" && s.star) return `${s.value}·${s.star}星`;
+    return s.value || s.label || "";
+  }).filter(Boolean).join("、") || "-";
+}
+function compactParsed(parsed) {
+  const rows = [];
+  if (parsed.clear) rows.push("清空");
+  if (parsed.add && parsed.add.length) rows.push(`加：${signalText(parsed.add)}`);
+  if (parsed.remove && parsed.remove.length) rows.push(`删：${signalText(parsed.remove)}`);
+  if (parsed.augTriple && parsed.augTriple.length) rows.push(`符文：${signalText(parsed.augTriple)}`);
+  if (parsed.pending && parsed.pending.length) rows.push(`待确认：${parsed.pending.map(x => x.raw).join("、")}`);
+  if (parsed.unheard && parsed.unheard.length) rows.push(`没听懂：${parsed.unheard.join("、")}`);
+  return rows.join("；") || "-";
+}
+function appendMatchLog(entry) {
+  const rows = readMatchLog();
+  const top = lastRenderedTop;
+  rows.push({
+    time: entry.time || new Date().toLocaleTimeString("zh-CN", { hour12: false }),
+    raw: entry.raw || "",
+    fast: entry.fast || "-",
+    ai: entry.ai || "-",
+    top: top ? `${top.name} ${top.score}分` : "-",
+  });
+  writeMatchLog(rows);
+  renderLog();
+}
 function clearGame() {
+  archiveMatchLog();
   signals = [];
   pending = [];
   unheard = [];
   augChoices = null;
+  currentLevel = DEFAULT_LEVEL;
+  previousOrder = [];
+  lastTop = "";
+  lastTopId = "";
+  lastRenderedTop = null;
   save();
   render();
   focusInput();
 }
 function selectedObj() {
-  return MatcherCore.selectedFromSignals(signals);
+  const selected = MatcherCore.selectedFromSignals(signals);
+  selected.level = currentLevel;
+  return selected;
 }
 function focusInput() {
   setTimeout(() => $("voiceInput").focus(), 0);
@@ -219,8 +347,19 @@ function parseInput() {
   const raw = input.value.trim();
   if (!raw) return;
   const parsed = SignalParser.parse(raw, signals);
+  const round = {
+    time: new Date().toLocaleTimeString("zh-CN", { hour12: false }),
+    raw,
+    fast: compactParsed(parsed),
+    ai: "-",
+  };
   applyParse(parsed);
-  if (parsed.unheard && parsed.unheard.length) triggerLlm(raw, parsed.unheard);
+  if (parsed.clear) {
+    input.value = "";
+    return;
+  }
+  if (parsed.unheard && parsed.unheard.length) triggerLlm(raw, parsed.unheard, round);
+  else appendMatchLog(round);
   input.value = "";
 }
 function renderSignals() {
@@ -232,6 +371,13 @@ function renderSignals() {
     removeSignal({ kind: btn.dataset.k, value: btn.dataset.v, count: btn.dataset.c ? Number(btn.dataset.c) : undefined });
     render();
   }));
+}
+function renderLevel() {
+  const box = $("levelRow");
+  box.innerHTML = `<span class="label">等级</span>` + [4, 5, 6, 7, 8, 9].map(n =>
+    `<button class="levelChip ${n === currentLevel ? "on" : ""}" data-level="${n}">等级${n}</button>`
+  ).join("");
+  box.querySelectorAll("[data-level]").forEach(btn => btn.addEventListener("click", () => setLevel(Number(btn.dataset.level))));
 }
 function renderPending() {
   const box = $("pending");
@@ -256,7 +402,12 @@ function renderPending() {
   }));
 }
 function rankedRoutes() {
-  return MatcherCore.rank(STAGE2_MATCHER.templates, selectedObj(), STAGE2_MATCHER.weights, 5);
+  return MatcherCore.rank(STAGE2_MATCHER.templates, selectedObj(), STAGE2_MATCHER.weights, 5, {
+    oddsData: window.JCC_ODDS,
+    unitPrices: UNIT_PRICES,
+    previousOrder,
+    stickyTopId: lastTopId,
+  });
 }
 function unheardHtml() {
   return unheard.length ? `<div class="unheardLine">没听懂：${unheard.map(esc).join("、")}</div>` : "";
@@ -284,7 +435,7 @@ function logUnheard(raw, rows, reason) {
   const now = new Date().toISOString();
   writeUnheardLog([...old, ...rows.map(x => ({ time: now, raw, fragment: x, reason }))]);
 }
-async function triggerLlm(raw, rows) {
+async function triggerLlm(raw, rows, round) {
   const seq = ++llmSeq;
   const settings = llmSettings();
   setLlmStatus("work");
@@ -299,10 +450,17 @@ async function triggerLlm(raw, rows) {
   if (!result.ok) {
     setLlmStatus("fail");
     if (result.status !== "no-key") logUnheard(raw, rows, result.status);
+    appendMatchLog(round || { raw, fast: "-", ai: "-" });
     return;
   }
   (result.remove || []).forEach(removeByValue);
   (result.add || []).forEach(addSignal);
+  if (round) {
+    const aiRows = [];
+    if (result.add && result.add.length) aiRows.push(`加：${signalText(result.add)}`);
+    if (result.remove && result.remove.length) aiRows.push(`删：${(result.remove || []).join("、")}`);
+    round.ai = aiRows.join("；") || "-";
+  }
   if ((result.add || []).length || (result.remove || []).length) {
     unheard = [];
     setLlmStatus("ok");
@@ -311,6 +469,7 @@ async function triggerLlm(raw, rows) {
     logUnheard(raw, rows, result.status || "empty");
   }
   render();
+  appendMatchLog(round || { raw, fast: "-", ai: "-" });
 }
 function fillSettingsPanel() {
   const s = llmSettings();
@@ -338,26 +497,41 @@ function renderRoute() {
   if (!signals.length || !ranked.length) {
     box.innerHTML = `<div class="empty">说出这把看到的棋子、装备、符文。<br>例如：安妮波比养刀，或者符文无情连打DD街区团队建设。</div>${unheardHtml()}`;
     lastTop = "";
+    lastTopId = "";
+    lastRenderedTop = null;
+    previousOrder = ranked.map(r => r.template.id || r.template.name);
     return;
   }
   const top = ranked[0], second = ranked[1], third = ranked[2], t = top.template;
+  const topId = t.id || t.name;
+  const topScore = Number.isFinite(Number(top.finalScore)) ? top.finalScore : top.score;
+  const secondScore = second ? (Number.isFinite(Number(second.finalScore)) ? second.finalScore : second.score) : 0;
+  const thirdScore = third ? (Number.isFinite(Number(third.finalScore)) ? third.finalScore : third.score) : 0;
   if (lastTop && lastTop !== t.name) showBanner(`路线切换 ${lastTop} → ${t.name}`);
   lastTop = t.name;
-  const delta = second ? top.score - second.score : top.score;
+  lastTopId = topId;
+  lastRenderedTop = { name: t.name, score: topScore };
+  const delta = second ? topScore - secondScore : topScore;
   const actions = MatcherCore.actionLines(t, selectedObj(), top);
+  const reach = top.reachability;
+  const breakLine = reach ? `强度${top.score}分 × 可达${reach.coefficient}（${reach.summary}） = ${topScore}分` : `强度${top.score}分`;
+  const stickyLine = top.sticky && top.sticky.text ? top.sticky.text : "黏性：当前推荐未触发易主保护";
   box.innerHTML = `
     <div>
       <div class="rankTop">
         <div class="routeName">#1 ${esc(t.name)}</div>
-        <div class="score">${top.score}分</div>
+        <div class="score">${topScore}分</div>
       </div>
-      <div class="subRank">领先#2 ${delta}分 ｜ #2 ${second ? esc(second.template.name) + " " + second.score + "分" : "-"} ｜ #3 ${third ? esc(third.template.name) + " " + third.score + "分" : "-"}</div>
+      <div class="subRank">领先#2 ${delta}分 ｜ #2 ${second ? esc(second.template.name) + " " + secondScore + "分" : "-"} ｜ #3 ${third ? esc(third.template.name) + " " + thirdScore + "分" : "-"}</div>
+      <div class="scoreBreak">${esc(breakLine)}</div>
+      <div class="stickyNote">${esc(stickyLine)}</div>
       ${MatcherCore.signalTowerHtml(top).replaceAll("s2SignalTower", "meta").replaceAll("s2Signal", "metric")}
     </div>
     <div class="actions">${actions.map(x => `<div class="action">${esc(x)}</div>`).join("")}</div>
     <div></div>
     ${unheardHtml()}
   `;
+  previousOrder = ranked.map(r => r.template.id || r.template.name);
 }
 function augOptionInfo(sig) {
   const name = sig.value;
@@ -396,11 +570,27 @@ function renderAugTriple() {
     render();
   }));
 }
+function renderLog() {
+  const body = $("logBody");
+  if (!body) return;
+  const rows = readMatchLog();
+  const history = readMatchHistory();
+  body.innerHTML = rows.length ? rows.slice().reverse().map(r => `
+    <div class="logEntry">
+      <div class="logMeta">${esc(r.time || "-")} ｜ #1 ${esc(r.top || "-")}</div>
+      <div class="logRaw">${esc(r.raw || "-")}</div>
+      <div>快车道：${esc(r.fast || "-")}</div>
+      <div>AI车道：${esc(r.ai || "-")}</div>
+    </div>
+  `).join("") : `<div class="logEntry"><div class="logRaw">本局还没有沟通记录</div><div class="logMeta">已归档 ${history.length} 局历史，新的一局会清空当前记录。</div></div>`;
+}
 function render() {
+  renderLevel();
   renderSignals();
   renderPending();
   if (augChoices && augChoices.length) renderAugTriple();
   else renderRoute();
+  renderLog();
 }
 
 $("voiceInput").addEventListener("input", () => {
@@ -420,6 +610,15 @@ $("settingsBtn").addEventListener("click", () => {
   fillSettingsPanel();
   $("settingsPanel").classList.toggle("hidden");
   $("llmTestState").textContent = "";
+});
+$("logBtn").addEventListener("click", () => {
+  renderLog();
+  $("logPanel").classList.toggle("hidden");
+  focusInput();
+});
+$("logClose").addEventListener("click", () => {
+  $("logPanel").classList.add("hidden");
+  focusInput();
 });
 $("settingsClose").addEventListener("click", () => {
   saveSettingsPanel();
