@@ -550,6 +550,70 @@ function mk(tag, cls, text, parent) {
 function unitsText(rows) {
   return (rows || []).length ? rows.join("、") : "-";
 }
+function uniqueRows(rows) {
+  return [...new Set((rows || []).filter(Boolean))];
+}
+function isFrontUnit(name) {
+  return new Set([
+    "波比", "安妮", "阿利斯塔", "蕾欧娜", "瑟庄妮", "瑟提", "孙悟空", "锐雯", "蔚", "布里茨",
+    "墨菲特", "拉莫斯", "科加斯", "扎克", "亚托克斯", "加里奥", "芮尔", "李青", "雷克顿",
+    "努努和威朗普", "内瑟斯", "瑟庄妮", "费德提克", "艾克",
+  ]).has(name);
+}
+function isMeleeCarry(name) {
+  return new Set(["贾克斯", "孙悟空", "菲奥娜", "亚索", "泰隆", "德莱文", "佛耶戈", "雷克顿", "劫"]).has(name);
+}
+function inferBoard(t) {
+  const carrySet = new Set([...(t.carryUnits || [])]);
+  const units = uniqueRows([...(t.coreUnits || []), ...(t.midUnits || []), ...(t.earlyUnits || [])]).slice(0, 9);
+  const occupied = new Set();
+  const rows = [];
+  const centerCols = [4, 3, 5, 2, 6, 1, 7];
+  const put = (name, row, role, carry) => {
+    const fallbackRows = row === 4 ? [4, 3, 2, 1] : row === 1 ? [1, 2, 3, 4] : [row, 2, 3, 1, 4];
+    for (const r of fallbackRows) {
+      for (const col of centerCols) {
+        const key = `${r}-${col}`;
+        if (occupied.has(key)) continue;
+        occupied.add(key);
+        const itemSeed = carry ? (t.completedPrefs || []).slice(0, 3) : [];
+        rows.push({ name, row: r, col, role, carry, items: itemSeed });
+        return;
+      }
+    }
+  };
+  const carries = units.filter(x => carrySet.has(x));
+  const fronts = units.filter(x => !carrySet.has(x) && isFrontUnit(x));
+  const backs = units.filter(x => !carrySet.has(x) && !isFrontUnit(x));
+  carries.forEach(name => put(name, isMeleeCarry(name) ? 2 : 4, "主C", true));
+  fronts.forEach(name => put(name, 1, "前排", false));
+  backs.forEach(name => put(name, 4, "输出/功能", false));
+  return rows;
+}
+function renderBoard(body, t) {
+  const hasModelBoard = (t.board || []).length > 0;
+  const boardRows = hasModelBoard ? t.board : inferBoard(t);
+  if (!boardRows.length) return;
+  mk("div", "detailSection", "站位草图", body);
+  if (hasModelBoard) {
+    if (t.boardNote) mk("div", "detailLine", t.boardNote, body);
+  } else {
+    mk("div", "detailLine", "推断站位：模板未提供站位，按主C、前排、功能位自动生成；行1靠敌方。", body);
+  }
+  const board = mk("div", "board", null, body);
+  for (let r = 1; r <= 4; r++) {
+    const brow = mk("div", "brow" + (r % 2 === 0 ? " off" : ""), null, board);
+    for (let c = 1; c <= 7; c++) {
+      const u = boardRows.find(x => x.row === r && x.col === c);
+      const cell = mk("div", "cell" + (u ? (u.carry ? " carry" : "") : " empty"), null, brow);
+      if (!u) continue;
+      cell.style.borderTop = "3px solid " + (u.carry ? "var(--s2)" : "var(--grid)");
+      mk("div", "cn", (u.carry ? "主C " : "") + u.name, cell);
+      mk("div", "cost", u.role || "-", cell);
+      (u.items || []).forEach(it => mk("div", "it", it, cell));
+    }
+  }
+}
 function openRouteDetail(row) {
   if (!row || !row.template) return;
   const t = row.template;
@@ -575,23 +639,7 @@ function openRouteDetail(row) {
     mk("div", "stageUnits", unitsText(units), box);
   });
 
-  if ((t.board || []).length) {
-    mk("div", "detailSection", "站位草图", body);
-    if (t.boardNote) mk("div", "detailLine", t.boardNote, body);
-    const board = mk("div", "board", null, body);
-    for (let r = 1; r <= 4; r++) {
-      const brow = mk("div", "brow" + (r % 2 === 0 ? " off" : ""), null, board);
-      for (let c = 1; c <= 7; c++) {
-        const u = (t.board || []).find(x => x.row === r && x.col === c);
-        const cell = mk("div", "cell" + (u ? (u.carry ? " carry" : "") : " empty"), null, brow);
-        if (!u) continue;
-        cell.style.borderTop = "3px solid " + (u.carry ? "var(--s2)" : "var(--grid)");
-        mk("div", "cn", (u.carry ? "主C " : "") + u.name, cell);
-        mk("div", "cost", u.role || "-", cell);
-        (u.items || []).forEach(it => mk("div", "it", it, cell));
-      }
-    }
-  }
+  renderBoard(body, t);
 
   if (t.route && t.route.length) {
     mk("div", "detailSection", "路线", body);
