@@ -28,11 +28,17 @@ html, body { height:100%; overflow:hidden; }
 body { background:var(--plane); color:var(--ink); font:18px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif; }
 button, input { font:inherit; }
 .app { height:100vh; display:grid; grid-template-rows:auto auto 1fr; gap:12px; padding:16px; max-width:1280px; margin:0 auto; }
-.top { display:grid; grid-template-columns:minmax(0,1fr) auto auto; gap:10px; align-items:center; }
+.top { display:grid; grid-template-columns:minmax(0,1fr) auto auto auto auto; gap:10px; align-items:center; }
 .voice { height:62px; border:2px solid var(--s2); border-radius:12px; background:var(--surface); color:var(--ink); padding:0 18px; font-size:24px; outline:none; }
 .bigBtn { min-height:58px; border:1px solid var(--border); border-radius:12px; background:var(--surface); color:var(--ink); padding:0 18px; cursor:pointer; font-weight:800; }
 .new { background:var(--s6); color:#fff; border-color:var(--s6); }
 .theme { color:var(--ink2); }
+.settingsBtn { width:58px; padding:0; font-size:25px; }
+.llmDot { width:14px; height:14px; border-radius:50%; background:var(--muted); justify-self:center; box-shadow:0 0 0 4px color-mix(in srgb, var(--muted) 15%, transparent); }
+.llmDot.work { background:var(--s3); box-shadow:0 0 0 4px color-mix(in srgb, var(--s3) 22%, transparent); }
+.llmDot.ok { background:var(--s2); box-shadow:0 0 0 4px color-mix(in srgb, var(--s2) 22%, transparent); }
+.llmDot.fail { background:var(--muted); }
+.aiMark { display:inline-grid; place-items:center; min-width:24px; height:20px; margin-left:6px; border-radius:999px; background:var(--s5); color:#fff; font-size:12px; font-weight:950; vertical-align:middle; }
 .banner { position:fixed; left:50%; top:16px; transform:translateX(-50%); z-index:5; background:var(--s2); color:#fff;
   padding:10px 18px; border-radius:999px; font-weight:900; box-shadow:0 10px 30px rgba(0,0,0,.24); opacity:0; pointer-events:none; transition:opacity .18s; }
 .banner.show { opacity:1; }
@@ -68,6 +74,13 @@ button, input { font:inherit; }
 .augVerdict { font-size:21px; color:var(--ink2); }
 .augScore { font-size:28px; font-weight:950; color:var(--s2); }
 .empty { height:100%; display:grid; place-items:center; color:var(--muted); font-size:24px; text-align:center; padding:20px; }
+.settingsPanel { position:fixed; right:16px; top:88px; z-index:8; width:min(520px, calc(100vw - 32px)); border:1px solid var(--border); border-radius:16px; background:var(--surface); box-shadow:0 18px 46px rgba(0,0,0,.28); padding:18px; display:grid; gap:12px; }
+.settingsPanel h2 { font-size:24px; line-height:1.2; }
+.settingsPanel label { display:grid; gap:6px; color:var(--ink2); font-size:15px; font-weight:800; }
+.settingsPanel input { height:44px; border:1px solid var(--border); border-radius:10px; background:var(--plane); color:var(--ink); padding:0 12px; font-size:16px; outline:none; }
+.settingsActions { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+.smallBtn { min-height:42px; border:1px solid var(--border); border-radius:10px; background:var(--plane); color:var(--ink); padding:0 12px; cursor:pointer; font-weight:850; }
+.testState { color:var(--muted); font-size:14px; font-weight:800; }
 .hidden { display:none !important; }
 @media (max-width: 900px) {
   .app { padding:10px; }
@@ -85,6 +98,8 @@ button, input { font:inherit; }
     <input id="voiceInput" class="voice" autofocus placeholder="直接说：来了个安妮还有波比拿了养刀">
     <button id="newGame" class="bigBtn new">新的一局</button>
     <button id="themeBtn" class="bigBtn theme">切换明暗</button>
+    <span id="llmDot" class="llmDot fail" title="LLM慢车道"></span>
+    <button id="settingsBtn" class="bigBtn settingsBtn" title="设置">⚙</button>
   </div>
   <div class="status">
     <div class="pending" id="pending"></div>
@@ -95,14 +110,36 @@ button, input { font:inherit; }
     <section class="augView hidden" id="augView"></section>
   </main>
 </div>
+<section id="settingsPanel" class="settingsPanel hidden" aria-label="设置">
+  <h2>LLM 慢车道</h2>
+  <label>API 地址
+    <input id="llmApiBase" autocomplete="off">
+  </label>
+  <label>Key
+    <input id="llmKey" type="password" autocomplete="off">
+  </label>
+  <label>模型名
+    <input id="llmModel" autocomplete="off">
+  </label>
+  <div class="settingsActions">
+    <button id="llmTest" class="smallBtn">测试连接</button>
+    <button id="llmExport" class="smallBtn">导出没听懂日志</button>
+    <button id="llmClearLog" class="smallBtn">清空日志</button>
+    <button id="settingsClose" class="smallBtn">关闭</button>
+    <span id="llmTestState" class="testState"></span>
+  </div>
+</section>
 
 <script src="data.js?v=match-20260706a"></script>
 <script src="stage2-matcher-data.js?v=stage2-20260705b"></script>
 <script src="matcher-core.js?v=match-20260706a"></script>
 <script src="signal-parser.js?v=match-20260706a"></script>
+<script src="llm-lane.js?v=match-20260706a"></script>
 <script>
 "use strict";
 const LS = "jcc-match-";
+const LLM_LS = "jcc-match-llm-";
+const UNHEARD_LOG_KEY = "jcc-match-unheard-log";
 const $ = id => document.getElementById(id);
 const esc = MatcherCore.escText;
 const savedTheme = localStorage.getItem(LS + "theme");
@@ -115,6 +152,7 @@ let augChoices = null;
 let inputTimer = null;
 let lastTop = "";
 let bannerTimer = null;
+let llmSeq = 0;
 
 function load() {
   try { signals = JSON.parse(localStorage.getItem(LS + "signals") || "[]"); } catch (e) { signals = []; }
@@ -125,11 +163,15 @@ function save() {
 function signalKey(s) { return `${s.kind}|${s.value}|${s.kind === "traits" ? (s.count || "") : ""}`; }
 function addSignal(s) {
   if (!s || !s.kind || !s.value) return;
-  if (!signals.some(x => signalKey(x) === signalKey(s))) signals.push({ kind: s.kind, value: s.value, label: s.label || s.value, count: s.count });
+  if (!signals.some(x => signalKey(x) === signalKey(s))) signals.push({ kind: s.kind, value: s.value, label: s.label || s.value, count: s.count, via: s.via });
   save();
 }
 function removeSignal(s) {
   signals = signals.filter(x => signalKey(x) !== signalKey(s));
+  save();
+}
+function removeByValue(value) {
+  signals = signals.filter(s => s.value !== value && s.label !== value);
   save();
 }
 function clearGame() {
@@ -176,13 +218,15 @@ function parseInput() {
   const input = $("voiceInput");
   const raw = input.value.trim();
   if (!raw) return;
-  applyParse(SignalParser.parse(raw, signals));
+  const parsed = SignalParser.parse(raw, signals);
+  applyParse(parsed);
+  if (parsed.unheard && parsed.unheard.length) triggerLlm(raw, parsed.unheard);
   input.value = "";
 }
 function renderSignals() {
   const box = $("signals");
   box.innerHTML = `<span class="label">信号</span>` + (signals.length
-    ? signals.map(s => `<button class="chip" data-k="${esc(s.kind)}" data-v="${esc(s.value)}" data-c="${esc(s.count || "")}">${esc(s.label || s.value)} ×</button>`).join("")
+    ? signals.map(s => `<button class="chip" data-k="${esc(s.kind)}" data-v="${esc(s.value)}" data-c="${esc(s.count || "")}">${esc(s.label || s.value)}${s.via === "llm" ? '<span class="aiMark">AI</span>' : ""} ×</button>`).join("")
     : `<span class="label">还没识别到信号</span>`);
   box.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => {
     removeSignal({ kind: btn.dataset.k, value: btn.dataset.v, count: btn.dataset.c ? Number(btn.dataset.c) : undefined });
@@ -216,6 +260,75 @@ function rankedRoutes() {
 }
 function unheardHtml() {
   return unheard.length ? `<div class="unheardLine">没听懂：${unheard.map(esc).join("、")}</div>` : "";
+}
+function llmSettings() {
+  return {
+    apiBase: localStorage.getItem(LLM_LS + "apiBase") || LLMLane.DEFAULT_API_BASE,
+    apiKey: localStorage.getItem(LLM_LS + "key") || "",
+    model: localStorage.getItem(LLM_LS + "model") || LLMLane.DEFAULT_MODEL,
+  };
+}
+function setLlmStatus(status) {
+  const dot = $("llmDot");
+  dot.className = `llmDot ${status || "fail"}`;
+}
+function readUnheardLog() {
+  try { return JSON.parse(localStorage.getItem(UNHEARD_LOG_KEY) || "[]"); } catch (e) { return []; }
+}
+function writeUnheardLog(rows) {
+  localStorage.setItem(UNHEARD_LOG_KEY, JSON.stringify((rows || []).slice(-500)));
+}
+function logUnheard(raw, rows, reason) {
+  if (!rows || !rows.length) return;
+  const old = readUnheardLog();
+  const now = new Date().toISOString();
+  writeUnheardLog([...old, ...rows.map(x => ({ time: now, raw, fragment: x, reason }))]);
+}
+async function triggerLlm(raw, rows) {
+  const seq = ++llmSeq;
+  const settings = llmSettings();
+  setLlmStatus("work");
+  const result = await LLMLane.translate({
+    ...settings,
+    original: raw,
+    unheard: rows,
+    signals,
+    matcher: STAGE2_MATCHER,
+  });
+  if (seq !== llmSeq) return;
+  if (!result.ok) {
+    setLlmStatus("fail");
+    if (result.status !== "no-key") logUnheard(raw, rows, result.status);
+    return;
+  }
+  (result.remove || []).forEach(removeByValue);
+  (result.add || []).forEach(addSignal);
+  if ((result.add || []).length || (result.remove || []).length) {
+    unheard = [];
+    setLlmStatus("ok");
+  } else {
+    setLlmStatus("fail");
+    logUnheard(raw, rows, result.status || "empty");
+  }
+  render();
+}
+function fillSettingsPanel() {
+  const s = llmSettings();
+  $("llmApiBase").value = s.apiBase;
+  $("llmKey").value = s.apiKey;
+  $("llmModel").value = s.model;
+}
+function saveSettingsPanel() {
+  localStorage.setItem(LLM_LS + "apiBase", $("llmApiBase").value.trim() || LLMLane.DEFAULT_API_BASE);
+  localStorage.setItem(LLM_LS + "key", $("llmKey").value.trim());
+  localStorage.setItem(LLM_LS + "model", $("llmModel").value.trim() || LLMLane.DEFAULT_MODEL);
+}
+function downloadText(filename, text) {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([text], { type: "application/json;charset=utf-8" }));
+  a.download = filename;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 }
 function renderRoute() {
   $("augView").classList.add("hidden");
@@ -302,6 +415,32 @@ $("themeBtn").addEventListener("click", () => {
   document.documentElement.dataset.theme = next;
   localStorage.setItem(LS + "theme", next);
   focusInput();
+});
+$("settingsBtn").addEventListener("click", () => {
+  fillSettingsPanel();
+  $("settingsPanel").classList.toggle("hidden");
+  $("llmTestState").textContent = "";
+});
+$("settingsClose").addEventListener("click", () => {
+  saveSettingsPanel();
+  $("settingsPanel").classList.add("hidden");
+  focusInput();
+});
+["llmApiBase", "llmKey", "llmModel"].forEach(id => $(id).addEventListener("change", saveSettingsPanel));
+$("llmTest").addEventListener("click", async () => {
+  saveSettingsPanel();
+  $("llmTestState").textContent = "测试中...";
+  setLlmStatus("work");
+  const res = await LLMLane.testConnection({ ...llmSettings(), matcher: STAGE2_MATCHER });
+  $("llmTestState").textContent = res.ok ? `通（${res.status}）` : `不通（${res.status}）`;
+  setLlmStatus(res.ok ? "ok" : "fail");
+});
+$("llmExport").addEventListener("click", () => {
+  downloadText("jcc-match-unheard-log.json", JSON.stringify(readUnheardLog(), null, 2));
+});
+$("llmClearLog").addEventListener("click", () => {
+  writeUnheardLog([]);
+  $("llmTestState").textContent = "日志已清空";
 });
 
 load();
