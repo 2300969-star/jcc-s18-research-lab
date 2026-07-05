@@ -141,6 +141,11 @@
     气象主播: ["气象", "气象主播"],
   };
   const CN_NUMBERS = { 一: 1, 二: 2, 两: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9 };
+  const STAR_WORDS = [
+    ["一星", 1], ["1星", 1],
+    ["二星", 2], ["两星", 2], ["2星", 2],
+    ["三星", 3], ["3星", 3],
+  ];
 
   const PINYIN = {
     安: "an", 妮: "ni", 波: "bo", 比: "bi", 璐: "lu", 露: "lu", 佐: "zuo", 左: "zuo", 伊: "yi", 移: "yi",
@@ -253,6 +258,30 @@
     return m ? { count: Number(m[0]), len: m[0].length } : null;
   }
 
+  function parseStarAt(text, i) {
+    const hit = STAR_WORDS.find(([word]) => text.startsWith(norm(word), i));
+    return hit ? { star: hit[1], len: norm(hit[0]).length } : null;
+  }
+
+  function parseLevelAt(text, i) {
+    let offset = 0;
+    if (text.startsWith("我", i)) offset = 1;
+    const n = parseNumberAt(text, i + offset);
+    if (!n) return null;
+    if (!text.startsWith("级", i + offset + n.len)) return null;
+    if (n.count < 4 || n.count > 9) return null;
+    return {
+      entry: {
+        kind: "levels",
+        value: String(n.count),
+        label: `等级${n.count}`,
+        level: n.count,
+      },
+      len: offset + n.len + 1,
+      method: "level",
+    };
+  }
+
   function findTraitAt(text, i) {
     const n = parseNumberAt(text, i);
     if (!n) return null;
@@ -292,12 +321,8 @@
     return rows.length <= 3 ? rows : [];
   }
 
-  function findMatchAt(text, i, kindFilter) {
+  function findVocabAt(text, i, kindFilter) {
     const { entries, maxLen } = buildVocab();
-    if (!kindFilter) {
-      const trait = findTraitAt(text, i);
-      if (trait) return trait;
-    }
     const max = Math.min(maxLen, text.length - i);
     for (let len = max; len >= 1; len--) {
       const piece = text.slice(i, i + len);
@@ -332,6 +357,41 @@
     return null;
   }
 
+  function findStarUnitAt(text, i) {
+    const prefix = parseStarAt(text, i);
+    if (prefix) {
+      const unit = findVocabAt(text, i + prefix.len, "units");
+      if (unit) {
+        return {
+          entry: { ...unit.entry, star: prefix.star, label: `${unit.entry.value}·${prefix.star}星` },
+          len: prefix.len + unit.len,
+          method: "star",
+        };
+      }
+    }
+    const unit = findVocabAt(text, i, "units");
+    if (!unit) return null;
+    const suffix = parseStarAt(text, i + unit.len);
+    if (!suffix) return null;
+    return {
+      entry: { ...unit.entry, star: suffix.star, label: `${unit.entry.value}·${suffix.star}星` },
+      len: unit.len + suffix.len,
+      method: "star",
+    };
+  }
+
+  function findMatchAt(text, i, kindFilter) {
+    if (!kindFilter) {
+      const level = parseLevelAt(text, i);
+      if (level) return level;
+      const starUnit = findStarUnitAt(text, i);
+      if (starUnit) return starUnit;
+      const trait = findTraitAt(text, i);
+      if (trait) return trait;
+    }
+    return findVocabAt(text, i, kindFilter);
+  }
+
   function tokenize(text, kindFilter) {
     const clean = norm(stripFillers(text));
     const add = [];
@@ -364,8 +424,10 @@
         add.push({
           kind: hit.entry.kind,
           value: hit.entry.value,
-          label: hit.entry.kind === "traits" ? hit.entry.label : hit.entry.value,
+          label: hit.entry.label || (hit.entry.kind === "traits" ? hit.entry.label : hit.entry.value),
           count: hit.entry.count,
+          star: hit.entry.star,
+          level: hit.entry.level,
           via: hit.method,
         });
         i += hit.len;
@@ -433,6 +495,16 @@
       throw new Error(`断言失败：缺少 ${count}${value}，实际=${JSON.stringify(rows)}`);
     }
   }
+  function assertStar(rows, value, star) {
+    if (!rows.some(x => x.kind === "units" && x.value === value && x.star === star)) {
+      throw new Error(`断言失败：缺少 ${value}${star}星，实际=${JSON.stringify(rows)}`);
+    }
+  }
+  function assertLevel(rows, level) {
+    if (!rows.some(x => x.kind === "levels" && x.level === level)) {
+      throw new Error(`断言失败：缺少 等级${level}，实际=${JSON.stringify(rows)}`);
+    }
+  }
 
   function runTests() {
     const a = parse("来了个安妮还有波比拿了养刀", []);
@@ -476,6 +548,11 @@
 
     const j = parse("然后的话那个嗯", [{ kind: "units", value: "凯尔" }]);
     if (j.add.length || j.pending.length || j.unheard.length) throw new Error("纯填充词应静默：" + JSON.stringify(j));
+
+    assertStar(parse("两星波比", []).add, "波比", 2);
+    assertStar(parse("波比三星", []).add, "波比", 3);
+    assertStar(parse("3星安妮", []).add, "安妮", 3);
+    assertLevel(parse("我6级", []).add, 6);
     console.log("signal-parser assertions passed");
   }
 

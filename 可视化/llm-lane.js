@@ -78,6 +78,15 @@
         via: "llm",
       };
       if (kind === "traits") sig.count = count;
+      if (kind === "units" && row && row.star != null) {
+        const star = Number(row.star);
+        if (Number.isInteger(star) && star >= 1 && star <= 3) {
+          sig.star = star;
+          sig.label = `${value}·${star}星`;
+        } else if (log && log.warn) {
+          log.warn("[llm-lane] 丢弃非法星级", row);
+        }
+      }
       const key = `${sig.kind}|${sig.value}|${sig.count || ""}`;
       if (!seenAdd.has(key)) {
         seenAdd.add(key);
@@ -106,7 +115,7 @@
     const sys = [
       "你是金铲铲之战 S18 阵容信号翻译器，只把口述文本翻译成标准信号，不参与打分、阵容推荐或解释。",
       "只能输出严格 JSON，不要 Markdown，不要自然语言。",
-      "JSON格式：{\"add\":[{\"kind\":\"units|items|augments|traits\",\"value\":\"<词表内标准名>\",\"count\":<羁绊数量,可选>}],\"remove\":[\"<词表内标准名>\"]}",
+      "JSON格式：{\"add\":[{\"kind\":\"units|items|augments|traits\",\"value\":\"<词表内标准名>\",\"count\":<羁绊数量,可选>,\"star\":<棋子星级1-3,可选>}],\"remove\":[\"<词表内标准名>\"]}",
       "traits 必须带 count，count 只能是 1 到 9。理解不了就省略。禁止输出词表外的 value。",
       `棋子标准名：${vocab.list.units.join("、")}`,
       `装备标准名：${vocab.list.items.join("、")}`,
@@ -114,6 +123,7 @@
       `常用符文标准名：${vocab.list.augments.slice(0, 180).join("、")}`,
       "例1：原句=不是安妮是波比；当前信号=安妮；输出={\"add\":[{\"kind\":\"units\",\"value\":\"波比\"}],\"remove\":[\"安妮\"]}",
       "例2：原句=三小两护卫；输出={\"add\":[{\"kind\":\"traits\",\"value\":\"小天才\",\"count\":3},{\"kind\":\"traits\",\"value\":\"护卫\",\"count\":2}],\"remove\":[]}",
+      "例3：原句=我有个两星波比；输出={\"add\":[{\"kind\":\"units\",\"value\":\"波比\",\"star\":2}],\"remove\":[]}",
     ].join("\n");
     const user = JSON.stringify({
       原句全文: ctx.original || "",
@@ -130,6 +140,8 @@
     return {
       add: [
         { kind: "traits", value: "战斗机甲", count: 3 },
+        { kind: "units", value: "波比", star: 2 },
+        { kind: "units", value: "安妮", star: 5 },
         { kind: "units", value: "幻觉棋子" },
       ],
       remove: [],
@@ -207,12 +219,16 @@
         { kind: "units", value: "幻觉棋子" },
         { kind: "traits", value: "护卫", count: 12 },
         { kind: "items", value: "巨龙之爪" },
+        { kind: "units", value: "波比", star: 2 },
+        { kind: "units", value: "安妮", star: 5 },
       ],
       remove: ["安妮", "幻觉装备"],
     }, vocab, silent);
-    assert(got.add.length === 2, "应只接受两个合法add");
+    assert(got.add.length === 4, "应接受合法add，非法star只丢星级不丢信号");
     assert(got.add.some(x => x.kind === "traits" && x.value === "战斗机甲" && x.count === 3), "应接受合法羁绊");
     assert(got.add.some(x => x.kind === "items" && x.value === "巨龙之爪"), "应接受合法装备");
+    assert(got.add.some(x => x.kind === "units" && x.value === "波比" && x.star === 2), "应接受合法星级");
+    assert(got.add.some(x => x.kind === "units" && x.value === "安妮" && !x.star), "非法star应被丢弃但保留棋子");
     assert(got.remove.length === 1 && got.remove[0] === "安妮", "应接受合法remove");
     assert(got.discarded.length === 3, "应拒绝词表外值和非法count");
     console.log("llm-lane assertions passed");
