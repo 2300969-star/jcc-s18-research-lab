@@ -37,6 +37,16 @@
     气象主播: ["气象", "气象主播"],
   };
   const CN_NUMBERS = { 一: 1, 二: 2, 两: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9 };
+  // 排序黏性：挑战者最终分必须领先当前推荐至少 5 分才易主，避免同分/微分来回跳。
+  const STICKY_LEAD_THRESHOLD = 5;
+  // 星级权重：二星/三星来牌比单张更能代表可执行路线，放大该棋子的命中分。
+  const STAR_SCORE_MULTIPLIERS = { 1: 1, 2: 1.5, 3: 2.5 };
+  // 三星核心视为关键里程碑完成，给追三/核心路线一个确定性成型加成。
+  const STAR_MILESTONE_BONUS = 18;
+  // 可达性：预计 D 牌成本 80 金以上视为最低可达，最低仍保留 20% 避免路线被彻底归零。
+  const REACHABILITY_GOLD_CAP = 80;
+  const REACHABILITY_MIN = 0.2;
+  const DEFAULT_LEVEL = 6;
 
   const fallbackWeights = {
     baseS: 18,
@@ -120,8 +130,54 @@
     return map;
   }
 
+  function normalizeSelectedUnits(rows) {
+    const map = new Map();
+    (rows || []).forEach(row => {
+      const name = typeof row === "string" ? row : (row && (row.name || row.value || row.label));
+      if (!name) return;
+      const cleanName = String(name).split("·")[0];
+      const star = Number(typeof row === "object" ? row.star : 0) || 0;
+      const prev = map.get(cleanName);
+      if (!prev || star > (prev.star || 0)) map.set(cleanName, { name: cleanName, star });
+    });
+    return [...map.values()];
+  }
+
+  function unitCopies(star) {
+    if (star >= 3) return 9;
+    if (star === 2) return 3;
+    return 1;
+  }
+
+  function starLabel(name, star) {
+    return star ? `${name}·${star}星` : name;
+  }
+
+  function isRerollRoute(t) {
+    const text = [
+      t.name, t.family, t.goal, t.boardNote,
+      t.actions && t.actions.checkpoint,
+      t.actions && t.actions.stopLoss,
+      (t.route || []).join(" "),
+    ].filter(Boolean).join(" ");
+    return /追三|三星|慢D|慢d|赌|D牌|d牌/.test(text);
+  }
+
+  function isMilestoneUnit(t, name) {
+    if (!(t.coreUnits || []).includes(name)) return false;
+    const board = (t.board || []).find(x => x && x.name === name);
+    const role = board && (board.role || "");
+    const text = [
+      t.name, t.family, t.goal,
+      t.actions && t.actions.checkpoint,
+      t.actions && t.actions.item,
+    ].filter(Boolean).join(" ");
+    return Boolean(board && board.carry) || /主C|核心|主坦|追三|三星/.test(role + text) || isRerollRoute(t);
+  }
+
   function scoreTemplate(t, selected, weights) {
-    const units = new Set(selected.units || []);
+    const unitRows = normalizeSelectedUnits(selected.units || []);
+    const units = new Set(unitRows.map(x => x.name));
     const items = new Set(selected.items || []);
     const augments = new Set(selected.augments || []);
     const augCats = new Set(selected.augmentCats || []);
@@ -136,13 +192,27 @@
     }
     const evidence = [], missing = [], penalties = [];
 
-    units.forEach(u => {
+    unitRows.forEach(row => {
+      const u = row.name;
+      const star = row.star || 0;
+      const mult = STAR_SCORE_MULTIPLIERS[star] || 1;
+      const addHeroScore = (basePts, text) => {
+        const pts = star > 1 ? Math.round(basePts * mult) : basePts;
+        score += pts;
+        breakdown.hero += pts;
+        evidence.push(star > 1 ? `${starLabel(u, star)} ${text}（星级x${mult}）` : `${u} ${text}`);
+      };
       if ((t.earlyUnits || []).includes(u)) {
-        score += w.earlyUnit; breakdown.hero += w.earlyUnit; evidence.push(`${u} 命中前期底座`);
+        addHeroScore(w.earlyUnit, "命中前期底座");
       } else if ((t.midUnits || []).includes(u)) {
-        score += w.midUnit; breakdown.hero += w.midUnit; evidence.push(`${u} 可中期承接`);
+        addHeroScore(w.midUnit, "可中期承接");
       } else if ((t.coreUnits || []).includes(u)) {
-        score += w.coreUnit; breakdown.hero += w.coreUnit; evidence.push(`${u} 是后续核心`);
+        addHeroScore(w.coreUnit, "是后续核心");
+      }
+      if (star >= 3 && isMilestoneUnit(t, u)) {
+        score += STAR_MILESTONE_BONUS;
+        breakdown.synergy += STAR_MILESTONE_BONUS;
+        evidence.push(`三星${u}=追三完成`);
       }
     });
 
@@ -233,10 +303,154 @@
     };
   }
 
-  function rank(templates, selected, weights, limit) {
-    return (templates || []).map(t => ({ template: t, ...scoreTemplate(t, selected, weights) }))
-      .sort((a, b) => b.score - a.score)
-      .slice(0, limit || 5);
+  function clamp(n, min, max) {
+    return Math.max(min, Math.min(max, n));
+  }
+
+  function unitPrice(name, opts) {
+    const map = opts && opts.unitPrices;
+    return Number(map && map[name]) || 3;
+  }
+
+  function ownedCopyMap(selected) {
+    const map = new Map();
+    normalizeSelectedUnits(selected.units || []).forEach(u => map.set(u.name, unitCopies(u.star)));
+    return map;
+  }
+
+  function carryUnits(t) {
+    return uniq([
+      ...(t.board || []).filter(x => x && x.carry).map(x => x.name),
+      ...(t.coreUnits || []).slice(0, 2),
+    ]).filter(Boolean);
+  }
+
+  function targetCopiesFor(t, name, cost) {
+    if (isRerollRoute(t) && cost <= 3 && isMilestoneUnit(t, name)) return 9;
+    if (cost >= 4 && isMilestoneUnit(t, name)) return 3;
+    return 1;
+  }
+
+  function expectedCostForUnit(name, targetCopies, selected, opts) {
+    const level = clamp(Number(selected.level) || DEFAULT_LEVEL, 4, 9);
+    const oddsData = opts && opts.oddsData || {};
+    const shopOdds = oddsData.shopOdds || {};
+    const unitCounts = oddsData.unitCounts || {};
+    const poolCopies = oddsData.poolCopies || {};
+    const cost = unitPrice(name, opts);
+    const owned = ownedCopyMap(selected).get(name) || 0;
+    const need = Math.max(0, targetCopies - owned);
+    const odds = ((shopOdds[level] || [0, 0, 0, 0, 0])[cost - 1] || 0) / 100;
+    const count = Number(unitCounts[cost]) || 1;
+    const pool = Number(poolCopies[cost]) || 1;
+    const remainingFactor = clamp((pool - owned) / pool, 0.05, 1);
+    const pSlot = odds / count * remainingFactor;
+    const expectedGold = need <= 0 ? 0 : (pSlot > 0 ? (need / (5 * pSlot)) * 2 : 999);
+    return {
+      name,
+      cost,
+      owned,
+      need,
+      targetCopies,
+      oddsPct: Math.round(odds * 100),
+      expectedGold,
+    };
+  }
+
+  function reachabilityForTemplate(t, selected, opts) {
+    if (!opts || !opts.oddsData) return null;
+    const targets = carryUnits(t).map(name => {
+      const cost = unitPrice(name, opts);
+      return expectedCostForUnit(name, targetCopiesFor(t, name, cost), selected, opts);
+    }).filter(x => x.need > 0);
+    const expectedGold = targets.reduce((sum, x) => sum + x.expectedGold, 0);
+    const coefficient = clamp(1 - expectedGold / REACHABILITY_GOLD_CAP, REACHABILITY_MIN, 1);
+    const level = clamp(Number(selected.level) || DEFAULT_LEVEL, 4, 9);
+    const summary = targets.length
+      ? targets.slice(0, 2).map(x => `缺${x.name}${x.need}张`).join("、") + `，约${Math.round(expectedGold)}金`
+      : "核心已见，约0金";
+    return {
+      level,
+      missing: targets,
+      expectedGold: Math.round(expectedGold),
+      coefficient: Math.round(coefficient * 100) / 100,
+      summary,
+    };
+  }
+
+  function teamSearchScore(t) {
+    if (Number.isFinite(Number(t.teamScore))) return Number(t.teamScore);
+    if (Number.isFinite(Number(t.sortID))) return Number(t.sortID);
+    const q = t.quality === "S" ? 300 : t.quality === "A" ? 200 : 100;
+    return q + (t.source === "research" ? 20 : 0) + ((t.coreUnits || []).length || 0);
+  }
+
+  function rowId(row) {
+    return row && row.template && (row.template.id || row.template.name);
+  }
+
+  function rowSortScore(row) {
+    return Number.isFinite(Number(row.finalScore)) ? Number(row.finalScore) : Number(row.score);
+  }
+
+  function applySticky(rows, opts) {
+    if (!opts || !opts.stickyTopId || !rows.length) return rows;
+    const currentId = opts.stickyTopId;
+    const challenger = rows[0];
+    if (rowId(challenger) === currentId) {
+      challenger.sticky = { state: "current", text: "当前推荐稳定领先" };
+      return rows;
+    }
+    const currentIndex = rows.findIndex(r => rowId(r) === currentId);
+    if (currentIndex < 0) return rows;
+    const current = rows[currentIndex];
+    const gap = rowSortScore(challenger) - rowSortScore(current);
+    if (gap < STICKY_LEAD_THRESHOLD) {
+      rows.splice(currentIndex, 1);
+      rows.unshift(current);
+      current.sticky = {
+        state: "held",
+        challenger: challenger.template.name,
+        gap,
+        threshold: STICKY_LEAD_THRESHOLD,
+        text: `${challenger.template.name}领先${gap}分，未到${STICKY_LEAD_THRESHOLD}分阈值，维持现推荐`,
+      };
+    } else {
+      challenger.sticky = {
+        state: "switched",
+        previous: current.template.name,
+        gap,
+        threshold: STICKY_LEAD_THRESHOLD,
+        text: `${challenger.template.name}领先${gap}分，达到${STICKY_LEAD_THRESHOLD}分阈值，允许易主`,
+      };
+    }
+    return rows;
+  }
+
+  function rank(templates, selected, weights, limit, opts) {
+    const rows = (templates || []).map(t => {
+      const base = { template: t, ...scoreTemplate(t, selected, weights) };
+      const reachability = reachabilityForTemplate(t, selected, opts);
+      if (reachability) {
+        base.reachability = reachability;
+        base.finalScore = Math.max(0, Math.round(base.score * reachability.coefficient));
+      }
+      return base;
+    });
+    if (!opts) return rows.sort((a, b) => b.score - a.score).slice(0, limit || 5);
+    const previousRank = new Map((opts.previousOrder || []).map((id, i) => [id, i]));
+    rows.sort((a, b) => {
+      const delta = rowSortScore(b) - rowSortScore(a);
+      if (delta) return delta;
+      const pa = previousRank.has(rowId(a)) ? previousRank.get(rowId(a)) : 9999;
+      const pb = previousRank.has(rowId(b)) ? previousRank.get(rowId(b)) : 9999;
+      if (pa !== pb) return pa - pb;
+      const teamDelta = teamSearchScore(b.template) - teamSearchScore(a.template);
+      if (teamDelta) return teamDelta;
+      return String(a.template.name).localeCompare(String(b.template.name), "zh-Hans-CN");
+    });
+    applySticky(rows, opts);
+    return rows.slice(0, limit || 5);
   }
 
   function confidence(score) {
@@ -249,26 +463,29 @@
   function buildOutput(ranked, selected) {
     if (!ranked || !ranked.length) return "输入棋子、装备、符文后，这里会输出可复制的路线结论。";
     const signals = [
-      ...(selected.units || []),
+      ...normalizeSelectedUnits(selected.units || []).map(x => starLabel(x.name, x.star)),
       ...(selected.items || []),
       ...(selected.augmentCats || []),
       ...(selected.augments || []),
       ...(selected.traits || []).map(x => x.label || `${x.count}${x.name}`),
-    ].join("、") || "无";
+      selected.level ? `等级${selected.level}` : "",
+    ].filter(Boolean).join("、") || "无";
     const top = ranked[0];
     const t = top.template;
-    const backups = ranked.slice(1, 4).map(r => `${r.template.name}(${r.score}分)`).join(" / ") || "无";
+    const topScore = rowSortScore(top);
+    const backups = ranked.slice(1, 4).map(r => `${r.template.name}(${rowSortScore(r)}分)`).join(" / ") || "无";
     return [
       `信号：${signals}`,
-      `首选：${t.name}（${top.score}分，信心${confidence(top.score)}）`,
+      `首选：${t.name}（${topScore}分，信心${confidence(topScore)}）`,
       `权重：英雄${top.shares?.hero || 0}% / 装备${top.shares?.item || 0}% / 符文${top.shares?.augment || 0}%${top.breakdown?.traitSignals ? ` / 羁绊${top.shares?.trait || 0}%` : ""}`,
+      top.reachability ? `拆分：强度${top.score}分 × 可达${top.reachability.coefficient}（${top.reachability.summary}）=${top.finalScore}分` : "",
       `路线：${(t.route || []).join(" -> ")}`,
       `留牌：${(t.actions.keep || []).slice(0, 8).join("、")}`,
       `装备：${t.actions.item || "-"}`,
       `判断：${t.actions.checkpoint || "-"}`,
       `止损：${t.actions.stopLoss || "-"}`,
       `备选：${backups}`,
-    ].join("\n");
+    ].filter(Boolean).join("\n");
   }
 
   function signalTowerHtml(r) {
@@ -288,14 +505,31 @@
   }
 
   function selectedFromSignals(signals) {
-    const selected = { units: [], items: [], augments: [], augmentCats: [], traits: [] };
+    const selected = { units: [], items: [], augments: [], augmentCats: [], traits: [], level: null };
     (signals || []).forEach(s => {
       if (!s) return;
       const kind = s.kind || s.type;
       const value = s.value || s.name || s.label;
+      if (kind === "levels") {
+        selected.level = Number(s.level || value) || selected.level;
+        return;
+      }
       if (kind === "traits") {
         const parsed = normalizeSelectedTraits([s])[0];
         if (parsed && !selected.traits.some(x => x.name === parsed.name && x.count === parsed.count)) selected.traits.push(parsed);
+        return;
+      }
+      if (kind === "units" && value) {
+        const prev = selected.units.find(x => x.name === value || x.value === value);
+        const star = Number(s.star) || 0;
+        if (prev) {
+          if (star > (Number(prev.star) || 0)) {
+            prev.star = star;
+            prev.label = starLabel(value, star);
+          }
+        } else {
+          selected.units.push(star ? { name: value, value, star, label: starLabel(value, star) } : value);
+        }
         return;
       }
       if (selected[kind] && value && !selected[kind].includes(value)) selected[kind].push(value);
@@ -306,7 +540,7 @@
   function actionLines(template, selected, top) {
     const lines = [];
     const selectedItems = new Set(selected.items || []);
-    const selectedUnits = new Set(selected.units || []);
+    const selectedUnits = new Set(normalizeSelectedUnits(selected.units || []).map(x => x.name));
     const nextComponent = (template.componentPrefs || []).find(x => !selectedItems.has(x));
     const nextItem = (template.completedPrefs || []).find(x => !selectedItems.has(x));
     const earlyHits = (template.earlyUnits || []).filter(x => selectedUnits.has(x));
@@ -315,6 +549,17 @@
     else if (nextItem) lines.push(`装备往${nextItem}靠`);
     if (earlyHits.length >= 2) lines.push(`围绕${earlyHits.slice(0, 3).join("、")}定线`);
     else if (keep.length) lines.push(`先留${keep.join("、")}`);
+    if (top && top.reachability) {
+      const miss = top.reachability.missing || [];
+      if (miss.length) {
+        const first = miss[0];
+        const ideal = first.cost <= 1 ? 5 : first.cost === 2 ? 6 : first.cost === 3 ? 7 : first.cost === 4 ? 8 : 9;
+        if (top.reachability.level < ideal && first.cost >= 4) lines.push(`缺口全是${first.cost}费，建议先拉${ideal}再D`);
+        else lines.push(`${top.reachability.level}级${first.cost}费${first.oddsPct}%，适合现在追${first.name}`);
+      } else {
+        lines.push("核心已见，先补质量和关键装备");
+      }
+    }
     const core = (template.coreUnits || []).filter(x => !selectedUnits.has(x)).slice(0, 3);
     if (core.length) lines.push(`后续找${core.join("、")}`);
     if (top && top.penalties && top.penalties.length) lines.push(top.penalties[0]);
@@ -327,6 +572,12 @@
     AP,
     TANK,
     fallbackWeights,
+    STICKY_LEAD_THRESHOLD,
+    STAR_SCORE_MULTIPLIERS,
+    STAR_MILESTONE_BONUS,
+    REACHABILITY_GOLD_CAP,
+    REACHABILITY_MIN,
+    DEFAULT_LEVEL,
     scoreTemplate,
     rank,
     confidence,
@@ -336,6 +587,7 @@
     actionLines,
     activeTraitsForTemplate,
     parseTraitsInText,
+    normalizeSelectedUnits,
     escText,
   };
 });
