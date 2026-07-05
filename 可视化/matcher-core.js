@@ -40,12 +40,22 @@
   // 排序黏性：挑战者需领先 max(3分, 现任分*15%) 才易主；现任跌出前3则立即让位。
   const STICKY_MIN_LEAD = 3;
   const STICKY_RELATIVE_LEAD = 0.15;
+  // 阶段感知：低等级优先保血和承接，高等级才把终局核心权重放大。
+  const STAGE_LEVEL_RULES = {
+    early: { maxLevel: 5, earlyUnit: 1.5, midUnit: 1, coreUnit: 0.6, component: 1.3 },
+    middle: { level: 6, earlyUnit: 1, midUnit: 1, coreUnit: 1, component: 1 },
+    late: { minLevel: 7, earlyUnit: 0.6, midUnit: 1, coreUnit: 1.4, component: 1 },
+  };
+  // 散件方向纯度达到 2/3 时，给同方向主C路线 10% 确定性加成。
+  const COMPONENT_DIRECTION_BONUS = 0.1;
   // 星级权重：二星/三星来牌比单张更能代表可执行路线，放大该棋子的命中分。
   const STAR_SCORE_MULTIPLIERS = { 1: 1, 2: 1.5, 3: 2.5 };
   // 三星核心视为关键里程碑完成，给追三/核心路线一个确定性成型加成。
   const STAR_MILESTONE_BONUS = 18;
   // 可达性：预计 D 牌成本 80 金以上视为最低可达，最低仍保留 20% 避免路线被彻底归零。
   const REACHABILITY_GOLD_CAP = 80;
+  // 低等级只评估下一段承接牌，容忍度略高，避免把合法过渡线过早打死。
+  const LOW_STAGE_REACHABILITY_GOLD_CAP = 90;
   const REACHABILITY_MIN = 0.2;
   const DEFAULT_LEVEL = 6;
 
@@ -65,6 +75,47 @@
     attackSynergy: 16,
     conflictPenalty: 16,
     tankPenalty: 5,
+  };
+
+  const ITEM_RECIPES = {
+    鬼索的狂暴之刃: ["反曲之弓", "无用大棒"],
+    疾射火炮: ["反曲之弓", "反曲之弓"],
+    卢安娜的飓风: ["反曲之弓", "负极斗篷"],
+    最后的轻语: ["反曲之弓", "拳套"],
+    锐利之刃: ["暴风之剑", "暴风之剑"],
+    无尽之刃: ["暴风之剑", "拳套"],
+    巨人捕手: ["暴风之剑", "反曲之弓"],
+    泰坦的坚决: ["反曲之弓", "锁子甲"],
+    水银: ["负极斗篷", "拳套"],
+    海克斯科技枪刃: ["暴风之剑", "无用大棒"],
+    汲取剑: ["暴风之剑", "负极斗篷"],
+    蓝霸符: ["女神之泪", "女神之泪"],
+    珠光护手: ["无用大棒", "拳套"],
+    班克斯的魔法帽: ["无用大棒", "无用大棒"],
+    斯塔缇克电刃: ["反曲之弓", "女神之泪"],
+    朔极之矛: ["暴风之剑", "女神之泪"],
+    狂徒铠甲: ["巨人腰带", "巨人腰带"],
+    日炎斗篷: ["锁子甲", "巨人腰带"],
+    石像鬼石板甲: ["锁子甲", "负极斗篷"],
+    棘刺背心: ["锁子甲", "锁子甲"],
+    巨龙之爪: ["负极斗篷", "负极斗篷"],
+    圣盾使的誓约: ["锁子甲", "女神之泪"],
+    离子火花: ["无用大棒", "负极斗篷"],
+    振奋盔甲: ["巨人腰带", "负极斗篷"],
+  };
+  const ITEM_ALIASES = {
+    羊刀: "鬼索的狂暴之刃",
+    鬼索: "鬼索的狂暴之刃",
+    火炮: "疾射火炮",
+    泰坦: "泰坦的坚决",
+    法爆: "珠光护手",
+    帽子: "班克斯的魔法帽",
+    轻语: "最后的轻语",
+    飓风: "卢安娜的飓风",
+    巨杀: "巨人捕手",
+    锐利: "锐利之刃",
+    狂徒: "狂徒铠甲",
+    离子: "离子火花",
   };
 
   function uniq(arr) {
@@ -172,6 +223,61 @@
     return Boolean(board && board.carry) || /主C/.test(role);
   }
 
+  function stageMultipliers(level) {
+    const lv = Number(level) || DEFAULT_LEVEL;
+    if (lv <= STAGE_LEVEL_RULES.early.maxLevel) return STAGE_LEVEL_RULES.early;
+    if (lv >= STAGE_LEVEL_RULES.late.minLevel) return STAGE_LEVEL_RULES.late;
+    return STAGE_LEVEL_RULES.middle;
+  }
+
+  function canonicalItem(name) {
+    const raw = String(name || "").split("/")[0].trim();
+    return ITEM_ALIASES[raw] || raw;
+  }
+
+  function carryCoreItems(t) {
+    const boardCarry = (t.board || []).find(x => x && x.carry && Array.isArray(x.items));
+    const boardItems = boardCarry ? boardCarry.items.map(canonicalItem).filter(x => ITEM_RECIPES[x]) : [];
+    return uniq([...(t.carryItems || []), ...boardItems, ...(t.completedPrefs || [])].map(canonicalItem)).filter(x => ITEM_RECIPES[x]);
+  }
+
+  function componentInItems(component, items) {
+    return (items || []).some(item => (ITEM_RECIPES[canonicalItem(item)] || []).includes(component));
+  }
+
+  function componentScore(component, t, w, stage) {
+    const coreItems = carryCoreItems(t);
+    if (componentInItems(component, coreItems.slice(0, 2))) {
+      return { pts: Math.round(w.component * stage.component), text: `${component} 命中主C核心散件` };
+    }
+    if (componentInItems(component, coreItems) || componentInItems(component, t.completedPrefs || []) || (t.componentPrefs || []).includes(component)) {
+      return { pts: Math.round(w.component * stage.component * 0.5), text: `${component} 命中路线散件` };
+    }
+    return { pts: w.looseComponent, text: "" };
+  }
+
+  function componentDirection(items) {
+    const components = [...(items || [])].filter(x => COMPONENTS.includes(x));
+    const physical = components.filter(x => ["暴风之剑", "反曲之弓", "拳套"].includes(x)).length;
+    const magic = components.filter(x => ["无用大棒", "女神之泪"].includes(x)).length;
+    const total = physical + magic;
+    if (total < 2) return null;
+    if (physical / total >= 2 / 3) return "物理";
+    if (magic / total >= 2 / 3) return "法系";
+    return null;
+  }
+
+  function routeDirection(t) {
+    if (t.role === "普攻") return "物理";
+    if (t.role === "法系") return "法系";
+    const items = carryCoreItems(t).slice(0, 3);
+    const physical = items.filter(x => ["鬼索的狂暴之刃", "疾射火炮", "卢安娜的飓风", "最后的轻语", "锐利之刃", "无尽之刃", "泰坦的坚决", "汲取剑"].includes(x)).length;
+    const magic = items.filter(x => ["蓝霸符", "珠光护手", "班克斯的魔法帽", "斯塔缇克电刃", "朔极之矛"].includes(x)).length;
+    if (physical > magic) return "物理";
+    if (magic > physical) return "法系";
+    return null;
+  }
+
   function scoreTemplate(t, selected, weights) {
     const unitRows = normalizeSelectedUnits(selected.units || []);
     const units = new Set(unitRows.map(x => x.name));
@@ -180,6 +286,7 @@
     const augCats = new Set(selected.augmentCats || []);
     const traits = normalizeSelectedTraits(selected.traits || []);
     const w = weights || fallbackWeights;
+    const stage = stageMultipliers(selected.level);
     const base = t.quality === "S" ? w.baseS : t.quality === "A" ? w.baseA : w.baseB;
     let score = base;
     const breakdown = { base, hero: 0, item: 0, augment: 0, synergy: 0, penalty: 0 };
@@ -193,18 +300,19 @@
       const u = row.name;
       const star = row.star || 0;
       const mult = STAR_SCORE_MULTIPLIERS[star] || 1;
-      const addHeroScore = (basePts, text) => {
-        const pts = star > 1 ? Math.round(basePts * mult) : basePts;
+      const addHeroScore = (basePts, stageMult, text) => {
+        const pts = Math.round(basePts * stageMult * (star > 1 ? mult : 1));
         score += pts;
         breakdown.hero += pts;
-        evidence.push(star > 1 ? `${starLabel(u, star)} ${text}（星级x${mult}）` : `${u} ${text}`);
+        const stageText = stageMult === 1 ? "" : `，阶段x${stageMult}`;
+        evidence.push(star > 1 ? `${starLabel(u, star)} ${text}（星级x${mult}${stageText}）` : `${u} ${text}${stageText ? `（${stageText.slice(1)}）` : ""}`);
       };
       if ((t.earlyUnits || []).includes(u)) {
-        addHeroScore(w.earlyUnit, "命中前期底座");
+        addHeroScore(w.earlyUnit, stage.earlyUnit, "命中前期底座");
       } else if ((t.midUnits || []).includes(u)) {
-        addHeroScore(w.midUnit, "可中期承接");
+        addHeroScore(w.midUnit, stage.midUnit, "可中期承接");
       } else if ((t.coreUnits || []).includes(u)) {
-        addHeroScore(w.coreUnit, "是后续核心");
+        addHeroScore(w.coreUnit, stage.coreUnit, "是后续核心");
       }
       if (star >= 3 && isMilestoneUnit(t, u)) {
         score += STAR_MILESTONE_BONUS;
@@ -216,12 +324,23 @@
     items.forEach(it => {
       if ((t.completedPrefs || []).includes(it)) {
         score += w.coreItem; breakdown.item += w.coreItem; evidence.push(`${it} 命中核心成装`);
-      } else if ((t.componentPrefs || []).includes(it)) {
-        score += w.component; breakdown.item += w.component; evidence.push(`${it} 命中散件优先级`);
       } else if (COMPONENTS.includes(it)) {
-        score += w.looseComponent; breakdown.item += w.looseComponent;
+        const hit = componentScore(it, t, w, stage);
+        score += hit.pts;
+        breakdown.item += hit.pts;
+        if (hit.text) evidence.push(hit.text);
       }
     });
+
+    const direction = componentDirection(items);
+    const tDirection = routeDirection(t);
+    if (direction && tDirection === direction) {
+      const bonus = Math.max(1, Math.round(score * COMPONENT_DIRECTION_BONUS));
+      score += bonus;
+      breakdown.synergy += bonus;
+      const label = /源计划|枪手/.test(`${t.name}${t.family}`) ? "源计划/枪手系" : (t.family || t.name);
+      evidence.unshift(`散件方向：${direction}→${label}`);
+    }
 
     augments.forEach(h => {
       if ((t.augmentPrefs || []).includes(h)) {
@@ -337,11 +456,23 @@
     const owned = ownedCopyMap(selected).get(name) || 0;
     const need = Math.max(0, targetCopies - owned);
     const odds = ((shopOdds[level] || [0, 0, 0, 0, 0])[cost - 1] || 0) / 100;
+    if (need <= 0 || odds <= 0) {
+      return {
+        name,
+        cost,
+        owned,
+        need,
+        targetCopies,
+        oddsPct: Math.round(odds * 100),
+        expectedGold: 0,
+        available: odds > 0,
+      };
+    }
     const count = Number(unitCounts[cost]) || 1;
     const pool = Number(poolCopies[cost]) || 1;
     const remainingFactor = clamp((pool - owned) / pool, 0.05, 1);
     const pSlot = odds / count * remainingFactor;
-    const expectedGold = need <= 0 ? 0 : (pSlot > 0 ? (need / (5 * pSlot)) * 2 : 999);
+    const expectedGold = (need / (5 * pSlot)) * 2;
     return {
       name,
       cost,
@@ -350,24 +481,36 @@
       targetCopies,
       oddsPct: Math.round(odds * 100),
       expectedGold,
+      available: true,
     };
   }
 
   function reachabilityForTemplate(t, selected, opts) {
     if (!opts || !opts.oddsData) return null;
-    const targets = reachabilityUnits(t).map(name => {
-      const cost = unitPrice(name, opts);
-      return expectedCostForUnit(name, targetCopiesFor(t, name, cost), selected, opts);
-    }).filter(x => x.need > 0);
-    const expectedGold = targets.reduce((sum, x) => sum + x.expectedGold, 0);
-    const coefficient = clamp(1 - expectedGold / REACHABILITY_GOLD_CAP, REACHABILITY_MIN, 1);
     const level = clamp(Number(selected.level) || DEFAULT_LEVEL, 4, 9);
+    const owned = ownedCopyMap(selected);
+    const lowStage = level <= 6;
+    const costedNames = lowStage ? uniq(t.midUnits || []) : reachabilityUnits(t);
+    const coreNames = reachabilityUnits(t);
+    const rawTargets = costedNames.map(name => {
+      const cost = unitPrice(name, opts);
+      return expectedCostForUnit(name, lowStage ? 1 : targetCopiesFor(t, name, cost), selected, opts);
+    });
+    const targets = rawTargets.filter(x => x.need > 0 && x.available);
+    const unavailableCosted = rawTargets.filter(x => x.need > 0 && !x.available).map(x => x.name);
+    const lateTargets = lowStage
+      ? uniq([...unavailableCosted, ...coreNames.filter(name => !owned.has(name) && !targets.some(x => x.name === name))])
+      : unavailableCosted;
+    const expectedGold = targets.reduce((sum, x) => sum + x.expectedGold, 0);
+    const cap = lowStage ? LOW_STAGE_REACHABILITY_GOLD_CAP : REACHABILITY_GOLD_CAP;
+    const coefficient = clamp(1 - expectedGold / cap, REACHABILITY_MIN, 1);
     const summary = targets.length
       ? targets.map(x => `缺${x.name}${x.need}张约${Math.round(x.expectedGold)}金`).join("、") + `；合计约${Math.round(expectedGold)}金`
-      : "核心已见，约0金";
+      : "当前可刷缺口已见，约0金";
     return {
       level,
       missing: targets,
+      lateTargets: uniq(lateTargets),
       expectedGold: Math.round(expectedGold),
       coefficient: Math.round(coefficient * 100) / 100,
       summary,
@@ -398,7 +541,8 @@
     const currentId = opts.stickyTopId;
     const challenger = rows[0];
     if (rowId(challenger) === currentId) {
-      challenger.sticky = { state: "current", text: "当前推荐稳定领先" };
+      challenger.following = true;
+      challenger.sticky = { state: "current", text: "当前跟随路线仍是最高分" };
       return rows;
     }
     const currentIndex = rows.findIndex(r => rowId(r) === currentId);
@@ -415,14 +559,14 @@
     const gap = rowSortScore(challenger) - rowSortScore(current);
     const threshold = stickyThreshold(current);
     if (gap < threshold) {
-      rows.splice(currentIndex, 1);
-      rows.unshift(current);
+      current.following = true;
+      challenger.followAdvice = `建议继续跟 ${current.template.name}（挑战者领先不足）`;
       current.sticky = {
         state: "held",
         challenger: challenger.template.name,
         gap,
         threshold,
-        text: `${challenger.template.name}领先${gap}分，未到${threshold}分阈值，维持现推荐`,
+        text: `${challenger.template.name}领先${gap}分，未到${threshold}分阈值，继续跟随`,
       };
     } else {
       challenger.sticky = {
@@ -579,6 +723,10 @@
     if (!cond) throw new Error(msg);
   }
 
+  function assertNoBadNumbers(text, msg) {
+    assert(!/(999|Infinity|NaN)/.test(String(text)), msg || "不应出现999/Infinity/NaN");
+  }
+
   function runTests() {
     const odds = {
       shopOdds: { 6: [25, 40, 30, 5, 0], 8: [18, 25, 32, 22, 3] },
@@ -586,12 +734,22 @@
       poolCopies: { 1: 29, 2: 22, 3: 18, 4: 12, 5: 10 },
     };
     const unitPrices = { A: 1, B: 2, C: 3, D: 4 };
-    const fullCore = [{ id: "full", name: "全集core", quality: "S", coreUnits: ["A", "B", "C"], earlyUnits: [], midUnits: [], actions: {} }];
+    const fullCore = [{ id: "full", name: "全集core", quality: "S", coreUnits: ["A", "B", "C"], earlyUnits: [], midUnits: ["B", "C"], actions: {} }];
     const selected = selectedFromSignals([{ kind: "units", value: "A" }]);
-    selected.level = 6;
+    selected.level = 8;
     const full = rank(fullCore, selected, fallbackWeights, 1, { oddsData: odds, unitPrices })[0];
     assert(full.reachability.missing.length === 2, "可达性应按core全集计算缺口");
     assert(full.reachability.summary.includes("缺B1张") && full.reachability.summary.includes("缺C1张"), "缺口摘要应逐条列出core缺口");
+    assertNoBadNumbers(full.reachability.summary, "缺口摘要不应有坏数字");
+
+    const low = selectedFromSignals([]);
+    low.level = 4;
+    const lowRows = rank([{ id: "low", name: "低级", quality: "S", coreUnits: ["D"], midUnits: ["D"], earlyUnits: [], actions: {} }], low, fallbackWeights, 1, { oddsData: odds, unitPrices })[0];
+    assert(lowRows.reachability.missing.length === 0, "0概率棋子不应进入期望成本");
+    assert(lowRows.reachability.lateTargets.includes("D"), "0概率棋子应进入后期目标");
+    assertNoBadNumbers(JSON.stringify(lowRows.reachability), "可达性对象不应有坏数字");
+    const lowMidOnly = rank([{ id: "low-mid", name: "低级承接", quality: "S", coreUnits: [], midUnits: ["D"], earlyUnits: [], actions: {} }], low, fallbackWeights, 1, { oddsData: odds, unitPrices })[0];
+    assert(lowMidOnly.reachability.lateTargets.includes("D"), "0概率承接牌也应进入后期目标");
 
     const stickyTemplates = [
       { id: "old", name: "旧路线", quality: "S", coreUnits: [], earlyUnits: [], midUnits: [], completedPrefs: [], componentPrefs: [], augmentPrefs: [], augmentCats: [], actions: {} },
@@ -599,7 +757,8 @@
     ];
     const baseWeights = { ...fallbackWeights, baseS: 100, coreItem: 14, earlyUnit: 0, midUnit: 0, coreUnit: 0, augment: 0, augmentSignal: 0 };
     let held = rank(stickyTemplates, { items: ["X"], units: [], augments: [], augmentCats: [] }, baseWeights, 2, { previousOrder: ["old", "new"], stickyTopId: "old" });
-    assert(rowId(held[0]) === "old", "挑战者未达到相对阈值时应维持旧#1");
+    assert(rowId(held[0]) === "new", "黏性不得篡改真分排序");
+    assert(held[1].following, "挑战者未达到相对阈值时，旧路线只应带跟随徽章");
     const switchWeights = { ...baseWeights, coreItem: 15 };
     let switched = rank(stickyTemplates, { items: ["X"], units: [], augments: [], augmentCats: [] }, switchWeights, 2, { previousOrder: ["old", "new"], stickyTopId: "old" });
     assert(rowId(switched[0]) === "new", "挑战者达到相对阈值时应易主");
@@ -612,6 +771,10 @@
     ];
     const dropped = rank(dropTemplates, { items: ["A", "B", "C"], units: [], augments: [], augmentCats: [] }, { ...fallbackWeights, baseS: 100, coreItem: 10 }, 4, { previousOrder: ["old", "n1", "n2", "n3"], stickyTopId: "old" });
     assert(rowId(dropped[0]) !== "old", "旧#1跌出前3时应立即让位");
+    assert(!dropped.some(r => r.template.id === "old" && r.following), "旧#1跌出前3不应保留跟随徽章");
+    for (let i = 1; i < dropped.length; i++) {
+      assert(rowSortScore(dropped[i - 1]) >= rowSortScore(dropped[i]), "rank结果必须按最终分单调降序");
+    }
     console.log("matcher-core assertions passed");
   }
 
@@ -623,9 +786,12 @@
     fallbackWeights,
     STICKY_MIN_LEAD,
     STICKY_RELATIVE_LEAD,
+    STAGE_LEVEL_RULES,
+    COMPONENT_DIRECTION_BONUS,
     STAR_SCORE_MULTIPLIERS,
     STAR_MILESTONE_BONUS,
     REACHABILITY_GOLD_CAP,
+    LOW_STAGE_REACHABILITY_GOLD_CAP,
     REACHABILITY_MIN,
     DEFAULT_LEVEL,
     scoreTemplate,

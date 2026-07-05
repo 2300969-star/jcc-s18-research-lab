@@ -53,19 +53,26 @@ button, input { font:inherit; }
 .candidate { border-color:color-mix(in srgb, var(--s3) 65%, var(--border)); }
 .drop { min-width:44px; padding:6px 12px; color:var(--s6); }
 .main { min-height:0; display:grid; grid-template-columns:minmax(0,1fr); }
-.routeView, .augView { position:relative; min-height:0; border:1px solid var(--border); border-radius:16px; background:var(--surface); padding:20px; display:grid; grid-template-rows:auto auto 1fr; gap:12px; }
+.routeView, .augView { position:relative; min-width:0; min-height:0; overflow:hidden; border:1px solid var(--border); border-radius:16px; background:var(--surface); padding:20px; display:grid; grid-template-rows:auto auto 1fr; gap:12px; }
 .rankTop { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; align-items:start; }
 .routeName { font-size:32px; font-weight:950; line-height:1.18; overflow-wrap:anywhere; }
 .score { font-size:34px; font-weight:950; color:var(--s2); white-space:nowrap; }
-.subRank { color:var(--ink2); font-size:17px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.scoreBreak, .stickyNote { color:var(--ink2); font-size:16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:4px; }
+.subRank { color:var(--ink2); font-size:17px; overflow-wrap:anywhere; }
+.scoreBreak, .stickyNote { color:var(--ink2); font-size:16px; overflow-wrap:anywhere; margin-top:4px; }
 .stickyNote { color:var(--muted); }
+.evidenceLine { color:var(--ink2); font-size:15px; overflow-wrap:anywhere; margin-top:4px; }
+.followBadge { display:inline-grid; place-items:center; margin-left:8px; padding:2px 8px; border-radius:999px; background:var(--s2); color:#fff; font-size:14px; font-weight:950; vertical-align:middle; }
+.followStrip { margin-top:6px; padding:7px 10px; border-radius:10px; border:1px solid color-mix(in srgb, var(--s2) 45%, var(--border)); color:var(--ink2); background:color-mix(in srgb, var(--surface) 88%, var(--s2) 12%); font-size:15px; overflow-wrap:anywhere; }
+.reachBox { color:var(--ink2); font-size:16px; line-height:1.45; margin-top:4px; overflow-wrap:anywhere; }
+.reachToggle { margin-left:8px; border:0; background:transparent; color:var(--s2); cursor:pointer; font-weight:900; padding:0; }
 .actions { display:grid; gap:10px; align-content:start; margin-top:6px; }
 .action { min-height:50px; border-left:5px solid var(--s2); background:color-mix(in srgb, var(--surface) 88%, var(--s2) 12%);
   border-radius:10px; padding:10px 14px; font-size:22px; font-weight:850; }
-.meta { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin-top:8px; }
+.meta { display:flex; flex-wrap:wrap; gap:10px; margin-top:8px; min-width:0; }
 .metric { border:1px solid var(--grid); border-radius:10px; padding:9px 11px; min-width:0; }
-.metric .lb { color:var(--muted); font-size:14px; display:flex; justify-content:space-between; gap:8px; }
+.metric { flex:1 1 180px; }
+.metric .lb { color:var(--muted); font-size:14px; display:flex; justify-content:space-between; gap:8px; min-width:0; }
+.metric .lb span { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .metric .bar { height:7px; border-radius:999px; background:color-mix(in srgb, var(--s2) 14%, transparent); overflow:hidden; margin-top:6px; }
 .metric .bar i { display:block; height:100%; border-radius:999px; background:var(--s2); }
 .metric.item .bar i { background:var(--s1); }
@@ -97,7 +104,7 @@ button, input { font:inherit; }
   .app { padding:10px; }
   .top { grid-template-columns:1fr; }
   .voice { font-size:21px; }
-  .rankTop, .meta, .augCards { grid-template-columns:1fr; }
+  .rankTop, .augCards { grid-template-columns:1fr; }
   .routeName { font-size:28px; }
 }
 </style>
@@ -153,7 +160,7 @@ button, input { font:inherit; }
 <script src="data.js?v=match-20260706c"></script>
 <script src="stage2-matcher-data.js?v=stage2-20260705b"></script>
 <script src="odds-data.js?v=match-20260706c"></script>
-<script src="matcher-core.js?v=match-20260706c"></script>
+<script src="matcher-core.js?v=match-20260706d"></script>
 <script src="signal-parser.js?v=match-20260706c"></script>
 <script src="llm-lane.js?v=match-20260706c"></script>
 <script>
@@ -180,6 +187,7 @@ let lastTop = "";
 let lastTopId = "";
 let previousOrder = [];
 let lastRenderedTop = null;
+let expandedReachId = "";
 let bannerTimer = null;
 let llmSeq = 0;
 
@@ -305,6 +313,7 @@ function clearGame() {
   lastTop = "";
   lastTopId = "";
   lastRenderedTop = null;
+  expandedReachId = "";
   save();
   render();
   focusInput();
@@ -489,6 +498,27 @@ function downloadText(filename, text) {
   a.click();
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 }
+function routeId(row) {
+  return row && row.template && (row.template.id || row.template.name);
+}
+function rowScore(row) {
+  return Number.isFinite(Number(row && row.finalScore)) ? row.finalScore : (row ? row.score : 0);
+}
+function reachHtml(row) {
+  const reach = row && row.reachability;
+  if (!reach) return "";
+  const id = routeId(row);
+  const expanded = expandedReachId === id;
+  const costItems = (reach.missing || []).map(x => `缺${x.name}${x.need}张约${Math.round(x.expectedGold)}金`);
+  const visible = expanded || costItems.length <= 3 ? costItems : costItems.slice(0, 2);
+  const folded = costItems.length > 3 && !expanded;
+  const costText = visible.length ? visible.join("、") + (folded ? ` 等${costItems.length}项` : "") : "当前可刷缺口已见，约0金";
+  const lateRows = reach.lateTargets || [];
+  const lateVisible = expanded || lateRows.length <= 3 ? lateRows : lateRows.slice(0, 3);
+  const late = lateRows.length ? `后期目标：${lateVisible.join("、")}${!expanded && lateRows.length > 3 ? ` 等${lateRows.length}项` : ""}` : "";
+  const toggle = costItems.length > 3 || lateRows.length > 3 ? `<button class="reachToggle" data-reach="${esc(id)}">${expanded ? "收起" : "展开"}</button>` : "";
+  return `<div class="reachBox">缺口：${esc(costText)}${toggle}${late ? `<br>${esc(late)}` : ""}</div>`;
+}
 function renderRoute() {
   $("augView").classList.add("hidden");
   $("routeView").classList.remove("hidden");
@@ -504,33 +534,48 @@ function renderRoute() {
   }
   const top = ranked[0], second = ranked[1], third = ranked[2], t = top.template;
   const topId = t.id || t.name;
-  const topScore = Number.isFinite(Number(top.finalScore)) ? top.finalScore : top.score;
-  const secondScore = second ? (Number.isFinite(Number(second.finalScore)) ? second.finalScore : second.score) : 0;
-  const thirdScore = third ? (Number.isFinite(Number(third.finalScore)) ? third.finalScore : third.score) : 0;
-  if (lastTop && lastTop !== t.name) showBanner(`路线切换 ${lastTop} → ${t.name}`);
-  lastTop = t.name;
-  lastTopId = topId;
+  const topScore = rowScore(top);
+  const secondScore = second ? rowScore(second) : 0;
+  const thirdScore = third ? rowScore(third) : 0;
+  const following = ranked.find(r => r.following);
+  const nextFollow = following || top;
+  if (lastTop && lastTop !== nextFollow.template.name) showBanner(`路线切换 ${lastTop} → ${nextFollow.template.name}`);
+  lastTop = nextFollow.template.name;
+  lastTopId = routeId(nextFollow);
   lastRenderedTop = { name: t.name, score: topScore };
-  const delta = second ? topScore - secondScore : topScore;
+  const delta = Math.max(0, second ? topScore - secondScore : topScore);
   const actions = MatcherCore.actionLines(t, selectedObj(), top);
   const reach = top.reachability;
-  const breakLine = reach ? `强度${top.score}分 × 可达${reach.coefficient}（${reach.summary}） = ${topScore}分` : `强度${top.score}分`;
-  const stickyLine = top.sticky && top.sticky.text ? top.sticky.text : "黏性：当前推荐未触发易主保护";
+  const breakLine = reach ? `强度${top.score}分 × 可达${reach.coefficient} = ${topScore}分` : `强度${top.score}分`;
+  const evidenceLine = (top.evidence || []).slice(0, 3).join("；");
+  const stickyLine = top.followAdvice || (following && routeId(following) !== topId ? `建议继续跟 ${following.template.name}（挑战者领先不足）` : "跟随：当前最高分路线");
+  const followBadge = top.following ? `<span class="followBadge">跟随中</span>` : "";
+  const followStrip = following && routeId(following) !== topId
+    ? `<div class="followStrip"><span class="followBadge">跟随中</span> ${esc(following.template.name)} · ${rowScore(following)}分</div>`
+    : "";
   box.innerHTML = `
     <div>
       <div class="rankTop">
-        <div class="routeName">#1 ${esc(t.name)}</div>
+        <div class="routeName">#1 ${esc(t.name)}${followBadge}</div>
         <div class="score">${topScore}分</div>
       </div>
       <div class="subRank">领先#2 ${delta}分 ｜ #2 ${second ? esc(second.template.name) + " " + secondScore + "分" : "-"} ｜ #3 ${third ? esc(third.template.name) + " " + thirdScore + "分" : "-"}</div>
       <div class="scoreBreak">${esc(breakLine)}</div>
+      ${evidenceLine ? `<div class="evidenceLine">证据：${esc(evidenceLine)}</div>` : ""}
+      ${reachHtml(top)}
       <div class="stickyNote">${esc(stickyLine)}</div>
+      ${followStrip}
       ${MatcherCore.signalTowerHtml(top).replaceAll("s2SignalTower", "meta").replaceAll("s2Signal", "metric")}
     </div>
     <div class="actions">${actions.map(x => `<div class="action">${esc(x)}</div>`).join("")}</div>
     <div></div>
     ${unheardHtml()}
   `;
+  box.querySelectorAll("[data-reach]").forEach(btn => btn.addEventListener("click", () => {
+    const id = btn.dataset.reach;
+    expandedReachId = expandedReachId === id ? "" : id;
+    render();
+  }));
   previousOrder = ranked.map(r => r.template.id || r.template.name);
 }
 function augOptionInfo(sig) {
