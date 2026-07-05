@@ -44,7 +44,7 @@ button, input { font:inherit; }
 .candidate { border-color:color-mix(in srgb, var(--s3) 65%, var(--border)); }
 .drop { min-width:44px; padding:6px 12px; color:var(--s6); }
 .main { min-height:0; display:grid; grid-template-columns:minmax(0,1fr); }
-.routeView, .augView { min-height:0; border:1px solid var(--border); border-radius:16px; background:var(--surface); padding:20px; display:grid; grid-template-rows:auto auto 1fr; gap:12px; }
+.routeView, .augView { position:relative; min-height:0; border:1px solid var(--border); border-radius:16px; background:var(--surface); padding:20px; display:grid; grid-template-rows:auto auto 1fr; gap:12px; }
 .rankTop { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; align-items:start; }
 .routeName { font-size:32px; font-weight:950; line-height:1.18; overflow-wrap:anywhere; }
 .score { font-size:34px; font-weight:950; color:var(--s2); white-space:nowrap; }
@@ -59,6 +59,8 @@ button, input { font:inherit; }
 .metric .bar i { display:block; height:100%; border-radius:999px; background:var(--s2); }
 .metric.item .bar i { background:var(--s1); }
 .metric.aug .bar i { background:var(--s3); }
+.metric.trait .bar i { background:var(--s5); }
+.unheardLine { position:absolute; left:20px; right:20px; bottom:10px; color:var(--muted); font-size:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; pointer-events:none; }
 .augCards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; min-height:0; }
 .augCard { border:2px solid var(--border); border-radius:16px; background:var(--surface); padding:18px; cursor:pointer; display:grid; gap:10px; align-content:start; }
 .augCard.best { border-color:var(--s2); background:color-mix(in srgb, var(--surface) 88%, var(--s2) 12%); }
@@ -108,6 +110,7 @@ if (savedTheme) document.documentElement.dataset.theme = savedTheme;
 
 let signals = [];
 let pending = [];
+let unheard = [];
 let augChoices = null;
 let inputTimer = null;
 let lastTop = "";
@@ -119,10 +122,10 @@ function load() {
 function save() {
   localStorage.setItem(LS + "signals", JSON.stringify(signals));
 }
-function signalKey(s) { return `${s.kind}|${s.value}`; }
+function signalKey(s) { return `${s.kind}|${s.value}|${s.kind === "traits" ? (s.count || "") : ""}`; }
 function addSignal(s) {
   if (!s || !s.kind || !s.value) return;
-  if (!signals.some(x => signalKey(x) === signalKey(s))) signals.push({ kind: s.kind, value: s.value, label: s.label || s.value });
+  if (!signals.some(x => signalKey(x) === signalKey(s))) signals.push({ kind: s.kind, value: s.value, label: s.label || s.value, count: s.count });
   save();
 }
 function removeSignal(s) {
@@ -132,6 +135,7 @@ function removeSignal(s) {
 function clearGame() {
   signals = [];
   pending = [];
+  unheard = [];
   augChoices = null;
   save();
   render();
@@ -159,9 +163,11 @@ function applyParse(parsed) {
   if (parsed.augTriple && parsed.augTriple.length) {
     augChoices = parsed.augTriple;
     pending = parsed.pending || [];
+    unheard = parsed.unheard || [];
   } else {
     (parsed.add || []).forEach(addSignal);
     pending = parsed.pending || [];
+    unheard = parsed.unheard || [];
   }
   save();
   render();
@@ -176,10 +182,10 @@ function parseInput() {
 function renderSignals() {
   const box = $("signals");
   box.innerHTML = `<span class="label">信号</span>` + (signals.length
-    ? signals.map(s => `<button class="chip" data-k="${esc(s.kind)}" data-v="${esc(s.value)}">${esc(s.value)} ×</button>`).join("")
+    ? signals.map(s => `<button class="chip" data-k="${esc(s.kind)}" data-v="${esc(s.value)}" data-c="${esc(s.count || "")}">${esc(s.label || s.value)} ×</button>`).join("")
     : `<span class="label">还没识别到信号</span>`);
   box.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => {
-    removeSignal({ kind: btn.dataset.k, value: btn.dataset.v });
+    removeSignal({ kind: btn.dataset.k, value: btn.dataset.v, count: btn.dataset.c ? Number(btn.dataset.c) : undefined });
     render();
   }));
 }
@@ -191,12 +197,12 @@ function renderPending() {
   }
   box.innerHTML = `<span class="label">待确认</span>` + pending.map((p, pi) =>
     `<span class="label">${esc(p.raw)}</span>` +
-    (p.candidates || []).map((c, ci) => `<button class="candidate" data-p="${pi}" data-c="${ci}">${esc(c.value)}</button>`).join("") +
+    (p.candidates || []).map((c, ci) => `<button class="candidate" data-p="${pi}" data-c="${ci}">${esc(c.label || c.value)}</button>`).join("") +
     `<button class="candidate drop" data-drop="${pi}">×</button>`
   ).join("");
   box.querySelectorAll("[data-c]").forEach(btn => btn.addEventListener("click", () => {
     const c = pending[Number(btn.dataset.p)].candidates[Number(btn.dataset.c)];
-    addSignal({ kind: c.kind, value: c.value, label: c.value });
+    addSignal({ kind: c.kind, value: c.value, label: c.label || c.value, count: c.count });
     pending.splice(Number(btn.dataset.p), 1);
     render();
   }));
@@ -208,13 +214,16 @@ function renderPending() {
 function rankedRoutes() {
   return MatcherCore.rank(STAGE2_MATCHER.templates, selectedObj(), STAGE2_MATCHER.weights, 5);
 }
+function unheardHtml() {
+  return unheard.length ? `<div class="unheardLine">没听懂：${unheard.map(esc).join("、")}</div>` : "";
+}
 function renderRoute() {
   $("augView").classList.add("hidden");
   $("routeView").classList.remove("hidden");
   const box = $("routeView");
   const ranked = rankedRoutes();
   if (!signals.length || !ranked.length) {
-    box.innerHTML = `<div class="empty">说出这把看到的棋子、装备、符文。<br>例如：安妮波比养刀，或者符文无情连打DD街区团队建设。</div>`;
+    box.innerHTML = `<div class="empty">说出这把看到的棋子、装备、符文。<br>例如：安妮波比养刀，或者符文无情连打DD街区团队建设。</div>${unheardHtml()}`;
     lastTop = "";
     return;
   }
@@ -234,6 +243,7 @@ function renderRoute() {
     </div>
     <div class="actions">${actions.map(x => `<div class="action">${esc(x)}</div>`).join("")}</div>
     <div></div>
+    ${unheardHtml()}
   `;
 }
 function augOptionInfo(sig) {
@@ -265,6 +275,7 @@ function renderAugTriple() {
         <div class="augScore">${r.score}分</div>
       </button>`).join("")}</div>
     <div></div>
+    ${unheardHtml()}
   `;
   $("augView").querySelectorAll(".augCard").forEach(btn => btn.addEventListener("click", () => {
     addSignal({ kind: "augments", value: btn.dataset.name, label: btn.dataset.name });
