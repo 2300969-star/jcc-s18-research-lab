@@ -30,6 +30,7 @@ const csv = s => String(s || '').split(',').filter(Boolean);
 const uniq = arr => [...new Set((arr || []).filter(Boolean))];
 const avg = arr => arr.length ? arr.reduce((s, x) => s + x, 0) / arr.length : 0;
 const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+const modelResults = readOptional('model_results.json') || {};
 
 const COMPONENTS = [
   '暴风之剑', '反曲之弓', '无用大棒', '女神之泪', '锁子甲',
@@ -141,6 +142,23 @@ function familyOf(name, detail) {
   return '通用过渡';
 }
 
+function compKey(name) {
+  return String(name || '').replace(/[【】\s]/g, '');
+}
+
+const modelCompByName = new Map((modelResults.comps || [])
+  .filter(x => x && x.name && x.detail && Array.isArray(x.detail.heroes))
+  .map(x => [compKey(x.name), x]));
+
+function modelCompForLine(name) {
+  return modelCompByName.get(compKey(name)) || null;
+}
+
+function modelFinalUnits(lineName) {
+  const comp = modelCompForLine(lineName);
+  return uniq(comp && comp.detail && comp.detail.heroes ? comp.detail.heroes.map(h => h.name) : []);
+}
+
 function roleOf(template) {
   const joined = [...template.completedPrefs, ...template.componentPrefs, template.family, template.name].join(' ');
   if (/贾克斯|决斗|枪手|德莱文|薇恩|剑姬|天使|鬼索|火炮|飓风|轻语|锐利/.test(joined)) return '普攻';
@@ -152,10 +170,13 @@ function roleOf(template) {
 function officialTemplates() {
   return data.lineups.map(lineup => {
     const detail = JSON.parse(lineup.detail || '{}');
+    const lineName = detail.line_name || lineup.id;
     const earlyUnits = uniq((detail.y21_early_heros || []).map(h => nameOf.hero(h.hero_id)));
     const midUnits = uniq((detail.y21_metaphase_heros || []).map(h => nameOf.hero(h.hero_id)));
-    const finalUnits = uniq((detail.hero_location || []).map(h => nameOf.hero(h.hero_id)));
-    const coreUnits = uniq([...midUnits, ...finalUnits].filter(x => !earlyUnits.includes(x)).slice(0, 8));
+    const finalUnits = modelFinalUnits(lineName).length
+      ? modelFinalUnits(lineName)
+      : uniq((detail.hero_location || []).map(h => nameOf.hero(h.hero_id)));
+    const coreUnits = finalUnits;
     const componentPrefs = csv(detail.equipment_order).map(nameOf.item);
     const completedPrefs = uniq((detail.hero_location || []).flatMap(h => csv(h.equipment_id).map(nameOf.item)));
     const augmentPrefs = uniq([...csv(detail.hexbuff && detail.hexbuff.recomm), ...csv(detail.hexbuff && detail.hexbuff.replace)].map(nameOf.hex));
@@ -164,12 +185,19 @@ function officialTemplates() {
       .filter(Boolean)
       .flatMap(classifyAug));
     const earlyTraits = uniq((detail.y21_early_heros_contact || []).map(t => `${t.num}${nameOf.trait(t)}`));
-    const family = familyOf(detail.line_name || lineup.id, detail);
+    const family = familyOf(lineName, detail);
+    const modelComp = modelCompForLine(lineName);
     const template = {
       id: `official-${lineup.id}`,
       source: 'official',
       quality: lineup.quality,
-      name: (detail.line_name || lineup.id).replace(/[【】]/g, ''),
+      name: lineName.replace(/[【】]/g, ''),
+      teamScore: modelComp ? modelComp.sortID : undefined,
+      carryUnits: modelComp && modelComp.carry ? [modelComp.carry.hero] : undefined,
+      starTargets: modelComp && modelComp.carry ? [{
+        name: modelComp.carry.hero,
+        targetCopies: Number(modelComp.carryStar) >= 3 ? 9 : Number(modelComp.carryStar) >= 2 ? 3 : 1,
+      }] : undefined,
       family,
       goal: /九五|高端购物|升级咯|对冲基金/.test(`${detail.line_name} ${detail.hex_info}`) ? '吃鸡上限' : lineup.quality === 'S' ? '吃分/争一' : '备选吃分',
       earlyUnits,
@@ -687,6 +715,52 @@ function rank(templates, selected, weights) {
 }
 
 const templates = [...manualTemplates, ...officialTemplates()];
+
+function sameSet(a, b) {
+  const aa = uniq(a).sort();
+  const bb = uniq(b).sort();
+  return aa.length === bb.length && aa.every((x, i) => x === bb[i]);
+}
+
+function seededOfficialSample(rows, n) {
+  return rows
+    .map(row => ({
+      row,
+      key: Array.from(row.name).reduce((sum, ch) => sum + ch.charCodeAt(0), 0) % 997,
+    }))
+    .sort((a, b) => a.key - b.key || a.row.name.localeCompare(b.row.name, 'zh-Hans-CN'))
+    .slice(0, n)
+    .map(x => x.row);
+}
+
+function assertCoreData(templatesIn) {
+  const official = templatesIn.filter(t => t.source === 'official' && modelFinalUnits(t.name).length);
+  const sample = seededOfficialSample(official, 5);
+  const checked = sample.map(t => {
+    const expected = modelFinalUnits(t.name);
+    if (!sameSet(t.coreUnits, expected)) {
+      throw new Error(`官方core对账失败：${t.name} core=${t.coreUnits.join('、')} expected=${expected.join('、')}`);
+    }
+    return { name: t.name, coreUnits: t.coreUnits };
+  });
+  templatesIn.filter(t => t.source === 'research' && Array.isArray(t.board)).forEach(t => {
+    const boardNames = new Set((t.board || []).map(x => x.name));
+    const outOfBoard = (t.coreUnits || []).filter(x => !boardNames.has(x));
+    if (outOfBoard.length) throw new Error(`研究模板core不在成型站位：${t.name} ${outOfBoard.join('、')}`);
+  });
+  const mf = templatesIn.find(t => t.name.includes('幻灵厄运小姐'));
+  if (mf && mf.coreUnits.includes('贾克斯')) throw new Error('幻灵厄运小姐 core 不应包含过渡贾克斯');
+  const jax = templatesIn.find(t => t.name.includes('无情连打贾克斯'));
+  if (jax && (!jax.coreUnits.includes('贾克斯') || jax.coreUnits.includes('芮尔'))) {
+    throw new Error('无情连打贾克斯 core 应包含贾克斯且不含过渡芮尔');
+  }
+  return {
+    officialChecked: checked,
+    researchChecked: templatesIn.filter(t => t.source === 'research' && Array.isArray(t.board)).length,
+  };
+}
+
+const coreAssertions = assertCoreData(templates);
 const options = buildOptions(templates);
 const weights = computeModelWeights();
 const examples = [
@@ -706,12 +780,13 @@ const out = {
   source: {
     officialLineups: data.lineups.length,
     officialSTier: data.lineups.filter(x => x.quality === 'S').length,
-    fields: ['y21_early_heros', 'y21_early_heros_contact', 'equipment_order', 'hexbuff', 'monster', 'early_info', 'levelMap'],
+    fields: ['model_results.comps.detail.heroes(coreUnits)', 'y21_early_heros', 'y21_early_heros_contact', 'equipment_order', 'hexbuff', 'monster', 'early_info', 'levelMap'],
   },
   options,
   templates,
   weights,
   examples,
+  assertions: { coreData: coreAssertions },
   assumptions: [
     '二阶段匹配器只根据你点击的信号重排路线，不读取游戏画面。',
     '路线模板来自官方早期阵容/散件优先级/符文推荐，并补充研究型过渡模板。',

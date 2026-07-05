@@ -5,6 +5,7 @@
   "officialLineups": 44,
   "officialSTier": 15,
   "fields": [
+   "model_results.comps.detail.heroes(coreUnits)",
    "y21_early_heros",
    "y21_early_heros_contact",
    "equipment_order",
@@ -163,18 +164,8 @@
   ],
   "unitSearch": [
    {
-    "name": "蔚",
-    "priority": 222,
-    "price": 2,
-    "aliases": [
-     "vi",
-     "皮城执法官",
-     "执法官"
-    ]
-   },
-   {
     "name": "普朗克",
-    "priority": 217,
+    "priority": 227,
     "price": 1,
     "aliases": [
      "船长",
@@ -184,8 +175,18 @@
     ]
    },
    {
+    "name": "蔚",
+    "priority": 225,
+    "price": 2,
+    "aliases": [
+     "vi",
+     "皮城执法官",
+     "执法官"
+    ]
+   },
+   {
     "name": "亚索",
-    "priority": 201,
+    "priority": 208,
     "price": 2,
     "aliases": [
      "风男",
@@ -197,7 +198,7 @@
    },
    {
     "name": "李青",
-    "priority": 192,
+    "priority": 206,
     "price": 2,
     "aliases": [
      "瞎子",
@@ -209,7 +210,7 @@
    },
    {
     "name": "安妮",
-    "priority": 176,
+    "priority": 183,
     "price": 2,
     "aliases": [
      "火女",
@@ -219,7 +220,7 @@
    },
    {
     "name": "雷克顿",
-    "priority": 166,
+    "priority": 169,
     "price": 1,
     "aliases": [
      "鳄鱼",
@@ -228,8 +229,18 @@
     ]
    },
    {
+    "name": "璐璐",
+    "priority": 156,
+    "price": 1,
+    "aliases": [
+     "露露",
+     "lulu",
+     "仙灵女巫"
+    ]
+   },
+   {
     "name": "布里茨",
-    "priority": 154,
+    "priority": 155,
     "price": 1,
     "aliases": [
      "机器人",
@@ -239,18 +250,8 @@
     ]
    },
    {
-    "name": "璐璐",
-    "priority": 152,
-    "price": 1,
-    "aliases": [
-     "露露",
-     "lulu",
-     "仙灵女巫"
-    ]
-   },
-   {
     "name": "波比",
-    "priority": 144,
+    "priority": 149,
     "price": 1,
     "aliases": [
      "poppy",
@@ -259,7 +260,7 @@
    },
    {
     "name": "凯尔",
-    "priority": 135,
+    "priority": 142,
     "price": 1,
     "aliases": [
      "天使",
@@ -269,7 +270,7 @@
    },
    {
     "name": "加里奥",
-    "priority": 132,
+    "priority": 137,
     "price": 1,
     "aliases": [
      "正义巨像",
@@ -279,7 +280,7 @@
    },
    {
     "name": "悠米",
-    "priority": 122,
+    "priority": 125,
     "price": 2,
     "aliases": [
      "猫咪",
@@ -289,19 +290,8 @@
     ]
    },
    {
-    "name": "艾希",
-    "priority": 116,
-    "price": 1,
-    "aliases": [
-     "寒冰",
-     "冰弓",
-     "冰霜射手",
-     "ashe"
-    ]
-   },
-   {
     "name": "菲奥娜",
-    "priority": 116,
+    "priority": 121,
     "price": 2,
     "aliases": [
      "剑姬",
@@ -311,8 +301,19 @@
     ]
    },
    {
+    "name": "艾希",
+    "priority": 120,
+    "price": 1,
+    "aliases": [
+     "寒冰",
+     "冰弓",
+     "冰霜射手",
+     "ashe"
+    ]
+   },
+   {
     "name": "贾克斯",
-    "priority": 115,
+    "priority": 118,
     "price": 3,
     "aliases": [
      "武器",
@@ -323,7 +324,7 @@
    },
    {
     "name": "墨菲特",
-    "priority": 107,
+    "priority": 112,
     "price": 2,
     "aliases": [
      "石头人",
@@ -346,7 +347,7 @@
    },
    {
     "name": "希维尔",
-    "priority": 100,
+    "priority": 99,
     "price": 2,
     "aliases": [
      "轮子妈",
@@ -367,8 +368,26 @@
     ]
    },
    {
+    "name": "德莱文",
+    "priority": 86,
+    "price": 2,
+    "aliases": [
+     "draven",
+     "荣耀行刑官"
+    ]
+   },
+   {
+    "name": "佐伊",
+    "priority": 86,
+    "price": 3,
+    "aliases": [
+     "zoe",
+     "暮光星灵"
+    ]
+   },
+   {
     "name": "瑟庄妮",
-    "priority": 87,
+    "priority": 86,
     "price": 4,
     "aliases": [
      "猪妹",
@@ -380,26 +399,8 @@
     ]
    },
    {
-    "name": "德莱文",
-    "priority": 86,
-    "price": 2,
-    "aliases": [
-     "draven",
-     "荣耀行刑官"
-    ]
-   },
-   {
-    "name": "佐伊",
-    "priority": 82,
-    "price": 3,
-    "aliases": [
-     "zoe",
-     "暮光星灵"
-    ]
-   },
-   {
     "name": "伊泽瑞尔",
-    "priority": 77,
+    "priority": 79,
     "price": 2,
     "aliases": [
      "ez",
@@ -422,7 +423,7 @@
    },
    {
     "name": "锐雯",
-    "priority": 64,
+    "priority": 62,
     "price": 3,
     "aliases": [
      "瑞文",
@@ -434,7 +435,7 @@
    },
    {
     "name": "乐芙兰",
-    "priority": 63,
+    "priority": 61,
     "price": 3,
     "aliases": [
      "妖姬",
@@ -454,7 +455,7 @@
    },
    {
     "name": "内瑟斯",
-    "priority": 56,
+    "priority": 58,
     "price": 1,
     "aliases": [
      "狗头",
@@ -464,7 +465,7 @@
    },
    {
     "name": "泰隆",
-    "priority": 56,
+    "priority": 58,
     "price": 1,
     "aliases": [
      "男刀",
@@ -474,23 +475,23 @@
     ]
    },
    {
-    "name": "芮尔",
-    "priority": 53,
-    "price": 2,
-    "aliases": [
-     "rell",
-     "镕铁少女",
-     "熔铁少女"
-    ]
-   },
-   {
     "name": "莎弥拉",
-    "priority": 53,
+    "priority": 51,
     "price": 4,
     "aliases": [
      "莎米拉",
      "沙弥拉",
      "samira"
+    ]
+   },
+   {
+    "name": "芮尔",
+    "priority": 50,
+    "price": 2,
+    "aliases": [
+     "rell",
+     "镕铁少女",
+     "熔铁少女"
     ]
    },
    {
@@ -502,14 +503,13 @@
     ]
    },
    {
-    "name": "维克兹",
-    "priority": 37,
-    "price": 3,
+    "name": "费德提克",
+    "priority": 45,
+    "price": 5,
     "aliases": [
-     "大眼",
-     "虚空之眼",
-     "velkoz",
-     "vel'koz"
+     "稻草人",
+     "fiddle",
+     "fiddlesticks"
     ]
    },
    {
@@ -522,8 +522,19 @@
     ]
    },
    {
+    "name": "维克兹",
+    "priority": 35,
+    "price": 3,
+    "aliases": [
+     "大眼",
+     "虚空之眼",
+     "velkoz",
+     "vel'koz"
+    ]
+   },
+   {
     "name": "扎克",
-    "priority": 37,
+    "priority": 35,
     "price": 4,
     "aliases": [
      "生化魔人",
@@ -532,7 +543,7 @@
    },
    {
     "name": "卡蜜尔",
-    "priority": 36,
+    "priority": 34,
     "price": 2,
     "aliases": [
      "青钢影",
@@ -553,7 +564,7 @@
    },
    {
     "name": "艾克",
-    "priority": 33,
+    "priority": 32,
     "price": 4,
     "aliases": [
      "时间刺客",
@@ -561,39 +572,8 @@
     ]
    },
    {
-    "name": "拉克丝",
-    "priority": 30,
-    "price": 1,
-    "aliases": [
-     "光女",
-     "光辉",
-     "光辉女郎",
-     "lux"
-    ]
-   },
-   {
-    "name": "费德提克",
-    "priority": 29,
-    "price": 5,
-    "aliases": [
-     "稻草人",
-     "fiddle",
-     "fiddlesticks"
-    ]
-   },
-   {
-    "name": "拉莫斯",
-    "priority": 26,
-    "price": 3,
-    "aliases": [
-     "龙龟",
-     "披甲龙龟",
-     "rammus"
-    ]
-   },
-   {
     "name": "蕾欧娜",
-    "priority": 25,
+    "priority": 32,
     "price": 5,
     "aliases": [
      "日女",
@@ -603,8 +583,29 @@
     ]
    },
    {
+    "name": "拉克丝",
+    "priority": 31,
+    "price": 1,
+    "aliases": [
+     "光女",
+     "光辉",
+     "光辉女郎",
+     "lux"
+    ]
+   },
+   {
+    "name": "厄加特",
+    "priority": 30,
+    "price": 5,
+    "aliases": [
+     "螃蟹",
+     "无畏战车",
+     "urgot"
+    ]
+   },
+   {
     "name": "瑟提",
-    "priority": 22,
+    "priority": 27,
     "price": 4,
     "aliases": [
      "腕豪",
@@ -612,8 +613,51 @@
     ]
    },
    {
-    "name": "奥瑞利安 · 索尔",
+    "name": "拉莫斯",
+    "priority": 24,
+    "price": 3,
+    "aliases": [
+     "龙龟",
+     "披甲龙龟",
+     "rammus"
+    ]
+   },
+   {
+    "name": "卡莎",
+    "priority": 21,
+    "price": 3,
+    "aliases": [
+     "虚空之女",
+     "kaisa",
+     "kai'sa"
+    ]
+   },
+   {
+    "name": "塞拉斯",
     "priority": 20,
+    "price": 1,
+    "aliases": [
+     "偷男",
+     "解脱者",
+     "sylas"
+    ]
+   },
+   {
+    "name": "努努和威朗普",
+    "priority": 19,
+    "price": 5,
+    "aliases": [
+     "努努",
+     "雪人",
+     "雪原双子",
+     "nunu",
+     "willump",
+     "nunu willump"
+    ]
+   },
+   {
+    "name": "奥瑞利安 · 索尔",
+    "priority": 18,
     "price": 4,
     "aliases": [
      "奥瑞利安索尔",
@@ -624,33 +668,34 @@
     ]
    },
    {
-    "name": "卡莎",
-    "priority": 19,
-    "price": 3,
+    "name": "厄斐琉斯",
+    "priority": 17,
+    "price": 5,
     "aliases": [
-     "虚空之女",
-     "kaisa",
-     "kai'sa"
-    ]
-   },
-   {
-    "name": "塞拉斯",
-    "priority": 18,
-    "price": 1,
-    "aliases": [
-     "偷男",
-     "解脱者",
-     "sylas"
+     "月男",
+     "月亮男",
+     "残月之肃",
+     "aphelios"
     ]
    },
    {
     "name": "索拉卡",
-    "priority": 18,
+    "priority": 16,
     "price": 4,
     "aliases": [
      "奶妈",
      "众星之子",
      "soraka"
+    ]
+   },
+   {
+    "name": "迦娜",
+    "priority": 16,
+    "price": 5,
+    "aliases": [
+     "风女",
+     "风暴之怒",
+     "janna"
     ]
    },
    {
@@ -666,6 +711,18 @@
     ]
    },
    {
+    "name": "亚托克斯",
+    "priority": 14,
+    "price": 4,
+    "aliases": [
+     "剑魔",
+     "暗裔剑魔",
+     "aatrox",
+     "aatrox damie",
+     "aatroxdamie"
+    ]
+   },
+   {
     "name": "金克丝",
     "priority": 13,
     "price": 2,
@@ -677,7 +734,7 @@
    },
    {
     "name": "厄运小姐",
-    "priority": 12,
+    "priority": 13,
     "price": 4,
     "aliases": [
      "女枪",
@@ -686,41 +743,6 @@
      "mf",
      "missfortune",
      "miss fortune"
-    ]
-   },
-   {
-    "name": "亚托克斯",
-    "priority": 12,
-    "price": 4,
-    "aliases": [
-     "剑魔",
-     "暗裔剑魔",
-     "aatrox",
-     "aatrox damie",
-     "aatroxdamie"
-    ]
-   },
-   {
-    "name": "厄加特",
-    "priority": 12,
-    "price": 5,
-    "aliases": [
-     "螃蟹",
-     "无畏战车",
-     "urgot"
-    ]
-   },
-   {
-    "name": "努努和威朗普",
-    "priority": 11,
-    "price": 5,
-    "aliases": [
-     "努努",
-     "雪人",
-     "雪原双子",
-     "nunu",
-     "willump",
-     "nunu willump"
     ]
    },
    {
@@ -734,43 +756,13 @@
     ]
    },
    {
-    "name": "厄斐琉斯",
-    "priority": 8,
-    "price": 5,
-    "aliases": [
-     "月男",
-     "月亮男",
-     "残月之肃",
-     "aphelios"
-    ]
-   },
-   {
-    "name": "迦娜",
-    "priority": 8,
-    "price": 5,
-    "aliases": [
-     "风女",
-     "风暴之怒",
-     "janna"
-    ]
-   },
-   {
     "name": "莫德凯撒",
-    "priority": 6,
+    "priority": 9,
     "price": 5,
     "aliases": [
      "铁男",
      "金属大师",
      "mordekaiser"
-    ]
-   },
-   {
-    "name": "塔莉垭",
-    "priority": 5,
-    "price": 4,
-    "aliases": [
-     "岩雀",
-     "taliyah"
     ]
    },
    {
@@ -785,19 +777,28 @@
     ]
    },
    {
+    "name": "塔莉垭",
+    "priority": 4,
+    "price": 4,
+    "aliases": [
+     "岩雀",
+     "taliyah"
+    ]
+   },
+   {
+    "name": "辛德拉",
+    "priority": 1,
+    "price": 5,
+    "aliases": [
+     "syndra"
+    ]
+   },
+   {
     "name": "莫甘娜",
     "priority": 0,
     "price": 3,
     "aliases": [
      "morgana"
-    ]
-   },
-   {
-    "name": "辛德拉",
-    "priority": 0,
-    "price": 5,
-    "aliases": [
-     "syndra"
     ]
    },
    {
@@ -5400,6 +5401,16 @@
    "source": "official",
    "quality": "S",
    "name": "超英伊泽瑞尔4情报特工3超级英雄2斗士",
+   "teamScore": 3917,
+   "carryUnits": [
+    "伊泽瑞尔"
+   ],
+   "starTargets": [
+    {
+     "name": "伊泽瑞尔",
+     "targetCopies": 9
+    }
+   ],
    "family": "魔盗经济",
    "goal": "吃分/争一",
    "earlyUnits": [
@@ -5419,8 +5430,12 @@
    ],
    "coreUnits": [
     "墨菲特",
-    "艾希",
+    "李青",
+    "普朗克",
+    "蔚",
+    "伊泽瑞尔",
     "薇恩",
+    "艾希",
     "卡莎"
    ],
    "earlyTraits": [
@@ -5497,6 +5512,16 @@
    "source": "official",
    "quality": "S",
    "name": "黑客贾克斯3战斗机甲2黑客2斗士",
+   "teamScore": 3739,
+   "carryUnits": [
+    "贾克斯"
+   ],
+   "starTargets": [
+    {
+     "name": "贾克斯",
+     "targetCopies": 9
+    }
+   ],
    "family": "机甲贾克斯",
    "goal": "吃分/争一",
    "earlyUnits": [
@@ -5515,12 +5540,13 @@
    ],
    "coreUnits": [
     "贾克斯",
-    "德莱文",
-    "布里茨",
-    "扎克",
     "孙悟空",
-    "佐伊",
-    "乐芙兰"
+    "费德提克",
+    "瑟提",
+    "乐芙兰",
+    "瑟庄妮",
+    "扎克",
+    "佐伊"
    ],
    "earlyTraits": [
     "3地下魔盗团"
@@ -5597,6 +5623,16 @@
    "source": "official",
    "quality": "S",
    "name": "小天才九五5小天才2福牛守护者2吉祥物",
+   "teamScore": 3561,
+   "carryUnits": [
+    "佐伊"
+   ],
+   "starTargets": [
+    {
+     "name": "佐伊",
+     "targetCopies": 9
+    }
+   ],
    "family": "小天才法系",
    "goal": "吃鸡上限",
    "earlyUnits": [
@@ -5616,12 +5652,15 @@
     "璐璐"
    ],
    "coreUnits": [
-    "蔚",
-    "阿利斯塔",
-    "佐伊",
-    "乐芙兰",
     "费德提克",
-    "蕾欧娜"
+    "安妮",
+    "阿利斯塔",
+    "蕾欧娜",
+    "波比",
+    "佐伊",
+    "厄加特",
+    "努努和威朗普",
+    "璐璐"
    ],
    "earlyTraits": [
     "3小天才",
@@ -5702,6 +5741,16 @@
    "source": "official",
    "quality": "A",
    "name": "平民怪兽枪3平民英雄2枪手",
+   "teamScore": 3276,
+   "carryUnits": [
+    "莎弥拉"
+   ],
+   "starTargets": [
+    {
+     "name": "莎弥拉",
+     "targetCopies": 3
+    }
+   ],
    "family": "枪手九五",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -5721,13 +5770,14 @@
     "维克兹"
    ],
    "coreUnits": [
-    "瑟庄妮",
-    "锐雯",
-    "维克兹",
     "费德提克",
+    "加里奥",
+    "瑟庄妮",
     "拉莫斯",
     "迦娜",
-    "莎弥拉"
+    "莎弥拉",
+    "维克兹",
+    "希维尔"
    ],
    "earlyTraits": [
     "2平民英雄",
@@ -5806,6 +5856,16 @@
    "source": "official",
    "quality": "A",
    "name": "超英希维尔4枪手3超级英雄2吉祥物",
+   "teamScore": 3120,
+   "carryUnits": [
+    "希维尔"
+   ],
+   "starTargets": [
+    {
+     "name": "希维尔",
+     "targetCopies": 9
+    }
+   ],
    "family": "枪手九五",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -5824,10 +5884,15 @@
     "希维尔"
    ],
    "coreUnits": [
-    "赛娜",
+    "墨菲特",
+    "李青",
+    "普朗克",
+    "加里奥",
+    "希维尔",
     "迦娜",
     "厄斐琉斯",
-    "莎弥拉"
+    "莎弥拉",
+    "赛娜"
    ],
    "earlyTraits": [
     "3超级英雄",
@@ -5903,6 +5968,16 @@
    "source": "official",
    "quality": "S",
    "name": "无情连打贾克斯5战队机甲4斗士2护卫",
+   "teamScore": 2978,
+   "carryUnits": [
+    "贾克斯"
+   ],
+   "starTargets": [
+    {
+     "name": "贾克斯",
+     "targetCopies": 9
+    }
+   ],
    "family": "机甲贾克斯",
    "goal": "吃分/争一",
    "earlyUnits": [
@@ -5921,12 +5996,15 @@
     "瑟提"
    ],
    "coreUnits": [
-    "瑟庄妮",
+    "蕾欧娜",
     "锐雯",
-    "芮尔",
-    "孙悟空",
+    "瑟庄妮",
+    "李青",
     "瑟提",
-    "蕾欧娜"
+    "费德提克",
+    "贾克斯",
+    "孙悟空",
+    "德莱文"
    ],
    "earlyTraits": [],
    "componentPrefs": [
@@ -6000,6 +6078,16 @@
    "source": "official",
    "quality": "S",
    "name": "秘卫斗士贾克斯4斗士3秘术卫士3战斗机甲",
+   "teamScore": 2849,
+   "carryUnits": [
+    "贾克斯"
+   ],
+   "starTargets": [
+    {
+     "name": "贾克斯",
+     "targetCopies": 9
+    }
+   ],
    "family": "机甲贾克斯",
    "goal": "吃分/争一",
    "earlyUnits": [
@@ -6017,12 +6105,15 @@
     "贾克斯"
    ],
    "coreUnits": [
-    "德莱文",
+    "艾克",
     "锐雯",
     "蔚",
-    "孙悟空",
-    "艾克",
-    "瑟庄妮"
+    "瑟庄妮",
+    "贾克斯",
+    "蕾欧娜",
+    "瑟提",
+    "厄加特",
+    "费德提克"
    ],
    "earlyTraits": [],
    "componentPrefs": [
@@ -6097,6 +6188,16 @@
    "source": "official",
    "quality": "S",
    "name": "情报特工怪兽卡莎4情报特工3怪兽",
+   "teamScore": 2340,
+   "carryUnits": [
+    "卡莎"
+   ],
+   "starTargets": [
+    {
+     "name": "卡莎",
+     "targetCopies": 9
+    }
+   ],
    "family": "魔盗经济",
    "goal": "吃分/争一",
    "earlyUnits": [
@@ -6116,9 +6217,10 @@
     "卡莎"
    ],
    "coreUnits": [
-    "拉莫斯",
-    "扎克",
     "科加斯",
+    "扎克",
+    "拉莫斯",
+    "艾希",
     "伊泽瑞尔",
     "薇恩",
     "卡莎"
@@ -6201,6 +6303,16 @@
    "source": "official",
    "quality": "S",
    "name": "机甲秘术枪手3战斗机甲2枪手2吉祥物",
+   "teamScore": 2114,
+   "carryUnits": [
+    "厄加特"
+   ],
+   "starTargets": [
+    {
+     "name": "厄加特",
+     "targetCopies": 3
+    }
+   ],
    "family": "决斗",
    "goal": "吃分/争一",
    "earlyUnits": [
@@ -6220,14 +6332,15 @@
     "奥瑞利安 · 索尔"
    ],
    "coreUnits": [
-    "瑟庄妮",
-    "阿利斯塔",
-    "莎弥拉",
-    "希维尔",
-    "奥瑞利安 · 索尔",
     "孙悟空",
     "瑟提",
-    "蕾欧娜"
+    "蕾欧娜",
+    "费德提克",
+    "努努和威朗普",
+    "阿利斯塔",
+    "莎弥拉",
+    "厄加特",
+    "厄斐琉斯"
    ],
    "earlyTraits": [
     "3地下魔盗团",
@@ -6306,6 +6419,16 @@
    "source": "official",
    "quality": "S",
    "name": "超英猫咪3超级英雄3星之守护者2爱心使者",
+   "teamScore": 2081,
+   "carryUnits": [
+    "悠米"
+   ],
+   "starTargets": [
+    {
+     "name": "悠米",
+     "targetCopies": 9
+    }
+   ],
    "family": "超英赌低费",
    "goal": "吃分/争一",
    "earlyUnits": [
@@ -6323,11 +6446,14 @@
     "悠米"
    ],
    "coreUnits": [
+    "芮尔",
     "李青",
     "尼菈",
     "墨菲特",
     "普朗克",
-    "芮尔"
+    "瑟庄妮",
+    "悠米",
+    "费德提克"
    ],
    "earlyTraits": [
     "2吉祥物",
@@ -6405,6 +6531,16 @@
    "source": "official",
    "quality": "A",
    "name": "84机甲怪兽双子星3战斗机甲2护卫怪兽",
+   "teamScore": 2048,
+   "carryUnits": [
+    "卑尔维斯"
+   ],
+   "starTargets": [
+    {
+     "name": "卑尔维斯",
+     "targetCopies": 3
+    }
+   ],
    "family": "枪手九五",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -6423,13 +6559,15 @@
     "奥瑞利安 · 索尔"
    ],
    "coreUnits": [
-    "拉莫斯",
     "瑟提",
-    "锐雯",
-    "卑尔维斯",
-    "孙悟空",
+    "费德提克",
     "贾克斯",
-    "奥瑞利安 · 索尔"
+    "孙悟空",
+    "莫德凯撒",
+    "瑟庄妮",
+    "卑尔维斯",
+    "奥瑞利安 · 索尔",
+    "厄加特"
    ],
    "earlyTraits": [
     "2AI程序",
@@ -6515,6 +6653,16 @@
    "source": "official",
    "quality": "A",
    "name": "金钟罩李青4爱心使者3秘术卫士2AI程序",
+   "teamScore": 1985,
+   "carryUnits": [
+    "娑娜"
+   ],
+   "starTargets": [
+    {
+     "name": "娑娜",
+     "targetCopies": 9
+    }
+   ],
    "family": "小天才法系",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -6534,10 +6682,14 @@
     "乐芙兰"
    ],
    "coreUnits": [
+    "蔚",
+    "李青",
     "阿利斯塔",
+    "艾克",
+    "悠米",
+    "娑娜",
     "索拉卡",
-    "乐芙兰",
-    "艾克"
+    "乐芙兰"
    ],
    "earlyTraits": [
     "4爱心使者",
@@ -6613,6 +6765,16 @@
    "source": "official",
    "quality": "S",
    "name": "决斗薇恩6决斗大师3源计划激光特工",
+   "teamScore": 1927,
+   "carryUnits": [
+    "薇恩"
+   ],
+   "starTargets": [
+    {
+     "name": "薇恩",
+     "targetCopies": 9
+    }
+   ],
    "family": "决斗",
    "goal": "吃分/争一",
    "earlyUnits": [
@@ -6631,11 +6793,15 @@
     "普朗克"
    ],
    "coreUnits": [
-    "瑟庄妮",
     "劫",
+    "瑟庄妮",
     "尼菈",
+    "亚索",
+    "菲奥娜",
+    "费德提克",
     "薇恩",
-    "费德提克"
+    "卡莎",
+    "凯尔"
    ],
    "earlyTraits": [],
    "componentPrefs": [
@@ -6711,6 +6877,16 @@
    "source": "official",
    "quality": "A",
    "name": "福牛泰隆6福牛守护者3混沌战士",
+   "teamScore": 1899,
+   "carryUnits": [
+    "泰隆"
+   ],
+   "starTargets": [
+    {
+     "name": "泰隆",
+     "targetCopies": 9
+    }
+   ],
    "family": "枪手九五",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -6731,8 +6907,11 @@
    ],
    "coreUnits": [
     "阿利斯塔",
-    "蔚",
+    "安妮",
     "佛耶戈",
+    "菲奥娜",
+    "塞拉斯",
+    "泰隆",
     "莎弥拉",
     "费德提克",
     "厄斐琉斯"
@@ -6813,6 +6992,16 @@
    "source": "official",
    "quality": "B",
    "name": "灵风原计划7原计划2强袭枪手",
+   "teamScore": 1872,
+   "carryUnits": [
+    "厄斐琉斯"
+   ],
+   "starTargets": [
+    {
+     "name": "厄斐琉斯",
+     "targetCopies": 3
+    }
+   ],
    "family": "决斗",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -6834,10 +7023,14 @@
     "赛娜"
    ],
    "coreUnits": [
+    "雷克顿",
     "莫德凯撒",
     "瑟庄妮",
+    "亚索",
     "劫",
-    "莎弥拉",
+    "费德提克",
+    "艾希",
+    "厄斐琉斯",
     "赛娜"
    ],
    "earlyTraits": [],
@@ -6911,6 +7104,16 @@
    "source": "official",
    "quality": "A",
    "name": "小天才安妮5小天才2灵能使2黑客",
+   "teamScore": 1846,
+   "carryUnits": [
+    "乐芙兰"
+   ],
+   "starTargets": [
+    {
+     "name": "乐芙兰",
+     "targetCopies": 9
+    }
+   ],
    "family": "小天才法系",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -6930,10 +7133,14 @@
     "乐芙兰"
    ],
    "coreUnits": [
-    "艾克",
-    "索拉卡",
+    "安妮",
+    "阿利斯塔",
+    "波比",
     "努努和威朗普",
-    "璐璐"
+    "艾克",
+    "佐伊",
+    "璐璐",
+    "乐芙兰"
    ],
    "earlyTraits": [
     "3小天才",
@@ -7010,6 +7217,16 @@
    "source": "official",
    "quality": "A",
    "name": "AI妖姬乐芙兰4AI程序3黑客2淘气包",
+   "teamScore": 1820,
+   "carryUnits": [
+    "乐芙兰"
+   ],
+   "starTargets": [
+    {
+     "name": "乐芙兰",
+     "targetCopies": 9
+    }
+   ],
    "family": "小天才法系",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -7029,13 +7246,15 @@
     "卡蜜尔"
    ],
    "coreUnits": [
+    "艾克",
     "乐芙兰",
-    "布里茨",
     "蔚",
-    "劫",
+    "迦娜",
     "索拉卡",
-    "卡蜜尔",
-    "艾克"
+    "布里茨",
+    "劫",
+    "佐伊",
+    "卡蜜尔"
    ],
    "earlyTraits": [],
    "componentPrefs": [
@@ -7113,6 +7332,16 @@
    "source": "official",
    "quality": "A",
    "name": "怪兽平民4精英4精英战士2平民英雄2枪手",
+   "teamScore": 1771,
+   "carryUnits": [
+    "厄运小姐"
+   ],
+   "starTargets": [
+    {
+     "name": "厄运小姐",
+     "targetCopies": 3
+    }
+   ],
    "family": "枪手九五",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -7131,14 +7360,15 @@
     "莎弥拉"
    ],
    "coreUnits": [
-    "加里奥",
+    "费德提克",
     "扎克",
-    "拉莫斯",
-    "阿利斯塔",
+    "莫德凯撒",
+    "迦娜",
     "希维尔",
-    "维克兹",
-    "莎弥拉",
-    "费德提克"
+    "厄运小姐",
+    "厄加特",
+    "德莱文",
+    "莎弥拉"
    ],
    "earlyTraits": [
     "3源计划：激光特工",
@@ -7221,6 +7451,16 @@
    "source": "official",
    "quality": "S",
    "name": "怪兽厄运小姐8怪兽1精英战士",
+   "teamScore": 1724,
+   "carryUnits": [
+    "厄运小姐"
+   ],
+   "starTargets": [
+    {
+     "name": "厄运小姐",
+     "targetCopies": 3
+    }
+   ],
    "family": "魔盗经济",
    "goal": "吃分/争一",
    "earlyUnits": [
@@ -7240,12 +7480,14 @@
    ],
    "coreUnits": [
     "拉莫斯",
-    "扎克",
-    "厄运小姐",
-    "维克兹",
-    "奥瑞利安 · 索尔",
     "费德提克",
-    "科加斯"
+    "科加斯",
+    "扎克",
+    "亚托克斯",
+    "厄运小姐",
+    "厄加特",
+    "奥瑞利安 · 索尔",
+    "维克兹"
    ],
    "earlyTraits": [
     "3源计划：激光特工",
@@ -7328,6 +7570,16 @@
    "source": "official",
    "quality": "S",
    "name": "95秘卫枪手3秘书卫士2福牛守护者",
+   "teamScore": 1680,
+   "carryUnits": [
+    "莎弥拉"
+   ],
+   "starTargets": [
+    {
+     "name": "莎弥拉",
+     "targetCopies": 3
+    }
+   ],
    "family": "枪手九五",
    "goal": "吃分/争一",
    "earlyUnits": [
@@ -7347,14 +7599,15 @@
     "维克兹"
    ],
    "coreUnits": [
-    "瑟庄妮",
+    "费德提克",
+    "艾克",
+    "蕾欧娜",
+    "努努和威朗普",
+    "迦娜",
     "阿利斯塔",
     "莎弥拉",
-    "希维尔",
-    "加里奥",
-    "维克兹",
-    "费德提克",
-    "艾克"
+    "厄加特",
+    "厄斐琉斯"
    ],
    "earlyTraits": [
     "3源计划：激光特工",
@@ -7435,6 +7688,16 @@
    "source": "official",
    "quality": "A",
    "name": "超英艾希5激光特工3超级英雄2决斗大师",
+   "teamScore": 1638,
+   "carryUnits": [
+    "艾希"
+   ],
+   "starTargets": [
+    {
+     "name": "艾希",
+     "targetCopies": 9
+    }
+   ],
    "family": "决斗",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -7452,10 +7715,14 @@
     "艾希"
    ],
    "coreUnits": [
+    "普朗克",
+    "李青",
     "雷克顿",
-    "亚索",
+    "墨菲特",
     "莫德凯撒",
-    "瑟庄妮"
+    "亚索",
+    "瑟庄妮",
+    "艾希"
    ],
    "earlyTraits": [
     "3超级英雄"
@@ -7529,6 +7796,16 @@
    "source": "official",
    "quality": "S",
    "name": "九五平民枪手3平民英雄2枪手2吉祥物",
+   "teamScore": 1598,
+   "carryUnits": [
+    "厄斐琉斯"
+   ],
+   "starTargets": [
+    {
+     "name": "厄斐琉斯",
+     "targetCopies": 3
+    }
+   ],
    "family": "枪手九五",
    "goal": "吃鸡上限",
    "earlyUnits": [
@@ -7548,13 +7825,15 @@
     "希维尔"
    ],
    "coreUnits": [
-    "扎克",
-    "艾克",
     "阿利斯塔",
-    "菲奥娜",
-    "莎弥拉",
     "费德提克",
-    "蕾欧娜"
+    "蕾欧娜",
+    "加里奥",
+    "迦娜",
+    "厄加特",
+    "厄斐琉斯",
+    "希维尔",
+    "莎弥拉"
    ],
    "earlyTraits": [
     "2平民英雄",
@@ -7634,6 +7913,16 @@
    "source": "official",
    "quality": "A",
    "name": "超级机甲德莱文5战斗机甲3超级英雄2斗士",
+   "teamScore": 1560,
+   "carryUnits": [
+    "德莱文"
+   ],
+   "starTargets": [
+    {
+     "name": "德莱文",
+     "targetCopies": 9
+    }
+   ],
    "family": "超英赌低费",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -7653,11 +7942,15 @@
     "孙悟空"
    ],
    "coreUnits": [
-    "锐雯",
-    "贾克斯",
     "瑟提",
+    "墨菲特",
     "蕾欧娜",
-    "厄加特"
+    "孙悟空",
+    "贾克斯",
+    "德莱文",
+    "李青",
+    "厄加特",
+    "普朗克"
    ],
    "earlyTraits": [
     "3超级英雄",
@@ -7739,6 +8032,16 @@
    "source": "official",
    "quality": "A",
    "name": "星守灵能塔利娅5星之守护者4灵能使",
+   "teamScore": 1524,
+   "carryUnits": [
+    "塔莉垭"
+   ],
+   "starTargets": [
+    {
+     "name": "塔莉垭",
+     "targetCopies": 3
+    }
+   ],
    "family": "小天才法系",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -7758,13 +8061,15 @@
     "璐璐"
    ],
    "coreUnits": [
-    "阿利斯塔",
-    "悠米",
+    "安妮",
     "艾克",
+    "阿利斯塔",
     "尼菈",
+    "拉克丝",
     "迦娜",
     "努努和威朗普",
-    "塔莉垭"
+    "塔莉垭",
+    "辛德拉"
    ],
    "earlyTraits": [
     "3小天才",
@@ -7842,6 +8147,16 @@
    "source": "official",
    "quality": "A",
    "name": "鸟盾劫6决斗大师3源计划特工3黑客",
+   "teamScore": 1489,
+   "carryUnits": [
+    "劫"
+   ],
+   "starTargets": [
+    {
+     "name": "劫",
+     "targetCopies": 3
+    }
+   ],
    "family": "决斗",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -7860,12 +8175,15 @@
     "薇恩"
    ],
    "coreUnits": [
-    "菲奥娜",
-    "尼菈",
-    "薇恩",
     "瑟庄妮",
+    "尼菈",
+    "菲奥娜",
+    "普朗克",
+    "亚索",
     "劫",
-    "乐芙兰"
+    "乐芙兰",
+    "佐伊",
+    "薇恩"
    ],
    "earlyTraits": [
     "3源计划：激光特工",
@@ -7942,6 +8260,16 @@
    "source": "official",
    "quality": "A",
    "name": "灵能佐伊4灵能使3小天才2AI程序",
+   "teamScore": 1424,
+   "carryUnits": [
+    "佐伊"
+   ],
+   "starTargets": [
+    {
+     "name": "佐伊",
+     "targetCopies": 9
+    }
+   ],
    "family": "小天才法系",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -7961,14 +8289,15 @@
     "塔莉垭"
    ],
    "coreUnits": [
-    "芮尔",
-    "佐伊",
-    "乐芙兰",
-    "娑娜",
-    "塔莉垭",
+    "安妮",
     "阿利斯塔",
     "努努和威朗普",
-    "索拉卡"
+    "索拉卡",
+    "迦娜",
+    "娑娜",
+    "艾克",
+    "佐伊",
+    "乐芙兰"
    ],
    "earlyTraits": [
     "3小天才",
@@ -8047,6 +8376,16 @@
    "source": "official",
    "quality": "A",
    "name": "超英泰隆3超级英雄3混沌战士4福牛守护者",
+   "teamScore": 1394,
+   "carryUnits": [
+    "泰隆"
+   ],
+   "starTargets": [
+    {
+     "name": "泰隆",
+     "targetCopies": 9
+    }
+   ],
    "family": "小天才法系",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -8064,10 +8403,13 @@
     "泰隆"
    ],
    "coreUnits": [
-    "墨菲特",
-    "普朗克",
-    "李青",
     "阿利斯塔",
+    "普朗克",
+    "塞拉斯",
+    "李青",
+    "墨菲特",
+    "泰隆",
+    "菲奥娜",
     "佛耶戈"
    ],
    "earlyTraits": [
@@ -8144,6 +8486,16 @@
    "source": "official",
    "quality": "A",
    "name": "怪兽佐伊2黑客2淘气包怪兽",
+   "teamScore": 1365,
+   "carryUnits": [
+    "佐伊"
+   ],
+   "starTargets": [
+    {
+     "name": "佐伊",
+     "targetCopies": 9
+    }
+   ],
    "family": "小天才法系",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -8163,14 +8515,14 @@
     "佐伊"
    ],
    "coreUnits": [
-    "维克兹",
-    "科加斯",
-    "乐芙兰",
-    "金克丝",
-    "佐伊",
     "拉莫斯",
     "扎克",
-    "艾克"
+    "艾克",
+    "科加斯",
+    "佐伊",
+    "厄加特",
+    "乐芙兰",
+    "维克兹"
    ],
    "earlyTraits": [
     "3小天才"
@@ -8246,6 +8598,16 @@
    "source": "official",
    "quality": "S",
    "name": "福牛混沌九五4福牛守护者3混沌战士2吉祥物",
+   "teamScore": 1337,
+   "carryUnits": [
+    "佛耶戈"
+   ],
+   "starTargets": [
+    {
+     "name": "佛耶戈",
+     "targetCopies": 3
+    }
+   ],
    "family": "通用过渡",
    "goal": "吃鸡上限",
    "earlyUnits": [
@@ -8265,14 +8627,15 @@
     "希维尔"
    ],
    "coreUnits": [
-    "卡蜜尔",
+    "费德提克",
     "阿利斯塔",
-    "安妮",
-    "泰隆",
+    "努努和威朗普",
     "佛耶戈",
+    "蕾欧娜",
+    "泰隆",
     "莎弥拉",
-    "希维尔",
-    "费德提克"
+    "厄加特",
+    "厄斐琉斯"
    ],
    "earlyTraits": [
     "3源计划：激光特工",
@@ -8355,6 +8718,16 @@
    "source": "official",
    "quality": "A",
    "name": "单核克星维克兹6斗士2爱心使者2秘术卫士",
+   "teamScore": 1310,
+   "carryUnits": [
+    "维克兹"
+   ],
+   "starTargets": [
+    {
+     "name": "维克兹",
+     "targetCopies": 9
+    }
+   ],
    "family": "通用过渡",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -8374,10 +8747,15 @@
     "娑娜"
    ],
    "coreUnits": [
-    "阿利斯塔",
+    "雷克顿",
     "锐雯",
     "瑟庄妮",
-    "娑娜"
+    "布里茨",
+    "李青",
+    "蔚",
+    "阿利斯塔",
+    "娑娜",
+    "维克兹"
    ],
    "earlyTraits": [
     "1怪兽",
@@ -8453,6 +8831,16 @@
    "source": "official",
    "quality": "A",
    "name": "灵能娑娜4灵能使3秘术2福牛2斗士",
+   "teamScore": 1285,
+   "carryUnits": [
+    "娑娜"
+   ],
+   "starTargets": [
+    {
+     "name": "娑娜",
+     "targetCopies": 9
+    }
+   ],
    "family": "小天才法系",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -8472,12 +8860,15 @@
     "拉克丝"
    ],
    "coreUnits": [
-    "阿利斯塔",
-    "艾克",
     "布里茨",
+    "蕾欧娜",
+    "安妮",
+    "阿利斯塔",
+    "李青",
+    "艾克",
+    "迦娜",
     "娑娜",
-    "乐芙兰",
-    "蕾欧娜"
+    "乐芙兰"
    ],
    "earlyTraits": [
     "3小天才",
@@ -8558,6 +8949,16 @@
    "source": "official",
    "quality": "A",
    "name": "超英露露3超级英雄5吉祥物2爱心使者",
+   "teamScore": 1260,
+   "carryUnits": [
+    "璐璐"
+   ],
+   "starTargets": [
+    {
+     "name": "璐璐",
+     "targetCopies": 9
+    }
+   ],
    "family": "超英赌低费",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -8577,10 +8978,15 @@
     "璐璐"
    ],
    "coreUnits": [
-    "墨菲特",
-    "悠米",
     "努努和威朗普",
-    "费德提克"
+    "加里奥",
+    "墨菲特",
+    "李青",
+    "内瑟斯",
+    "璐璐",
+    "悠米",
+    "费德提克",
+    "普朗克"
    ],
    "earlyTraits": [
     "2吉祥物",
@@ -8659,6 +9065,16 @@
    "source": "official",
    "quality": "B",
    "name": "地下魔盗团转952吉祥物2秘术卫士",
+   "teamScore": 0,
+   "carryUnits": [
+    "厄加特"
+   ],
+   "starTargets": [
+    {
+     "name": "厄加特",
+     "targetCopies": 3
+    }
+   ],
    "family": "机甲贾克斯",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -8679,14 +9095,13 @@
     "薇恩"
    ],
    "coreUnits": [
-    "艾克",
-    "李青",
-    "莎弥拉",
-    "娑娜",
     "费德提克",
     "阿利斯塔",
     "努努和威朗普",
-    "迦娜"
+    "迦娜",
+    "莫德凯撒",
+    "蕾欧娜",
+    "厄加特"
    ],
    "earlyTraits": [
     "3地下魔盗团",
@@ -8765,6 +9180,16 @@
    "source": "official",
    "quality": "A",
    "name": "吉祥鸡牛猫队6吉祥物3超级英雄2爱心使者",
+   "teamScore": 0,
+   "carryUnits": [
+    "悠米"
+   ],
+   "starTargets": [
+    {
+     "name": "悠米",
+     "targetCopies": 9
+    }
+   ],
    "family": "超英赌低费",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -8784,9 +9209,14 @@
     "悠米"
    ],
    "coreUnits": [
-    "内瑟斯",
     "阿利斯塔",
-    "努努和威朗普"
+    "加里奥",
+    "内瑟斯",
+    "墨菲特",
+    "李青",
+    "悠米",
+    "努努和威朗普",
+    "普朗克"
    ],
    "earlyTraits": [
     "3超级英雄",
@@ -8866,6 +9296,16 @@
    "source": "official",
    "quality": "S",
    "name": "登神决斗天使6决斗大师3源计划",
+   "teamScore": 0,
+   "carryUnits": [
+    "凯尔"
+   ],
+   "starTargets": [
+    {
+     "name": "凯尔",
+     "targetCopies": 9
+    }
+   ],
    "family": "决斗",
    "goal": "吃分/争一",
    "earlyUnits": [
@@ -8883,12 +9323,14 @@
     "薇恩"
    ],
    "coreUnits": [
-    "亚索",
-    "菲奥娜",
-    "尼菈",
     "劫",
-    "薇恩",
-    "瑟庄妮"
+    "瑟庄妮",
+    "尼菈",
+    "菲奥娜",
+    "亚索",
+    "费德提克",
+    "凯尔",
+    "薇恩"
    ],
    "earlyTraits": [
     "3地下魔盗团",
@@ -8968,6 +9410,16 @@
    "source": "official",
    "quality": "A",
    "name": "小天才佐伊5小天才2福牛守护者",
+   "teamScore": 0,
+   "carryUnits": [
+    "佐伊"
+   ],
+   "starTargets": [
+    {
+     "name": "佐伊",
+     "targetCopies": 9
+    }
+   ],
    "family": "小天才法系",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -8987,12 +9439,14 @@
     "索拉卡"
    ],
    "coreUnits": [
-    "阿利斯塔",
+    "波比",
     "艾克",
-    "乐芙兰",
+    "安妮",
+    "努努和威朗普",
+    "阿利斯塔",
+    "佐伊",
     "璐璐",
-    "索拉卡",
-    "努努和威朗普"
+    "乐芙兰"
    ],
    "earlyTraits": [],
    "componentPrefs": [
@@ -9066,6 +9520,16 @@
    "source": "official",
    "quality": "A",
    "name": "小天才璐璐5小天才4吉祥物",
+   "teamScore": 0,
+   "carryUnits": [
+    "璐璐"
+   ],
+   "starTargets": [
+    {
+     "name": "璐璐",
+     "targetCopies": 9
+    }
+   ],
    "family": "小天才法系",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -9084,7 +9548,11 @@
    "coreUnits": [
     "内瑟斯",
     "阿利斯塔",
+    "安妮",
+    "波比",
+    "加里奥",
     "努努和威朗普",
+    "璐璐",
     "佐伊"
    ],
    "earlyTraits": [],
@@ -9158,6 +9626,16 @@
    "source": "official",
    "quality": "A",
    "name": "超英赛娜3平民英雄3超级英雄2斗士",
+   "teamScore": 0,
+   "carryUnits": [
+    "赛娜"
+   ],
+   "starTargets": [
+    {
+     "name": "赛娜",
+     "targetCopies": 9
+    }
+   ],
    "family": "枪手九五",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -9178,8 +9656,13 @@
    ],
    "coreUnits": [
     "瑟庄妮",
+    "墨菲特",
+    "普朗克",
+    "李青",
+    "迦娜",
+    "加里奥",
     "赛娜",
-    "迦娜"
+    "希维尔"
    ],
    "earlyTraits": [],
    "componentPrefs": [
@@ -9253,6 +9736,16 @@
    "source": "official",
    "quality": "A",
    "name": "6斗拉面贾克斯6斗士3战斗机甲3护卫",
+   "teamScore": 0,
+   "carryUnits": [
+    "贾克斯"
+   ],
+   "starTargets": [
+    {
+     "name": "贾克斯",
+     "targetCopies": 9
+    }
+   ],
    "family": "机甲贾克斯",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -9270,12 +9763,15 @@
     "德莱文"
    ],
    "coreUnits": [
+    "锐雯",
+    "李青",
+    "瑟庄妮",
+    "布里茨",
+    "蔚",
+    "艾克",
     "贾克斯",
     "孙悟空",
-    "李青",
-    "锐雯",
-    "德莱文",
-    "瑟庄妮"
+    "瑟提"
    ],
    "earlyTraits": [],
    "componentPrefs": [
@@ -9352,6 +9848,16 @@
    "source": "official",
    "quality": "A",
    "name": "幻灵厄运小姐5幻灵战队2淘气包2吉祥物",
+   "teamScore": 0,
+   "carryUnits": [
+    "厄运小姐"
+   ],
+   "starTargets": [
+    {
+     "name": "厄运小姐",
+     "targetCopies": 3
+    }
+   ],
    "family": "决斗",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -9371,12 +9877,14 @@
     "薇恩"
    ],
    "coreUnits": [
-    "贾克斯",
     "阿利斯塔",
-    "厄运小姐",
-    "薇恩",
     "艾克",
-    "瑟庄妮"
+    "锐雯",
+    "瑟庄妮",
+    "内瑟斯",
+    "厄运小姐",
+    "金克丝",
+    "薇恩"
    ],
    "earlyTraits": [],
    "componentPrefs": [
@@ -9449,6 +9957,16 @@
    "source": "official",
    "quality": "A",
    "name": "大闹天宫5战斗机甲3超级英雄2护卫",
+   "teamScore": 0,
+   "carryUnits": [
+    "孙悟空"
+   ],
+   "starTargets": [
+    {
+     "name": "孙悟空",
+     "targetCopies": 9
+    }
+   ],
    "family": "超英赌低费",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -9466,6 +9984,10 @@
     "墨菲特"
    ],
    "coreUnits": [
+    "德莱文",
+    "孙悟空",
+    "贾克斯",
+    "李青",
     "普朗克",
     "墨菲特",
     "厄加特",
@@ -9548,6 +10070,16 @@
    "source": "official",
    "quality": "A",
    "name": "怒之领域6斗士3源计划激光特工2爱心使者",
+   "teamScore": 0,
+   "carryUnits": [
+    "雷克顿"
+   ],
+   "starTargets": [
+    {
+     "name": "雷克顿",
+     "targetCopies": 9
+    }
+   ],
    "family": "通用过渡",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -9566,11 +10098,13 @@
     "乐芙兰"
    ],
    "coreUnits": [
+    "布里茨",
     "瑟庄妮",
-    "贾克斯",
-    "乐芙兰",
+    "李青",
     "莫德凯撒",
     "锐雯",
+    "蔚",
+    "雷克顿",
     "索拉卡",
     "厄加特"
    ],
@@ -9647,6 +10181,16 @@
    "source": "official",
    "quality": "A",
    "name": "超英亚索6决斗大师3超级英雄3源计划激光特工",
+   "teamScore": 0,
+   "carryUnits": [
+    "亚索"
+   ],
+   "starTargets": [
+    {
+     "name": "亚索",
+     "targetCopies": 9
+    }
+   ],
    "family": "决斗",
    "goal": "备选吃分",
    "earlyUnits": [
@@ -9665,10 +10209,14 @@
    ],
    "coreUnits": [
     "李青",
-    "墨菲特",
-    "薇恩",
+    "亚索",
     "劫",
-    "瑟庄妮"
+    "墨菲特",
+    "瑟庄妮",
+    "菲奥娜",
+    "普朗克",
+    "薇恩",
+    "凯尔"
    ],
    "earlyTraits": [],
    "componentPrefs": [
@@ -9745,6 +10293,16 @@
    "source": "official",
    "quality": "S",
    "name": "决斗剑姬6决斗大师2福牛守护者",
+   "teamScore": 0,
+   "carryUnits": [
+    "菲奥娜"
+   ],
+   "starTargets": [
+    {
+     "name": "菲奥娜",
+     "targetCopies": 9
+    }
+   ],
    "family": "决斗",
    "goal": "吃分/争一",
    "earlyUnits": [
@@ -9763,12 +10321,15 @@
     "普朗克"
    ],
    "coreUnits": [
-    "瑟庄妮",
+    "菲奥娜",
     "劫",
     "尼菈",
-    "薇恩",
+    "亚索",
     "蕾欧娜",
-    "阿利斯塔"
+    "阿利斯塔",
+    "费德提克",
+    "薇恩",
+    "凯尔"
    ],
    "earlyTraits": [],
    "componentPrefs": [
@@ -9928,7 +10489,7 @@
       "波比 命中前期底座"
      ],
      "missing": [
-      "后续关键牌：蔚、阿利斯塔、佐伊、乐芙兰",
+      "后续关键牌：费德提克、阿利斯塔、蕾欧娜、佐伊",
       "还没选择装备，路线暂按来牌判断",
       "还没选择符文，符文权重未生效"
      ],
@@ -10064,7 +10625,7 @@
       "疾射火炮 命中核心成装"
      ],
      "missing": [
-      "后续关键牌：蔚、阿利斯塔、佐伊、乐芙兰",
+      "后续关键牌：费德提克、阿利斯塔、蕾欧娜、佐伊",
       "还没选择符文，符文权重未生效"
      ],
      "penalties": [],
@@ -10148,7 +10709,7 @@
       "暴风之剑 命中散件优先级"
      ],
      "missing": [
-      "后续关键牌：拉莫斯、扎克、科加斯、伊泽瑞尔"
+      "后续关键牌：科加斯、扎克、拉莫斯、伊泽瑞尔"
      ],
      "penalties": [],
      "template": "情报特工怪兽卡莎4情报特工3怪兽"
@@ -10179,7 +10740,7 @@
       "暴风之剑 命中散件优先级"
      ],
      "missing": [
-      "后续关键牌：瑟庄妮、阿利斯塔、莎弥拉、希维尔"
+      "后续关键牌：费德提克、艾克、蕾欧娜、努努和威朗普"
      ],
      "penalties": [],
      "template": "95秘卫枪手3秘书卫士2福牛守护者"
@@ -10187,6 +10748,82 @@
    ]
   }
  ],
+ "assertions": {
+  "coreData": {
+   "officialChecked": [
+    {
+     "name": "超级机甲德莱文5战斗机甲3超级英雄2斗士",
+     "coreUnits": [
+      "瑟提",
+      "墨菲特",
+      "蕾欧娜",
+      "孙悟空",
+      "贾克斯",
+      "德莱文",
+      "李青",
+      "厄加特",
+      "普朗克"
+     ]
+    },
+    {
+     "name": "怪兽厄运小姐8怪兽1精英战士",
+     "coreUnits": [
+      "拉莫斯",
+      "费德提克",
+      "科加斯",
+      "扎克",
+      "亚托克斯",
+      "厄运小姐",
+      "厄加特",
+      "奥瑞利安 · 索尔",
+      "维克兹"
+     ]
+    },
+    {
+     "name": "超英亚索6决斗大师3超级英雄3源计划激光特工",
+     "coreUnits": [
+      "李青",
+      "亚索",
+      "劫",
+      "墨菲特",
+      "瑟庄妮",
+      "菲奥娜",
+      "普朗克",
+      "薇恩",
+      "凯尔"
+     ]
+    },
+    {
+     "name": "超英艾希5激光特工3超级英雄2决斗大师",
+     "coreUnits": [
+      "普朗克",
+      "李青",
+      "雷克顿",
+      "墨菲特",
+      "莫德凯撒",
+      "亚索",
+      "瑟庄妮",
+      "艾希"
+     ]
+    },
+    {
+     "name": "灵能娑娜4灵能使3秘术2福牛2斗士",
+     "coreUnits": [
+      "布里茨",
+      "蕾欧娜",
+      "安妮",
+      "阿利斯塔",
+      "李青",
+      "艾克",
+      "迦娜",
+      "娑娜",
+      "乐芙兰"
+     ]
+    }
+   ],
+   "researchChecked": 7
+  }
+ },
  "assumptions": [
   "二阶段匹配器只根据你点击的信号重排路线，不读取游戏画面。",
   "路线模板来自官方早期阵容/散件优先级/符文推荐，并补充研究型过渡模板。",

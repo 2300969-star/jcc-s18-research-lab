@@ -37,8 +37,9 @@
     气象主播: ["气象", "气象主播"],
   };
   const CN_NUMBERS = { 一: 1, 二: 2, 两: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9 };
-  // 排序黏性：挑战者最终分必须领先当前推荐至少 5 分才易主，避免同分/微分来回跳。
-  const STICKY_LEAD_THRESHOLD = 5;
+  // 排序黏性：挑战者需领先 max(3分, 现任分*15%) 才易主；现任跌出前3则立即让位。
+  const STICKY_MIN_LEAD = 3;
+  const STICKY_RELATIVE_LEAD = 0.15;
   // 星级权重：二星/三星来牌比单张更能代表可执行路线，放大该棋子的命中分。
   const STAR_SCORE_MULTIPLIERS = { 1: 1, 2: 1.5, 3: 2.5 };
   // 三星核心视为关键里程碑完成，给追三/核心路线一个确定性成型加成。
@@ -165,14 +166,10 @@
 
   function isMilestoneUnit(t, name) {
     if (!(t.coreUnits || []).includes(name)) return false;
+    if ((t.carryUnits || []).includes(name)) return true;
     const board = (t.board || []).find(x => x && x.name === name);
     const role = board && (board.role || "");
-    const text = [
-      t.name, t.family, t.goal,
-      t.actions && t.actions.checkpoint,
-      t.actions && t.actions.item,
-    ].filter(Boolean).join(" ");
-    return Boolean(board && board.carry) || /主C|核心|主坦|追三|三星/.test(role + text) || isRerollRoute(t);
+    return Boolean(board && board.carry) || /主C/.test(role);
   }
 
   function scoreTemplate(t, selected, weights) {
@@ -318,14 +315,13 @@
     return map;
   }
 
-  function carryUnits(t) {
-    return uniq([
-      ...(t.board || []).filter(x => x && x.carry).map(x => x.name),
-      ...(t.coreUnits || []).slice(0, 2),
-    ]).filter(Boolean);
+  function reachabilityUnits(t) {
+    return uniq(t.coreUnits || []).filter(Boolean);
   }
 
   function targetCopiesFor(t, name, cost) {
+    const fixed = (t.starTargets || []).find(x => x && x.name === name);
+    if (fixed && Number(fixed.targetCopies) > 0) return Number(fixed.targetCopies);
     if (isRerollRoute(t) && cost <= 3 && isMilestoneUnit(t, name)) return 9;
     if (cost >= 4 && isMilestoneUnit(t, name)) return 3;
     return 1;
@@ -359,7 +355,7 @@
 
   function reachabilityForTemplate(t, selected, opts) {
     if (!opts || !opts.oddsData) return null;
-    const targets = carryUnits(t).map(name => {
+    const targets = reachabilityUnits(t).map(name => {
       const cost = unitPrice(name, opts);
       return expectedCostForUnit(name, targetCopiesFor(t, name, cost), selected, opts);
     }).filter(x => x.need > 0);
@@ -367,7 +363,7 @@
     const coefficient = clamp(1 - expectedGold / REACHABILITY_GOLD_CAP, REACHABILITY_MIN, 1);
     const level = clamp(Number(selected.level) || DEFAULT_LEVEL, 4, 9);
     const summary = targets.length
-      ? targets.slice(0, 2).map(x => `缺${x.name}${x.need}张`).join("、") + `，约${Math.round(expectedGold)}金`
+      ? targets.map(x => `缺${x.name}${x.need}张约${Math.round(x.expectedGold)}金`).join("、") + `；合计约${Math.round(expectedGold)}金`
       : "核心已见，约0金";
     return {
       level,
@@ -393,6 +389,10 @@
     return Number.isFinite(Number(row.finalScore)) ? Number(row.finalScore) : Number(row.score);
   }
 
+  function stickyThreshold(current) {
+    return Math.max(STICKY_MIN_LEAD, Math.ceil(rowSortScore(current) * STICKY_RELATIVE_LEAD));
+  }
+
   function applySticky(rows, opts) {
     if (!opts || !opts.stickyTopId || !rows.length) return rows;
     const currentId = opts.stickyTopId;
@@ -404,24 +404,33 @@
     const currentIndex = rows.findIndex(r => rowId(r) === currentId);
     if (currentIndex < 0) return rows;
     const current = rows[currentIndex];
+    if (currentIndex > 2) {
+      challenger.sticky = {
+        state: "dropped",
+        previous: current.template.name,
+        text: `${current.template.name}跌出前3，立即让位`,
+      };
+      return rows;
+    }
     const gap = rowSortScore(challenger) - rowSortScore(current);
-    if (gap < STICKY_LEAD_THRESHOLD) {
+    const threshold = stickyThreshold(current);
+    if (gap < threshold) {
       rows.splice(currentIndex, 1);
       rows.unshift(current);
       current.sticky = {
         state: "held",
         challenger: challenger.template.name,
         gap,
-        threshold: STICKY_LEAD_THRESHOLD,
-        text: `${challenger.template.name}领先${gap}分，未到${STICKY_LEAD_THRESHOLD}分阈值，维持现推荐`,
+        threshold,
+        text: `${challenger.template.name}领先${gap}分，未到${threshold}分阈值，维持现推荐`,
       };
     } else {
       challenger.sticky = {
         state: "switched",
         previous: current.template.name,
         gap,
-        threshold: STICKY_LEAD_THRESHOLD,
-        text: `${challenger.template.name}领先${gap}分，达到${STICKY_LEAD_THRESHOLD}分阈值，允许易主`,
+        threshold,
+        text: `${challenger.template.name}领先${gap}分，达到${threshold}分阈值，允许易主`,
       };
     }
     return rows;
@@ -554,7 +563,7 @@
       if (miss.length) {
         const first = miss[0];
         const ideal = first.cost <= 1 ? 5 : first.cost === 2 ? 6 : first.cost === 3 ? 7 : first.cost === 4 ? 8 : 9;
-        if (top.reachability.level < ideal && first.cost >= 4) lines.push(`缺口全是${first.cost}费，建议先拉${ideal}再D`);
+        if (top.reachability.level < ideal && first.cost >= 4) lines.push(`主要缺${first.cost}费核心，建议先拉${ideal}再D`);
         else lines.push(`${top.reachability.level}级${first.cost}费${first.oddsPct}%，适合现在追${first.name}`);
       } else {
         lines.push("核心已见，先补质量和关键装备");
@@ -566,13 +575,54 @@
     return uniq(lines).slice(0, 3);
   }
 
-  return {
+  function assert(cond, msg) {
+    if (!cond) throw new Error(msg);
+  }
+
+  function runTests() {
+    const odds = {
+      shopOdds: { 6: [25, 40, 30, 5, 0], 8: [18, 25, 32, 22, 3] },
+      unitCounts: { 1: 10, 2: 10, 3: 10, 4: 10, 5: 10 },
+      poolCopies: { 1: 29, 2: 22, 3: 18, 4: 12, 5: 10 },
+    };
+    const unitPrices = { A: 1, B: 2, C: 3, D: 4 };
+    const fullCore = [{ id: "full", name: "全集core", quality: "S", coreUnits: ["A", "B", "C"], earlyUnits: [], midUnits: [], actions: {} }];
+    const selected = selectedFromSignals([{ kind: "units", value: "A" }]);
+    selected.level = 6;
+    const full = rank(fullCore, selected, fallbackWeights, 1, { oddsData: odds, unitPrices })[0];
+    assert(full.reachability.missing.length === 2, "可达性应按core全集计算缺口");
+    assert(full.reachability.summary.includes("缺B1张") && full.reachability.summary.includes("缺C1张"), "缺口摘要应逐条列出core缺口");
+
+    const stickyTemplates = [
+      { id: "old", name: "旧路线", quality: "S", coreUnits: [], earlyUnits: [], midUnits: [], completedPrefs: [], componentPrefs: [], augmentPrefs: [], augmentCats: [], actions: {} },
+      { id: "new", name: "新路线", quality: "S", coreUnits: [], earlyUnits: [], midUnits: [], completedPrefs: ["X"], componentPrefs: [], augmentPrefs: [], augmentCats: [], actions: {} },
+    ];
+    const baseWeights = { ...fallbackWeights, baseS: 100, coreItem: 14, earlyUnit: 0, midUnit: 0, coreUnit: 0, augment: 0, augmentSignal: 0 };
+    let held = rank(stickyTemplates, { items: ["X"], units: [], augments: [], augmentCats: [] }, baseWeights, 2, { previousOrder: ["old", "new"], stickyTopId: "old" });
+    assert(rowId(held[0]) === "old", "挑战者未达到相对阈值时应维持旧#1");
+    const switchWeights = { ...baseWeights, coreItem: 15 };
+    let switched = rank(stickyTemplates, { items: ["X"], units: [], augments: [], augmentCats: [] }, switchWeights, 2, { previousOrder: ["old", "new"], stickyTopId: "old" });
+    assert(rowId(switched[0]) === "new", "挑战者达到相对阈值时应易主");
+
+    const dropTemplates = [
+      { id: "n1", name: "新1", quality: "S", completedPrefs: ["A"], coreUnits: [], earlyUnits: [], midUnits: [], actions: {} },
+      { id: "n2", name: "新2", quality: "S", completedPrefs: ["B"], coreUnits: [], earlyUnits: [], midUnits: [], actions: {} },
+      { id: "n3", name: "新3", quality: "S", completedPrefs: ["C"], coreUnits: [], earlyUnits: [], midUnits: [], actions: {} },
+      { id: "old", name: "旧", quality: "S", coreUnits: [], earlyUnits: [], midUnits: [], actions: {} },
+    ];
+    const dropped = rank(dropTemplates, { items: ["A", "B", "C"], units: [], augments: [], augmentCats: [] }, { ...fallbackWeights, baseS: 100, coreItem: 10 }, 4, { previousOrder: ["old", "n1", "n2", "n3"], stickyTopId: "old" });
+    assert(rowId(dropped[0]) !== "old", "旧#1跌出前3时应立即让位");
+    console.log("matcher-core assertions passed");
+  }
+
+  const api = {
     COMPONENTS,
     ATTACK,
     AP,
     TANK,
     fallbackWeights,
-    STICKY_LEAD_THRESHOLD,
+    STICKY_MIN_LEAD,
+    STICKY_RELATIVE_LEAD,
     STAR_SCORE_MULTIPLIERS,
     STAR_MILESTONE_BONUS,
     REACHABILITY_GOLD_CAP,
@@ -588,6 +638,9 @@
     activeTraitsForTemplate,
     parseTraitsInText,
     normalizeSelectedUnits,
+    runTests,
     escText,
   };
+  if (typeof module === "object" && module.exports && require.main === module) runTests();
+  return api;
 });
