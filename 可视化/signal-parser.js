@@ -82,7 +82,7 @@
     鬼索的狂暴之刃: ["羊刀", "鬼索", "鬼锁", "养刀", "鬼索刀"],
     疾射火炮: ["火炮", "双火炮"],
     泰坦的坚决: ["泰坦", "泰坦甲"],
-    卢安娜的飓风: ["飓风"],
+    卢安娜的飓风: ["飓风", "大风"],
     最后的轻语: ["轻语", "破甲", "破甲弓"],
     锐利之刃: ["杀人剑"],
     汲取剑: ["饮血", "饮血剑"],
@@ -313,8 +313,10 @@
     for (let len = max; len >= 2; len--) {
       const piece = text.slice(i, i + len);
       const py = toPinyin(piece);
+      // 符文禁止 near 模糊入池：口语描述词（如"双法核"）会被错配成符文名（双排），
+      // 且符文信号直接改变打分；英雄/装备保留 near（反甲/石像鬼/帽子等依赖它）。
       const nearRows = entries
-        .filter(e => !kindFilter || e.kind === kindFilter)
+        .filter(e => (!kindFilter || e.kind === kindFilter) && e.kind !== "augments")
         .map(e => ({ e, d: editDistance(py, e.py) }))
         .filter(x => x.d <= 1)
         .sort((a, b) => a.d - b.d || b.e.norm.length - a.e.norm.length);
@@ -346,7 +348,16 @@
       }
       unknown = "";
     };
+    const CONNECTORS = ["一个", "这个", "那个", "个", "把", "件", "张"];
     while (i < clean.length) {
+      // 量词/连接字黏在词头会挡住识别（"拿了个大风"剥掉填充词后剩"个大风"）：
+      // 若跳过连接字后紧跟可识别词，则消耗连接字
+      const conn = CONNECTORS.find(c => clean.startsWith(c, i));
+      if (conn && findMatchAt(clean, i + conn.length, kindFilter)) {
+        flush();
+        i += conn.length;
+        continue;
+      }
       const hit = findMatchAt(clean, i, kindFilter);
       if (hit) {
         flush();
