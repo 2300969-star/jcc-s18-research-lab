@@ -1079,7 +1079,7 @@ function renderStage2Matcher() {
     mk("h2", null, "#" + (idx + 1) + " " + t.name, head);
     const x = mk("button", "closeX", "✕", head);
     x.addEventListener("click", () => dlg.close());
-    mk("div", "dlgMeta", `${t.family} ｜ ${t.goal} ｜ ${r.score}分 ｜ 信心 ${confidence(r.score)}`, body);
+    mk("div", "dlgMeta", `${t.family} ｜ ${t.goal} ｜ ${r.stageStrength}分 ｜ 信心 ${confidence(r.stageStrength)}`, body);
 
     const traitBox = mk("div", "traitChips", null, body);
     (t.earlyTraits || []).forEach(x => mk("span", "chip", x, traitBox));
@@ -1185,7 +1185,7 @@ function renderStage2Matcher() {
     }
     const selected = selectedObj();
     const ranked = MATCHER.templates.map(t => ({ template: t, ...scoreTemplate(t, selected) }))
-      .sort((a, b) => b.score - a.score)
+      .sort((a, b) => b.stageStrength - a.stageStrength)
       .slice(0, 5);
     writeOutput(buildOutput(ranked));
     box.innerHTML = ranked.map((r, i) => {
@@ -1196,10 +1196,10 @@ function renderStage2Matcher() {
         <div class="s2Head">
           <div>
             <div class="s2Title">#${i + 1} ${escText(t.name)}</div>
-            <div class="s2Meta">${escText(t.family)} ｜ ${escText(t.goal)} ｜ 信心 ${confidence(r.score)}</div>
+            <div class="s2Meta">${escText(t.family)} ｜ ${escText(t.goal)} ｜ 信心 ${confidence(r.stageStrength)}</div>
             <div class="s2OpenHint">点击查看实际阵容 / 路线详情</div>
           </div>
-          <div class="s2Score">${r.score}分</div>
+          <div class="s2Score">${r.stageStrength}分</div>
         </div>
         <div>${(t.earlyTraits || []).slice(0, 5).map(x => `<span class="chip">${escText(x)}</span>`).join("")}</div>
         <div class="s2Route"><b>路线：</b>${escText((t.route || []).join(" -> "))}</div>

@@ -56,9 +56,9 @@ button, input { font:inherit; }
 .routeView, .augView { position:relative; min-width:0; min-height:0; overflow:hidden; border:1px solid var(--border); border-radius:16px; background:var(--surface); padding:20px; display:grid; grid-template-rows:auto auto 1fr; gap:12px; }
 .rankTop { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; align-items:start; }
 .routeName { font-size:32px; font-weight:950; line-height:1.18; overflow-wrap:anywhere; }
-.score { font-size:34px; font-weight:950; color:var(--s2); white-space:nowrap; }
+.routePoints { font-size:34px; font-weight:950; color:var(--s2); white-space:nowrap; }
 .subRank { color:var(--ink2); font-size:17px; overflow-wrap:anywhere; }
-.scoreBreak, .stickyNote { color:var(--ink2); font-size:16px; overflow-wrap:anywhere; margin-top:4px; }
+.strengthBreak, .stickyNote { color:var(--ink2); font-size:16px; overflow-wrap:anywhere; margin-top:4px; }
 .stickyNote { color:var(--muted); }
 .evidenceLine { color:var(--ink2); font-size:15px; overflow-wrap:anywhere; margin-top:4px; }
 .followBadge { display:inline-grid; place-items:center; margin-left:8px; padding:2px 8px; border-radius:999px; background:var(--s2); color:#fff; font-size:14px; font-weight:950; vertical-align:middle; }
@@ -303,7 +303,7 @@ function appendMatchLog(entry) {
     raw: entry.raw || "",
     fast: entry.fast || "-",
     ai: entry.ai || "-",
-    top: top ? `${top.name} ${top.score}分` : "-",
+    top: top ? `${top.name} ${top.finalScore}分` : "-",
   });
   writeMatchLog(rows);
   renderLog();
@@ -508,7 +508,7 @@ function routeId(row) {
   return row && row.template && (row.template.id || row.template.name);
 }
 function rowScore(row) {
-  return Number.isFinite(Number(row && row.finalScore)) ? row.finalScore : (row ? row.score : 0);
+  return Number.isFinite(Number(row && row.finalScore)) ? row.finalScore : (row ? row.stageStrength : 0);
 }
 function reachHtml(row) {
   const reach = row && row.reachability;
@@ -548,11 +548,11 @@ function renderRoute() {
   if (lastTop && lastTop !== nextFollow.template.name) showBanner(`路线切换 ${lastTop} → ${nextFollow.template.name}`);
   lastTop = nextFollow.template.name;
   lastTopId = routeId(nextFollow);
-  lastRenderedTop = { name: t.name, score: topScore };
+  lastRenderedTop = { name: t.name, finalScore: topScore };
   const delta = Math.max(0, second ? topScore - secondScore : topScore);
   const actions = MatcherCore.actionLines(t, selectedObj(), top);
   const reach = top.reachability;
-  const breakLine = reach ? `强度${top.score}分 × 可达${reach.coefficient} = ${topScore}分` : `强度${top.score}分`;
+  const breakLine = reach ? `强度${top.stageStrength}分 × 可达${reach.coefficient} = ${topScore}分` : `强度${top.stageStrength}分`;
   const evidenceLine = (top.evidence || []).slice(0, 3).join("；");
   const stickyLine = top.followAdvice || (following && routeId(following) !== topId ? `建议继续跟 ${following.template.name}（挑战者领先不足）` : "跟随：当前最高分路线");
   const followBadge = top.following ? `<span class="followBadge">跟随中</span>` : "";
@@ -563,10 +563,10 @@ function renderRoute() {
     <div>
       <div class="rankTop">
         <div class="routeName">#1 ${esc(t.name)}${followBadge}</div>
-        <div class="score">${topScore}分</div>
+        <div class="routePoints">${topScore}分</div>
       </div>
       <div class="subRank">领先#2 ${delta}分 ｜ #2 ${second ? esc(second.template.name) + " " + secondScore + "分" : "-"} ｜ #3 ${third ? esc(third.template.name) + " " + thirdScore + "分" : "-"}</div>
-      <div class="scoreBreak">${esc(breakLine)}</div>
+      <div class="strengthBreak">${esc(breakLine)}</div>
       ${evidenceLine ? `<div class="evidenceLine">证据：${esc(evidenceLine)}</div>` : ""}
       ${reachHtml(top)}
       <div class="stickyNote">${esc(stickyLine)}</div>
@@ -590,17 +590,18 @@ function augOptionInfo(sig) {
   const hot = (MODEL.augRank || []).find(a => a.name === name);
   const option = ((STAGE2_MATCHER.options.augmentSearch || STAGE2_MATCHER.options.augments) || []).find(x => x.name === name) || {};
   const hero = (option.cats || []).includes("英雄强化");
-  const score = routeHits.length * 20 + (hot ? hot.score * 5 : 0) + (hero ? 12 : 0);
+  const hotScore = hot ? hot["score"] : 0;
+  const score = routeHits.length * 20 + (hotScore ? hotScore * 5 : 0) + (hero ? 12 : 0);
   let verdict = "通用符文，按当前路线权重判断。";
   if (routeHits.length) verdict = `命中 ${routeHits.slice(0, 2).map(t => t.name).join("、")} 推荐位。`;
   if (hero) verdict = "英雄强化，可能改变阵容方向。";
-  if (hot && !routeHits.length) verdict = `通用热度 ${hot.score} 分，适合保底。`;
-  return { name, routeHits, hot, hero, score: Math.round(score), verdict };
+  if (hot && !routeHits.length) verdict = `通用热度 ${hotScore} 分，适合保底。`;
+  return { name, routeHits, hot, hero, augScore: Math.round(score), verdict };
 }
 function renderAugTriple() {
   $("routeView").classList.add("hidden");
   $("augView").classList.remove("hidden");
-  const rows = (augChoices || []).map(augOptionInfo).sort((a, b) => b.score - a.score);
+  const rows = (augChoices || []).map(augOptionInfo).sort((a, b) => b.augScore - a.augScore);
   $("augView").innerHTML = `
     <div>
       <div class="routeName">符文三选一</div>
@@ -610,7 +611,7 @@ function renderAugTriple() {
       <button class="augCard ${i === 0 ? "best" : ""}" data-name="${esc(r.name)}">
         <div class="augName">${esc(r.name)}</div>
         <div class="augVerdict">${esc(r.verdict)}</div>
-        <div class="augScore">${r.score}分</div>
+        <div class="augScore">${r.augScore}分</div>
       </button>`).join("")}</div>
     <div></div>
     ${unheardHtml()}

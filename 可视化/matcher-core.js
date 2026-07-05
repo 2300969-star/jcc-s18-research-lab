@@ -412,7 +412,7 @@
     if (traits.length) shares.trait = signalTotal > 0 ? Math.round((breakdown.trait || 0) / signalTotal * 100) : 0;
 
     return {
-      score: Math.max(0, Math.round(score)),
+      stageStrength: Math.max(0, Math.round(score)),
       breakdown,
       shares,
       evidence: uniq(evidence).slice(0, 6),
@@ -531,7 +531,7 @@
   }
 
   function rowSortScore(row) {
-    return Number.isFinite(Number(row.finalScore)) ? Number(row.finalScore) : Number(row.score);
+    return Number.isFinite(Number(row.finalScore)) ? Number(row.finalScore) : Number(row.stageStrength);
   }
 
   function stickyThreshold(current) {
@@ -584,15 +584,17 @@
 
   function rank(templates, selected, weights, limit, opts) {
     const rows = (templates || []).map(t => {
-      const base = { template: t, ...scoreTemplate(t, selected, weights) };
+      const stageResult = scoreTemplate(t, selected, weights);
+      const base = { template: t, ...stageResult };
+      base.finalScore = base.stageStrength;
       const reachability = reachabilityForTemplate(t, selected, opts);
       if (reachability) {
         base.reachability = reachability;
-        base.finalScore = Math.max(0, Math.round(base.score * reachability.coefficient));
+        base.finalScore = Math.max(0, Math.round(base.stageStrength * reachability.coefficient));
       }
       return base;
     });
-    if (!opts) return rows.sort((a, b) => b.score - a.score).slice(0, limit || 5);
+    if (!opts) return rows.sort((a, b) => b.stageStrength - a.stageStrength).slice(0, limit || 5);
     const previousRank = new Map((opts.previousOrder || []).map((id, i) => [id, i]));
     rows.sort((a, b) => {
       const delta = rowSortScore(b) - rowSortScore(a);
@@ -633,7 +635,7 @@
       `信号：${signals}`,
       `首选：${t.name}（${topScore}分，信心${confidence(topScore)}）`,
       `权重：英雄${top.shares?.hero || 0}% / 装备${top.shares?.item || 0}% / 符文${top.shares?.augment || 0}%${top.breakdown?.traitSignals ? ` / 羁绊${top.shares?.trait || 0}%` : ""}`,
-      top.reachability ? `拆分：强度${top.score}分 × 可达${top.reachability.coefficient}（${top.reachability.summary}）=${top.finalScore}分` : "",
+      top.reachability ? `拆分：强度${top.stageStrength}分 × 可达${top.reachability.coefficient}（${top.reachability.summary}）=${top.finalScore}分` : "",
       `路线：${(t.route || []).join(" -> ")}`,
       `留牌：${(t.actions.keep || []).slice(0, 8).join("、")}`,
       `装备：${t.actions.item || "-"}`,
@@ -740,6 +742,9 @@
     const selected = selectedFromSignals([{ kind: "units", value: "A" }]);
     selected.level = 8;
     const full = rank(fullCore, selected, fallbackWeights, 1, { oddsData: odds, unitPrices })[0];
+    assert(Object.prototype.hasOwnProperty.call(full, "stageStrength"), "rank行应包含stageStrength");
+    assert(Object.prototype.hasOwnProperty.call(full, "finalScore"), "rank行应包含finalScore");
+    assert(!Object.prototype.hasOwnProperty.call(full, "score"), "rank行不应再包含score字段");
     assert(full.reachability.missing.length === 2, "可达性应按core全集计算缺口");
     assert(full.reachability.summary.includes("缺B1张") && full.reachability.summary.includes("缺C1张"), "缺口摘要应逐条列出core缺口");
     assertNoBadNumbers(full.reachability.summary, "缺口摘要不应有坏数字");
@@ -778,7 +783,7 @@
     assert(rowId(dropped[0]) !== "old", "旧#1跌出前3时应立即让位");
     assert(!dropped.some(r => r.template.id === "old" && r.following), "旧#1跌出前3不应保留跟随徽章");
     for (let i = 1; i < dropped.length; i++) {
-      assert(rowSortScore(dropped[i - 1]) >= rowSortScore(dropped[i]), "rank结果必须按最终分单调降序");
+      assert(dropped[i - 1].finalScore >= dropped[i].finalScore, "rank结果finalScore必须单调非增");
     }
     console.log("matcher-core assertions passed");
   }
