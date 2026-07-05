@@ -54,6 +54,8 @@ button, input { font:inherit; }
 .drop { min-width:44px; padding:6px 12px; color:var(--s6); }
 .main { min-height:0; display:grid; grid-template-columns:minmax(0,1fr); }
 .routeView, .augView { position:relative; min-width:0; min-height:0; overflow:hidden; border:1px solid var(--border); border-radius:16px; background:var(--surface); padding:20px; display:grid; grid-template-rows:auto auto 1fr; gap:12px; }
+.routeView.clickable { cursor:pointer; }
+.routeView.clickable:focus-visible { outline:3px solid color-mix(in srgb, var(--s2) 70%, transparent); outline-offset:3px; }
 .rankTop { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; align-items:start; }
 .routeName { font-size:32px; font-weight:950; line-height:1.18; overflow-wrap:anywhere; }
 .routePoints { font-size:34px; font-weight:950; color:var(--s2); white-space:nowrap; }
@@ -65,6 +67,7 @@ button, input { font:inherit; }
 .followStrip { margin-top:6px; padding:7px 10px; border-radius:10px; border:1px solid color-mix(in srgb, var(--s2) 45%, var(--border)); color:var(--ink2); background:color-mix(in srgb, var(--surface) 88%, var(--s2) 12%); font-size:15px; overflow-wrap:anywhere; }
 .reachBox { color:var(--ink2); font-size:16px; line-height:1.45; margin-top:4px; overflow-wrap:anywhere; }
 .reachToggle { margin-left:8px; border:0; background:transparent; color:var(--s2); cursor:pointer; font-weight:900; padding:0; }
+.openHint { color:var(--s2); font-size:15px; font-weight:900; margin-top:4px; }
 .actions { display:grid; gap:10px; align-content:start; margin-top:6px; }
 .action { min-height:50px; border-left:5px solid var(--s2); background:color-mix(in srgb, var(--surface) 88%, var(--s2) 12%);
   border-radius:10px; padding:10px 14px; font-size:22px; font-weight:850; }
@@ -99,6 +102,30 @@ button, input { font:inherit; }
 .logEntry { border:1px solid var(--grid); border-radius:10px; padding:8px 10px; display:grid; gap:3px; }
 .logRaw { color:var(--ink); font-weight:850; }
 .logMeta { color:var(--muted); }
+dialog { border:1px solid var(--border); border-radius:16px; background:var(--surface); color:var(--ink);
+  width:min(860px,94vw); max-height:88vh; padding:22px 24px; margin:auto; overflow:auto; box-shadow:0 20px 56px rgba(0,0,0,.34); }
+dialog::backdrop { background:rgba(0,0,0,.55); }
+.detailHead { display:flex; align-items:flex-start; gap:10px; margin-bottom:8px; }
+.detailHead h2 { flex:1; font-size:24px; line-height:1.25; }
+.detailBadge { flex:0 0 auto; font-weight:900; font-size:13px; border-radius:8px; padding:3px 10px; color:#fff; background:var(--s2); }
+.detailMeta { color:var(--ink2); font-size:15px; margin-bottom:12px; }
+.closeX { background:none; border:0; color:var(--muted); font-size:26px; cursor:pointer; line-height:1; padding:0 6px; }
+.detailSection { font-size:15px; color:var(--muted); font-weight:900; margin:16px 0 7px; }
+.detailLine { color:var(--ink2); font-size:16px; line-height:1.55; margin-bottom:6px; overflow-wrap:anywhere; }
+.detailLine b { color:var(--ink); font-weight:900; }
+.stageGrid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.stageBox { border:1px solid var(--grid); border-radius:12px; padding:11px 12px; background:color-mix(in srgb, var(--surface) 92%, var(--s2) 8%); min-width:0; }
+.stageTitle { color:var(--muted); font-size:14px; font-weight:900; margin-bottom:6px; }
+.stageUnits { color:var(--ink); font-size:17px; font-weight:850; line-height:1.55; overflow-wrap:anywhere; }
+.board { display:flex; flex-direction:column; gap:5px; margin:10px 0 4px; overflow-x:auto; padding-bottom:4px; }
+.brow { display:flex; gap:5px; }
+.brow.off { margin-left:46px; }
+.cell { flex:0 0 86px; min-height:78px; border:1px solid var(--grid); border-radius:8px; padding:5px 6px; font-size:11px; background:var(--plane); }
+.cell.empty { border-style:dashed; opacity:.42; }
+.cell.carry { box-shadow:inset 0 0 0 2px var(--s2); }
+.cell .cn { font-weight:900; font-size:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.cell .cost { color:var(--muted); font-size:10.5px; }
+.cell .it { color:var(--ink2); font-size:10.5px; line-height:1.35; }
 .hidden { display:none !important; }
 @media (max-width: 900px) {
   .app { padding:10px; }
@@ -106,6 +133,7 @@ button, input { font:inherit; }
   .voice { font-size:21px; }
   .rankTop, .augCards { grid-template-columns:1fr; }
   .routeName { font-size:28px; }
+  .stageGrid { grid-template-columns:1fr; }
 }
 </style>
 </head>
@@ -156,6 +184,7 @@ button, input { font:inherit; }
   </div>
   <div id="logBody" class="logBody"></div>
 </section>
+<dialog id="routeDialog"><div id="routeDialogBody"></div></dialog>
 
 <script src="data.js?v=match-20260706c"></script>
 <script src="stage2-matcher-data.js?v=stage2-20260705b"></script>
@@ -190,6 +219,7 @@ let lastTop = "";
 let lastTopId = "";
 let previousOrder = [];
 let lastRenderedTop = null;
+let lastDetailRow = null;
 let expandedReachId = "";
 let bannerTimer = null;
 let llmSeq = 0;
@@ -510,6 +540,92 @@ function routeId(row) {
 function rowScore(row) {
   return Number.isFinite(Number(row && row.finalScore)) ? row.finalScore : (row ? row.stageStrength : 0);
 }
+function mk(tag, cls, text, parent) {
+  const el = document.createElement(tag);
+  if (cls) el.className = cls;
+  if (text != null) el.textContent = text;
+  if (parent) parent.appendChild(el);
+  return el;
+}
+function unitsText(rows) {
+  return (rows || []).length ? rows.join("、") : "-";
+}
+function openRouteDetail(row) {
+  if (!row || !row.template) return;
+  const t = row.template;
+  const body = $("routeDialogBody");
+  body.textContent = "";
+  const head = mk("div", "detailHead", null, body);
+  mk("span", "detailBadge", t.source === "official" ? `官方${t.quality || ""}` : "研究路线", head);
+  mk("h2", null, t.name, head);
+  const close = mk("button", "closeX", "×", head);
+  close.type = "button";
+  close.addEventListener("click", () => $("routeDialog").close());
+  mk("div", "detailMeta", `${t.family || "-"} ｜ ${t.goal || "-"} ｜ 强度${row.stageStrength}分 ｜ 最终${rowScore(row)}分`, body);
+
+  mk("div", "detailSection", "前中后期阵容", body);
+  const stageGrid = mk("div", "stageGrid", null, body);
+  [
+    ["前期", "二阶段可拿", t.earlyUnits || []],
+    ["中期", "三/四阶段承接", t.midUnits || []],
+    ["后期", "终局核心", t.coreUnits || []],
+  ].forEach(([title, sub, units]) => {
+    const box = mk("div", "stageBox", null, stageGrid);
+    mk("div", "stageTitle", `${title} · ${sub}`, box);
+    mk("div", "stageUnits", unitsText(units), box);
+  });
+
+  if ((t.board || []).length) {
+    mk("div", "detailSection", "站位草图", body);
+    if (t.boardNote) mk("div", "detailLine", t.boardNote, body);
+    const board = mk("div", "board", null, body);
+    for (let r = 1; r <= 4; r++) {
+      const brow = mk("div", "brow" + (r % 2 === 0 ? " off" : ""), null, board);
+      for (let c = 1; c <= 7; c++) {
+        const u = (t.board || []).find(x => x.row === r && x.col === c);
+        const cell = mk("div", "cell" + (u ? (u.carry ? " carry" : "") : " empty"), null, brow);
+        if (!u) continue;
+        cell.style.borderTop = "3px solid " + (u.carry ? "var(--s2)" : "var(--grid)");
+        mk("div", "cn", (u.carry ? "主C " : "") + u.name, cell);
+        mk("div", "cost", u.role || "-", cell);
+        (u.items || []).forEach(it => mk("div", "it", it, cell));
+      }
+    }
+  }
+
+  if (t.route && t.route.length) {
+    mk("div", "detailSection", "路线", body);
+    mk("div", "detailLine", t.route.join(" -> "), body);
+  }
+  mk("div", "detailSection", "装备 / 符文", body);
+  mk("div", "detailLine", "装备优先：" + ((t.completedPrefs || []).slice(0, 8).join("、") || "-"), body);
+  mk("div", "detailLine", "散件优先：" + ((t.componentPrefs || []).slice(0, 8).join("、") || "-"), body);
+  mk("div", "detailLine", "符文优先：" + ((t.augmentPrefs || []).slice(0, 8).join("、") || "-"), body);
+  if ((t.monsterPrefs || []).length) mk("div", "detailLine", "怪兽：" + t.monsterPrefs.slice(0, 6).join("、"), body);
+
+  mk("div", "detailSection", "当前命中", body);
+  mk("div", "detailLine", (row.evidence || []).length ? row.evidence.join("；") : "当前命中较少，更多按基础强度排序。", body);
+  const warns = [...(row.penalties || []), ...(row.missing || [])];
+  if (warns.length) mk("div", "detailLine", "缺口/扣分：" + warns.join("；"), body);
+
+  mk("div", "detailSection", "现在怎么打", body);
+  mk("div", "detailLine", "留：" + ((t.actions && t.actions.keep || []).slice(0, 10).join("、") || "-"), body);
+  mk("div", "detailLine", "装：" + ((t.actions && t.actions.item) || "-"), body);
+  mk("div", "detailLine", "判：" + ((t.actions && t.actions.checkpoint) || "-"), body);
+  mk("div", "detailLine", "止：" + ((t.actions && t.actions.stopLoss) || "-"), body);
+
+  if (t.officialText) {
+    mk("div", "detailSection", "数据文本依据", body);
+    if (t.officialText.early) mk("div", "detailLine", "过渡：" + t.officialText.early, body);
+    if (t.officialText.equipment) mk("div", "detailLine", "装备：" + t.officialText.equipment, body);
+    if (t.officialText.hex) mk("div", "detailLine", "符文：" + t.officialText.hex, body);
+    if (t.officialText.enemy) mk("div", "detailLine", "风险：" + t.officialText.enemy, body);
+  }
+
+  const dialog = $("routeDialog");
+  if (dialog.open) dialog.close();
+  dialog.showModal();
+}
 function reachHtml(row) {
   const reach = row && row.reachability;
   if (!reach) return "";
@@ -531,10 +647,14 @@ function renderRoute() {
   const box = $("routeView");
   const ranked = rankedRoutes();
   if (!signals.length || !ranked.length) {
+    box.classList.remove("clickable");
+    box.removeAttribute("tabindex");
+    box.removeAttribute("role");
     box.innerHTML = `<div class="empty">说出这把看到的棋子、装备、符文。<br>例如：安妮波比养刀，或者符文无情连打DD街区团队建设。</div>${unheardHtml()}`;
     lastTop = "";
     lastTopId = "";
     lastRenderedTop = null;
+    lastDetailRow = null;
     previousOrder = ranked.map(r => r.template.id || r.template.name);
     return;
   }
@@ -549,6 +669,7 @@ function renderRoute() {
   lastTop = nextFollow.template.name;
   lastTopId = routeId(nextFollow);
   lastRenderedTop = { name: t.name, finalScore: topScore };
+  lastDetailRow = top;
   const delta = Math.max(0, second ? topScore - secondScore : topScore);
   const actions = MatcherCore.actionLines(t, selectedObj(), top);
   const reach = top.reachability;
@@ -566,6 +687,7 @@ function renderRoute() {
         <div class="routePoints">${topScore}分</div>
       </div>
       <div class="subRank">领先#2 ${delta}分 ｜ #2 ${second ? esc(second.template.name) + " " + secondScore + "分" : "-"} ｜ #3 ${third ? esc(third.template.name) + " " + thirdScore + "分" : "-"}</div>
+      <div class="openHint">点击查看前期 / 中期 / 后期阵容</div>
       <div class="strengthBreak">${esc(breakLine)}</div>
       ${evidenceLine ? `<div class="evidenceLine">证据：${esc(evidenceLine)}</div>` : ""}
       ${reachHtml(top)}
@@ -582,6 +704,10 @@ function renderRoute() {
     expandedReachId = expandedReachId === id ? "" : id;
     render();
   }));
+  box.classList.add("clickable");
+  box.tabIndex = 0;
+  box.setAttribute("role", "button");
+  box.setAttribute("aria-label", `查看 ${t.name} 前中后期阵容`);
   previousOrder = ranked.map(r => r.template.id || r.template.name);
 }
 function augOptionInfo(sig) {
@@ -650,6 +776,18 @@ $("voiceInput").addEventListener("input", () => {
   inputTimer = setTimeout(parseInput, 400);
 });
 $("voiceInput").addEventListener("blur", () => setTimeout(focusInput, 1000));
+$("routeView").addEventListener("click", ev => {
+  if (ev.target.closest("button,a,input,textarea,select")) return;
+  openRouteDetail(lastDetailRow);
+});
+$("routeView").addEventListener("keydown", ev => {
+  if (ev.key !== "Enter" && ev.key !== " ") return;
+  ev.preventDefault();
+  openRouteDetail(lastDetailRow);
+});
+$("routeDialog").addEventListener("click", ev => {
+  if (ev.target === $("routeDialog")) $("routeDialog").close();
+});
 $("newGame").addEventListener("click", clearGame);
 $("themeBtn").addEventListener("click", () => {
   const cur = document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
