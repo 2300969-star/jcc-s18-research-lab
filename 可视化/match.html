@@ -566,6 +566,29 @@ function isFrontUnit(name) {
 function isMeleeCarry(name) {
   return new Set(["贾克斯", "孙悟空", "菲奥娜", "亚索", "泰隆", "德莱文", "佛耶戈", "雷克顿", "劫"]).has(name);
 }
+function profileUnit(t, name) {
+  return ((t.routeProfile && t.routeProfile.units) || []).find(x => x.name === name) || null;
+}
+function profileMainCarryItems(t) {
+  return (((t.routeProfile && t.routeProfile.mainCarry) || {}).items || []).filter(Boolean);
+}
+function profileRoleItems(t, role) {
+  return uniqueRows(((t.routeProfile && t.routeProfile.items) || [])
+    .filter(x => x.role === role)
+    .map(x => x.name));
+}
+function equipmentLines(t) {
+  if (!t.routeProfile) return ["装备优先：" + ((t.completedPrefs || []).slice(0, 8).join("、") || "-")];
+  const rows = [];
+  const main = profileMainCarryItems(t);
+  const sub = profileRoleItems(t, "subCarry");
+  const front = profileRoleItems(t, "frontline");
+  if (main.length) rows.push("主C装：" + main.join("、"));
+  if (sub.length) rows.push("副C装：" + sub.slice(0, 6).join("、"));
+  if (front.length) rows.push("前排装：" + front.slice(0, 6).join("、"));
+  if (!rows.length) rows.push("装备优先：" + ((t.completedPrefs || []).slice(0, 8).join("、") || "-"));
+  return rows;
+}
 function inferBoard(t) {
   const carrySet = new Set([...(t.carryUnits || [])]);
   const units = uniqueRows([...(t.coreUnits || []), ...(t.midUnits || []), ...(t.earlyUnits || [])]).slice(0, 9);
@@ -579,7 +602,10 @@ function inferBoard(t) {
         const key = `${r}-${col}`;
         if (occupied.has(key)) continue;
         occupied.add(key);
-        const itemSeed = carry ? (t.completedPrefs || []).slice(0, 3) : [];
+        const prof = profileUnit(t, name);
+        const itemSeed = carry
+          ? (profileMainCarryItems(t).length ? profileMainCarryItems(t) : (t.completedPrefs || []).slice(0, 3))
+          : ((prof && prof.items) || []).slice(0, 3);
         rows.push({ name, row: r, col, role, carry, items: itemSeed });
         return;
       }
@@ -663,7 +689,7 @@ function openRouteDetail(row) {
   }
   renderPrimePlan(body, t);
   mk("div", "detailSection", "装备 / 符文", body);
-  mk("div", "detailLine", "装备优先：" + ((t.completedPrefs || []).slice(0, 8).join("、") || "-"), body);
+  equipmentLines(t).forEach(line => mk("div", "detailLine", line, body));
   mk("div", "detailLine", "散件优先：" + ((t.componentPrefs || []).slice(0, 8).join("、") || "-"), body);
   mk("div", "detailLine", "符文优先：" + ((t.augmentPrefs || []).slice(0, 8).join("、") || "-"), body);
   if ((t.monsterPrefs || []).length) mk("div", "detailLine", "怪兽：" + t.monsterPrefs.slice(0, 6).join("、"), body);
