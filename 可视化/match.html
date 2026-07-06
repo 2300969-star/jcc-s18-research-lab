@@ -202,6 +202,7 @@ const MATCH_LOG_HISTORY_KEY = "jcc-match-log-history";
 const $ = id => document.getElementById(id);
 const esc = MatcherCore.escText;
 const UNIT_PRICES = Object.fromEntries((STAGE2_MATCHER.options.unitSearch || []).map(x => [x.name, x.price]));
+const UNIT_TRAITS = Object.fromEntries((STAGE2_MATCHER.options.unitSearch || []).map(x => [x.name, x.traits || []]));
 const DEFAULT_LEVEL = MatcherCore.DEFAULT_LEVEL || 6;
 const MIN_LEVEL = MatcherCore.MIN_LEVEL || 1;
 const MAX_LEVEL = MatcherCore.MAX_LEVEL || 9;
@@ -450,6 +451,7 @@ function rankedRoutes() {
   return MatcherCore.rank(STAGE2_MATCHER.templates, selectedObj(), STAGE2_MATCHER.weights, 5, {
     oddsData: window.JCC_ODDS,
     unitPrices: UNIT_PRICES,
+    unitTraits: UNIT_TRAITS,
     previousOrder,
     stickyTopId: lastTopId,
   });
@@ -735,7 +737,7 @@ function renderRoute() {
   const delta = Math.max(0, second ? topScore - secondScore : topScore);
   const actions = MatcherCore.actionLines(t, selectedObj(), top);
   const reach = top.reachability;
-  const breakLine = reach ? `强度${top.stageStrength}分 × 可达${reach.coefficient} = ${topScore}分` : `强度${top.stageStrength}分`;
+  const breakLine = `已握资产${top.heldValue || 0}分 + 概率折现${top.futureValue || 0}分 = ${topScore}分`;
   const evidenceLine = (top.evidence || []).slice(0, 3).join("；");
   const stickyLine = top.followAdvice || (following && routeId(following) !== topId ? `建议继续跟 ${following.template.name}（挑战者领先不足）` : "跟随：当前最高分路线");
   const followBadge = top.following ? `<span class="followBadge">跟随中</span>` : "";

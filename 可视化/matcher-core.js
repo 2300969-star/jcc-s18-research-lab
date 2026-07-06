@@ -40,12 +40,6 @@
   // 排序黏性：挑战者需领先 max(3分, 现任分*15%) 才易主；现任跌出前3则立即让位。
   const STICKY_MIN_LEAD = 3;
   const STICKY_RELATIVE_LEAD = 0.15;
-  // 阶段感知：低等级优先保血和承接，高等级才把终局核心权重放大。
-  const STAGE_LEVEL_RULES = {
-    early: { maxLevel: 5, earlyUnit: 1.5, midUnit: 1, coreUnit: 0.6, component: 1.3 },
-    middle: { level: 6, earlyUnit: 1, midUnit: 1, coreUnit: 1, component: 1 },
-    late: { minLevel: 7, earlyUnit: 0.6, midUnit: 1, coreUnit: 1.4, component: 1 },
-  };
   // 散件方向纯度达到 2/3 时，给同方向主C路线 10% 确定性加成。
   const COMPONENT_DIRECTION_BONUS = 0.1;
   // primePlan 只给含战斗机甲实验结论的路线加命中证据；不影响无 primePlan 的路线。
@@ -54,31 +48,34 @@
   const STAR_SCORE_MULTIPLIERS = { 1: 1, 2: 1.5, 3: 2.5 };
   // 三星核心视为关键里程碑完成，给追三/核心路线一个确定性成型加成。
   const STAR_MILESTONE_BONUS = 18;
-  // 可达性：预计 D 牌成本 80 金以上视为最低可达，最低仍保留 20% 避免路线被彻底归零。
-  const REACHABILITY_GOLD_CAP = 80;
-  // 低等级只评估下一段承接牌，容忍度略高，避免把合法过渡线过早打死。
-  const LOW_STAGE_REACHABILITY_GOLD_CAP = 90;
-  const REACHABILITY_MIN = 0.2;
+  // 资产角色估值：角色判定来自 routeProfile，这里只集中放数值权重。
+  const FUTURE_VALUE_GOLD_CAP = 80;
+  const FUTURE_ITEM_VALUE_RATIO = 0.25;
   const MIN_LEVEL = 1;
   const MAX_LEVEL = 9;
   const DEFAULT_LEVEL = 6;
 
   const fallbackWeights = {
-    baseS: 18,
-    baseA: 10,
-    baseB: 4,
-    earlyUnit: 14,
-    midUnit: 10,
-    coreUnit: 7,
-    coreItem: 21,
-    component: 12,
-    looseComponent: 2,
-    augment: 24,
-    augmentSignal: 8,
+    baseS: 6,
+    baseA: 3,
+    baseB: 1,
+    mainCarryUnit: 60,
+    mainCarryItem: 30,
+    subCarryUnit: 24,
+    subCarryItem: 22,
+    frontlineUnit: 16,
+    frontlineItem: 16,
+    utilityUnit: 10,
+    routeItem: 12,
+    immediateCraftRatio: 0.8,
+    singleComponentRatio: 0.5,
+    traitAffinity: 7,
     trait: 18,
-    attackSynergy: 16,
-    conflictPenalty: 16,
-    tankPenalty: 5,
+    augment: 16,
+    augmentSignal: 6,
+    futureMainCarryUnit: 24,
+    futureCoreUnit: 10,
+    futureItem: 8,
   };
 
   const ITEM_RECIPES = {
@@ -209,55 +206,140 @@
     return star ? `${name}·${star}星` : name;
   }
 
-  function isRerollRoute(t) {
-    const text = [
-      t.name, t.family, t.goal, t.boardNote,
-      t.actions && t.actions.checkpoint,
-      t.actions && t.actions.stopLoss,
-      (t.route || []).join(" "),
-    ].filter(Boolean).join(" ");
-    return /追三|三星|慢D|慢d|赌|D牌|d牌/.test(text);
-  }
-
-  function isMilestoneUnit(t, name) {
-    if (!(t.coreUnits || []).includes(name)) return false;
-    if ((t.carryUnits || []).includes(name)) return true;
-    const board = (t.board || []).find(x => x && x.name === name);
-    const role = board && (board.role || "");
-    return Boolean(board && board.carry) || /主C/.test(role);
-  }
-
-  function stageMultipliers(level) {
-    const lv = Number(level) || DEFAULT_LEVEL;
-    if (lv <= STAGE_LEVEL_RULES.early.maxLevel) return STAGE_LEVEL_RULES.early;
-    if (lv >= STAGE_LEVEL_RULES.late.minLevel) return STAGE_LEVEL_RULES.late;
-    return STAGE_LEVEL_RULES.middle;
-  }
-
   function canonicalItem(name) {
     const raw = String(name || "").split("/")[0].trim();
     return ITEM_ALIASES[raw] || raw;
   }
 
+  function profile(t) {
+    return t.routeProfile || {
+      mainCarry: { name: (t.carryUnits || [])[0] || (t.coreUnits || [])[0], starTarget: 2, items: (t.completedPrefs || []).slice(0, 3) },
+      units: (t.coreUnits || []).map(name => ({ name, role: "utility", starTarget: 1, items: [], traits: [] })),
+      items: (t.completedPrefs || []).map(name => ({ name: canonicalItem(name), role: "route", holder: "", components: ITEM_RECIPES[canonicalItem(name)] || [] })),
+      activeTraits: [...activeTraitsForTemplate(t)].map(([name, count]) => ({ name, count, label: `${count}${name}` })),
+    };
+  }
+
+  function profileUnitMap(t) {
+    const map = new Map();
+    (profile(t).units || []).forEach(u => {
+      if (!u || !u.name) return;
+      map.set(u.name, u);
+    });
+    return map;
+  }
+
+  function profileItems(t) {
+    return (profile(t).items || []).map(item => ({
+      ...item,
+      name: canonicalItem(item.name),
+      components: item.components && item.components.length ? item.components : (ITEM_RECIPES[canonicalItem(item.name)] || []),
+    })).filter(x => x.name);
+  }
+
+  function activeTraitRows(t) {
+    const rows = (profile(t).activeTraits || []).filter(x => x && x.name && x.count);
+    if (rows.length) return rows;
+    return [...activeTraitsForTemplate(t)].map(([name, count]) => ({ name, count, label: `${count}${name}` }));
+  }
+
+  function activeTraitMap(t) {
+    const map = new Map();
+    activeTraitRows(t).forEach(x => map.set(x.name, Math.max(map.get(x.name) || 0, Number(x.count) || 0)));
+    return map;
+  }
+
+  function roleUnitWeight(role, w) {
+    if (role === "mainCarry") return w.mainCarryUnit;
+    if (role === "subCarry") return w.subCarryUnit;
+    if (role === "frontline") return w.frontlineUnit;
+    return w.utilityUnit;
+  }
+
+  function roleItemWeight(role, w) {
+    if (role === "mainCarry") return w.mainCarryItem;
+    if (role === "subCarry") return w.subCarryItem;
+    if (role === "frontline") return w.frontlineItem;
+    return w.routeItem;
+  }
+
+  function roleLabel(role) {
+    return role === "mainCarry" ? "主C"
+      : role === "subCarry" ? "副C"
+      : role === "frontline" ? "前排"
+      : "成型";
+  }
+
+  function itemRankLabel(item, roleItems) {
+    const sameRole = roleItems.filter(x => x.role === item.role && x.holder === item.holder);
+    const idx = sameRole.findIndex(x => x.name === item.name);
+    return idx === 0 ? "一号装" : idx === 1 ? "二号装" : idx === 2 ? "三号装" : "装备";
+  }
+
   function carryCoreItems(t) {
-    const boardCarry = (t.board || []).find(x => x && x.carry && Array.isArray(x.items));
-    const boardItems = boardCarry ? boardCarry.items.map(canonicalItem).filter(x => ITEM_RECIPES[x]) : [];
-    return uniq([...(t.carryItems || []), ...boardItems, ...(t.completedPrefs || [])].map(canonicalItem)).filter(x => ITEM_RECIPES[x]);
+    return profileItems(t).filter(x => x.role === "mainCarry").map(x => x.name);
   }
 
-  function componentInItems(component, items) {
-    return (items || []).some(item => (ITEM_RECIPES[canonicalItem(item)] || []).includes(component));
+  function unitTraits(name, opts, unitMap) {
+    const row = unitMap && unitMap.get(name);
+    if (row && row.traits) return row.traits;
+    const map = opts && opts.unitTraits || {};
+    return map[name] || [];
   }
 
-  function componentScore(component, t, w, stage) {
-    const coreItems = carryCoreItems(t);
-    if (componentInItems(component, coreItems.slice(0, 2))) {
-      return { pts: Math.round(w.component * stage.component), text: `${component} 命中主C核心散件` };
-    }
-    if (componentInItems(component, coreItems) || componentInItems(component, t.completedPrefs || []) || (t.componentPrefs || []).includes(component)) {
-      return { pts: Math.round(w.component * stage.component * 0.5), text: `${component} 命中路线散件` };
-    }
-    return { pts: w.looseComponent, text: "" };
+  function selectedComponentList(items) {
+    return [...(items || [])].filter(x => COMPONENTS.includes(x));
+  }
+
+  function countComponents(list) {
+    const counts = {};
+    (list || []).forEach(x => { counts[x] = (counts[x] || 0) + 1; });
+    return counts;
+  }
+
+  function hasRecipe(components, recipe) {
+    const counts = countComponents(components);
+    return (recipe || []).every(part => {
+      if (!counts[part]) return false;
+      counts[part]--;
+      return true;
+    });
+  }
+
+  function bestCrafts(t, selectedItems, w) {
+    const components = selectedComponentList(selectedItems);
+    const items = profileItems(t);
+    const rows = [];
+    items.forEach(item => {
+      const recipe = item.components || [];
+      if (recipe.length !== 2) return;
+      const base = roleItemWeight(item.role, w);
+      if (hasRecipe(components, recipe)) {
+        rows.push({
+          item,
+          pts: Math.round(base * w.immediateCraftRatio),
+          evidence: `${recipe[0]}+${recipe[1]}→${item.name}（${roleLabel(item.role)}${itemRankLabel(item, items)}可立即合成）`,
+          kind: "craft",
+        });
+      } else {
+        const hit = recipe.find(x => components.includes(x));
+        if (hit) {
+          rows.push({
+            item,
+            pts: Math.round(base * w.singleComponentRatio),
+            evidence: `${hit} 属于${item.name}分解件`,
+            kind: "component",
+          });
+        }
+      }
+    });
+    const seen = new Set();
+    return rows.sort((a, b) => b.pts - a.pts).filter(row => {
+      const key = row.kind + row.item.name;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
   }
 
   function componentDirection(items) {
@@ -282,88 +364,135 @@
     return null;
   }
 
-  function scoreTemplate(t, selected, weights) {
+  function scoreTemplate(t, selected, weights, opts) {
     const unitRows = normalizeSelectedUnits(selected.units || []);
     const units = new Set(unitRows.map(x => x.name));
+    const unitStars = new Map(unitRows.map(x => [x.name, x.star || 0]));
     const items = new Set(selected.items || []);
     const augments = new Set(selected.augments || []);
     const augCats = new Set(selected.augmentCats || []);
     const traits = normalizeSelectedTraits(selected.traits || []);
-    const w = weights || fallbackWeights;
-    const stage = stageMultipliers(selected.level);
+    const w = { ...fallbackWeights, ...(weights || {}) };
     const base = t.quality === "S" ? w.baseS : t.quality === "A" ? w.baseA : w.baseB;
     let score = base;
-    const breakdown = { base, hero: 0, item: 0, augment: 0, synergy: 0, penalty: 0 };
+    let heldValue = base;
+    let futureValue = 0;
+    const breakdown = { base, hero: 0, item: 0, augment: 0, synergy: 0, future: 0, penalty: 0 };
     if (traits.length) {
       breakdown.trait = 0;
       breakdown.traitSignals = traits.length;
     }
     const evidence = [], missing = [], penalties = [];
+    const p = profile(t);
+    const unitMap = profileUnitMap(t);
+    const roleItems = profileItems(t);
+    const activeTraits = activeTraitMap(t);
+    const selectedCompleted = [...items].map(canonicalItem).filter(x => !COMPONENTS.includes(x));
+    const selectedComponents = selectedComponentList(items);
+    const mainCarryName = p.mainCarry && p.mainCarry.name;
 
     unitRows.forEach(row => {
       const u = row.name;
       const star = row.star || 0;
       const mult = STAR_SCORE_MULTIPLIERS[star] || 1;
-      const addHeroScore = (basePts, stageMult, text) => {
-        const pts = Math.round(basePts * stageMult * (star > 1 ? mult : 1));
+      const routeUnit = unitMap.get(u);
+      if (routeUnit) {
+        const role = routeUnit.role || (u === mainCarryName ? "mainCarry" : "utility");
+        const pts = Math.round(roleUnitWeight(role, w) * (star > 1 ? mult : 1));
         score += pts;
+        heldValue += pts;
         breakdown.hero += pts;
-        const stageText = stageMult === 1 ? "" : `，阶段x${stageMult}`;
-        evidence.push(star > 1 ? `${starLabel(u, star)} ${text}（星级x${mult}${stageText}）` : `${u} ${text}${stageText ? `（${stageText.slice(1)}）` : ""}`);
-      };
-      if ((t.earlyUnits || []).includes(u)) {
-        addHeroScore(w.earlyUnit, stage.earlyUnit, "命中前期底座");
-      } else if ((t.midUnits || []).includes(u)) {
-        addHeroScore(w.midUnit, stage.midUnit, "可中期承接");
-      } else if ((t.coreUnits || []).includes(u)) {
-        addHeroScore(w.coreUnit, stage.coreUnit, "是后续核心");
+        if (role === "mainCarry") {
+          evidence.push(`${roleLabel(role)}本体在手：${u}${star ? `（${star}星）` : ""}`);
+        } else {
+          evidence.push(`${u}${star ? `（${star}星）` : ""}=成型${roleLabel(role)}在手`);
+        }
+      } else {
+        const overlap = unitTraits(u, opts, unitMap).filter(name => activeTraits.has(name));
+        if (overlap.length) {
+          const pts = w.traitAffinity;
+          score += pts;
+          heldValue += pts;
+          breakdown.synergy += pts;
+          const trait = overlap[0];
+          const need = activeTraits.get(trait);
+          evidence.push(`${u}=${trait}，可作${need}${trait}填充`);
+        }
       }
-      if (star >= 3 && isMilestoneUnit(t, u)) {
+      if (star >= 3 && routeUnit && routeUnit.role === "mainCarry") {
         score += STAR_MILESTONE_BONUS;
+        heldValue += STAR_MILESTONE_BONUS;
         breakdown.synergy += STAR_MILESTONE_BONUS;
         evidence.push(`三星${u}=追三完成`);
       }
     });
 
-    items.forEach(it => {
-      if ((t.completedPrefs || []).includes(it)) {
-        score += w.coreItem; breakdown.item += w.coreItem; evidence.push(`${it} 命中核心成装`);
-      } else if (COMPONENTS.includes(it)) {
-        const hit = componentScore(it, t, w, stage);
-        score += hit.pts;
-        breakdown.item += hit.pts;
-        if (hit.text) evidence.push(hit.text);
-      }
+    selectedCompleted.forEach(it => {
+      const hits = roleItems.filter(x => x.name === it);
+      if (!hits.length) return;
+      const best = hits.sort((a, b) => roleItemWeight(b.role, w) - roleItemWeight(a.role, w))[0];
+      const pts = roleItemWeight(best.role, w);
+      score += pts;
+      heldValue += pts;
+      breakdown.item += pts;
+      evidence.push(`${it}=命中${roleLabel(best.role)}装备（${best.holder || "路线"}）`);
     });
 
-    const direction = componentDirection(items);
-    const tDirection = routeDirection(t);
-    if (direction && tDirection === direction) {
-      const bonus = Math.max(1, Math.round(score * COMPONENT_DIRECTION_BONUS));
-      score += bonus;
-      breakdown.synergy += bonus;
-      const label = /源计划|枪手/.test(`${t.name}${t.family}`) ? "源计划/枪手系" : (t.family || t.name);
-      evidence.unshift(`散件方向：${direction}→${label}`);
+    bestCrafts(t, items, w).forEach(row => {
+      const owned = selectedCompleted.includes(row.item.name);
+      if (owned) return;
+      score += row.pts;
+      heldValue += row.pts;
+      breakdown.item += row.pts;
+      evidence.push(row.evidence);
+    });
+
+    if (opts && opts.oddsData) {
+      const future = futureDemandValue(t, selected, opts, w);
+      futureValue = future.value;
+      score += futureValue;
+      breakdown.future += futureValue;
+      future.evidence.forEach(x => evidence.push(x));
+      future.lateTargets.forEach(x => missing.push(`后期目标：${x}`));
+      future.missing.forEach(x => missing.push(`缺${x.name}${x.need}张约${Math.round(x.expectedGold)}金`));
+      const missingItems = roleItems.filter(x => !selectedCompleted.includes(x.name) && !bestCrafts(t, items, w).some(c => c.item.name === x.name));
+      if (missingItems.length) missing.push(`关键装：${uniq(missingItems.slice(0, 3).map(x => x.name)).join("、")}`);
+    } else {
+      const missingUnits = (p.units || []).filter(x => !units.has(x.name)).slice(0, 4).map(x => x.name);
+      if (missingUnits.length) missing.push(`后续关键牌：${missingUnits.join("、")}`);
+    }
+
+    if (selectedComponents.length >= 2) {
+      const direction = componentDirection(items);
+      const tDirection = routeDirection(t);
+      if (direction && tDirection === direction) {
+        const bonus = Math.max(1, Math.round((heldValue + futureValue) * COMPONENT_DIRECTION_BONUS));
+        score += bonus;
+        heldValue += bonus;
+        breakdown.synergy += bonus;
+        const label = /源计划|枪手/.test(`${t.name}${t.family}`) ? "源计划/枪手系" : (t.family || t.name);
+        evidence.unshift(`散件方向：${direction}→${label}`);
+      }
     }
 
     augments.forEach(h => {
       if ((t.augmentPrefs || []).includes(h)) {
-        score += w.augment; breakdown.augment += w.augment; evidence.push(`${h} 命中推荐符文`);
+        score += w.augment; heldValue += w.augment; breakdown.augment += w.augment; evidence.push(`${h} 命中推荐符文`);
       }
     });
     augCats.forEach(c => {
       if ((t.augmentCats || []).includes(c)) {
-        score += w.augmentSignal; breakdown.augment += w.augmentSignal; evidence.push(`${c}符文匹配路线`);
+        score += w.augmentSignal; heldValue += w.augmentSignal; breakdown.augment += w.augmentSignal; evidence.push(`${c}符文匹配路线`);
       }
     });
 
     if (traits.length) {
-      const activeTraits = activeTraitsForTemplate(t);
       traits.forEach(sig => {
         const have = activeTraits.get(sig.name) || 0;
         if (have >= sig.count) {
           const pts = w.trait || fallbackWeights.trait;
           score += pts;
+          heldValue += pts;
           breakdown.trait += pts;
           evidence.push(`${sig.count}${sig.name} 命中激活羁绊`);
         } else {
@@ -375,53 +504,28 @@
     const primeRule = primePlanRule(t, selected);
     if (primeRule) {
       score += PRIME_PLAN_MATCH_BONUS;
+      heldValue += PRIME_PLAN_MATCH_BONUS;
       breakdown.synergy += PRIME_PLAN_MATCH_BONUS;
       evidence.push(`至尊计划：${primeRule.text || primeRule.holder}`);
     }
 
-    const selectedAttack = [...items].filter(x => ATTACK.includes(x)).length;
-    const selectedAp = [...items].filter(x => AP.includes(x)).length;
-    const selectedTank = [...items].filter(x => TANK.includes(x)).length;
-    if (selectedAttack >= 2 && t.role === "法系") {
-      score -= w.conflictPenalty; breakdown.penalty -= w.conflictPenalty; penalties.push("装备偏普攻，法系终局降权");
-    }
-    if (selectedAp >= 2 && t.role === "普攻") {
-      const p = Math.round(w.conflictPenalty * 0.78);
-      score -= p; breakdown.penalty -= p; penalties.push("装备偏法系，普攻C降权");
-    }
-    if (selectedTank >= 2 && t.role !== "九五") {
-      score -= w.tankPenalty; breakdown.penalty -= w.tankPenalty; penalties.push("肉装多，需要确认输出装来源");
-    }
-    if (selectedAttack >= 2 && t.id === "manual-gadget-jax") {
-      score += w.attackSynergy; breakdown.synergy += w.attackSynergy;
-    }
-    if (selectedAttack >= 2 && t.id === "manual-gadget-ap") {
-      score -= w.conflictPenalty; breakdown.penalty -= w.conflictPenalty;
-    }
-    if (t.id === "manual-gadget-jax" && selectedAttack < 2 && !["贾克斯", "德莱文", "孙悟空"].some(u => units.has(u))) {
-      const p = Math.round(w.conflictPenalty * 0.65);
-      score -= p; breakdown.penalty -= p;
-      penalties.push("只有小天才牌、没有普攻装备/机甲核心，先按小天才判断");
-    }
-
-    const selectedUnitCount = [...units].filter(u => (t.earlyUnits || []).includes(u)).length;
-    if (units.size && selectedUnitCount === 0) missing.push("当前来牌没有命中前期底座");
-    const coreMissing = (t.coreUnits || []).filter(x => !units.has(x)).slice(0, 4);
-    if (coreMissing.length) missing.push(`后续关键牌：${coreMissing.join("、")}`);
     if (!items.size) missing.push("还没选择装备，路线暂按来牌判断");
     if (!augments.size && !augCats.size) missing.push("还没选择符文，符文权重未生效");
 
-    const signalTotal = breakdown.hero + breakdown.item + breakdown.augment + breakdown.synergy + (breakdown.trait || 0);
+    const signalTotal = breakdown.hero + breakdown.item + breakdown.augment + breakdown.synergy + breakdown.future + (breakdown.trait || 0);
     const shares = signalTotal > 0 ? {
       hero: Math.round(breakdown.hero / signalTotal * 100),
       item: Math.round(breakdown.item / signalTotal * 100),
       augment: Math.round(breakdown.augment / signalTotal * 100),
       synergy: Math.round(breakdown.synergy / signalTotal * 100),
+      future: Math.round(breakdown.future / signalTotal * 100),
     } : { hero: 0, item: 0, augment: 0, synergy: 0 };
     if (traits.length) shares.trait = signalTotal > 0 ? Math.round((breakdown.trait || 0) / signalTotal * 100) : 0;
 
     return {
       stageStrength: Math.max(0, Math.round(score)),
+      heldValue: Math.max(0, Math.round(heldValue)),
+      futureValue: Math.max(0, Math.round(futureValue)),
       breakdown,
       shares,
       evidence: uniq(evidence).slice(0, 6),
@@ -446,14 +550,14 @@
   }
 
   function reachabilityUnits(t) {
-    return uniq(t.coreUnits || []).filter(Boolean);
+    return uniq((profile(t).units || []).map(x => x.name)).filter(Boolean);
   }
 
   function targetCopiesFor(t, name, cost) {
-    const fixed = (t.starTargets || []).find(x => x && x.name === name);
-    if (fixed && Number(fixed.targetCopies) > 0) return Number(fixed.targetCopies);
-    if (isRerollRoute(t) && cost <= 3 && isMilestoneUnit(t, name)) return 9;
-    if (cost >= 4 && isMilestoneUnit(t, name)) return 3;
+    const row = (profile(t).units || []).find(x => x && x.name === name);
+    const starTarget = row && Number(row.starTarget) || (name === (profile(t).mainCarry || {}).name ? (cost <= 3 ? 3 : 2) : 1);
+    if (starTarget >= 3) return 9;
+    if (starTarget === 2) return 3;
     return 1;
   }
 
@@ -496,25 +600,66 @@
     };
   }
 
+  function futureUnitBaseValue(t, unit, w) {
+    if (!unit) return w.futureCoreUnit;
+    if (unit.role === "mainCarry") return w.futureMainCarryUnit;
+    return w.futureCoreUnit;
+  }
+
+  function discountedValue(baseValue, expectedGold) {
+    return Math.round(baseValue * clamp(1 - expectedGold / FUTURE_VALUE_GOLD_CAP, 0, 1));
+  }
+
+  function futureDemandValue(t, selected, opts, w) {
+    const selectedUnitNames = new Set(normalizeSelectedUnits(selected.units || []).map(x => x.name));
+    const selectedItems = new Set((selected.items || []).map(canonicalItem));
+    const p = profile(t);
+    const rows = [];
+    const lateTargets = [];
+    const evidence = [];
+    let value = 0;
+    (p.units || []).forEach(unit => {
+      if (!unit || !unit.name || selectedUnitNames.has(unit.name)) return;
+      const cost = unitPrice(unit.name, opts);
+      const target = targetCopiesFor(t, unit.name, cost);
+      const row = expectedCostForUnit(unit.name, target, selected, opts);
+      if (row.need <= 0) return;
+      if (!row.available) {
+        lateTargets.push(unit.name);
+        return;
+      }
+      const base = futureUnitBaseValue(t, unit, w);
+      const pts = discountedValue(base, row.expectedGold);
+      if (pts > 0) {
+        value += pts;
+        evidence.push(`未持有${roleLabel(unit.role)}${unit.name}折现+${pts}（约${Math.round(row.expectedGold)}金）`);
+      }
+      rows.push(row);
+    });
+    const missingCoreItems = profileItems(t).filter(item => item.role === "mainCarry" && !selectedItems.has(item.name));
+    const itemValue = Math.round(Math.min(3, uniq(missingCoreItems.map(x => x.name)).length) * w.futureItem * FUTURE_ITEM_VALUE_RATIO);
+    if (itemValue > 0) {
+      value += itemValue;
+      evidence.push(`未持有主C关键装折现+${itemValue}`);
+    }
+    return {
+      value,
+      missing: rows,
+      lateTargets: uniq(lateTargets),
+      evidence,
+    };
+  }
+
   function reachabilityForTemplate(t, selected, opts) {
     if (!opts || !opts.oddsData) return null;
     const level = clamp(Number(selected.level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
-    const owned = ownedCopyMap(selected);
-    const lowStage = level <= 6;
-    const costedNames = lowStage ? uniq(t.midUnits || []) : reachabilityUnits(t);
-    const coreNames = reachabilityUnits(t);
-    const rawTargets = costedNames.map(name => {
+    const rawTargets = reachabilityUnits(t).map(name => {
       const cost = unitPrice(name, opts);
-      return expectedCostForUnit(name, lowStage ? 1 : targetCopiesFor(t, name, cost), selected, opts);
+      return expectedCostForUnit(name, targetCopiesFor(t, name, cost), selected, opts);
     });
     const targets = rawTargets.filter(x => x.need > 0 && x.available);
-    const unavailableCosted = rawTargets.filter(x => x.need > 0 && !x.available).map(x => x.name);
-    const lateTargets = lowStage
-      ? uniq([...unavailableCosted, ...coreNames.filter(name => !owned.has(name) && !targets.some(x => x.name === name))])
-      : unavailableCosted;
+    const lateTargets = rawTargets.filter(x => x.need > 0 && !x.available).map(x => x.name);
     const expectedGold = targets.reduce((sum, x) => sum + x.expectedGold, 0);
-    const cap = lowStage ? LOW_STAGE_REACHABILITY_GOLD_CAP : REACHABILITY_GOLD_CAP;
-    const coefficient = clamp(1 - expectedGold / cap, REACHABILITY_MIN, 1);
     const summary = targets.length
       ? targets.map(x => `缺${x.name}${x.need}张约${Math.round(x.expectedGold)}金`).join("、") + `；合计约${Math.round(expectedGold)}金`
       : "当前可刷缺口已见，约0金";
@@ -523,7 +668,7 @@
       missing: targets,
       lateTargets: uniq(lateTargets),
       expectedGold: Math.round(expectedGold),
-      coefficient: Math.round(coefficient * 100) / 100,
+      coefficient: 1,
       summary,
     };
   }
@@ -593,13 +738,13 @@
 
   function rank(templates, selected, weights, limit, opts) {
     const rows = (templates || []).map(t => {
-      const stageResult = scoreTemplate(t, selected, weights);
+      const stageResult = scoreTemplate(t, selected, weights, opts);
       const base = { template: t, ...stageResult };
       base.finalScore = base.stageStrength;
       const reachability = reachabilityForTemplate(t, selected, opts);
       if (reachability) {
         base.reachability = reachability;
-        base.finalScore = Math.max(0, Math.round(base.stageStrength * reachability.coefficient));
+        base.finalScore = base.stageStrength;
       }
       return base;
     });
@@ -644,7 +789,7 @@
       `信号：${signals}`,
       `首选：${t.name}（${topScore}分，信心${confidence(topScore)}）`,
       `权重：英雄${top.shares?.hero || 0}% / 装备${top.shares?.item || 0}% / 符文${top.shares?.augment || 0}%${top.breakdown?.traitSignals ? ` / 羁绊${top.shares?.trait || 0}%` : ""}`,
-      top.reachability ? `拆分：强度${top.stageStrength}分 × 可达${top.reachability.coefficient}（${top.reachability.summary}）=${top.finalScore}分` : "",
+      `拆分：已握资产${top.heldValue || 0}分 + 概率折现${top.futureValue || 0}分 = ${top.finalScore}分`,
       `路线：${(t.route || []).join(" -> ")}`,
       `留牌：${(t.actions.keep || []).slice(0, 8).join("、")}`,
       `装备：${t.actions.item || "-"}`,
@@ -662,6 +807,7 @@
       ["item", "装备", s.item || 0, b.item || 0],
       ["aug", "符文", s.augment || 0, b.augment || 0],
     ];
+    if (b.future) rows.push(["future", "折现", s.future || 0, b.future || 0]);
     if (b.traitSignals) rows.push(["trait", "羁绊", s.trait || 0, b.trait || 0]);
     return `<div class="s2SignalTower">${rows.map(([cls, label, pct, pts]) => `
       <div class="s2Signal ${cls}">
@@ -793,8 +939,26 @@
       poolCopies: { 1: 29, 2: 22, 3: 18, 4: 12, 5: 10 },
     };
     const unitPrices = { A: 1, B: 2, C: 3, D: 4 };
-    const fullCore = [{ id: "full", name: "全集core", quality: "S", coreUnits: ["A", "B", "C"], earlyUnits: [], midUnits: ["B", "C"], actions: {} }];
-    const selected = selectedFromSignals([{ kind: "units", value: "A" }]);
+    const fullCore = [{
+      id: "full",
+      name: "全集core",
+      quality: "S",
+      coreUnits: ["A", "B", "C"],
+      earlyUnits: [],
+      midUnits: ["B", "C"],
+      actions: {},
+      routeProfile: {
+        mainCarry: { name: "A", starTarget: 3, items: [] },
+        units: [
+          { name: "A", role: "mainCarry", starTarget: 3, traits: [] },
+          { name: "B", role: "frontline", starTarget: 1, traits: [] },
+          { name: "C", role: "utility", starTarget: 1, traits: [] },
+        ],
+        items: [],
+        activeTraits: [],
+      },
+    }];
+    const selected = selectedFromSignals([{ kind: "units", value: "A", star: 3 }]);
     selected.level = 8;
     const full = rank(fullCore, selected, fallbackWeights, 1, { oddsData: odds, unitPrices })[0];
     assert(Object.prototype.hasOwnProperty.call(full, "stageStrength"), "rank行应包含stageStrength");
@@ -806,12 +970,11 @@
 
     const low = selectedFromSignals([]);
     low.level = 4;
-    const lowRows = rank([{ id: "low", name: "低级", quality: "S", coreUnits: ["D"], midUnits: ["D"], earlyUnits: [], actions: {} }], low, fallbackWeights, 1, { oddsData: odds, unitPrices })[0];
+    const lowTemplate = { id: "low", name: "低级", quality: "S", coreUnits: ["D"], midUnits: ["D"], earlyUnits: [], actions: {}, routeProfile: { mainCarry: { name: "D", starTarget: 2, items: [] }, units: [{ name: "D", role: "mainCarry", starTarget: 2, traits: [] }], items: [], activeTraits: [] } };
+    const lowRows = rank([lowTemplate], low, fallbackWeights, 1, { oddsData: odds, unitPrices })[0];
     assert(lowRows.reachability.missing.length === 0, "0概率棋子不应进入期望成本");
     assert(lowRows.reachability.lateTargets.includes("D"), "0概率棋子应进入后期目标");
     assertNoBadNumbers(JSON.stringify(lowRows.reachability), "可达性对象不应有坏数字");
-    const lowMidOnly = rank([{ id: "low-mid", name: "低级承接", quality: "S", coreUnits: [], midUnits: ["D"], earlyUnits: [], actions: {} }], low, fallbackWeights, 1, { oddsData: odds, unitPrices })[0];
-    assert(lowMidOnly.reachability.lateTargets.includes("D"), "0概率承接牌也应进入后期目标");
     const levelOne = selectedFromSignals([{ kind: "levels", value: "1", level: 1 }]);
     const firstCost = expectedCostForUnit("A", 1, levelOne, { oddsData: odds, unitPrices });
     assert(firstCost.oddsPct === 100 && firstCost.available, "1级应按一费100%概率计算");
@@ -839,24 +1002,24 @@
     assert(primeActionLine(primeTemplate, selectedFromSignals([{ kind: "levels", level: 9 }, { kind: "units", value: "蕾欧娜", star: 2 }])).includes("蕾欧娜"), "9级蕾欧娜2星应转蕾欧娜");
 
     const stickyTemplates = [
-      { id: "old", name: "旧路线", quality: "S", coreUnits: [], earlyUnits: [], midUnits: [], completedPrefs: [], componentPrefs: [], augmentPrefs: [], augmentCats: [], actions: {} },
-      { id: "new", name: "新路线", quality: "S", coreUnits: [], earlyUnits: [], midUnits: [], completedPrefs: ["X"], componentPrefs: [], augmentPrefs: [], augmentCats: [], actions: {} },
+      { id: "old", name: "旧路线", quality: "S", coreUnits: [], earlyUnits: [], midUnits: [], completedPrefs: [], componentPrefs: [], augmentPrefs: [], augmentCats: [], actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 1, items: [] }, units: [], items: [], activeTraits: [] } },
+      { id: "new", name: "新路线", quality: "S", coreUnits: [], earlyUnits: [], midUnits: [], completedPrefs: ["X"], componentPrefs: [], augmentPrefs: [], augmentCats: [], actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 1, items: [] }, units: [], items: [{ name: "X", role: "route", holder: "A", components: [] }], activeTraits: [] } },
     ];
-    const baseWeights = { ...fallbackWeights, baseS: 100, coreItem: 14, earlyUnit: 0, midUnit: 0, coreUnit: 0, augment: 0, augmentSignal: 0 };
+    const baseWeights = { ...fallbackWeights, baseS: 100, routeItem: 14, augment: 0, augmentSignal: 0 };
     let held = rank(stickyTemplates, { items: ["X"], units: [], augments: [], augmentCats: [] }, baseWeights, 2, { previousOrder: ["old", "new"], stickyTopId: "old" });
     assert(rowId(held[0]) === "new", "黏性不得篡改真分排序");
     assert(held[1].following, "挑战者未达到相对阈值时，旧路线只应带跟随徽章");
-    const switchWeights = { ...baseWeights, coreItem: 15 };
+    const switchWeights = { ...baseWeights, routeItem: 15 };
     let switched = rank(stickyTemplates, { items: ["X"], units: [], augments: [], augmentCats: [] }, switchWeights, 2, { previousOrder: ["old", "new"], stickyTopId: "old" });
     assert(rowId(switched[0]) === "new", "挑战者达到相对阈值时应易主");
 
     const dropTemplates = [
-      { id: "n1", name: "新1", quality: "S", completedPrefs: ["A"], coreUnits: [], earlyUnits: [], midUnits: [], actions: {} },
-      { id: "n2", name: "新2", quality: "S", completedPrefs: ["B"], coreUnits: [], earlyUnits: [], midUnits: [], actions: {} },
-      { id: "n3", name: "新3", quality: "S", completedPrefs: ["C"], coreUnits: [], earlyUnits: [], midUnits: [], actions: {} },
-      { id: "old", name: "旧", quality: "S", coreUnits: [], earlyUnits: [], midUnits: [], actions: {} },
+      { id: "n1", name: "新1", quality: "S", completedPrefs: ["A"], coreUnits: [], earlyUnits: [], midUnits: [], actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 1, items: [] }, units: [], items: [{ name: "A", role: "route", holder: "A", components: [] }], activeTraits: [] } },
+      { id: "n2", name: "新2", quality: "S", completedPrefs: ["B"], coreUnits: [], earlyUnits: [], midUnits: [], actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 1, items: [] }, units: [], items: [{ name: "B", role: "route", holder: "A", components: [] }], activeTraits: [] } },
+      { id: "n3", name: "新3", quality: "S", completedPrefs: ["C"], coreUnits: [], earlyUnits: [], midUnits: [], actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 1, items: [] }, units: [], items: [{ name: "C", role: "route", holder: "A", components: [] }], activeTraits: [] } },
+      { id: "old", name: "旧", quality: "S", coreUnits: [], earlyUnits: [], midUnits: [], actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 1, items: [] }, units: [], items: [], activeTraits: [] } },
     ];
-    const dropped = rank(dropTemplates, { items: ["A", "B", "C"], units: [], augments: [], augmentCats: [] }, { ...fallbackWeights, baseS: 100, coreItem: 10 }, 4, { previousOrder: ["old", "n1", "n2", "n3"], stickyTopId: "old" });
+    const dropped = rank(dropTemplates, { items: ["A", "B", "C"], units: [], augments: [], augmentCats: [] }, { ...fallbackWeights, baseS: 100, routeItem: 10 }, 4, { previousOrder: ["old", "n1", "n2", "n3"], stickyTopId: "old" });
     assert(rowId(dropped[0]) !== "old", "旧#1跌出前3时应立即让位");
     assert(!dropped.some(r => r.template.id === "old" && r.following), "旧#1跌出前3不应保留跟随徽章");
     for (let i = 1; i < dropped.length; i++) {
@@ -875,14 +1038,12 @@
     STICKY_RELATIVE_LEAD,
     MIN_LEVEL,
     MAX_LEVEL,
-    STAGE_LEVEL_RULES,
     COMPONENT_DIRECTION_BONUS,
     PRIME_PLAN_MATCH_BONUS,
     STAR_SCORE_MULTIPLIERS,
     STAR_MILESTONE_BONUS,
-    REACHABILITY_GOLD_CAP,
-    LOW_STAGE_REACHABILITY_GOLD_CAP,
-    REACHABILITY_MIN,
+    FUTURE_VALUE_GOLD_CAP,
+    FUTURE_ITEM_VALUE_RATIO,
     DEFAULT_LEVEL,
     scoreTemplate,
     rank,
