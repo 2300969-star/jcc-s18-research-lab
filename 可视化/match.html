@@ -63,6 +63,11 @@ button, input { font:inherit; }
 .strengthBreak, .stickyNote { color:var(--ink2); font-size:16px; overflow-wrap:anywhere; margin-top:4px; }
 .stickyNote { color:var(--muted); }
 .evidenceLine { color:var(--ink2); font-size:15px; overflow-wrap:anywhere; margin-top:4px; }
+.gateStrip { margin-top:8px; padding:9px 11px; border-radius:10px; border:1px solid var(--border); font-size:17px; font-weight:900; overflow-wrap:anywhere; }
+.gateStrip.green { color:#fff; background:var(--s2); border-color:var(--s2); }
+.gateStrip.yellow { color:#1f1800; background:color-mix(in srgb, var(--s3) 70%, #fff 30%); border-color:var(--s3); }
+.gateStrip.red { color:#fff; background:var(--s6); border-color:var(--s6); }
+.formulaLine { color:var(--muted); font-size:14px; margin-top:4px; overflow-wrap:anywhere; }
 .followBadge { display:inline-grid; place-items:center; margin-left:8px; padding:2px 8px; border-radius:999px; background:var(--s2); color:#fff; font-size:14px; font-weight:950; vertical-align:middle; }
 .followStrip { margin-top:6px; padding:7px 10px; border-radius:10px; border:1px solid color-mix(in srgb, var(--s2) 45%, var(--border)); color:var(--ink2); background:color-mix(in srgb, var(--surface) 88%, var(--s2) 12%); font-size:15px; overflow-wrap:anywhere; }
 .reachBox { color:var(--ink2); font-size:16px; line-height:1.45; margin-top:4px; overflow-wrap:anywhere; }
@@ -190,7 +195,7 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
 <script src="data.js?v=match-20260706c"></script>
 <script src="stage2-matcher-data.js?v=stage2-20260705b"></script>
 <script src="odds-data.js?v=match-20260706e"></script>
-<script src="matcher-core.js?v=match-20260706e"></script>
+<script src="matcher-core.js?v=match-20260707a"></script>
 <script src="signal-parser.js?v=match-20260706e"></script>
 <script src="llm-lane.js?v=match-20260706c"></script>
 <script>
@@ -455,6 +460,7 @@ function rankedRoutes() {
     unitTraits: UNIT_TRAITS,
     previousOrder,
     stickyTopId: lastTopId,
+    antiFragile: true,
   });
 }
 function unheardHtml() {
@@ -668,6 +674,15 @@ function openRouteDetail(row) {
   close.type = "button";
   close.addEventListener("click", () => $("routeDialog").close());
   mk("div", "detailMeta", `${t.family || "-"} ｜ ${t.goal || "-"} ｜ 强度${row.stageStrength}分 ｜ 最终${rowScore(row)}分`, body);
+  if (row.antiFragile) {
+    const af = row.antiFragile;
+    mk("div", "detailSection", "抗脆弱诊断", body);
+    mk("div", "detailLine", `${af.label}；核心度${af.readyPct}%；瓶颈：${af.bottleneckText}`, body);
+    mk("div", "detailLine", af.formula, body);
+    if (af.core && af.core.length) {
+      mk("div", "detailLine", "核心组件：" + af.core.map(x => `${x.label}${Math.round(x.readiness * 100)}%`).join("、"), body);
+    }
+  }
 
   mk("div", "detailSection", "前中后期阵容", body);
   const stageGrid = mk("div", "stageGrid", null, body);
@@ -764,12 +779,18 @@ function renderRoute() {
   const delta = Math.max(0, second ? topScore - secondScore : topScore);
   const actions = MatcherCore.actionLines(t, selectedObj(), top);
   const reach = top.reachability;
-  const breakLine = `已握资产${top.heldValue || 0}分 + 概率折现${top.futureValue || 0}分 = ${topScore}分`;
+  const af = top.antiFragile;
+  const breakLine = af
+    ? `基础强度${top.stageStrength || 0}分 → 抗脆弱${topScore}分`
+    : `已握资产${top.heldValue || 0}分 + 概率折现${top.futureValue || 0}分 = ${topScore}分`;
   const evidenceLine = (top.evidence || []).slice(0, 3).join("；");
   const stickyLine = top.followAdvice || (following && routeId(following) !== topId ? `建议继续跟 ${following.template.name}（挑战者领先不足）` : "跟随：当前最高分路线");
   const followBadge = top.following ? `<span class="followBadge">跟随中</span>` : "";
   const followStrip = following && routeId(following) !== topId
     ? `<div class="followStrip"><span class="followBadge">跟随中</span> ${esc(following.template.name)} · ${rowScore(following)}分</div>`
+    : "";
+  const gateHtml = af
+    ? `<div class="gateStrip ${esc(af.status)}">${esc(af.label)} · 核心度${af.readyPct}% · 瓶颈：${esc(af.bottleneckText)}</div><div class="formulaLine">${esc(af.formula)}</div>`
     : "";
   box.innerHTML = `
     <div>
@@ -779,6 +800,7 @@ function renderRoute() {
       </div>
       <div class="subRank">领先#2 ${delta}分 ｜ #2 ${second ? esc(second.template.name) + " " + secondScore + "分" : "-"} ｜ #3 ${third ? esc(third.template.name) + " " + thirdScore + "分" : "-"}</div>
       <div class="openHint">点击查看前期 / 中期 / 后期阵容</div>
+      ${gateHtml}
       <div class="strengthBreak">${esc(breakLine)}</div>
       ${evidenceLine ? `<div class="evidenceLine">证据：${esc(evidenceLine)}</div>` : ""}
       ${reachHtml(top)}

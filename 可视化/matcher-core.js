@@ -54,6 +54,18 @@
   const MIN_LEVEL = 1;
   const MAX_LEVEL = 9;
   const DEFAULT_LEVEL = 6;
+  // 抗脆弱路线泛函：只在 opts.antiFragile 打开时参与最终排序。
+  // 设计意图：用核心度、瓶颈、最坏下限和转阵期权，压低"满配强但缺一环就崩"的路线。
+  const ANTIFRAGILE_READY_GREEN = 0.55;
+  const ANTIFRAGILE_READY_YELLOW = 0.25;
+  const ANTIFRAGILE_BOTTLENECK_RED = 1.6;
+  const ANTIFRAGILE_BOTTLENECK_YELLOW = 0.9;
+  const ANTIFRAGILE_OPTION_BONUS = 16;
+  const ANTIFRAGILE_READY_BONUS = 12;
+  const ANTIFRAGILE_BOTTLENECK_PENALTY = 35;
+  const ANTIFRAGILE_CVAR_PENALTY = 40;
+  const ANTIFRAGILE_HARD_GATE_PENALTY = 32;
+  const ANTIFRAGILE_ROLL_GOLD = { 1: 0, 2: 0, 3: 8, 4: 12, 5: 24, 6: 36, 7: 50, 8: 45, 9: 55 };
 
   const fallbackWeights = {
     baseS: 6,
@@ -358,6 +370,267 @@
     if (physical / total >= 2 / 3) return "物理";
     if (magic / total >= 2 / 3) return "法系";
     return null;
+  }
+
+  function routeText(t) {
+    return [
+      t && t.name,
+      t && t.family,
+      ...((t && t.earlyUnits) || []),
+      ...((t && t.midUnits) || []),
+      ...((t && t.coreUnits) || []),
+      ...((t && t.componentPrefs) || []),
+      ...((t && t.completedPrefs) || []),
+      ...profileItems(t || {}).flatMap(x => [x.name, ...(x.components || [])]),
+    ].join(" ");
+  }
+
+  function binomialTail(n, p, k) {
+    if (k <= 0) return 1;
+    if (n <= 0 || p <= 0) return 0;
+    if (p >= 1) return 1;
+    if (k > n) return 0;
+    let prob = Math.pow(1 - p, n);
+    let sum = prob;
+    for (let i = 1; i < k; i++) {
+      prob *= ((n - i + 1) / i) * (p / (1 - p));
+      sum += prob;
+    }
+    return clamp(1 - sum, 0, 1);
+  }
+
+  function hitProbabilityForUnit(name, targetCopies, selected, opts) {
+    const level = clamp(Number(selected.level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
+    const oddsData = opts && opts.oddsData || {};
+    const shopOdds = oddsData.shopOdds || {};
+    const unitCounts = oddsData.unitCounts || {};
+    const cost = unitPrice(name, opts);
+    const owned = ownedCopyMap(selected).get(name) || 0;
+    const need = Math.max(0, targetCopies - owned);
+    if (need <= 0) return 1;
+    const odds = ((shopOdds[level] || [0, 0, 0, 0, 0])[cost - 1] || 0) / 100;
+    if (odds <= 0) return 0;
+    const count = Number(unitCounts[cost]) || 1;
+    const pSlot = odds / count;
+    const gold = ANTIFRAGILE_ROLL_GOLD[level] || 30;
+    const slots = Math.max(0, Math.floor(gold / 2) * 5);
+    return binomialTail(slots, pSlot, need);
+  }
+
+  function timingForCost(cost, level) {
+    const ideal = cost <= 1 ? 4 : cost === 2 ? 5 : cost === 3 ? 7 : cost === 4 ? 8 : 9;
+    return clamp(Math.exp(-0.35 * Math.abs((Number(level) || DEFAULT_LEVEL) - ideal)), 0.25, 1);
+  }
+
+  function unitReadiness(name, targetCopies, selected) {
+    const owned = ownedCopyMap(selected).get(name) || 0;
+    if (owned >= targetCopies) return 1;
+    if (targetCopies >= 9) {
+      if (owned >= 3) return 0.65;
+      if (owned >= 1) return 0.25;
+      return 0;
+    }
+    if (targetCopies >= 3) return owned >= 1 ? 0.55 : 0;
+    return owned >= 1 ? 1 : 0;
+  }
+
+  function itemReadiness(item, selectedItems) {
+    const name = canonicalItem(item.name);
+    if (selectedItems.has(name)) return 1;
+    const recipe = item.components && item.components.length ? item.components : ITEM_RECIPES[name] || [];
+    const components = selectedComponentList(selectedItems);
+    if (recipe.length === 2 && hasRecipe(components, recipe)) return 0.8;
+    if (recipe.some(part => components.includes(part))) return 0.35;
+    return 0;
+  }
+
+  function itemAvailability(readiness) {
+    if (readiness >= 0.8) return 0.9;
+    if (readiness > 0) return 0.5;
+    return 0.25;
+  }
+
+  function componentIrreplaceability(type, role) {
+    if (type === "augment") return 1;
+    if (type === "unit") return role === "mainCarry" ? 0.95 : role === "subCarry" ? 0.68 : role === "frontline" ? 0.55 : 0.42;
+    if (type === "item") return role === "mainCarry" ? 0.86 : role === "subCarry" ? 0.62 : role === "frontline" ? 0.5 : 0.35;
+    return 0.45;
+  }
+
+  function coreComponentRows(t, selected, opts, w) {
+    const rows = [];
+    const level = clamp(Number(selected.level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
+    const selectedItems = new Set([...(selected.items || [])].map(canonicalItem));
+    const p = profile(t);
+    const mainName = p.mainCarry && p.mainCarry.name;
+    const stageNames = new Set(level <= 5 ? (t.earlyUnits || []) : level === 6 ? (t.midUnits || []) : []);
+    const profileNames = new Set((p.units || []).map(x => x && x.name).filter(Boolean));
+    stageNames.forEach(name => {
+      if (!name || profileNames.has(name)) return;
+      const cost = unitPrice(name, opts);
+      const target = 1;
+      const weight = w.frontlineUnit * 0.8;
+      const readiness = unitReadiness(name, target, selected);
+      const probability = readiness >= 1 ? 1 : hitProbabilityForUnit(name, target, selected, opts);
+      const availability = readiness > 0 ? Math.max(0.55, probability) : probability;
+      const timing = timingForCost(cost, level);
+      const coreIndex = weight * componentIrreplaceability("unit", "frontline") * timing / clamp(availability, 0.05, 1);
+      rows.push({
+        type: "unit",
+        name,
+        label: `阶段${name}`,
+        role: "stage",
+        weight,
+        readiness,
+        probability,
+        availability,
+        timing,
+        coreIndex,
+        need: readiness >= 1 ? 0 : 1,
+      });
+    });
+    (p.units || []).forEach(unit => {
+      if (!unit || !unit.name) return;
+      const role = unit.role || (unit.name === mainName ? "mainCarry" : "utility");
+      const cost = unitPrice(unit.name, opts);
+      const futureScale = level <= 5 && !stageNames.has(unit.name)
+        ? (cost >= 4 ? 0.12 : cost >= 3 ? 0.25 : 1)
+        : level === 6 && !stageNames.has(unit.name) && cost >= 4
+          ? 0.35
+          : 1;
+      const stageTarget = stageNames.has(unit.name)
+        ? (level <= 5 ? 1 : level === 6 ? Math.min(3, targetCopiesFor(t, unit.name, cost)) : 0)
+        : 0;
+      const target = stageTarget || (futureScale < 1 ? 1 : targetCopiesFor(t, unit.name, cost));
+      const weight = roleUnitWeight(role, w) * (role === "mainCarry" ? 1.25 : 0.75) * futureScale;
+      const readiness = unitReadiness(unit.name, target, selected);
+      const probability = readiness >= 1 ? 1 : hitProbabilityForUnit(unit.name, target, selected, opts);
+      const availability = readiness > 0 ? Math.max(0.55, probability) : probability;
+      const timing = timingForCost(cost, level);
+      const coreIndex = weight * componentIrreplaceability("unit", role) * timing / clamp(availability, 0.05, 1);
+      rows.push({
+        type: "unit",
+        name: unit.name,
+        label: `${roleLabel(role)}${unit.name}`,
+        role,
+        weight,
+        readiness,
+        probability,
+        availability,
+        timing,
+        coreIndex,
+        need: Math.max(0, target - (ownedCopyMap(selected).get(unit.name) || 0)),
+      });
+    });
+    profileItems(t).forEach(item => {
+      const role = item.role || "route";
+      const weight = roleItemWeight(role, w) * (role === "mainCarry" ? 1.15 : 0.65);
+      const readiness = itemReadiness(item, selectedItems);
+      const availability = itemAvailability(readiness);
+      const coreIndex = weight * componentIrreplaceability("item", role) / availability;
+      rows.push({
+        type: "item",
+        name: item.name,
+        label: `${roleLabel(role)}装${item.name}`,
+        role,
+        weight,
+        readiness,
+        probability: availability,
+        availability,
+        timing: 1,
+        coreIndex,
+        need: readiness >= 1 ? 0 : 1,
+      });
+    });
+    const directAug = (t.augmentPrefs || []).find(name => String(t.name || "").includes(name));
+    if (directAug) {
+      const has = (selected.augments || []).includes(directAug);
+      const weight = w.augment * 1.8;
+      rows.push({
+        type: "augment",
+        name: directAug,
+        label: `专属符文${directAug}`,
+        role: "augment",
+        weight,
+        readiness: has ? 1 : 0,
+        probability: has ? 1 : 0.22,
+        availability: has ? 1 : 0.22,
+        timing: 1,
+        coreIndex: weight * componentIrreplaceability("augment", "augment") / (has ? 1 : 0.22),
+        need: has ? 0 : 1,
+      });
+    }
+    return rows.filter(x => Number.isFinite(x.coreIndex));
+  }
+
+  function routeOptionValue(t, selected, templates) {
+    const all = (templates || []).filter(x => x && x !== t);
+    if (!all.length) return 0;
+    const selectedAssets = [
+      ...normalizeSelectedUnits(selected.units || []).map(x => x.name),
+      ...(selected.items || []).map(canonicalItem),
+    ];
+    const routeAssets = [
+      ...(t.earlyUnits || []),
+      ...(t.midUnits || []),
+      ...profileItems(t).flatMap(x => [x.name, ...(x.components || [])]),
+    ];
+    const assets = uniq((selectedAssets.length ? selectedAssets : routeAssets).filter(a => routeText(t).includes(a))).slice(0, 8);
+    if (!assets.length) return 0;
+    const raw = assets.map(asset => all.filter(other => routeText(other).includes(asset)).length / all.length);
+    return clamp(raw.reduce((sum, x) => sum + x, 0) / raw.length, 0, 1);
+  }
+
+  function antiFragileStatus(ready, bottleneckRatio) {
+    if (ready < ANTIFRAGILE_READY_YELLOW || bottleneckRatio >= ANTIFRAGILE_BOTTLENECK_RED) return "red";
+    if (ready < ANTIFRAGILE_READY_GREEN || bottleneckRatio >= ANTIFRAGILE_BOTTLENECK_YELLOW) return "yellow";
+    return "green";
+  }
+
+  function antiFragileLabel(status) {
+    if (status === "green") return "绿灯：可以定线";
+    if (status === "yellow") return "黄灯：观察验证";
+    return "红灯：陷阱别硬玩";
+  }
+
+  function analyzeAntiFragility(t, selected, stageResult, opts, weights, templates) {
+    const w = { ...fallbackWeights, ...(weights || {}) };
+    const core = coreComponentRows(t, selected, opts || {}, w);
+    const total = core.reduce((sum, x) => sum + x.weight, 0) || 1;
+    const owned = core.reduce((sum, x) => sum + x.weight * x.readiness, 0);
+    const ready = clamp(owned / total, 0, 1);
+    const missingRows = core.filter(x => x.readiness < 0.95).sort((a, b) => b.coreIndex - a.coreIndex);
+    const bottleneck = missingRows[0] || null;
+    const bottleneckRatio = bottleneck ? bottleneck.coreIndex / total : 0;
+    const worstLossRatio = missingRows.length ? Math.max(...missingRows.map(x => x.weight * (1 - x.readiness) / total)) : 0;
+    const option = routeOptionValue(t, selected, templates);
+    const bottleneckPenalty = Math.round(Math.min(80, bottleneckRatio * ANTIFRAGILE_BOTTLENECK_PENALTY));
+    const cvarPenalty = Math.round(worstLossRatio * ANTIFRAGILE_CVAR_PENALTY);
+    const optionBonus = Math.round(option * ANTIFRAGILE_OPTION_BONUS);
+    const readyBonus = Math.round(ready * ANTIFRAGILE_READY_BONUS);
+    const hardPenalty = ready < ANTIFRAGILE_READY_YELLOW ? ANTIFRAGILE_HARD_GATE_PENALTY : ready < ANTIFRAGILE_READY_GREEN ? Math.round(ANTIFRAGILE_HARD_GATE_PENALTY / 2) : 0;
+    const score = Math.max(0, Math.round(stageResult.stageStrength - bottleneckPenalty - cvarPenalty - hardPenalty + optionBonus + readyBonus));
+    const status = antiFragileStatus(ready, bottleneckRatio);
+    const bottleneckText = bottleneck ? `${bottleneck.label}（核心度${Math.round(bottleneck.coreIndex)}，可达${Math.round((bottleneck.probability || 0) * 100)}%）` : "核心组件已基本到位";
+    const formula = `抗脆弱=${stageResult.stageStrength}-瓶颈${bottleneckPenalty}-下限${cvarPenalty}-硬门槛${hardPenalty}+期权${optionBonus}+准备${readyBonus}=${score}`;
+    return {
+      score,
+      ready,
+      readyPct: Math.round(ready * 100),
+      status,
+      label: antiFragileLabel(status),
+      bottleneck,
+      bottleneckText,
+      bottleneckPenalty,
+      cvarPenalty,
+      hardPenalty,
+      option,
+      optionBonus,
+      readyBonus,
+      formula,
+      core: core.sort((a, b) => b.coreIndex - a.coreIndex).slice(0, 6),
+      missing: missingRows.slice(0, 4).map(x => x.label),
+    };
   }
 
   function routeDirection(t) {
@@ -753,6 +1026,10 @@
         base.reachability = reachability;
         base.finalScore = base.stageStrength;
       }
+      if (opts && opts.antiFragile) {
+        base.antiFragile = analyzeAntiFragility(t, selected, stageResult, opts, weights, templates || []);
+        base.finalScore = base.antiFragile.score;
+      }
       return base;
     });
     if (!opts) return rows.sort((a, b) => b.stageStrength - a.stageStrength).slice(0, limit || 5);
@@ -909,6 +1186,12 @@
     const earlyHits = (template.earlyUnits || []).filter(x => selectedUnits.has(x));
     const keep = (template.actions && template.actions.keep || template.earlyUnits || []).slice(0, 4);
     const primeLine = primeActionLine(template, selected);
+    if (top && top.antiFragile) {
+      const af = top.antiFragile;
+      lines.push(`${af.label}，核心度${af.readyPct}%`);
+      if (af.status === "red") lines.push(`禁止硬定：先补${af.bottleneckText}`);
+      else if (af.status === "yellow") lines.push(`下一验证：补${af.bottleneckText}`);
+    }
     if (primeLine) lines.push(primeLine);
     if (nextComponent) lines.push(`下件优先拿${nextComponent}`);
     else if (nextItem) lines.push(`装备往${nextItem}靠`);
@@ -985,6 +1268,17 @@
     const levelOne = selectedFromSignals([{ kind: "levels", value: "1", level: 1 }]);
     const firstCost = expectedCostForUnit("A", 1, levelOne, { oddsData: odds, unitPrices });
     assert(firstCost.oddsPct === 100 && firstCost.available, "1级应按一费100%概率计算");
+    const antiTemplates = [
+      { id: "stable", name: "稳定线", quality: "S", coreUnits: ["A"], earlyUnits: ["A"], midUnits: ["A"], completedPrefs: ["锐利之刃"], actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 1, items: ["锐利之刃"] }, units: [{ name: "A", role: "mainCarry", starTarget: 1, traits: [] }], items: [{ name: "锐利之刃", role: "mainCarry", holder: "A", components: ["暴风之剑", "暴风之剑"] }], activeTraits: [] } },
+      { id: "trap", name: "陷阱线", quality: "S", coreUnits: ["B"], earlyUnits: ["A"], midUnits: ["B"], completedPrefs: ["蓝霸符"], actions: {}, routeProfile: { mainCarry: { name: "B", starTarget: 3, items: ["蓝霸符"] }, units: [{ name: "B", role: "mainCarry", starTarget: 3, traits: [] }], items: [{ name: "蓝霸符", role: "mainCarry", holder: "B", components: ["女神之泪", "女神之泪"] }], activeTraits: [] } },
+    ];
+    const antiSelected = selectedFromSignals([{ kind: "units", value: "A" }, { kind: "items", value: "暴风之剑" }, { kind: "levels", level: 4 }]);
+    const defaultAntiOff = rank(antiTemplates, antiSelected, fallbackWeights, 2, { oddsData: odds, unitPrices: { A: 1, B: 3 } })[0];
+    assert(!defaultAntiOff.antiFragile, "默认rank不应启用抗脆弱层");
+    const antiRows = rank(antiTemplates, antiSelected, fallbackWeights, 2, { oddsData: odds, unitPrices: { A: 1, B: 3 }, antiFragile: true });
+    assert(antiRows[0].antiFragile && antiRows[0].antiFragile.formula.includes("抗脆弱"), "比赛模式应返回抗脆弱诊断");
+    assert(Number.isFinite(antiRows[0].finalScore), "抗脆弱分必须是有限数");
+    antiRows.forEach(row => assertNoBadNumbers(`${row.antiFragile.formula} ${row.antiFragile.bottleneckText}`, "抗脆弱上屏文案不应有坏数字"));
 
     const primeTemplate = {
       id: "prime",
