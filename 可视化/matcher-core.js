@@ -66,6 +66,12 @@
   const ANTIFRAGILE_CVAR_PENALTY = 40;
   const ANTIFRAGILE_HARD_GATE_PENALTY = 32;
   const ANTIFRAGILE_ROLL_GOLD = { 1: 0, 2: 0, 3: 8, 4: 12, 5: 24, 6: 36, 7: 50, 8: 45, 9: 55 };
+  const ANTIFRAGILE_UNREACHABLE_PROB = 0.05;
+  const ANTIFRAGILE_HUGE_GOLD = 80;
+  const ANTIFRAGILE_UNREACHABLE_PENALTY = 70;
+  const ANTIFRAGILE_HUGE_GOLD_PENALTY = 42;
+  const ANTIFRAGILE_RED_STATUS_PENALTY = 80;
+  const ECONOMY_AUGMENTS = ["高端购物", "升级咯！", "升级咯", "对冲基金", "明智消费", "利滚利", "利滚利加强版", "DD街区", "快速思考"];
 
   const fallbackWeights = {
     baseS: 6,
@@ -471,6 +477,7 @@
       const target = 1;
       const weight = w.frontlineUnit * 0.8;
       const readiness = unitReadiness(name, target, selected);
+      const costRow = expectedCostForUnit(name, target, selected, opts);
       const probability = readiness >= 1 ? 1 : hitProbabilityForUnit(name, target, selected, opts);
       const availability = readiness > 0 ? Math.max(0.55, probability) : probability;
       const timing = timingForCost(cost, level);
@@ -486,6 +493,7 @@
         availability,
         timing,
         coreIndex,
+        expectedGold: readiness >= 1 ? 0 : (costRow.available ? costRow.expectedGold : ANTIFRAGILE_HUGE_GOLD * 2),
         need: readiness >= 1 ? 0 : 1,
       });
     });
@@ -504,6 +512,7 @@
       const target = stageTarget || (futureScale < 1 ? 1 : targetCopiesFor(t, unit.name, cost));
       const weight = roleUnitWeight(role, w) * (role === "mainCarry" ? 1.25 : 0.75) * futureScale;
       const readiness = unitReadiness(unit.name, target, selected);
+      const costRow = expectedCostForUnit(unit.name, target, selected, opts);
       const probability = readiness >= 1 ? 1 : hitProbabilityForUnit(unit.name, target, selected, opts);
       const availability = readiness > 0 ? Math.max(0.55, probability) : probability;
       const timing = timingForCost(cost, level);
@@ -519,6 +528,7 @@
         availability,
         timing,
         coreIndex,
+        expectedGold: readiness >= 1 ? 0 : (costRow.available ? costRow.expectedGold : ANTIFRAGILE_HUGE_GOLD * 2),
         need: Math.max(0, target - (ownedCopyMap(selected).get(unit.name) || 0)),
       });
     });
@@ -539,6 +549,7 @@
         availability,
         timing: 1,
         coreIndex,
+        expectedGold: 0,
         need: readiness >= 1 ? 0 : 1,
       });
     });
@@ -581,7 +592,24 @@
     return clamp(raw.reduce((sum, x) => sum + x, 0) / raw.length, 0, 1);
   }
 
-  function antiFragileStatus(ready, bottleneckRatio) {
+  function hasEconomySignal(selected) {
+    const augments = new Set([...(selected.augments || []), ...(selected.augmentCats || [])].map(String));
+    if (augments.has("经济")) return true;
+    return ECONOMY_AUGMENTS.some(name => augments.has(name));
+  }
+
+  function economyActionLine(selected) {
+    if (!hasEconomySignal(selected)) return "";
+    const level = clamp(Number(selected.level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
+    if (level >= 8) return "经济符文已兑现：8级后再按核心质量D牌";
+    const augments = new Set([...(selected.augments || []), ...(selected.augmentCats || [])].map(String));
+    const levelEcon = ["高端购物", "升级咯！", "升级咯", "对冲基金", "利滚利", "利滚利加强版"].some(name => augments.has(name));
+    const target = levelEcon ? 8 : (level < 7 ? 7 : 8);
+    return `经济符文：先拉${target}再D，不在${level}级追终局缺口`;
+  }
+
+  function antiFragileStatus(ready, bottleneckRatio, blocked) {
+    if (blocked) return "red";
     if (ready < ANTIFRAGILE_READY_YELLOW || bottleneckRatio >= ANTIFRAGILE_BOTTLENECK_RED) return "red";
     if (ready < ANTIFRAGILE_READY_GREEN || bottleneckRatio >= ANTIFRAGILE_BOTTLENECK_YELLOW) return "yellow";
     return "green";
@@ -606,13 +634,19 @@
     const option = routeOptionValue(t, selected, templates);
     const bottleneckPenalty = Math.round(Math.min(80, bottleneckRatio * ANTIFRAGILE_BOTTLENECK_PENALTY));
     const cvarPenalty = Math.round(worstLossRatio * ANTIFRAGILE_CVAR_PENALTY);
+    const lowProbBlocked = !!(bottleneck && bottleneck.need > 0 && Number(bottleneck.probability) <= ANTIFRAGILE_UNREACHABLE_PROB);
+    const hugeGoldBlocked = !!(bottleneck && bottleneck.need > 0 && Number(bottleneck.expectedGold) >= ANTIFRAGILE_HUGE_GOLD);
+    const blocked = lowProbBlocked || hugeGoldBlocked;
+    const blockPenalty = (lowProbBlocked ? ANTIFRAGILE_UNREACHABLE_PENALTY : 0) + (hugeGoldBlocked ? ANTIFRAGILE_HUGE_GOLD_PENALTY : 0);
+    const status = antiFragileStatus(ready, bottleneckRatio, blocked);
     const optionBonus = Math.round(option * ANTIFRAGILE_OPTION_BONUS);
     const readyBonus = Math.round(ready * ANTIFRAGILE_READY_BONUS);
     const hardPenalty = ready < ANTIFRAGILE_READY_YELLOW ? ANTIFRAGILE_HARD_GATE_PENALTY : ready < ANTIFRAGILE_READY_GREEN ? Math.round(ANTIFRAGILE_HARD_GATE_PENALTY / 2) : 0;
-    const score = Math.max(0, Math.round(stageResult.stageStrength - bottleneckPenalty - cvarPenalty - hardPenalty + optionBonus + readyBonus));
-    const status = antiFragileStatus(ready, bottleneckRatio);
-    const bottleneckText = bottleneck ? `${bottleneck.label}（核心度${Math.round(bottleneck.coreIndex)}，可达${Math.round((bottleneck.probability || 0) * 100)}%）` : "核心组件已基本到位";
-    const formula = `抗脆弱=${stageResult.stageStrength}-瓶颈${bottleneckPenalty}-下限${cvarPenalty}-硬门槛${hardPenalty}+期权${optionBonus}+准备${readyBonus}=${score}`;
+    const statusPenalty = status === "red" ? ANTIFRAGILE_RED_STATUS_PENALTY : 0;
+    const score = Math.max(0, Math.round(stageResult.stageStrength - bottleneckPenalty - cvarPenalty - hardPenalty - blockPenalty - statusPenalty + optionBonus + readyBonus));
+    const goldText = bottleneck && Number(bottleneck.expectedGold) > 0 ? `，约${Math.round(bottleneck.expectedGold)}金` : "";
+    const bottleneckText = bottleneck ? `${bottleneck.label}（核心度${Math.round(bottleneck.coreIndex)}，可达${Math.round((bottleneck.probability || 0) * 100)}%${goldText}）` : "核心组件已基本到位";
+    const formula = `抗脆弱=${stageResult.stageStrength}-瓶颈${bottleneckPenalty}-下限${cvarPenalty}-硬门槛${hardPenalty}-不可达${blockPenalty}-红灯${statusPenalty}+期权${optionBonus}+准备${readyBonus}=${score}`;
     return {
       score,
       ready,
@@ -624,6 +658,11 @@
       bottleneckPenalty,
       cvarPenalty,
       hardPenalty,
+      statusPenalty,
+      blockPenalty,
+      blocked,
+      lowProbBlocked,
+      hugeGoldBlocked,
       option,
       optionBonus,
       readyBonus,
@@ -1186,12 +1225,15 @@
     const earlyHits = (template.earlyUnits || []).filter(x => selectedUnits.has(x));
     const keep = (template.actions && template.actions.keep || template.earlyUnits || []).slice(0, 4);
     const primeLine = primeActionLine(template, selected);
+    const econLine = economyActionLine(selected);
     if (top && top.antiFragile) {
       const af = top.antiFragile;
       lines.push(`${af.label}，核心度${af.readyPct}%`);
-      if (af.status === "red") lines.push(`禁止硬定：先补${af.bottleneckText}`);
+      if (af.blocked) lines.push(`不可达瓶颈：${af.bottleneckText}，别为它D牌`);
+      else if (af.status === "red") lines.push(`禁止硬定：先补${af.bottleneckText}`);
       else if (af.status === "yellow") lines.push(`下一验证：补${af.bottleneckText}`);
     }
+    if (econLine) lines.push(econLine);
     if (primeLine) lines.push(primeLine);
     if (nextComponent) lines.push(`下件优先拿${nextComponent}`);
     else if (nextItem) lines.push(`装备往${nextItem}靠`);
