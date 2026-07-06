@@ -42,6 +42,21 @@ const ATTACK_ITEMS = ['鬼索的狂暴之刃', '疾射火炮', '卢安娜的飓�
 const AP_ITEMS = ['蓝霸符', '珠光护手', '班克斯的魔法帽', '巨人捕手', '斯塔缇克电刃', '朔极之矛'];
 const TANK_ITEMS = ['狂徒铠甲', '日炎斗篷', '石像鬼石板甲', '棘刺背心', '巨龙之爪', '圣盾使的誓约', '离子火花', '振奋盔甲'];
 const JAX_ITEMS = ['泰坦的坚决', '水银', '鬼索的狂暴之刃', '疾射火炮', '海克斯科技枪刃', '汲取剑'];
+const ITEM_ALIASES = {
+  羊刀: '鬼索的狂暴之刃',
+  鬼索: '鬼索的狂暴之刃',
+  火炮: '疾射火炮',
+  泰坦: '泰坦的坚决',
+  法爆: '珠光护手',
+  帽子: '班克斯的魔法帽',
+  轻语: '最后的轻语',
+  飓风: '卢安娜的飓风',
+  巨杀: '巨人捕手',
+  锐利: '锐利之刃',
+  狂徒: '狂徒铠甲',
+  离子: '离子火花',
+};
+const TANK_ITEM_SET = new Set(TANK_ITEMS);
 const UNIT_ALIASES = {
   蔚: ['vi', '皮城执法官', '执法官'],
   雷克顿: ['鳄鱼', 'renekton', '怒之领域'],
@@ -167,6 +182,174 @@ function roleOf(template) {
   if (/小天才|佐伊|猫咪|伊泽瑞尔|法爆|蓝霸符|大棒|女神之泪|灵能|爱心/.test(joined)) return '法系';
   if (/怪兽|九五|高端购物|升级咯/.test(joined)) return '九五';
   return '混合';
+}
+
+function canonicalItem(name) {
+  const raw = String(name || '').split('/')[0].trim();
+  return ITEM_ALIASES[raw] || raw;
+}
+
+function itemRecipeMap() {
+  const out = {};
+  Object.values(data.equip).filter(e => e && e.name).forEach(e => {
+    const parts = [e.synthesis1, e.synthesis2]
+      .filter(id => id && id !== '0')
+      .map(id => nameOf.item(id))
+      .filter(Boolean);
+    if (parts.length) out[e.name] = parts;
+  });
+  return out;
+}
+
+const ITEM_RECIPES = itemRecipeMap();
+
+function heroByName(name) {
+  return Object.values(data.chess)
+    .filter(h => h.name === name && String(h.setid) === '8' && String(h.showHeroTag) === '1')
+    .sort((a, b) => Number(a.price) - Number(b.price) || Number(a.id) - Number(b.id))[0] || null;
+}
+
+function priceOf(name) {
+  const h = heroByName(name);
+  return h ? Number(h.price) || null : null;
+}
+
+function starTargetFor(name) {
+  const price = priceOf(name) || 3;
+  return price <= 3 ? 3 : 2;
+}
+
+function traitsForHero(name) {
+  const h = heroByName(name);
+  if (!h) return [];
+  return uniq([...(String(h.species || '').split('|')), ...(String(h.class || '').split('|'))]
+    .filter(id => id && id !== '-1' && id !== '0')
+    .map(id => (data.race[id] || data.job[id] || {}).name)
+    .filter(Boolean));
+}
+
+function parseTraitLabel(label) {
+  const m = String(label || '').match(/^(\d+)(.+)$/);
+  if (!m) return null;
+  return { count: Number(m[1]), name: m[2], label: `${Number(m[1])}${m[2]}` };
+}
+
+function activeTraitsFromTemplate(template, modelComp) {
+  const rows = [];
+  if (modelComp && modelComp.detail && Array.isArray(modelComp.detail.traits)) {
+    modelComp.detail.traits
+      .filter(t => t && t.active)
+      .map(t => parseTraitLabel(t.label))
+      .filter(Boolean)
+      .forEach(t => rows.push(t));
+  }
+  [...(template.earlyTraits || []), template.name || ''].forEach(text => {
+    for (const m of String(text).matchAll(/(\d+)(幻灵战队|平民英雄|小天才|星之守护者|超级英雄|福牛守护者|战斗机甲|战队机甲|怪兽|地下魔盗团|AI程序|源计划：激光特工|源计划|混沌战士|护卫|斗士|决斗大师|秘术卫士|秘书卫士|情报特工|强袭枪手|吉祥物|爱心使者|黑客|灵能使|精英战士|气象主播)/g)) {
+      const normalized = m[2] === '战队机甲' ? '战斗机甲'
+        : m[2] === '秘书卫士' ? '秘术卫士'
+        : m[2] === '源计划' ? '源计划：激光特工'
+        : m[2];
+      rows.push({ count: Number(m[1]), name: normalized, label: `${Number(m[1])}${normalized}` });
+    }
+  });
+  const best = new Map();
+  rows.forEach(row => {
+    if (!best.has(row.name) || best.get(row.name).count < row.count) best.set(row.name, row);
+  });
+  return [...best.values()];
+}
+
+function roleFromModelHero(hero, carryName) {
+  if (!hero) return 'utility';
+  if (hero.name === carryName || hero.carry) return 'mainCarry';
+  const items = (hero.items || []).map(canonicalItem).filter(Boolean);
+  const tankItems = items.filter(x => TANK_ITEM_SET.has(x)).length;
+  if (items.length && tankItems < items.length) return 'subCarry';
+  if (hero.row <= 2 || tankItems || Number(hero.price) >= 4) return 'frontline';
+  return 'utility';
+}
+
+function roleFromBoardUnit(unit, carryName) {
+  if (!unit) return 'utility';
+  if (unit.name === carryName || unit.carry || /主C/.test(unit.role || '')) return 'mainCarry';
+  const items = (unit.items || []).map(canonicalItem).filter(x => ITEM_RECIPES[x] || TANK_ITEM_SET.has(x));
+  const tankItems = items.filter(x => TANK_ITEM_SET.has(x)).length;
+  if (items.length && tankItems < items.length) return 'subCarry';
+  if (unit.row <= 2 || /前排|坦|控制/.test(unit.role || '') || tankItems) return 'frontline';
+  return 'utility';
+}
+
+function profileItems(items, holder, role) {
+  return uniq((items || []).map(canonicalItem).filter(x => x && ITEM_RECIPES[x]))
+    .map(name => ({ name, holder, role, components: ITEM_RECIPES[name] || [] }));
+}
+
+function profileFromModel(template, modelComp) {
+  const heroes = modelComp && modelComp.detail && Array.isArray(modelComp.detail.heroes) ? modelComp.detail.heroes : [];
+  const carryHero = heroes.find(h => h.carry) || heroes.find(h => h.name === (modelComp.carry && modelComp.carry.hero)) || heroes[0] || {};
+  const carryName = carryHero.name || (modelComp.carry && modelComp.carry.hero) || (template.carryUnits || [])[0] || (template.coreUnits || [])[0];
+  const mainItems = profileItems((carryHero.items && carryHero.items.length ? carryHero.items : modelComp.carryItems || template.completedPrefs || []).slice(0, 3), carryName, 'mainCarry');
+  const units = heroes.map(h => {
+    const role = roleFromModelHero(h, carryName);
+    return {
+      name: h.name,
+      price: Number(h.price) || priceOf(h.name),
+      role,
+      starTarget: role === 'mainCarry' ? starTargetFor(h.name) : (Number(h.price) >= 4 ? 2 : 1),
+      items: profileItems(h.items || [], h.name, role).map(x => x.name),
+      traits: traitsForHero(h.name),
+    };
+  });
+  return {
+    source: 'model_results',
+    mainCarry: { name: carryName, starTarget: starTargetFor(carryName), items: mainItems.map(x => x.name) },
+    units,
+    activeTraits: activeTraitsFromTemplate(template, modelComp),
+    items: uniq([
+      ...mainItems,
+      ...heroes.flatMap(h => profileItems(h.items || [], h.name, roleFromModelHero(h, carryName))),
+      ...profileItems(template.completedPrefs || [], carryName, 'route'),
+    ].map(x => JSON.stringify(x))).map(x => JSON.parse(x)),
+  };
+}
+
+function profileFromTemplate(template) {
+  const board = Array.isArray(template.board) ? template.board : [];
+  const carryUnit = board.find(x => x.carry) || board.find(x => /主C/.test(x.role || '')) || null;
+  const carryName = (carryUnit && carryUnit.name) || (template.carryUnits || [])[0] || (template.coreUnits || [])[0];
+  const carryItems = (carryUnit && carryUnit.items && carryUnit.items.length ? carryUnit.items : template.completedPrefs || []).slice(0, 3);
+  const unitNames = uniq(board.length ? board.map(x => x.name) : (template.coreUnits || []));
+  const units = unitNames.map(name => {
+    const row = board.find(x => x.name === name);
+    const role = roleFromBoardUnit(row || { name, row: 4, role: '' }, carryName);
+    return {
+      name,
+      price: priceOf(name),
+      role,
+      starTarget: role === 'mainCarry' ? starTargetFor(name) : ((priceOf(name) || 1) >= 4 ? 2 : 1),
+      items: profileItems(row && row.items || [], name, role).map(x => x.name),
+      traits: traitsForHero(name),
+    };
+  });
+  const items = uniq([
+    ...profileItems(carryItems, carryName, 'mainCarry'),
+    ...board.flatMap(u => profileItems(u.items || [], u.name, roleFromBoardUnit(u, carryName))),
+    ...profileItems(template.completedPrefs || [], carryName, 'route'),
+  ].map(x => JSON.stringify(x))).map(x => JSON.parse(x));
+  return {
+    source: 'template',
+    mainCarry: { name: carryName, starTarget: starTargetFor(carryName), items: profileItems(carryItems, carryName, 'mainCarry').map(x => x.name) },
+    units,
+    activeTraits: activeTraitsFromTemplate(template, null),
+    items,
+  };
+}
+
+function attachRouteProfiles(templatesIn) {
+  return templatesIn.map(t => {
+    const comp = modelCompForLine(t.name);
+    return { ...t, routeProfile: comp ? profileFromModel(t, comp) : profileFromTemplate(t) };
+  });
 }
 
 function templateHasMechaPrime(template) {
@@ -631,6 +814,7 @@ function buildOptions(templates) {
         name,
         priority: (unitCount[name] || 0) * 6 + (midUnitCount[name] || 0) * 3 + (coreUnitCount[name] || 0),
         price: unitMetaByName[name] ? unitMetaByName[name].price : null,
+        traits: traitsForHero(name),
         aliases: unitAliasesFor(name),
       }))
       .sort((a, b) => b.priority - a.priority || (a.price || 9) - (b.price || 9) || a.name.localeCompare(b.name, 'zh-Hans-CN')),
@@ -738,7 +922,7 @@ function rank(templates, selected, weights) {
     .slice(0, 6);
 }
 
-const templates = attachPrimePlans([...manualTemplates, ...officialTemplates()]);
+const templates = attachPrimePlans(attachRouteProfiles([...manualTemplates, ...officialTemplates()]));
 
 function sameSet(a, b) {
   const aa = uniq(a).sort();
