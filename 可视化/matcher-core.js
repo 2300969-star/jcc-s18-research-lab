@@ -307,39 +307,46 @@
   }
 
   function bestCrafts(t, selectedItems, w) {
-    const components = selectedComponentList(selectedItems);
+    // 贪心撮合：散件是互斥资源——一件散件只能进一个合成对或计一次单件分，
+    // 杜绝"三件散件被记成三个可立即合成"的重复计分
+    const pool = countComponents(selectedComponentList(selectedItems));
     const items = profileItems(t);
+    const candidates = items
+      .filter(item => (item.components || []).length === 2)
+      .map(item => ({ item, recipe: item.components, base: roleItemWeight(item.role, w) }))
+      .sort((a, b) => b.base - a.base);
     const rows = [];
-    items.forEach(item => {
-      const recipe = item.components || [];
-      if (recipe.length !== 2) return;
-      const base = roleItemWeight(item.role, w);
-      if (hasRecipe(components, recipe)) {
-        rows.push({
-          item,
-          pts: Math.round(base * w.immediateCraftRatio),
-          evidence: `${recipe[0]}+${recipe[1]}→${item.name}（${roleLabel(item.role)}${itemRankLabel(item, items)}可立即合成）`,
-          kind: "craft",
-        });
-      } else {
-        const hit = recipe.find(x => components.includes(x));
-        if (hit) {
-          rows.push({
-            item,
-            pts: Math.round(base * w.singleComponentRatio),
-            evidence: `${hit} 属于${item.name}分解件`,
-            kind: "component",
-          });
-        }
-      }
+    const usedItems = new Set();
+    // 第一轮：高价值成装优先配对，配上即消耗两件散件
+    candidates.forEach(({ item, recipe, base }) => {
+      if (usedItems.has(item.name)) return;
+      const need = countComponents(recipe);
+      const ok = Object.entries(need).every(([part, n]) => (pool[part] || 0) >= n);
+      if (!ok) return;
+      Object.entries(need).forEach(([part, n]) => { pool[part] -= n; });
+      usedItems.add(item.name);
+      rows.push({
+        item,
+        pts: Math.round(base * w.immediateCraftRatio),
+        evidence: `${recipe[0]}+${recipe[1]}→${item.name}（${roleLabel(item.role)}${itemRankLabel(item, items)}可立即合成）`,
+        kind: "craft",
+      });
     });
-    const seen = new Set();
-    return rows.sort((a, b) => b.pts - a.pts).filter(row => {
-      const key = row.kind + row.item.name;
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
+    // 第二轮：剩余散件每件只计一次，记到还需要它的最高价值成装上
+    candidates.forEach(({ item, recipe, base }) => {
+      if (usedItems.has(item.name)) return;
+      const hit = recipe.find(part => (pool[part] || 0) > 0);
+      if (!hit) return;
+      pool[hit] -= 1;
+      usedItems.add(item.name);
+      rows.push({
+        item,
+        pts: Math.round(base * w.singleComponentRatio),
+        evidence: `${hit} 属于${item.name}分解件`,
+        kind: "component",
+      });
     });
+    return rows;
   }
 
   function componentDirection(items) {
