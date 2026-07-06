@@ -614,6 +614,19 @@ function renderBoard(body, t) {
     }
   }
 }
+function renderPrimePlan(body, t) {
+  const plan = t && t.primePlan;
+  if (!plan) return;
+  mk("div", "detailSection", "至尊机甲交接", body);
+  mk("div", "detailLine", "模型实验依据：mecha_prime_results.json；只对战斗机甲路线生效。", body);
+  (plan.chain || []).forEach(step => {
+    mk("div", "detailLine", `${step.stage}：${step.holder}。${step.condition || ""}${step.evidence ? ` 证据：${step.evidence}` : ""}`, body);
+  });
+  (plan.rules || []).forEach(rule => {
+    mk("div", "detailLine", `触发：${rule.text || rule.holder}。${rule.evidence || ""}`, body);
+  });
+  (plan.conclusion || []).forEach(line => mk("div", "detailLine", line, body));
+}
 function openRouteDetail(row) {
   if (!row || !row.template) return;
   const t = row.template;
@@ -645,6 +658,7 @@ function openRouteDetail(row) {
     mk("div", "detailSection", "路线", body);
     mk("div", "detailLine", t.route.join(" -> "), body);
   }
+  renderPrimePlan(body, t);
   mk("div", "detailSection", "装备 / 符文", body);
   mk("div", "detailLine", "装备优先：" + ((t.completedPrefs || []).slice(0, 8).join("、") || "-"), body);
   mk("div", "detailLine", "散件优先：" + ((t.componentPrefs || []).slice(0, 8).join("、") || "-"), body);

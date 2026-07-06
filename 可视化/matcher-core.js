@@ -48,6 +48,8 @@
   };
   // 散件方向纯度达到 2/3 时，给同方向主C路线 10% 确定性加成。
   const COMPONENT_DIRECTION_BONUS = 0.1;
+  // primePlan 只给含战斗机甲实验结论的路线加命中证据；不影响无 primePlan 的路线。
+  const PRIME_PLAN_MATCH_BONUS = 10;
   // 星级权重：二星/三星来牌比单张更能代表可执行路线，放大该棋子的命中分。
   const STAR_SCORE_MULTIPLIERS = { 1: 1, 2: 1.5, 3: 2.5 };
   // 三星核心视为关键里程碑完成，给追三/核心路线一个确定性成型加成。
@@ -368,6 +370,13 @@
           missing.push(`路线未激活${sig.count}${sig.name}`);
         }
       });
+    }
+
+    const primeRule = primePlanRule(t, selected);
+    if (primeRule) {
+      score += PRIME_PLAN_MATCH_BONUS;
+      breakdown.synergy += PRIME_PLAN_MATCH_BONUS;
+      evidence.push(`至尊计划：${primeRule.text || primeRule.holder}`);
     }
 
     const selectedAttack = [...items].filter(x => ATTACK.includes(x)).length;
@@ -694,6 +703,50 @@
     return selected;
   }
 
+  function selectedUnitMap(selected) {
+    const map = new Map();
+    normalizeSelectedUnits(selected.units || []).forEach(row => {
+      map.set(row.name, row.star || 0);
+    });
+    return map;
+  }
+
+  function primeConditionMet(when, selected) {
+    if (!when) return true;
+    const units = selectedUnitMap(selected);
+    const level = Number(selected.level) || DEFAULT_LEVEL;
+    if (Number(when.levelGte) && level < Number(when.levelGte)) return false;
+    if (Number(when.levelLte) && level > Number(when.levelLte)) return false;
+    if ((when.hasUnits || []).some(name => !units.has(name))) return false;
+    const unitStars = when.unitStars || {};
+    for (const [name, star] of Object.entries(unitStars)) {
+      const have = units.has(name) ? (units.get(name) || 1) : 0;
+      if (have < Number(star)) return false;
+    }
+    return true;
+  }
+
+  function primePlanRule(template, selected) {
+    const plan = template && template.primePlan;
+    if (!plan || !Array.isArray(plan.rules)) return null;
+    return plan.rules
+      .filter(rule => primeConditionMet(rule.when, selected))
+      .sort((a, b) => Number(b.priority || 0) - Number(a.priority || 0))[0] || null;
+  }
+
+  function compactPrimeEvidence(text) {
+    const raw = String(text || "");
+    if (!raw) return "模型实验";
+    if (/裸转/.test(raw)) return "模型：三件套上限更高，裸青龙刀不够";
+    return "模型：" + raw.split(/[；;]/)[0].replace(/\s+/g, "");
+  }
+
+  function primeActionLine(template, selected) {
+    const rule = primePlanRule(template, selected);
+    if (!rule) return "";
+    return `至尊：${rule.text || `给${rule.holder}`}（${compactPrimeEvidence(rule.evidence)}）`;
+  }
+
   function actionLines(template, selected, top) {
     const lines = [];
     const selectedItems = new Set(selected.items || []);
@@ -702,6 +755,8 @@
     const nextItem = (template.completedPrefs || []).find(x => !selectedItems.has(x));
     const earlyHits = (template.earlyUnits || []).filter(x => selectedUnits.has(x));
     const keep = (template.actions && template.actions.keep || template.earlyUnits || []).slice(0, 4);
+    const primeLine = primeActionLine(template, selected);
+    if (primeLine) lines.push(primeLine);
     if (nextComponent) lines.push(`下件优先拿${nextComponent}`);
     else if (nextItem) lines.push(`装备往${nextItem}靠`);
     if (earlyHits.length >= 2) lines.push(`围绕${earlyHits.slice(0, 3).join("、")}定线`);
@@ -761,6 +816,28 @@
     const firstCost = expectedCostForUnit("A", 1, levelOne, { oddsData: odds, unitPrices });
     assert(firstCost.oddsPct === 100 && firstCost.available, "1级应按一费100%概率计算");
 
+    const primeTemplate = {
+      id: "prime",
+      name: "机甲测试",
+      quality: "S",
+      componentPrefs: [],
+      completedPrefs: [],
+      earlyUnits: ["德莱文"],
+      midUnits: ["贾克斯"],
+      coreUnits: ["蕾欧娜"],
+      actions: {},
+      primePlan: {
+        rules: [
+          { priority: 10, text: "至尊给德莱文", when: { hasUnits: ["德莱文"] }, evidence: "德莱文437 vs 贾克斯395" },
+          { priority: 30, text: "至尊转贾克斯", when: { unitStars: { 贾克斯: 2 } }, evidence: "贾克斯810 > 蕾欧娜419" },
+          { priority: 50, text: "至尊转蕾欧娜", when: { levelGte: 9, unitStars: { 蕾欧娜: 2 } }, evidence: "蕾欧娜1251 > 贾克斯1189；仅青龙刀不建议裸转" },
+        ],
+      },
+    };
+    assert(primeActionLine(primeTemplate, selectedFromSignals([{ kind: "units", value: "德莱文" }])).includes("德莱文"), "仅德莱文应给德莱文");
+    assert(primeActionLine(primeTemplate, selectedFromSignals([{ kind: "units", value: "德莱文" }, { kind: "units", value: "贾克斯", star: 2 }])).includes("贾克斯"), "贾克斯2星应转贾克斯");
+    assert(primeActionLine(primeTemplate, selectedFromSignals([{ kind: "levels", level: 9 }, { kind: "units", value: "蕾欧娜", star: 2 }])).includes("蕾欧娜"), "9级蕾欧娜2星应转蕾欧娜");
+
     const stickyTemplates = [
       { id: "old", name: "旧路线", quality: "S", coreUnits: [], earlyUnits: [], midUnits: [], completedPrefs: [], componentPrefs: [], augmentPrefs: [], augmentCats: [], actions: {} },
       { id: "new", name: "新路线", quality: "S", coreUnits: [], earlyUnits: [], midUnits: [], completedPrefs: ["X"], componentPrefs: [], augmentPrefs: [], augmentCats: [], actions: {} },
@@ -800,6 +877,7 @@
     MAX_LEVEL,
     STAGE_LEVEL_RULES,
     COMPONENT_DIRECTION_BONUS,
+    PRIME_PLAN_MATCH_BONUS,
     STAR_SCORE_MULTIPLIERS,
     STAR_MILESTONE_BONUS,
     REACHABILITY_GOLD_CAP,
@@ -813,6 +891,7 @@
     signalTowerHtml,
     selectedFromSignals,
     actionLines,
+    primeActionLine,
     activeTraitsForTemplate,
     parseTraitsInText,
     normalizeSelectedUnits,

@@ -31,6 +31,8 @@ const uniq = arr => [...new Set((arr || []).filter(Boolean))];
 const avg = arr => arr.length ? arr.reduce((s, x) => s + x, 0) / arr.length : 0;
 const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
 const modelResults = readOptional('model_results.json') || {};
+const mechaPrimeResults = readOptional('mecha_prime_results.json') || null;
+const mechaPrimeNames = new Set(((mechaPrimeResults && mechaPrimeResults.mechaMembers) || []).map(x => x.name));
 
 const COMPONENTS = [
   '暴风之剑', '反曲之弓', '无用大棒', '女神之泪', '锁子甲',
@@ -165,6 +167,28 @@ function roleOf(template) {
   if (/小天才|佐伊|猫咪|伊泽瑞尔|法爆|蓝霸符|大棒|女神之泪|灵能|爱心/.test(joined)) return '法系';
   if (/怪兽|九五|高端购物|升级咯/.test(joined)) return '九五';
   return '混合';
+}
+
+function templateHasMechaPrime(template) {
+  if (!mechaPrimeResults || !mechaPrimeResults.primePlan) return false;
+  const text = [
+    template.name,
+    template.family,
+    ...(template.earlyTraits || []),
+    ...(template.route || []),
+  ].filter(Boolean).join(' ');
+  const traitHit = [...text.matchAll(/([3-9])\s*(?:战斗机甲|战队机甲|机甲)/g)]
+    .some(m => Number(m[1]) >= 3);
+  const coreMecha = uniq([...(template.coreUnits || []), ...(template.midUnits || []), ...(template.earlyUnits || [])])
+    .filter(name => mechaPrimeNames.has(name)).length;
+  return traitHit || (coreMecha >= 3 && /机甲|贾克斯/.test(text));
+}
+
+function attachPrimePlans(templatesIn) {
+  if (!mechaPrimeResults || !mechaPrimeResults.primePlan) return templatesIn;
+  return templatesIn.map(t => templateHasMechaPrime(t)
+    ? { ...t, primePlan: mechaPrimeResults.primePlan }
+    : t);
 }
 
 function officialTemplates() {
@@ -714,7 +738,7 @@ function rank(templates, selected, weights) {
     .slice(0, 6);
 }
 
-const templates = [...manualTemplates, ...officialTemplates()];
+const templates = attachPrimePlans([...manualTemplates, ...officialTemplates()]);
 
 function sameSet(a, b) {
   const aa = uniq(a).sort();
