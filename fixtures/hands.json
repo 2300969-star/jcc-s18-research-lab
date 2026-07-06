@@ -1,0 +1,67 @@
+[
+  {
+    "id": "kaisa-threat-l2",
+    "label": "狗头+卡莎+莫甘娜+弓+泪 @2级",
+    "level": 2,
+    "signals": [
+      { "kind": "units", "value": "内瑟斯" },
+      { "kind": "units", "value": "卡莎" },
+      { "kind": "units", "value": "莫甘娜" },
+      { "kind": "items", "value": "反曲之弓" },
+      { "kind": "items", "value": "女神之泪" }
+    ],
+    "expect": {
+      "top1NameIncludes": ["情报特工怪兽卡莎"],
+      "evidenceIncludes": ["主C本体在手", "反曲之弓+女神之泪→斯塔缇克电刃", "莫甘娜=怪兽"]
+    }
+  },
+  {
+    "id": "laser-physical-l4",
+    "label": "李青+悠米+卡蜜尔+亚索+鳄鱼+弓+拳套+大剑 @4级",
+    "level": 4,
+    "signals": [
+      { "kind": "units", "value": "李青" },
+      { "kind": "units", "value": "悠米" },
+      { "kind": "units", "value": "卡蜜尔" },
+      { "kind": "units", "value": "亚索" },
+      { "kind": "units", "value": "雷克顿" },
+      { "kind": "items", "value": "反曲之弓" },
+      { "kind": "items", "value": "拳套" },
+      { "kind": "items", "value": "暴风之剑" }
+    ],
+    "expect": {
+      "topN": 2,
+      "topAnyNameIncludes": ["源计划", "激光"],
+      "evidenceIncludes": ["散件方向：物理"]
+    }
+  },
+  {
+    "id": "jax-mecha-l8",
+    "label": "贾克斯2星+蕾欧娜+厄加特+瑟提 @8级",
+    "level": 8,
+    "signals": [
+      { "kind": "units", "value": "贾克斯", "star": 2 },
+      { "kind": "units", "value": "蕾欧娜" },
+      { "kind": "units", "value": "厄加特" },
+      { "kind": "units", "value": "瑟提" }
+    ],
+    "expect": {
+      "top1NameIncludesAny": ["秘卫斗士贾克斯", "无情连打贾克斯", "机甲"],
+      "evidenceIncludes": ["主C本体在手"]
+    }
+  },
+  {
+    "id": "gadget-pair-l2",
+    "label": "安妮+波比 @2级",
+    "level": 2,
+    "signals": [
+      { "kind": "units", "value": "安妮" },
+      { "kind": "units", "value": "波比" }
+    ],
+    "expect": {
+      "topN": 2,
+      "topAnyNameIncludes": ["小天才"],
+      "evidenceIncludes": ["安妮", "波比"]
+    }
+  }
+]

@@ -1025,6 +1025,36 @@
     for (let i = 1; i < dropped.length; i++) {
       assert(dropped[i - 1].finalScore >= dropped[i].finalScore, "rank结果finalScore必须单调非增");
     }
+    if (typeof require === "function") {
+      const path = require("path");
+      const rootDir = path.resolve(__dirname, "..");
+      const matcherData = require(path.join(rootDir, "stage2_matcher_results.json"));
+      require(path.join(__dirname, "odds-data.js"));
+      const fixtureRows = require(path.join(rootDir, "fixtures", "hands.json"));
+      const fixtureUnitPrices = Object.fromEntries((matcherData.options.unitSearch || []).map(x => [x.name, x.price]));
+      const fixtureUnitTraits = Object.fromEntries((matcherData.options.unitSearch || []).map(x => [x.name, x.traits || []]));
+      fixtureRows.forEach(fx => {
+        const selectedFx = selectedFromSignals([...(fx.signals || []), { kind: "levels", level: fx.level }]);
+        const rows = rank(matcherData.templates, selectedFx, matcherData.weights, 5, {
+          oddsData: globalThis.JCC_ODDS,
+          unitPrices: fixtureUnitPrices,
+          unitTraits: fixtureUnitTraits,
+        });
+        const topNames = rows.slice(0, fx.expect.topN || 1).map(r => r.template.name).join(" / ");
+        const topEvidence = rows.slice(0, fx.expect.topN || 1).flatMap(r => r.evidence || []).join("；");
+        if (fx.expect.top1NameIncludes) {
+          fx.expect.top1NameIncludes.forEach(part => assert((rows[0].template.name || "").includes(part), `${fx.label} #1 应包含 ${part}，实际 ${rows[0].template.name}`));
+        }
+        if (fx.expect.top1NameIncludesAny) {
+          assert(fx.expect.top1NameIncludesAny.some(part => (rows[0].template.name || "").includes(part)), `${fx.label} #1 不符合预期，实际 ${rows[0].template.name}`);
+        }
+        if (fx.expect.topAnyNameIncludes) {
+          fx.expect.topAnyNameIncludes.forEach(part => assert(topNames.includes(part), `${fx.label} 前${fx.expect.topN || 1} 应包含 ${part}，实际 ${topNames}`));
+        }
+        (fx.expect.evidenceIncludes || []).forEach(part => assert(topEvidence.includes(part), `${fx.label} 证据应包含 ${part}，实际 ${topEvidence}`));
+      });
+      console.log(`fixture assertions passed (${fixtureRows.length})`);
+    }
     console.log("matcher-core assertions passed");
   }
 
