@@ -43,8 +43,11 @@ node discover.js
 node transition.js
 node numeric-lens.js
 node research-lab.js
-node stage2-matcher.js
 node reinvent.js
 node mecha-branch.js
+node mecha-prime-lab.js
+node mechanic-profiles.js
+node meta-solver.js
+node stage2-matcher.js
 echo
 echo "完成。明细见 notes/阵容全量明细.md，可视化打开 可视化/index.html（报告需按新统计手动修订）"

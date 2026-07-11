@@ -140,6 +140,33 @@ function bestItemsFor(u, star) {
   return best;
 }
 
+// 装备不能脱离阵容羁绊单独最优：同一英雄在不同棋盘上重新遍历三件套。
+const teamItemCache = new Map();
+function bestItemsForTeam(u, star, team, scenario = {}) {
+  const acts = activeTraits(team);
+  const traitKey = acts.map(a => `${a.id}:${a.need}`).sort().join('|');
+  const extraBonus = scenario.carryBonus || {};
+  const bonusKey = Object.entries(extraBonus).sort(([a], [b]) => a.localeCompare(b)).map(([k, v]) => `${k}:${v}`).join('|');
+  const key = `${u.id}:${star}:${traitKey}:${scenario.id || ''}:${bonusKey}`;
+  if (teamItemCache.has(key)) return teamItemCache.get(key);
+  const traitBonus = bonusFor(u, acts);
+  const bonus = { ...traitBonus };
+  for (const [k, v] of Object.entries(extraBonus || {})) {
+    if (k === 'manaMult' || k === 'ehpMult') bonus[k] = (bonus[k] || 1) * Number(v || 1);
+    else bonus[k] = Number(bonus[k] || 0) + Number(v || 0);
+  }
+  let best = null;
+  for (const ids of offenseCombos) {
+    const base = simulate(u.id, ids, star, 30, bonus);
+    const r = scenario.transformCarry ? scenario.transformCarry(base, { carry: u, items: { ids, items: ids.map(itemName) }, team, acts, stage: null }) : base;
+    if (r && (!best || r.dps > best.dps)) {
+      best = { dps: r.dps, ids, items: ids.map(itemName), auto: r.auto, spell: r.spell, proc: r.proc };
+    }
+  }
+  teamItemCache.set(key, best);
+  return best;
+}
+
 const tankCache = new Map();
 function bestTankFor(u, star) {
   const key = u.id + ':' + star;
@@ -209,11 +236,17 @@ function partialTeamHeuristic(team, carry, stage) {
   return team.reduce((s, u, i) => s + (i ? partialHeuristic(team.slice(0, i), u, carry, stage) : 0), 0);
 }
 
-function scoreTeam(stage, carry, carryItems, team) {
+function scoreTeam(stage, carry, carryItems, team, scenario = {}) {
   const acts = activeTraits(team);
   const util = acts.reduce((s, a) => s + (a.fx.util || 0), 0);
   const cStar = stage.star(carry, 'carry');
-  const sim = simulate(carry.id, carryItems.ids, cStar, 30, bonusFor(carry, acts));
+  const carryBonus = bonusFor(carry, acts);
+  for (const [k, v] of Object.entries(scenario.carryBonus || {})) {
+    if (k === 'manaMult' || k === 'ehpMult') carryBonus[k] = (carryBonus[k] || 1) * Number(v || 1);
+    else carryBonus[k] = Number(carryBonus[k] || 0) + Number(v || 0);
+  }
+  const baseSim = simulate(carry.id, carryItems.ids, cStar, 30, carryBonus);
+  const sim = scenario.transformCarry ? scenario.transformCarry(baseSim, { carry, items: carryItems, team, acts, stage }) : baseSim;
 
   const tanks = team.filter(u => u.name !== carry.name)
     .sort((a, b) => baseTankValue(b) - baseTankValue(a))
@@ -279,8 +312,7 @@ function findStageComps(stage) {
     const priceTax = u.price * stage.pricePenalty * 0.7 + (u.price === 5 ? stage.fivePenalty : 0);
     return { u, star, best, seedScore: best.dps - priceTax };
   }).filter(x => x.best)
-    .sort((a, b) => b.seedScore - a.seedScore)
-    .slice(0, 18);
+    .sort((a, b) => b.seedScore - a.seedScore);
 
   const finals = [];
   for (const cc of carryCands) {
@@ -308,7 +340,8 @@ function findStageComps(stage) {
         .map(x => x.t);
     }
     beam.slice(0, 8).forEach(team => {
-      const s = scoreTeam(stage, cc.u, cc.best, team);
+      const optimizedItems = bestItemsForTeam(cc.u, cc.star, team);
+      const s = scoreTeam(stage, cc.u, optimizedItems, team);
       const row = {
         stage: stage.key,
         stageTitle: stage.title,
@@ -316,7 +349,10 @@ function findStageComps(stage) {
         carry: cc.u.name,
         carryPrice: cc.u.price,
         carryStar: cc.star,
-        carryItems: cc.best.items,
+        carryId: cc.u.id,
+        carryItems: optimizedItems.items,
+        carryItemIds: optimizedItems.ids,
+        carryTraitBonus: bonusFor(cc.u, activeTraits(team)),
         officialFlag: officialCarries.has(cc.u.name) ? '官方主C' : officialUsed.has(cc.u.name) ? '官方配角' : '野路子',
         team: team.map(u => ({ name: u.name, price: u.price })),
         ...s,
@@ -339,7 +375,59 @@ function findStageComps(stage) {
     carrySeen.add(r.carry);
     return true;
   });
-  return [...diverse, ...sorted.filter(r => !diverse.includes(r))].slice(0, 8);
+  return {
+    top: [...diverse, ...sorted.filter(r => !diverse.includes(r))].slice(0, 8),
+    byCarry: diverse,
+  };
+}
+
+// 条件场景只约束机制所需棋子，棋盘和装备仍由同一束搜索自动推出。
+function optimizeScenario(stageKey, carryName, mandatoryNames = [], scenario = {}) {
+  const stage = STAGES.find(s => s.key === stageKey);
+  const carry = unitByName[carryName];
+  if (!stage || !carry || !stage.carryCosts.includes(carry.price)) return [];
+  const allowed = units.filter(u => u.price <= stage.maxCost);
+  const mandatory = mandatoryNames.map(name => unitByName[name]).filter(Boolean).filter(u => u.name !== carry.name);
+  if (mandatory.some(u => !allowed.includes(u)) || mandatory.length + 1 > stage.level) return [];
+  let beam = [[carry, ...mandatory]];
+  for (let slot = beam[0].length; slot < stage.level; slot++) {
+    const next = [];
+    for (const team of beam) {
+      const names = new Set(team.map(u => u.name));
+      allowed.filter(u => !names.has(u.name))
+        .map(u => ({ u, h: partialHeuristic(team, u, carry, stage) }))
+        .sort((a, b) => b.h - a.h)
+        .slice(0, stage.expand)
+        .forEach(x => next.push([...team, x.u]));
+    }
+    const seen = new Set();
+    beam = next.map(t => ({ t, h: partialTeamHeuristic(t, carry, stage) }))
+      .sort((a, b) => b.h - a.h)
+      .filter(x => {
+        const key = x.t.map(u => u.name).sort().join(',');
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      })
+      .slice(0, stage.beam)
+      .map(x => x.t);
+  }
+  return beam.slice(0, 10).map(team => {
+    const items = bestItemsForTeam(carry, stage.star(carry, 'carry'), team, scenario);
+    const result = scoreTeam(stage, carry, items, team, scenario);
+    return {
+      stage: stage.key,
+      level: stage.level,
+      carry: carry.name,
+      carryPrice: carry.price,
+      carryStar: stage.star(carry, 'carry'),
+      carryItems: items.items,
+      carryItemIds: items.ids,
+      carryTraitBonus: bonusFor(carry, activeTraits(team)),
+      team: team.map(u => ({ name: u.name, price: u.price })),
+      ...result,
+    };
+  }).sort((a, b) => b.score - a.score);
 }
 
 function numericMonsters() {
@@ -507,7 +595,9 @@ function writeReport(out) {
   fs.writeFileSync(path.join(ROOT, 'reports', '阵容发现研究.md'), lines.join('\n'));
 }
 
-const stageComps = Object.fromEntries(STAGES.map(s => [s.key, findStageComps(s)]));
+const stageSearch = Object.fromEntries(STAGES.map(s => [s.key, findStageComps(s)]));
+const stageComps = Object.fromEntries(STAGES.map(s => [s.key, stageSearch[s.key].top]));
+const carryAtlas = Object.fromEntries(STAGES.map(s => [s.key, stageSearch[s.key].byCarry]));
 function generatedDate() {
   return new Intl.DateTimeFormat('en-CA', {
     timeZone: 'Asia/Shanghai',
@@ -528,6 +618,7 @@ const out = {
   },
   stages: STAGES.map(s => ({ key: s.key, title: s.title, level: s.level, note: s.note })),
   stageComps,
+  carryAtlas,
   numericMonsters: numericMonsters(),
   shopModel: shopModel(stageComps),
   augmentLeads: augmentLeads(),
@@ -549,3 +640,5 @@ for (const s of STAGES) {
   console.log(`${s.title}: ${top.carry}${top.carryStar}星 ${top.score}分 ${top.traits.slice(0, 4).join('/')}`);
 }
 console.log('输出: discovery_results.json, 可视化/discovery-data.js, reports/阵容发现研究.md');
+
+module.exports = { optimizeScenario, activeTraits, bonusFor, units, unitByName, STAGES, itemName };
