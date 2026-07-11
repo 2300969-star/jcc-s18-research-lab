@@ -1,6 +1,6 @@
 {
  "version": "17.17.6b-S18",
- "generated": "2026-07-11",
+ "generated": "2026-07-12",
  "source": {
   "officialLineups": 44,
   "officialSTier": 15,
@@ -19,7 +19,7 @@
   "units": [
    {
     "name": "蔚",
-    "priority": 28
+    "priority": 31
    },
    {
     "name": "雷克顿",
@@ -74,6 +74,10 @@
     "priority": 11
    },
    {
+    "name": "内瑟斯",
+    "priority": 10
+   },
+   {
     "name": "伊泽瑞尔",
     "priority": 9
    },
@@ -98,10 +102,6 @@
     "priority": 7
    },
    {
-    "name": "内瑟斯",
-    "priority": 7
-   },
-   {
     "name": "佐伊",
     "priority": 6
    },
@@ -114,8 +114,16 @@
     "priority": 6
    },
    {
+    "name": "塞拉斯",
+    "priority": 5
+   },
+   {
     "name": "芮尔",
     "priority": 5
+   },
+   {
+    "name": "金克丝",
+    "priority": 4
    },
    {
     "name": "拉克丝",
@@ -124,10 +132,6 @@
    {
     "name": "卡蜜尔",
     "priority": 3
-   },
-   {
-    "name": "塞拉斯",
-    "priority": 2
    },
    {
     "name": "亚托克斯",
@@ -156,16 +160,27 @@
    {
     "name": "锐雯",
     "priority": 1
-   },
-   {
-    "name": "金克丝",
-    "priority": 1
    }
   ],
   "unitSearch": [
    {
+    "name": "蔚",
+    "priority": 255,
+    "price": 2,
+    "traits": [
+     "地下魔盗团",
+     "斗士",
+     "秘术卫士"
+    ],
+    "aliases": [
+     "vi",
+     "皮城执法官",
+     "执法官"
+    ]
+   },
+   {
     "name": "普朗克",
-    "priority": 227,
+    "priority": 239,
     "price": 1,
     "traits": [
      "超级英雄",
@@ -179,18 +194,20 @@
     ]
    },
    {
-    "name": "蔚",
-    "priority": 225,
+    "name": "李青",
+    "priority": 218,
     "price": 2,
     "traits": [
-     "地下魔盗团",
-     "斗士",
-     "秘术卫士"
+     "超级英雄",
+     "爱心使者",
+     "斗士"
     ],
     "aliases": [
-     "vi",
-     "皮城执法官",
-     "执法官"
+     "瞎子",
+     "盲僧",
+     "lee",
+     "leesin",
+     "lee sin"
     ]
    },
    {
@@ -207,23 +224,6 @@
      "托儿索",
      "疾风剑豪",
      "yasuo"
-    ]
-   },
-   {
-    "name": "李青",
-    "priority": 206,
-    "price": 2,
-    "traits": [
-     "超级英雄",
-     "爱心使者",
-     "斗士"
-    ],
-    "aliases": [
-     "瞎子",
-     "盲僧",
-     "lee",
-     "leesin",
-     "lee sin"
     ]
    },
    {
@@ -342,6 +342,21 @@
     ]
    },
    {
+    "name": "墨菲特",
+    "priority": 124,
+    "price": 2,
+    "traits": [
+     "超级英雄",
+     "吉祥物"
+    ],
+    "aliases": [
+     "石头人",
+     "石头",
+     "熔岩巨兽",
+     "malphite"
+    ]
+   },
+   {
     "name": "菲奥娜",
     "priority": 121,
     "price": 2,
@@ -384,21 +399,6 @@
      "武器大师",
      "jax",
      "拉面"
-    ]
-   },
-   {
-    "name": "墨菲特",
-    "priority": 112,
-    "price": 2,
-    "traits": [
-     "超级英雄",
-     "吉祥物"
-    ],
-    "aliases": [
-     "石头人",
-     "石头",
-     "熔岩巨兽",
-     "malphite"
     ]
    },
    {
@@ -493,6 +493,20 @@
     ]
    },
    {
+    "name": "内瑟斯",
+    "priority": 79,
+    "price": 1,
+    "traits": [
+     "幻灵战队",
+     "吉祥物"
+    ],
+    "aliases": [
+     "狗头",
+     "沙漠死神",
+     "nasus"
+    ]
+   },
+   {
     "name": "伊泽瑞尔",
     "priority": 79,
     "price": 2,
@@ -571,20 +585,6 @@
     ]
    },
    {
-    "name": "内瑟斯",
-    "priority": 58,
-    "price": 1,
-    "traits": [
-     "幻灵战队",
-     "吉祥物"
-    ],
-    "aliases": [
-     "狗头",
-     "沙漠死神",
-     "nasus"
-    ]
-   },
-   {
     "name": "泰隆",
     "priority": 58,
     "price": 1,
@@ -612,6 +612,20 @@
      "莎米拉",
      "沙弥拉",
      "samira"
+    ]
+   },
+   {
+    "name": "塞拉斯",
+    "priority": 50,
+    "price": 1,
+    "traits": [
+     "幻灵战队",
+     "混沌战士"
+    ],
+    "aliases": [
+     "偷男",
+     "解脱者",
+     "sylas"
     ]
    },
    {
@@ -655,6 +669,20 @@
     ]
    },
    {
+    "name": "金克丝",
+    "priority": 43,
+    "price": 2,
+    "traits": [
+     "幻灵战队",
+     "淘气包"
+    ],
+    "aliases": [
+     "金克斯",
+     "暴走萝莉",
+     "jinx"
+    ]
+   },
+   {
     "name": "劫",
     "priority": 37,
     "price": 4,
@@ -680,6 +708,20 @@
      "虚空之眼",
      "velkoz",
      "vel'koz"
+    ]
+   },
+   {
+    "name": "艾克",
+    "priority": 35,
+    "price": 4,
+    "traits": [
+     "星之守护者",
+     "淘气包",
+     "秘术卫士"
+    ],
+    "aliases": [
+     "时间刺客",
+     "ekko"
     ]
    },
    {
@@ -722,20 +764,6 @@
      "琴女",
      "琴瑟仙女",
      "sona"
-    ]
-   },
-   {
-    "name": "艾克",
-    "priority": 32,
-    "price": 4,
-    "traits": [
-     "星之守护者",
-     "淘气包",
-     "秘术卫士"
-    ],
-    "aliases": [
-     "时间刺客",
-     "ekko"
     ]
    },
    {
@@ -820,20 +848,6 @@
      "虚空之女",
      "kaisa",
      "kai'sa"
-    ]
-   },
-   {
-    "name": "塞拉斯",
-    "priority": 20,
-    "price": 1,
-    "traits": [
-     "幻灵战队",
-     "混沌战士"
-    ],
-    "aliases": [
-     "偷男",
-     "解脱者",
-     "sylas"
     ]
    },
    {
@@ -941,20 +955,6 @@
      "aatrox",
      "aatrox damie",
      "aatroxdamie"
-    ]
-   },
-   {
-    "name": "金克丝",
-    "priority": 13,
-    "price": 2,
-    "traits": [
-     "幻灵战队",
-     "淘气包"
-    ],
-    "aliases": [
-     "金克斯",
-     "暴走萝莉",
-     "jinx"
     ]
    },
    {
@@ -1067,17 +1067,17 @@
    {
     "name": "暴风之剑",
     "type": "component",
-    "priority": 73
+    "priority": 76
    },
    {
     "name": "反曲之弓",
     "type": "component",
-    "priority": 61
+    "priority": 64
    },
    {
     "name": "无用大棒",
     "type": "component",
-    "priority": 59
+    "priority": 62
    },
    {
     "name": "负极斗篷",
@@ -1095,29 +1095,29 @@
     "priority": 46
    },
    {
+    "name": "拳套",
+    "type": "component",
+    "priority": 46
+   },
+   {
     "name": "日炎斗篷",
     "type": "completed",
     "priority": 44
    },
    {
-    "name": "拳套",
+    "name": "珠光护手",
+    "type": "completed",
+    "priority": 41
+   },
+   {
+    "name": "女神之泪",
     "type": "component",
-    "priority": 43
+    "priority": 40
    },
    {
     "name": "卢安娜的飓风",
     "type": "completed",
     "priority": 38
-   },
-   {
-    "name": "珠光护手",
-    "type": "completed",
-    "priority": 38
-   },
-   {
-    "name": "女神之泪",
-    "type": "component",
-    "priority": 37
    },
    {
     "name": "最后的轻语",
@@ -1145,6 +1145,11 @@
     "priority": 28
    },
    {
+    "name": "蓝霸符",
+    "type": "completed",
+    "priority": 27
+   },
+   {
     "name": "疾射火炮",
     "type": "completed",
     "priority": 25
@@ -1157,11 +1162,6 @@
    {
     "name": "巨人腰带",
     "type": "component",
-    "priority": 24
-   },
-   {
-    "name": "蓝霸符",
-    "type": "completed",
     "priority": 24
    },
    {
@@ -1200,14 +1200,14 @@
     "priority": 16
    },
    {
+    "name": "朔极之矛",
+    "type": "completed",
+    "priority": 15
+   },
+   {
     "name": "斯塔缇克电刃",
     "type": "completed",
     "priority": 14
-   },
-   {
-    "name": "朔极之矛",
-    "type": "completed",
-    "priority": 12
    },
    {
     "name": "水银",
@@ -1233,7 +1233,7 @@
   "augments": [
    {
     "name": "DD街区",
-    "priority": 45,
+    "priority": 48,
     "cats": [
      "经济"
     ],
@@ -1242,7 +1242,7 @@
    },
    {
     "name": "团队建设",
-    "priority": 36,
+    "priority": 39,
     "cats": [
      "经济"
     ],
@@ -1256,6 +1256,15 @@
      "经济"
     ],
     "desc": "你的商店会以比你当前等级高1级的几率来刷新英雄。提供3金币。",
+    "aliases": []
+   },
+   {
+    "name": "公理圆弧II",
+    "priority": 26,
+    "cats": [
+     "战力"
+    ],
+    "desc": "你的弈子们在击败时回复30法力值。",
     "aliases": []
    },
    {
@@ -1289,15 +1298,6 @@
      "升级了",
      "升级"
     ]
-   },
-   {
-    "name": "公理圆弧II",
-    "priority": 23,
-    "cats": [
-     "战力"
-    ],
-    "desc": "你的弈子们在击败时回复30法力值。",
-    "aliases": []
    },
    {
     "name": "便携锻炉",
@@ -1446,6 +1446,17 @@
     ],
     "desc": "提供1个【悠米】。她获得5法术加成、75%暴击几率并且她的技能可以暴击。",
     "aliases": []
+   },
+   {
+    "name": "羽量级选手 II",
+    "priority": 6,
+    "cats": [
+     "战力"
+    ],
+    "desc": "你的1费和2费英雄们获得30%攻击速度和移动速度。",
+    "aliases": [
+     "羽量级选手II"
+    ]
    },
    {
     "name": "炼狱合约",
@@ -1557,21 +1568,12 @@
     ],
     "desc": "商店刷新是免费的，直到这个回合结束为止。羁绊和其它强化不会受益于这些免费刷新。获得3金币。",
     "aliases": []
-   },
-   {
-    "name": "升星之运",
-    "priority": 4,
-    "cats": [
-     "经济"
-    ],
-    "desc": "每当你将1个在上一场战斗中登场的弈子升星时，获得1次免费商店刷新。获得6金币。",
-    "aliases": []
    }
   ],
   "augmentSearch": [
    {
     "name": "DD街区",
-    "priority": 45,
+    "priority": 48,
     "cats": [
      "经济"
     ],
@@ -1580,7 +1582,7 @@
    },
    {
     "name": "团队建设",
-    "priority": 36,
+    "priority": 39,
     "cats": [
      "经济"
     ],
@@ -1594,6 +1596,15 @@
      "经济"
     ],
     "desc": "你的商店会以比你当前等级高1级的几率来刷新英雄。提供3金币。",
+    "aliases": []
+   },
+   {
+    "name": "公理圆弧II",
+    "priority": 26,
+    "cats": [
+     "战力"
+    ],
+    "desc": "你的弈子们在击败时回复30法力值。",
     "aliases": []
    },
    {
@@ -1627,15 +1638,6 @@
      "升级了",
      "升级"
     ]
-   },
-   {
-    "name": "公理圆弧II",
-    "priority": 23,
-    "cats": [
-     "战力"
-    ],
-    "desc": "你的弈子们在击败时回复30法力值。",
-    "aliases": []
    },
    {
     "name": "便携锻炉",
@@ -1802,6 +1804,17 @@
     ],
     "desc": "提供1个【悠米】。她获得5法术加成、75%暴击几率并且她的技能可以暴击。",
     "aliases": []
+   },
+   {
+    "name": "羽量级选手 II",
+    "priority": 6,
+    "cats": [
+     "战力"
+    ],
+    "desc": "你的1费和2费英雄们获得30%攻击速度和移动速度。",
+    "aliases": [
+     "羽量级选手II"
+    ]
    },
    {
     "name": "登神长阶",
@@ -1953,6 +1966,15 @@
     "aliases": []
    },
    {
+    "name": "姐妹",
+    "priority": 3,
+    "cats": [
+     "英雄强化"
+    ],
+    "desc": "提供1个【金克丝】。当金克丝和蔚同时上场时，激活姐妹羁绊，她们将互相鼓励成长。",
+    "aliases": []
+   },
+   {
     "name": "利滚利",
     "priority": 3,
     "cats": [
@@ -1979,17 +2001,6 @@
     ],
     "desc": "提供1个【厄运小姐】。在与玩家的战斗中每登场3次后，你最强大的那个【厄运小姐】会掉落10-25金币（基于当前阶段）。",
     "aliases": []
-   },
-   {
-    "name": "羽量级选手 II",
-    "priority": 3,
-    "cats": [
-     "战力"
-    ],
-    "desc": "你的1费和2费英雄们获得30%攻击速度和移动速度。",
-    "aliases": [
-     "羽量级选手II"
-    ]
    },
    {
     "name": "终极飞升",
@@ -3332,15 +3343,6 @@
      "羁绊"
     ],
     "desc": "获得1个随机【纹章】和1个【装备重铸器】。  【装备重铸器】允许你将任一装备随机成另一件装备。",
-    "aliases": []
-   },
-   {
-    "name": "姐妹",
-    "priority": 0,
-    "cats": [
-     "英雄强化"
-    ],
-    "desc": "提供1个【金克丝】。当金克丝和蔚同时上场时，激活姐妹羁绊，她们将互相鼓励成长。",
     "aliases": []
    },
    {
@@ -4988,8 +4990,8 @@
      {
       "stage": "终局",
       "holder": "蕾欧娜",
-      "condition": "后期棋盘中蕾欧娜至尊总输出1251，但需结合专项星级触发。",
-      "evidence": "蕾欧娜2星 1251 vs #2 贾克斯 1077"
+      "condition": "后期棋盘中蕾欧娜至尊总输出1253，但需结合专项星级触发。",
+      "evidence": "蕾欧娜2星 1253 vs #2 贾克斯 1079"
      }
     ],
     "rules": [
@@ -5015,7 +5017,7 @@
         "贾克斯": 2
        }
       },
-      "evidence": "贾克斯2星三件专项 810，高于蕾欧娜1星青龙刀 419"
+      "evidence": "贾克斯2星三件专项 812，高于蕾欧娜1星青龙刀 421"
      },
      {
       "id": "late-leona-two-star",
@@ -5028,7 +5030,7 @@
         "蕾欧娜": 2
        }
       },
-      "evidence": "蕾欧娜2星三件 1251 > 贾克斯3星三件 1189；仅青龙刀时 540 vs 贾克斯2星三件 810，不建议裸转"
+      "evidence": "蕾欧娜2星三件 1253 > 贾克斯3星三件 1191；仅青龙刀时 542 vs 贾克斯2星三件 812，不建议裸转"
      }
     ],
     "conclusion": [
@@ -5768,8 +5770,8 @@
      {
       "stage": "终局",
       "holder": "蕾欧娜",
-      "condition": "后期棋盘中蕾欧娜至尊总输出1251，但需结合专项星级触发。",
-      "evidence": "蕾欧娜2星 1251 vs #2 贾克斯 1077"
+      "condition": "后期棋盘中蕾欧娜至尊总输出1253，但需结合专项星级触发。",
+      "evidence": "蕾欧娜2星 1253 vs #2 贾克斯 1079"
      }
     ],
     "rules": [
@@ -5795,7 +5797,7 @@
         "贾克斯": 2
        }
       },
-      "evidence": "贾克斯2星三件专项 810，高于蕾欧娜1星青龙刀 419"
+      "evidence": "贾克斯2星三件专项 812，高于蕾欧娜1星青龙刀 421"
      },
      {
       "id": "late-leona-two-star",
@@ -5808,7 +5810,7 @@
         "蕾欧娜": 2
        }
       },
-      "evidence": "蕾欧娜2星三件 1251 > 贾克斯3星三件 1189；仅青龙刀时 540 vs 贾克斯2星三件 810，不建议裸转"
+      "evidence": "蕾欧娜2星三件 1253 > 贾克斯3星三件 1191；仅青龙刀时 542 vs 贾克斯2星三件 812，不建议裸转"
      }
     ],
     "conclusion": [
@@ -7201,11 +7203,357 @@
    }
   },
   {
+   "id": "research-sisters-jinx",
+   "source": "research",
+   "quality": "S",
+   "name": "姐妹无限技能金克丝",
+   "family": "超英幻灵金克丝",
+   "goal": "姐妹限定；20层后进入导弹进化期",
+   "earlyUnits": [
+    "金克丝",
+    "蔚",
+    "塞拉斯",
+    "内瑟斯"
+   ],
+   "midUnits": [
+    "金克丝",
+    "蔚",
+    "普朗克",
+    "李青",
+    "墨菲特",
+    "塞拉斯"
+   ],
+   "coreUnits": [
+    "蔚",
+    "墨菲特",
+    "李青",
+    "艾克",
+    "塞拉斯",
+    "内瑟斯",
+    "普朗克",
+    "金克丝"
+   ],
+   "earlyTraits": [
+    "3超级英雄",
+    "2斗士",
+    "3幻灵战队"
+   ],
+   "componentPrefs": [
+    "女神之泪",
+    "无用大棒",
+    "拳套",
+    "暴风之剑",
+    "反曲之弓"
+   ],
+   "completedPrefs": [
+    "蓝霸符",
+    "朔极之矛",
+    "珠光护手"
+   ],
+   "augmentPrefs": [
+    "姐妹",
+    "公理圆弧II",
+    "羽量级选手 II",
+    "DD街区",
+    "团队建设"
+   ],
+   "augmentCats": [
+    "英雄强化",
+    "战力",
+    "经济"
+   ],
+   "monsterPrefs": [
+    "装备商人（经济）",
+    "魄罗粉丝（战力）"
+   ],
+   "route": [
+    "金克丝+蔚拿姐妹",
+    "6级3超英慢D金克丝三星",
+    "7级补3幻灵/2吉祥物",
+    "8级艾克开淘气包/秘卫"
+   ],
+   "boardNote": "金克丝沉底避开第一轮集火；蔚和超英前排分散站。20层前靠前排和控制保叠层，20层后利用额外导弹加速清场。",
+   "board": [
+    {
+     "name": "蔚",
+     "row": 1,
+     "col": 2,
+     "role": "主坦/姐妹核心"
+    },
+    {
+     "name": "墨菲特",
+     "row": 1,
+     "col": 4,
+     "role": "超英主坦"
+    },
+    {
+     "name": "李青",
+     "row": 1,
+     "col": 6,
+     "role": "斗士前排"
+    },
+    {
+     "name": "艾克",
+     "row": 2,
+     "col": 1,
+     "role": "淘气包/秘卫"
+    },
+    {
+     "name": "塞拉斯",
+     "row": 2,
+     "col": 4,
+     "role": "幻灵前排"
+    },
+    {
+     "name": "内瑟斯",
+     "row": 2,
+     "col": 7,
+     "role": "幻灵/吉祥物"
+    },
+    {
+     "name": "普朗克",
+     "row": 3,
+     "col": 4,
+     "role": "超级英雄"
+    },
+    {
+     "name": "金克丝",
+     "row": 4,
+     "col": 4,
+     "carry": true,
+     "role": "主C",
+     "items": [
+      "蓝霸符",
+      "朔极之矛",
+      "珠光护手"
+     ]
+    }
+   ],
+   "officialText": {
+    "early": "只有拿到【姐妹】才定线；2阶段用幻灵/斗士保血，金克丝和蔚都留。",
+    "equipment": "金克丝优先蓝霸符、朔极之矛、珠光护手；蓝霸的击杀回蓝是技能循环入口，不可按普通法系装估值。",
+    "hex": "【姐妹】是硬门槛；公理圆弧进一步压缩击杀后的第二次施法间隔。",
+    "enemy": "第一炮无法参与击杀、金克丝被切或前排过薄都会让成长断档；不是无条件强玩。"
+   },
+   "actions": {
+    "keep": [
+     "金克丝",
+     "蔚",
+     "普朗克",
+     "李青",
+     "墨菲特",
+     "塞拉斯",
+     "内瑟斯",
+     "艾克"
+    ],
+    "item": "先做蓝霸符和朔极之矛，保证首炮与击杀回蓝；第三件按模型优先珠光护手。",
+    "checkpoint": "有姐妹+金克丝蔚才启动；6级慢D金克丝三星，20次击杀前以保血和让金克丝收尾为第一目标。",
+    "stopLoss": "没有姐妹、金克丝无法两星或蓝装完全断档时，立即转幻灵女枪/超英法系。"
+   },
+   "role": "法系",
+   "strengthPrior": 0.89,
+   "mechanic": {
+    "type": "sisters-growth",
+    "requiredAugment": "姐妹",
+    "requiredUnits": [
+     "金克丝",
+     "蔚"
+    ],
+    "matchBonus": 18,
+    "missingPenalty": 60,
+    "threshold": 20,
+    "text": "金克丝每次击杀永久+2%法强；20次后增加导弹"
+   },
+   "routeProfile": {
+    "source": "template",
+    "mainCarry": {
+     "name": "金克丝",
+     "starTarget": 3,
+     "items": [
+      "蓝霸符",
+      "朔极之矛",
+      "珠光护手"
+     ]
+    },
+    "units": [
+     {
+      "name": "蔚",
+      "price": 2,
+      "role": "frontline",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "地下魔盗团",
+       "斗士",
+       "秘术卫士"
+      ]
+     },
+     {
+      "name": "墨菲特",
+      "price": 2,
+      "role": "frontline",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "超级英雄",
+       "吉祥物"
+      ]
+     },
+     {
+      "name": "李青",
+      "price": 2,
+      "role": "frontline",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "超级英雄",
+       "爱心使者",
+       "斗士"
+      ]
+     },
+     {
+      "name": "艾克",
+      "price": 4,
+      "role": "frontline",
+      "starTarget": 2,
+      "items": [],
+      "traits": [
+       "星之守护者",
+       "淘气包",
+       "秘术卫士"
+      ]
+     },
+     {
+      "name": "塞拉斯",
+      "price": 1,
+      "role": "frontline",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "幻灵战队",
+       "混沌战士"
+      ]
+     },
+     {
+      "name": "内瑟斯",
+      "price": 1,
+      "role": "frontline",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "幻灵战队",
+       "吉祥物"
+      ]
+     },
+     {
+      "name": "普朗克",
+      "price": 1,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "超级英雄",
+       "决斗大师"
+      ]
+     },
+     {
+      "name": "金克丝",
+      "price": 2,
+      "role": "mainCarry",
+      "starTarget": 3,
+      "items": [
+       "蓝霸符",
+       "朔极之矛",
+       "珠光护手"
+      ],
+      "traits": [
+       "幻灵战队",
+       "淘气包"
+      ]
+     }
+    ],
+    "activeTraits": [
+     {
+      "count": 3,
+      "name": "超级英雄",
+      "label": "3超级英雄"
+     },
+     {
+      "count": 2,
+      "name": "斗士",
+      "label": "2斗士"
+     },
+     {
+      "count": 3,
+      "name": "幻灵战队",
+      "label": "3幻灵战队"
+     }
+    ],
+    "items": [
+     {
+      "name": "蓝霸符",
+      "holder": "金克丝",
+      "role": "mainCarry",
+      "components": [
+       "女神之泪",
+       "女神之泪"
+      ]
+     },
+     {
+      "name": "朔极之矛",
+      "holder": "金克丝",
+      "role": "mainCarry",
+      "components": [
+       "暴风之剑",
+       "女神之泪"
+      ]
+     },
+     {
+      "name": "珠光护手",
+      "holder": "金克丝",
+      "role": "mainCarry",
+      "components": [
+       "无用大棒",
+       "拳套"
+      ]
+     },
+     {
+      "name": "蓝霸符",
+      "holder": "金克丝",
+      "role": "route",
+      "components": [
+       "女神之泪",
+       "女神之泪"
+      ]
+     },
+     {
+      "name": "朔极之矛",
+      "holder": "金克丝",
+      "role": "route",
+      "components": [
+       "暴风之剑",
+       "女神之泪"
+      ]
+     },
+     {
+      "name": "珠光护手",
+      "holder": "金克丝",
+      "role": "route",
+      "components": [
+       "无用大棒",
+       "拳套"
+      ]
+     }
+    ]
+   }
+  },
+  {
    "id": "official-1256",
    "source": "official",
    "quality": "S",
    "name": "超英伊泽瑞尔4情报特工3超级英雄2斗士",
    "teamScore": 3917,
+   "strengthPrior": 0.06,
    "carryUnits": [
     "伊泽瑞尔"
    ],
@@ -7616,6 +7964,7 @@
    "quality": "S",
    "name": "黑客贾克斯3战斗机甲2黑客2斗士",
    "teamScore": 3739,
+   "strengthPrior": 0.92,
    "carryUnits": [
     "贾克斯"
    ],
@@ -8023,8 +8372,8 @@
      {
       "stage": "终局",
       "holder": "蕾欧娜",
-      "condition": "后期棋盘中蕾欧娜至尊总输出1251，但需结合专项星级触发。",
-      "evidence": "蕾欧娜2星 1251 vs #2 贾克斯 1077"
+      "condition": "后期棋盘中蕾欧娜至尊总输出1253，但需结合专项星级触发。",
+      "evidence": "蕾欧娜2星 1253 vs #2 贾克斯 1079"
      }
     ],
     "rules": [
@@ -8050,7 +8399,7 @@
         "贾克斯": 2
        }
       },
-      "evidence": "贾克斯2星三件专项 810，高于蕾欧娜1星青龙刀 419"
+      "evidence": "贾克斯2星三件专项 812，高于蕾欧娜1星青龙刀 421"
      },
      {
       "id": "late-leona-two-star",
@@ -8063,7 +8412,7 @@
         "蕾欧娜": 2
        }
       },
-      "evidence": "蕾欧娜2星三件 1251 > 贾克斯3星三件 1189；仅青龙刀时 540 vs 贾克斯2星三件 810，不建议裸转"
+      "evidence": "蕾欧娜2星三件 1253 > 贾克斯3星三件 1191；仅青龙刀时 542 vs 贾克斯2星三件 812，不建议裸转"
      }
     ],
     "conclusion": [
@@ -8079,6 +8428,7 @@
    "quality": "S",
    "name": "小天才九五5小天才2福牛守护者2吉祥物",
    "teamScore": 3561,
+   "strengthPrior": 1.01,
    "carryUnits": [
     "佐伊"
    ],
@@ -8599,6 +8949,7 @@
    "quality": "A",
    "name": "平民怪兽枪3平民英雄2枪手",
    "teamScore": 3276,
+   "strengthPrior": -0.03,
    "carryUnits": [
     "莎弥拉"
    ],
@@ -9055,6 +9406,7 @@
    "quality": "A",
    "name": "超英希维尔4枪手3超级英雄2吉祥物",
    "teamScore": 3120,
+   "strengthPrior": 0.2,
    "carryUnits": [
     "希维尔"
    ],
@@ -9483,6 +9835,7 @@
    "quality": "S",
    "name": "无情连打贾克斯5战队机甲4斗士2护卫",
    "teamScore": 2978,
+   "strengthPrior": 0.65,
    "carryUnits": [
     "贾克斯"
    ],
@@ -9898,8 +10251,8 @@
      {
       "stage": "终局",
       "holder": "蕾欧娜",
-      "condition": "后期棋盘中蕾欧娜至尊总输出1251，但需结合专项星级触发。",
-      "evidence": "蕾欧娜2星 1251 vs #2 贾克斯 1077"
+      "condition": "后期棋盘中蕾欧娜至尊总输出1253，但需结合专项星级触发。",
+      "evidence": "蕾欧娜2星 1253 vs #2 贾克斯 1079"
      }
     ],
     "rules": [
@@ -9925,7 +10278,7 @@
         "贾克斯": 2
        }
       },
-      "evidence": "贾克斯2星三件专项 810，高于蕾欧娜1星青龙刀 419"
+      "evidence": "贾克斯2星三件专项 812，高于蕾欧娜1星青龙刀 421"
      },
      {
       "id": "late-leona-two-star",
@@ -9938,7 +10291,7 @@
         "蕾欧娜": 2
        }
       },
-      "evidence": "蕾欧娜2星三件 1251 > 贾克斯3星三件 1189；仅青龙刀时 540 vs 贾克斯2星三件 810，不建议裸转"
+      "evidence": "蕾欧娜2星三件 1253 > 贾克斯3星三件 1191；仅青龙刀时 542 vs 贾克斯2星三件 812，不建议裸转"
      }
     ],
     "conclusion": [
@@ -9954,6 +10307,7 @@
    "quality": "S",
    "name": "秘卫斗士贾克斯4斗士3秘术卫士3战斗机甲",
    "teamScore": 2849,
+   "strengthPrior": 1.03,
    "carryUnits": [
     "贾克斯"
    ],
@@ -10417,8 +10771,8 @@
      {
       "stage": "终局",
       "holder": "蕾欧娜",
-      "condition": "后期棋盘中蕾欧娜至尊总输出1251，但需结合专项星级触发。",
-      "evidence": "蕾欧娜2星 1251 vs #2 贾克斯 1077"
+      "condition": "后期棋盘中蕾欧娜至尊总输出1253，但需结合专项星级触发。",
+      "evidence": "蕾欧娜2星 1253 vs #2 贾克斯 1079"
      }
     ],
     "rules": [
@@ -10444,7 +10798,7 @@
         "贾克斯": 2
        }
       },
-      "evidence": "贾克斯2星三件专项 810，高于蕾欧娜1星青龙刀 419"
+      "evidence": "贾克斯2星三件专项 812，高于蕾欧娜1星青龙刀 421"
      },
      {
       "id": "late-leona-two-star",
@@ -10457,7 +10811,7 @@
         "蕾欧娜": 2
        }
       },
-      "evidence": "蕾欧娜2星三件 1251 > 贾克斯3星三件 1189；仅青龙刀时 540 vs 贾克斯2星三件 810，不建议裸转"
+      "evidence": "蕾欧娜2星三件 1253 > 贾克斯3星三件 1191；仅青龙刀时 542 vs 贾克斯2星三件 812，不建议裸转"
      }
     ],
     "conclusion": [
@@ -10473,6 +10827,7 @@
    "quality": "S",
    "name": "情报特工怪兽卡莎4情报特工3怪兽",
    "teamScore": 2340,
+   "strengthPrior": 1.36,
    "carryUnits": [
     "卡莎"
    ],
@@ -10951,6 +11306,7 @@
    "quality": "S",
    "name": "机甲秘术枪手3战斗机甲2枪手2吉祥物",
    "teamScore": 2114,
+   "strengthPrior": 0.62,
    "carryUnits": [
     "厄加特"
    ],
@@ -11453,8 +11809,8 @@
      {
       "stage": "终局",
       "holder": "蕾欧娜",
-      "condition": "后期棋盘中蕾欧娜至尊总输出1251，但需结合专项星级触发。",
-      "evidence": "蕾欧娜2星 1251 vs #2 贾克斯 1077"
+      "condition": "后期棋盘中蕾欧娜至尊总输出1253，但需结合专项星级触发。",
+      "evidence": "蕾欧娜2星 1253 vs #2 贾克斯 1079"
      }
     ],
     "rules": [
@@ -11480,7 +11836,7 @@
         "贾克斯": 2
        }
       },
-      "evidence": "贾克斯2星三件专项 810，高于蕾欧娜1星青龙刀 419"
+      "evidence": "贾克斯2星三件专项 812，高于蕾欧娜1星青龙刀 421"
      },
      {
       "id": "late-leona-two-star",
@@ -11493,7 +11849,7 @@
         "蕾欧娜": 2
        }
       },
-      "evidence": "蕾欧娜2星三件 1251 > 贾克斯3星三件 1189；仅青龙刀时 540 vs 贾克斯2星三件 810，不建议裸转"
+      "evidence": "蕾欧娜2星三件 1253 > 贾克斯3星三件 1191；仅青龙刀时 542 vs 贾克斯2星三件 812，不建议裸转"
      }
     ],
     "conclusion": [
@@ -11509,6 +11865,7 @@
    "quality": "S",
    "name": "超英猫咪3超级英雄3星之守护者2爱心使者",
    "teamScore": 2081,
+   "strengthPrior": -0.45,
    "carryUnits": [
     "悠米"
    ],
@@ -11931,6 +12288,7 @@
    "quality": "A",
    "name": "84机甲怪兽双子星3战斗机甲2护卫怪兽",
    "teamScore": 2048,
+   "strengthPrior": -0.92,
    "carryUnits": [
     "卑尔维斯"
    ],
@@ -12463,8 +12821,8 @@
      {
       "stage": "终局",
       "holder": "蕾欧娜",
-      "condition": "后期棋盘中蕾欧娜至尊总输出1251，但需结合专项星级触发。",
-      "evidence": "蕾欧娜2星 1251 vs #2 贾克斯 1077"
+      "condition": "后期棋盘中蕾欧娜至尊总输出1253，但需结合专项星级触发。",
+      "evidence": "蕾欧娜2星 1253 vs #2 贾克斯 1079"
      }
     ],
     "rules": [
@@ -12490,7 +12848,7 @@
         "贾克斯": 2
        }
       },
-      "evidence": "贾克斯2星三件专项 810，高于蕾欧娜1星青龙刀 419"
+      "evidence": "贾克斯2星三件专项 812，高于蕾欧娜1星青龙刀 421"
      },
      {
       "id": "late-leona-two-star",
@@ -12503,7 +12861,7 @@
         "蕾欧娜": 2
        }
       },
-      "evidence": "蕾欧娜2星三件 1251 > 贾克斯3星三件 1189；仅青龙刀时 540 vs 贾克斯2星三件 810，不建议裸转"
+      "evidence": "蕾欧娜2星三件 1253 > 贾克斯3星三件 1191；仅青龙刀时 542 vs 贾克斯2星三件 812，不建议裸转"
      }
     ],
     "conclusion": [
@@ -12519,6 +12877,7 @@
    "quality": "A",
    "name": "金钟罩李青4爱心使者3秘术卫士2AI程序",
    "teamScore": 1985,
+   "strengthPrior": -0.06,
    "carryUnits": [
     "娑娜"
    ],
@@ -12948,6 +13307,7 @@
    "quality": "S",
    "name": "决斗薇恩6决斗大师3源计划激光特工",
    "teamScore": 1927,
+   "strengthPrior": -0.32,
    "carryUnits": [
     "薇恩"
    ],
@@ -13335,6 +13695,7 @@
    "quality": "A",
    "name": "福牛泰隆6福牛守护者3混沌战士",
    "teamScore": 1899,
+   "strengthPrior": -0.44,
    "carryUnits": [
     "泰隆"
    ],
@@ -13826,6 +14187,7 @@
    "quality": "B",
    "name": "灵风原计划7原计划2强袭枪手",
    "teamScore": 1872,
+   "strengthPrior": 0.06,
    "carryUnits": [
     "厄斐琉斯"
    ],
@@ -14282,6 +14644,7 @@
    "quality": "A",
    "name": "小天才安妮5小天才2灵能使2黑客",
    "teamScore": 1846,
+   "strengthPrior": -0.98,
    "carryUnits": [
     "乐芙兰"
    ],
@@ -14677,6 +15040,7 @@
    "quality": "A",
    "name": "AI妖姬乐芙兰4AI程序3黑客2淘气包",
    "teamScore": 1820,
+   "strengthPrior": -0.35,
    "carryUnits": [
     "乐芙兰"
    ],
@@ -15129,6 +15493,7 @@
    "quality": "A",
    "name": "怪兽平民4精英4精英战士2平民英雄2枪手",
    "teamScore": 1771,
+   "strengthPrior": -0.67,
    "carryUnits": [
     "厄运小姐"
    ],
@@ -15616,6 +15981,7 @@
    "quality": "S",
    "name": "怪兽厄运小姐8怪兽1精英战士",
    "teamScore": 1724,
+   "strengthPrior": -0.96,
    "carryUnits": [
     "厄运小姐"
    ],
@@ -16124,6 +16490,7 @@
    "quality": "S",
    "name": "95秘卫枪手3秘书卫士2福牛守护者",
    "teamScore": 1680,
+   "strengthPrior": 0.46,
    "carryUnits": [
     "莎弥拉"
    ],
@@ -16678,6 +17045,7 @@
    "quality": "A",
    "name": "超英艾希5激光特工3超级英雄2决斗大师",
    "teamScore": 1638,
+   "strengthPrior": -0.53,
    "carryUnits": [
     "艾希"
    ],
@@ -17069,6 +17437,7 @@
    "quality": "S",
    "name": "九五平民枪手3平民英雄2枪手2吉祥物",
    "teamScore": 1598,
+   "strengthPrior": 0.21,
    "carryUnits": [
     "厄斐琉斯"
    ],
@@ -17604,6 +17973,7 @@
    "quality": "A",
    "name": "超级机甲德莱文5战斗机甲3超级英雄2斗士",
    "teamScore": 1560,
+   "strengthPrior": 0.29,
    "carryUnits": [
     "德莱文"
    ],
@@ -18150,8 +18520,8 @@
      {
       "stage": "终局",
       "holder": "蕾欧娜",
-      "condition": "后期棋盘中蕾欧娜至尊总输出1251，但需结合专项星级触发。",
-      "evidence": "蕾欧娜2星 1251 vs #2 贾克斯 1077"
+      "condition": "后期棋盘中蕾欧娜至尊总输出1253，但需结合专项星级触发。",
+      "evidence": "蕾欧娜2星 1253 vs #2 贾克斯 1079"
      }
     ],
     "rules": [
@@ -18177,7 +18547,7 @@
         "贾克斯": 2
        }
       },
-      "evidence": "贾克斯2星三件专项 810，高于蕾欧娜1星青龙刀 419"
+      "evidence": "贾克斯2星三件专项 812，高于蕾欧娜1星青龙刀 421"
      },
      {
       "id": "late-leona-two-star",
@@ -18190,7 +18560,7 @@
         "蕾欧娜": 2
        }
       },
-      "evidence": "蕾欧娜2星三件 1251 > 贾克斯3星三件 1189；仅青龙刀时 540 vs 贾克斯2星三件 810，不建议裸转"
+      "evidence": "蕾欧娜2星三件 1253 > 贾克斯3星三件 1191；仅青龙刀时 542 vs 贾克斯2星三件 812，不建议裸转"
      }
     ],
     "conclusion": [
@@ -18206,6 +18576,7 @@
    "quality": "A",
    "name": "星守灵能塔利娅5星之守护者4灵能使",
    "teamScore": 1524,
+   "strengthPrior": 0.19,
    "carryUnits": [
     "塔莉垭"
    ],
@@ -18725,6 +19096,7 @@
    "quality": "A",
    "name": "鸟盾劫6决斗大师3源计划特工3黑客",
    "teamScore": 1489,
+   "strengthPrior": 0.59,
    "carryUnits": [
     "劫"
    ],
@@ -19119,6 +19491,7 @@
    "quality": "A",
    "name": "灵能佐伊4灵能使3小天才2AI程序",
    "teamScore": 1424,
+   "strengthPrior": 0.02,
    "carryUnits": [
     "佐伊"
    ],
@@ -19599,6 +19972,7 @@
    "quality": "A",
    "name": "超英泰隆3超级英雄3混沌战士4福牛守护者",
    "teamScore": 1394,
+   "strengthPrior": -0.97,
    "carryUnits": [
     "泰隆"
    ],
@@ -19999,6 +20373,7 @@
    "quality": "A",
    "name": "怪兽佐伊2黑客2淘气包怪兽",
    "teamScore": 1365,
+   "strengthPrior": 1.57,
    "carryUnits": [
     "佐伊"
    ],
@@ -20449,6 +20824,7 @@
    "quality": "S",
    "name": "福牛混沌九五4福牛守护者3混沌战士2吉祥物",
    "teamScore": 1337,
+   "strengthPrior": 0.07,
    "carryUnits": [
     "佛耶戈"
    ],
@@ -21008,6 +21384,7 @@
    "quality": "A",
    "name": "单核克星维克兹6斗士2爱心使者2秘术卫士",
    "teamScore": 1310,
+   "strengthPrior": -0.56,
    "carryUnits": [
     "维克兹"
    ],
@@ -21427,6 +21804,7 @@
    "quality": "A",
    "name": "灵能娑娜4灵能使3秘术2福牛2斗士",
    "teamScore": 1285,
+   "strengthPrior": 0.17,
    "carryUnits": [
     "娑娜"
    ],
@@ -21944,6 +22322,7 @@
    "quality": "A",
    "name": "超英露露3超级英雄5吉祥物2爱心使者",
    "teamScore": 1260,
+   "strengthPrior": 0.64,
    "carryUnits": [
     "璐璐"
    ],
@@ -22440,6 +22819,7 @@
    "quality": "B",
    "name": "地下魔盗团转952吉祥物2秘术卫士",
    "teamScore": 0,
+   "strengthPrior": 0.66,
    "carryUnits": [
     "厄加特"
    ],
@@ -22917,6 +23297,7 @@
    "quality": "A",
    "name": "吉祥鸡牛猫队6吉祥物3超级英雄2爱心使者",
    "teamScore": 0,
+   "strengthPrior": -0.19,
    "carryUnits": [
     "悠米"
    ],
@@ -23347,6 +23728,7 @@
    "quality": "S",
    "name": "登神决斗天使6决斗大师3源计划",
    "teamScore": 0,
+   "strengthPrior": 0.43,
    "carryUnits": [
     "凯尔"
    ],
@@ -23760,6 +24142,7 @@
    "quality": "A",
    "name": "小天才佐伊5小天才2福牛守护者",
    "teamScore": 0,
+   "strengthPrior": -0.43,
    "carryUnits": [
     "佐伊"
    ],
@@ -24156,6 +24539,7 @@
    "quality": "A",
    "name": "小天才璐璐5小天才4吉祥物",
    "teamScore": 0,
+   "strengthPrior": 0.18,
    "carryUnits": [
     "璐璐"
    ],
@@ -24557,6 +24941,7 @@
    "quality": "A",
    "name": "超英赛娜3平民英雄3超级英雄2斗士",
    "teamScore": 0,
+   "strengthPrior": 0.22,
    "carryUnits": [
     "赛娜"
    ],
@@ -24965,6 +25350,7 @@
    "quality": "A",
    "name": "6斗拉面贾克斯6斗士3战斗机甲3护卫",
    "teamScore": 0,
+   "strengthPrior": 1.39,
    "carryUnits": [
     "贾克斯"
    ],
@@ -25399,8 +25785,8 @@
      {
       "stage": "终局",
       "holder": "蕾欧娜",
-      "condition": "后期棋盘中蕾欧娜至尊总输出1251，但需结合专项星级触发。",
-      "evidence": "蕾欧娜2星 1251 vs #2 贾克斯 1077"
+      "condition": "后期棋盘中蕾欧娜至尊总输出1253，但需结合专项星级触发。",
+      "evidence": "蕾欧娜2星 1253 vs #2 贾克斯 1079"
      }
     ],
     "rules": [
@@ -25426,7 +25812,7 @@
         "贾克斯": 2
        }
       },
-      "evidence": "贾克斯2星三件专项 810，高于蕾欧娜1星青龙刀 419"
+      "evidence": "贾克斯2星三件专项 812，高于蕾欧娜1星青龙刀 421"
      },
      {
       "id": "late-leona-two-star",
@@ -25439,7 +25825,7 @@
         "蕾欧娜": 2
        }
       },
-      "evidence": "蕾欧娜2星三件 1251 > 贾克斯3星三件 1189；仅青龙刀时 540 vs 贾克斯2星三件 810，不建议裸转"
+      "evidence": "蕾欧娜2星三件 1253 > 贾克斯3星三件 1191；仅青龙刀时 542 vs 贾克斯2星三件 812，不建议裸转"
      }
     ],
     "conclusion": [
@@ -25455,6 +25841,7 @@
    "quality": "A",
    "name": "幻灵厄运小姐5幻灵战队2淘气包2吉祥物",
    "teamScore": 0,
+   "strengthPrior": -1.36,
    "carryUnits": [
     "厄运小姐"
    ],
@@ -25820,6 +26207,7 @@
    "quality": "A",
    "name": "大闹天宫5战斗机甲3超级英雄2护卫",
    "teamScore": 0,
+   "strengthPrior": -1.25,
    "carryUnits": [
     "孙悟空"
    ],
@@ -26292,8 +26680,8 @@
      {
       "stage": "终局",
       "holder": "蕾欧娜",
-      "condition": "后期棋盘中蕾欧娜至尊总输出1251，但需结合专项星级触发。",
-      "evidence": "蕾欧娜2星 1251 vs #2 贾克斯 1077"
+      "condition": "后期棋盘中蕾欧娜至尊总输出1253，但需结合专项星级触发。",
+      "evidence": "蕾欧娜2星 1253 vs #2 贾克斯 1079"
      }
     ],
     "rules": [
@@ -26319,7 +26707,7 @@
         "贾克斯": 2
        }
       },
-      "evidence": "贾克斯2星三件专项 810，高于蕾欧娜1星青龙刀 419"
+      "evidence": "贾克斯2星三件专项 812，高于蕾欧娜1星青龙刀 421"
      },
      {
       "id": "late-leona-two-star",
@@ -26332,7 +26720,7 @@
         "蕾欧娜": 2
        }
       },
-      "evidence": "蕾欧娜2星三件 1251 > 贾克斯3星三件 1189；仅青龙刀时 540 vs 贾克斯2星三件 810，不建议裸转"
+      "evidence": "蕾欧娜2星三件 1253 > 贾克斯3星三件 1191；仅青龙刀时 542 vs 贾克斯2星三件 812，不建议裸转"
      }
     ],
     "conclusion": [
@@ -26348,6 +26736,7 @@
    "quality": "A",
    "name": "怒之领域6斗士3源计划激光特工2爱心使者",
    "teamScore": 0,
+   "strengthPrior": -1.27,
    "carryUnits": [
     "雷克顿"
    ],
@@ -26787,6 +27176,7 @@
    "quality": "A",
    "name": "超英亚索6决斗大师3超级英雄3源计划激光特工",
    "teamScore": 0,
+   "strengthPrior": -0.57,
    "carryUnits": [
     "亚索"
    ],
@@ -27219,6 +27609,7 @@
    "quality": "S",
    "name": "决斗剑姬6决斗大师2福牛守护者",
    "teamScore": 0,
+   "strengthPrior": -0.71,
    "carryUnits": [
     "菲奥娜"
    ],
@@ -27671,6 +28062,36 @@
    },
    "result": [
     {
+     "id": "official-1570",
+     "score": 50,
+     "breakdown": {
+      "base": 18,
+      "hero": 28,
+      "item": 0,
+      "augment": 0,
+      "synergy": 4,
+      "penalty": 0
+     },
+     "shares": {
+      "hero": 88,
+      "item": 0,
+      "augment": 0,
+      "synergy": 13
+     },
+     "evidence": [
+      "版本数值先验 +4",
+      "安妮 命中前期底座",
+      "波比 命中前期底座"
+     ],
+     "missing": [
+      "后续关键牌：费德提克、阿利斯塔、蕾欧娜、佐伊",
+      "还没选择装备，路线暂按来牌判断",
+      "还没选择符文，符文权重未生效"
+     ],
+     "penalties": [],
+     "template": "小天才九五5小天才2福牛守护者2吉祥物"
+    },
+    {
      "id": "manual-gadget-ap",
      "score": 46,
      "breakdown": {
@@ -27700,62 +28121,34 @@
      "template": "小天才法系 -> 佐伊/九五"
     },
     {
-     "id": "official-1570",
-     "score": 46,
+     "id": "official-1327",
+     "score": 44,
      "breakdown": {
-      "base": 18,
+      "base": 10,
       "hero": 28,
       "item": 0,
       "augment": 0,
-      "synergy": 0,
+      "synergy": 6,
       "penalty": 0
      },
      "shares": {
-      "hero": 100,
+      "hero": 82,
       "item": 0,
       "augment": 0,
-      "synergy": 0
+      "synergy": 18
      },
      "evidence": [
+      "版本数值先验 +6",
       "安妮 命中前期底座",
       "波比 命中前期底座"
      ],
      "missing": [
-      "后续关键牌：费德提克、阿利斯塔、蕾欧娜、佐伊",
+      "后续关键牌：拉莫斯、扎克、艾克、科加斯",
       "还没选择装备，路线暂按来牌判断",
       "还没选择符文，符文权重未生效"
      ],
      "penalties": [],
-     "template": "小天才九五5小天才2福牛守护者2吉祥物"
-    },
-    {
-     "id": "manual-mecha-draven-jax-leona",
-     "score": 42,
-     "breakdown": {
-      "base": 18,
-      "hero": 24,
-      "item": 0,
-      "augment": 0,
-      "synergy": 0,
-      "penalty": 0
-     },
-     "shares": {
-      "hero": 100,
-      "item": 0,
-      "augment": 0,
-      "synergy": 0
-     },
-     "evidence": [
-      "安妮 可中期承接",
-      "波比 命中前期底座"
-     ],
-     "missing": [
-      "后续关键牌：贾克斯、德莱文、孙悟空、瑟提",
-      "还没选择装备，路线暂按来牌判断",
-      "还没选择符文，符文权重未生效"
-     ],
-     "penalties": [],
-     "template": "机甲德莱文 -> 贾克斯 -> 蕾欧娜"
+     "template": "怪兽佐伊2黑客2淘气包怪兽"
     }
    ]
   },
@@ -27836,22 +28229,23 @@
     },
     {
      "id": "official-1570",
-     "score": 67,
+     "score": 71,
      "breakdown": {
       "base": 18,
       "hero": 28,
       "item": 21,
       "augment": 0,
-      "synergy": 0,
+      "synergy": 4,
       "penalty": 0
      },
      "shares": {
-      "hero": 57,
-      "item": 43,
+      "hero": 53,
+      "item": 40,
       "augment": 0,
-      "synergy": 0
+      "synergy": 8
      },
      "evidence": [
+      "版本数值先验 +4",
       "安妮 命中前期底座",
       "波比 命中前期底座",
       "疾射火炮 命中核心成装"
@@ -27885,6 +28279,68 @@
    },
    "result": [
     {
+     "id": "official-1406",
+     "score": 111,
+     "breakdown": {
+      "base": 18,
+      "hero": 56,
+      "item": 24,
+      "augment": 8,
+      "synergy": 5,
+      "penalty": 0
+     },
+     "shares": {
+      "hero": 60,
+      "item": 26,
+      "augment": 9,
+      "synergy": 5
+     },
+     "evidence": [
+      "版本数值先验 +5",
+      "雷克顿 命中前期底座",
+      "亚索 命中前期底座",
+      "艾希 命中前期底座",
+      "蔚 命中前期底座",
+      "反曲之弓 命中散件优先级"
+     ],
+     "missing": [
+      "后续关键牌：科加斯、扎克、拉莫斯、伊泽瑞尔"
+     ],
+     "penalties": [],
+     "template": "情报特工怪兽卡莎4情报特工3怪兽"
+    },
+    {
+     "id": "official-1378",
+     "score": 108,
+     "breakdown": {
+      "base": 18,
+      "hero": 56,
+      "item": 24,
+      "augment": 8,
+      "synergy": 2,
+      "penalty": 0
+     },
+     "shares": {
+      "hero": 62,
+      "item": 27,
+      "augment": 9,
+      "synergy": 2
+     },
+     "evidence": [
+      "版本数值先验 +2",
+      "雷克顿 命中前期底座",
+      "亚索 命中前期底座",
+      "艾希 命中前期底座",
+      "蔚 命中前期底座",
+      "反曲之弓 命中散件优先级"
+     ],
+     "missing": [
+      "后续关键牌：费德提克、艾克、蕾欧娜、努努和威朗普"
+     ],
+     "penalties": [],
+     "template": "95秘卫枪手3秘书卫士2福牛守护者"
+    },
+    {
      "id": "manual-laser-duelist",
      "score": 106,
      "breakdown": {
@@ -27914,68 +28370,6 @@
      ],
      "penalties": [],
      "template": "源计划斗士/决斗 -> 卡莎/枪手/九五"
-    },
-    {
-     "id": "official-1406",
-     "score": 106,
-     "breakdown": {
-      "base": 18,
-      "hero": 56,
-      "item": 24,
-      "augment": 8,
-      "synergy": 0,
-      "penalty": 0
-     },
-     "shares": {
-      "hero": 64,
-      "item": 27,
-      "augment": 9,
-      "synergy": 0
-     },
-     "evidence": [
-      "雷克顿 命中前期底座",
-      "亚索 命中前期底座",
-      "艾希 命中前期底座",
-      "蔚 命中前期底座",
-      "反曲之弓 命中散件优先级",
-      "暴风之剑 命中散件优先级"
-     ],
-     "missing": [
-      "后续关键牌：科加斯、扎克、拉莫斯、伊泽瑞尔"
-     ],
-     "penalties": [],
-     "template": "情报特工怪兽卡莎4情报特工3怪兽"
-    },
-    {
-     "id": "official-1378",
-     "score": 106,
-     "breakdown": {
-      "base": 18,
-      "hero": 56,
-      "item": 24,
-      "augment": 8,
-      "synergy": 0,
-      "penalty": 0
-     },
-     "shares": {
-      "hero": 64,
-      "item": 27,
-      "augment": 9,
-      "synergy": 0
-     },
-     "evidence": [
-      "雷克顿 命中前期底座",
-      "亚索 命中前期底座",
-      "艾希 命中前期底座",
-      "蔚 命中前期底座",
-      "反曲之弓 命中散件优先级",
-      "暴风之剑 命中散件优先级"
-     ],
-     "missing": [
-      "后续关键牌：费德提克、艾克、蕾欧娜、努努和威朗普"
-     ],
-     "penalties": [],
-     "template": "95秘卫枪手3秘书卫士2福牛守护者"
     }
    ]
   }
@@ -28053,7 +28447,7 @@
      ]
     }
    ],
-   "researchChecked": 7
+   "researchChecked": 8
   }
  },
  "assumptions": [

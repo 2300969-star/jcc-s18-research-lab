@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { currentVersion } = require('./version-context');
 
 const ROOT = __dirname;
 const readJSON = p => JSON.parse(fs.readFileSync(path.join(ROOT, p), 'utf8'));
@@ -15,7 +16,7 @@ const data = {
 };
 
 const VERSION = readJSON('data/chess.js').version;
-const EDITION = '17.17.6';
+const EDITION = currentVersion(ROOT).edition;
 
 function splitCsv(s) {
   return String(s || '').split(',').map(x => x.trim()).filter(Boolean);

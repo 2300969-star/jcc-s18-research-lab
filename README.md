@@ -119,4 +119,4 @@ python3 -m http.server 8765 --bind 127.0.0.1
 | data/race.js + job.js | 羁绊（种族/职业） |
 | data/versiondataconfig.js | 全模式版本索引，mode=8 且 is_newest_version=1 即当前怪兽入侵最新版 |
 
-创建：2026-07-05，基于版本 17.17.6-S18（2026-06-24 生效）。
+创建：2026-07-05，当前数据已同步至 17.17.6b-S18（2026-07-07 热更新）。

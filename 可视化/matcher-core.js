@@ -94,6 +94,7 @@
     futureMainCarryUnit: 24,
     futureCoreUnit: 10,
     futureItem: 8,
+    versionStrength: 4,
   };
 
   const ITEM_RECIPES = {
@@ -636,7 +637,8 @@
     const cvarPenalty = Math.round(worstLossRatio * ANTIFRAGILE_CVAR_PENALTY);
     const lowProbBlocked = !!(bottleneck && bottleneck.need > 0 && Number(bottleneck.probability) <= ANTIFRAGILE_UNREACHABLE_PROB);
     const hugeGoldBlocked = !!(bottleneck && bottleneck.need > 0 && Number(bottleneck.expectedGold) >= ANTIFRAGILE_HUGE_GOLD);
-    const blocked = lowProbBlocked || hugeGoldBlocked;
+    const mechanicBlocked = !!stageResult.mechanicBlocked;
+    const blocked = lowProbBlocked || hugeGoldBlocked || mechanicBlocked;
     const blockPenalty = (lowProbBlocked ? ANTIFRAGILE_UNREACHABLE_PENALTY : 0) + (hugeGoldBlocked ? ANTIFRAGILE_HUGE_GOLD_PENALTY : 0);
     const status = antiFragileStatus(ready, bottleneckRatio, blocked);
     const optionBonus = Math.round(option * ANTIFRAGILE_OPTION_BONUS);
@@ -693,9 +695,11 @@
     const traits = normalizeSelectedTraits(selected.traits || []);
     const w = { ...fallbackWeights, ...(weights || {}) };
     const base = t.quality === "S" ? w.baseS : t.quality === "A" ? w.baseA : w.baseB;
-    let score = base;
+    const strengthPrior = Math.round((Number(t.strengthPrior) || 0) * (Number(w.versionStrength) || 0));
+    let score = base + strengthPrior;
     let heldValue = base;
     let futureValue = 0;
+    let mechanicBlocked = false;
     const breakdown = { base, hero: 0, item: 0, augment: 0, synergy: 0, future: 0, penalty: 0 };
     if (traits.length) {
       breakdown.trait = 0;
@@ -709,6 +713,7 @@
     const selectedCompleted = [...items].map(canonicalItem).filter(x => !COMPONENTS.includes(x));
     const selectedComponents = selectedComponentList(items);
     const mainCarryName = p.mainCarry && p.mainCarry.name;
+    if (strengthPrior) evidence.push(`版本数值先验 ${strengthPrior > 0 ? "+" : ""}${strengthPrior}`);
 
     unitRows.forEach(row => {
       const u = row.name;
@@ -805,6 +810,25 @@
       }
     });
 
+    if (t.mechanic) {
+      const requiredAugment = t.mechanic.requiredAugment;
+      const requiredUnits = t.mechanic.requiredUnits || [];
+      const active = (!requiredAugment || augments.has(requiredAugment)) && requiredUnits.every(name => units.has(name));
+      if (active) {
+        const bonus = Number(t.mechanic.matchBonus) || 0;
+        score += bonus;
+        heldValue += bonus;
+        breakdown.synergy += bonus;
+        evidence.unshift(`机制闭环：${t.mechanic.text}`);
+      } else {
+        mechanicBlocked = true;
+        const penalty = Number(t.mechanic.missingPenalty) || 0;
+        score -= penalty;
+        breakdown.penalty -= penalty;
+        penalties.push(`缺机制门槛：${requiredAugment || requiredUnits.join("、")}`);
+      }
+    }
+
     if (traits.length) {
       traits.forEach(sig => {
         const have = activeTraits.get(sig.name) || 0;
@@ -842,7 +866,7 @@
     if (traits.length) shares.trait = signalTotal > 0 ? Math.round((breakdown.trait || 0) / signalTotal * 100) : 0;
 
     return {
-      stageStrength: Math.max(0, Math.round(score)),
+      stageStrength: mechanicBlocked ? 0 : Math.max(0, Math.round(score)),
       heldValue: Math.max(0, Math.round(heldValue)),
       futureValue: Math.max(0, Math.round(futureValue)),
       breakdown,
@@ -850,6 +874,7 @@
       evidence: uniq(evidence).slice(0, 6),
       missing: uniq(missing).slice(0, 4),
       penalties: uniq(penalties).slice(0, 4),
+      mechanicBlocked,
     };
   }
 
@@ -1226,6 +1251,9 @@
     const keep = (template.actions && template.actions.keep || template.earlyUnits || []).slice(0, 4);
     const primeLine = primeActionLine(template, selected);
     const econLine = economyActionLine(selected);
+    const mechanic = template.mechanic;
+    const mechanicActive = mechanic && (!mechanic.requiredAugment || (selected.augments || []).includes(mechanic.requiredAugment))
+      && (mechanic.requiredUnits || []).every(name => selectedUnits.has(name));
     if (top && top.antiFragile) {
       const af = top.antiFragile;
       lines.push(`${af.label}，核心度${af.readyPct}%`);
@@ -1235,6 +1263,8 @@
     }
     if (econLine) lines.push(econLine);
     if (primeLine) lines.push(primeLine);
+    if (mechanicActive) lines.push(`机制：${mechanic.text}`);
+    else if (mechanic && mechanic.requiredAugment) lines.push(`缺${mechanic.requiredAugment}，这条路线不能定`);
     if (nextComponent) lines.push(`下件优先拿${nextComponent}`);
     else if (nextItem) lines.push(`装备往${nextItem}靠`);
     if (earlyHits.length >= 2) lines.push(`围绕${earlyHits.slice(0, 3).join("、")}定线`);
@@ -1343,6 +1373,29 @@
     assert(primeActionLine(primeTemplate, selectedFromSignals([{ kind: "units", value: "德莱文" }])).includes("德莱文"), "仅德莱文应给德莱文");
     assert(primeActionLine(primeTemplate, selectedFromSignals([{ kind: "units", value: "德莱文" }, { kind: "units", value: "贾克斯", star: 2 }])).includes("贾克斯"), "贾克斯2星应转贾克斯");
     assert(primeActionLine(primeTemplate, selectedFromSignals([{ kind: "levels", level: 9 }, { kind: "units", value: "蕾欧娜", star: 2 }])).includes("蕾欧娜"), "9级蕾欧娜2星应转蕾欧娜");
+
+    const mechanicTemplate = {
+      id: "sisters-test",
+      name: "姐妹测试",
+      quality: "S",
+      coreUnits: ["金克丝", "蔚"],
+      earlyUnits: ["金克丝", "蔚"],
+      midUnits: ["金克丝", "蔚"],
+      augmentPrefs: ["姐妹"],
+      actions: {},
+      mechanic: { requiredAugment: "姐妹", requiredUnits: ["金克丝", "蔚"], matchBonus: 28, missingPenalty: 60, text: "击杀成长" },
+      routeProfile: {
+        mainCarry: { name: "金克丝", starTarget: 3, items: [] },
+        units: [{ name: "金克丝", role: "mainCarry", starTarget: 3, traits: [] }, { name: "蔚", role: "frontline", starTarget: 3, traits: [] }],
+        items: [],
+        activeTraits: [],
+      },
+    };
+    const mechanicOff = scoreTemplate(mechanicTemplate, selectedFromSignals([{ kind: "units", value: "金克丝" }, { kind: "units", value: "蔚" }]), fallbackWeights, {});
+    const mechanicOn = scoreTemplate(mechanicTemplate, selectedFromSignals([{ kind: "units", value: "金克丝" }, { kind: "units", value: "蔚" }, { kind: "augments", value: "姐妹" }]), fallbackWeights, {});
+    assert(mechanicOn.stageStrength > mechanicOff.stageStrength + 80, "姐妹机制只有满足符文和双棋子时才应跃升");
+    assert(mechanicOn.evidence.some(x => x.includes("机制闭环")), "姐妹命中证据应显示机制闭环");
+    assert(mechanicOff.penalties.some(x => x.includes("机制门槛")), "缺姐妹时应显示机制门槛");
 
     const stickyTemplates = [
       { id: "old", name: "旧路线", quality: "S", coreUnits: [], earlyUnits: [], midUnits: [], completedPrefs: [], componentPrefs: [], augmentPrefs: [], augmentCats: [], actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 1, items: [] }, units: [], items: [], activeTraits: [] } },

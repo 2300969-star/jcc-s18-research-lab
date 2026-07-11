@@ -32,6 +32,7 @@ const avg = arr => arr.length ? arr.reduce((s, x) => s + x, 0) / arr.length : 0;
 const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
 const modelResults = readOptional('model_results.json') || {};
 const mechaPrimeResults = readOptional('mecha_prime_results.json') || null;
+const jinxSistersResults = readOptional('jinx_sisters_results.json') || null;
 const mechaPrimeNames = new Set(((mechaPrimeResults && mechaPrimeResults.mechaMembers) || []).map(x => x.name));
 
 const COMPONENTS = [
@@ -400,6 +401,7 @@ function officialTemplates() {
       quality: lineup.quality,
       name: lineName.replace(/[【】]/g, ''),
       teamScore: modelComp ? modelComp.sortID : undefined,
+      strengthPrior: modelComp ? Number(modelComp.score) || 0 : 0,
       carryUnits: modelComp && modelComp.carry ? [modelComp.carry.hero] : undefined,
       starTargets: modelComp && modelComp.carry ? [{
         name: modelComp.carry.hero,
@@ -723,6 +725,7 @@ const manualTemplates = [
     },
   },
 ];
+if (jinxSistersResults && jinxSistersResults.route) manualTemplates.push(jinxSistersResults.route);
 manualTemplates.forEach(t => { t.role = roleOf(t); });
 
 function optionCounts(templates, field) {
@@ -853,6 +856,13 @@ function scoreTemplate(template, selected, weights) {
   const evidence = [];
   const missing = [];
   const penalties = [];
+  let mechanicBlocked = false;
+  const strengthPrior = Math.round((Number(template.strengthPrior) || 0) * 4);
+  if (strengthPrior) {
+    score += strengthPrior;
+    breakdown.synergy += strengthPrior;
+    evidence.push(`版本数值先验 ${strengthPrior > 0 ? '+' : ''}${strengthPrior}`);
+  }
 
   for (const u of units) {
     if (template.earlyUnits.includes(u)) { score += w.earlyUnit; breakdown.hero += w.earlyUnit; evidence.push(`${u} 命中前期底座`); }
@@ -871,6 +881,24 @@ function scoreTemplate(template, selected, weights) {
   }
   for (const c of augCats) {
     if (template.augmentCats.includes(c)) { score += w.augmentSignal; breakdown.augment += w.augmentSignal; evidence.push(`${c}符文匹配路线`); }
+  }
+
+  if (template.mechanic) {
+    const requiredAugment = template.mechanic.requiredAugment;
+    const requiredUnits = template.mechanic.requiredUnits || [];
+    const active = (!requiredAugment || augments.has(requiredAugment)) && requiredUnits.every(name => units.has(name));
+    if (active) {
+      const bonus = Number(template.mechanic.matchBonus) || 0;
+      score += bonus;
+      breakdown.synergy += bonus;
+      evidence.push(`机制闭环：${template.mechanic.text}`);
+    } else {
+      mechanicBlocked = true;
+      const penalty = Number(template.mechanic.missingPenalty) || 0;
+      score -= penalty;
+      breakdown.penalty -= penalty;
+      penalties.push(`缺机制门槛：${requiredAugment || requiredUnits.join('、')}`);
+    }
   }
 
   const selectedAttack = [...items].filter(x => ATTACK_ITEMS.includes(x) || JAX_ITEMS.includes(x)).length;
@@ -907,7 +935,7 @@ function scoreTemplate(template, selected, weights) {
   } : { hero: 0, item: 0, augment: 0, synergy: 0 };
   return {
     id: template.id,
-    score: Math.max(0, Math.round(score)),
+    score: mechanicBlocked ? 0 : Math.max(0, Math.round(score)),
     breakdown,
     shares,
     evidence: uniq(evidence).slice(0, 6),

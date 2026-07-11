@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const { simulate, chess, equip } = require('./model.js');
+const { currentVersion } = require('./version-context');
 
 const ROOT = __dirname;
 const OUT_JSON = path.join(ROOT, 'mecha_prime_results.json');
@@ -401,6 +402,7 @@ function writeReport(out) {
 }
 
 function main() {
+  const version = currentVersion(ROOT);
   const route = stageSource();
   const stages = Object.fromEntries(Object.entries(route.stages).map(([key, stage]) => [key, normalizeStage(stage)]));
   const stageResults = Object.fromEntries(Object.entries(stages).map(([key, stage]) => [key, evaluateStage(stage)]));
@@ -415,7 +417,7 @@ function main() {
   ].sort((a, b) => b.teamOutput - a.teamOutput || a.label.localeCompare(b.label, 'zh-Hans-CN'));
 
   const out = {
-    version: '17.17.6-S18',
+    version: version.label,
     generated: new Intl.DateTimeFormat('en-CA', {
       timeZone: 'Asia/Shanghai',
       year: 'numeric',

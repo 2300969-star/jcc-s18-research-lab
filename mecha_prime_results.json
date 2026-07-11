@@ -1,6 +1,6 @@
 {
- "version": "17.17.6-S18",
- "generated": "2026-07-06",
+ "version": "17.17.6b-S18",
+ "generated": "2026-07-12",
  "source": {
   "route": "战斗机甲：德莱文 -> 贾克斯 -> 蕾欧娜",
   "stages": "transition_results.json.routes[].stages（由机甲分叉/过渡脚本产出）",
@@ -282,8 +282,8 @@
      "primeDps": 1086,
      "mainCarry": "蕾欧娜",
      "mainCarryDps": 0,
-     "sideOutput": 165,
-     "teamOutput": 1251,
+     "sideOutput": 167,
+     "teamOutput": 1253,
      "note": "至尊与阶段装备主C同人"
     },
     {
@@ -294,8 +294,8 @@
      "primeDps": 112,
      "mainCarry": "蕾欧娜",
      "mainCarryDps": 829,
-     "sideOutput": 136,
-     "teamOutput": 1077,
+     "sideOutput": 138,
+     "teamOutput": 1079,
      "note": "至尊给贾克斯，蕾欧娜继续带阶段主C装备"
     },
     {
@@ -306,8 +306,8 @@
      "primeDps": 107,
      "mainCarry": "蕾欧娜",
      "mainCarryDps": 829,
-     "sideOutput": 138,
-     "teamOutput": 1073,
+     "sideOutput": 139,
+     "teamOutput": 1075,
      "note": "至尊给德莱文，蕾欧娜继续带阶段主C装备"
     },
     {
@@ -318,8 +318,8 @@
      "primeDps": 79,
      "mainCarry": "蕾欧娜",
      "mainCarryDps": 829,
-     "sideOutput": 145,
-     "teamOutput": 1053,
+     "sideOutput": 147,
+     "teamOutput": 1054,
      "note": "至尊给瑟提，蕾欧娜继续带阶段主C装备"
     },
     {
@@ -330,8 +330,8 @@
      "primeDps": 74,
      "mainCarry": "蕾欧娜",
      "mainCarryDps": 829,
-     "sideOutput": 146,
-     "teamOutput": 1048,
+     "sideOutput": 148,
+     "teamOutput": 1050,
      "note": "至尊给孙悟空，蕾欧娜继续带阶段主C装备"
     }
    ],
@@ -347,8 +347,8 @@
     "primeDps": 1086,
     "mainCarry": "蕾欧娜",
     "mainCarryDps": 0,
-    "sideOutput": 165,
-    "teamOutput": 1251,
+    "sideOutput": 167,
+    "teamOutput": 1253,
     "note": "至尊与阶段装备主C同人"
    },
    "frontControl": {
@@ -359,8 +359,8 @@
     "primeDps": 79,
     "mainCarry": "蕾欧娜",
     "mainCarryDps": 829,
-    "sideOutput": 145,
-    "teamOutput": 1053,
+    "sideOutput": 147,
+    "teamOutput": 1054,
     "note": "至尊给瑟提，蕾欧娜继续带阶段主C装备"
    }
   }
@@ -377,8 +377,8 @@
    ],
    "legalPrime": true,
    "primaryDps": 1086,
-   "sideOutput": 165,
-   "teamOutput": 1251
+   "sideOutput": 167,
+   "teamOutput": 1253
   },
   {
    "label": "贾克斯3星至尊三件",
@@ -391,8 +391,8 @@
    ],
    "legalPrime": true,
    "primaryDps": 1014,
-   "sideOutput": 175,
-   "teamOutput": 1189
+   "sideOutput": 177,
+   "teamOutput": 1191
   },
   {
    "label": "贾克斯2星至尊三件",
@@ -405,8 +405,8 @@
    ],
    "legalPrime": true,
    "primaryDps": 635,
-   "sideOutput": 175,
-   "teamOutput": 810
+   "sideOutput": 177,
+   "teamOutput": 812
   },
   {
    "label": "蕾欧娜2星至尊+青龙刀",
@@ -417,8 +417,8 @@
    ],
    "legalPrime": true,
    "primaryDps": 375,
-   "sideOutput": 165,
-   "teamOutput": 540
+   "sideOutput": 167,
+   "teamOutput": 542
   },
   {
    "label": "蕾欧娜1星至尊+青龙刀",
@@ -429,8 +429,8 @@
    ],
    "legalPrime": true,
    "primaryDps": 254,
-   "sideOutput": 165,
-   "teamOutput": 419
+   "sideOutput": 167,
+   "teamOutput": 421
   },
   {
    "label": "瑟提1星至尊肉装",
@@ -442,8 +442,8 @@
    ],
    "legalPrime": true,
    "primaryDps": 79,
-   "sideOutput": 183,
-   "teamOutput": 262
+   "sideOutput": 185,
+   "teamOutput": 264
   }
  ],
  "offTraitChecks": [
@@ -451,7 +451,7 @@
    "name": "佛耶戈",
    "inBoard": true,
    "legalPrime": false,
-   "whatIfDpsWithPrimeBonus": 209,
+   "whatIfDpsWithPrimeBonus": 222,
    "items": [
     "珠光护手",
     "班克斯的魔法帽",
@@ -491,8 +491,8 @@
    {
     "stage": "终局",
     "holder": "蕾欧娜",
-    "condition": "后期棋盘中蕾欧娜至尊总输出1251，但需结合专项星级触发。",
-    "evidence": "蕾欧娜2星 1251 vs #2 贾克斯 1077"
+    "condition": "后期棋盘中蕾欧娜至尊总输出1253，但需结合专项星级触发。",
+    "evidence": "蕾欧娜2星 1253 vs #2 贾克斯 1079"
    }
   ],
   "rules": [
@@ -518,7 +518,7 @@
       "贾克斯": 2
      }
     },
-    "evidence": "贾克斯2星三件专项 810，高于蕾欧娜1星青龙刀 419"
+    "evidence": "贾克斯2星三件专项 812，高于蕾欧娜1星青龙刀 421"
    },
    {
     "id": "late-leona-two-star",
@@ -531,7 +531,7 @@
       "蕾欧娜": 2
      }
     },
-    "evidence": "蕾欧娜2星三件 1251 > 贾克斯3星三件 1189；仅青龙刀时 540 vs 贾克斯2星三件 810，不建议裸转"
+    "evidence": "蕾欧娜2星三件 1253 > 贾克斯3星三件 1191；仅青龙刀时 542 vs 贾克斯2星三件 812，不建议裸转"
    }
   ],
   "conclusion": [

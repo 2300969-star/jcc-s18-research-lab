@@ -63,5 +63,22 @@
       "topAnyNameIncludes": ["小天才"],
       "evidenceIncludes": ["安妮", "波比"]
     }
+  },
+  {
+    "id": "sisters-jinx-l6",
+    "label": "姐妹+金克丝3星+蔚+蓝霸青龙刀法爆 @6级",
+    "level": 6,
+    "signals": [
+      { "kind": "units", "value": "金克丝", "star": 3 },
+      { "kind": "units", "value": "蔚" },
+      { "kind": "items", "value": "蓝霸符" },
+      { "kind": "items", "value": "朔极之矛" },
+      { "kind": "items", "value": "珠光护手" },
+      { "kind": "augments", "value": "姐妹" }
+    ],
+    "expect": {
+      "top1NameIncludes": ["姐妹无限技能金克丝"],
+      "evidenceIncludes": ["机制闭环", "主C本体在手", "三星金克丝=追三完成"]
+    }
   }
 ]
