@@ -1,6 +1,6 @@
 {
- "version": "17.17.6-S18",
- "generated": "2026-07-06",
+ "version": "17.17.6b-S18",
+ "generated": "2026-07-11",
  "routes": [
   {
    "name": "战斗机甲：德莱文 -> 贾克斯 -> 蕾欧娜",
@@ -1773,7 +1773,7 @@
      "carry": "卡蜜尔",
      "carryStar": 3,
      "carryPrice": 2,
-     "score": 1409,
+     "score": 1414,
      "items": [
       "锐利之刃",
       "鬼索的狂暴之刃",
@@ -2697,7 +2697,7 @@
      "carry": "卡蜜尔",
      "carryStar": 2,
      "carryPrice": 2,
-     "score": 1286,
+     "score": 1291,
      "items": [
       "锐利之刃",
       "鬼索的狂暴之刃",
@@ -2740,7 +2740,7 @@
      "carry": "卡蜜尔",
      "carryStar": 3,
      "carryPrice": 2,
-     "score": 1409,
+     "score": 1414,
      "items": [
       "锐利之刃",
       "鬼索的狂暴之刃",

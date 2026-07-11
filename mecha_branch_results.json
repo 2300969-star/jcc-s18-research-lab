@@ -1,6 +1,6 @@
 {
- "version": "17.17.6-S18",
- "generated": "2026-07-06",
+ "version": "17.17.6b-S18",
+ "generated": "2026-07-11",
  "assumptions": [
   "这是同壳分叉实验：候选池固定为机甲、混沌、护卫、斗士、秘术、五费补强等与机甲线自然相关的棋子。",
   "打分口径沿用 teamsearch：主C 30秒木桩DPS + 副输出折算 + 前排EHP + 机制羁绊 util。",
@@ -381,8 +381,8 @@
    "level": 9,
    "carry": "佛耶戈",
    "carryStar": 2,
-   "score": 1936,
-   "carryDps": 688,
+   "score": 1983,
+   "carryDps": 735,
    "primaryEHP": 0,
    "frontEHP": 21894,
    "subDps": 323,
@@ -468,7 +468,7 @@
  ],
  "findings": [
   "蕾欧娜分支反超贾克斯 94 分，说明机甲壳的终局上限不是停贾克斯，而是上9找蕾欧娜2星。",
-  "佛耶戈分支比蕾欧娜低 835 分，混沌牌更像给蕾欧娜开乘区，不是抢主C。",
+  "佛耶戈分支比蕾欧娜低 788 分，混沌牌更像给蕾欧娜开乘区，不是抢主C。",
   "瑟提半肉分支比贾克斯低 574 分，但会显著抬前排；它更适合当主坦阈值，不适合作为最终输出答案。",
   "当前最高路线是：蕾欧娜终局C，9人口，朔极之矛+鬼索的狂暴之刃+水银，模型分 2771。"
  ],
@@ -4558,8 +4558,8 @@
    "level": 9,
    "carry": "佛耶戈",
    "carryStar": 2,
-   "score": 1936,
-   "carryDps": 688,
+   "score": 1983,
+   "carryDps": 735,
    "primaryEHP": 0,
    "frontEHP": 21894,
    "subDps": 323,
@@ -4648,8 +4648,8 @@
    "level": 9,
    "carry": "佛耶戈",
    "carryStar": 2,
-   "score": 1930,
-   "carryDps": 698,
+   "score": 1979,
+   "carryDps": 747,
    "primaryEHP": 0,
    "frontEHP": 21894,
    "subDps": 324,
@@ -4737,8 +4737,8 @@
    "level": 9,
    "carry": "佛耶戈",
    "carryStar": 2,
-   "score": 1924,
-   "carryDps": 688,
+   "score": 1971,
+   "carryDps": 735,
    "primaryEHP": 0,
    "frontEHP": 21894,
    "subDps": 295,
@@ -4827,8 +4827,8 @@
    "level": 9,
    "carry": "佛耶戈",
    "carryStar": 2,
-   "score": 1924,
-   "carryDps": 688,
+   "score": 1971,
+   "carryDps": 735,
    "primaryEHP": 0,
    "frontEHP": 21894,
    "subDps": 296,
@@ -4917,8 +4917,8 @@
    "level": 9,
    "carry": "佛耶戈",
    "carryStar": 2,
-   "score": 1923,
-   "carryDps": 688,
+   "score": 1970,
+   "carryDps": 735,
    "primaryEHP": 0,
    "frontEHP": 21894,
    "subDps": 293,
@@ -5007,97 +5007,8 @@
    "level": 9,
    "carry": "佛耶戈",
    "carryStar": 2,
-   "score": 1918,
-   "carryDps": 698,
-   "primaryEHP": 0,
-   "frontEHP": 21894,
-   "subDps": 297,
-   "util": 1.5,
-   "items": [
-    "泰坦的坚决",
-    "鬼索的狂暴之刃",
-    "朔极之矛"
-   ],
-   "traits": [
-    "3混沌战士",
-    "3战斗机甲",
-    "2灵能使",
-    "2护卫",
-    "2爱心使者",
-    "2秘术卫士",
-    "2AI程序",
-    "1精英战士"
-   ],
-   "team": [
-    {
-     "name": "佛耶戈",
-     "price": 4
-    },
-    {
-     "name": "卡蜜尔",
-     "price": 2
-    },
-    {
-     "name": "蕾欧娜",
-     "price": 5
-    },
-    {
-     "name": "德莱文",
-     "price": 2
-    },
-    {
-     "name": "瑟提",
-     "price": 4
-    },
-    {
-     "name": "乐芙兰",
-     "price": 3
-    },
-    {
-     "name": "锐雯",
-     "price": 3
-    },
-    {
-     "name": "艾克",
-     "price": 4
-    },
-    {
-     "name": "娑娜",
-     "price": 3
-    }
-   ],
-   "tanks": [
-    {
-     "hero": "瑟提",
-     "star": 2,
-     "ehp": 12324,
-     "items": [
-      "狂徒铠甲",
-      "狂徒铠甲",
-      "圣盾使的誓约"
-     ]
-    },
-    {
-     "hero": "艾克",
-     "star": 2,
-     "ehp": 9570,
-     "items": [
-      "石像鬼石板甲",
-      "日炎斗篷",
-      "狂徒铠甲"
-     ]
-    }
-   ],
-   "thesis": "同样吃混沌，但更依赖切入残局和法系装备，理论上不如蕾欧娜稳定。"
-  },
-  {
-   "branch": "viego",
-   "label": "混沌佛耶戈收割",
-   "level": 9,
-   "carry": "佛耶戈",
-   "carryStar": 2,
-   "score": 1918,
-   "carryDps": 698,
+   "score": 1967,
+   "carryDps": 747,
    "primaryEHP": 0,
    "frontEHP": 21894,
    "subDps": 297,
@@ -5185,22 +5096,23 @@
    "level": 9,
    "carry": "佛耶戈",
    "carryStar": 2,
-   "score": 1917,
-   "carryDps": 622,
+   "score": 1966,
+   "carryDps": 747,
    "primaryEHP": 0,
    "frontEHP": 21894,
-   "subDps": 441,
-   "util": 2.5,
+   "subDps": 297,
+   "util": 1.5,
    "items": [
     "泰坦的坚决",
     "鬼索的狂暴之刃",
     "朔极之矛"
    ],
    "traits": [
-    "5战斗机甲",
     "3混沌战士",
+    "3战斗机甲",
+    "2灵能使",
     "2护卫",
-    "2斗士",
+    "2爱心使者",
     "2秘术卫士",
     "2AI程序",
     "1精英战士"
@@ -5227,20 +5139,109 @@
      "price": 4
     },
     {
-     "name": "孙悟空",
-     "price": 1
-    },
-    {
-     "name": "贾克斯",
+     "name": "乐芙兰",
      "price": 3
     },
     {
-     "name": "布里茨",
-     "price": 1
+     "name": "锐雯",
+     "price": 3
     },
     {
      "name": "艾克",
      "price": 4
+    },
+    {
+     "name": "娑娜",
+     "price": 3
+    }
+   ],
+   "tanks": [
+    {
+     "hero": "瑟提",
+     "star": 2,
+     "ehp": 12324,
+     "items": [
+      "狂徒铠甲",
+      "狂徒铠甲",
+      "圣盾使的誓约"
+     ]
+    },
+    {
+     "hero": "艾克",
+     "star": 2,
+     "ehp": 9570,
+     "items": [
+      "石像鬼石板甲",
+      "日炎斗篷",
+      "狂徒铠甲"
+     ]
+    }
+   ],
+   "thesis": "同样吃混沌，但更依赖切入残局和法系装备，理论上不如蕾欧娜稳定。"
+  },
+  {
+   "branch": "viego",
+   "label": "混沌佛耶戈收割",
+   "level": 9,
+   "carry": "佛耶戈",
+   "carryStar": 2,
+   "score": 1965,
+   "carryDps": 747,
+   "primaryEHP": 0,
+   "frontEHP": 21894,
+   "subDps": 294,
+   "util": 1.5,
+   "items": [
+    "泰坦的坚决",
+    "鬼索的狂暴之刃",
+    "朔极之矛"
+   ],
+   "traits": [
+    "3混沌战士",
+    "3战斗机甲",
+    "2灵能使",
+    "2护卫",
+    "2爱心使者",
+    "2秘术卫士",
+    "2AI程序",
+    "1精英战士"
+   ],
+   "team": [
+    {
+     "name": "佛耶戈",
+     "price": 4
+    },
+    {
+     "name": "卡蜜尔",
+     "price": 2
+    },
+    {
+     "name": "蕾欧娜",
+     "price": 5
+    },
+    {
+     "name": "德莱文",
+     "price": 2
+    },
+    {
+     "name": "瑟提",
+     "price": 4
+    },
+    {
+     "name": "乐芙兰",
+     "price": 3
+    },
+    {
+     "name": "芮尔",
+     "price": 2
+    },
+    {
+     "name": "艾克",
+     "price": 4
+    },
+    {
+     "name": "娑娜",
+     "price": 3
     }
    ],
    "tanks": [
@@ -5273,8 +5274,8 @@
    "level": 8,
    "carry": "佛耶戈",
    "carryStar": 2,
-   "score": 1908,
-   "carryDps": 622,
+   "score": 1949,
+   "carryDps": 664,
    "primaryEHP": 0,
    "frontEHP": 24355,
    "subDps": 289,
@@ -5356,8 +5357,8 @@
    "level": 8,
    "carry": "佛耶戈",
    "carryStar": 2,
-   "score": 1858,
-   "carryDps": 622,
+   "score": 1899,
+   "carryDps": 664,
    "primaryEHP": 0,
    "frontEHP": 21894,
    "subDps": 406,
@@ -5438,8 +5439,8 @@
    "level": 8,
    "carry": "佛耶戈",
    "carryStar": 2,
-   "score": 1847,
-   "carryDps": 622,
+   "score": 1888,
+   "carryDps": 664,
    "primaryEHP": 0,
    "frontEHP": 21634,
    "subDps": 406,
@@ -5520,8 +5521,8 @@
    "level": 8,
    "carry": "佛耶戈",
    "carryStar": 2,
-   "score": 1821,
-   "carryDps": 622,
+   "score": 1862,
+   "carryDps": 664,
    "primaryEHP": 0,
    "frontEHP": 21894,
    "subDps": 268,
@@ -5604,8 +5605,8 @@
    "level": 8,
    "carry": "佛耶戈",
    "carryStar": 2,
-   "score": 1814,
-   "carryDps": 622,
+   "score": 1855,
+   "carryDps": 664,
    "primaryEHP": 0,
    "frontEHP": 21788,
    "subDps": 262,
@@ -5688,8 +5689,8 @@
    "level": 8,
    "carry": "佛耶戈",
    "carryStar": 2,
-   "score": 1803,
-   "carryDps": 622,
+   "score": 1844,
+   "carryDps": 664,
    "primaryEHP": 0,
    "frontEHP": 21717,
    "subDps": 262,
@@ -5771,8 +5772,8 @@
    "level": 8,
    "carry": "佛耶戈",
    "carryStar": 2,
-   "score": 1802,
-   "carryDps": 622,
+   "score": 1843,
+   "carryDps": 664,
    "primaryEHP": 0,
    "frontEHP": 21717,
    "subDps": 261,
@@ -5854,8 +5855,8 @@
    "level": 8,
    "carry": "佛耶戈",
    "carryStar": 2,
-   "score": 1787,
-   "carryDps": 698,
+   "score": 1835,
+   "carryDps": 747,
    "primaryEHP": 0,
    "frontEHP": 19529,
    "subDps": 262,

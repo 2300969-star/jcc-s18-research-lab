@@ -1,6 +1,6 @@
 {
- "version": "17.17.6-S18",
- "generated": "2026-07-06",
+ "version": "17.17.6b-S18",
+ "generated": "2026-07-11",
  "searchSpace": {
   "heroes": 62,
   "offenseCombos": 2002,
@@ -281,10 +281,10 @@
       "price": 1
      }
     ],
-    "score": 1286,
-    "rawScore": 1303,
+    "score": 1291,
+    "rawScore": 1308,
     "tempoPenalty": 16,
-    "carryDps": 360,
+    "carryDps": 365,
     "frontEHP": 13713,
     "subDps": 70,
     "util": 1.5,
@@ -1230,10 +1230,10 @@
       "price": 1
      }
     ],
-    "score": 1409,
-    "rawScore": 1421,
+    "score": 1414,
+    "rawScore": 1426,
     "tempoPenalty": 12,
-    "carryDps": 563,
+    "carryDps": 567,
     "frontEHP": 14058,
     "subDps": 155,
     "util": 1.5,
@@ -1608,10 +1608,10 @@
       "price": 3
      }
     ],
-    "score": 1930,
-    "rawScore": 1936,
+    "score": 1979,
+    "rawScore": 1984,
     "tempoPenalty": 5,
-    "carryDps": 704,
+    "carryDps": 753,
     "frontEHP": 23499,
     "subDps": 296,
     "util": 3.5,
@@ -1704,10 +1704,10 @@
       "price": 3
      }
     ],
-    "score": 1919,
-    "rawScore": 1924,
+    "score": 1956,
+    "rawScore": 1962,
     "tempoPenalty": 5,
-    "carryDps": 706,
+    "carryDps": 743,
     "frontEHP": 23183,
     "subDps": 296,
     "util": 3.5,
@@ -2151,6 +2151,38 @@
     "value": 50
    },
    {
+    "hero": "佛耶戈",
+    "price": 4,
+    "star": 2,
+    "dps": 506,
+    "items": [
+     "朔极之矛",
+     "泰坦的坚决",
+     "鬼索的狂暴之刃"
+    ],
+    "auto": 145,
+    "spell": 361,
+    "proc": 0,
+    "officialFlag": "官方主C",
+    "value": 68
+   },
+   {
+    "hero": "娑娜",
+    "price": 3,
+    "star": 3,
+    "dps": 498,
+    "items": [
+     "泰坦的坚决",
+     "水银",
+     "鬼索的狂暴之刃"
+    ],
+    "auto": 164,
+    "spell": 334,
+    "proc": 0,
+    "officialFlag": "官方主C",
+    "value": 101
+   },
+   {
     "hero": "希维尔",
     "price": 2,
     "star": 3,
@@ -2165,38 +2197,6 @@
     "proc": 0,
     "officialFlag": "官方主C",
     "value": 179
-   },
-   {
-    "hero": "佛耶戈",
-    "price": 4,
-    "star": 2,
-    "dps": 475,
-    "items": [
-     "朔极之矛",
-     "泰坦的坚决",
-     "鬼索的狂暴之刃"
-    ],
-    "auto": 145,
-    "spell": 330,
-    "proc": 0,
-    "officialFlag": "官方主C",
-    "value": 64
-   },
-   {
-    "hero": "娑娜",
-    "price": 3,
-    "star": 3,
-    "dps": 474,
-    "items": [
-     "泰坦的坚决",
-     "水银",
-     "鬼索的狂暴之刃"
-    ],
-    "auto": 164,
-    "spell": 310,
-    "proc": 0,
-    "officialFlag": "官方主C",
-    "value": 96
    },
    {
     "hero": "厄斐琉斯",
@@ -2562,6 +2562,20 @@
  },
  "shopModel": {
   "odds": {
+   "1": [
+    100,
+    0,
+    0,
+    0,
+    0
+   ],
+   "2": [
+    100,
+    0,
+    0,
+    0,
+    0
+   ],
    "3": [
     75,
     25,

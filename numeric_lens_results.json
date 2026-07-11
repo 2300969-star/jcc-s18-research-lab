@@ -1,6 +1,6 @@
 {
- "version": "17.17.6-S18",
- "generated": "2026-07-06",
+ "version": "17.17.6b-S18",
+ "generated": "2026-07-11",
  "routes": [
   {
    "name": "战斗机甲：德莱文 -> 贾克斯 -> 蕾欧娜",
@@ -4160,7 +4160,7 @@
     },
     "mid": {
      "label": "中期",
-     "score": 1409,
+     "score": 1414,
      "team": [
       {
        "name": "卡蜜尔",
@@ -4209,35 +4209,35 @@
        "鬼索的狂暴之刃",
        "卢安娜的飓风"
       ],
-      "dps": 563,
-      "baseDps": 79,
-      "itemsOnlyDps": 438,
-      "traitsOnlyDps": 104,
+      "dps": 567,
+      "baseDps": 80,
+      "itemsOnlyDps": 442,
+      "traitsOnlyDps": 105,
       "auto": 311,
-      "spell": 97,
+      "spell": 102,
       "proc": 155,
-      "itemGainX": 5.53,
+      "itemGainX": 5.51,
       "traitGainX": 1.31,
-      "fullGainX": 7.1,
-      "interaction": 99,
-      "interactionPct": 17.7,
+      "fullGainX": 7.07,
+      "interaction": 100,
+      "interactionPct": 17.6,
       "itemDrops": [
        {
         "item": "鬼索的狂暴之刃",
-        "dpsWithout": 278,
-        "drop": 285,
+        "dpsWithout": 280,
+        "drop": 287,
         "dropPct": 50.6
        },
        {
         "item": "卢安娜的飓风",
-        "dpsWithout": 341,
-        "drop": 222,
-        "dropPct": 39.4
+        "dpsWithout": 345,
+        "drop": 223,
+        "dropPct": 39.2
        },
        {
         "item": "锐利之刃",
-        "dpsWithout": 343,
-        "drop": 219,
+        "dpsWithout": 346,
+        "drop": 221,
         "dropPct": 39
        }
       ],
@@ -4245,21 +4245,21 @@
        {
         "trait": "3混沌战士",
         "appliesToCarry": true,
-        "dpsWithout": 463,
-        "drop": 100,
+        "dpsWithout": 467,
+        "drop": 101,
         "dropPct": 17.7
        },
        {
         "trait": "1精英战士",
         "appliesToCarry": true,
-        "dpsWithout": 539,
+        "dpsWithout": 543,
         "drop": 24,
         "dropPct": 4.3
        },
        {
         "trait": "2爱心使者",
         "appliesToCarry": true,
-        "dpsWithout": 562,
+        "dpsWithout": 567,
         "drop": 1,
         "dropPct": 0.1
        }
@@ -4509,7 +4509,7 @@
     "后期蕾欧娜最怕少鬼索的狂暴之刃：DPS -46.4%",
     "后期第一羁绊杠杆是5战斗机甲：DPS -43.4%",
     "后期装备与羁绊存在正乘法：额外 +772 DPS",
-    "中期卡蜜尔从裸装到完整口径提升 7.1x，吃装备/羁绊程度极高",
+    "中期卡蜜尔从裸装到完整口径提升 7.07x，吃装备/羁绊程度极高",
     "中后期保留泰隆、佛耶戈、德莱文，换壳成本可控"
    ]
   }
@@ -4756,9 +4756,9 @@
     "route": "战斗机甲：德莱文 -> 卡蜜尔 -> 蕾欧娜",
     "stage": "中期",
     "hero": "卡蜜尔",
-    "dps": 563,
-    "fullGainX": 7.1,
-    "itemGainX": 5.53,
+    "dps": 567,
+    "fullGainX": 7.07,
+    "itemGainX": 5.51,
     "traitGainX": 1.31,
     "topItem": "鬼索的狂暴之刃",
     "topItemDropPct": 50.6,
