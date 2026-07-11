@@ -96,7 +96,7 @@ h3 { font-size:14px; font-weight:650; margin:16px 0 8px; }
 .compChip:hover { border-color:var(--s1); color:var(--s1); }
 .cmp .chip { margin:2px 6px 2px 0; }
 dialog { border:1px solid var(--border); border-radius:14px; background:var(--surface); color:var(--ink);
-  width:min(780px,94vw); max-height:88vh; padding:22px 24px; margin:auto; }
+  width:min(940px,94vw); max-height:88vh; padding:22px 24px; margin:auto; overflow:auto; }
 dialog::backdrop { background:rgba(0,0,0,.55); }
 .dlgHead { display:flex; align-items:flex-start; gap:10px; margin-bottom:4px; }
 .dlgHead h2 { font-size:17px; flex:1; }
@@ -111,6 +111,9 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
 .cell .cn { font-weight:650; font-size:12px; white-space:nowrap; }
 .cell .cost { font-size:10px; color:var(--muted); }
 .cell .it { color:var(--ink2); font-size:10.5px; line-height:1.45; }
+.cell .role { color:var(--muted); font-size:10px; margin-top:2px; }
+.cell .itemIcons { display:flex; gap:3px; margin-top:5px; }
+.cell .itemIcon { width:22px; height:22px; border-radius:4px; border:1px solid var(--border); object-fit:cover; }
 .cell.carry { box-shadow:inset 0 0 0 2px var(--s1); }
 .cell .tag3 { color:var(--s3); font-weight:700; }
 .secT { font-size:12px; color:var(--muted); margin:14px 0 5px; }
@@ -121,6 +124,17 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
 .noteP { font-size:12.5px; color:var(--ink2); margin-bottom:6px; }
 .noteP b { color:var(--ink); font-weight:600; }
 .traitChips .chip { margin:0 6px 6px 0; }
+.metaStageTabs { display:flex; gap:8px; margin:6px 0 8px; }
+.metaStageTab { border:1px solid var(--border); background:transparent; color:var(--ink2); border-radius:7px; padding:6px 13px; cursor:pointer; font:inherit; font-size:12.5px; }
+.metaStageTab.active { background:var(--s1); border-color:var(--s1); color:#fff; }
+.metaStageSummary { display:flex; gap:14px; flex-wrap:wrap; color:var(--ink2); font-size:12.5px; margin-bottom:4px; }
+.metaItemGrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:8px; }
+.metaItem { display:flex; align-items:center; gap:9px; border:1px solid var(--grid); border-radius:8px; padding:7px 9px; min-width:0; }
+.metaItem > img { width:38px; height:38px; border-radius:6px; object-fit:cover; flex:0 0 auto; }
+.metaItem b { display:block; font-size:12.5px; }
+.metaItem small { color:var(--muted); font-size:10.5px; }
+.metaOps { margin:4px 0 0; padding-left:22px; color:var(--ink2); font-size:12.5px; }
+.metaOps li { margin:6px 0; line-height:1.55; }
 .auditFilters { display:grid; grid-template-columns:minmax(220px,1fr) 120px 150px; gap:10px; margin:12px 0 14px; }
 .auditFilters input, .auditFilters select { width:100%; background:var(--surface); color:var(--ink); border:1px solid var(--border); border-radius:8px; padding:7px 10px; font:inherit; font-size:12.5px; }
 .auditTabs { display:flex; gap:8px; flex-wrap:wrap; margin:10px 0 12px; }
@@ -1419,6 +1433,11 @@ function openMetaComp(name) {
   if (!c) return false;
   const body = document.getElementById("dlgBody"); body.textContent = "";
   const mk = (tag, cls, text, parent) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text) e.textContent = text; if (parent) parent.appendChild(e); return e; };
+  const addImage = (src, alt, cls, parent) => {
+    const img = mk("img", cls, null, parent); img.src = src; img.alt = alt; img.title = alt;
+    img.addEventListener("error", () => img.style.display = "none");
+    return img;
+  };
   const head = mk("div", "dlgHead", null, body);
   mk("span", "qbadge", c.augment ? "条件模拟" : "算法生成", head);
   mk("h2", null, name, head);
@@ -1434,9 +1453,66 @@ function openMetaComp(name) {
     const traits = mk("div", "traitChips", null, body);
     (c.traits || c.acts || []).forEach(t => mk("span", "chip", t, traits));
   }
-  if ((c.carryItems || []).length) {
-    mk("div", "secT", "联合优化装备", body);
-    mk("div", "noteP", c.carryItems.join("、"), body);
+  const presentation = c.presentation;
+  if (presentation && presentation.stages && presentation.stages.length) {
+    mk("div", "secT", "模型推导的前期 / 中期 / 后期站位", body);
+    const tabs = mk("div", "metaStageTabs", null, body);
+    const stageSummary = mk("div", "metaStageSummary", null, body);
+    const board = mk("div", "board", null, body);
+    const traitLine = mk("div", "traitChips", null, body);
+    const ramp = [css("--seq250"), css("--seq350"), css("--seq450"), css("--seq550"), css("--seq650")];
+    const renderStage = (stage, activeButton) => {
+      [...tabs.children].forEach(button => button.classList.toggle("active", button === activeButton));
+      stageSummary.textContent = ""; board.textContent = ""; traitLine.textContent = "";
+      mk("b", null, `${stage.level}人口 · 装备承载者 ${stage.carry}`, stageSummary);
+      mk("span", null, stage.method, stageSummary);
+      for (let rowNo = 1; rowNo <= 4; rowNo++) {
+        const row = mk("div", "brow" + (rowNo % 2 === 0 ? " off" : ""), null, board);
+        for (let col = 1; col <= 7; col++) {
+          const unit = stage.board.find(item => item.row === rowNo && item.col === col);
+          const cell = mk("div", "cell" + (unit ? (unit.carry ? " carry" : "") : " empty"), null, row);
+          if (!unit) continue;
+          cell.style.borderTop = "3px solid " + ramp[Math.max(0, Math.min(4, unit.price - 1))];
+          mk("div", "cn", (unit.carry ? "★ " : "") + unit.name, cell);
+          mk("div", "cost", `${unit.price}费`, cell);
+          mk("div", "role", unit.role, cell);
+          if (unit.items && unit.items.length) {
+            const icons = mk("div", "itemIcons", null, cell);
+            unit.items.forEach(itemName => {
+              const item = ((M.metaDiscovery || {}).itemCatalog || []).find(entry => entry.name === itemName);
+              if (item && item.picture) addImage(item.picture, item.name, "itemIcon", icons);
+            });
+          }
+        }
+      }
+      (stage.traits || []).forEach(trait => mk("span", "chip", trait, traitLine));
+    };
+    presentation.stages.forEach((stage, index) => {
+      const button = mk("button", "metaStageTab", `${stage.label} · ${stage.level}人口`, tabs);
+      button.addEventListener("click", () => renderStage(stage, button));
+      if (index === presentation.stages.length - 1) renderStage(stage, button);
+    });
+    mk("div", "noteP", `站位依据：${presentation.positioningBasis}`, body);
+    mk("div", "noteP", `推导方式：${presentation.derivation}`, body);
+  }
+  const itemCatalog = (M.metaDiscovery || {}).itemCatalog || [];
+  const itemRows = (presentation && presentation.items || c.carryItems || [])
+    .map(name => itemCatalog.find(item => item.name === name) || { name, picture: "", components: [] });
+  if (itemRows.length) {
+    mk("div", "secT", `${c.carry}联合优化三件套`, body);
+    const itemGrid = mk("div", "metaItemGrid", null, body);
+    itemRows.forEach(item => {
+      const card = mk("div", "metaItem", null, itemGrid);
+      if (item.picture) addImage(item.picture, item.name, null, card);
+      const text = mk("div", null, null, card);
+      mk("b", null, item.name, text);
+      mk("small", null, (item.components || []).map(component => component.name).join(" + ") || "模型成装", text);
+    });
+  }
+  if (presentation && presentation.operations && presentation.operations.length) {
+    mk("div", "secT", "模型运营思路", body);
+    const list = mk("ol", "metaOps", null, body);
+    presentation.operations.forEach(line => mk("li", null, line, list));
   }
   dlg.showModal();
   return true;

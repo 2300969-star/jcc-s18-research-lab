@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const { currentVersion } = require('./version-context.js');
 const optimizer = require('./discover.js');
+const { simulate } = require('./model.js');
 const { profiles } = require('./mechanic-profiles.js');
 
 const ROOT = __dirname;
@@ -11,7 +12,14 @@ const read = file => JSON.parse(fs.readFileSync(path.join(ROOT, file), 'utf8'));
 const discovery = read('discovery_results.json');
 const model = read('model_results.json');
 const equip = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'equip.js'), 'utf8')).data;
-const equipByName = Object.fromEntries(Object.values(equip).filter(Boolean).map(x => [x.name, x]));
+const equipByName = {};
+Object.values(equip).forEach(item => {
+  if (item && item.name && !equipByName[item.name]) equipByName[item.name] = item;
+});
+const chess = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'chess.js'), 'utf8')).data;
+const heroByName = Object.fromEntries(Object.values(chess)
+  .filter(x => x && x.showHeroTag === '1')
+  .map(x => [x.name, x]));
 
 function pct(value) {
   return Math.round(value * 10) / 10;
@@ -111,6 +119,210 @@ function componentsFor(items) {
   }))];
 }
 
+function itemView(name) {
+  const item = equipByName[name];
+  if (!item) return { name, picture: '', components: [] };
+  const localPicture = picture => picture ? `assets/equip/${path.basename(new URL(picture).pathname)}` : '';
+  const components = [equip[item.synthesis1], equip[item.synthesis2]]
+    .filter(Boolean)
+    .map(x => ({ name: x.name, picture: localPicture(x.picture) }));
+  return { name, picture: localPicture(item.picture), components };
+}
+
+function teamNames(row) {
+  return (row && row.team || []).map(x => typeof x === 'string' ? x : x.name).filter(Boolean);
+}
+
+function activeTraitLabels(names) {
+  const units = names.map(name => optimizer.unitByName[name]).filter(Boolean);
+  return optimizer.activeTraits(units)
+    .sort((a, b) => b.need - a.need || b.tier - a.tier)
+    .map(x => `${x.need}${x.name}`);
+}
+
+function bestItemHolder(names, itemNames, preferred) {
+  const ids = itemNames.map(name => equipByName[name] && equipByName[name].id).filter(Boolean);
+  const rows = names.map(name => {
+    const unit = optimizer.unitByName[name];
+    if (!unit) return null;
+    const star = unit.price <= 2 ? 2 : 1;
+    try {
+      const result = simulate(unit.id, ids, star);
+      const range = Number((heroByName[name] || {}).attackRange || 1);
+      const survivalFactor = Math.min(1.22, 0.82 + range * 0.08 + Number(unit.hp || 0) / 9000);
+      return { name, dps: Math.round(result.dps), value: result.dps * survivalFactor + (name === preferred ? 25 : 0) };
+    } catch (_) {
+      return null;
+    }
+  }).filter(Boolean).sort((a, b) => b.value - a.value || a.name.localeCompare(b.name, 'zh-Hans-CN'));
+  return rows[0] || { name: preferred || names[0], dps: 0, value: 0 };
+}
+
+function bridgeCandidate(stage, finalRow) {
+  const rows = discovery.carryAtlas[stage] || [];
+  const finalNames = new Set(teamNames(finalRow));
+  const targetItems = finalRow.carryItems || [];
+  const maxScore = Math.max(...rows.map(x => x.score), 1);
+  return rows.map(row => {
+    const names = teamNames(row);
+    const holder = bestItemHolder(names, targetItems, row.carry);
+    const overlap = names.filter(name => finalNames.has(name)).length;
+    const itemFit = Math.min(1, Math.log1p(holder.dps) / 7);
+    const transitionScore = row.score / maxScore * 50
+      + overlap / Math.max(1, names.length) * 27
+      + itemFit * 18
+      + (row.carry === finalRow.carry ? 5 : 0);
+    return { row, holder, transitionScore };
+  }).sort((a, b) => b.transitionScore - a.transitionScore || b.row.score - a.row.score)[0];
+}
+
+function traitProgress(beforeNames, afterNames) {
+  const before = new Map(activeTraitLabels(beforeNames).map(label => [label.replace(/^\d+/, ''), Number(label.match(/^\d+/)[0])]));
+  return activeTraitLabels(afterNames).reduce((sum, label) => {
+    const name = label.replace(/^\d+/, '');
+    const count = Number(label.match(/^\d+/)[0]);
+    return sum + Math.max(0, count - (before.get(name) || 0));
+  }, 0);
+}
+
+function expandLateTeam(row) {
+  const names = teamNames(row);
+  const targetSize = Math.max(8, names.length);
+  const expanded = names.slice();
+  while (expanded.length < targetSize) {
+    const pick = optimizer.units.filter(unit => !expanded.includes(unit.name)).map(unit => {
+      const next = [...expanded, unit.name];
+      const progress = traitProgress(expanded, next);
+      const control = /晕眩|击飞|恐惧|嘲讽|缴械/.test(String((heroByName[unit.name] || {}).skillDesc || '')) ? 8 : 0;
+      const defense = Number(unit.hp || 0) * (1 + (Number(unit.armor || 0) + Number(unit.mr || 0)) / 200) / 320;
+      return { unit, value: progress * 20 + control + defense + unit.price * 1.5 };
+    }).sort((a, b) => b.value - a.value || a.unit.name.localeCompare(b.unit.name, 'zh-Hans-CN'))[0];
+    if (!pick) break;
+    expanded.push(pick.unit.name);
+  }
+  return expanded;
+}
+
+function heroRole(name, carry, tankOrder) {
+  if (name === carry) return '主C';
+  const tankIndex = tankOrder.indexOf(name);
+  if (tankIndex === 0) return '主坦';
+  if (tankIndex === 1) return '副坦';
+  const hero = heroByName[name] || {};
+  if (Number(hero.attackRange || 1) <= 2 && /晕眩|击飞|恐惧|嘲讽|缴械/.test(String(hero.skillDesc || ''))) return '控制';
+  return Number(hero.attackRange || 1) >= 3 ? '后排输出' : '战士';
+}
+
+function positionBoard(names, carry, items, tankDetail) {
+  const tankOrder = (tankDetail || []).map(x => x.hero).filter(name => names.includes(name) && name !== carry);
+  const used = new Set();
+  const slots = {
+    '主坦': [[1, 4], [1, 3], [1, 5]],
+    '副坦': [[1, 2], [1, 6], [2, 3], [2, 5]],
+    '控制': [[1, 3], [1, 5], [2, 2], [2, 6], [1, 1], [1, 7]],
+    '战士': [[2, 4], [2, 3], [2, 5], [1, 2], [1, 6], [2, 1], [2, 7]],
+    '后排输出': [[4, 2], [4, 6], [4, 3], [4, 5], [3, 2], [3, 6]],
+    '主C': [[4, 4], [4, 5], [4, 3], [3, 4], [2, 4]],
+  };
+  const fallback = [];
+  for (let row = 1; row <= 4; row++) for (let col = 1; col <= 7; col++) fallback.push([row, col]);
+  const order = names.slice().sort((a, b) => {
+    const weight = role => ({ '主坦': 0, '副坦': 1, '控制': 2, '主C': 3, '战士': 4, '后排输出': 5 }[role] ?? 9);
+    return weight(heroRole(a, carry, tankOrder)) - weight(heroRole(b, carry, tankOrder));
+  });
+  return order.map(name => {
+    const hero = heroByName[name] || {};
+    const role = heroRole(name, carry, tankOrder);
+    let preferred = slots[role] || fallback;
+    if (role === '主C' && Number(hero.attackRange || 1) <= 1) preferred = [[2, 4], [2, 3], [2, 5], [1, 4]];
+    const pos = [...preferred, ...fallback].find(([row, col]) => !used.has(`${row}-${col}`));
+    used.add(`${pos[0]}-${pos[1]}`);
+    const tank = (tankDetail || []).find(x => x.hero === name);
+    const unitItems = name === carry ? items : tank ? (tank.items || []) : [];
+    return {
+      name,
+      price: Number(hero.price || (optimizer.unitByName[name] || {}).price || 0),
+      row: pos[0],
+      col: pos[1],
+      role,
+      carry: name === carry,
+      items: unitItems,
+    };
+  });
+}
+
+function stageView(key, label, level, row, carry, names, targetItems, method) {
+  const holder = carry || bestItemHolder(names, targetItems, row && row.carry).name;
+  const tanks = row && row.tankDetail || [];
+  return {
+    key,
+    label,
+    level,
+    carry: holder,
+    score: row && row.score || 0,
+    method,
+    team: names,
+    traits: activeTraitLabels(names),
+    board: positionBoard(names, holder, targetItems, tanks),
+  };
+}
+
+function operationPlan(stages, finalRow) {
+  const components = componentsFor(finalRow.carryItems || []);
+  const carryUnit = optimizer.unitByName[finalRow.carry];
+  const price = carryUnit ? carryUnit.price : 4;
+  const rollLevel = price <= 1 ? 5 : price === 2 ? 6 : price === 3 ? 7 : price === 4 ? 8 : 9;
+  const targetCopies = price <= 3 ? 9 : 3;
+  const shopOdds = ((discovery.shopModel || {}).odds || {})[rollLevel] || [0, 0, 0, 0, 0];
+  const costOdds = Number(shopOdds[price - 1] || 0) / 100;
+  const unitCount = Number((((discovery.shopModel || {}).unitCounts || {})[price]) || 1);
+  const slotProbability = costOdds / unitCount;
+  const shopProbability = 1 - Math.pow(1 - slotProbability, 5);
+  const expectedGold = slotProbability > 0 ? Math.round(targetCopies / (slotProbability * 5) * 2) : 0;
+  const dPlan = `${rollLevel}级${price}费槽${Math.round(costOdds * 100)}%，单次商店见${finalRow.carry}约${pct(shopProbability * 100)}%，从0张到${targetCopies}张理论期望约${expectedGold}金`;
+  const [early, mid, late] = stages;
+  const handoff = (from, to, targetTeam, phase) => {
+    if (from === to) return `${phase}继续由${to}持装`;
+    if (targetTeam.includes(from)) return `${phase}先留一只无装${from}，再卖持装${from}把三件套转给${to}`;
+    return `${phase}卖掉持装${from}，把三件套转给${to}`;
+  };
+  const change1 = handoff(early.carry, mid.carry, mid.team, '中期');
+  const change2 = handoff(mid.carry, late.carry, late.team, '成型后');
+  return [
+    `2阶段：优先拿${components.join('、') || '目标装散件'}，${early.level}人口由${early.carry}带目标装打工。`,
+    `3/4阶段：${change1}；只保留终局重合牌，按模型承接到${mid.team.join('、')}。`,
+    `成型：${change2}，终局围绕${finalRow.carry}；${dPlan}（独立抽样近似，未扣同行与牌库）。`,
+    `止损：目标三件差两件以上或关键主C两轮搜不到，沿当前装备承载者切换到同方向次优路线。`,
+  ];
+}
+
+function buildPresentation(row) {
+  if (!teamNames(row).length || !(row.carryItems || []).length) return null;
+  const targetItems = row.carryItems;
+  const earlyBridge = bridgeCandidate('early', row);
+  const midBridge = row.stage === 'mid'
+    ? { row, holder: bestItemHolder(teamNames(row), targetItems, row.carry), transitionScore: 100 }
+    : bridgeCandidate('mid', row);
+  if (!earlyBridge || !midBridge) return null;
+  const earlyNames = teamNames(earlyBridge.row);
+  const midNames = teamNames(midBridge.row);
+  const lateNames = expandLateTeam(row);
+  const early = stageView('early', '前期', 5, earlyBridge.row, earlyBridge.holder.name, earlyNames, targetItems,
+    `阶段战力${earlyBridge.row.score}，转型相容度${Math.round(earlyBridge.transitionScore)}`);
+  const mid = stageView('mid', '中期', 7, midBridge.row, midBridge.holder.name, midNames, targetItems,
+    `阶段战力${midBridge.row.score}，转型相容度${Math.round(midBridge.transitionScore)}`);
+  const late = stageView('late', '后期', Math.max(8, lateNames.length), row, row.carry, lateNames, targetItems,
+    `终局模型总分${row.score}，主C模拟${row.carryDps || 0}/秒`);
+  const stages = [early, mid, late];
+  return {
+    stages,
+    items: targetItems,
+    operations: operationPlan(stages, row),
+    positioningBasis: '行1靠敌方；主坦按EHP居中承伤，控制分散前置，远程主C按攻击距离沉底并与副输出错侧。',
+    derivation: '阶段承载者由目标三件套在当期棋盘逐人重跑输出模型后选出；过渡阵容按阶段战力、终局重合率与持装效率联合排序。',
+  };
+}
+
 function generatedRoutes(rows) {
   return rows
     .filter(row => row.upliftPct >= 5 && row.stageRatio >= 0.7 && row.confidence >= 0.6)
@@ -202,6 +414,14 @@ function groupConditional(rows) {
 
 const stable = stableCandidates();
 const conditional = conditionalCandidates();
+stable.forEach(row => { row.presentation = buildPresentation(row); });
+conditional.forEach(row => { row.presentation = buildPresentation(row); });
+const itemCatalog = [...new Set([...stable, ...conditional]
+  .filter(row => row.presentation)
+  .flatMap(row => [
+    ...row.presentation.items,
+    ...row.presentation.stages.flatMap(stage => stage.board.flatMap(unit => unit.items || [])),
+  ]))].map(itemView);
 const verdicts = [...groupStable(stable), ...groupConditional(conditional)];
 const routes = generatedRoutes(conditional);
 const unsupported = profiles.filter(x => !x.supported).map(x => ({ augment: x.augment, desc: x.desc, basis: x.basis }));
@@ -221,6 +441,7 @@ const result = {
   },
   stable,
   conditional,
+  itemCatalog,
   routes,
   unsupported,
   verdicts,
@@ -257,8 +478,21 @@ const sisters = conditional.find(x => x.augment === '姐妹' && x.carry === '金
 if (!sisters || !sisters.team.some(x => x.name === '蔚')) throw new Error('姐妹场景没有由硬门槛推导出蔚');
 const sistersRoute = routes.find(x => x.name.includes('姐妹金克丝'));
 if (!sistersRoute || sistersRoute.coreUnits.join(',') !== sisters.team.map(x => x.name).join(',')) throw new Error('比赛路线必须来自元求解阵容');
+const presented = [...stable, ...conditional].filter(row => row.presentation);
+for (const row of presented) {
+  if (row.presentation.stages.length !== 3 || row.presentation.operations.length < 3) throw new Error('算法阵容缺少阶段棋盘或运营计划');
+  for (const stage of row.presentation.stages) {
+    const cells = stage.board.map(unit => `${unit.row}-${unit.col}`);
+    if (new Set(cells).size !== cells.length) throw new Error(`${row.displayName || row.augment}的${stage.label}站位重叠`);
+    if (stage.board.some(unit => unit.row < 1 || unit.row > 4 || unit.col < 1 || unit.col > 7)) throw new Error('算法站位越界');
+  }
+}
+for (const item of itemCatalog) {
+  if (!item.picture || !fs.existsSync(path.join(ROOT, '可视化', item.picture))) throw new Error(`缺少本地装备图：${item.name}`);
+}
 console.log(`元阵容求解完成: ${result.version}`);
 console.log(`强化覆盖: ${result.coverage.simulated}/${result.coverage.heroAugments}`);
+console.log(`算法展示: ${presented.length}条候选完成三阶段站位/装备/运营推导`);
 console.log(`姐妹金克丝: ${sisters.baselineScore} -> ${sisters.score} (+${sisters.upliftPct}%)`);
 console.log(`自动阵容: ${sisters.team.map(x => x.name).join('、')}`);
 console.log('输出: meta_discovery_results.json, reports/元阵容自动求解.md, model_results.json');
