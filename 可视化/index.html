@@ -75,6 +75,7 @@ ul.assump li { margin-bottom:5px; }
 h3 { font-size:14px; font-weight:650; margin:16px 0 8px; }
 .tierRow { display:flex; gap:12px; align-items:flex-start; padding:10px 0; border-bottom:1px solid var(--grid); }
 .tierRow:last-child { border-bottom:none; }
+.certSummary { border-left:3px solid var(--s5); padding:7px 10px; margin:2px 0 10px; color:var(--ink2); font-size:12.5px; background:color-mix(in srgb, var(--surface) 92%, var(--s5) 8%); }
 .tierBadge { flex:0 0 44px; text-align:center; font-weight:700; font-size:15px; border-radius:8px; padding:6px 0; color:#fff; }
 .tierRow .fam { font-weight:650; }
 .tierRow .cmp { color:var(--ink2); font-size:12.5px; margin:2px 0; }
@@ -311,6 +312,7 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
 .s2OpenHint { color:var(--s2); font-size:11.5px; font-weight:750; margin-top:2px; }
 .s2Score { font-weight:850; color:var(--s2); font-variant-numeric:tabular-nums; }
 .s2Meta { color:var(--muted); font-size:11.5px; margin:2px 0 6px; }
+.s2Cert { color:var(--s5); font-size:11.5px; font-weight:750; margin:2px 0 6px; }
 .s2Cols { display:grid; grid-template-columns:minmax(0,.85fr) minmax(0,.85fr) minmax(220px,1.3fr); gap:8px; margin-top:8px; }
 .s2Box { border:1px solid var(--grid); border-radius:8px; padding:8px; min-width:0; color:var(--ink2); font-size:12px; }
 .s2Box b { color:var(--ink); display:block; margin-bottom:2px; }
@@ -642,15 +644,15 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
 <div id="tip"></div>
 <dialog id="dlg"><div id="dlgBody"></div></dialog>
 
-<script src="data.js?v=meta-20260712a"></script>
+<script src="data.js?v=cert-20260712a"></script>
 <script src="discovery-data.js?v=meta-20260712a"></script>
 <script src="transition-data.js?v=transition-20260705a"></script>
 <script src="numeric-lens-data.js?v=lens-20260705a"></script>
 <script src="research-lab-data.js?v=lab-20260705a"></script>
 <script src="reinvent-data.js?v=reinvent-20260706a"></script>
 <script src="mecha-branch-data.js?v=mecha-20260706a"></script>
-<script src="stage2-matcher-data.js?v=meta-20260712a"></script>
-<script src="matcher-core.js?v=match-20260711a"></script>
+<script src="stage2-matcher-data.js?v=cert-20260712a"></script>
+<script src="matcher-core.js?v=cert-20260712a"></script>
 <script src="audit-data.js?v=tiers-20260705b"></script>
 <script>
 "use strict";
@@ -1079,7 +1081,20 @@ function renderStage2Matcher() {
   }
   function openStage2Detail(r, idx) {
     const t = r.template;
-    if (t.source === "official" && openComp(t.name)) return;
+    if (t.source === "official" && openComp(t.name)) {
+      if (r.sampleDecision) {
+        const body = document.getElementById("dlgBody");
+        const title = document.createElement("div"); title.className = "secT"; title.textContent = "路线认证样本";
+        const line = document.createElement("div"); line.className = "noteP";
+        line.textContent = `${r.sampleDecision.evidenceLevel}；${r.sampleDecision.sampleSize}次模型扰动；稳健${r.sampleDecision.robustness}%；95%区间${(r.sampleDecision.interval95 || []).join("~")}；尾部${r.sampleDecision.cvar10}；当前支持${r.sampleDecision.decisionShare}%。`;
+        body.append(title, line);
+        if ((r.sampleDecision.dependencies || []).length) {
+          const dep = document.createElement("div"); dep.className = "noteP"; dep.textContent = `关键依赖：${r.sampleDecision.dependencies.join("；")}。`;
+          body.appendChild(dep);
+        }
+      }
+      return;
+    }
     const body = document.getElementById("dlgBody");
     body.textContent = "";
     const mk = (tag, cls, text, parent) => {
@@ -1094,7 +1109,13 @@ function renderStage2Matcher() {
     mk("h2", null, "#" + (idx + 1) + " " + t.name, head);
     const x = mk("button", "closeX", "✕", head);
     x.addEventListener("click", () => dlg.close());
-    mk("div", "dlgMeta", `${t.family} ｜ ${t.goal} ｜ ${r.stageStrength}分 ｜ 信心 ${confidence(r.stageStrength)}`, body);
+    mk("div", "dlgMeta", `${t.family} ｜ ${t.goal} ｜ 强度${r.stageStrength}分 ｜ 认证后${r.finalScore}分 ｜ 信心 ${confidence(r.finalScore)}`, body);
+    if (r.sampleDecision) {
+      mk("div", "secT", "路线认证样本", body);
+      mk("div", "noteP", `${r.sampleDecision.evidenceLevel}；${r.sampleDecision.sampleSize}次模型扰动；稳健${r.sampleDecision.robustness}%；95%区间${(r.sampleDecision.interval95 || []).join("~")}；尾部${r.sampleDecision.cvar10}；当前支持${r.sampleDecision.decisionShare}%。`, body);
+      if ((r.sampleDecision.dependencies || []).length) mk("div", "noteP", `关键依赖：${r.sampleDecision.dependencies.join("；")}。稳健驱动：${(r.sampleDecision.drivers || []).join("；")}。`, body);
+      mk("div", "noteP", r.sampleDecision.warning, body);
+    }
 
     const traitBox = mk("div", "traitChips", null, body);
     (t.earlyTraits || []).forEach(x => mk("span", "chip", x, traitBox));
@@ -1172,9 +1193,6 @@ function renderStage2Matcher() {
       btn.addEventListener("click", () => toggle(btn.dataset.kind, btn.dataset.value));
     });
   }
-  function scoreTemplate(t, selected) {
-    return MatcherCore.scoreTemplate(t, selected, MATCHER.weights);
-  }
   function confidence(score) {
     return MatcherCore.confidence(score);
   }
@@ -1199,9 +1217,7 @@ function renderStage2Matcher() {
       return;
     }
     const selected = selectedObj();
-    const ranked = MATCHER.templates.map(t => ({ template: t, ...scoreTemplate(t, selected) }))
-      .sort((a, b) => b.stageStrength - a.stageStrength)
-      .slice(0, 5);
+    const ranked = MatcherCore.rank(MATCHER.templates, selected, MATCHER.weights, 5, { certification: true });
     writeOutput(buildOutput(ranked));
     box.innerHTML = ranked.map((r, i) => {
       const t = r.template;
@@ -1211,10 +1227,11 @@ function renderStage2Matcher() {
         <div class="s2Head">
           <div>
             <div class="s2Title">#${i + 1} ${escText(t.name)}</div>
-            <div class="s2Meta">${escText(t.family)} ｜ ${escText(t.goal)} ｜ 信心 ${confidence(r.stageStrength)}</div>
+            <div class="s2Meta">${escText(t.family)} ｜ ${escText(t.goal)} ｜ 现场匹配 ${confidence(r.finalScore)}</div>
+            ${r.sampleDecision ? `<div class="s2Cert">${escText(r.sampleDecision.evidenceLevel)} ｜ ${r.sampleDecision.sampleSize}样本 ｜ 稳健${r.sampleDecision.robustness}% ｜ 当前支持${r.sampleDecision.decisionShare}%</div>` : ""}
             <div class="s2OpenHint">点击查看实际阵容 / 路线详情</div>
           </div>
-          <div class="s2Score">${r.stageStrength}分</div>
+          <div class="s2Score">${r.finalScore}分</div>
         </div>
         <div>${(t.earlyTraits || []).slice(0, 5).map(x => `<span class="chip">${escText(x)}</span>`).join("")}</div>
         <div class="s2Route"><b>路线：</b>${escText((t.route || []).join(" -> "))}</div>
@@ -1418,6 +1435,14 @@ function openComp(shortName) {
     if (d.notes.early) mk("div", "noteP", "运营：" + d.notes.early, body);
     if (d.notes.enemy) mk("div", "noteP", "克制：" + d.notes.enemy, body);
   }
+  const versionRow = metaCandidate(shortName);
+  if (versionRow && versionRow.certification) {
+    const cert = versionRow.certification;
+    mk("div", "secT", "版本答案认证", body);
+    mk("div", "noteP", `${cert.evidenceLevel}；匹配路线：${cert.matchedRoute}；${cert.sampleSize}次模型扰动；稳健${cert.metrics.robustness}%；前25%进入率${cert.metrics.topQuartileRate}%；失败率${cert.metrics.failureRate}%；95%区间${cert.metrics.interval95.join("~")}。`, body);
+    mk("div", "noteP", `关键依赖：${(cert.dependencies || []).join("；") || "无硬依赖"}。稳健驱动：${(cert.drivers || []).join("；")}。`, body);
+    mk("div", "noteP", cert.warning, body);
+  }
   dlg.showModal();
   return true;
 }
@@ -1444,6 +1469,13 @@ function openMetaComp(name) {
   const x = mk("button", "closeX", "✕", head); x.addEventListener("click", () => dlg.close());
   const scoreText = c.augment ? `无强化 ${c.baselineScore} → 有强化 ${c.score}（+${c.upliftPct}%）` : `全队总分 ${c.score}`;
   mk("div", "dlgMeta", `${scoreText} ｜ 主C ${c.carry} ${c.carryDps || "-"}/秒 ｜ 前排EHP ${fmt(c.frontEHP || 0)}`, body);
+  if (c.certification) {
+    const cert = c.certification;
+    mk("div", "secT", "版本答案认证", body);
+    mk("div", "noteP", `${cert.evidenceLevel}；匹配路线：${cert.matchedRoute}；${cert.sampleSize}次模型扰动；稳健${cert.metrics.robustness}%；前25%进入率${cert.metrics.topQuartileRate}%；失败率${cert.metrics.failureRate}%；95%区间${cert.metrics.interval95.join("~")}。`, body);
+    mk("div", "noteP", `关键依赖：${(cert.dependencies || []).join("；") || "无硬依赖"}。稳健驱动：${(cert.drivers || []).join("；")}。`, body);
+    mk("div", "noteP", cert.warning, body);
+  }
   if (c.augment) mk("div", "noteP", `模型依据：${c.basis}。硬门槛：${(c.requiredUnits || []).join("、")}。`, body);
   mk("div", "secT", "自动求解阵容", body);
   const team = mk("div", "traitChips", null, body);
@@ -1523,6 +1555,11 @@ function openMetaComp(name) {
   // ① 体系梯队
   const tierCol = { T0: css("--seq650"), T1: css("--seq450"), "T1.5": css("--seq250"), CT0: css("--s3"), CT1: css("--s2"), "CT1.5": css("--s1") };
   const vt = document.getElementById("v-tiers");
+  if (MATCHER && MATCHER.certification) {
+    const proof = document.createElement("div"); proof.className = "certSummary";
+    proof.textContent = `认证证据：${MATCHER.templates.length}条路线 × ${MATCHER.certification.sampleSize}次模型扰动；样本先验最多±5分。${MATCHER.certification.ceiling}`;
+    vt.appendChild(proof);
+  }
   M.verdicts.forEach(v => {
     const row = document.createElement("div"); row.className = "tierRow";
     const b = document.createElement("div"); b.className = "tierBadge"; b.textContent = v.tier; b.style.background = tierCol[v.tier];
@@ -1535,7 +1572,9 @@ function openMetaComp(name) {
       const official = M.comps.some(o => o.name.includes("【" + x + "】") || o.name.includes(x));
       const meta = metaCandidate(x);
       if (official || meta) {
-        const btn = document.createElement("button"); btn.className = "compChip"; btn.textContent = x + " ▸";
+        const btn = document.createElement("button"); btn.className = "compChip";
+        const cert = meta && meta.certification;
+        btn.textContent = x + (cert ? ` · ${cert.evidenceLevel.split(" ")[0]}` : "") + " ▸";
         btn.addEventListener("click", () => official ? openComp(x) : openMetaComp(x));
         c.appendChild(btn);
       } else {

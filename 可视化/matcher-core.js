@@ -51,6 +51,9 @@
   // 资产角色估值：角色判定来自 routeProfile，这里只集中放数值权重。
   const FUTURE_VALUE_GOLD_CAP = 80;
   const FUTURE_ITEM_VALUE_RATIO = 0.25;
+  // 认证样本只作为有限先验，最多±5分；现场资产与硬门槛仍决定主要排序。
+  const CERTIFICATION_PRIOR_LIMIT = 5;
+  const CERTIFICATION_SOFTMAX_TEMPERATURE = 16;
   const MIN_LEVEL = 1;
   const MAX_LEVEL = 9;
   const DEFAULT_LEVEL = 6;
@@ -1032,6 +1035,46 @@
     return Number.isFinite(Number(row.finalScore)) ? Number(row.finalScore) : Number(row.stageStrength);
   }
 
+  function applyCertification(rows, opts) {
+    if (opts && opts.certification === false) return rows;
+    rows.forEach(row => {
+      const cert = row.template && row.template.certification;
+      if (!cert || row.mechanicBlocked) return;
+      const prior = clamp(Number(cert.priorPoints) || 0, -CERTIFICATION_PRIOR_LIMIT, CERTIFICATION_PRIOR_LIMIT);
+      row.preCertificationScore = row.finalScore;
+      row.samplePrior = prior;
+      row.finalScore = Math.max(0, Math.round(row.finalScore + prior));
+      row.certification = cert;
+      row.evidence = uniq([`样本先验${prior >= 0 ? "+" : ""}${prior}（${cert.sampleSize}次，稳健${cert.metrics?.robustness || 0}%）`, ...(row.evidence || [])]).slice(0, 6);
+    });
+    const eligible = rows.filter(row => row.finalScore > 0);
+    if (!eligible.length) return rows;
+    const maxScore = Math.max(...eligible.map(row => row.finalScore));
+    const weighted = eligible.map(row => {
+      const robustness = Number(row.certification && row.certification.metrics && row.certification.metrics.robustness) || 50;
+      const priorWeight = 0.75 + robustness / 100 * 0.25;
+      return { row, weight: Math.exp((row.finalScore - maxScore) / CERTIFICATION_SOFTMAX_TEMPERATURE) * priorWeight };
+    });
+    const total = weighted.reduce((sum, x) => sum + x.weight, 0) || 1;
+    weighted.forEach(({ row, weight }) => {
+      const cert = row.certification;
+      row.sampleDecision = {
+        sampleSize: cert ? cert.sampleSize : 0,
+        evidenceLevel: cert ? cert.evidenceLevel : "未认证",
+        robustness: cert && cert.metrics ? cert.metrics.robustness : 0,
+        interval95: cert && cert.metrics ? cert.metrics.interval95 : [],
+        cvar10: cert && cert.metrics ? cert.metrics.cvar10 : 0,
+        failureRate: cert && cert.metrics ? cert.metrics.failureRate : 0,
+        priorPoints: row.samplePrior || 0,
+        decisionShare: Math.round(weight / total * 1000) / 10,
+        drivers: cert ? cert.drivers || [] : [],
+        dependencies: cert ? cert.dependencies || [] : [],
+        warning: cert ? cert.warning : "没有认证样本",
+      };
+    });
+    return rows;
+  }
+
   function stickyThreshold(current) {
     return Math.max(STICKY_MIN_LEAD, Math.ceil(rowSortScore(current) * STICKY_RELATIVE_LEAD));
   }
@@ -1096,7 +1139,8 @@
       }
       return base;
     });
-    if (!opts) return rows.sort((a, b) => b.stageStrength - a.stageStrength).slice(0, limit || 5);
+    applyCertification(rows, opts);
+    if (!opts) return rows.sort((a, b) => rowSortScore(b) - rowSortScore(a)).slice(0, limit || 5);
     const previousRank = new Map((opts.previousOrder || []).map((id, i) => [id, i]));
     rows.sort((a, b) => {
       const delta = rowSortScore(b) - rowSortScore(a);
@@ -1135,9 +1179,10 @@
     const backups = ranked.slice(1, 4).map(r => `${r.template.name}(${rowSortScore(r)}分)`).join(" / ") || "无";
     return [
       `信号：${signals}`,
-      `首选：${t.name}（${topScore}分，信心${confidence(topScore)}）`,
+      `首选：${t.name}（${topScore}分，现场匹配${confidence(topScore)}）`,
       `权重：英雄${top.shares?.hero || 0}% / 装备${top.shares?.item || 0}% / 符文${top.shares?.augment || 0}%${top.breakdown?.traitSignals ? ` / 羁绊${top.shares?.trait || 0}%` : ""}`,
       `拆分：已握资产${top.heldValue || 0}分 + 概率折现${top.futureValue || 0}分 = ${top.finalScore}分`,
+      top.sampleDecision ? `样本：${top.sampleDecision.evidenceLevel}，${top.sampleDecision.sampleSize}次，稳健${top.sampleDecision.robustness}%，决策支持${top.sampleDecision.decisionShare}%` : "",
       `路线：${(t.route || []).join(" -> ")}`,
       `留牌：${(t.actions.keep || []).slice(0, 8).join("、")}`,
       `装备：${t.actions.item || "-"}`,
@@ -1421,6 +1466,13 @@
     for (let i = 1; i < dropped.length; i++) {
       assert(dropped[i - 1].finalScore >= dropped[i].finalScore, "rank结果finalScore必须单调非增");
     }
+    const certBase = id => ({ id, name: id, quality: "S", coreUnits: [], earlyUnits: [], midUnits: [], actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 1, items: [] }, units: [], items: [], activeTraits: [] } });
+    const certHigh = { ...certBase("稳健"), certification: { sampleSize: 5000, evidenceLevel: "L2.5 模型扰动稳健", priorPoints: 5, metrics: { robustness: 92, interval95: [110, 130], cvar10: 112, failureRate: 2 }, warning: "模型样本" } };
+    const certLow = { ...certBase("敏感"), certification: { sampleSize: 5000, evidenceLevel: "L1.5 高敏感假设", priorPoints: -5, metrics: { robustness: 18, interval95: [70, 120], cvar10: 74, failureRate: 42 }, warning: "模型样本" } };
+    const certRows = rank([certLow, certHigh], { units: [], items: [], augments: [], augmentCats: [] }, fallbackWeights, 2, {});
+    assert(rowId(certRows[0]) === "稳健" && certRows[0].finalScore - certRows[1].finalScore === 10, "认证先验应在±5分内参与排序");
+    assert(certRows[0].sampleDecision && Number.isFinite(certRows[0].sampleDecision.decisionShare), "每次rank应输出动态样本决策支持度");
+    assert(certRows[0].evidence.some(x => x.includes("5000次")), "认证样本应进入证据栏");
     if (typeof require === "function") {
       const path = require("path");
       const rootDir = path.resolve(__dirname, "..");
@@ -1470,6 +1522,8 @@
     STAR_MILESTONE_BONUS,
     FUTURE_VALUE_GOLD_CAP,
     FUTURE_ITEM_VALUE_RATIO,
+    CERTIFICATION_PRIOR_LIMIT,
+    CERTIFICATION_SOFTMAX_TEMPERATURE,
     DEFAULT_LEVEL,
     scoreTemplate,
     rank,
