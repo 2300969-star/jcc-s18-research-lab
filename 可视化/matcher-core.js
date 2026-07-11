@@ -54,6 +54,17 @@
   // 认证样本只作为有限先验，最多±5分；现场资产与硬门槛仍决定主要排序。
   const CERTIFICATION_PRIOR_LIMIT = 5;
   const CERTIFICATION_SOFTMAX_TEMPERATURE = 16;
+  // 条件符文算子：认证边际先按证据等级折扣，再分别作用于战力、D牌成本或装备缺口。
+  const AUGMENT_OPERATOR_EVIDENCE = { "L2.5": 1, "L2": 0.65, "L1.5": 0.35 };
+  const AUGMENT_OPERATOR_LIFT_SCALE = 0.5;
+  const AUGMENT_OPERATOR_SINGLE_CAP = 12;
+  const AUGMENT_OPERATOR_TOTAL_CAP = 18;
+  const AUGMENT_COMBAT_READY_FLOOR = 0.6;
+  const AUGMENT_ECON_DISCOUNT_BASE = 0.05;
+  const AUGMENT_ECON_DISCOUNT_PER_POINT = 0.02;
+  const AUGMENT_ECON_DISCOUNT_CAP = 0.3;
+  const AUGMENT_ITEM_MISSING_CAP = 3;
+  const AUGMENT_ITEM_BONUS_CAP = 10;
   const MIN_LEVEL = 1;
   const MAX_LEVEL = 9;
   const DEFAULT_LEVEL = 6;
@@ -688,6 +699,56 @@
     return null;
   }
 
+  function augmentEvidenceFactor(level) {
+    const key = Object.keys(AUGMENT_OPERATOR_EVIDENCE).find(x => String(level || "").startsWith(x));
+    return key ? AUGMENT_OPERATOR_EVIDENCE[key] : 0;
+  }
+
+  function calibratedAugmentLift(profile) {
+    const delta = Math.max(0, Number(profile && profile.conditionLift) || 0);
+    return Math.min(AUGMENT_OPERATOR_SINGLE_CAP, delta * AUGMENT_OPERATOR_LIFT_SCALE) * augmentEvidenceFactor(profile && profile.evidenceLevel);
+  }
+
+  function activeAugmentOperators(t, selected) {
+    const selectedAugments = new Set(selected.augments || []);
+    const rows = (t.augmentOperators || []).filter(x => selectedAugments.has(x.name)).map(x => ({
+      ...x,
+      calibratedLift: calibratedAugmentLift(x),
+    })).filter(x => x.calibratedLift > 0);
+    const economyRows = rows.filter(x => x.category === "经济");
+    let discount = 0;
+    let shopLevelOffset = 0;
+    let copyCredit = 0;
+    economyRows.forEach(x => {
+      if (/高端购物/.test(x.name)) shopLevelOffset = Math.max(shopLevelOffset, 1);
+      else discount += AUGMENT_ECON_DISCOUNT_BASE + AUGMENT_ECON_DISCOUNT_PER_POINT * x.calibratedLift;
+      if (/DD街区|明智消费|快速思考|门票/.test(x.name)) discount += 0.06;
+      if (/团队建设|英勇福袋|复制器/.test(x.name)) copyCredit = Math.max(copyCredit, 1);
+    });
+    discount = clamp(discount, 0, AUGMENT_ECON_DISCOUNT_CAP);
+    return {
+      rows,
+      economy: {
+        active: economyRows.length > 0,
+        names: economyRows.map(x => x.name),
+        goldMultiplier: 1 - discount,
+        discount,
+        shopLevelOffset,
+        copyCredit,
+        copyTarget: (profile(t).mainCarry || {}).name || "",
+      },
+      variableBonus: 0,
+      economyFutureBonus: 0,
+      evidence: [],
+      actions: [],
+    };
+  }
+
+  function operatorOddsOpts(opts, operator) {
+    if (!operator || !operator.economy || !operator.economy.active) return opts || {};
+    return { ...(opts || {}), augmentEconomy: operator.economy };
+  }
+
   function scoreTemplate(t, selected, weights, opts) {
     const unitRows = normalizeSelectedUnits(selected.units || []);
     const units = new Set(unitRows.map(x => x.name));
@@ -716,6 +777,8 @@
     const selectedCompleted = [...items].map(canonicalItem).filter(x => !COMPONENTS.includes(x));
     const selectedComponents = selectedComponentList(items);
     const mainCarryName = p.mainCarry && p.mainCarry.name;
+    const augmentOperator = activeAugmentOperators(t, selected);
+    let operatorBudget = AUGMENT_OPERATOR_TOTAL_CAP;
     if (strengthPrior) evidence.push(`版本数值先验 ${strengthPrior > 0 ? "+" : ""}${strengthPrior}`);
 
     unitRows.forEach(row => {
@@ -775,11 +838,36 @@
     });
 
     if (opts && opts.oddsData) {
-      const future = futureDemandValue(t, selected, opts, w);
+      const baselineFuture = futureDemandValue(t, selected, opts, w);
+      const future = augmentOperator.economy.active
+        ? futureDemandValue(t, selected, operatorOddsOpts(opts, augmentOperator), w)
+        : baselineFuture;
       futureValue = future.value;
       score += futureValue;
-      breakdown.future += futureValue;
+      augmentOperator.economyFutureBonus = Math.max(0, future.value - baselineFuture.value);
+      breakdown.future += Math.max(0, futureValue - augmentOperator.economyFutureBonus);
+      breakdown.augment += augmentOperator.economyFutureBonus;
       future.evidence.forEach(x => evidence.push(x));
+      if (augmentOperator.economy.active) {
+        const econ = augmentOperator.economy;
+        const optionRaw = augmentOperator.rows.filter(x => x.category === "经济").reduce((sum, x) => sum + x.calibratedLift, 0);
+        const optionBonus = Math.max(0, Math.min(operatorBudget, Math.round(optionRaw)));
+        operatorBudget -= optionBonus;
+        if (optionBonus > 0) {
+          score += optionBonus;
+          heldValue += optionBonus;
+          breakdown.augment += optionBonus;
+          augmentOperator.variableBonus += optionBonus;
+        }
+        const effects = [];
+        if (econ.shopLevelOffset) effects.push(`商店概率按等级+${econ.shopLevelOffset}`);
+        if (econ.discount) effects.push(`D牌期望成本-${Math.round(econ.discount * 100)}%`);
+        if (econ.copyCredit) effects.push(`主C缺口-${econ.copyCredit}张`);
+        const line = `经济算子：${econ.names.join("+")}→${effects.join("、") || "可达性边际提升"}${optionBonus ? `，可达期权+${optionBonus}` : ""}`;
+        evidence.unshift(line);
+        augmentOperator.evidence.push(line);
+        augmentOperator.actions.push(line);
+      }
       future.lateTargets.forEach(x => missing.push(`后期目标：${x}`));
       future.missing.forEach(x => missing.push(`缺${x.name}${x.need}张约${Math.round(x.expectedGold)}金`));
       const missingItems = roleItems.filter(x => !selectedCompleted.includes(x.name) && !bestCrafts(t, items, w).some(c => c.item.name === x.name));
@@ -805,6 +893,33 @@
     augments.forEach(h => {
       if ((t.augmentPrefs || []).includes(h)) {
         score += w.augment; heldValue += w.augment; breakdown.augment += w.augment; evidence.push(`${h} 命中推荐符文`);
+      }
+    });
+
+    augmentOperator.rows.filter(x => x.category !== "经济").forEach(op => {
+      let rawBonus = 0;
+      let line = "";
+      if (op.category === "战力") {
+        const combatAssets = breakdown.hero + breakdown.item + breakdown.synergy;
+        const readiness = combatAssets / Math.max(1, combatAssets + futureValue + 30);
+        rawBonus = op.calibratedLift * (AUGMENT_COMBAT_READY_FLOOR + (1 - AUGMENT_COMBAT_READY_FLOOR) * readiness);
+        line = `战力算子：${op.name}→已握战力×${roundNumber(AUGMENT_COMBAT_READY_FLOOR + (1 - AUGMENT_COMBAT_READY_FLOOR) * readiness, 2)}`;
+      } else if (op.category === "装备") {
+        const missingMainItems = uniq(roleItems.filter(x => x.role === "mainCarry" && !selectedCompleted.includes(x.name)).map(x => x.name)).length;
+        rawBonus = Math.min(AUGMENT_ITEM_BONUS_CAP, op.calibratedLift * Math.min(AUGMENT_ITEM_MISSING_CAP, missingMainItems) / AUGMENT_ITEM_MISSING_CAP);
+        line = `装备算子：${op.name}→补偿${Math.min(AUGMENT_ITEM_MISSING_CAP, missingMainItems)}件主C装缺口`;
+      }
+      const bonus = Math.max(0, Math.min(operatorBudget, Math.round(rawBonus)));
+      operatorBudget -= bonus;
+      if (bonus > 0) {
+        score += bonus;
+        heldValue += bonus;
+        breakdown.augment += bonus;
+        augmentOperator.variableBonus += bonus;
+        const evidenceLine = `${line}，认证边际+${bonus}`;
+        evidence.unshift(evidenceLine);
+        augmentOperator.evidence.push(evidenceLine);
+        augmentOperator.actions.push(evidenceLine);
       }
     });
     augCats.forEach(c => {
@@ -878,11 +993,17 @@
       missing: uniq(missing).slice(0, 4),
       penalties: uniq(penalties).slice(0, 4),
       mechanicBlocked,
+      augmentOperator,
     };
   }
 
   function clamp(n, min, max) {
     return Math.max(min, Math.min(max, n));
+  }
+
+  function roundNumber(n, digits = 1) {
+    const p = 10 ** digits;
+    return Math.round(Number(n || 0) * p) / p;
   }
 
   function unitPrice(name, opts) {
@@ -910,14 +1031,17 @@
 
   function expectedCostForUnit(name, targetCopies, selected, opts) {
     const level = clamp(Number(selected.level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
+    const economy = opts && opts.augmentEconomy || {};
+    const effectiveLevel = clamp(level + (Number(economy.shopLevelOffset) || 0), MIN_LEVEL, MAX_LEVEL);
     const oddsData = opts && opts.oddsData || {};
     const shopOdds = oddsData.shopOdds || {};
     const unitCounts = oddsData.unitCounts || {};
     const poolCopies = oddsData.poolCopies || {};
     const cost = unitPrice(name, opts);
     const owned = ownedCopyMap(selected).get(name) || 0;
-    const need = Math.max(0, targetCopies - owned);
-    const odds = ((shopOdds[level] || [0, 0, 0, 0, 0])[cost - 1] || 0) / 100;
+    const copyCredit = economy.copyTarget === name ? Number(economy.copyCredit) || 0 : 0;
+    const need = Math.max(0, targetCopies - owned - copyCredit);
+    const odds = ((shopOdds[effectiveLevel] || [0, 0, 0, 0, 0])[cost - 1] || 0) / 100;
     if (need <= 0 || odds <= 0) {
       return {
         name,
@@ -928,13 +1052,15 @@
         oddsPct: Math.round(odds * 100),
         expectedGold: 0,
         available: odds > 0,
+        effectiveLevel,
       };
     }
     const count = Number(unitCounts[cost]) || 1;
     const pool = Number(poolCopies[cost]) || 1;
     const remainingFactor = clamp((pool - owned) / pool, 0.05, 1);
     const pSlot = odds / count * remainingFactor;
-    const expectedGold = (need / (5 * pSlot)) * 2;
+    const baseExpectedGold = (need / (5 * pSlot)) * 2;
+    const expectedGold = baseExpectedGold * clamp(Number(economy.goldMultiplier) || 1, 0.5, 1);
     return {
       name,
       cost,
@@ -943,7 +1069,9 @@
       targetCopies,
       oddsPct: Math.round(odds * 100),
       expectedGold,
+      baseExpectedGold,
       available: true,
+      effectiveLevel,
     };
   }
 
@@ -1128,13 +1256,13 @@
       const stageResult = scoreTemplate(t, selected, weights, opts);
       const base = { template: t, ...stageResult };
       base.finalScore = base.stageStrength;
-      const reachability = reachabilityForTemplate(t, selected, opts);
+      const reachability = reachabilityForTemplate(t, selected, operatorOddsOpts(opts, stageResult.augmentOperator));
       if (reachability) {
         base.reachability = reachability;
         base.finalScore = base.stageStrength;
       }
       if (opts && opts.antiFragile) {
-        base.antiFragile = analyzeAntiFragility(t, selected, stageResult, opts, weights, templates || []);
+        base.antiFragile = analyzeAntiFragility(t, selected, stageResult, operatorOddsOpts(opts, stageResult.augmentOperator), weights, templates || []);
         base.finalScore = base.antiFragile.score;
       }
       return base;
@@ -1306,6 +1434,7 @@
       else if (af.status === "red") lines.push(`禁止硬定：先补${af.bottleneckText}`);
       else if (af.status === "yellow") lines.push(`下一验证：补${af.bottleneckText}`);
     }
+    if (top && top.augmentOperator && top.augmentOperator.actions.length) lines.push(top.augmentOperator.actions[0]);
     if (econLine) lines.push(econLine);
     if (primeLine) lines.push(primeLine);
     if (mechanicActive) lines.push(`机制：${mechanic.text}`);
@@ -1320,7 +1449,11 @@
         const first = miss[0];
         const ideal = first.cost <= 1 ? 5 : first.cost === 2 ? 6 : first.cost === 3 ? 7 : first.cost === 4 ? 8 : 9;
         if (top.reachability.level < ideal && first.cost >= 4) lines.push(`主要缺${first.cost}费核心，建议先拉${ideal}再D`);
-        else lines.push(`${top.reachability.level}级${first.cost}费${first.oddsPct}%，适合现在追${first.name}`);
+        else {
+          const oddsLevel = Number(first.effectiveLevel) || top.reachability.level;
+          const levelText = oddsLevel !== top.reachability.level ? `${top.reachability.level}级商店按${oddsLevel}级` : `${top.reachability.level}级`;
+          lines.push(`${levelText}${first.cost}费${first.oddsPct}%，适合现在追${first.name}`);
+        }
       } else {
         lines.push("核心已见，先补质量和关键装备");
       }
@@ -1341,7 +1474,7 @@
 
   function runTests() {
     const odds = {
-      shopOdds: { 1: [100, 0, 0, 0, 0], 2: [100, 0, 0, 0, 0], 3: [75, 25, 0, 0, 0], 6: [25, 40, 30, 5, 0], 8: [18, 25, 32, 22, 3] },
+      shopOdds: { 1: [100, 0, 0, 0, 0], 2: [100, 0, 0, 0, 0], 3: [75, 25, 0, 0, 0], 6: [25, 40, 30, 5, 0], 7: [19, 35, 35, 10, 1], 8: [18, 25, 32, 22, 3] },
       unitCounts: { 1: 10, 2: 10, 3: 10, 4: 10, 5: 10 },
       poolCopies: { 1: 29, 2: 22, 3: 18, 4: 12, 5: 10 },
     };
@@ -1442,6 +1575,42 @@
     assert(mechanicOn.evidence.some(x => x.includes("机制闭环")), "姐妹命中证据应显示机制闭环");
     assert(mechanicOff.penalties.some(x => x.includes("机制门槛")), "缺姐妹时应显示机制门槛");
 
+    const operatorTemplate = {
+      id: "operator-test",
+      name: "条件符文算子测试",
+      quality: "S",
+      augmentPrefs: ["飞升", "高端购物", "便携锻炉"],
+      augmentOperators: [
+        { name: "飞升", category: "战力", conditionLift: 8, evidenceLevel: "L2.5 模型扰动稳健" },
+        { name: "高端购物", category: "经济", conditionLift: 8, evidenceLevel: "L2.5 模型扰动稳健" },
+        { name: "便携锻炉", category: "装备", conditionLift: 8, evidenceLevel: "L2.5 模型扰动稳健" },
+      ],
+      actions: {},
+      routeProfile: {
+        mainCarry: { name: "D", starTarget: 2, items: ["鬼索的狂暴之刃", "疾射火炮", "泰坦的坚决"] },
+        units: [{ name: "D", role: "mainCarry", starTarget: 2, traits: [] }],
+        items: [
+          { name: "鬼索的狂暴之刃", role: "mainCarry", holder: "D", components: ["反曲之弓", "无用大棒"] },
+          { name: "疾射火炮", role: "mainCarry", holder: "D", components: ["反曲之弓", "反曲之弓"] },
+          { name: "泰坦的坚决", role: "mainCarry", holder: "D", components: ["反曲之弓", "锁子甲"] },
+        ],
+        activeTraits: [],
+      },
+    };
+    const operatorOpts = { oddsData: odds, unitPrices: { D: 4 }, certification: false };
+    const operatorBase = rank([operatorTemplate], selectedFromSignals([{ kind: "units", value: "D" }, { kind: "levels", level: 6 }]), fallbackWeights, 1, operatorOpts)[0];
+    const combatOperator = rank([operatorTemplate], selectedFromSignals([{ kind: "units", value: "D" }, { kind: "levels", level: 6 }, { kind: "augments", value: "飞升" }]), fallbackWeights, 1, operatorOpts)[0];
+    assert(combatOperator.finalScore > operatorBase.finalScore + fallbackWeights.augment, "战力符文应在固定推荐分之外获得认证算子增益");
+    assert(combatOperator.augmentOperator.evidence.some(x => x.includes("战力算子")), "战力算子应进入证据栏");
+    const economyOperator = rank([operatorTemplate], selectedFromSignals([{ kind: "levels", level: 6 }, { kind: "augments", value: "高端购物" }]), fallbackWeights, 1, operatorOpts)[0];
+    const economyBase = rank([operatorTemplate], selectedFromSignals([{ kind: "levels", level: 6 }]), fallbackWeights, 1, operatorOpts)[0];
+    assert(economyOperator.reachability.missing[0].effectiveLevel === 7, "高端购物应让6级按7级商店概率计算");
+    assert(economyOperator.reachability.expectedGold < economyBase.reachability.expectedGold, "经济算子应降低路线期望D牌成本");
+    const itemOperator = rank([operatorTemplate], selectedFromSignals([{ kind: "levels", level: 6 }, { kind: "augments", value: "便携锻炉" }]), fallbackWeights, 1, operatorOpts)[0];
+    const itemComplete = rank([operatorTemplate], selectedFromSignals([{ kind: "levels", level: 6 }, { kind: "augments", value: "便携锻炉" }, { kind: "items", value: "鬼索的狂暴之刃" }, { kind: "items", value: "疾射火炮" }, { kind: "items", value: "泰坦的坚决" }]), fallbackWeights, 1, operatorOpts)[0];
+    assert(itemOperator.augmentOperator.variableBonus > itemComplete.augmentOperator.variableBonus, "装备算子应随主C装备缺口收缩而衰减");
+    assert(itemOperator.augmentOperator.variableBonus <= AUGMENT_ITEM_BONUS_CAP, "单条装备算子不得越过上限");
+
     const stickyTemplates = [
       { id: "old", name: "旧路线", quality: "S", coreUnits: [], earlyUnits: [], midUnits: [], completedPrefs: [], componentPrefs: [], augmentPrefs: [], augmentCats: [], actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 1, items: [] }, units: [], items: [], activeTraits: [] } },
       { id: "new", name: "新路线", quality: "S", coreUnits: [], earlyUnits: [], midUnits: [], completedPrefs: ["X"], componentPrefs: [], augmentPrefs: [], augmentCats: [], actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 1, items: [] }, units: [], items: [{ name: "X", role: "route", holder: "A", components: [] }], activeTraits: [] } },
@@ -1481,6 +1650,8 @@
       const fixtureRows = require(path.join(rootDir, "fixtures", "hands.json"));
       const fixtureUnitPrices = Object.fromEntries((matcherData.options.unitSearch || []).map(x => [x.name, x.price]));
       const fixtureUnitTraits = Object.fromEntries((matcherData.options.unitSearch || []).map(x => [x.name, x.traits || []]));
+      assert(matcherData.templates.some(t => (t.augmentOperators || []).length), "构建数据应包含条件符文算子");
+      assert(!matcherData.templates.some(t => (t.augmentOperators || []).some(x => !(t.augmentPrefs || []).includes(x.name))), "算子必须属于该路线推荐符文");
       fixtureRows.forEach(fx => {
         const selectedFx = selectedFromSignals([...(fx.signals || []), { kind: "levels", level: fx.level }]);
         const rows = rank(matcherData.templates, selectedFx, matcherData.weights, 5, {
@@ -1524,6 +1695,9 @@
     FUTURE_ITEM_VALUE_RATIO,
     CERTIFICATION_PRIOR_LIMIT,
     CERTIFICATION_SOFTMAX_TEMPERATURE,
+    AUGMENT_OPERATOR_EVIDENCE,
+    AUGMENT_OPERATOR_SINGLE_CAP,
+    AUGMENT_OPERATOR_TOTAL_CAP,
     DEFAULT_LEVEL,
     scoreTemplate,
     rank,

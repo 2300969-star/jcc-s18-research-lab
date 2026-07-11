@@ -362,6 +362,24 @@ templates.forEach(t => {
   });
 });
 
+const operatorsByTemplate = new Map();
+genericConditions.forEach(x => {
+  if (!operatorsByTemplate.has(x.templateId)) operatorsByTemplate.set(x.templateId, []);
+  operatorsByTemplate.get(x.templateId).push({
+    name: x.gates[0].value,
+    category: x.category,
+    conditionScore: x.conditionScore,
+    conditionLift: x.conditionLift,
+    fitIndex: round(x.fitGain / 22, 3),
+    evidenceLevel: x.evidenceLevel,
+    robustness: x.metrics.robustness,
+    reasons: x.reasons,
+  });
+});
+templates.forEach(t => {
+  t.augmentOperators = (operatorsByTemplate.get(t.id) || []).sort((a, b) => b.conditionScore - a.conditionScore || a.name.localeCompare(b.name, 'zh-Hans-CN'));
+});
+
 function topConditions(rows, limit = 24) {
   const seen = new Set();
   return rows.sort((a, b) => b.conditionScore - a.conditionScore || b.metrics.cvar10 - a.metrics.cvar10)
@@ -386,6 +404,12 @@ stage2.certification = {
   utilityFormula: 'U=基础强度+19×搜卡就绪+14×装备就绪+8×装备方向+9×转型平滑+7×前排+8×对局适配-依赖风险+噪声',
   robustnessFormula: 'R=40%×前25%进入率+20%×前5率+25%×(1-失速率)+15%×尾部归一值',
   decisionFormula: '现场最终分=资产/概率/抗脆弱分+clamp((R-50)/10,-5,+5)',
+  augmentOperatorFormula: [
+    '认证边际 b=q_e×min(12,0.5×(条件适配-基础稳健))，q_e={L2.5:1,L2:0.65,L1.5:0.35}',
+    '战力算子 B_w=b×(0.6+0.4×已握战力成熟度)，并受单项12/总计18分封顶',
+    '经济算子将高端购物映射为商店等级+1，其余经济符文将D牌成本折扣限制在30%内，并给受证据折扣的可达期权值',
+    '装备算子 B_i=min(10,b×min(3,缺失主C装数)/3)，装备补齐后自动衰减为0',
+  ],
   failureThreshold: '样本效用<105记为模型失速；不等同真实第八率。',
   ceiling: 'L2.5；未接入真实战绩留出集，不授予L3/L4。',
   conditionRankings,
@@ -458,6 +482,8 @@ const report = [
   `- ${stage2.certification.robustnessFormula}`,
   `- ${stage2.certification.decisionFormula}`,
   `- ${stage2.certification.failureThreshold}`, '',
+  '## 条件符文算子模型', '',
+  ...stage2.certification.augmentOperatorFormula.map(x => `- ${x}`), '',
   '## 常规路线稳健度 Top15', '',
   '| 排名 | 路线 | 等级 | 稳健度 | 前25%率 | 失败率 | 后10%均值 | 95%扰动区间 |',
   '|---:|---|---|---:|---:|---:|---:|---|',
@@ -484,6 +510,9 @@ if (!meta.stable.some(x => x.certification) || !meta.conditional.some(x => x.cer
 if (Object.values(conditionRankings).some(rows => !rows.length)) throw new Error('存在空的条件路线分类');
 if (Object.values(conditionRankings).flat().some(x => (x.gates || []).some(g => /^\d+$/.test(g.value)))) throw new Error('条件路线混入数字占位符');
 if (Object.values(conditionRankings).some(rows => new Set(rows.map(x => x.templateId)).size !== rows.length)) throw new Error('条件榜存在重复路线');
+if (!templates.some(t => (t.augmentOperators || []).length)) throw new Error('路线模板没有生成条件符文算子');
+if (templates.some(t => (t.augmentOperators || []).some(x => !(t.augmentPrefs || []).includes(x.name)))) throw new Error('条件符文算子与路线推荐位不一致');
+if (templates.some(t => (t.augmentOperators || []).some(x => !['战力', '经济', '装备'].includes(x.category)))) throw new Error('条件符文算子类别非法');
 console.log(`路线认证完成: ${certificates.length}条路线 × ${SAMPLE_SIZE}样本`);
 console.log(`常规#1: ${certificates.find(x => x.peerGroup.startsWith('常规')).templateName}`);
 console.log(`条件#1: ${certificates.find(x => x.peerGroup.startsWith('条件')).templateName}`);

@@ -860,6 +860,12 @@ function augOptionInfo(sig) {
   const current = rankedRoutes()[0];
   const gain = top && current ? rowScore(top) - rowScore(current) : 0;
   let verdict = top ? `选择后首推 ${top.template.name}，相对当前${gain >= 0 ? "+" : ""}${gain}分。` : "没有可执行路线。";
+  const operator = top && top.augmentOperator;
+  if (operator && operator.rows.length) {
+    const categories = [...new Set(operator.rows.map(x => x.category))].join("+");
+    const operatorGain = (operator.variableBonus || 0) + (operator.economyFutureBonus || 0);
+    verdict += ` ${categories}算子重算${operatorGain ? `，认证边际额外+${operatorGain}分` : "可达性"}。`;
+  }
   if (hero && top) verdict += " 英雄强化按机制硬门槛重算。";
   else if (routeHits.length) verdict += ` 命中${routeHits.length}条路线推荐位。`;
   else if (hot) verdict += ` 通用热度${hot.score || 0}分。`;

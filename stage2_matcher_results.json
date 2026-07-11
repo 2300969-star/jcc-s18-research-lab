@@ -5068,7 +5068,61 @@
      "三件套:鬼索的狂暴之刃+疾射火炮+泰坦的坚决"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "便携锻炉",
+     "category": "装备",
+     "conditionScore": 60.8,
+     "conditionLift": 51.3,
+     "fitIndex": 0.873,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 9.5,
+     "reasons": [
+      "装备弹性58%，缓解瓶颈+4.2",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "name": "明智消费",
+     "category": "经济",
+     "conditionScore": 53.4,
+     "conditionLift": 43.9,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 9.5,
+     "reasons": [
+      "刷新经济适配贾克斯3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "DD街区",
+     "category": "经济",
+     "conditionScore": 53.4,
+     "conditionLift": 43.9,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 9.5,
+     "reasons": [
+      "刷新经济适配贾克斯3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "部分飞升",
+     "category": "战力",
+     "conditionScore": 48.5,
+     "conditionLift": 39,
+     "fitIndex": 0.664,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 9.5,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+5.6适配"
+     ]
+    }
+   ]
   },
   {
    "id": "manual-gadget-ap",
@@ -5472,7 +5526,71 @@
      "三件套:蓝霸符+珠光护手+班克斯的魔法帽"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "公理圆弧II",
+     "category": "战力",
+     "conditionScore": 62.8,
+     "conditionLift": 44.4,
+     "fitIndex": 0.836,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 18.4,
+     "reasons": [
+      "回蓝命中法系施法轴",
+      "文本数值折算+8.4适配"
+     ]
+    },
+    {
+     "name": "高端购物",
+     "category": "经济",
+     "conditionScore": 58.4,
+     "conditionLift": 40,
+     "fitIndex": 0.755,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 18.4,
+     "reasons": [
+      "刷新经济适配佐伊3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "对冲基金",
+     "category": "经济",
+     "conditionScore": 38.7,
+     "conditionLift": 20.3,
+     "fitIndex": 0.382,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 18.4,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "升级咯！",
+     "category": "经济",
+     "conditionScore": 28,
+     "conditionLift": 9.6,
+     "fitIndex": 0.182,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 18.4,
+     "reasons": [
+      "命中路线推荐符文位"
+     ]
+    },
+    {
+     "name": "珠光莲花",
+     "category": "战力",
+     "conditionScore": 28,
+     "conditionLift": 9.6,
+     "fitIndex": 0.182,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 18.4,
+     "reasons": [
+      "命中路线推荐符文位"
+     ]
+    }
+   ]
   },
   {
    "id": "manual-mecha-draven-jax-leona",
@@ -5912,7 +6030,60 @@
      "三件套:鬼索的狂暴之刃+疾射火炮+泰坦的坚决"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "便携锻炉",
+     "category": "装备",
+     "conditionScore": 63.8,
+     "conditionLift": 47.5,
+     "fitIndex": 0.873,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 16.3,
+     "reasons": [
+      "装备弹性58%，缓解瓶颈+4.2",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "name": "高端购物",
+     "category": "经济",
+     "conditionScore": 57.4,
+     "conditionLift": 41.1,
+     "fitIndex": 0.755,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 16.3,
+     "reasons": [
+      "刷新经济适配贾克斯3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "DD街区",
+     "category": "经济",
+     "conditionScore": 56.9,
+     "conditionLift": 40.6,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 16.3,
+     "reasons": [
+      "刷新经济适配贾克斯3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "升级咯！",
+     "category": "经济",
+     "conditionScore": 26.2,
+     "conditionLift": 9.9,
+     "fitIndex": 0.182,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 16.3,
+     "reasons": [
+      "命中路线推荐符文位"
+     ]
+    }
+   ]
   },
   {
    "id": "manual-laser-duelist",
@@ -6301,7 +6472,72 @@
      "三件套:最后的轻语+卢安娜的飓风+巨人捕手"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "高端购物",
+     "category": "经济",
+     "conditionScore": 78,
+     "conditionLift": 40.9,
+     "fitIndex": 1,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 37.1,
+     "reasons": [
+      "刷新经济适配莎弥拉2星",
+      "高费主C莎弥拉受益于等级概率",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "升级咯！",
+     "category": "经济",
+     "conditionScore": 66.8,
+     "conditionLift": 29.7,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 37.1,
+     "reasons": [
+      "高费主C莎弥拉受益于等级概率"
+     ]
+    },
+    {
+     "name": "DD街区",
+     "category": "经济",
+     "conditionScore": 56.4,
+     "conditionLift": 19.3,
+     "fitIndex": 0.473,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 37.1,
+     "reasons": [
+      "刷新经济适配莎弥拉2星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "对冲基金",
+     "category": "经济",
+     "conditionScore": 52.7,
+     "conditionLift": 15.6,
+     "fitIndex": 0.382,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 37.1,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "团队建设",
+     "category": "经济",
+     "conditionScore": 44.5,
+     "conditionLift": 7.4,
+     "fitIndex": 0.182,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 37.1,
+     "reasons": [
+      "命中路线推荐符文位"
+     ]
+    }
+   ]
   },
   {
    "id": "manual-duelist",
@@ -6648,7 +6884,21 @@
      "三件套:鬼索的狂暴之刃+最后的轻语+卢安娜的飓风"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "大百宝袋",
+     "category": "经济",
+     "conditionScore": 26.7,
+     "conditionLift": 11.5,
+     "fitIndex": 0.209,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 15.2,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    }
+   ]
   },
   {
    "id": "manual-mascot-heart",
@@ -7027,7 +7277,59 @@
      "三件套:蓝霸符+珠光护手+巨人捕手"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "公理圆弧II",
+     "category": "战力",
+     "conditionScore": 69.1,
+     "conditionLift": 36.7,
+     "fitIndex": 0.836,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 32.4,
+     "reasons": [
+      "回蓝命中法系施法轴",
+      "文本数值折算+8.4适配"
+     ]
+    },
+    {
+     "name": "DD街区",
+     "category": "经济",
+     "conditionScore": 65.2,
+     "conditionLift": 32.8,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 32.4,
+     "reasons": [
+      "刷新经济适配悠米3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "团队建设",
+     "category": "经济",
+     "conditionScore": 62.4,
+     "conditionLift": 30,
+     "fitIndex": 0.682,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 32.4,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口"
+     ]
+    },
+    {
+     "name": "学习拼读",
+     "category": "战力",
+     "conditionScore": 47.2,
+     "conditionLift": 14.8,
+     "fitIndex": 0.336,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 32.4,
+     "reasons": [
+      "文本数值折算+3.4适配"
+     ]
+    }
+   ]
   },
   {
    "id": "manual-civilian-gunner",
@@ -7422,7 +7724,47 @@
      "三件套:最后的轻语+锐利之刃+卢安娜的飓风"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "高端购物",
+     "category": "经济",
+     "conditionScore": 84.1,
+     "conditionLift": 29.6,
+     "fitIndex": 1,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 54.5,
+     "reasons": [
+      "刷新经济适配莎弥拉2星",
+      "高费主C莎弥拉受益于等级概率",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "升级咯！",
+     "category": "经济",
+     "conditionScore": 76,
+     "conditionLift": 21.5,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 54.5,
+     "reasons": [
+      "高费主C莎弥拉受益于等级概率"
+     ]
+    },
+    {
+     "name": "对冲基金",
+     "category": "经济",
+     "conditionScore": 65.8,
+     "conditionLift": 11.3,
+     "fitIndex": 0.382,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 54.5,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    }
+   ]
   },
   {
    "id": "meta-完美的日炎耀斑-蕾欧娜-0",
@@ -7818,7 +8160,8 @@
      "三件套:朔极之矛+水银+鬼索的狂暴之刃"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": []
   },
   {
    "id": "meta-评级与交火-莎弥拉-1",
@@ -8146,7 +8489,8 @@
      "三件套:最后的轻语+鬼索的狂暴之刃+卢安娜的飓风"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": []
   },
   {
    "id": "meta-德莱文联盟-德莱文-2",
@@ -8512,7 +8856,8 @@
      "三件套:最后的轻语+鬼索的狂暴之刃+卢安娜的飓风"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": []
   },
   {
    "id": "meta-进入夜晚-薇恩-3",
@@ -8812,7 +9157,8 @@
      "三件套:泰坦的坚决+锐利之刃+鬼索的狂暴之刃"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": []
   },
   {
    "id": "meta-适应性防守-卡蜜尔-4",
@@ -9111,7 +9457,8 @@
      "三件套:最后的轻语+鬼索的狂暴之刃+卢安娜的飓风"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": []
   },
   {
    "id": "meta-浪客精神-亚索-5",
@@ -9410,7 +9757,8 @@
      "三件套:泰坦的坚决+鬼索的狂暴之刃+卢安娜的飓风"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": []
   },
   {
    "id": "meta-旺盛精力-悠米-6",
@@ -9708,7 +10056,8 @@
      "三件套:朔极之矛+班克斯的魔法帽+鬼索的狂暴之刃"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": []
   },
   {
    "id": "meta-姐妹-金克丝-7",
@@ -10003,7 +10352,8 @@
      "三件套:泰坦的坚决+水银+鬼索的狂暴之刃"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": []
   },
   {
    "id": "meta-咒能高涨-伊泽瑞尔-8",
@@ -10303,7 +10653,8 @@
      "三件套:泰坦的坚决+水银+鬼索的狂暴之刃"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": []
   },
   {
    "id": "official-1256",
@@ -10746,7 +11097,97 @@
      "三件套:珠光护手+蓝霸符+巨人捕手"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "公理圆弧II",
+     "category": "战力",
+     "conditionScore": 78.1,
+     "conditionLift": 26,
+     "fitIndex": 0.836,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 52.1,
+     "reasons": [
+      "回蓝命中法系施法轴",
+      "文本数值折算+8.4适配"
+     ]
+    },
+    {
+     "name": "明智消费",
+     "category": "经济",
+     "conditionScore": 75.3,
+     "conditionLift": 23.2,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 52.1,
+     "reasons": [
+      "刷新经济适配伊泽瑞尔3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "DD街区",
+     "category": "经济",
+     "conditionScore": 75.3,
+     "conditionLift": 23.2,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 52.1,
+     "reasons": [
+      "刷新经济适配伊泽瑞尔3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "棱彩门票",
+     "category": "经济",
+     "conditionScore": 74.7,
+     "conditionLift": 22.6,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 52.1,
+     "reasons": [
+      "刷新经济适配伊泽瑞尔3星"
+     ]
+    },
+    {
+     "name": "D个痛快！ I",
+     "category": "经济",
+     "conditionScore": 74.7,
+     "conditionLift": 22.6,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 52.1,
+     "reasons": [
+      "刷新经济适配伊泽瑞尔3星"
+     ]
+    },
+    {
+     "name": "团队建设",
+     "category": "经济",
+     "conditionScore": 73.3,
+     "conditionLift": 21.2,
+     "fitIndex": 0.682,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 52.1,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口"
+     ]
+    },
+    {
+     "name": "部分飞升",
+     "category": "战力",
+     "conditionScore": 72.8,
+     "conditionLift": 20.7,
+     "fitIndex": 0.664,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 52.1,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+5.6适配"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1567",
@@ -11242,7 +11683,97 @@
      "三件套:泰坦的坚决+疾射火炮+鬼索的狂暴之刃"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "休眠锻炉",
+     "category": "装备",
+     "conditionScore": 74.2,
+     "conditionLift": 33.8,
+     "fitIndex": 0.873,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 40.4,
+     "reasons": [
+      "装备弹性58%，缓解瓶颈+4.2",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "name": "明智消费",
+     "category": "经济",
+     "conditionScore": 69.3,
+     "conditionLift": 28.9,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 40.4,
+     "reasons": [
+      "刷新经济适配贾克斯3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "DD街区",
+     "category": "经济",
+     "conditionScore": 69.3,
+     "conditionLift": 28.9,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 40.4,
+     "reasons": [
+      "刷新经济适配贾克斯3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "团队建设",
+     "category": "经济",
+     "conditionScore": 66.8,
+     "conditionLift": 26.4,
+     "fitIndex": 0.682,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 40.4,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口"
+     ]
+    },
+    {
+     "name": "部分飞升",
+     "category": "战力",
+     "conditionScore": 66.1,
+     "conditionLift": 25.7,
+     "fitIndex": 0.664,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 40.4,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+5.6适配"
+     ]
+    },
+    {
+     "name": "开摆",
+     "category": "经济",
+     "conditionScore": 53.4,
+     "conditionLift": 13,
+     "fitIndex": 0.336,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 40.4,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "三费小组",
+     "category": "战力",
+     "conditionScore": 49.9,
+     "conditionLift": 9.5,
+     "fitIndex": 0.245,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 40.4,
+     "reasons": [
+      "文本数值折算+1.4适配"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1570",
@@ -11795,7 +12326,107 @@
      "三件套:蓝霸符+珠光护手+班克斯的魔法帽"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "便携锻炉",
+     "category": "装备",
+     "conditionScore": 89.6,
+     "conditionLift": 11.6,
+     "fitIndex": 0.809,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 78,
+     "reasons": [
+      "装备弹性72%，缓解瓶颈+2.8",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "name": "高端购物",
+     "category": "经济",
+     "conditionScore": 88.8,
+     "conditionLift": 10.8,
+     "fitIndex": 0.755,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 78,
+     "reasons": [
+      "刷新经济适配佐伊3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "前瞻思维",
+     "category": "经济",
+     "conditionScore": 85.8,
+     "conditionLift": 7.8,
+     "fitIndex": 0.545,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 78,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "后期专家",
+     "category": "经济",
+     "conditionScore": 84.1,
+     "conditionLift": 6.1,
+     "fitIndex": 0.427,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 78,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "对冲基金",
+     "category": "经济",
+     "conditionScore": 83.5,
+     "conditionLift": 5.5,
+     "fitIndex": 0.382,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 78,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "开摆",
+     "category": "经济",
+     "conditionScore": 82.8,
+     "conditionLift": 4.8,
+     "fitIndex": 0.336,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 78,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "金色追求",
+     "category": "经济",
+     "conditionScore": 81.3,
+     "conditionLift": 3.3,
+     "fitIndex": 0.227,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 78,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "升级咯！",
+     "category": "经济",
+     "conditionScore": 80.6,
+     "conditionLift": 2.6,
+     "fitIndex": 0.182,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 78,
+     "reasons": [
+      "命中路线推荐符文位"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1374",
@@ -12284,7 +12915,99 @@
      "三件套:卢安娜的飓风+最后的轻语+锐利之刃"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "终极飞升",
+     "category": "战力",
+     "conditionScore": 76.3,
+     "conditionLift": 38.7,
+     "fitIndex": 0.955,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 37.6,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+12适配"
+     ]
+    },
+    {
+     "name": "便携锻炉++",
+     "category": "装备",
+     "conditionScore": 67.8,
+     "conditionLift": 30.2,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 37.6,
+     "reasons": [
+      "装备弹性86%，缓解瓶颈+1.4",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "name": "休眠锻炉",
+     "category": "装备",
+     "conditionScore": 67.8,
+     "conditionLift": 30.2,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 37.6,
+     "reasons": [
+      "装备弹性86%，缓解瓶颈+1.4",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "name": "药剂师 II",
+     "category": "战力",
+     "conditionScore": 67.1,
+     "conditionLift": 29.5,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 37.6,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+7适配"
+     ]
+    },
+    {
+     "name": "部分飞升",
+     "category": "战力",
+     "conditionScore": 64.5,
+     "conditionLift": 26.9,
+     "fitIndex": 0.664,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 37.6,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+5.6适配"
+     ]
+    },
+    {
+     "name": "前瞻思维",
+     "category": "经济",
+     "conditionScore": 59.7,
+     "conditionLift": 22.1,
+     "fitIndex": 0.545,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 37.6,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "DD街区",
+     "category": "经济",
+     "conditionScore": 56.8,
+     "conditionLift": 19.2,
+     "fitIndex": 0.473,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 37.6,
+     "reasons": [
+      "刷新经济适配莎弥拉2星",
+      "金币折算提升成型可达性"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1328",
@@ -12745,7 +13468,98 @@
      "三件套:鬼索的狂暴之刃+锐利之刃+巨人捕手"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "休眠锻炉",
+     "category": "装备",
+     "conditionScore": 62.9,
+     "conditionLift": 41.1,
+     "fitIndex": 0.809,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 21.8,
+     "reasons": [
+      "装备弹性72%，缓解瓶颈+2.8",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "name": "快速思考",
+     "category": "经济",
+     "conditionScore": 60.2,
+     "conditionLift": 38.4,
+     "fitIndex": 0.755,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 21.8,
+     "reasons": [
+      "刷新经济适配希维尔3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "明智消费",
+     "category": "经济",
+     "conditionScore": 59.7,
+     "conditionLift": 37.9,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 21.8,
+     "reasons": [
+      "刷新经济适配希维尔3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "DD街区",
+     "category": "经济",
+     "conditionScore": 59.7,
+     "conditionLift": 37.9,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 21.8,
+     "reasons": [
+      "刷新经济适配希维尔3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "棱彩门票",
+     "category": "经济",
+     "conditionScore": 58.8,
+     "conditionLift": 37,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 21.8,
+     "reasons": [
+      "刷新经济适配希维尔3星"
+     ]
+    },
+    {
+     "name": "部分飞升",
+     "category": "战力",
+     "conditionScore": 55.5,
+     "conditionLift": 33.7,
+     "fitIndex": 0.664,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 21.8,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+5.6适配"
+     ]
+    },
+    {
+     "name": "炼狱合约",
+     "category": "经济",
+     "conditionScore": 49.5,
+     "conditionLift": 27.7,
+     "fitIndex": 0.545,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 21.8,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    }
+   ]
   },
   {
    "id": "official-4524",
@@ -13249,7 +14063,100 @@
      "三件套:泰坦的坚决+疾射火炮+鬼索的狂暴之刃"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "升星之运",
+     "category": "经济",
+     "conditionScore": 79.4,
+     "conditionLift": 38.3,
+     "fitIndex": 1,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 41.1,
+     "reasons": [
+      "刷新经济适配贾克斯3星",
+      "低费追三可直接减少同名牌缺口",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "便携锻炉",
+     "category": "装备",
+     "conditionScore": 74.5,
+     "conditionLift": 33.4,
+     "fitIndex": 0.873,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 41.1,
+     "reasons": [
+      "装备弹性58%，缓解瓶颈+4.2",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "name": "光明圣物",
+     "category": "装备",
+     "conditionScore": 74.5,
+     "conditionLift": 33.4,
+     "fitIndex": 0.873,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 41.1,
+     "reasons": [
+      "装备弹性58%，缓解瓶颈+4.2",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "name": "DD街区",
+     "category": "经济",
+     "conditionScore": 69.6,
+     "conditionLift": 28.5,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 41.1,
+     "reasons": [
+      "刷新经济适配贾克斯3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "药剂师 II",
+     "category": "战力",
+     "conditionScore": 68.9,
+     "conditionLift": 27.8,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 41.1,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+7适配"
+     ]
+    },
+    {
+     "name": "英勇福袋",
+     "category": "经济",
+     "conditionScore": 68.9,
+     "conditionLift": 27.8,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 41.1,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "光明重构器",
+     "category": "经济",
+     "conditionScore": 48.1,
+     "conditionLift": 7,
+     "fitIndex": 0.182,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 41.1,
+     "reasons": [
+      "命中路线推荐符文位"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1566",
@@ -13801,7 +14708,86 @@
      "三件套:泰坦的坚决+疾射火炮+鬼索的狂暴之刃"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "便携锻炉+",
+     "category": "装备",
+     "conditionScore": 82.5,
+     "conditionLift": 22.9,
+     "fitIndex": 0.873,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 59.6,
+     "reasons": [
+      "装备弹性58%，缓解瓶颈+4.2",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "name": "高端购物",
+     "category": "经济",
+     "conditionScore": 79.4,
+     "conditionLift": 19.8,
+     "fitIndex": 0.755,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 59.6,
+     "reasons": [
+      "刷新经济适配贾克斯3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "大买特买",
+     "category": "经济",
+     "conditionScore": 79.2,
+     "conditionLift": 19.6,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 59.6,
+     "reasons": [
+      "刷新经济适配贾克斯3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "明智消费",
+     "category": "经济",
+     "conditionScore": 79.2,
+     "conditionLift": 19.6,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 59.6,
+     "reasons": [
+      "刷新经济适配贾克斯3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "DD街区",
+     "category": "经济",
+     "conditionScore": 79.2,
+     "conditionLift": 19.6,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 59.6,
+     "reasons": [
+      "刷新经济适配贾克斯3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "对冲基金",
+     "category": "经济",
+     "conditionScore": 69.6,
+     "conditionLift": 10,
+     "fitIndex": 0.382,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 59.6,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1406",
@@ -14312,7 +15298,109 @@
      "三件套:巨人捕手+斯塔缇克电刃+海克斯科技枪刃"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "飞升",
+     "category": "战力",
+     "conditionScore": 94,
+     "conditionLift": 7.5,
+     "fitIndex": 0.855,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 86.5,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+9.8适配"
+     ]
+    },
+    {
+     "name": "明智消费",
+     "category": "经济",
+     "conditionScore": 93,
+     "conditionLift": 6.5,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 86.5,
+     "reasons": [
+      "刷新经济适配卡莎3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "DD街区",
+     "category": "经济",
+     "conditionScore": 93,
+     "conditionLift": 6.5,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 86.5,
+     "reasons": [
+      "刷新经济适配卡莎3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "英勇福袋",
+     "category": "经济",
+     "conditionScore": 92.9,
+     "conditionLift": 6.4,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 86.5,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "团队建设",
+     "category": "经济",
+     "conditionScore": 92.5,
+     "conditionLift": 6,
+     "fitIndex": 0.682,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 86.5,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口"
+     ]
+    },
+    {
+     "name": "不破壁垒",
+     "category": "装备",
+     "conditionScore": 91.4,
+     "conditionLift": 4.9,
+     "fitIndex": 0.564,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 86.5,
+     "reasons": [
+      "装备弹性86%，缓解瓶颈+1.4"
+     ]
+    },
+    {
+     "name": "珍藏财宝",
+     "category": "装备",
+     "conditionScore": 91.4,
+     "conditionLift": 4.9,
+     "fitIndex": 0.564,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 86.5,
+     "reasons": [
+      "装备弹性86%，缓解瓶颈+1.4"
+     ]
+    },
+    {
+     "name": "炼狱合约",
+     "category": "经济",
+     "conditionScore": 91.3,
+     "conditionLift": 4.8,
+     "fitIndex": 0.545,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 86.5,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1571",
@@ -14903,7 +15991,108 @@
      "三件套:最后的轻语+卢安娜的飓风+锐利之刃"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "高端购物",
+     "category": "经济",
+     "conditionScore": 95,
+     "conditionLift": 9.3,
+     "fitIndex": 1,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 85.7,
+     "reasons": [
+      "刷新经济适配厄加特2星",
+      "高费主C厄加特受益于等级概率",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "后期专家",
+     "category": "经济",
+     "conditionScore": 94.7,
+     "conditionLift": 9,
+     "fitIndex": 0.973,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 85.7,
+     "reasons": [
+      "高费主C厄加特受益于等级概率",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "升级咯！",
+     "category": "经济",
+     "conditionScore": 92.5,
+     "conditionLift": 6.8,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 85.7,
+     "reasons": [
+      "高费主C厄加特受益于等级概率"
+     ]
+    },
+    {
+     "name": "双排",
+     "category": "装备",
+     "conditionScore": 90.9,
+     "conditionLift": 5.2,
+     "fitIndex": 0.564,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 85.7,
+     "reasons": [
+      "装备弹性86%，缓解瓶颈+1.4"
+     ]
+    },
+    {
+     "name": "前瞻思维",
+     "category": "经济",
+     "conditionScore": 90.8,
+     "conditionLift": 5.1,
+     "fitIndex": 0.545,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 85.7,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "利滚利",
+     "category": "经济",
+     "conditionScore": 88.4,
+     "conditionLift": 2.7,
+     "fitIndex": 0.291,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 85.7,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "生日礼物",
+     "category": "经济",
+     "conditionScore": 87.8,
+     "conditionLift": 2.1,
+     "fitIndex": 0.227,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 85.7,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "小巨人",
+     "category": "经济",
+     "conditionScore": 87.4,
+     "conditionLift": 1.7,
+     "fitIndex": 0.182,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 85.7,
+     "reasons": [
+      "命中路线推荐符文位"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1412",
@@ -15358,7 +16547,97 @@
      "三件套:蓝霸符+珠光护手+巨人捕手"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "公理圆弧II",
+     "category": "战力",
+     "conditionScore": 74.7,
+     "conditionLift": 30.1,
+     "fitIndex": 0.836,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 44.6,
+     "reasons": [
+      "回蓝命中法系施法轴",
+      "文本数值折算+8.4适配"
+     ]
+    },
+    {
+     "name": "明智消费",
+     "category": "经济",
+     "conditionScore": 71.4,
+     "conditionLift": 26.8,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 44.6,
+     "reasons": [
+      "刷新经济适配悠米3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "DD街区",
+     "category": "经济",
+     "conditionScore": 71.4,
+     "conditionLift": 26.8,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 44.6,
+     "reasons": [
+      "刷新经济适配悠米3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "黄金门票",
+     "category": "经济",
+     "conditionScore": 70.8,
+     "conditionLift": 26.2,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 44.6,
+     "reasons": [
+      "刷新经济适配悠米3星"
+     ]
+    },
+    {
+     "name": "英勇福袋",
+     "category": "经济",
+     "conditionScore": 70.8,
+     "conditionLift": 26.2,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 44.6,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "团队建设",
+     "category": "经济",
+     "conditionScore": 69.2,
+     "conditionLift": 24.6,
+     "fitIndex": 0.682,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 44.6,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口"
+     ]
+    },
+    {
+     "name": "学习拼读",
+     "category": "战力",
+     "conditionScore": 56.7,
+     "conditionLift": 12.1,
+     "fitIndex": 0.336,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 44.6,
+     "reasons": [
+      "文本数值折算+3.4适配"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1576",
@@ -15979,7 +17258,98 @@
      "三件套:水银+巨人捕手+汲取剑"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "高端购物",
+     "category": "经济",
+     "conditionScore": 76.9,
+     "conditionLift": 42.9,
+     "fitIndex": 1,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 34,
+     "reasons": [
+      "刷新经济适配卑尔维斯2星",
+      "高费主C卑尔维斯受益于等级概率",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "飞升",
+     "category": "战力",
+     "conditionScore": 70.7,
+     "conditionLift": 36.7,
+     "fitIndex": 0.855,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 34,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+9.8适配"
+     ]
+    },
+    {
+     "name": "便携锻炉",
+     "category": "装备",
+     "conditionScore": 66,
+     "conditionLift": 32,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 34,
+     "reasons": [
+      "装备弹性86%，缓解瓶颈+1.4",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "name": "升级咯！",
+     "category": "经济",
+     "conditionScore": 65.2,
+     "conditionLift": 31.2,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 34,
+     "reasons": [
+      "高费主C卑尔维斯受益于等级概率"
+     ]
+    },
+    {
+     "name": "部分飞升",
+     "category": "战力",
+     "conditionScore": 62.5,
+     "conditionLift": 28.5,
+     "fitIndex": 0.664,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 34,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+5.6适配"
+     ]
+    },
+    {
+     "name": "公理圆弧II",
+     "category": "战力",
+     "conditionScore": 58.2,
+     "conditionLift": 24.2,
+     "fitIndex": 0.564,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 34,
+     "reasons": [
+      "文本数值折算+8.4适配"
+     ]
+    },
+    {
+     "name": "前瞻思维",
+     "category": "经济",
+     "conditionScore": 57.4,
+     "conditionLift": 23.4,
+     "fitIndex": 0.545,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 34,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1589",
@@ -16441,7 +17811,98 @@
      "三件套:蓝霸符+珠光护手+大天使之杖"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "飞升",
+     "category": "战力",
+     "conditionScore": 59.4,
+     "conditionLift": 50.7,
+     "fitIndex": 0.855,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 8.7,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+9.8适配"
+     ]
+    },
+    {
+     "name": "便携锻炉",
+     "category": "装备",
+     "conditionScore": 56.7,
+     "conditionLift": 48,
+     "fitIndex": 0.809,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 8.7,
+     "reasons": [
+      "装备弹性72%，缓解瓶颈+2.8",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "name": "明智消费",
+     "category": "经济",
+     "conditionScore": 52.9,
+     "conditionLift": 44.2,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 8.7,
+     "reasons": [
+      "刷新经济适配娑娜3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "DD街区",
+     "category": "经济",
+     "conditionScore": 52.9,
+     "conditionLift": 44.2,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 8.7,
+     "reasons": [
+      "刷新经济适配娑娜3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "团队建设",
+     "category": "经济",
+     "conditionScore": 49.2,
+     "conditionLift": 40.5,
+     "fitIndex": 0.682,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 8.7,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口"
+     ]
+    },
+    {
+     "name": "部分飞升",
+     "category": "战力",
+     "conditionScore": 48.1,
+     "conditionLift": 39.4,
+     "fitIndex": 0.664,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 8.7,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+5.6适配"
+     ]
+    },
+    {
+     "name": "公理圆弧II",
+     "category": "战力",
+     "conditionScore": 42.1,
+     "conditionLift": 33.4,
+     "fitIndex": 0.564,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 8.7,
+     "reasons": [
+      "文本数值折算+8.4适配"
+     ]
+    }
+   ]
   },
   {
    "id": "official-4526",
@@ -16861,7 +18322,85 @@
      "三件套:卢安娜的飓风+巨人捕手+锐利之刃"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "光明圣物",
+     "category": "装备",
+     "conditionScore": 65.8,
+     "conditionLift": 37.9,
+     "fitIndex": 0.809,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 27.9,
+     "reasons": [
+      "装备弹性72%，缓解瓶颈+2.8",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "name": "活体锻炉",
+     "category": "装备",
+     "conditionScore": 65.8,
+     "conditionLift": 37.9,
+     "fitIndex": 0.809,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 27.9,
+     "reasons": [
+      "装备弹性72%，缓解瓶颈+2.8",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "name": "明智消费",
+     "category": "经济",
+     "conditionScore": 62.8,
+     "conditionLift": 34.9,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 27.9,
+     "reasons": [
+      "刷新经济适配薇恩3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "药剂师 II",
+     "category": "战力",
+     "conditionScore": 62,
+     "conditionLift": 34.1,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 27.9,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+7适配"
+     ]
+    },
+    {
+     "name": "团队建设",
+     "category": "经济",
+     "conditionScore": 59.9,
+     "conditionLift": 32,
+     "fitIndex": 0.682,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 27.9,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口"
+     ]
+    },
+    {
+     "name": "大百宝袋",
+     "category": "经济",
+     "conditionScore": 37.7,
+     "conditionLift": 9.8,
+     "fitIndex": 0.209,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 27.9,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1415",
@@ -17385,7 +18924,86 @@
      "三件套:班克斯的魔法帽+珠光护手+汲取剑"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "终极飞升",
+     "category": "战力",
+     "conditionScore": 69.5,
+     "conditionLift": 49.9,
+     "fitIndex": 0.955,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 19.6,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+12适配"
+     ]
+    },
+    {
+     "name": "休眠锻炉",
+     "category": "装备",
+     "conditionScore": 61.9,
+     "conditionLift": 42.3,
+     "fitIndex": 0.809,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 19.6,
+     "reasons": [
+      "装备弹性72%，缓解瓶颈+2.8",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "name": "大买特买",
+     "category": "经济",
+     "conditionScore": 58.6,
+     "conditionLift": 39,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 19.6,
+     "reasons": [
+      "刷新经济适配泰隆3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "DD街区",
+     "category": "经济",
+     "conditionScore": 58.6,
+     "conditionLift": 39,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 19.6,
+     "reasons": [
+      "刷新经济适配泰隆3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "部分飞升",
+     "category": "战力",
+     "conditionScore": 54.3,
+     "conditionLift": 34.7,
+     "fitIndex": 0.664,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 19.6,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+5.6适配"
+     ]
+    },
+    {
+     "name": "公理圆弧II",
+     "category": "战力",
+     "conditionScore": 49.1,
+     "conditionLift": 29.5,
+     "fitIndex": 0.564,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 19.6,
+     "reasons": [
+      "文本数值折算+8.4适配"
+     ]
+    }
+   ]
   },
   {
    "id": "official-4536",
@@ -17874,7 +19492,93 @@
      "三件套:鬼索的狂暴之刃+最后的轻语+无尽之刃"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "升级咯！",
+     "category": "经济",
+     "conditionScore": 50.5,
+     "conditionLift": 44.3,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 6.2,
+     "reasons": [
+      "高费主C厄斐琉斯受益于等级概率"
+     ]
+    },
+    {
+     "name": "打捞桶+",
+     "category": "装备",
+     "conditionScore": 40.6,
+     "conditionLift": 34.4,
+     "fitIndex": 0.564,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 6.2,
+     "reasons": [
+      "装备弹性86%，缓解瓶颈+1.4"
+     ]
+    },
+    {
+     "name": "潘朵拉的装备",
+     "category": "装备",
+     "conditionScore": 40.6,
+     "conditionLift": 34.4,
+     "fitIndex": 0.564,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 6.2,
+     "reasons": [
+      "装备弹性86%，缓解瓶颈+1.4"
+     ]
+    },
+    {
+     "name": "珍藏财宝",
+     "category": "装备",
+     "conditionScore": 40.6,
+     "conditionLift": 34.4,
+     "fitIndex": 0.564,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 6.2,
+     "reasons": [
+      "装备弹性86%，缓解瓶颈+1.4"
+     ]
+    },
+    {
+     "name": "珍藏财宝 II",
+     "category": "装备",
+     "conditionScore": 40.6,
+     "conditionLift": 34.4,
+     "fitIndex": 0.564,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 6.2,
+     "reasons": [
+      "装备弹性86%，缓解瓶颈+1.4"
+     ]
+    },
+    {
+     "name": "新人入队+",
+     "category": "战力",
+     "conditionScore": 20.3,
+     "conditionLift": 14.1,
+     "fitIndex": 0.232,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 6.2,
+     "reasons": [
+      "文本数值折算+1.1适配"
+     ]
+    },
+    {
+     "name": "诅咒冠冕",
+     "category": "战力",
+     "conditionScore": 20.3,
+     "conditionLift": 14.1,
+     "fitIndex": 0.232,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 6.2,
+     "reasons": [
+      "文本数值折算+1.1适配"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1565",
@@ -18302,7 +20006,96 @@
      "三件套:蓝霸符+珠光护手+强袭者的链枷"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "快速思考",
+     "category": "经济",
+     "conditionScore": 57.8,
+     "conditionLift": 40.6,
+     "fitIndex": 0.755,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 17.2,
+     "reasons": [
+      "刷新经济适配乐芙兰3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "DD街区",
+     "category": "经济",
+     "conditionScore": 57.3,
+     "conditionLift": 40.1,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 17.2,
+     "reasons": [
+      "刷新经济适配乐芙兰3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "英勇福袋",
+     "category": "经济",
+     "conditionScore": 56.3,
+     "conditionLift": 39.1,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 17.2,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "团队建设",
+     "category": "经济",
+     "conditionScore": 53.9,
+     "conditionLift": 36.7,
+     "fitIndex": 0.682,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 17.2,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口"
+     ]
+    },
+    {
+     "name": "公理圆弧II",
+     "category": "战力",
+     "conditionScore": 47.5,
+     "conditionLift": 30.3,
+     "fitIndex": 0.564,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 17.2,
+     "reasons": [
+      "文本数值折算+8.4适配"
+     ]
+    },
+    {
+     "name": "学习拼读",
+     "category": "战力",
+     "conditionScore": 35.3,
+     "conditionLift": 18.1,
+     "fitIndex": 0.336,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 17.2,
+     "reasons": [
+      "文本数值折算+3.4适配"
+     ]
+    },
+    {
+     "name": "光明重构器",
+     "category": "经济",
+     "conditionScore": 27,
+     "conditionLift": 9.8,
+     "fitIndex": 0.182,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 17.2,
+     "reasons": [
+      "命中路线推荐符文位"
+     ]
+    }
+   ]
   },
   {
    "id": "official-4541",
@@ -18787,7 +20580,109 @@
      "三件套:蓝霸符+珠光护手+巨人捕手"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "便携锻炉+",
+     "category": "装备",
+     "conditionScore": 54.1,
+     "conditionLift": 43.2,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 10.9,
+     "reasons": [
+      "装备弹性86%，缓解瓶颈+1.4",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "name": "活体锻炉",
+     "category": "装备",
+     "conditionScore": 54.1,
+     "conditionLift": 43.2,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 10.9,
+     "reasons": [
+      "装备弹性86%，缓解瓶颈+1.4",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "name": "DD街区",
+     "category": "经济",
+     "conditionScore": 54.1,
+     "conditionLift": 43.2,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 10.9,
+     "reasons": [
+      "刷新经济适配乐芙兰3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "英勇福袋",
+     "category": "经济",
+     "conditionScore": 53,
+     "conditionLift": 42.1,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 10.9,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "公理圆弧II",
+     "category": "战力",
+     "conditionScore": 43.5,
+     "conditionLift": 32.6,
+     "fitIndex": 0.564,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 10.9,
+     "reasons": [
+      "文本数值折算+8.4适配"
+     ]
+    },
+    {
+     "name": "炼狱合约",
+     "category": "经济",
+     "conditionScore": 42.5,
+     "conditionLift": 31.6,
+     "fitIndex": 0.545,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 10.9,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "学习拼读",
+     "category": "战力",
+     "conditionScore": 30.4,
+     "conditionLift": 19.5,
+     "fitIndex": 0.336,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 10.9,
+     "reasons": [
+      "文本数值折算+3.4适配"
+     ]
+    },
+    {
+     "name": "光明重构器",
+     "category": "经济",
+     "conditionScore": 21.4,
+     "conditionLift": 10.5,
+     "fitIndex": 0.182,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 10.9,
+     "reasons": [
+      "命中路线推荐符文位"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1394",
@@ -19307,7 +21202,83 @@
      "三件套:朔极之矛+珠光护手+班克斯的魔法帽"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "高端购物",
+     "category": "经济",
+     "conditionScore": 72.2,
+     "conditionLift": 51.6,
+     "fitIndex": 1,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 20.6,
+     "reasons": [
+      "刷新经济适配厄运小姐2星",
+      "高费主C厄运小姐受益于等级概率",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "升级咯！",
+     "category": "经济",
+     "conditionScore": 58.1,
+     "conditionLift": 37.5,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 20.6,
+     "reasons": [
+      "高费主C厄运小姐受益于等级概率"
+     ]
+    },
+    {
+     "name": "对冲基金",
+     "category": "经济",
+     "conditionScore": 40.3,
+     "conditionLift": 19.7,
+     "fitIndex": 0.382,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 20.6,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "最小巨人",
+     "category": "经济",
+     "conditionScore": 34.7,
+     "conditionLift": 14.1,
+     "fitIndex": 0.273,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 20.6,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "四费增援",
+     "category": "经济",
+     "conditionScore": 33.3,
+     "conditionLift": 12.7,
+     "fitIndex": 0.245,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 20.6,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "小巨人",
+     "category": "经济",
+     "conditionScore": 30,
+     "conditionLift": 9.4,
+     "fitIndex": 0.182,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 20.6,
+     "reasons": [
+      "命中路线推荐符文位"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1379",
@@ -19848,7 +21819,96 @@
      "三件套:朔极之矛+珠光护手+班克斯的魔法帽"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "明智消费",
+     "category": "经济",
+     "conditionScore": 89.4,
+     "conditionLift": 19.7,
+     "fitIndex": 1,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 69.7,
+     "reasons": [
+      "刷新经济适配厄运小姐2星",
+      "高费主C厄运小姐受益于等级概率",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "DD街区",
+     "category": "经济",
+     "conditionScore": 79,
+     "conditionLift": 9.3,
+     "fitIndex": 0.473,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 69.7,
+     "reasons": [
+      "刷新经济适配厄运小姐2星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "开摆",
+     "category": "经济",
+     "conditionScore": 76.3,
+     "conditionLift": 6.6,
+     "fitIndex": 0.336,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 69.7,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "大怪兽来袭！",
+     "category": "战力",
+     "conditionScore": 75.8,
+     "conditionLift": 6.1,
+     "fitIndex": 0.309,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 69.7,
+     "reasons": [
+      "文本数值折算+2.8适配"
+     ]
+    },
+    {
+     "name": "英勇福袋",
+     "category": "经济",
+     "conditionScore": 74.2,
+     "conditionLift": 4.5,
+     "fitIndex": 0.227,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 69.7,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "光明重构器",
+     "category": "经济",
+     "conditionScore": 73.3,
+     "conditionLift": 3.6,
+     "fitIndex": 0.182,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 69.7,
+     "reasons": [
+      "命中路线推荐符文位"
+     ]
+    },
+    {
+     "name": "吸血习性 II",
+     "category": "经济",
+     "conditionScore": 73.3,
+     "conditionLift": 3.6,
+     "fitIndex": 0.182,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 69.7,
+     "reasons": [
+      "命中路线推荐符文位"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1378",
@@ -20435,7 +22495,98 @@
      "三件套:巨人捕手+卢安娜的飓风+锐利之刃"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "高端购物",
+     "category": "经济",
+     "conditionScore": 95.3,
+     "conditionLift": 8.7,
+     "fitIndex": 1,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 86.6,
+     "reasons": [
+      "刷新经济适配莎弥拉2星",
+      "高费主C莎弥拉受益于等级概率",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "后期专家",
+     "category": "经济",
+     "conditionScore": 95.1,
+     "conditionLift": 8.5,
+     "fitIndex": 0.973,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 86.6,
+     "reasons": [
+      "高费主C莎弥拉受益于等级概率",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "飞升",
+     "category": "战力",
+     "conditionScore": 94,
+     "conditionLift": 7.4,
+     "fitIndex": 0.855,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 86.6,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+9.8适配"
+     ]
+    },
+    {
+     "name": "升级咯！",
+     "category": "经济",
+     "conditionScore": 92.9,
+     "conditionLift": 6.3,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 86.6,
+     "reasons": [
+      "高费主C莎弥拉受益于等级概率"
+     ]
+    },
+    {
+     "name": "前瞻思维",
+     "category": "经济",
+     "conditionScore": 91.4,
+     "conditionLift": 4.8,
+     "fitIndex": 0.545,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 86.6,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "大买特买",
+     "category": "经济",
+     "conditionScore": 90.7,
+     "conditionLift": 4.1,
+     "fitIndex": 0.473,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 86.6,
+     "reasons": [
+      "刷新经济适配莎弥拉2星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "对冲基金",
+     "category": "经济",
+     "conditionScore": 89.9,
+     "conditionLift": 3.3,
+     "fitIndex": 0.382,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 86.6,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1257",
@@ -20859,7 +23010,33 @@
      "三件套:鬼索的狂暴之刃+巨人捕手+最后的轻语"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "团队建设",
+     "category": "经济",
+     "conditionScore": 53.1,
+     "conditionLift": 37.3,
+     "fitIndex": 0.682,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 15.8,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口"
+     ]
+    },
+    {
+     "name": "羽量级选手 I",
+     "category": "战力",
+     "conditionScore": 36.2,
+     "conditionLift": 20.4,
+     "fitIndex": 0.373,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 15.8,
+     "reasons": [
+      "文本数值折算+4.2适配"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1269",
@@ -21427,7 +23604,73 @@
      "三件套:卢安娜的飓风+锐利之刃+鬼索的狂暴之刃"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "高端购物",
+     "category": "经济",
+     "conditionScore": 88.2,
+     "conditionLift": 21.9,
+     "fitIndex": 1,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 66.3,
+     "reasons": [
+      "刷新经济适配厄斐琉斯2星",
+      "高费主C厄斐琉斯受益于等级概率",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "后期专家",
+     "category": "经济",
+     "conditionScore": 87.6,
+     "conditionLift": 21.3,
+     "fitIndex": 0.973,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 66.3,
+     "reasons": [
+      "高费主C厄斐琉斯受益于等级概率",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "飞升",
+     "category": "战力",
+     "conditionScore": 85,
+     "conditionLift": 18.7,
+     "fitIndex": 0.855,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 66.3,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+9.8适配"
+     ]
+    },
+    {
+     "name": "升级咯！",
+     "category": "经济",
+     "conditionScore": 82.2,
+     "conditionLift": 15.9,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 66.3,
+     "reasons": [
+      "高费主C厄斐琉斯受益于等级概率"
+     ]
+    },
+    {
+     "name": "对冲基金",
+     "category": "经济",
+     "conditionScore": 74.7,
+     "conditionLift": 8.4,
+     "fitIndex": 0.382,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 66.3,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1288",
@@ -22062,7 +24305,58 @@
      "三件套:朔极之矛+无尽之刃+锐利之刃"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "DD街区",
+     "category": "经济",
+     "conditionScore": 55.4,
+     "conditionLift": 42,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 13.4,
+     "reasons": [
+      "刷新经济适配德莱文3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "团队建设",
+     "category": "经济",
+     "conditionScore": 51.8,
+     "conditionLift": 38.4,
+     "fitIndex": 0.682,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 13.4,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口"
+     ]
+    },
+    {
+     "name": "开摆",
+     "category": "经济",
+     "conditionScore": 32.3,
+     "conditionLift": 18.9,
+     "fitIndex": 0.336,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 13.4,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "光明重构器",
+     "category": "经济",
+     "conditionScore": 23.6,
+     "conditionLift": 10.2,
+     "fitIndex": 0.182,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 13.4,
+     "reasons": [
+      "命中路线推荐符文位"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1290",
@@ -22614,7 +24908,83 @@
      "三件套:朔极之矛+珠光护手+班克斯的魔法帽"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "后期专家",
+     "category": "经济",
+     "conditionScore": 80.6,
+     "conditionLift": 33.3,
+     "fitIndex": 0.973,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 47.3,
+     "reasons": [
+      "高费主C塔莉垭受益于等级概率",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "公理圆弧II",
+     "category": "战力",
+     "conditionScore": 75.9,
+     "conditionLift": 28.6,
+     "fitIndex": 0.836,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 47.3,
+     "reasons": [
+      "回蓝命中法系施法轴",
+      "文本数值折算+8.4适配"
+     ]
+    },
+    {
+     "name": "潘朵拉的装备",
+     "category": "装备",
+     "conditionScore": 68.8,
+     "conditionLift": 21.5,
+     "fitIndex": 0.627,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 47.3,
+     "reasons": [
+      "装备弹性72%，缓解瓶颈+2.8"
+     ]
+    },
+    {
+     "name": "D个痛快！ I",
+     "category": "经济",
+     "conditionScore": 62.9,
+     "conditionLift": 15.6,
+     "fitIndex": 0.455,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 47.3,
+     "reasons": [
+      "刷新经济适配塔莉垭2星"
+     ]
+    },
+    {
+     "name": "光明重构器",
+     "category": "经济",
+     "conditionScore": 53.5,
+     "conditionLift": 6.2,
+     "fitIndex": 0.182,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 47.3,
+     "reasons": [
+      "命中路线推荐符文位"
+     ]
+    },
+    {
+     "name": "团队建设",
+     "category": "经济",
+     "conditionScore": 53.5,
+     "conditionLift": 6.2,
+     "fitIndex": 0.182,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 47.3,
+     "reasons": [
+      "命中路线推荐符文位"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1294",
@@ -23041,7 +25411,70 @@
      "三件套:卢安娜的飓风"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "便携锻炉+",
+     "category": "装备",
+     "conditionScore": 89,
+     "conditionLift": 8.7,
+     "fitIndex": 0.682,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 80.3,
+     "reasons": [
+      "装备弹性100%，缓解瓶颈+0",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "name": "最小巨人",
+     "category": "经济",
+     "conditionScore": 83.8,
+     "conditionLift": 3.5,
+     "fitIndex": 0.273,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 80.3,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "四费增援",
+     "category": "经济",
+     "conditionScore": 83.4,
+     "conditionLift": 3.1,
+     "fitIndex": 0.245,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 80.3,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "光明重构器",
+     "category": "经济",
+     "conditionScore": 82.6,
+     "conditionLift": 2.3,
+     "fitIndex": 0.182,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 80.3,
+     "reasons": [
+      "命中路线推荐符文位"
+     ]
+    },
+    {
+     "name": "游神的神选",
+     "category": "经济",
+     "conditionScore": 82.6,
+     "conditionLift": 2.3,
+     "fitIndex": 0.182,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 80.3,
+     "reasons": [
+      "命中路线推荐符文位"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1312",
@@ -23554,7 +25987,97 @@
      "三件套:蓝霸符+珠光护手+莫雷洛秘典"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "公理圆弧II",
+     "category": "战力",
+     "conditionScore": 59.8,
+     "conditionLift": 47.8,
+     "fitIndex": 0.836,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 12,
+     "reasons": [
+      "回蓝命中法系施法轴",
+      "文本数值折算+8.4适配"
+     ]
+    },
+    {
+     "name": "便携锻炉",
+     "category": "装备",
+     "conditionScore": 54.6,
+     "conditionLift": 42.6,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 12,
+     "reasons": [
+      "装备弹性86%，缓解瓶颈+1.4",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "name": "DD街区",
+     "category": "经济",
+     "conditionScore": 54.6,
+     "conditionLift": 42.6,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 12,
+     "reasons": [
+      "刷新经济适配佐伊3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "棱彩门票",
+     "category": "经济",
+     "conditionScore": 53.6,
+     "conditionLift": 41.6,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 12,
+     "reasons": [
+      "刷新经济适配佐伊3星"
+     ]
+    },
+    {
+     "name": "英勇福袋",
+     "category": "经济",
+     "conditionScore": 53.6,
+     "conditionLift": 41.6,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 12,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "团队建设",
+     "category": "经济",
+     "conditionScore": 51,
+     "conditionLift": 39,
+     "fitIndex": 0.682,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 12,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口"
+     ]
+    },
+    {
+     "name": "光明重构器",
+     "category": "经济",
+     "conditionScore": 22.4,
+     "conditionLift": 10.4,
+     "fitIndex": 0.182,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 12,
+     "reasons": [
+      "命中路线推荐符文位"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1321",
@@ -23987,7 +26510,97 @@
      "三件套:珠光护手+疾射火炮+正义之手"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "便携锻炉",
+     "category": "装备",
+     "conditionScore": 58.5,
+     "conditionLift": 39.1,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 19.4,
+     "reasons": [
+      "装备弹性86%，缓解瓶颈+1.4",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "name": "明智消费",
+     "category": "经济",
+     "conditionScore": 58.5,
+     "conditionLift": 39.1,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 19.4,
+     "reasons": [
+      "刷新经济适配泰隆3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "DD街区",
+     "category": "经济",
+     "conditionScore": 58.5,
+     "conditionLift": 39.1,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 19.4,
+     "reasons": [
+      "刷新经济适配泰隆3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "药剂师 II",
+     "category": "战力",
+     "conditionScore": 57.5,
+     "conditionLift": 38.1,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 19.4,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+7适配"
+     ]
+    },
+    {
+     "name": "团队建设",
+     "category": "经济",
+     "conditionScore": 55.1,
+     "conditionLift": 35.7,
+     "fitIndex": 0.682,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 19.4,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口"
+     ]
+    },
+    {
+     "name": "公理圆弧II",
+     "category": "战力",
+     "conditionScore": 48.9,
+     "conditionLift": 29.5,
+     "fitIndex": 0.564,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 19.4,
+     "reasons": [
+      "文本数值折算+8.4适配"
+     ]
+    },
+    {
+     "name": "羽量级选手 II",
+     "category": "战力",
+     "conditionScore": 48.9,
+     "conditionLift": 29.5,
+     "fitIndex": 0.564,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 19.4,
+     "reasons": [
+      "文本数值折算+8.4适配"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1327",
@@ -24470,7 +27083,109 @@
      "三件套:蓝霸符+珠光护手+班克斯的魔法帽"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "快速思考",
+     "category": "经济",
+     "conditionScore": 65.8,
+     "conditionLift": 32.9,
+     "fitIndex": 0.755,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 32.9,
+     "reasons": [
+      "刷新经济适配佐伊3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "明智消费",
+     "category": "经济",
+     "conditionScore": 65.4,
+     "conditionLift": 32.5,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 32.9,
+     "reasons": [
+      "刷新经济适配佐伊3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "DD街区",
+     "category": "经济",
+     "conditionScore": 65.4,
+     "conditionLift": 32.5,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 32.9,
+     "reasons": [
+      "刷新经济适配佐伊3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "英勇福袋",
+     "category": "经济",
+     "conditionScore": 64.6,
+     "conditionLift": 31.7,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 32.9,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "团队建设",
+     "category": "经济",
+     "conditionScore": 62.6,
+     "conditionLift": 29.7,
+     "fitIndex": 0.682,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 32.9,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口"
+     ]
+    },
+    {
+     "name": "炼狱合约",
+     "category": "经济",
+     "conditionScore": 56.7,
+     "conditionLift": 23.8,
+     "fitIndex": 0.545,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 32.9,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "对冲基金",
+     "category": "经济",
+     "conditionScore": 49.6,
+     "conditionLift": 16.7,
+     "fitIndex": 0.382,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 32.9,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "利滚利",
+     "category": "经济",
+     "conditionScore": 45.6,
+     "conditionLift": 12.7,
+     "fitIndex": 0.291,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 32.9,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1338",
@@ -25062,7 +27777,99 @@
      "三件套:珠光护手+汲取剑+正义之手"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "高端购物",
+     "category": "经济",
+     "conditionScore": 94.5,
+     "conditionLift": 10.3,
+     "fitIndex": 1,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 84.2,
+     "reasons": [
+      "刷新经济适配佛耶戈2星",
+      "高费主C佛耶戈受益于等级概率",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "飞升",
+     "category": "战力",
+     "conditionScore": 93,
+     "conditionLift": 8.8,
+     "fitIndex": 0.855,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 84.2,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+9.8适配"
+     ]
+    },
+    {
+     "name": "便携锻炉",
+     "category": "装备",
+     "conditionScore": 91.9,
+     "conditionLift": 7.7,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 84.2,
+     "reasons": [
+      "装备弹性86%，缓解瓶颈+1.4",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "name": "药剂师 II",
+     "category": "战力",
+     "conditionScore": 91.7,
+     "conditionLift": 7.5,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 84.2,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+7适配"
+     ]
+    },
+    {
+     "name": "前瞻思维",
+     "category": "经济",
+     "conditionScore": 89.8,
+     "conditionLift": 5.6,
+     "fitIndex": 0.545,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 84.2,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "DD街区",
+     "category": "经济",
+     "conditionScore": 89.1,
+     "conditionLift": 4.9,
+     "fitIndex": 0.473,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 84.2,
+     "reasons": [
+      "刷新经济适配佛耶戈2星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "对冲基金",
+     "category": "经济",
+     "conditionScore": 88.1,
+     "conditionLift": 3.9,
+     "fitIndex": 0.382,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 84.2,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1347",
@@ -25514,7 +28321,111 @@
      "三件套:蓝霸符+珠光护手+班克斯的魔法帽"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "飞升",
+     "category": "战力",
+     "conditionScore": 60.2,
+     "conditionLift": 49.8,
+     "fitIndex": 0.855,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 10.4,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+9.8适配"
+     ]
+    },
+    {
+     "name": "便携锻炉",
+     "category": "装备",
+     "conditionScore": 57.5,
+     "conditionLift": 47.1,
+     "fitIndex": 0.809,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 10.4,
+     "reasons": [
+      "装备弹性72%，缓解瓶颈+2.8",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "name": "活体锻炉",
+     "category": "装备",
+     "conditionScore": 57.5,
+     "conditionLift": 47.1,
+     "fitIndex": 0.809,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 10.4,
+     "reasons": [
+      "装备弹性72%，缓解瓶颈+2.8",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "name": "大买特买",
+     "category": "经济",
+     "conditionScore": 53.8,
+     "conditionLift": 43.4,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 10.4,
+     "reasons": [
+      "刷新经济适配维克兹3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "DD街区",
+     "category": "经济",
+     "conditionScore": 53.8,
+     "conditionLift": 43.4,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 10.4,
+     "reasons": [
+      "刷新经济适配维克兹3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "英勇福袋",
+     "category": "经济",
+     "conditionScore": 52.8,
+     "conditionLift": 42.4,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 10.4,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "团队建设",
+     "category": "经济",
+     "conditionScore": 50.1,
+     "conditionLift": 39.7,
+     "fitIndex": 0.682,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 10.4,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口"
+     ]
+    },
+    {
+     "name": "光明重构器",
+     "category": "经济",
+     "conditionScore": 21,
+     "conditionLift": 10.6,
+     "fitIndex": 0.182,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 10.4,
+     "reasons": [
+      "命中路线推荐符文位"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1355",
@@ -26064,7 +28975,83 @@
      "三件套:蓝霸符+珠光护手+大天使之杖"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "大买特买",
+     "category": "经济",
+     "conditionScore": 54.2,
+     "conditionLift": 43.1,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 11.1,
+     "reasons": [
+      "刷新经济适配娑娜3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "DD街区",
+     "category": "经济",
+     "conditionScore": 54.2,
+     "conditionLift": 43.1,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 11.1,
+     "reasons": [
+      "刷新经济适配娑娜3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "团队建设",
+     "category": "经济",
+     "conditionScore": 50.5,
+     "conditionLift": 39.4,
+     "fitIndex": 0.682,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 11.1,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口"
+     ]
+    },
+    {
+     "name": "炼狱合约",
+     "category": "经济",
+     "conditionScore": 42.6,
+     "conditionLift": 31.5,
+     "fitIndex": 0.545,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 11.1,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "学习拼读",
+     "category": "战力",
+     "conditionScore": 30.5,
+     "conditionLift": 19.4,
+     "fitIndex": 0.336,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 11.1,
+     "reasons": [
+      "文本数值折算+3.4适配"
+     ]
+    },
+    {
+     "name": "光明重构器",
+     "category": "经济",
+     "conditionScore": 21.6,
+     "conditionLift": 10.5,
+     "fitIndex": 0.182,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 11.1,
+     "reasons": [
+      "命中路线推荐符文位"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1376",
@@ -26593,7 +29580,97 @@
      "三件套:蓝霸符+珠光护手+巨人捕手"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "飞升",
+     "category": "战力",
+     "conditionScore": 79.2,
+     "conditionLift": 25.9,
+     "fitIndex": 0.855,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 53.3,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+9.8适配"
+     ]
+    },
+    {
+     "name": "公理圆弧II",
+     "category": "战力",
+     "conditionScore": 78.7,
+     "conditionLift": 25.4,
+     "fitIndex": 0.836,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 53.3,
+     "reasons": [
+      "回蓝命中法系施法轴",
+      "文本数值折算+8.4适配"
+     ]
+    },
+    {
+     "name": "DD街区",
+     "category": "经济",
+     "conditionScore": 75.9,
+     "conditionLift": 22.6,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 53.3,
+     "reasons": [
+      "刷新经济适配璐璐3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "团队建设",
+     "category": "经济",
+     "conditionScore": 74,
+     "conditionLift": 20.7,
+     "fitIndex": 0.682,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 53.3,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口"
+     ]
+    },
+    {
+     "name": "部分飞升",
+     "category": "战力",
+     "conditionScore": 73.4,
+     "conditionLift": 20.1,
+     "fitIndex": 0.664,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 53.3,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+5.6适配"
+     ]
+    },
+    {
+     "name": "开摆",
+     "category": "经济",
+     "conditionScore": 63.5,
+     "conditionLift": 10.2,
+     "fitIndex": 0.336,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 53.3,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "小巨人",
+     "category": "经济",
+     "conditionScore": 58.8,
+     "conditionLift": 5.5,
+     "fitIndex": 0.182,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 53.3,
+     "reasons": [
+      "命中路线推荐符文位"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1271",
@@ -27103,7 +30180,96 @@
      "三件套:最后的轻语+鬼索的狂暴之刃+巨人捕手"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "高端购物",
+     "category": "经济",
+     "conditionScore": 67.4,
+     "conditionLift": 60.5,
+     "fitIndex": 1,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 6.9,
+     "reasons": [
+      "刷新经济适配厄加特2星",
+      "高费主C厄加特受益于等级概率",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "后期专家",
+     "category": "经济",
+     "conditionScore": 65.8,
+     "conditionLift": 58.9,
+     "fitIndex": 0.973,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 6.9,
+     "reasons": [
+      "高费主C厄加特受益于等级概率",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "耐心学习",
+     "category": "经济",
+     "conditionScore": 50.9,
+     "conditionLift": 44,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 6.9,
+     "reasons": [
+      "高费主C厄加特受益于等级概率"
+     ]
+    },
+    {
+     "name": "升级咯！",
+     "category": "经济",
+     "conditionScore": 50.9,
+     "conditionLift": 44,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 6.9,
+     "reasons": [
+      "高费主C厄加特受益于等级概率"
+     ]
+    },
+    {
+     "name": "对冲基金",
+     "category": "经济",
+     "conditionScore": 30,
+     "conditionLift": 23.1,
+     "fitIndex": 0.382,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 6.9,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "利滚利加强版",
+     "category": "经济",
+     "conditionScore": 27.8,
+     "conditionLift": 20.9,
+     "fitIndex": 0.345,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 6.9,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "小巨人",
+     "category": "经济",
+     "conditionScore": 17.9,
+     "conditionLift": 11,
+     "fitIndex": 0.182,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 6.9,
+     "reasons": [
+      "命中路线推荐符文位"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1323",
@@ -27566,7 +30732,85 @@
      "三件套:蓝霸符+珠光护手+班克斯的魔法帽"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "飞升",
+     "category": "战力",
+     "conditionScore": 62.3,
+     "conditionLift": 47,
+     "fitIndex": 0.855,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 15.3,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+9.8适配"
+     ]
+    },
+    {
+     "name": "公理圆弧II",
+     "category": "战力",
+     "conditionScore": 61.3,
+     "conditionLift": 46,
+     "fitIndex": 0.836,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 15.3,
+     "reasons": [
+      "回蓝命中法系施法轴",
+      "文本数值折算+8.4适配"
+     ]
+    },
+    {
+     "name": "快速思考",
+     "category": "经济",
+     "conditionScore": 56.8,
+     "conditionLift": 41.5,
+     "fitIndex": 0.755,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 15.3,
+     "reasons": [
+      "刷新经济适配悠米3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "DD街区",
+     "category": "经济",
+     "conditionScore": 56.3,
+     "conditionLift": 41,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 15.3,
+     "reasons": [
+      "刷新经济适配悠米3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "赚大发",
+     "category": "战力",
+     "conditionScore": 55.3,
+     "conditionLift": 40,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 15.3,
+     "reasons": [
+      "文本数值折算+12适配"
+     ]
+    },
+    {
+     "name": "学习拼读",
+     "category": "战力",
+     "conditionScore": 33.8,
+     "conditionLift": 18.5,
+     "fitIndex": 0.336,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 15.3,
+     "reasons": [
+      "文本数值折算+3.4适配"
+     ]
+    }
+   ]
   },
   {
    "id": "official-1402",
@@ -28012,7 +31256,86 @@
      "三件套:卢安娜的飓风+无尽之刃+最后的轻语"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "升星之运",
+     "category": "经济",
+     "conditionScore": 89.5,
+     "conditionLift": 19.5,
+     "fitIndex": 1,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 70,
+     "reasons": [
+      "刷新经济适配凯尔3星",
+      "低费追三可直接减少同名牌缺口",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "便携锻炉++",
+     "category": "装备",
+     "conditionScore": 84.5,
+     "conditionLift": 14.5,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 70,
+     "reasons": [
+      "装备弹性86%，缓解瓶颈+1.4",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "name": "DD街区",
+     "category": "经济",
+     "conditionScore": 84.5,
+     "conditionLift": 14.5,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 70,
+     "reasons": [
+      "刷新经济适配凯尔3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "药剂师 II",
+     "category": "战力",
+     "conditionScore": 84.2,
+     "conditionLift": 14.2,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 70,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+7适配"
+     ]
+    },
+    {
+     "name": "羽量级选手 I",
+     "category": "战力",
+     "conditionScore": 77.3,
+     "conditionLift": 7.3,
+     "fitIndex": 0.373,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 70,
+     "reasons": [
+      "文本数值折算+4.2适配"
+     ]
+    },
+    {
+     "name": "开摆",
+     "category": "经济",
+     "conditionScore": 76.6,
+     "conditionLift": 6.6,
+     "fitIndex": 0.336,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "robustness": 70,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    }
+   ]
   },
   {
    "id": "official-4529",
@@ -28441,7 +31764,82 @@
      "三件套:蓝霸符+海克斯科技枪刃+莫雷洛秘典"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "DD街区",
+     "category": "经济",
+     "conditionScore": 54.7,
+     "conditionLift": 42.5,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 12.2,
+     "reasons": [
+      "刷新经济适配佐伊3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "D个痛快！ I",
+     "category": "经济",
+     "conditionScore": 53.7,
+     "conditionLift": 41.5,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 12.2,
+     "reasons": [
+      "刷新经济适配佐伊3星"
+     ]
+    },
+    {
+     "name": "团队建设",
+     "category": "经济",
+     "conditionScore": 51.1,
+     "conditionLift": 38.9,
+     "fitIndex": 0.682,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 12.2,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口"
+     ]
+    },
+    {
+     "name": "珍藏财宝",
+     "category": "装备",
+     "conditionScore": 44.4,
+     "conditionLift": 32.2,
+     "fitIndex": 0.564,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 12.2,
+     "reasons": [
+      "装备弹性86%，缓解瓶颈+1.4"
+     ]
+    },
+    {
+     "name": "魔杖",
+     "category": "战力",
+     "conditionScore": 35.5,
+     "conditionLift": 23.3,
+     "fitIndex": 0.409,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 12.2,
+     "reasons": [
+      "文本数值折算+5适配"
+     ]
+    },
+    {
+     "name": "学习拼读",
+     "category": "战力",
+     "conditionScore": 31.4,
+     "conditionLift": 19.2,
+     "fitIndex": 0.336,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 12.2,
+     "reasons": [
+      "文本数值折算+3.4适配"
+     ]
+    }
+   ]
   },
   {
    "id": "official-4532",
@@ -28875,7 +32273,93 @@
      "三件套:珠光护手+蓝霸符+巨人捕手"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "D个痛快！ I",
+     "category": "经济",
+     "conditionScore": 63.8,
+     "conditionLift": 32.4,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 31.4,
+     "reasons": [
+      "刷新经济适配璐璐3星"
+     ]
+    },
+    {
+     "name": "团队建设",
+     "category": "经济",
+     "conditionScore": 61.8,
+     "conditionLift": 30.4,
+     "fitIndex": 0.682,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 31.4,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口"
+     ]
+    },
+    {
+     "name": "潘朵拉的装备",
+     "category": "装备",
+     "conditionScore": 56.5,
+     "conditionLift": 25.1,
+     "fitIndex": 0.564,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 31.4,
+     "reasons": [
+      "装备弹性86%，缓解瓶颈+1.4"
+     ]
+    },
+    {
+     "name": "羽量级选手 II",
+     "category": "战力",
+     "conditionScore": 56.5,
+     "conditionLift": 25.1,
+     "fitIndex": 0.564,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 31.4,
+     "reasons": [
+      "文本数值折算+8.4适配"
+     ]
+    },
+    {
+     "name": "对冲基金",
+     "category": "经济",
+     "conditionScore": 48.4,
+     "conditionLift": 17,
+     "fitIndex": 0.382,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 31.4,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "羽量级选手 I",
+     "category": "战力",
+     "conditionScore": 48,
+     "conditionLift": 16.6,
+     "fitIndex": 0.373,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 31.4,
+     "reasons": [
+      "文本数值折算+4.2适配"
+     ]
+    },
+    {
+     "name": "学习拼读",
+     "category": "战力",
+     "conditionScore": 46.4,
+     "conditionLift": 15,
+     "fitIndex": 0.336,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 31.4,
+     "reasons": [
+      "文本数值折算+3.4适配"
+     ]
+    }
+   ]
   },
   {
    "id": "official-4533",
@@ -29316,7 +32800,84 @@
      "三件套:最后的轻语+巨人捕手+卢安娜的飓风"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "终极飞升",
+     "category": "战力",
+     "conditionScore": 67.4,
+     "conditionLift": 53.3,
+     "fitIndex": 0.955,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 14.1,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+12适配"
+     ]
+    },
+    {
+     "name": "飞升",
+     "category": "战力",
+     "conditionScore": 61.8,
+     "conditionLift": 47.7,
+     "fitIndex": 0.855,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 14.1,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+9.8适配"
+     ]
+    },
+    {
+     "name": "棱彩门票",
+     "category": "经济",
+     "conditionScore": 54.7,
+     "conditionLift": 40.6,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 14.1,
+     "reasons": [
+      "刷新经济适配赛娜3星"
+     ]
+    },
+    {
+     "name": "团队建设",
+     "category": "经济",
+     "conditionScore": 52.2,
+     "conditionLift": 38.1,
+     "fitIndex": 0.682,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 14.1,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口"
+     ]
+    },
+    {
+     "name": "部分飞升",
+     "category": "战力",
+     "conditionScore": 51.2,
+     "conditionLift": 37.1,
+     "fitIndex": 0.664,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 14.1,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+5.6适配"
+     ]
+    },
+    {
+     "name": "潘朵拉的装备 II",
+     "category": "装备",
+     "conditionScore": 49.1,
+     "conditionLift": 35,
+     "fitIndex": 0.627,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 14.1,
+     "reasons": [
+      "装备弹性72%，缓解瓶颈+2.8"
+     ]
+    }
+   ]
   },
   {
    "id": "official-4534",
@@ -29839,7 +33400,95 @@
      "三件套:疾射火炮+鬼索的狂暴之刃+泰坦的坚决"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "飞升",
+     "category": "战力",
+     "conditionScore": 69.1,
+     "conditionLift": 38.6,
+     "fitIndex": 0.855,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 30.5,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+9.8适配"
+     ]
+    },
+    {
+     "name": "英勇福袋",
+     "category": "经济",
+     "conditionScore": 63.4,
+     "conditionLift": 32.9,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 30.5,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "团队建设",
+     "category": "经济",
+     "conditionScore": 61.3,
+     "conditionLift": 30.8,
+     "fitIndex": 0.682,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 30.5,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口"
+     ]
+    },
+    {
+     "name": "万用瞄准镜 II",
+     "category": "战力",
+     "conditionScore": 53.1,
+     "conditionLift": 22.6,
+     "fitIndex": 0.5,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 30.5,
+     "reasons": [
+      "文本数值折算+7适配"
+     ]
+    },
+    {
+     "name": "吾弓听命于您",
+     "category": "战力",
+     "conditionScore": 45.7,
+     "conditionLift": 15.2,
+     "fitIndex": 0.336,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 30.5,
+     "reasons": [
+      "文本数值折算+3.4适配"
+     ]
+    },
+    {
+     "name": "不屈意志",
+     "category": "战力",
+     "conditionScore": 44.5,
+     "conditionLift": 14,
+     "fitIndex": 0.309,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 30.5,
+     "reasons": [
+      "文本数值折算+2.8适配"
+     ]
+    },
+    {
+     "name": "打气 II",
+     "category": "战力",
+     "conditionScore": 44.5,
+     "conditionLift": 14,
+     "fitIndex": 0.309,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 30.5,
+     "reasons": [
+      "文本数值折算+2.8适配"
+     ]
+    }
+   ]
   },
   {
    "id": "official-4540",
@@ -30237,7 +33886,72 @@
      "三件套:朔极之矛+珠光护手+班克斯的魔法帽"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "明智消费",
+     "category": "经济",
+     "conditionScore": 75.6,
+     "conditionLift": 45.2,
+     "fitIndex": 1,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 30.4,
+     "reasons": [
+      "刷新经济适配厄运小姐2星",
+      "高费主C厄运小姐受益于等级概率",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "前进之路",
+     "category": "经济",
+     "conditionScore": 64.5,
+     "conditionLift": 34.1,
+     "fitIndex": 0.755,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 30.4,
+     "reasons": [
+      "高费主C厄运小姐受益于等级概率",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "公理圆弧II",
+     "category": "战力",
+     "conditionScore": 55.9,
+     "conditionLift": 25.5,
+     "fitIndex": 0.564,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 30.4,
+     "reasons": [
+      "文本数值折算+8.4适配"
+     ]
+    },
+    {
+     "name": "对冲基金",
+     "category": "经济",
+     "conditionScore": 47.7,
+     "conditionLift": 17.3,
+     "fitIndex": 0.382,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 30.4,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "新人入队",
+     "category": "战力",
+     "conditionScore": 40.9,
+     "conditionLift": 10.5,
+     "fitIndex": 0.232,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 30.4,
+     "reasons": [
+      "文本数值折算+1.1适配"
+     ]
+    }
+   ]
   },
   {
    "id": "official-4544",
@@ -30798,7 +34512,95 @@
      "三件套:汲取剑+珠光护手+泰坦的坚决"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "药剂师 II",
+     "category": "战力",
+     "conditionScore": 62.1,
+     "conditionLift": 33.9,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 28.2,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+7适配"
+     ]
+    },
+    {
+     "name": "潘朵拉的装备 III",
+     "category": "装备",
+     "conditionScore": 60.9,
+     "conditionLift": 32.7,
+     "fitIndex": 0.7,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 28.2,
+     "reasons": [
+      "装备弹性96%，缓解瓶颈+0.4",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "name": "团队建设",
+     "category": "经济",
+     "conditionScore": 60,
+     "conditionLift": 31.8,
+     "fitIndex": 0.682,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 28.2,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口"
+     ]
+    },
+    {
+     "name": "公理圆弧II",
+     "category": "战力",
+     "conditionScore": 54.5,
+     "conditionLift": 26.3,
+     "fitIndex": 0.564,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 28.2,
+     "reasons": [
+      "文本数值折算+8.4适配"
+     ]
+    },
+    {
+     "name": "治疗法球 I",
+     "category": "战力",
+     "conditionScore": 47.3,
+     "conditionLift": 19.1,
+     "fitIndex": 0.409,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 28.2,
+     "reasons": [
+      "前排支持持续战触发"
+     ]
+    },
+    {
+     "name": "大百宝袋",
+     "category": "经济",
+     "conditionScore": 38,
+     "conditionLift": 9.8,
+     "fitIndex": 0.209,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 28.2,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "光明重构器",
+     "category": "经济",
+     "conditionScore": 36.7,
+     "conditionLift": 8.5,
+     "fitIndex": 0.182,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 28.2,
+     "reasons": [
+      "命中路线推荐符文位"
+     ]
+    }
+   ]
   },
   {
    "id": "official-4545",
@@ -31270,7 +35072,96 @@
      "三件套:海克斯科技枪刃+疾射火炮+泰坦的坚决"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "飞升",
+     "category": "战力",
+     "conditionScore": 62.6,
+     "conditionLift": 46.8,
+     "fitIndex": 0.855,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 15.8,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+9.8适配"
+     ]
+    },
+    {
+     "name": "药剂师 II",
+     "category": "战力",
+     "conditionScore": 55.6,
+     "conditionLift": 39.8,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 15.8,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+7适配"
+     ]
+    },
+    {
+     "name": "团队建设",
+     "category": "经济",
+     "conditionScore": 53.1,
+     "conditionLift": 37.3,
+     "fitIndex": 0.682,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 15.8,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口"
+     ]
+    },
+    {
+     "name": "部分飞升",
+     "category": "战力",
+     "conditionScore": 52.1,
+     "conditionLift": 36.3,
+     "fitIndex": 0.664,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 15.8,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+5.6适配"
+     ]
+    },
+    {
+     "name": "羽量级选手 II",
+     "category": "战力",
+     "conditionScore": 46.6,
+     "conditionLift": 30.8,
+     "fitIndex": 0.564,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 15.8,
+     "reasons": [
+      "文本数值折算+8.4适配"
+     ]
+    },
+    {
+     "name": "大百宝袋",
+     "category": "经济",
+     "conditionScore": 27.2,
+     "conditionLift": 11.4,
+     "fitIndex": 0.209,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 15.8,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "光明重构器",
+     "category": "经济",
+     "conditionScore": 25.8,
+     "conditionLift": 10,
+     "fitIndex": 0.182,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 15.8,
+     "reasons": [
+      "命中路线推荐符文位"
+     ]
+    }
+   ]
   },
   {
    "id": "official-4546",
@@ -31735,7 +35626,94 @@
      "三件套:汲取剑+珠光护手+水银"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "光明圣物",
+     "category": "装备",
+     "conditionScore": 57.7,
+     "conditionLift": 39.8,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 17.9,
+     "reasons": [
+      "装备弹性86%，缓解瓶颈+1.4",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "name": "团队建设",
+     "category": "经济",
+     "conditionScore": 54.3,
+     "conditionLift": 36.4,
+     "fitIndex": 0.682,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 17.9,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口"
+     ]
+    },
+    {
+     "name": "公理圆弧II",
+     "category": "战力",
+     "conditionScore": 48,
+     "conditionLift": 30.1,
+     "fitIndex": 0.564,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 17.9,
+     "reasons": [
+      "文本数值折算+8.4适配"
+     ]
+    },
+    {
+     "name": "治疗法球 I",
+     "category": "战力",
+     "conditionScore": 39.7,
+     "conditionLift": 21.8,
+     "fitIndex": 0.409,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 17.9,
+     "reasons": [
+      "前排支持持续战触发"
+     ]
+    },
+    {
+     "name": "理想主义",
+     "category": "战力",
+     "conditionScore": 35.9,
+     "conditionLift": 18,
+     "fitIndex": 0.336,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 17.9,
+     "reasons": [
+      "文本数值折算+3.4适配"
+     ]
+    },
+    {
+     "name": "大百宝袋",
+     "category": "经济",
+     "conditionScore": 29.1,
+     "conditionLift": 11.2,
+     "fitIndex": 0.209,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 17.9,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "光明重构器",
+     "category": "经济",
+     "conditionScore": 27.6,
+     "conditionLift": 9.7,
+     "fitIndex": 0.182,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "robustness": 17.9,
+     "reasons": [
+      "命中路线推荐符文位"
+     ]
+    }
+   ]
   },
   {
    "id": "official-4548",
@@ -32188,7 +36166,85 @@
      "三件套:泰坦的坚决+汲取剑+鬼索的狂暴之刃"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-   }
+   },
+   "augmentOperators": [
+    {
+     "name": "光明圣物",
+     "category": "装备",
+     "conditionScore": 74.1,
+     "conditionLift": 24.3,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 49.8,
+     "reasons": [
+      "装备弹性86%，缓解瓶颈+1.4",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "name": "活体锻炉",
+     "category": "装备",
+     "conditionScore": 74.1,
+     "conditionLift": 24.3,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 49.8,
+     "reasons": [
+      "装备弹性86%，缓解瓶颈+1.4",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "name": "明智消费",
+     "category": "经济",
+     "conditionScore": 74.1,
+     "conditionLift": 24.3,
+     "fitIndex": 0.745,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 49.8,
+     "reasons": [
+      "刷新经济适配菲奥娜3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "name": "药剂师 II",
+     "category": "战力",
+     "conditionScore": 73.5,
+     "conditionLift": 23.7,
+     "fitIndex": 0.727,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 49.8,
+     "reasons": [
+      "前排支持持续战触发",
+      "文本数值折算+7适配"
+     ]
+    },
+    {
+     "name": "团队建设",
+     "category": "经济",
+     "conditionScore": 72,
+     "conditionLift": 22.2,
+     "fitIndex": 0.682,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 49.8,
+     "reasons": [
+      "低费追三可直接减少同名牌缺口"
+     ]
+    },
+    {
+     "name": "大百宝袋",
+     "category": "经济",
+     "conditionScore": 56.6,
+     "conditionLift": 6.8,
+     "fitIndex": 0.209,
+     "evidenceLevel": "L2 模型候选",
+     "robustness": 49.8,
+     "reasons": [
+      "金币折算提升成型可达性"
+     ]
+    }
+   ]
   }
  ],
  "weights": {
@@ -32628,6 +36684,12 @@
   "utilityFormula": "U=基础强度+19×搜卡就绪+14×装备就绪+8×装备方向+9×转型平滑+7×前排+8×对局适配-依赖风险+噪声",
   "robustnessFormula": "R=40%×前25%进入率+20%×前5率+25%×(1-失速率)+15%×尾部归一值",
   "decisionFormula": "现场最终分=资产/概率/抗脆弱分+clamp((R-50)/10,-5,+5)",
+  "augmentOperatorFormula": [
+   "认证边际 b=q_e×min(12,0.5×(条件适配-基础稳健))，q_e={L2.5:1,L2:0.65,L1.5:0.35}",
+   "战力算子 B_w=b×(0.6+0.4×已握战力成熟度)，并受单项12/总计18分封顶",
+   "经济算子将高端购物映射为商店等级+1，其余经济符文将D牌成本折扣限制在30%内，并给受证据折扣的可达期权值",
+   "装备算子 B_i=min(10,b×min(3,缺失主C装数)/3)，装备补齐后自动衰减为0"
+  ],
   "failureThreshold": "样本效用<105记为模型失速；不等同真实第八率。",
   "ceiling": "L2.5；未接入真实战绩留出集，不授予L3/L4。",
   "conditionRankings": {
