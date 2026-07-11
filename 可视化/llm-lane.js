@@ -7,6 +7,9 @@
 
   const DEFAULT_MODEL = "claude-haiku-4-5";
   const DEFAULT_API_BASE = "http://127.0.0.1:8787/v1";
+  const DEFAULT_TRANSLATE_TIMEOUT_MS = 12000;
+  const DEFAULT_TEST_TIMEOUT_MS = 20000;
+  const LOCAL_PROXY_PROBE_TIMEOUT_MS = 2500;
   const TRAITS = [
     "护卫", "斗士", "战斗机甲", "小天才", "福牛守护者", "决斗大师", "秘术卫士", "情报特工", "强袭枪手",
     "超级英雄", "星之守护者", "源计划：激光特工", "混沌战士", "爱心使者", "吉祥物", "黑客", "灵能使",
@@ -160,7 +163,8 @@
     }
     if (!ctx.apiKey) return { ok: false, status: "no-key", add: [], remove: [], discarded: [] };
     const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), ctx.timeoutMs || 4000);
+    const timeoutMs = Number(ctx.timeoutMs) || DEFAULT_TRANSLATE_TIMEOUT_MS;
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
     try {
       const res = await fetch(`${apiBase}/chat/completions`, {
         method: "POST",
@@ -188,22 +192,48 @@
     }
   }
 
+  async function probeLocalProxy(apiBase) {
+    if (!/^http:\/\/(127\.0\.0\.1|localhost):8787\/v1\/?$/i.test(apiBase)) return { ok: true, status: "direct" };
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), LOCAL_PROXY_PROBE_TIMEOUT_MS);
+    try {
+      const res = await fetch(apiBase.replace(/\/v1\/?$/i, "/health"), { signal: controller.signal });
+      return { ok: res.ok, status: res.ok ? "proxy-ok" : `proxy-http-${res.status}` };
+    } catch (e) {
+      return { ok: false, status: e && e.name === "AbortError" ? "proxy-timeout" : "proxy-error" };
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
   async function testConnection(opts) {
     const apiBase = String(opts && opts.apiBase || DEFAULT_API_BASE).replace(/\/+$/, "");
     if (apiBase.toLowerCase() === "mock") return { ok: true, status: "mock" };
     if (!opts || !opts.apiKey) return { ok: false, status: "no-key" };
-    const res = await translate({
-      apiBase,
-      apiKey: opts.apiKey,
-      model: opts.model || DEFAULT_MODEL,
-      original: "测试连接",
-      unheard: ["测试连接"],
-      signals: [],
-      matcher: opts.matcher,
-      timeoutMs: opts.timeoutMs || 4000,
-      logger: opts.logger || console,
-    });
-    return { ok: res.ok, status: res.status };
+    const proxy = await probeLocalProxy(apiBase);
+    if (!proxy.ok) return { ok: false, status: proxy.status, proxy };
+    const controller = new AbortController();
+    const timeoutMs = Number(opts.timeoutMs) || DEFAULT_TEST_TIMEOUT_MS;
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+    const started = Date.now();
+    try {
+      const res = await fetch(`${apiBase}/chat/completions`, {
+        method: "POST",
+        headers: { "content-type": "application/json", "authorization": `Bearer ${opts.apiKey}` },
+        body: JSON.stringify({
+          model: opts.model || DEFAULT_MODEL,
+          temperature: 0,
+          max_tokens: 8,
+          messages: [{ role: "user", content: "只回复OK" }],
+        }),
+        signal: controller.signal,
+      });
+      return { ok: res.ok, status: res.ok ? "ok" : `http-${res.status}`, latencyMs: Date.now() - started, proxy };
+    } catch (e) {
+      return { ok: false, status: e && e.name === "AbortError" ? "timeout" : "error", latencyMs: Date.now() - started, proxy };
+    } finally {
+      clearTimeout(timer);
+    }
   }
 
   function assert(cond, msg) {
@@ -213,6 +243,8 @@
   function runTests() {
     const vocab = buildVocab(getMatcher());
     const silent = { warn() {} };
+    assert(DEFAULT_TRANSLATE_TIMEOUT_MS >= 10000, "实战慢车道应容纳正常上游延迟");
+    assert(DEFAULT_TEST_TIMEOUT_MS > DEFAULT_TRANSLATE_TIMEOUT_MS, "连接测试窗口应长于实战翻译窗口");
     const got = validatePayload({
       add: [
         { kind: "traits", value: "战斗机甲", count: 3 },
@@ -237,6 +269,8 @@
   const api = {
     DEFAULT_MODEL,
     DEFAULT_API_BASE,
+    DEFAULT_TRANSLATE_TIMEOUT_MS,
+    DEFAULT_TEST_TIMEOUT_MS,
     TRAITS,
     buildVocab,
     buildMessages,

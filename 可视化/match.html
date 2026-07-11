@@ -199,7 +199,7 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
 <script src="odds-data.js?v=match-20260706e"></script>
 <script src="matcher-core.js?v=cert-20260712a"></script>
 <script src="signal-parser.js?v=match-20260706e"></script>
-<script src="llm-lane.js?v=match-20260706c"></script>
+<script src="llm-lane.js?v=match-20260712b"></script>
 <script>
 "use strict";
 const LS = "jcc-match-";
@@ -478,6 +478,15 @@ function llmSettings() {
 function setLlmStatus(status) {
   const dot = $("llmDot");
   dot.className = `llmDot ${status || "fail"}`;
+}
+function connectionStatusText(result) {
+  if (result.ok) return `通（${result.status}${result.latencyMs ? `，${result.latencyMs}ms` : ""}）`;
+  if (result.status === "no-key") return "不通（请填写Key）";
+  if (String(result.status).startsWith("proxy-")) return `不通（本地代理异常：${result.status}）`;
+  if (result.status === "timeout") return `不通（代理正常，上游超过${Math.round((LLMLane.DEFAULT_TEST_TIMEOUT_MS || 20000) / 1000)}秒）`;
+  if (result.status === "http-401" || result.status === "http-403") return `不通（Key无效或无权限：${result.status}）`;
+  if (result.status === "http-404") return "不通（API地址或模型名不存在）";
+  return `不通（${result.status || "error"}）`;
 }
 function readUnheardLog() {
   try { return JSON.parse(localStorage.getItem(UNHEARD_LOG_KEY) || "[]"); } catch (e) { return []; }
@@ -969,7 +978,7 @@ $("llmTest").addEventListener("click", async () => {
   $("llmTestState").textContent = "测试中...";
   setLlmStatus("work");
   const res = await LLMLane.testConnection({ ...llmSettings(), matcher: STAGE2_MATCHER });
-  $("llmTestState").textContent = res.ok ? `通（${res.status}）` : `不通（${res.status}）`;
+  $("llmTestState").textContent = connectionStatusText(res);
   setLlmStatus(res.ok ? "ok" : "fail");
 });
 $("llmExport").addEventListener("click", () => {
