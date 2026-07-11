@@ -88,6 +88,11 @@ h3 { font-size:14px; font-weight:650; margin:16px 0 8px; }
 .certRoute .name { display:block; font-weight:700; font-size:12.5px; overflow-wrap:anywhere; }
 .certRoute .sub { display:block; color:var(--muted); font-size:11px; margin-top:2px; }
 .certRoute .metric { color:var(--s5); font-size:12px; font-weight:800; text-align:right; white-space:nowrap; }
+.certConditionTabs { display:flex; flex-wrap:wrap; gap:6px; margin:-2px 0 7px; }
+.certConditionTab { border:1px solid var(--border); border-radius:999px; padding:3px 10px; background:transparent; color:var(--ink2); font:inherit; font-size:11.5px; cursor:pointer; }
+.certConditionTab.active { border-color:var(--s5); background:color-mix(in srgb, var(--surface) 82%, var(--s5) 18%); color:var(--ink); font-weight:750; }
+.certGates { display:flex; flex-wrap:wrap; gap:4px; margin-top:5px; }
+.certGate { display:inline-flex; align-items:center; min-height:20px; border:1px solid color-mix(in srgb, var(--s5) 60%, var(--border)); border-radius:999px; padding:1px 7px; color:var(--ink2); background:color-mix(in srgb, var(--surface) 92%, var(--s5) 8%); font-size:10.5px; font-weight:650; line-height:1.25; }
 .certFormula { margin-top:16px; color:var(--ink2); font-size:12px; }
 .tierBadge { flex:0 0 44px; text-align:center; font-weight:700; font-size:15px; border-radius:8px; padding:6px 0; color:#fff; }
 .tierRow .fam { font-weight:650; }
@@ -512,7 +517,7 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
     <div id="cert-kpis" class="certKpis"></div>
     <div class="certCols">
       <div><h3>常规路线稳健榜</h3><div id="cert-stable" class="certList"></div></div>
-      <div><h3>条件路线稳健榜</h3><div id="cert-conditional" class="certList"></div></div>
+      <div><h3>条件路线适配榜</h3><div id="cert-condition-tabs" class="certConditionTabs" aria-label="条件类型"></div><div id="cert-conditional" class="certList"></div></div>
     </div>
     <details class="certFormula"><summary>公式与证据边界</summary><div id="cert-formulas" class="noteP"></div></details>
   </div>
@@ -1698,16 +1703,17 @@ function openMetaComp(name) {
   ];
   document.getElementById("cert-kpis").innerHTML = kpis.map(([value, label]) => `<div class="certKpi"><div class="v">${value}</div><div class="l">${label}</div></div>`).join("");
 
-  function detailRow(template) {
+  function detailRow(template, condition) {
     const cert = template.certification;
+    const conditionText = condition && (condition.gates || []).map(g => `${g.kind}：${g.value}`);
     return {
       template,
       certificationOnly: true,
       stageStrength: 0,
       finalScore: 0,
-      evidence: cert.drivers || [],
+      evidence: [...(conditionText && conditionText.length ? [`条件门槛：${conditionText.join("；")}`] : []), ...(condition && condition.reasons || []), ...(cert.drivers || [])],
       penalties: [],
-      missing: cert.dependencies || [],
+      missing: [...(conditionText || []), ...(cert.dependencies || [])],
       sampleDecision: {
         sampleSize: cert.sampleSize,
         evidenceLevel: cert.evidenceLevel,
@@ -1718,8 +1724,8 @@ function openMetaComp(name) {
         meanUtility: cert.metrics.meanUtility,
         priorPoints: cert.priorPoints,
         decisionShare: null,
-        dependencies: cert.dependencies || [],
-        drivers: cert.drivers || [],
+        dependencies: [...(conditionText || []), ...(cert.dependencies || [])],
+        drivers: [...(condition && condition.reasons || []), ...(cert.drivers || [])],
         warning: cert.warning,
       },
     };
@@ -1743,7 +1749,37 @@ function openMetaComp(name) {
 
   const sorted = certified.slice().sort((a, b) => b.certification.metrics.robustness - a.certification.metrics.robustness || b.certification.metrics.cvar10 - a.certification.metrics.cvar10);
   drawList("cert-stable", sorted.filter(t => String(t.certification.peerGroup).startsWith("常规")));
-  drawList("cert-conditional", sorted.filter(t => String(t.certification.peerGroup).startsWith("条件")));
+  const conditionRankings = summary.conditionRankings || {};
+  const conditionTypes = ["英雄专属", "战力", "经济", "装备"].filter(type => (conditionRankings[type] || []).length);
+  const tabs = document.getElementById("cert-condition-tabs");
+  let activeCondition = conditionTypes.includes("战力") ? "战力" : conditionTypes[0];
+
+  function drawConditionList(type) {
+    const host = document.getElementById("cert-conditional");
+    const rows = conditionRankings[type] || [];
+    host.innerHTML = rows.slice(0, 8).map((row, index) => {
+      const gates = (row.gates || []).map(g => `<span class="certGate">${escText(g.kind)}：${escText(g.value)}</span>`).join("");
+      return `<button class="certRoute" data-condition-index="${index}">
+        <span class="n">${index + 1}</span>
+        <span><span class="name">${escText(row.templateName)}</span><span class="certGates">${gates}</span><span class="sub">${escText(row.evidenceLevel)} · 失速${row.metrics.failureRate}% · 尾部${row.metrics.cvar10}</span></span>
+        <span class="metric">适配${row.conditionScore}<br>稳健${row.metrics.robustness}%</span>
+      </button>`;
+    }).join("");
+    host.querySelectorAll("[data-condition-index]").forEach(button => button.addEventListener("click", () => {
+      const row = rows[Number(button.dataset.conditionIndex)];
+      const template = row && templates.find(t => t.id === row.templateId);
+      if (template && window.openStage2RouteDetail) window.openStage2RouteDetail(detailRow(template, row), 0);
+    }));
+  }
+
+  tabs.innerHTML = conditionTypes.map(type => `<button class="certConditionTab" data-condition-type="${escText(type)}">${escText(type)}</button>`).join("");
+  function activateCondition(type) {
+    activeCondition = type;
+    tabs.querySelectorAll("[data-condition-type]").forEach(button => button.classList.toggle("active", button.dataset.conditionType === activeCondition));
+    drawConditionList(activeCondition);
+  }
+  tabs.querySelectorAll("[data-condition-type]").forEach(button => button.addEventListener("click", () => activateCondition(button.dataset.conditionType)));
+  activateCondition(activeCondition);
   document.getElementById("cert-formulas").textContent = [summary.utilityFormula, summary.robustnessFormula, summary.decisionFormula, summary.failureThreshold, summary.ceiling].join("；");
 })();
 
