@@ -1,0 +1,1000 @@
+{
+ "version": "17.17.6b-S18",
+ "generated": "2026-07-12",
+ "source": {
+  "officialAugment": {
+   "id": "1214301",
+   "desc": "提供1个【金克丝】。当金克丝和蔚同时上场时，激活姐妹羁绊，她们将互相鼓励成长。",
+   "icon": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/hex/s8_jinx.png",
+   "name": "姐妹",
+   "level": "4",
+   "is_legend": 0,
+   "hero_enhancement_type": "0",
+   "fetterId": "",
+   "fetterType": "0"
+  },
+  "patch": "17.6b：金克丝击杀1%→2%法强，蔚击杀1%→2%最大生命，导弹与护盾增加阈值100→20次。"
+ },
+ "mechanics": {
+  "augment": "姐妹",
+  "jinxApPerKill": 2,
+  "viHpPerKill": 2,
+  "evolutionKills": 20,
+  "maxMissiles": 3,
+  "blueKillMana": 10
+ },
+ "assumptions": [
+  "官方数据文件只写“互相鼓励成长”，具体数值来自17.6b更新公告。",
+  "导弹进化按每20次击杀增加1枚、最多3枚的保守总伤模型；它代表清场能力，不等同于单体同目标伤害。",
+  "蓝霸符按技能后参与击败返10法力折算施法频率；通用model.js此前没有目标死亡，因此看不到这段收益。",
+  "击杀层数跨回合累计，实验展示0/10/20/30/40层状态，不把20层强度伪装成开局强度。"
+ ],
+ "blindSpot": [
+  "通用搜索使用不死亡的单体木桩，没有击杀事件。",
+  "hex.js没有姐妹的成长数值，普通文本解析无法恢复机制。",
+  "蓝霸符的击杀回蓝此前未建模，导致技能循环装备被低估。",
+  "官方44套阵容没有姐妹金克丝模板，所以stage2没有任何路线可匹配。"
+ ],
+ "boards": [
+  {
+   "key": "supers-anima",
+   "name": "超英幻灵姐妹",
+   "team": [
+    "金克丝",
+    "蔚",
+    "普朗克",
+    "李青",
+    "墨菲特",
+    "塞拉斯",
+    "内瑟斯",
+    "艾克"
+   ],
+   "superStars": 3,
+   "note": "6级先成3超英+金克丝蔚，7级补内瑟斯开3幻灵/2吉祥物，8级艾克开淘气包和秘卫。",
+   "traits": [
+    {
+     "id": "164",
+     "name": "超级英雄",
+     "count": 3,
+     "active": 3,
+     "label": "3超级英雄"
+    },
+    {
+     "id": "160",
+     "name": "幻灵战队",
+     "count": 3,
+     "active": 3,
+     "label": "3幻灵战队"
+    },
+    {
+     "id": "132",
+     "name": "斗士",
+     "count": 2,
+     "active": 2,
+     "label": "2斗士"
+    },
+    {
+     "id": "127",
+     "name": "吉祥物",
+     "count": 2,
+     "active": 2,
+     "label": "2吉祥物"
+    },
+    {
+     "id": "134",
+     "name": "秘术卫士",
+     "count": 2,
+     "active": 2,
+     "label": "2秘术卫士"
+    },
+    {
+     "id": "122",
+     "name": "淘气包",
+     "count": 2,
+     "active": 2,
+     "label": "2淘气包"
+    }
+   ],
+   "bonus": {
+    "ap": 10,
+    "adPct": 10,
+    "ampPct": 35
+   },
+   "dps20": 381.7,
+   "frontEhp": 22749,
+   "score": 1032
+  },
+  {
+   "key": "supers-aegis",
+   "name": "超英秘卫姐妹",
+   "team": [
+    "金克丝",
+    "蔚",
+    "普朗克",
+    "李青",
+    "墨菲特",
+    "阿利斯塔",
+    "艾克",
+    "拉莫斯"
+   ],
+   "superStars": 3,
+   "note": "牺牲3幻灵，换更厚秘卫、淘气包和怪兽前排，适合法系环境。",
+   "traits": [
+    {
+     "id": "164",
+     "name": "超级英雄",
+     "count": 3,
+     "active": 3,
+     "label": "3超级英雄"
+    },
+    {
+     "id": "134",
+     "name": "秘术卫士",
+     "count": 3,
+     "active": 3,
+     "label": "3秘术卫士"
+    },
+    {
+     "id": "132",
+     "name": "斗士",
+     "count": 2,
+     "active": 2,
+     "label": "2斗士"
+    },
+    {
+     "id": "127",
+     "name": "吉祥物",
+     "count": 2,
+     "active": 2,
+     "label": "2吉祥物"
+    },
+    {
+     "id": "122",
+     "name": "淘气包",
+     "count": 2,
+     "active": 2,
+     "label": "2淘气包"
+    },
+    {
+     "id": "167",
+     "name": "怪兽",
+     "count": 1,
+     "active": 1,
+     "label": "1怪兽"
+    }
+   ],
+   "bonus": {
+    "ap": 0,
+    "adPct": 0,
+    "ampPct": 35
+   },
+   "dps20": 361,
+   "frontEhp": 20983,
+   "score": 961
+  },
+  {
+   "key": "anima-five",
+   "name": "五幻灵姐妹",
+   "team": [
+    "金克丝",
+    "蔚",
+    "内瑟斯",
+    "塞拉斯",
+    "锐雯",
+    "厄运小姐",
+    "阿利斯塔",
+    "艾克"
+   ],
+   "superStars": 0,
+   "note": "不追超英全员，靠5幻灵35双强和四费副C提高后期上限。",
+   "traits": [
+    {
+     "id": "160",
+     "name": "幻灵战队",
+     "count": 5,
+     "active": 5,
+     "label": "5幻灵战队"
+    },
+    {
+     "id": "134",
+     "name": "秘术卫士",
+     "count": 3,
+     "active": 3,
+     "label": "3秘术卫士"
+    },
+    {
+     "id": "132",
+     "name": "斗士",
+     "count": 2,
+     "active": 2,
+     "label": "2斗士"
+    },
+    {
+     "id": "127",
+     "name": "吉祥物",
+     "count": 2,
+     "active": 2,
+     "label": "2吉祥物"
+    },
+    {
+     "id": "122",
+     "name": "淘气包",
+     "count": 2,
+     "active": 2,
+     "label": "2淘气包"
+    },
+    {
+     "id": "135",
+     "name": "精英战士",
+     "count": 1,
+     "active": 1,
+     "label": "1精英战士"
+    }
+   ],
+   "bonus": {
+    "ap": 35,
+    "adPct": 35,
+    "ampPct": 0
+   },
+   "dps20": 335.5,
+   "frontEhp": 18488,
+   "score": 864
+  }
+ ],
+ "itemRank": [
+  {
+   "items": [
+    "蓝霸符",
+    "朔极之矛",
+    "珠光护手"
+   ],
+   "zero": {
+    "kills": 0,
+    "missiles": 1,
+    "items": [
+     "蓝霸符",
+     "朔极之矛",
+     "珠光护手"
+    ],
+    "dps": 250.1,
+    "auto": 97.9,
+    "spell": 152.2,
+    "casts": 6.1,
+    "blueRefundRatio": 1.22
+   },
+   "ten": {
+    "kills": 10,
+    "missiles": 1,
+    "items": [
+     "蓝霸符",
+     "朔极之矛",
+     "珠光护手"
+    ],
+    "dps": 268,
+    "auto": 97.9,
+    "spell": 170.1,
+    "casts": 6.1,
+    "blueRefundRatio": 1.22
+   },
+   "twenty": {
+    "kills": 20,
+    "missiles": 2,
+    "items": [
+     "蓝霸符",
+     "朔极之矛",
+     "珠光护手"
+    ],
+    "dps": 473.8,
+    "auto": 97.9,
+    "spell": 376,
+    "casts": 6.1,
+    "blueRefundRatio": 1.22
+   }
+  },
+  {
+   "items": [
+    "蓝霸符",
+    "朔极之矛",
+    "斯塔缇克电刃"
+   ],
+   "zero": {
+    "kills": 0,
+    "missiles": 1,
+    "items": [
+     "蓝霸符",
+     "朔极之矛",
+     "斯塔缇克电刃"
+    ],
+    "dps": 247.2,
+    "auto": 103.4,
+    "spell": 137.6,
+    "casts": 7.3,
+    "blueRefundRatio": 1.22
+   },
+   "ten": {
+    "kills": 10,
+    "missiles": 1,
+    "items": [
+     "蓝霸符",
+     "朔极之矛",
+     "斯塔缇克电刃"
+    ],
+    "dps": 267.6,
+    "auto": 103.4,
+    "spell": 158,
+    "casts": 7.3,
+    "blueRefundRatio": 1.22
+   },
+   "twenty": {
+    "kills": 20,
+    "missiles": 2,
+    "items": [
+     "蓝霸符",
+     "朔极之矛",
+     "斯塔缇克电刃"
+    ],
+    "dps": 466.3,
+    "auto": 103.4,
+    "spell": 356.7,
+    "casts": 7.3,
+    "blueRefundRatio": 1.22
+   }
+  },
+  {
+   "items": [
+    "蓝霸符",
+    "朔极之矛",
+    "班克斯的魔法帽"
+   ],
+   "zero": {
+    "kills": 0,
+    "missiles": 1,
+    "items": [
+     "蓝霸符",
+     "朔极之矛",
+     "班克斯的魔法帽"
+    ],
+    "dps": 248.9,
+    "auto": 96.5,
+    "spell": 152.4,
+    "casts": 6.1,
+    "blueRefundRatio": 1.22
+   },
+   "ten": {
+    "kills": 10,
+    "missiles": 1,
+    "items": [
+     "蓝霸符",
+     "朔极之矛",
+     "班克斯的魔法帽"
+    ],
+    "dps": 264.9,
+    "auto": 96.5,
+    "spell": 168.4,
+    "casts": 6.1,
+    "blueRefundRatio": 1.22
+   },
+   "twenty": {
+    "kills": 20,
+    "missiles": 2,
+    "items": [
+     "蓝霸符",
+     "朔极之矛",
+     "班克斯的魔法帽"
+    ],
+    "dps": 465.4,
+    "auto": 96.5,
+    "spell": 369,
+    "casts": 6.1,
+    "blueRefundRatio": 1.22
+   }
+  },
+  {
+   "items": [
+    "朔极之矛",
+    "珠光护手",
+    "斯塔缇克电刃"
+   ],
+   "zero": {
+    "kills": 0,
+    "missiles": 1,
+    "items": [
+     "朔极之矛",
+     "珠光护手",
+     "斯塔缇克电刃"
+    ],
+    "dps": 252,
+    "auto": 107.9,
+    "spell": 137.9,
+    "casts": 5,
+    "blueRefundRatio": 1
+   },
+   "ten": {
+    "kills": 10,
+    "missiles": 1,
+    "items": [
+     "朔极之矛",
+     "珠光护手",
+     "斯塔缇克电刃"
+    ],
+    "dps": 269.2,
+    "auto": 107.9,
+    "spell": 155.1,
+    "casts": 5,
+    "blueRefundRatio": 1
+   },
+   "twenty": {
+    "kills": 20,
+    "missiles": 2,
+    "items": [
+     "朔极之矛",
+     "珠光护手",
+     "斯塔缇克电刃"
+    ],
+    "dps": 458.8,
+    "auto": 107.9,
+    "spell": 344.6,
+    "casts": 5,
+    "blueRefundRatio": 1
+   }
+  },
+  {
+   "items": [
+    "朔极之矛",
+    "班克斯的魔法帽",
+    "斯塔缇克电刃"
+   ],
+   "zero": {
+    "kills": 0,
+    "missiles": 1,
+    "items": [
+     "朔极之矛",
+     "班克斯的魔法帽",
+     "斯塔缇克电刃"
+    ],
+    "dps": 252.2,
+    "auto": 106.3,
+    "spell": 139,
+    "casts": 5,
+    "blueRefundRatio": 1
+   },
+   "ten": {
+    "kills": 10,
+    "missiles": 1,
+    "items": [
+     "朔极之矛",
+     "班克斯的魔法帽",
+     "斯塔缇克电刃"
+    ],
+    "dps": 267.7,
+    "auto": 106.3,
+    "spell": 154.4,
+    "casts": 5,
+    "blueRefundRatio": 1
+   },
+   "twenty": {
+    "kills": 20,
+    "missiles": 2,
+    "items": [
+     "朔极之矛",
+     "班克斯的魔法帽",
+     "斯塔缇克电刃"
+    ],
+    "dps": 453,
+    "auto": 106.3,
+    "spell": 339.7,
+    "casts": 5,
+    "blueRefundRatio": 1
+   }
+  },
+  {
+   "items": [
+    "蓝霸符",
+    "珠光护手",
+    "斯塔缇克电刃"
+   ],
+   "zero": {
+    "kills": 0,
+    "missiles": 1,
+    "items": [
+     "蓝霸符",
+     "珠光护手",
+     "斯塔缇克电刃"
+    ],
+    "dps": 240.4,
+    "auto": 103.6,
+    "spell": 130.6,
+    "casts": 4.9,
+    "blueRefundRatio": 1.22
+   },
+   "ten": {
+    "kills": 10,
+    "missiles": 1,
+    "items": [
+     "蓝霸符",
+     "珠光护手",
+     "斯塔缇克电刃"
+    ],
+    "dps": 257.2,
+    "auto": 103.6,
+    "spell": 147.4,
+    "casts": 4.9,
+    "blueRefundRatio": 1.22
+   },
+   "twenty": {
+    "kills": 20,
+    "missiles": 2,
+    "items": [
+     "蓝霸符",
+     "珠光护手",
+     "斯塔缇克电刃"
+    ],
+    "dps": 438.4,
+    "auto": 103.6,
+    "spell": 328.6,
+    "casts": 4.9,
+    "blueRefundRatio": 1.22
+   }
+  },
+  {
+   "items": [
+    "蓝霸符",
+    "朔极之矛",
+    "巨人捕手"
+   ],
+   "zero": {
+    "kills": 0,
+    "missiles": 1,
+    "items": [
+     "蓝霸符",
+     "朔极之矛",
+     "巨人捕手"
+    ],
+    "dps": 242.9,
+    "auto": 114.5,
+    "spell": 128.5,
+    "casts": 6.1,
+    "blueRefundRatio": 1.22
+   },
+   "ten": {
+    "kills": 10,
+    "missiles": 1,
+    "items": [
+     "蓝霸符",
+     "朔极之矛",
+     "巨人捕手"
+    ],
+    "dps": 259.5,
+    "auto": 114.5,
+    "spell": 145,
+    "casts": 6.1,
+    "blueRefundRatio": 1.22
+   },
+   "twenty": {
+    "kills": 20,
+    "missiles": 2,
+    "items": [
+     "蓝霸符",
+     "朔极之矛",
+     "巨人捕手"
+    ],
+    "dps": 437.7,
+    "auto": 114.5,
+    "spell": 323.2,
+    "casts": 6.1,
+    "blueRefundRatio": 1.22
+   }
+  },
+  {
+   "items": [
+    "蓝霸符",
+    "班克斯的魔法帽",
+    "斯塔缇克电刃"
+   ],
+   "zero": {
+    "kills": 0,
+    "missiles": 1,
+    "items": [
+     "蓝霸符",
+     "班克斯的魔法帽",
+     "斯塔缇克电刃"
+    ],
+    "dps": 241.1,
+    "auto": 102.1,
+    "spell": 132.1,
+    "casts": 4.9,
+    "blueRefundRatio": 1.22
+   },
+   "ten": {
+    "kills": 10,
+    "missiles": 1,
+    "items": [
+     "蓝霸符",
+     "班克斯的魔法帽",
+     "斯塔缇克电刃"
+    ],
+    "dps": 256.2,
+    "auto": 102.1,
+    "spell": 147.2,
+    "casts": 4.9,
+    "blueRefundRatio": 1.22
+   },
+   "twenty": {
+    "kills": 20,
+    "missiles": 2,
+    "items": [
+     "蓝霸符",
+     "班克斯的魔法帽",
+     "斯塔缇克电刃"
+    ],
+    "dps": 433.6,
+    "auto": 102.1,
+    "spell": 324.6,
+    "casts": 4.9,
+    "blueRefundRatio": 1.22
+   }
+  },
+  {
+   "items": [
+    "朔极之矛",
+    "珠光护手",
+    "班克斯的魔法帽"
+   ],
+   "zero": {
+    "kills": 0,
+    "missiles": 1,
+    "items": [
+     "朔极之矛",
+     "珠光护手",
+     "班克斯的魔法帽"
+    ],
+    "dps": 240.7,
+    "auto": 100.7,
+    "spell": 140,
+    "casts": 4,
+    "blueRefundRatio": 1
+   },
+   "ten": {
+    "kills": 10,
+    "missiles": 1,
+    "items": [
+     "朔极之矛",
+     "珠光护手",
+     "班克斯的魔法帽"
+    ],
+    "dps": 253.7,
+    "auto": 100.7,
+    "spell": 153,
+    "casts": 4,
+    "blueRefundRatio": 1
+   },
+   "twenty": {
+    "kills": 20,
+    "missiles": 2,
+    "items": [
+     "朔极之矛",
+     "珠光护手",
+     "班克斯的魔法帽"
+    ],
+    "dps": 432.7,
+    "auto": 100.7,
+    "spell": 332,
+    "casts": 4,
+    "blueRefundRatio": 1
+   }
+  },
+  {
+   "items": [
+    "朔极之矛",
+    "巨人捕手",
+    "斯塔缇克电刃"
+   ],
+   "zero": {
+    "kills": 0,
+    "missiles": 1,
+    "items": [
+     "朔极之矛",
+     "巨人捕手",
+     "斯塔缇克电刃"
+    ],
+    "dps": 250.3,
+    "auto": 127.5,
+    "spell": 115.7,
+    "casts": 5,
+    "blueRefundRatio": 1
+   },
+   "ten": {
+    "kills": 10,
+    "missiles": 1,
+    "items": [
+     "朔极之矛",
+     "巨人捕手",
+     "斯塔缇克电刃"
+    ],
+    "dps": 266.3,
+    "auto": 127.5,
+    "spell": 131.6,
+    "casts": 5,
+    "blueRefundRatio": 1
+   },
+   "twenty": {
+    "kills": 20,
+    "missiles": 2,
+    "items": [
+     "朔极之矛",
+     "巨人捕手",
+     "斯塔缇克电刃"
+    ],
+    "dps": 429.8,
+    "auto": 127.5,
+    "spell": 295.2,
+    "casts": 5,
+    "blueRefundRatio": 1
+   }
+  }
+ ],
+ "growth": [
+  {
+   "kills": 0,
+   "missiles": 1,
+   "items": [
+    "蓝霸符",
+    "朔极之矛",
+    "珠光护手"
+   ],
+   "dps": 250.1,
+   "auto": 97.9,
+   "spell": 152.2,
+   "casts": 6.1,
+   "blueRefundRatio": 1.22
+  },
+  {
+   "kills": 5,
+   "missiles": 1,
+   "items": [
+    "蓝霸符",
+    "朔极之矛",
+    "珠光护手"
+   ],
+   "dps": 259,
+   "auto": 97.9,
+   "spell": 161.1,
+   "casts": 6.1,
+   "blueRefundRatio": 1.22
+  },
+  {
+   "kills": 10,
+   "missiles": 1,
+   "items": [
+    "蓝霸符",
+    "朔极之矛",
+    "珠光护手"
+   ],
+   "dps": 268,
+   "auto": 97.9,
+   "spell": 170.1,
+   "casts": 6.1,
+   "blueRefundRatio": 1.22
+  },
+  {
+   "kills": 15,
+   "missiles": 1,
+   "items": [
+    "蓝霸符",
+    "朔极之矛",
+    "珠光护手"
+   ],
+   "dps": 276.9,
+   "auto": 97.9,
+   "spell": 179,
+   "casts": 6.1,
+   "blueRefundRatio": 1.22
+  },
+  {
+   "kills": 20,
+   "missiles": 2,
+   "items": [
+    "蓝霸符",
+    "朔极之矛",
+    "珠光护手"
+   ],
+   "dps": 473.8,
+   "auto": 97.9,
+   "spell": 376,
+   "casts": 6.1,
+   "blueRefundRatio": 1.22
+  },
+  {
+   "kills": 30,
+   "missiles": 2,
+   "items": [
+    "蓝霸符",
+    "朔极之矛",
+    "珠光护手"
+   ],
+   "dps": 509.6,
+   "auto": 97.9,
+   "spell": 411.8,
+   "casts": 6.1,
+   "blueRefundRatio": 1.22
+  },
+  {
+   "kills": 40,
+   "missiles": 3,
+   "items": [
+    "蓝霸符",
+    "朔极之矛",
+    "珠光护手"
+   ],
+   "dps": 769.2,
+   "auto": 97.9,
+   "spell": 671.3,
+   "casts": 6.1,
+   "blueRefundRatio": 1.22
+  }
+ ],
+ "growthRatio": 1.89,
+ "route": {
+  "id": "research-sisters-jinx",
+  "source": "research",
+  "quality": "S",
+  "name": "姐妹无限技能金克丝",
+  "family": "超英幻灵金克丝",
+  "goal": "姐妹限定；20层后进入导弹进化期",
+  "earlyUnits": [
+   "金克丝",
+   "蔚",
+   "塞拉斯",
+   "内瑟斯"
+  ],
+  "midUnits": [
+   "金克丝",
+   "蔚",
+   "普朗克",
+   "李青",
+   "墨菲特",
+   "塞拉斯"
+  ],
+  "coreUnits": [
+   "蔚",
+   "墨菲特",
+   "李青",
+   "艾克",
+   "塞拉斯",
+   "内瑟斯",
+   "普朗克",
+   "金克丝"
+  ],
+  "earlyTraits": [
+   "3超级英雄",
+   "2斗士",
+   "3幻灵战队"
+  ],
+  "componentPrefs": [
+   "女神之泪",
+   "无用大棒",
+   "拳套",
+   "暴风之剑",
+   "反曲之弓"
+  ],
+  "completedPrefs": [
+   "蓝霸符",
+   "朔极之矛",
+   "珠光护手"
+  ],
+  "augmentPrefs": [
+   "姐妹",
+   "公理圆弧II",
+   "羽量级选手 II",
+   "DD街区",
+   "团队建设"
+  ],
+  "augmentCats": [
+   "英雄强化",
+   "战力",
+   "经济"
+  ],
+  "monsterPrefs": [
+   "装备商人（经济）",
+   "魄罗粉丝（战力）"
+  ],
+  "route": [
+   "金克丝+蔚拿姐妹",
+   "6级3超英慢D金克丝三星",
+   "7级补3幻灵/2吉祥物",
+   "8级艾克开淘气包/秘卫"
+  ],
+  "boardNote": "金克丝沉底避开第一轮集火；蔚和超英前排分散站。20层前靠前排和控制保叠层，20层后利用额外导弹加速清场。",
+  "board": [
+   {
+    "name": "蔚",
+    "row": 1,
+    "col": 2,
+    "role": "主坦/姐妹核心"
+   },
+   {
+    "name": "墨菲特",
+    "row": 1,
+    "col": 4,
+    "role": "超英主坦"
+   },
+   {
+    "name": "李青",
+    "row": 1,
+    "col": 6,
+    "role": "斗士前排"
+   },
+   {
+    "name": "艾克",
+    "row": 2,
+    "col": 1,
+    "role": "淘气包/秘卫"
+   },
+   {
+    "name": "塞拉斯",
+    "row": 2,
+    "col": 4,
+    "role": "幻灵前排"
+   },
+   {
+    "name": "内瑟斯",
+    "row": 2,
+    "col": 7,
+    "role": "幻灵/吉祥物"
+   },
+   {
+    "name": "普朗克",
+    "row": 3,
+    "col": 4,
+    "role": "超级英雄"
+   },
+   {
+    "name": "金克丝",
+    "row": 4,
+    "col": 4,
+    "carry": true,
+    "role": "主C",
+    "items": [
+     "蓝霸符",
+     "朔极之矛",
+     "珠光护手"
+    ]
+   }
+  ],
+  "officialText": {
+   "early": "只有拿到【姐妹】才定线；2阶段用幻灵/斗士保血，金克丝和蔚都留。",
+   "equipment": "金克丝优先蓝霸符、朔极之矛、珠光护手；蓝霸的击杀回蓝是技能循环入口，不可按普通法系装估值。",
+   "hex": "【姐妹】是硬门槛；公理圆弧进一步压缩击杀后的第二次施法间隔。",
+   "enemy": "第一炮无法参与击杀、金克丝被切或前排过薄都会让成长断档；不是无条件强玩。"
+  },
+  "actions": {
+   "keep": [
+    "金克丝",
+    "蔚",
+    "普朗克",
+    "李青",
+    "墨菲特",
+    "塞拉斯",
+    "内瑟斯",
+    "艾克"
+   ],
+   "item": "先做蓝霸符和朔极之矛，保证首炮与击杀回蓝；第三件按模型优先珠光护手。",
+   "checkpoint": "有姐妹+金克丝蔚才启动；6级慢D金克丝三星，20次击杀前以保血和让金克丝收尾为第一目标。",
+   "stopLoss": "没有姐妹、金克丝无法两星或蓝装完全断档时，立即转幻灵女枪/超英法系。"
+  },
+  "role": "法系",
+  "strengthPrior": 0.89,
+  "mechanic": {
+   "type": "sisters-growth",
+   "requiredAugment": "姐妹",
+   "requiredUnits": [
+    "金克丝",
+    "蔚"
+   ],
+   "matchBonus": 18,
+   "missingPenalty": 60,
+   "threshold": 20,
+   "text": "金克丝每次击杀永久+2%法强；20次后增加导弹"
+  }
+ }
+}
