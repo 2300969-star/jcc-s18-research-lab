@@ -463,7 +463,7 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
 
   <div class="card" id="sec-verdict">
     <h2>版本结果</h2>
-    <div class="desc">只保留能直接拿来打的排行。阵容名可点开看实际成型站位。</div>
+    <div class="desc">稳定梯队来自全队模拟总分；CT为英雄强化条件梯队，来自同棋盘有/无强化的反事实差分。</div>
     <h3>阵容优先级</h3>
     <div id="v-tiers"></div>
     <h3>关键英雄</h3>
@@ -628,14 +628,14 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
 <div id="tip"></div>
 <dialog id="dlg"><div id="dlgBody"></div></dialog>
 
-<script src="data.js?v=tiers-20260705b"></script>
-<script src="discovery-data.js?v=tiers-20260705b"></script>
+<script src="data.js?v=meta-20260712a"></script>
+<script src="discovery-data.js?v=meta-20260712a"></script>
 <script src="transition-data.js?v=transition-20260705a"></script>
 <script src="numeric-lens-data.js?v=lens-20260705a"></script>
 <script src="research-lab-data.js?v=lab-20260705a"></script>
 <script src="reinvent-data.js?v=reinvent-20260706a"></script>
 <script src="mecha-branch-data.js?v=mecha-20260706a"></script>
-<script src="stage2-matcher-data.js?v=stage2-20260711a"></script>
+<script src="stage2-matcher-data.js?v=meta-20260712a"></script>
 <script src="matcher-core.js?v=match-20260711a"></script>
 <script src="audit-data.js?v=tiers-20260705b"></script>
 <script>
@@ -1408,30 +1408,68 @@ function openComp(shortName) {
   return true;
 }
 
+function metaCandidate(name) {
+  const meta = M.metaDiscovery || {};
+  return (meta.stable || []).find(x => x.displayName === name) ||
+    (meta.conditional || []).find(x => `${x.augment}·${x.carry}` === name);
+}
+
+function openMetaComp(name) {
+  const c = metaCandidate(name);
+  if (!c) return false;
+  const body = document.getElementById("dlgBody"); body.textContent = "";
+  const mk = (tag, cls, text, parent) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text) e.textContent = text; if (parent) parent.appendChild(e); return e; };
+  const head = mk("div", "dlgHead", null, body);
+  mk("span", "qbadge", c.augment ? "条件模拟" : "算法生成", head);
+  mk("h2", null, name, head);
+  const x = mk("button", "closeX", "✕", head); x.addEventListener("click", () => dlg.close());
+  const scoreText = c.augment ? `无强化 ${c.baselineScore} → 有强化 ${c.score}（+${c.upliftPct}%）` : `全队总分 ${c.score}`;
+  mk("div", "dlgMeta", `${scoreText} ｜ 主C ${c.carry} ${c.carryDps || "-"}/秒 ｜ 前排EHP ${fmt(c.frontEHP || 0)}`, body);
+  if (c.augment) mk("div", "noteP", `模型依据：${c.basis}。硬门槛：${(c.requiredUnits || []).join("、")}。`, body);
+  mk("div", "secT", "自动求解阵容", body);
+  const team = mk("div", "traitChips", null, body);
+  (c.team || []).forEach(u => mk("span", "chip", `${u.name}${u.price ? `（${u.price}费）` : ""}`, team));
+  if ((c.traits || c.acts || []).length) {
+    mk("div", "secT", "激活羁绊", body);
+    const traits = mk("div", "traitChips", null, body);
+    (c.traits || c.acts || []).forEach(t => mk("span", "chip", t, traits));
+  }
+  if ((c.carryItems || []).length) {
+    mk("div", "secT", "联合优化装备", body);
+    mk("div", "noteP", c.carryItems.join("、"), body);
+  }
+  dlg.showModal();
+  return true;
+}
+
 // ---------- verdict layer ----------
 (function () {
   // ① 体系梯队
-  const tierCol = { T0: css("--seq650"), T1: css("--seq450"), "T1.5": css("--seq250") };
+  const tierCol = { T0: css("--seq650"), T1: css("--seq450"), "T1.5": css("--seq250"), CT0: css("--s3"), CT1: css("--s2"), "CT1.5": css("--s1") };
   const vt = document.getElementById("v-tiers");
   M.verdicts.forEach(v => {
     const row = document.createElement("div"); row.className = "tierRow";
     const b = document.createElement("div"); b.className = "tierBadge"; b.textContent = v.tier; b.style.background = tierCol[v.tier];
     if (v.tier === "T1.5") b.style.color = "#0b0b0b";
+    if (v.kind === "conditional") b.style.fontSize = "12px";
     const body = document.createElement("div");
     const f = document.createElement("div"); f.className = "fam"; f.textContent = v.family;
     const c = document.createElement("div"); c.className = "cmp";
     v.comps.forEach(x => {
       const official = M.comps.some(o => o.name.includes("【" + x + "】") || o.name.includes(x));
-      if (official) {
+      const meta = metaCandidate(x);
+      if (official || meta) {
         const btn = document.createElement("button"); btn.className = "compChip"; btn.textContent = x + " ▸";
-        btn.addEventListener("click", () => openComp(x));
+        btn.addEventListener("click", () => official ? openComp(x) : openMetaComp(x));
         c.appendChild(btn);
       } else {
         const sp = document.createElement("span"); sp.className = "chip"; sp.textContent = x;
         c.appendChild(sp);
       }
     });
-    body.append(f, c); row.append(b, body); vt.appendChild(row);
+    body.append(f, c);
+    if (v.reason) { const why = document.createElement("div"); why.className = "why"; why.textContent = v.reason; body.appendChild(why); }
+    row.append(b, body); vt.appendChild(row);
   });
   // ② 最强英雄三列
   const vh = document.getElementById("v-heroes");

@@ -22,27 +22,39 @@
     "priority": 31
    },
    {
+    "name": "普朗克",
+    "priority": 30
+   },
+   {
     "name": "雷克顿",
-    "priority": 26
+    "priority": 28
    },
    {
     "name": "亚索",
-    "priority": 26
+    "priority": 28
    },
    {
-    "name": "普朗克",
-    "priority": 26
+    "name": "加里奥",
+    "priority": 27
    },
    {
     "name": "布里茨",
-    "priority": 21
+    "priority": 25
+   },
+   {
+    "name": "凯尔",
+    "priority": 22
+   },
+   {
+    "name": "安妮",
+    "priority": 20
    },
    {
     "name": "璐璐",
     "priority": 20
    },
    {
-    "name": "凯尔",
+    "name": "艾希",
     "priority": 20
    },
    {
@@ -54,32 +66,28 @@
     "priority": 19
    },
    {
-    "name": "安妮",
-    "priority": 18
-   },
-   {
-    "name": "艾希",
-    "priority": 16
-   },
-   {
-    "name": "加里奥",
-    "priority": 16
+    "name": "德莱文",
+    "priority": 17
    },
    {
     "name": "悠米",
-    "priority": 14
+    "priority": 15
+   },
+   {
+    "name": "泰隆",
+    "priority": 12
+   },
+   {
+    "name": "孙悟空",
+    "priority": 11
    },
    {
     "name": "菲奥娜",
     "priority": 11
    },
    {
-    "name": "内瑟斯",
-    "priority": 10
-   },
-   {
     "name": "伊泽瑞尔",
-    "priority": 9
+    "priority": 11
    },
    {
     "name": "贾克斯",
@@ -94,11 +102,15 @@
     "priority": 8
    },
    {
-    "name": "泰隆",
+    "name": "芮尔",
+    "priority": 8
+   },
+   {
+    "name": "内瑟斯",
     "priority": 7
    },
    {
-    "name": "孙悟空",
+    "name": "拉克丝",
     "priority": 7
    },
    {
@@ -106,36 +118,36 @@
     "priority": 6
    },
    {
-    "name": "德莱文",
-    "priority": 6
-   },
-   {
     "name": "赛娜",
     "priority": 6
    },
    {
-    "name": "塞拉斯",
+    "name": "卡蜜尔",
     "priority": 5
    },
    {
-    "name": "芮尔",
-    "priority": 5
+    "name": "薇恩",
+    "priority": 3
    },
    {
     "name": "金克丝",
-    "priority": 4
-   },
-   {
-    "name": "拉克丝",
-    "priority": 4
-   },
-   {
-    "name": "卡蜜尔",
     "priority": 3
+   },
+   {
+    "name": "蕾欧娜",
+    "priority": 2
+   },
+   {
+    "name": "塞拉斯",
+    "priority": 2
    },
    {
     "name": "亚托克斯",
     "priority": 2
+   },
+   {
+    "name": "莎弥拉",
+    "priority": 1
    },
    {
     "name": "娑娜",
@@ -148,21 +160,24 @@
    {
     "name": "乐芙兰",
     "priority": 1
-   },
-   {
-    "name": "维克兹",
-    "priority": 1
-   },
-   {
-    "name": "薇恩",
-    "priority": 1
-   },
-   {
-    "name": "锐雯",
-    "priority": 1
    }
   ],
   "unitSearch": [
+   {
+    "name": "普朗克",
+    "priority": 267,
+    "price": 1,
+    "traits": [
+     "超级英雄",
+     "决斗大师"
+    ],
+    "aliases": [
+     "船长",
+     "海洋之灾",
+     "gp",
+     "gangplank"
+    ]
+   },
    {
     "name": "蔚",
     "priority": 255,
@@ -179,23 +194,22 @@
     ]
    },
    {
-    "name": "普朗克",
-    "priority": 239,
+    "name": "加里奥",
+    "priority": 247,
     "price": 1,
     "traits": [
-     "超级英雄",
-     "决斗大师"
+     "平民英雄",
+     "吉祥物"
     ],
     "aliases": [
-     "船长",
-     "海洋之灾",
-     "gp",
-     "gangplank"
+     "正义巨像",
+     "巨像",
+     "galio"
     ]
    },
    {
     "name": "李青",
-    "priority": 218,
+    "priority": 230,
     "price": 2,
     "traits": [
      "超级英雄",
@@ -212,7 +226,7 @@
    },
    {
     "name": "亚索",
-    "priority": 208,
+    "priority": 228,
     "price": 2,
     "traits": [
      "源计划：激光特工",
@@ -228,7 +242,7 @@
    },
    {
     "name": "安妮",
-    "priority": 183,
+    "priority": 203,
     "price": 2,
     "traits": [
      "小天才",
@@ -242,8 +256,36 @@
     ]
    },
    {
+    "name": "德莱文",
+    "priority": 196,
+    "price": 2,
+    "traits": [
+     "战斗机甲",
+     "精英战士"
+    ],
+    "aliases": [
+     "draven",
+     "荣耀行刑官"
+    ]
+   },
+   {
+    "name": "布里茨",
+    "priority": 195,
+    "price": 1,
+    "traits": [
+     "AI程序",
+     "斗士"
+    ],
+    "aliases": [
+     "机器人",
+     "蒸汽机器人",
+     "blitz",
+     "blitzcrank"
+    ]
+   },
+   {
     "name": "雷克顿",
-    "priority": 169,
+    "priority": 189,
     "price": 1,
     "traits": [
      "源计划：激光特工",
@@ -253,6 +295,35 @@
      "鳄鱼",
      "renekton",
      "怒之领域"
+    ]
+   },
+   {
+    "name": "凯尔",
+    "priority": 162,
+    "price": 1,
+    "traits": [
+     "地下魔盗团",
+     "决斗大师"
+    ],
+    "aliases": [
+     "天使",
+     "正义天使",
+     "kayle"
+    ]
+   },
+   {
+    "name": "艾希",
+    "priority": 160,
+    "price": 1,
+    "traits": [
+     "源计划：激光特工",
+     "情报特工"
+    ],
+    "aliases": [
+     "寒冰",
+     "冰弓",
+     "冰霜射手",
+     "ashe"
     ]
    },
    {
@@ -270,21 +341,6 @@
     ]
    },
    {
-    "name": "布里茨",
-    "priority": 155,
-    "price": 1,
-    "traits": [
-     "AI程序",
-     "斗士"
-    ],
-    "aliases": [
-     "机器人",
-     "蒸汽机器人",
-     "blitz",
-     "blitzcrank"
-    ]
-   },
-   {
     "name": "波比",
     "priority": 149,
     "price": 1,
@@ -298,112 +354,8 @@
     ]
    },
    {
-    "name": "凯尔",
-    "priority": 142,
-    "price": 1,
-    "traits": [
-     "地下魔盗团",
-     "决斗大师"
-    ],
-    "aliases": [
-     "天使",
-     "正义天使",
-     "kayle"
-    ]
-   },
-   {
-    "name": "加里奥",
-    "priority": 137,
-    "price": 1,
-    "traits": [
-     "平民英雄",
-     "吉祥物"
-    ],
-    "aliases": [
-     "正义巨像",
-     "巨像",
-     "galio"
-    ]
-   },
-   {
-    "name": "悠米",
-    "priority": 125,
-    "price": 2,
-    "traits": [
-     "星之守护者",
-     "吉祥物",
-     "爱心使者"
-    ],
-    "aliases": [
-     "猫咪",
-     "猫",
-     "魔法猫咪",
-     "yuumi"
-    ]
-   },
-   {
-    "name": "墨菲特",
-    "priority": 124,
-    "price": 2,
-    "traits": [
-     "超级英雄",
-     "吉祥物"
-    ],
-    "aliases": [
-     "石头人",
-     "石头",
-     "熔岩巨兽",
-     "malphite"
-    ]
-   },
-   {
-    "name": "菲奥娜",
-    "priority": 121,
-    "price": 2,
-    "traits": [
-     "福牛守护者",
-     "决斗大师"
-    ],
-    "aliases": [
-     "剑姬",
-     "女剑",
-     "无双剑姬",
-     "fiora"
-    ]
-   },
-   {
-    "name": "艾希",
-    "priority": 120,
-    "price": 1,
-    "traits": [
-     "源计划：激光特工",
-     "情报特工"
-    ],
-    "aliases": [
-     "寒冰",
-     "冰弓",
-     "冰霜射手",
-     "ashe"
-    ]
-   },
-   {
-    "name": "贾克斯",
-    "priority": 118,
-    "price": 3,
-    "traits": [
-     "战斗机甲",
-     "斗士"
-    ],
-    "aliases": [
-     "武器",
-     "武器大师",
-     "jax",
-     "拉面"
-    ]
-   },
-   {
     "name": "孙悟空",
-    "priority": 106,
+    "priority": 146,
     "price": 1,
     "traits": [
      "战斗机甲",
@@ -418,8 +370,84 @@
     ]
    },
    {
+    "name": "悠米",
+    "priority": 143,
+    "price": 2,
+    "traits": [
+     "星之守护者",
+     "吉祥物",
+     "爱心使者"
+    ],
+    "aliases": [
+     "猫咪",
+     "猫",
+     "魔法猫咪",
+     "yuumi"
+    ]
+   },
+   {
+    "name": "菲奥娜",
+    "priority": 129,
+    "price": 2,
+    "traits": [
+     "福牛守护者",
+     "决斗大师"
+    ],
+    "aliases": [
+     "剑姬",
+     "女剑",
+     "无双剑姬",
+     "fiora"
+    ]
+   },
+   {
+    "name": "墨菲特",
+    "priority": 128,
+    "price": 2,
+    "traits": [
+     "超级英雄",
+     "吉祥物"
+    ],
+    "aliases": [
+     "石头人",
+     "石头",
+     "熔岩巨兽",
+     "malphite"
+    ]
+   },
+   {
+    "name": "贾克斯",
+    "priority": 126,
+    "price": 3,
+    "traits": [
+     "战斗机甲",
+     "斗士"
+    ],
+    "aliases": [
+     "武器",
+     "武器大师",
+     "jax",
+     "拉面"
+    ]
+   },
+   {
+    "name": "泰隆",
+    "priority": 108,
+    "price": 1,
+    "traits": [
+     "福牛守护者",
+     "混沌战士"
+    ],
+    "aliases": [
+     "男刀",
+     "刀锋",
+     "刀锋之影",
+     "talon"
+    ]
+   },
+   {
     "name": "希维尔",
-    "priority": 99,
+    "priority": 107,
     "price": 2,
     "traits": [
      "平民英雄",
@@ -432,8 +460,40 @@
     ]
    },
    {
+    "name": "薇恩",
+    "priority": 104,
+    "price": 3,
+    "traits": [
+     "幻灵战队",
+     "决斗大师",
+     "情报特工"
+    ],
+    "aliases": [
+     "vn",
+     "维恩",
+     "暗夜猎手",
+     "vayne"
+    ]
+   },
+   {
+    "name": "伊泽瑞尔",
+    "priority": 99,
+    "price": 2,
+    "traits": [
+     "地下魔盗团",
+     "情报特工"
+    ],
+    "aliases": [
+     "ez",
+     "ezreal",
+     "黄毛",
+     "小黄毛",
+     "探险家"
+    ]
+   },
+   {
     "name": "阿利斯塔",
-    "priority": 94,
+    "priority": 98,
     "price": 3,
     "traits": [
      "福牛守护者",
@@ -446,19 +506,6 @@
      "牛",
      "牛头酋长",
      "alistar"
-    ]
-   },
-   {
-    "name": "德莱文",
-    "priority": 86,
-    "price": 2,
-    "traits": [
-     "战斗机甲",
-     "精英战士"
-    ],
-    "aliases": [
-     "draven",
-     "荣耀行刑官"
     ]
    },
    {
@@ -493,49 +540,32 @@
     ]
    },
    {
-    "name": "内瑟斯",
-    "priority": 79,
-    "price": 1,
-    "traits": [
-     "幻灵战队",
-     "吉祥物"
-    ],
-    "aliases": [
-     "狗头",
-     "沙漠死神",
-     "nasus"
-    ]
-   },
-   {
-    "name": "伊泽瑞尔",
-    "priority": 79,
+    "name": "芮尔",
+    "priority": 80,
     "price": 2,
     "traits": [
-     "地下魔盗团",
-     "情报特工"
+     "星之守护者",
+     "护卫"
     ],
     "aliases": [
-     "ez",
-     "ezreal",
-     "黄毛",
-     "小黄毛",
-     "探险家"
+     "rell",
+     "镕铁少女",
+     "熔铁少女"
     ]
    },
    {
-    "name": "薇恩",
-    "priority": 76,
-    "price": 3,
+    "name": "莎弥拉",
+    "priority": 63,
+    "price": 4,
     "traits": [
-     "幻灵战队",
-     "决斗大师",
-     "情报特工"
+     "地下魔盗团",
+     "强袭枪手",
+     "精英战士"
     ],
     "aliases": [
-     "vn",
-     "维恩",
-     "暗夜猎手",
-     "vayne"
+     "莎米拉",
+     "沙弥拉",
+     "samira"
     ]
    },
    {
@@ -553,6 +583,21 @@
      "放逐之刃",
      "锐萌萌",
      "riven"
+    ]
+   },
+   {
+    "name": "拉克丝",
+    "priority": 61,
+    "price": 1,
+    "traits": [
+     "星之守护者",
+     "灵能使"
+    ],
+    "aliases": [
+     "光女",
+     "光辉",
+     "光辉女郎",
+     "lux"
     ]
    },
    {
@@ -585,61 +630,48 @@
     ]
    },
    {
-    "name": "泰隆",
+    "name": "内瑟斯",
     "priority": 58,
     "price": 1,
     "traits": [
-     "福牛守护者",
-     "混沌战士"
-    ],
-    "aliases": [
-     "男刀",
-     "刀锋",
-     "刀锋之影",
-     "talon"
-    ]
-   },
-   {
-    "name": "莎弥拉",
-    "priority": 51,
-    "price": 4,
-    "traits": [
-     "地下魔盗团",
-     "强袭枪手",
-     "精英战士"
-    ],
-    "aliases": [
-     "莎米拉",
-     "沙弥拉",
-     "samira"
-    ]
-   },
-   {
-    "name": "塞拉斯",
-    "priority": 50,
-    "price": 1,
-    "traits": [
      "幻灵战队",
-     "混沌战士"
+     "吉祥物"
     ],
     "aliases": [
-     "偷男",
-     "解脱者",
-     "sylas"
+     "狗头",
+     "沙漠死神",
+     "nasus"
     ]
    },
    {
-    "name": "芮尔",
-    "priority": 50,
+    "name": "卡蜜尔",
+    "priority": 54,
     "price": 2,
     "traits": [
-     "星之守护者",
-     "护卫"
+     "AI程序",
+     "混沌战士"
     ],
     "aliases": [
-     "rell",
-     "镕铁少女",
-     "熔铁少女"
+     "青钢影",
+     "卡密尔",
+     "卡米尔",
+     "camille"
+    ]
+   },
+   {
+    "name": "蕾欧娜",
+    "priority": 53,
+    "price": 5,
+    "traits": [
+     "战斗机甲",
+     "混沌战士",
+     "秘术卫士"
+    ],
+    "aliases": [
+     "日女",
+     "曙光",
+     "曙光女神",
+     "leona"
     ]
    },
    {
@@ -655,6 +687,21 @@
     ]
    },
    {
+    "name": "娑娜",
+    "priority": 46,
+    "price": 3,
+    "traits": [
+     "地下魔盗团",
+     "灵能使",
+     "爱心使者"
+    ],
+    "aliases": [
+     "琴女",
+     "琴瑟仙女",
+     "sona"
+    ]
+   },
+   {
     "name": "费德提克",
     "priority": 45,
     "price": 5,
@@ -666,20 +713,6 @@
      "稻草人",
      "fiddle",
      "fiddlesticks"
-    ]
-   },
-   {
-    "name": "金克丝",
-    "priority": 43,
-    "price": 2,
-    "traits": [
-     "幻灵战队",
-     "淘气包"
-    ],
-    "aliases": [
-     "金克斯",
-     "暴走萝莉",
-     "jinx"
     ]
    },
    {
@@ -711,20 +744,6 @@
     ]
    },
    {
-    "name": "艾克",
-    "priority": 35,
-    "price": 4,
-    "traits": [
-     "星之守护者",
-     "淘气包",
-     "秘术卫士"
-    ],
-    "aliases": [
-     "时间刺客",
-     "ekko"
-    ]
-   },
-   {
     "name": "扎克",
     "priority": 35,
     "price": 4,
@@ -737,64 +756,58 @@
     ]
    },
    {
-    "name": "卡蜜尔",
+    "name": "艾克",
     "priority": 34,
-    "price": 2,
+    "price": 4,
     "traits": [
-     "AI程序",
-     "混沌战士"
-    ],
-    "aliases": [
-     "青钢影",
-     "卡密尔",
-     "卡米尔",
-     "camille"
-    ]
-   },
-   {
-    "name": "娑娜",
-    "priority": 34,
-    "price": 3,
-    "traits": [
-     "地下魔盗团",
-     "灵能使",
-     "爱心使者"
-    ],
-    "aliases": [
-     "琴女",
-     "琴瑟仙女",
-     "sona"
-    ]
-   },
-   {
-    "name": "蕾欧娜",
-    "priority": 32,
-    "price": 5,
-    "traits": [
-     "战斗机甲",
-     "混沌战士",
+     "星之守护者",
+     "淘气包",
      "秘术卫士"
     ],
     "aliases": [
-     "日女",
-     "曙光",
-     "曙光女神",
-     "leona"
+     "时间刺客",
+     "ekko"
     ]
    },
    {
-    "name": "拉克丝",
-    "priority": 31,
-    "price": 1,
+    "name": "金克丝",
+    "priority": 33,
+    "price": 2,
     "traits": [
-     "星之守护者",
-     "灵能使"
+     "幻灵战队",
+     "淘气包"
     ],
     "aliases": [
-     "光女",
-     "光辉",
-     "光辉女郎",
-     "lux"
+     "金克斯",
+     "暴走萝莉",
+     "jinx"
+    ]
+   },
+   {
+    "name": "卡莎",
+    "priority": 33,
+    "price": 3,
+    "traits": [
+     "星之守护者",
+     "情报特工"
+    ],
+    "aliases": [
+     "虚空之女",
+     "kaisa",
+     "kai'sa"
+    ]
+   },
+   {
+    "name": "瑟提",
+    "priority": 31,
+    "price": 4,
+    "traits": [
+     "战斗机甲",
+     "护卫"
+    ],
+    "aliases": [
+     "腕豪",
+     "sett"
     ]
    },
    {
@@ -811,19 +824,6 @@
     ]
    },
    {
-    "name": "瑟提",
-    "priority": 27,
-    "price": 4,
-    "traits": [
-     "战斗机甲",
-     "护卫"
-    ],
-    "aliases": [
-     "腕豪",
-     "sett"
-    ]
-   },
-   {
     "name": "拉莫斯",
     "priority": 24,
     "price": 3,
@@ -837,17 +837,32 @@
     ]
    },
    {
-    "name": "卡莎",
-    "priority": 21,
-    "price": 3,
+    "name": "塞拉斯",
+    "priority": 20,
+    "price": 1,
     "traits": [
-     "星之守护者",
-     "情报特工"
+     "幻灵战队",
+     "混沌战士"
     ],
     "aliases": [
-     "虚空之女",
-     "kaisa",
-     "kai'sa"
+     "偷男",
+     "解脱者",
+     "sylas"
+    ]
+   },
+   {
+    "name": "迦娜",
+    "priority": 19,
+    "price": 5,
+    "traits": [
+     "平民英雄",
+     "气象主播",
+     "灵能使"
+    ],
+    "aliases": [
+     "风女",
+     "风暴之怒",
+     "janna"
     ]
    },
    {
@@ -884,7 +899,7 @@
    },
    {
     "name": "厄斐琉斯",
-    "priority": 17,
+    "priority": 18,
     "price": 5,
     "traits": [
      "福牛守护者",
@@ -913,18 +928,18 @@
     ]
    },
    {
-    "name": "迦娜",
-    "priority": 16,
-    "price": 5,
+    "name": "佛耶戈",
+    "priority": 15,
+    "price": 4,
     "traits": [
-     "平民英雄",
-     "气象主播",
-     "灵能使"
+     "福牛守护者",
+     "混沌战士",
+     "爱心使者"
     ],
     "aliases": [
-     "风女",
-     "风暴之怒",
-     "janna"
+     "破败王",
+     "破败之王",
+     "viego"
     ]
    },
    {
@@ -975,21 +990,6 @@
     ]
    },
    {
-    "name": "佛耶戈",
-    "priority": 10,
-    "price": 4,
-    "traits": [
-     "福牛守护者",
-     "混沌战士",
-     "爱心使者"
-    ],
-    "aliases": [
-     "破败王",
-     "破败之王",
-     "viego"
-    ]
-   },
-   {
     "name": "莫德凯撒",
     "priority": 9,
     "price": 5,
@@ -1004,6 +1004,19 @@
     ]
    },
    {
+    "name": "塔莉垭",
+    "priority": 5,
+    "price": 4,
+    "traits": [
+     "星之守护者",
+     "灵能使"
+    ],
+    "aliases": [
+     "岩雀",
+     "taliyah"
+    ]
+   },
+   {
     "name": "卑尔维斯",
     "priority": 4,
     "price": 4,
@@ -1015,19 +1028,6 @@
      "虚空女皇",
      "belveth",
      "bel'veth"
-    ]
-   },
-   {
-    "name": "塔莉垭",
-    "priority": 4,
-    "price": 4,
-    "traits": [
-     "星之守护者",
-     "灵能使"
-    ],
-    "aliases": [
-     "岩雀",
-     "taliyah"
     ]
    },
    {
@@ -1067,22 +1067,22 @@
    {
     "name": "暴风之剑",
     "type": "component",
-    "priority": 76
+    "priority": 78
    },
    {
     "name": "反曲之弓",
     "type": "component",
-    "priority": 64
+    "priority": 77
    },
    {
     "name": "无用大棒",
     "type": "component",
-    "priority": 62
+    "priority": 75
    },
    {
     "name": "负极斗篷",
     "type": "component",
-    "priority": 57
+    "priority": 70
    },
    {
     "name": "狂徒铠甲",
@@ -1092,12 +1092,22 @@
    {
     "name": "锁子甲",
     "type": "component",
-    "priority": 46
+    "priority": 54
    },
    {
     "name": "拳套",
     "type": "component",
-    "priority": 46
+    "priority": 54
+   },
+   {
+    "name": "鬼索的狂暴之刃",
+    "type": "completed",
+    "priority": 45
+   },
+   {
+    "name": "卢安娜的飓风",
+    "type": "completed",
+    "priority": 45
    },
    {
     "name": "日炎斗篷",
@@ -1105,22 +1115,22 @@
     "priority": 44
    },
    {
-    "name": "珠光护手",
-    "type": "completed",
-    "priority": 41
-   },
-   {
     "name": "女神之泪",
     "type": "component",
     "priority": 40
    },
    {
-    "name": "卢安娜的飓风",
+    "name": "最后的轻语",
     "type": "completed",
     "priority": 38
    },
    {
-    "name": "最后的轻语",
+    "name": "珠光护手",
+    "type": "completed",
+    "priority": 38
+   },
+   {
+    "name": "泰坦的坚决",
     "type": "completed",
     "priority": 33
    },
@@ -1135,19 +1145,9 @@
     "priority": 31
    },
    {
-    "name": "鬼索的狂暴之刃",
-    "type": "completed",
-    "priority": 29
-   },
-   {
     "name": "锐利之刃",
     "type": "completed",
-    "priority": 28
-   },
-   {
-    "name": "蓝霸符",
-    "type": "completed",
-    "priority": 27
+    "priority": 30
    },
    {
     "name": "疾射火炮",
@@ -1155,13 +1155,13 @@
     "priority": 25
    },
    {
-    "name": "泰坦的坚决",
-    "type": "completed",
-    "priority": 25
-   },
-   {
     "name": "巨人腰带",
     "type": "component",
+    "priority": 24
+   },
+   {
+    "name": "蓝霸符",
+    "type": "completed",
     "priority": 24
    },
    {
@@ -1187,7 +1187,7 @@
    {
     "name": "班克斯的魔法帽",
     "type": "completed",
-    "priority": 17
+    "priority": 18
    },
    {
     "name": "振奋盔甲",
@@ -1212,7 +1212,7 @@
    {
     "name": "水银",
     "type": "completed",
-    "priority": 8
+    "priority": 14
    },
    {
     "name": "海克斯科技枪刃",
@@ -1233,7 +1233,7 @@
   "augments": [
    {
     "name": "DD街区",
-    "priority": 48,
+    "priority": 45,
     "cats": [
      "经济"
     ],
@@ -1242,7 +1242,7 @@
    },
    {
     "name": "团队建设",
-    "priority": 39,
+    "priority": 36,
     "cats": [
      "经济"
     ],
@@ -1256,15 +1256,6 @@
      "经济"
     ],
     "desc": "你的商店会以比你当前等级高1级的几率来刷新英雄。提供3金币。",
-    "aliases": []
-   },
-   {
-    "name": "公理圆弧II",
-    "priority": 26,
-    "cats": [
-     "战力"
-    ],
-    "desc": "你的弈子们在击败时回复30法力值。",
     "aliases": []
    },
    {
@@ -1298,6 +1289,15 @@
      "升级了",
      "升级"
     ]
+   },
+   {
+    "name": "公理圆弧II",
+    "priority": 23,
+    "cats": [
+     "战力"
+    ],
+    "desc": "你的弈子们在击败时回复30法力值。",
+    "aliases": []
    },
    {
     "name": "便携锻炉",
@@ -1446,17 +1446,6 @@
     ],
     "desc": "提供1个【悠米】。她获得5法术加成、75%暴击几率并且她的技能可以暴击。",
     "aliases": []
-   },
-   {
-    "name": "羽量级选手 II",
-    "priority": 6,
-    "cats": [
-     "战力"
-    ],
-    "desc": "你的1费和2费英雄们获得30%攻击速度和移动速度。",
-    "aliases": [
-     "羽量级选手II"
-    ]
    },
    {
     "name": "炼狱合约",
@@ -1504,6 +1493,15 @@
     "aliases": []
    },
    {
+    "name": "评级与交火",
+    "priority": 5,
+    "cats": [
+     "英雄强化"
+    ],
+    "desc": "提供1个【莎弥拉】。你最强大的那个【莎弥拉】获得30%物理加成。当她参与一次击败后，她回复30%最大法力值。",
+    "aliases": []
+   },
+   {
     "name": "D个痛快！ I",
     "priority": 5,
     "cats": [
@@ -1542,15 +1540,6 @@
     "aliases": []
    },
    {
-    "name": "评级与交火",
-    "priority": 4,
-    "cats": [
-     "英雄强化"
-    ],
-    "desc": "提供1个【莎弥拉】。你最强大的那个【莎弥拉】获得30%物理加成。当她参与一次击败后，她回复30%最大法力值。",
-    "aliases": []
-   },
-   {
     "name": "送餐小费",
     "priority": 4,
     "cats": [
@@ -1558,6 +1547,15 @@
      "英雄强化"
     ],
     "desc": "提供1个【希维尔】。你最强大的那个【希维尔】每施放2次技能，就会掉落1金币并且有5%几率掉落额外的1金币。",
+    "aliases": []
+   },
+   {
+    "name": "咒能高涨",
+    "priority": 4,
+    "cats": [
+     "英雄强化"
+    ],
+    "desc": "提供1个【伊泽瑞尔】。当你最强大的那个【伊泽瑞尔】施放他的技能时，他会获得20%攻击速度和25%法术加成，持续到战斗环节结束为止(这个效果可以叠加)。",
     "aliases": []
    },
    {
@@ -1573,7 +1571,7 @@
   "augmentSearch": [
    {
     "name": "DD街区",
-    "priority": 48,
+    "priority": 45,
     "cats": [
      "经济"
     ],
@@ -1582,7 +1580,7 @@
    },
    {
     "name": "团队建设",
-    "priority": 39,
+    "priority": 36,
     "cats": [
      "经济"
     ],
@@ -1596,15 +1594,6 @@
      "经济"
     ],
     "desc": "你的商店会以比你当前等级高1级的几率来刷新英雄。提供3金币。",
-    "aliases": []
-   },
-   {
-    "name": "公理圆弧II",
-    "priority": 26,
-    "cats": [
-     "战力"
-    ],
-    "desc": "你的弈子们在击败时回复30法力值。",
     "aliases": []
    },
    {
@@ -1638,6 +1627,15 @@
      "升级了",
      "升级"
     ]
+   },
+   {
+    "name": "公理圆弧II",
+    "priority": 23,
+    "cats": [
+     "战力"
+    ],
+    "desc": "你的弈子们在击败时回复30法力值。",
+    "aliases": []
    },
    {
     "name": "便携锻炉",
@@ -1806,17 +1804,6 @@
     "aliases": []
    },
    {
-    "name": "羽量级选手 II",
-    "priority": 6,
-    "cats": [
-     "战力"
-    ],
-    "desc": "你的1费和2费英雄们获得30%攻击速度和移动速度。",
-    "aliases": [
-     "羽量级选手II"
-    ]
-   },
-   {
     "name": "登神长阶",
     "priority": 5,
     "cats": [
@@ -1841,6 +1828,15 @@
      "经济"
     ],
     "desc": "每当你的商店刷新时，你都有45%几率获得1次免费刷新。",
+    "aliases": []
+   },
+   {
+    "name": "评级与交火",
+    "priority": 5,
+    "cats": [
+     "英雄强化"
+    ],
+    "desc": "提供1个【莎弥拉】。你最强大的那个【莎弥拉】获得30%物理加成。当她参与一次击败后，她回复30%最大法力值。",
     "aliases": []
    },
    {
@@ -1900,15 +1896,6 @@
     "aliases": []
    },
    {
-    "name": "评级与交火",
-    "priority": 4,
-    "cats": [
-     "英雄强化"
-    ],
-    "desc": "提供1个【莎弥拉】。你最强大的那个【莎弥拉】获得30%物理加成。当她参与一次击败后，她回复30%最大法力值。",
-    "aliases": []
-   },
-   {
     "name": "升星之运",
     "priority": 4,
     "cats": [
@@ -1957,6 +1944,15 @@
     "aliases": []
    },
    {
+    "name": "咒能高涨",
+    "priority": 4,
+    "cats": [
+     "英雄强化"
+    ],
+    "desc": "提供1个【伊泽瑞尔】。当你最强大的那个【伊泽瑞尔】施放他的技能时，他会获得20%攻击速度和25%法术加成，持续到战斗环节结束为止(这个效果可以叠加)。",
+    "aliases": []
+   },
+   {
     "name": "便携锻炉++",
     "priority": 3,
     "cats": [
@@ -1966,12 +1962,22 @@
     "aliases": []
    },
    {
-    "name": "姐妹",
+    "name": "德莱文联盟",
+    "priority": 3,
+    "cats": [
+     "经济",
+     "英雄强化"
+    ],
+    "desc": "提供1个【德莱文】。你最强大的那个【德莱文】获得25%物理加成。当他击败一名敌人时，有35%几率获得1枚金币。",
+    "aliases": []
+   },
+   {
+    "name": "浪客精神",
     "priority": 3,
     "cats": [
      "英雄强化"
     ],
-    "desc": "提供1个【金克丝】。当金克丝和蔚同时上场时，激活姐妹羁绊，她们将互相鼓励成长。",
+    "desc": "提供1个【亚索】。当你派他上场时，邻格没有友军的友军们会获得30%攻击速度。",
     "aliases": []
    },
    {
@@ -2001,6 +2007,17 @@
     ],
     "desc": "提供1个【厄运小姐】。在与玩家的战斗中每登场3次后，你最强大的那个【厄运小姐】会掉落10-25金币（基于当前阶段）。",
     "aliases": []
+   },
+   {
+    "name": "羽量级选手 II",
+    "priority": 3,
+    "cats": [
+     "战力"
+    ],
+    "desc": "你的1费和2费英雄们获得30%攻击速度和移动速度。",
+    "aliases": [
+     "羽量级选手II"
+    ]
    },
    {
     "name": "终极飞升",
@@ -2068,6 +2085,15 @@
     "aliases": []
    },
    {
+    "name": "姐妹",
+    "priority": 2,
+    "cats": [
+     "英雄强化"
+    ],
+    "desc": "提供1个【金克丝】。当金克丝和蔚同时上场时，激活姐妹羁绊，她们将互相鼓励成长。",
+    "aliases": []
+   },
+   {
     "name": "金色追求",
     "priority": 2,
     "cats": [
@@ -2075,6 +2101,15 @@
      "装备"
     ],
     "desc": "你首次拥有162.0或更多金币时，获得1个2星5费弈子以及3件幸运装备宝箱。",
+    "aliases": []
+   },
+   {
+    "name": "进入夜晚",
+    "priority": 2,
+    "cats": [
+     "英雄强化"
+    ],
+    "desc": "提供1个【薇恩】和1个【夜之锋刃】。当你派她上场时，携带了【夜之锋刃】的友军们会获得35%攻击速度。",
     "aliases": []
    },
    {
@@ -2125,6 +2160,15 @@
     "aliases": []
    },
    {
+    "name": "适应性防守",
+    "priority": 2,
+    "cats": [
+     "英雄强化"
+    ],
+    "desc": "提供1个【卡蜜尔】。你最强大的那个【卡蜜尔】获得30%物理加成。当她首次跌到50%生命值以下时，她会获得相当于500%攻击力的护盾值。",
+    "aliases": []
+   },
+   {
     "name": "双排",
     "priority": 2,
     "cats": [
@@ -2149,6 +2193,15 @@
      "英雄强化"
     ],
     "desc": "提供1个【佛耶戈】。你最强大的那个【佛耶戈】拥有10法术加成，并且他的技能会基于目标的已损失生命值至多造成50%额外伤害。",
+    "aliases": []
+   },
+   {
+    "name": "完美的日炎耀斑",
+    "priority": 2,
+    "cats": [
+     "英雄强化"
+    ],
+    "desc": "提供1个【蕾欧娜】。你最强大的那个【蕾欧娜】拥有40法术加成并且她的技能消耗降低40。",
     "aliases": []
    },
    {
@@ -2190,15 +2243,6 @@
     "aliases": [
      "治疗法球I"
     ]
-   },
-   {
-    "name": "咒能高涨",
-    "priority": 2,
-    "cats": [
-     "英雄强化"
-    ],
-    "desc": "提供1个【伊泽瑞尔】。当你最强大的那个【伊泽瑞尔】施放他的技能时，他会获得20%攻击速度和25%法术加成，持续到战斗环节结束为止(这个效果可以叠加)。",
-    "aliases": []
    },
    {
     "name": "装弹完毕",
@@ -2265,16 +2309,6 @@
      "英雄强化"
     ],
     "desc": "提供1个【孙悟空】。你最强大的那个【孙悟空】获得18法术加成并且+1格技能距离。",
-    "aliases": []
-   },
-   {
-    "name": "德莱文联盟",
-    "priority": 1,
-    "cats": [
-     "经济",
-     "英雄强化"
-    ],
-    "desc": "提供1个【德莱文】。你最强大的那个【德莱文】获得25%物理加成。当他击败一名敌人时，有35%几率获得1枚金币。",
     "aliases": []
    },
    {
@@ -2373,15 +2407,6 @@
      "英雄强化"
     ],
     "desc": "提供1个【乐芙兰】。战斗环节开始时：你最强大的那个【乐芙兰】会复制她相距最近的那名友军(不带装备且无法继承本体羁绊，拥有99%生命值)。",
-    "aliases": []
-   },
-   {
-    "name": "浪客精神",
-    "priority": 1,
-    "cats": [
-     "英雄强化"
-    ],
-    "desc": "提供1个【亚索】。当你派他上场时，邻格没有友军的友军们会获得30%攻击速度。",
     "aliases": []
    },
    {
@@ -2534,6 +2559,15 @@
     "aliases": [
      "万用瞄准镜II"
     ]
+   },
+   {
+    "name": "旺盛精力",
+    "priority": 1,
+    "cats": [
+     "英雄强化"
+    ],
+    "desc": "提供1个【悠米】。当你派她上场时，你的弈子们会获得20%攻击速度并朝着各自的目标快速移动。",
+    "aliases": []
    },
    {
     "name": "为血而来",
@@ -3355,15 +3389,6 @@
     "aliases": []
    },
    {
-    "name": "进入夜晚",
-    "priority": 0,
-    "cats": [
-     "英雄强化"
-    ],
-    "desc": "提供1个【薇恩】和1个【夜之锋刃】。当你派她上场时，携带了【夜之锋刃】的友军们会获得35%攻击速度。",
-    "aliases": []
-   },
-   {
     "name": "禁魔链",
     "priority": 0,
     "cats": [
@@ -3813,15 +3838,6 @@
     "aliases": []
    },
    {
-    "name": "适应性防守",
-    "priority": 0,
-    "cats": [
-     "英雄强化"
-    ],
-    "desc": "提供1个【卡蜜尔】。你最强大的那个【卡蜜尔】获得30%物理加成。当她首次跌到50%生命值以下时，她会获得相当于500%攻击力的护盾值。",
-    "aliases": []
-   },
-   {
     "name": "弑君突刺",
     "priority": 0,
     "cats": [
@@ -4011,24 +4027,6 @@
      "英雄强化"
     ],
     "desc": "提供1个【内瑟斯】。当你派他上场时，你的弈子们会在参与击败时治疗自身275生命值。",
-    "aliases": []
-   },
-   {
-    "name": "完美的日炎耀斑",
-    "priority": 0,
-    "cats": [
-     "英雄强化"
-    ],
-    "desc": "提供1个【蕾欧娜】。你最强大的那个【蕾欧娜】拥有40法术加成并且她的技能消耗降低40。",
-    "aliases": []
-   },
-   {
-    "name": "旺盛精力",
-    "priority": 0,
-    "cats": [
-     "英雄强化"
-    ],
-    "desc": "提供1个【悠米】。当你派她上场时，你的弈子们会获得20%攻击速度并朝着各自的目标快速移动。",
     "aliases": []
    },
    {
@@ -7203,183 +7201,525 @@
    }
   },
   {
-   "id": "research-sisters-jinx",
-   "source": "research",
+   "id": "meta-完美的日炎耀斑-蕾欧娜-0",
+   "source": "meta-solver",
    "quality": "S",
-   "name": "姐妹无限技能金克丝",
-   "family": "超英幻灵金克丝",
-   "goal": "姐妹限定；20层后进入导弹进化期",
+   "name": "完美的日炎耀斑蕾欧娜机制路线",
+   "family": "完美的日炎耀斑·蕾欧娜",
+   "goal": "反事实模拟净提升6.8%",
    "earlyUnits": [
-    "金克丝",
-    "蔚",
-    "塞拉斯",
-    "内瑟斯"
+    "蕾欧娜",
+    "孙悟空",
+    "泰隆",
+    "德莱文"
    ],
    "midUnits": [
-    "金克丝",
-    "蔚",
-    "普朗克",
-    "李青",
-    "墨菲特",
-    "塞拉斯"
+    "蕾欧娜",
+    "孙悟空",
+    "泰隆",
+    "德莱文",
+    "贾克斯",
+    "娑娜"
    ],
    "coreUnits": [
-    "蔚",
-    "墨菲特",
-    "李青",
-    "艾克",
-    "塞拉斯",
-    "内瑟斯",
-    "普朗克",
-    "金克丝"
+    "蕾欧娜",
+    "德莱文",
+    "孙悟空",
+    "瑟提",
+    "贾克斯",
+    "佛耶戈",
+    "泰隆",
+    "迦娜",
+    "娑娜"
    ],
    "earlyTraits": [
-    "3超级英雄",
-    "2斗士",
-    "3幻灵战队"
+    "5战斗机甲",
+    "3混沌战士",
+    "2灵能使",
+    "2护卫"
    ],
    "componentPrefs": [
-    "女神之泪",
-    "无用大棒",
-    "拳套",
     "暴风之剑",
-    "反曲之弓"
+    "女神之泪",
+    "负极斗篷",
+    "拳套",
+    "反曲之弓",
+    "无用大棒"
    ],
    "completedPrefs": [
-    "蓝霸符",
     "朔极之矛",
-    "珠光护手"
+    "水银",
+    "鬼索的狂暴之刃"
    ],
    "augmentPrefs": [
-    "姐妹",
-    "公理圆弧II",
-    "羽量级选手 II",
-    "DD街区",
-    "团队建设"
+    "完美的日炎耀斑"
    ],
    "augmentCats": [
-    "英雄强化",
-    "战力",
-    "经济"
+    "英雄强化"
    ],
-   "monsterPrefs": [
-    "装备商人（经济）",
-    "魄罗粉丝（战力）"
-   ],
+   "monsterPrefs": [],
    "route": [
-    "金克丝+蔚拿姐妹",
-    "6级3超英慢D金克丝三星",
-    "7级补3幻灵/2吉祥物",
-    "8级艾克开淘气包/秘卫"
+    "拿到完美的日炎耀斑后锁定蕾欧娜",
+    "9级围绕蕾欧娜完成算法棋盘",
+    "按来牌替换至蕾欧娜、德莱文、孙悟空、瑟提、贾克斯、佛耶戈、泰隆、迦娜、娑娜"
    ],
-   "boardNote": "金克丝沉底避开第一轮集火；蔚和超英前排分散站。20层前靠前排和控制保叠层，20层后利用额外导弹加速清场。",
-   "board": [
-    {
-     "name": "蔚",
-     "row": 1,
-     "col": 2,
-     "role": "主坦/姐妹核心"
-    },
-    {
-     "name": "墨菲特",
-     "row": 1,
-     "col": 4,
-     "role": "超英主坦"
-    },
-    {
-     "name": "李青",
-     "row": 1,
-     "col": 6,
-     "role": "斗士前排"
-    },
-    {
-     "name": "艾克",
-     "row": 2,
-     "col": 1,
-     "role": "淘气包/秘卫"
-    },
-    {
-     "name": "塞拉斯",
-     "row": 2,
-     "col": 4,
-     "role": "幻灵前排"
-    },
-    {
-     "name": "内瑟斯",
-     "row": 2,
-     "col": 7,
-     "role": "幻灵/吉祥物"
-    },
-    {
-     "name": "普朗克",
-     "row": 3,
-     "col": 4,
-     "role": "超级英雄"
-    },
-    {
-     "name": "金克丝",
-     "row": 4,
-     "col": 4,
-     "carry": true,
-     "role": "主C",
-     "items": [
-      "蓝霸符",
-      "朔极之矛",
-      "珠光护手"
-     ]
-    }
-   ],
+   "boardNote": "算法自动生成；官方文本数值；叠层折算1层。",
    "officialText": {
-    "early": "只有拿到【姐妹】才定线；2阶段用幻灵/斗士保血，金克丝和蔚都留。",
-    "equipment": "金克丝优先蓝霸符、朔极之矛、珠光护手；蓝霸的击杀回蓝是技能循环入口，不可按普通法系装估值。",
-    "hex": "【姐妹】是硬门槛；公理圆弧进一步压缩击杀后的第二次施法间隔。",
-    "enemy": "第一炮无法参与击杀、金克丝被切或前排过薄都会让成长断档；不是无条件强玩。"
+    "early": "硬门槛：完美的日炎耀斑+蕾欧娜。",
+    "equipment": "蕾欧娜模型三件：朔极之矛、水银、鬼索的狂暴之刃。",
+    "hex": "无强化2634分，有强化2812分，净提升6.8%。",
+    "enemy": "机制置信度80%；未量化控制、站位和击杀归属误差。"
    },
    "actions": {
     "keep": [
-     "金克丝",
-     "蔚",
-     "普朗克",
-     "李青",
-     "墨菲特",
-     "塞拉斯",
-     "内瑟斯",
-     "艾克"
+     "蕾欧娜",
+     "德莱文",
+     "孙悟空",
+     "瑟提",
+     "贾克斯",
+     "佛耶戈",
+     "泰隆",
+     "迦娜",
+     "娑娜"
     ],
-    "item": "先做蓝霸符和朔极之矛，保证首炮与击杀回蓝；第三件按模型优先珠光护手。",
-    "checkpoint": "有姐妹+金克丝蔚才启动；6级慢D金克丝三星，20次击杀前以保血和让金克丝收尾为第一目标。",
-    "stopLoss": "没有姐妹、金克丝无法两星或蓝装完全断档时，立即转幻灵女枪/超英法系。"
+    "item": "装备往朔极之矛、水银、鬼索的狂暴之刃靠。",
+    "checkpoint": "完美的日炎耀斑场景总分2812，比同棋盘基线高6.8%。",
+    "stopLoss": "缺完美的日炎耀斑或蕾欧娜不启动。"
    },
-   "role": "法系",
-   "strengthPrior": 0.89,
+   "role": "普攻",
+   "strengthPrior": 1.1,
    "mechanic": {
-    "type": "sisters-growth",
-    "requiredAugment": "姐妹",
+    "type": "meta-counterfactual",
+    "requiredAugment": "完美的日炎耀斑",
     "requiredUnits": [
-     "金克丝",
-     "蔚"
+     "蕾欧娜"
     ],
-    "matchBonus": 18,
-    "missingPenalty": 60,
-    "threshold": 20,
-    "text": "金克丝每次击杀永久+2%法强；20次后增加导弹"
+    "matchBonus": 12,
+    "missingPenalty": 80,
+    "text": "官方文本数值；叠层折算1层；反事实+6.8%"
    },
    "routeProfile": {
     "source": "template",
     "mainCarry": {
-     "name": "金克丝",
-     "starTarget": 3,
+     "name": "蕾欧娜",
+     "starTarget": 2,
      "items": [
-      "蓝霸符",
       "朔极之矛",
-      "珠光护手"
+      "水银",
+      "鬼索的狂暴之刃"
      ]
     },
     "units": [
      {
+      "name": "蕾欧娜",
+      "price": 5,
+      "role": "mainCarry",
+      "starTarget": 2,
+      "items": [],
+      "traits": [
+       "战斗机甲",
+       "混沌战士",
+       "秘术卫士"
+      ]
+     },
+     {
+      "name": "德莱文",
+      "price": 2,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "战斗机甲",
+       "精英战士"
+      ]
+     },
+     {
+      "name": "孙悟空",
+      "price": 1,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "战斗机甲",
+       "护卫"
+      ]
+     },
+     {
+      "name": "瑟提",
+      "price": 4,
+      "role": "utility",
+      "starTarget": 2,
+      "items": [],
+      "traits": [
+       "战斗机甲",
+       "护卫"
+      ]
+     },
+     {
+      "name": "贾克斯",
+      "price": 3,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "战斗机甲",
+       "斗士"
+      ]
+     },
+     {
+      "name": "佛耶戈",
+      "price": 4,
+      "role": "utility",
+      "starTarget": 2,
+      "items": [],
+      "traits": [
+       "福牛守护者",
+       "混沌战士",
+       "爱心使者"
+      ]
+     },
+     {
+      "name": "泰隆",
+      "price": 1,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "福牛守护者",
+       "混沌战士"
+      ]
+     },
+     {
+      "name": "迦娜",
+      "price": 5,
+      "role": "utility",
+      "starTarget": 2,
+      "items": [],
+      "traits": [
+       "平民英雄",
+       "气象主播",
+       "灵能使"
+      ]
+     },
+     {
+      "name": "娑娜",
+      "price": 3,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "地下魔盗团",
+       "灵能使",
+       "爱心使者"
+      ]
+     }
+    ],
+    "activeTraits": [
+     {
+      "count": 5,
+      "name": "战斗机甲",
+      "label": "5战斗机甲"
+     },
+     {
+      "count": 3,
+      "name": "混沌战士",
+      "label": "3混沌战士"
+     },
+     {
+      "count": 2,
+      "name": "灵能使",
+      "label": "2灵能使"
+     },
+     {
+      "count": 2,
+      "name": "护卫",
+      "label": "2护卫"
+     }
+    ],
+    "items": [
+     {
+      "name": "朔极之矛",
+      "holder": "蕾欧娜",
+      "role": "mainCarry",
+      "components": [
+       "暴风之剑",
+       "女神之泪"
+      ]
+     },
+     {
+      "name": "水银",
+      "holder": "蕾欧娜",
+      "role": "mainCarry",
+      "components": [
+       "负极斗篷",
+       "拳套"
+      ]
+     },
+     {
+      "name": "鬼索的狂暴之刃",
+      "holder": "蕾欧娜",
+      "role": "mainCarry",
+      "components": [
+       "反曲之弓",
+       "无用大棒"
+      ]
+     },
+     {
+      "name": "朔极之矛",
+      "holder": "蕾欧娜",
+      "role": "route",
+      "components": [
+       "暴风之剑",
+       "女神之泪"
+      ]
+     },
+     {
+      "name": "水银",
+      "holder": "蕾欧娜",
+      "role": "route",
+      "components": [
+       "负极斗篷",
+       "拳套"
+      ]
+     },
+     {
+      "name": "鬼索的狂暴之刃",
+      "holder": "蕾欧娜",
+      "role": "route",
+      "components": [
+       "反曲之弓",
+       "无用大棒"
+      ]
+     }
+    ]
+   },
+   "primePlan": {
+    "source": "mecha_prime_results.json",
+    "sideOutputFactor": 0.35,
+    "chain": [
+     {
+      "stage": "前期",
+      "holder": "德莱文",
+      "condition": "前期棋盘中德莱文至尊总输出437，为本档第一。",
+      "evidence": "德莱文2星 437 vs #2 贾克斯 395"
+     },
+     {
+      "stage": "中期",
+      "holder": "贾克斯",
+      "condition": "中期棋盘中贾克斯至尊总输出597，优先承接。",
+      "evidence": "贾克斯2星 597 vs #2 德莱文 514"
+     },
+     {
+      "stage": "终局",
+      "holder": "蕾欧娜",
+      "condition": "后期棋盘中蕾欧娜至尊总输出1253，但需结合专项星级触发。",
+      "evidence": "蕾欧娜2星 1253 vs #2 贾克斯 1079"
+     }
+    ],
+    "rules": [
+     {
+      "id": "stage-start",
+      "priority": 10,
+      "holder": "德莱文",
+      "text": "至尊给德莱文",
+      "when": {
+       "hasUnits": [
+        "德莱文"
+       ]
+      },
+      "evidence": "德莱文2星 437 vs #2 贾克斯 395"
+     },
+     {
+      "id": "mid-carry-online",
+      "priority": 30,
+      "holder": "贾克斯",
+      "text": "至尊转贾克斯",
+      "when": {
+       "unitStars": {
+        "贾克斯": 2
+       }
+      },
+      "evidence": "贾克斯2星三件专项 812，高于蕾欧娜1星青龙刀 421"
+     },
+     {
+      "id": "late-leona-two-star",
+      "priority": 50,
+      "holder": "蕾欧娜",
+      "text": "至尊转蕾欧娜",
+      "when": {
+       "levelGte": 9,
+       "unitStars": {
+        "蕾欧娜": 2
+       }
+      },
+      "evidence": "蕾欧娜2星三件 1253 > 贾克斯3星三件 1191；仅青龙刀时 542 vs 贾克斯2星三件 812，不建议裸转"
+     }
+    ],
+    "conclusion": [
+     "德莱文负责前期，贾克斯二星后接管中期。",
+     "蕾欧娜至少二星且上9后接至尊，但只有青龙刀时仍弱于贾克斯二星三件，交接后要补输出装。",
+     "完全成型时蕾欧娜2星三件高于贾克斯3星三件，后期可以转上限。"
+    ]
+   }
+  },
+  {
+   "id": "meta-评级与交火-莎弥拉-1",
+   "source": "meta-solver",
+   "quality": "A",
+   "name": "评级与交火莎弥拉机制路线",
+   "family": "评级与交火·莎弥拉",
+   "goal": "反事实模拟净提升6%",
+   "earlyUnits": [
+    "莎弥拉",
+    "泰隆",
+    "蔚"
+   ],
+   "midUnits": [
+    "莎弥拉",
+    "泰隆",
+    "蔚",
+    "阿利斯塔",
+    "娑娜"
+   ],
+   "coreUnits": [
+    "莎弥拉",
+    "迦娜",
+    "娑娜",
+    "厄斐琉斯",
+    "蔚",
+    "佛耶戈",
+    "蕾欧娜",
+    "泰隆",
+    "阿利斯塔"
+   ],
+   "earlyTraits": [
+    "4福牛守护者",
+    "3秘术卫士",
+    "3混沌战士",
+    "3地下魔盗团"
+   ],
+   "componentPrefs": [
+    "反曲之弓",
+    "拳套",
+    "无用大棒",
+    "负极斗篷"
+   ],
+   "completedPrefs": [
+    "最后的轻语",
+    "鬼索的狂暴之刃",
+    "卢安娜的飓风"
+   ],
+   "augmentPrefs": [
+    "评级与交火"
+   ],
+   "augmentCats": [
+    "英雄强化"
+   ],
+   "monsterPrefs": [],
+   "route": [
+    "拿到评级与交火后锁定莎弥拉",
+    "9级围绕莎弥拉完成算法棋盘",
+    "按来牌替换至莎弥拉、迦娜、娑娜、厄斐琉斯、蔚、佛耶戈、蕾欧娜、泰隆、阿利斯塔"
+   ],
+   "boardNote": "算法自动生成；官方文本数值；叠层折算1层。",
+   "officialText": {
+    "early": "硬门槛：评级与交火+莎弥拉。",
+    "equipment": "莎弥拉模型三件：最后的轻语、鬼索的狂暴之刃、卢安娜的飓风。",
+    "hex": "无强化1774分，有强化1880分，净提升6%。",
+    "enemy": "机制置信度80%；未量化控制、站位和击杀归属误差。"
+   },
+   "actions": {
+    "keep": [
+     "莎弥拉",
+     "迦娜",
+     "娑娜",
+     "厄斐琉斯",
+     "蔚",
+     "佛耶戈",
+     "蕾欧娜",
+     "泰隆",
+     "阿利斯塔"
+    ],
+    "item": "装备往最后的轻语、鬼索的狂暴之刃、卢安娜的飓风靠。",
+    "checkpoint": "评级与交火场景总分1880，比同棋盘基线高6%。",
+    "stopLoss": "缺评级与交火或莎弥拉不启动。"
+   },
+   "role": "普攻",
+   "strengthPrior": 0.7,
+   "mechanic": {
+    "type": "meta-counterfactual",
+    "requiredAugment": "评级与交火",
+    "requiredUnits": [
+     "莎弥拉"
+    ],
+    "matchBonus": 12,
+    "missingPenalty": 80,
+    "text": "官方文本数值；叠层折算1层；反事实+6%"
+   },
+   "routeProfile": {
+    "source": "template",
+    "mainCarry": {
+     "name": "莎弥拉",
+     "starTarget": 2,
+     "items": [
+      "最后的轻语",
+      "鬼索的狂暴之刃",
+      "卢安娜的飓风"
+     ]
+    },
+    "units": [
+     {
+      "name": "莎弥拉",
+      "price": 4,
+      "role": "mainCarry",
+      "starTarget": 2,
+      "items": [],
+      "traits": [
+       "地下魔盗团",
+       "强袭枪手",
+       "精英战士"
+      ]
+     },
+     {
+      "name": "迦娜",
+      "price": 5,
+      "role": "utility",
+      "starTarget": 2,
+      "items": [],
+      "traits": [
+       "平民英雄",
+       "气象主播",
+       "灵能使"
+      ]
+     },
+     {
+      "name": "娑娜",
+      "price": 3,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "地下魔盗团",
+       "灵能使",
+       "爱心使者"
+      ]
+     },
+     {
+      "name": "厄斐琉斯",
+      "price": 5,
+      "role": "utility",
+      "starTarget": 2,
+      "items": [],
+      "traits": [
+       "福牛守护者",
+       "强袭枪手",
+       "枪神"
+      ]
+     },
+     {
       "name": "蔚",
       "price": 2,
-      "role": "frontline",
+      "role": "utility",
       "starTarget": 1,
       "items": [],
       "traits": [
@@ -7389,60 +7729,581 @@
       ]
      },
      {
-      "name": "墨菲特",
-      "price": 2,
-      "role": "frontline",
-      "starTarget": 1,
-      "items": [],
-      "traits": [
-       "超级英雄",
-       "吉祥物"
-      ]
-     },
-     {
-      "name": "李青",
-      "price": 2,
-      "role": "frontline",
-      "starTarget": 1,
-      "items": [],
-      "traits": [
-       "超级英雄",
-       "爱心使者",
-       "斗士"
-      ]
-     },
-     {
-      "name": "艾克",
+      "name": "佛耶戈",
       "price": 4,
-      "role": "frontline",
+      "role": "utility",
       "starTarget": 2,
       "items": [],
       "traits": [
-       "星之守护者",
-       "淘气包",
+       "福牛守护者",
+       "混沌战士",
+       "爱心使者"
+      ]
+     },
+     {
+      "name": "蕾欧娜",
+      "price": 5,
+      "role": "utility",
+      "starTarget": 2,
+      "items": [],
+      "traits": [
+       "战斗机甲",
+       "混沌战士",
        "秘术卫士"
       ]
      },
      {
-      "name": "塞拉斯",
+      "name": "泰隆",
       "price": 1,
-      "role": "frontline",
+      "role": "utility",
       "starTarget": 1,
       "items": [],
       "traits": [
-       "幻灵战队",
+       "福牛守护者",
        "混沌战士"
       ]
      },
      {
-      "name": "内瑟斯",
-      "price": 1,
-      "role": "frontline",
+      "name": "阿利斯塔",
+      "price": 3,
+      "role": "utility",
       "starTarget": 1,
       "items": [],
       "traits": [
-       "幻灵战队",
+       "福牛守护者",
+       "吉祥物",
+       "秘术卫士"
+      ]
+     }
+    ],
+    "activeTraits": [
+     {
+      "count": 4,
+      "name": "福牛守护者",
+      "label": "4福牛守护者"
+     },
+     {
+      "count": 3,
+      "name": "秘术卫士",
+      "label": "3秘术卫士"
+     },
+     {
+      "count": 3,
+      "name": "混沌战士",
+      "label": "3混沌战士"
+     },
+     {
+      "count": 3,
+      "name": "地下魔盗团",
+      "label": "3地下魔盗团"
+     }
+    ],
+    "items": [
+     {
+      "name": "最后的轻语",
+      "holder": "莎弥拉",
+      "role": "mainCarry",
+      "components": [
+       "反曲之弓",
+       "拳套"
+      ]
+     },
+     {
+      "name": "鬼索的狂暴之刃",
+      "holder": "莎弥拉",
+      "role": "mainCarry",
+      "components": [
+       "反曲之弓",
+       "无用大棒"
+      ]
+     },
+     {
+      "name": "卢安娜的飓风",
+      "holder": "莎弥拉",
+      "role": "mainCarry",
+      "components": [
+       "反曲之弓",
+       "负极斗篷"
+      ]
+     },
+     {
+      "name": "最后的轻语",
+      "holder": "莎弥拉",
+      "role": "route",
+      "components": [
+       "反曲之弓",
+       "拳套"
+      ]
+     },
+     {
+      "name": "鬼索的狂暴之刃",
+      "holder": "莎弥拉",
+      "role": "route",
+      "components": [
+       "反曲之弓",
+       "无用大棒"
+      ]
+     },
+     {
+      "name": "卢安娜的飓风",
+      "holder": "莎弥拉",
+      "role": "route",
+      "components": [
+       "反曲之弓",
+       "负极斗篷"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "meta-德莱文联盟-德莱文-2",
+   "source": "meta-solver",
+   "quality": "S",
+   "name": "德莱文联盟德莱文机制路线",
+   "family": "德莱文联盟·德莱文",
+   "goal": "反事实模拟净提升5.9%",
+   "earlyUnits": [
+    "德莱文",
+    "加里奥",
+    "拉克丝",
+    "孙悟空",
+    "安妮"
+   ],
+   "midUnits": [
+    "德莱文",
+    "加里奥",
+    "拉克丝",
+    "孙悟空",
+    "安妮",
+    "菲奥娜"
+   ],
+   "coreUnits": [
+    "德莱文",
+    "孙悟空",
+    "瑟提",
+    "安妮",
+    "拉克丝",
+    "加里奥",
+    "菲奥娜"
+   ],
+   "earlyTraits": [
+    "3战斗机甲",
+    "2灵能使",
+    "2护卫",
+    "2福牛守护者"
+   ],
+   "componentPrefs": [
+    "反曲之弓",
+    "拳套",
+    "无用大棒",
+    "负极斗篷"
+   ],
+   "completedPrefs": [
+    "最后的轻语",
+    "鬼索的狂暴之刃",
+    "卢安娜的飓风"
+   ],
+   "augmentPrefs": [
+    "德莱文联盟"
+   ],
+   "augmentCats": [
+    "英雄强化"
+   ],
+   "monsterPrefs": [],
+   "route": [
+    "拿到德莱文联盟后锁定德莱文",
+    "7级围绕德莱文完成算法棋盘",
+    "按来牌替换至德莱文、孙悟空、瑟提、安妮、拉克丝、加里奥、菲奥娜"
+   ],
+   "boardNote": "算法自动生成；官方文本数值；叠层折算1层。",
+   "officialText": {
+    "early": "硬门槛：德莱文联盟+德莱文。",
+    "equipment": "德莱文模型三件：最后的轻语、鬼索的狂暴之刃、卢安娜的飓风。",
+    "hex": "无强化1535分，有强化1625分，净提升5.9%。",
+    "enemy": "机制置信度80%；未量化控制、站位和击杀归属误差。"
+   },
+   "actions": {
+    "keep": [
+     "德莱文",
+     "孙悟空",
+     "瑟提",
+     "安妮",
+     "拉克丝",
+     "加里奥",
+     "菲奥娜"
+    ],
+    "item": "装备往最后的轻语、鬼索的狂暴之刃、卢安娜的飓风靠。",
+    "checkpoint": "德莱文联盟场景总分1625，比同棋盘基线高5.9%。",
+    "stopLoss": "缺德莱文联盟或德莱文不启动。"
+   },
+   "role": "普攻",
+   "strengthPrior": 1,
+   "mechanic": {
+    "type": "meta-counterfactual",
+    "requiredAugment": "德莱文联盟",
+    "requiredUnits": [
+     "德莱文"
+    ],
+    "matchBonus": 12,
+    "missingPenalty": 80,
+    "text": "官方文本数值；叠层折算1层；反事实+5.9%"
+   },
+   "routeProfile": {
+    "source": "template",
+    "mainCarry": {
+     "name": "德莱文",
+     "starTarget": 3,
+     "items": [
+      "最后的轻语",
+      "鬼索的狂暴之刃",
+      "卢安娜的飓风"
+     ]
+    },
+    "units": [
+     {
+      "name": "德莱文",
+      "price": 2,
+      "role": "mainCarry",
+      "starTarget": 3,
+      "items": [],
+      "traits": [
+       "战斗机甲",
+       "精英战士"
+      ]
+     },
+     {
+      "name": "孙悟空",
+      "price": 1,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "战斗机甲",
+       "护卫"
+      ]
+     },
+     {
+      "name": "瑟提",
+      "price": 4,
+      "role": "utility",
+      "starTarget": 2,
+      "items": [],
+      "traits": [
+       "战斗机甲",
+       "护卫"
+      ]
+     },
+     {
+      "name": "安妮",
+      "price": 2,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "小天才",
+       "福牛守护者",
+       "灵能使"
+      ]
+     },
+     {
+      "name": "拉克丝",
+      "price": 1,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "星之守护者",
+       "灵能使"
+      ]
+     },
+     {
+      "name": "加里奥",
+      "price": 1,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "平民英雄",
        "吉祥物"
+      ]
+     },
+     {
+      "name": "菲奥娜",
+      "price": 2,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "福牛守护者",
+       "决斗大师"
+      ]
+     }
+    ],
+    "activeTraits": [
+     {
+      "count": 3,
+      "name": "战斗机甲",
+      "label": "3战斗机甲"
+     },
+     {
+      "count": 2,
+      "name": "灵能使",
+      "label": "2灵能使"
+     },
+     {
+      "count": 2,
+      "name": "护卫",
+      "label": "2护卫"
+     },
+     {
+      "count": 2,
+      "name": "福牛守护者",
+      "label": "2福牛守护者"
+     }
+    ],
+    "items": [
+     {
+      "name": "最后的轻语",
+      "holder": "德莱文",
+      "role": "mainCarry",
+      "components": [
+       "反曲之弓",
+       "拳套"
+      ]
+     },
+     {
+      "name": "鬼索的狂暴之刃",
+      "holder": "德莱文",
+      "role": "mainCarry",
+      "components": [
+       "反曲之弓",
+       "无用大棒"
+      ]
+     },
+     {
+      "name": "卢安娜的飓风",
+      "holder": "德莱文",
+      "role": "mainCarry",
+      "components": [
+       "反曲之弓",
+       "负极斗篷"
+      ]
+     },
+     {
+      "name": "最后的轻语",
+      "holder": "德莱文",
+      "role": "route",
+      "components": [
+       "反曲之弓",
+       "拳套"
+      ]
+     },
+     {
+      "name": "鬼索的狂暴之刃",
+      "holder": "德莱文",
+      "role": "route",
+      "components": [
+       "反曲之弓",
+       "无用大棒"
+      ]
+     },
+     {
+      "name": "卢安娜的飓风",
+      "holder": "德莱文",
+      "role": "route",
+      "components": [
+       "反曲之弓",
+       "负极斗篷"
+      ]
+     }
+    ]
+   },
+   "primePlan": {
+    "source": "mecha_prime_results.json",
+    "sideOutputFactor": 0.35,
+    "chain": [
+     {
+      "stage": "前期",
+      "holder": "德莱文",
+      "condition": "前期棋盘中德莱文至尊总输出437，为本档第一。",
+      "evidence": "德莱文2星 437 vs #2 贾克斯 395"
+     },
+     {
+      "stage": "中期",
+      "holder": "贾克斯",
+      "condition": "中期棋盘中贾克斯至尊总输出597，优先承接。",
+      "evidence": "贾克斯2星 597 vs #2 德莱文 514"
+     },
+     {
+      "stage": "终局",
+      "holder": "蕾欧娜",
+      "condition": "后期棋盘中蕾欧娜至尊总输出1253，但需结合专项星级触发。",
+      "evidence": "蕾欧娜2星 1253 vs #2 贾克斯 1079"
+     }
+    ],
+    "rules": [
+     {
+      "id": "stage-start",
+      "priority": 10,
+      "holder": "德莱文",
+      "text": "至尊给德莱文",
+      "when": {
+       "hasUnits": [
+        "德莱文"
+       ]
+      },
+      "evidence": "德莱文2星 437 vs #2 贾克斯 395"
+     },
+     {
+      "id": "mid-carry-online",
+      "priority": 30,
+      "holder": "贾克斯",
+      "text": "至尊转贾克斯",
+      "when": {
+       "unitStars": {
+        "贾克斯": 2
+       }
+      },
+      "evidence": "贾克斯2星三件专项 812，高于蕾欧娜1星青龙刀 421"
+     },
+     {
+      "id": "late-leona-two-star",
+      "priority": 50,
+      "holder": "蕾欧娜",
+      "text": "至尊转蕾欧娜",
+      "when": {
+       "levelGte": 9,
+       "unitStars": {
+        "蕾欧娜": 2
+       }
+      },
+      "evidence": "蕾欧娜2星三件 1253 > 贾克斯3星三件 1191；仅青龙刀时 542 vs 贾克斯2星三件 812，不建议裸转"
+     }
+    ],
+    "conclusion": [
+     "德莱文负责前期，贾克斯二星后接管中期。",
+     "蕾欧娜至少二星且上9后接至尊，但只有青龙刀时仍弱于贾克斯二星三件，交接后要补输出装。",
+     "完全成型时蕾欧娜2星三件高于贾克斯3星三件，后期可以转上限。"
+    ]
+   }
+  },
+  {
+   "id": "meta-进入夜晚-薇恩-3",
+   "source": "meta-solver",
+   "quality": "S",
+   "name": "进入夜晚薇恩机制路线",
+   "family": "进入夜晚·薇恩",
+   "goal": "反事实模拟净提升10.3%",
+   "earlyUnits": [
+    "薇恩",
+    "布里茨",
+    "加里奥",
+    "普朗克",
+    "德莱文"
+   ],
+   "midUnits": [
+    "薇恩",
+    "布里茨",
+    "加里奥",
+    "普朗克",
+    "德莱文",
+    "李青",
+    "墨菲特"
+   ],
+   "coreUnits": [
+    "薇恩",
+    "普朗克",
+    "李青",
+    "墨菲特",
+    "德莱文",
+    "加里奥",
+    "布里茨"
+   ],
+   "earlyTraits": [
+    "3超级英雄",
+    "2决斗大师",
+    "2吉祥物",
+    "2斗士"
+   ],
+   "componentPrefs": [
+    "反曲之弓",
+    "锁子甲",
+    "暴风之剑",
+    "无用大棒"
+   ],
+   "completedPrefs": [
+    "泰坦的坚决",
+    "锐利之刃",
+    "鬼索的狂暴之刃"
+   ],
+   "augmentPrefs": [
+    "进入夜晚"
+   ],
+   "augmentCats": [
+    "英雄强化"
+   ],
+   "monsterPrefs": [],
+   "route": [
+    "拿到进入夜晚后锁定薇恩",
+    "7级围绕薇恩完成算法棋盘",
+    "按来牌替换至薇恩、普朗克、李青、墨菲特、德莱文、加里奥、布里茨"
+   ],
+   "boardNote": "算法自动生成；官方文本数值；叠层折算1层。",
+   "officialText": {
+    "early": "硬门槛：进入夜晚+薇恩。",
+    "equipment": "薇恩模型三件：泰坦的坚决、锐利之刃、鬼索的狂暴之刃。",
+    "hex": "无强化1453分，有强化1602分，净提升10.3%。",
+    "enemy": "机制置信度80%；未量化控制、站位和击杀归属误差。"
+   },
+   "actions": {
+    "keep": [
+     "薇恩",
+     "普朗克",
+     "李青",
+     "墨菲特",
+     "德莱文",
+     "加里奥",
+     "布里茨"
+    ],
+    "item": "装备往泰坦的坚决、锐利之刃、鬼索的狂暴之刃靠。",
+    "checkpoint": "进入夜晚场景总分1602，比同棋盘基线高10.3%。",
+    "stopLoss": "缺进入夜晚或薇恩不启动。"
+   },
+   "role": "普攻",
+   "strengthPrior": 1,
+   "mechanic": {
+    "type": "meta-counterfactual",
+    "requiredAugment": "进入夜晚",
+    "requiredUnits": [
+     "薇恩"
+    ],
+    "matchBonus": 12,
+    "missingPenalty": 80,
+    "text": "官方文本数值；叠层折算1层；反事实+10.3%"
+   },
+   "routeProfile": {
+    "source": "template",
+    "mainCarry": {
+     "name": "薇恩",
+     "starTarget": 3,
+     "items": [
+      "泰坦的坚决",
+      "锐利之刃",
+      "鬼索的狂暴之刃"
+     ]
+    },
+    "units": [
+     {
+      "name": "薇恩",
+      "price": 3,
+      "role": "mainCarry",
+      "starTarget": 3,
+      "items": [],
+      "traits": [
+       "幻灵战队",
+       "决斗大师",
+       "情报特工"
       ]
      },
      {
@@ -7457,18 +8318,59 @@
       ]
      },
      {
-      "name": "金克丝",
+      "name": "李青",
       "price": 2,
-      "role": "mainCarry",
-      "starTarget": 3,
-      "items": [
-       "蓝霸符",
-       "朔极之矛",
-       "珠光护手"
-      ],
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
       "traits": [
-       "幻灵战队",
-       "淘气包"
+       "超级英雄",
+       "爱心使者",
+       "斗士"
+      ]
+     },
+     {
+      "name": "墨菲特",
+      "price": 2,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "超级英雄",
+       "吉祥物"
+      ]
+     },
+     {
+      "name": "德莱文",
+      "price": 2,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "战斗机甲",
+       "精英战士"
+      ]
+     },
+     {
+      "name": "加里奥",
+      "price": 1,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "平民英雄",
+       "吉祥物"
+      ]
+     },
+     {
+      "name": "布里茨",
+      "price": 1,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "AI程序",
+       "斗士"
       ]
      }
     ],
@@ -7480,28 +8382,818 @@
      },
      {
       "count": 2,
-      "name": "斗士",
-      "label": "2斗士"
+      "name": "决斗大师",
+      "label": "2决斗大师"
      },
      {
-      "count": 3,
-      "name": "幻灵战队",
-      "label": "3幻灵战队"
+      "count": 2,
+      "name": "吉祥物",
+      "label": "2吉祥物"
+     },
+     {
+      "count": 2,
+      "name": "斗士",
+      "label": "2斗士"
      }
     ],
     "items": [
      {
-      "name": "蓝霸符",
-      "holder": "金克丝",
+      "name": "泰坦的坚决",
+      "holder": "薇恩",
       "role": "mainCarry",
       "components": [
-       "女神之泪",
-       "女神之泪"
+       "反曲之弓",
+       "锁子甲"
       ]
      },
      {
+      "name": "锐利之刃",
+      "holder": "薇恩",
+      "role": "mainCarry",
+      "components": [
+       "暴风之剑",
+       "暴风之剑"
+      ]
+     },
+     {
+      "name": "鬼索的狂暴之刃",
+      "holder": "薇恩",
+      "role": "mainCarry",
+      "components": [
+       "反曲之弓",
+       "无用大棒"
+      ]
+     },
+     {
+      "name": "泰坦的坚决",
+      "holder": "薇恩",
+      "role": "route",
+      "components": [
+       "反曲之弓",
+       "锁子甲"
+      ]
+     },
+     {
+      "name": "锐利之刃",
+      "holder": "薇恩",
+      "role": "route",
+      "components": [
+       "暴风之剑",
+       "暴风之剑"
+      ]
+     },
+     {
+      "name": "鬼索的狂暴之刃",
+      "holder": "薇恩",
+      "role": "route",
+      "components": [
+       "反曲之弓",
+       "无用大棒"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "meta-适应性防守-卡蜜尔-4",
+   "source": "meta-solver",
+   "quality": "S",
+   "name": "适应性防守卡蜜尔机制路线",
+   "family": "适应性防守·卡蜜尔",
+   "goal": "反事实模拟净提升9.7%",
+   "earlyUnits": [
+    "卡蜜尔",
+    "布里茨",
+    "加里奥",
+    "泰隆",
+    "德莱文"
+   ],
+   "midUnits": [
+    "卡蜜尔",
+    "布里茨",
+    "加里奥",
+    "泰隆",
+    "德莱文",
+    "李青"
+   ],
+   "coreUnits": [
+    "卡蜜尔",
+    "泰隆",
+    "佛耶戈",
+    "德莱文",
+    "布里茨",
+    "李青",
+    "加里奥"
+   ],
+   "earlyTraits": [
+    "3混沌战士",
+    "2爱心使者",
+    "2斗士",
+    "2福牛守护者"
+   ],
+   "componentPrefs": [
+    "反曲之弓",
+    "拳套",
+    "无用大棒",
+    "负极斗篷"
+   ],
+   "completedPrefs": [
+    "最后的轻语",
+    "鬼索的狂暴之刃",
+    "卢安娜的飓风"
+   ],
+   "augmentPrefs": [
+    "适应性防守"
+   ],
+   "augmentCats": [
+    "英雄强化"
+   ],
+   "monsterPrefs": [],
+   "route": [
+    "拿到适应性防守后锁定卡蜜尔",
+    "7级围绕卡蜜尔完成算法棋盘",
+    "按来牌替换至卡蜜尔、泰隆、佛耶戈、德莱文、布里茨、李青、加里奥"
+   ],
+   "boardNote": "算法自动生成；官方文本数值；叠层折算1层。",
+   "officialText": {
+    "early": "硬门槛：适应性防守+卡蜜尔。",
+    "equipment": "卡蜜尔模型三件：最后的轻语、鬼索的狂暴之刃、卢安娜的飓风。",
+    "hex": "无强化1414分，有强化1551分，净提升9.7%。",
+    "enemy": "机制置信度80%；未量化控制、站位和击杀归属误差。"
+   },
+   "actions": {
+    "keep": [
+     "卡蜜尔",
+     "泰隆",
+     "佛耶戈",
+     "德莱文",
+     "布里茨",
+     "李青",
+     "加里奥"
+    ],
+    "item": "装备往最后的轻语、鬼索的狂暴之刃、卢安娜的飓风靠。",
+    "checkpoint": "适应性防守场景总分1551，比同棋盘基线高9.7%。",
+    "stopLoss": "缺适应性防守或卡蜜尔不启动。"
+   },
+   "role": "普攻",
+   "strengthPrior": 0.9,
+   "mechanic": {
+    "type": "meta-counterfactual",
+    "requiredAugment": "适应性防守",
+    "requiredUnits": [
+     "卡蜜尔"
+    ],
+    "matchBonus": 12,
+    "missingPenalty": 80,
+    "text": "官方文本数值；叠层折算1层；反事实+9.7%"
+   },
+   "routeProfile": {
+    "source": "template",
+    "mainCarry": {
+     "name": "卡蜜尔",
+     "starTarget": 3,
+     "items": [
+      "最后的轻语",
+      "鬼索的狂暴之刃",
+      "卢安娜的飓风"
+     ]
+    },
+    "units": [
+     {
+      "name": "卡蜜尔",
+      "price": 2,
+      "role": "mainCarry",
+      "starTarget": 3,
+      "items": [],
+      "traits": [
+       "AI程序",
+       "混沌战士"
+      ]
+     },
+     {
+      "name": "泰隆",
+      "price": 1,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "福牛守护者",
+       "混沌战士"
+      ]
+     },
+     {
+      "name": "佛耶戈",
+      "price": 4,
+      "role": "utility",
+      "starTarget": 2,
+      "items": [],
+      "traits": [
+       "福牛守护者",
+       "混沌战士",
+       "爱心使者"
+      ]
+     },
+     {
+      "name": "德莱文",
+      "price": 2,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "战斗机甲",
+       "精英战士"
+      ]
+     },
+     {
+      "name": "布里茨",
+      "price": 1,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "AI程序",
+       "斗士"
+      ]
+     },
+     {
+      "name": "李青",
+      "price": 2,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "超级英雄",
+       "爱心使者",
+       "斗士"
+      ]
+     },
+     {
+      "name": "加里奥",
+      "price": 1,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "平民英雄",
+       "吉祥物"
+      ]
+     }
+    ],
+    "activeTraits": [
+     {
+      "count": 3,
+      "name": "混沌战士",
+      "label": "3混沌战士"
+     },
+     {
+      "count": 2,
+      "name": "爱心使者",
+      "label": "2爱心使者"
+     },
+     {
+      "count": 2,
+      "name": "斗士",
+      "label": "2斗士"
+     },
+     {
+      "count": 2,
+      "name": "福牛守护者",
+      "label": "2福牛守护者"
+     }
+    ],
+    "items": [
+     {
+      "name": "最后的轻语",
+      "holder": "卡蜜尔",
+      "role": "mainCarry",
+      "components": [
+       "反曲之弓",
+       "拳套"
+      ]
+     },
+     {
+      "name": "鬼索的狂暴之刃",
+      "holder": "卡蜜尔",
+      "role": "mainCarry",
+      "components": [
+       "反曲之弓",
+       "无用大棒"
+      ]
+     },
+     {
+      "name": "卢安娜的飓风",
+      "holder": "卡蜜尔",
+      "role": "mainCarry",
+      "components": [
+       "反曲之弓",
+       "负极斗篷"
+      ]
+     },
+     {
+      "name": "最后的轻语",
+      "holder": "卡蜜尔",
+      "role": "route",
+      "components": [
+       "反曲之弓",
+       "拳套"
+      ]
+     },
+     {
+      "name": "鬼索的狂暴之刃",
+      "holder": "卡蜜尔",
+      "role": "route",
+      "components": [
+       "反曲之弓",
+       "无用大棒"
+      ]
+     },
+     {
+      "name": "卢安娜的飓风",
+      "holder": "卡蜜尔",
+      "role": "route",
+      "components": [
+       "反曲之弓",
+       "负极斗篷"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "meta-浪客精神-亚索-5",
+   "source": "meta-solver",
+   "quality": "S",
+   "name": "浪客精神亚索机制路线",
+   "family": "浪客精神·亚索",
+   "goal": "反事实模拟净提升8.7%",
+   "earlyUnits": [
+    "亚索",
+    "艾希",
+    "雷克顿",
+    "普朗克",
+    "德莱文"
+   ],
+   "midUnits": [
+    "亚索",
+    "艾希",
+    "雷克顿",
+    "普朗克",
+    "德莱文",
+    "李青",
+    "墨菲特"
+   ],
+   "coreUnits": [
+    "亚索",
+    "普朗克",
+    "李青",
+    "墨菲特",
+    "德莱文",
+    "雷克顿",
+    "艾希"
+   ],
+   "earlyTraits": [
+    "3超级英雄",
+    "3源计划：激光特工",
+    "2决斗大师",
+    "2斗士"
+   ],
+   "componentPrefs": [
+    "反曲之弓",
+    "锁子甲",
+    "无用大棒",
+    "负极斗篷"
+   ],
+   "completedPrefs": [
+    "泰坦的坚决",
+    "鬼索的狂暴之刃",
+    "卢安娜的飓风"
+   ],
+   "augmentPrefs": [
+    "浪客精神"
+   ],
+   "augmentCats": [
+    "英雄强化"
+   ],
+   "monsterPrefs": [],
+   "route": [
+    "拿到浪客精神后锁定亚索",
+    "7级围绕亚索完成算法棋盘",
+    "按来牌替换至亚索、普朗克、李青、墨菲特、德莱文、雷克顿、艾希"
+   ],
+   "boardNote": "算法自动生成；官方文本数值；叠层折算1层。",
+   "officialText": {
+    "early": "硬门槛：浪客精神+亚索。",
+    "equipment": "亚索模型三件：泰坦的坚决、鬼索的狂暴之刃、卢安娜的飓风。",
+    "hex": "无强化1422分，有强化1546分，净提升8.7%。",
+    "enemy": "机制置信度80%；未量化控制、站位和击杀归属误差。"
+   },
+   "actions": {
+    "keep": [
+     "亚索",
+     "普朗克",
+     "李青",
+     "墨菲特",
+     "德莱文",
+     "雷克顿",
+     "艾希"
+    ],
+    "item": "装备往泰坦的坚决、鬼索的狂暴之刃、卢安娜的飓风靠。",
+    "checkpoint": "浪客精神场景总分1546，比同棋盘基线高8.7%。",
+    "stopLoss": "缺浪客精神或亚索不启动。"
+   },
+   "role": "普攻",
+   "strengthPrior": 0.9,
+   "mechanic": {
+    "type": "meta-counterfactual",
+    "requiredAugment": "浪客精神",
+    "requiredUnits": [
+     "亚索"
+    ],
+    "matchBonus": 12,
+    "missingPenalty": 80,
+    "text": "官方文本数值；叠层折算1层；反事实+8.7%"
+   },
+   "routeProfile": {
+    "source": "template",
+    "mainCarry": {
+     "name": "亚索",
+     "starTarget": 3,
+     "items": [
+      "泰坦的坚决",
+      "鬼索的狂暴之刃",
+      "卢安娜的飓风"
+     ]
+    },
+    "units": [
+     {
+      "name": "亚索",
+      "price": 2,
+      "role": "mainCarry",
+      "starTarget": 3,
+      "items": [],
+      "traits": [
+       "源计划：激光特工",
+       "决斗大师"
+      ]
+     },
+     {
+      "name": "普朗克",
+      "price": 1,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "超级英雄",
+       "决斗大师"
+      ]
+     },
+     {
+      "name": "李青",
+      "price": 2,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "超级英雄",
+       "爱心使者",
+       "斗士"
+      ]
+     },
+     {
+      "name": "墨菲特",
+      "price": 2,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "超级英雄",
+       "吉祥物"
+      ]
+     },
+     {
+      "name": "德莱文",
+      "price": 2,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "战斗机甲",
+       "精英战士"
+      ]
+     },
+     {
+      "name": "雷克顿",
+      "price": 1,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "源计划：激光特工",
+       "斗士"
+      ]
+     },
+     {
+      "name": "艾希",
+      "price": 1,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "源计划：激光特工",
+       "情报特工"
+      ]
+     }
+    ],
+    "activeTraits": [
+     {
+      "count": 3,
+      "name": "超级英雄",
+      "label": "3超级英雄"
+     },
+     {
+      "count": 3,
+      "name": "源计划：激光特工",
+      "label": "3源计划：激光特工"
+     },
+     {
+      "count": 2,
+      "name": "决斗大师",
+      "label": "2决斗大师"
+     },
+     {
+      "count": 2,
+      "name": "斗士",
+      "label": "2斗士"
+     }
+    ],
+    "items": [
+     {
+      "name": "泰坦的坚决",
+      "holder": "亚索",
+      "role": "mainCarry",
+      "components": [
+       "反曲之弓",
+       "锁子甲"
+      ]
+     },
+     {
+      "name": "鬼索的狂暴之刃",
+      "holder": "亚索",
+      "role": "mainCarry",
+      "components": [
+       "反曲之弓",
+       "无用大棒"
+      ]
+     },
+     {
+      "name": "卢安娜的飓风",
+      "holder": "亚索",
+      "role": "mainCarry",
+      "components": [
+       "反曲之弓",
+       "负极斗篷"
+      ]
+     },
+     {
+      "name": "泰坦的坚决",
+      "holder": "亚索",
+      "role": "route",
+      "components": [
+       "反曲之弓",
+       "锁子甲"
+      ]
+     },
+     {
+      "name": "鬼索的狂暴之刃",
+      "holder": "亚索",
+      "role": "route",
+      "components": [
+       "反曲之弓",
+       "无用大棒"
+      ]
+     },
+     {
+      "name": "卢安娜的飓风",
+      "holder": "亚索",
+      "role": "route",
+      "components": [
+       "反曲之弓",
+       "负极斗篷"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "meta-旺盛精力-悠米-6",
+   "source": "meta-solver",
+   "quality": "A",
+   "name": "旺盛精力悠米机制路线",
+   "family": "旺盛精力·悠米",
+   "goal": "反事实模拟净提升6.1%",
+   "earlyUnits": [
+    "悠米",
+    "加里奥",
+    "拉克丝",
+    "德莱文",
+    "芮尔"
+   ],
+   "midUnits": [
+    "悠米",
+    "加里奥",
+    "拉克丝",
+    "德莱文",
+    "芮尔",
+    "卡莎"
+   ],
+   "coreUnits": [
+    "悠米",
+    "加里奥",
+    "拉克丝",
+    "塔莉垭",
+    "德莱文",
+    "芮尔",
+    "卡莎"
+   ],
+   "earlyTraits": [
+    "5星之守护者",
+    "2灵能使",
+    "2吉祥物",
+    "1精英战士"
+   ],
+   "componentPrefs": [
+    "暴风之剑",
+    "女神之泪",
+    "无用大棒",
+    "反曲之弓"
+   ],
+   "completedPrefs": [
+    "朔极之矛",
+    "班克斯的魔法帽",
+    "鬼索的狂暴之刃"
+   ],
+   "augmentPrefs": [
+    "旺盛精力"
+   ],
+   "augmentCats": [
+    "英雄强化"
+   ],
+   "monsterPrefs": [],
+   "route": [
+    "拿到旺盛精力后锁定悠米",
+    "7级围绕悠米完成算法棋盘",
+    "按来牌替换至悠米、加里奥、拉克丝、塔莉垭、德莱文、芮尔、卡莎"
+   ],
+   "boardNote": "算法自动生成；官方文本数值；叠层折算1层。",
+   "officialText": {
+    "early": "硬门槛：旺盛精力+悠米。",
+    "equipment": "悠米模型三件：朔极之矛、班克斯的魔法帽、鬼索的狂暴之刃。",
+    "hex": "无强化1309分，有强化1389分，净提升6.1%。",
+    "enemy": "机制置信度80%；未量化控制、站位和击杀归属误差。"
+   },
+   "actions": {
+    "keep": [
+     "悠米",
+     "加里奥",
+     "拉克丝",
+     "塔莉垭",
+     "德莱文",
+     "芮尔",
+     "卡莎"
+    ],
+    "item": "装备往朔极之矛、班克斯的魔法帽、鬼索的狂暴之刃靠。",
+    "checkpoint": "旺盛精力场景总分1389，比同棋盘基线高6.1%。",
+    "stopLoss": "缺旺盛精力或悠米不启动。"
+   },
+   "role": "普攻",
+   "strengthPrior": 0.8,
+   "mechanic": {
+    "type": "meta-counterfactual",
+    "requiredAugment": "旺盛精力",
+    "requiredUnits": [
+     "悠米"
+    ],
+    "matchBonus": 12,
+    "missingPenalty": 80,
+    "text": "官方文本数值；叠层折算1层；反事实+6.1%"
+   },
+   "routeProfile": {
+    "source": "template",
+    "mainCarry": {
+     "name": "悠米",
+     "starTarget": 3,
+     "items": [
+      "朔极之矛",
+      "班克斯的魔法帽",
+      "鬼索的狂暴之刃"
+     ]
+    },
+    "units": [
+     {
+      "name": "悠米",
+      "price": 2,
+      "role": "mainCarry",
+      "starTarget": 3,
+      "items": [],
+      "traits": [
+       "星之守护者",
+       "吉祥物",
+       "爱心使者"
+      ]
+     },
+     {
+      "name": "加里奥",
+      "price": 1,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "平民英雄",
+       "吉祥物"
+      ]
+     },
+     {
+      "name": "拉克丝",
+      "price": 1,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "星之守护者",
+       "灵能使"
+      ]
+     },
+     {
+      "name": "塔莉垭",
+      "price": 4,
+      "role": "utility",
+      "starTarget": 2,
+      "items": [],
+      "traits": [
+       "星之守护者",
+       "灵能使"
+      ]
+     },
+     {
+      "name": "德莱文",
+      "price": 2,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "战斗机甲",
+       "精英战士"
+      ]
+     },
+     {
+      "name": "芮尔",
+      "price": 2,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "星之守护者",
+       "护卫"
+      ]
+     },
+     {
+      "name": "卡莎",
+      "price": 3,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "星之守护者",
+       "情报特工"
+      ]
+     }
+    ],
+    "activeTraits": [
+     {
+      "count": 5,
+      "name": "星之守护者",
+      "label": "5星之守护者"
+     },
+     {
+      "count": 2,
+      "name": "灵能使",
+      "label": "2灵能使"
+     },
+     {
+      "count": 2,
+      "name": "吉祥物",
+      "label": "2吉祥物"
+     },
+     {
+      "count": 1,
+      "name": "精英战士",
+      "label": "1精英战士"
+     }
+    ],
+    "items": [
+     {
       "name": "朔极之矛",
-      "holder": "金克丝",
+      "holder": "悠米",
       "role": "mainCarry",
       "components": [
        "暴风之剑",
@@ -7509,26 +9201,26 @@
       ]
      },
      {
-      "name": "珠光护手",
-      "holder": "金克丝",
+      "name": "班克斯的魔法帽",
+      "holder": "悠米",
       "role": "mainCarry",
       "components": [
        "无用大棒",
-       "拳套"
+       "无用大棒"
       ]
      },
      {
-      "name": "蓝霸符",
-      "holder": "金克丝",
-      "role": "route",
+      "name": "鬼索的狂暴之刃",
+      "holder": "悠米",
+      "role": "mainCarry",
       "components": [
-       "女神之泪",
-       "女神之泪"
+       "反曲之弓",
+       "无用大棒"
       ]
      },
      {
       "name": "朔极之矛",
-      "holder": "金克丝",
+      "holder": "悠米",
       "role": "route",
       "components": [
        "暴风之剑",
@@ -7536,12 +9228,548 @@
       ]
      },
      {
-      "name": "珠光护手",
-      "holder": "金克丝",
+      "name": "班克斯的魔法帽",
+      "holder": "悠米",
       "role": "route",
       "components": [
        "无用大棒",
+       "无用大棒"
+      ]
+     },
+     {
+      "name": "鬼索的狂暴之刃",
+      "holder": "悠米",
+      "role": "route",
+      "components": [
+       "反曲之弓",
+       "无用大棒"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "meta-姐妹-金克丝-7",
+   "source": "meta-solver",
+   "quality": "S",
+   "name": "姐妹金克丝机制路线",
+   "family": "姐妹·金克丝",
+   "goal": "反事实模拟净提升13.1%",
+   "earlyUnits": [
+    "金克丝",
+    "蔚",
+    "加里奥",
+    "凯尔"
+   ],
+   "midUnits": [
+    "金克丝",
+    "蔚",
+    "加里奥",
+    "凯尔",
+    "希维尔"
+   ],
+   "coreUnits": [
+    "金克丝",
+    "蔚",
+    "莎弥拉",
+    "凯尔",
+    "希维尔",
+    "艾克",
+    "加里奥"
+   ],
+   "earlyTraits": [
+    "3地下魔盗团",
+    "2平民英雄",
+    "2淘气包",
+    "2强袭枪手"
+   ],
+   "componentPrefs": [
+    "反曲之弓",
+    "锁子甲",
+    "负极斗篷",
+    "拳套",
+    "无用大棒"
+   ],
+   "completedPrefs": [
+    "泰坦的坚决",
+    "水银",
+    "鬼索的狂暴之刃"
+   ],
+   "augmentPrefs": [
+    "姐妹"
+   ],
+   "augmentCats": [
+    "英雄强化"
+   ],
+   "monsterPrefs": [],
+   "route": [
+    "拿到姐妹后锁定金克丝+蔚",
+    "7级围绕金克丝完成算法棋盘",
+    "按来牌替换至金克丝、蔚、莎弥拉、凯尔、希维尔、艾克、加里奥"
+   ],
+   "boardNote": "算法自动生成；17.6b公告：按20次击杀、每次+2%法强并触发额外导弹的中位状态。",
+   "officialText": {
+    "early": "硬门槛：姐妹+金克丝、蔚。",
+    "equipment": "金克丝模型三件：泰坦的坚决、水银、鬼索的狂暴之刃。",
+    "hex": "无强化1278分，有强化1446分，净提升13.1%。",
+    "enemy": "机制置信度72%；未量化控制、站位和击杀归属误差。"
+   },
+   "actions": {
+    "keep": [
+     "金克丝",
+     "蔚",
+     "莎弥拉",
+     "凯尔",
+     "希维尔",
+     "艾克",
+     "加里奥"
+    ],
+    "item": "装备往泰坦的坚决、水银、鬼索的狂暴之刃靠。",
+    "checkpoint": "姐妹场景总分1446，比同棋盘基线高13.1%。",
+    "stopLoss": "缺姐妹或金克丝、蔚不启动。"
+   },
+   "role": "普攻",
+   "strengthPrior": 0.9,
+   "mechanic": {
+    "type": "meta-counterfactual",
+    "requiredAugment": "姐妹",
+    "requiredUnits": [
+     "金克丝",
+     "蔚"
+    ],
+    "matchBonus": 13,
+    "missingPenalty": 80,
+    "text": "17.6b公告：按20次击杀、每次+2%法强并触发额外导弹的中位状态；反事实+13.1%"
+   },
+   "routeProfile": {
+    "source": "template",
+    "mainCarry": {
+     "name": "金克丝",
+     "starTarget": 3,
+     "items": [
+      "泰坦的坚决",
+      "水银",
+      "鬼索的狂暴之刃"
+     ]
+    },
+    "units": [
+     {
+      "name": "金克丝",
+      "price": 2,
+      "role": "mainCarry",
+      "starTarget": 3,
+      "items": [],
+      "traits": [
+       "幻灵战队",
+       "淘气包"
+      ]
+     },
+     {
+      "name": "蔚",
+      "price": 2,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "地下魔盗团",
+       "斗士",
+       "秘术卫士"
+      ]
+     },
+     {
+      "name": "莎弥拉",
+      "price": 4,
+      "role": "utility",
+      "starTarget": 2,
+      "items": [],
+      "traits": [
+       "地下魔盗团",
+       "强袭枪手",
+       "精英战士"
+      ]
+     },
+     {
+      "name": "凯尔",
+      "price": 1,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "地下魔盗团",
+       "决斗大师"
+      ]
+     },
+     {
+      "name": "希维尔",
+      "price": 2,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "平民英雄",
+       "强袭枪手"
+      ]
+     },
+     {
+      "name": "艾克",
+      "price": 4,
+      "role": "utility",
+      "starTarget": 2,
+      "items": [],
+      "traits": [
+       "星之守护者",
+       "淘气包",
+       "秘术卫士"
+      ]
+     },
+     {
+      "name": "加里奥",
+      "price": 1,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "平民英雄",
+       "吉祥物"
+      ]
+     }
+    ],
+    "activeTraits": [
+     {
+      "count": 3,
+      "name": "地下魔盗团",
+      "label": "3地下魔盗团"
+     },
+     {
+      "count": 2,
+      "name": "平民英雄",
+      "label": "2平民英雄"
+     },
+     {
+      "count": 2,
+      "name": "强袭枪手",
+      "label": "2强袭枪手"
+     }
+    ],
+    "items": [
+     {
+      "name": "泰坦的坚决",
+      "holder": "金克丝",
+      "role": "mainCarry",
+      "components": [
+       "反曲之弓",
+       "锁子甲"
+      ]
+     },
+     {
+      "name": "水银",
+      "holder": "金克丝",
+      "role": "mainCarry",
+      "components": [
+       "负极斗篷",
        "拳套"
+      ]
+     },
+     {
+      "name": "鬼索的狂暴之刃",
+      "holder": "金克丝",
+      "role": "mainCarry",
+      "components": [
+       "反曲之弓",
+       "无用大棒"
+      ]
+     },
+     {
+      "name": "泰坦的坚决",
+      "holder": "金克丝",
+      "role": "route",
+      "components": [
+       "反曲之弓",
+       "锁子甲"
+      ]
+     },
+     {
+      "name": "水银",
+      "holder": "金克丝",
+      "role": "route",
+      "components": [
+       "负极斗篷",
+       "拳套"
+      ]
+     },
+     {
+      "name": "鬼索的狂暴之刃",
+      "holder": "金克丝",
+      "role": "route",
+      "components": [
+       "反曲之弓",
+       "无用大棒"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "meta-咒能高涨-伊泽瑞尔-8",
+   "source": "meta-solver",
+   "quality": "S",
+   "name": "咒能高涨伊泽瑞尔机制路线",
+   "family": "咒能高涨·伊泽瑞尔",
+   "goal": "反事实模拟净提升27.7%",
+   "earlyUnits": [
+    "伊泽瑞尔",
+    "艾希",
+    "加里奥",
+    "芮尔"
+   ],
+   "midUnits": [
+    "伊泽瑞尔",
+    "艾希",
+    "加里奥",
+    "芮尔",
+    "悠米",
+    "卡莎",
+    "薇恩"
+   ],
+   "coreUnits": [
+    "伊泽瑞尔",
+    "薇恩",
+    "艾希",
+    "卡莎",
+    "加里奥",
+    "悠米",
+    "芮尔"
+   ],
+   "earlyTraits": [
+    "4情报特工",
+    "3星之守护者",
+    "2吉祥物",
+    "1平民英雄"
+   ],
+   "componentPrefs": [
+    "反曲之弓",
+    "锁子甲",
+    "负极斗篷",
+    "拳套",
+    "无用大棒"
+   ],
+   "completedPrefs": [
+    "泰坦的坚决",
+    "水银",
+    "鬼索的狂暴之刃"
+   ],
+   "augmentPrefs": [
+    "咒能高涨"
+   ],
+   "augmentCats": [
+    "英雄强化"
+   ],
+   "monsterPrefs": [],
+   "route": [
+    "拿到咒能高涨后锁定伊泽瑞尔",
+    "7级围绕伊泽瑞尔完成算法棋盘",
+    "按来牌替换至伊泽瑞尔、薇恩、艾希、卡莎、加里奥、悠米、芮尔"
+   ],
+   "boardNote": "算法自动生成；官方文本数值；叠层折算3层。",
+   "officialText": {
+    "early": "硬门槛：咒能高涨+伊泽瑞尔。",
+    "equipment": "伊泽瑞尔模型三件：泰坦的坚决、水银、鬼索的狂暴之刃。",
+    "hex": "无强化1241分，有强化1585分，净提升27.7%。",
+    "enemy": "机制置信度65%；未量化控制、站位和击杀归属误差。"
+   },
+   "actions": {
+    "keep": [
+     "伊泽瑞尔",
+     "薇恩",
+     "艾希",
+     "卡莎",
+     "加里奥",
+     "悠米",
+     "芮尔"
+    ],
+    "item": "装备往泰坦的坚决、水银、鬼索的狂暴之刃靠。",
+    "checkpoint": "咒能高涨场景总分1585，比同棋盘基线高27.7%。",
+    "stopLoss": "缺咒能高涨或伊泽瑞尔不启动。"
+   },
+   "role": "普攻",
+   "strengthPrior": 1,
+   "mechanic": {
+    "type": "meta-counterfactual",
+    "requiredAugment": "咒能高涨",
+    "requiredUnits": [
+     "伊泽瑞尔"
+    ],
+    "matchBonus": 28,
+    "missingPenalty": 80,
+    "text": "官方文本数值；叠层折算3层；反事实+27.7%"
+   },
+   "routeProfile": {
+    "source": "template",
+    "mainCarry": {
+     "name": "伊泽瑞尔",
+     "starTarget": 3,
+     "items": [
+      "泰坦的坚决",
+      "水银",
+      "鬼索的狂暴之刃"
+     ]
+    },
+    "units": [
+     {
+      "name": "伊泽瑞尔",
+      "price": 2,
+      "role": "mainCarry",
+      "starTarget": 3,
+      "items": [],
+      "traits": [
+       "地下魔盗团",
+       "情报特工"
+      ]
+     },
+     {
+      "name": "薇恩",
+      "price": 3,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "幻灵战队",
+       "决斗大师",
+       "情报特工"
+      ]
+     },
+     {
+      "name": "艾希",
+      "price": 1,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "源计划：激光特工",
+       "情报特工"
+      ]
+     },
+     {
+      "name": "卡莎",
+      "price": 3,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "星之守护者",
+       "情报特工"
+      ]
+     },
+     {
+      "name": "加里奥",
+      "price": 1,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "平民英雄",
+       "吉祥物"
+      ]
+     },
+     {
+      "name": "悠米",
+      "price": 2,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "星之守护者",
+       "吉祥物",
+       "爱心使者"
+      ]
+     },
+     {
+      "name": "芮尔",
+      "price": 2,
+      "role": "utility",
+      "starTarget": 1,
+      "items": [],
+      "traits": [
+       "星之守护者",
+       "护卫"
+      ]
+     }
+    ],
+    "activeTraits": [
+     {
+      "count": 4,
+      "name": "情报特工",
+      "label": "4情报特工"
+     },
+     {
+      "count": 3,
+      "name": "星之守护者",
+      "label": "3星之守护者"
+     },
+     {
+      "count": 2,
+      "name": "吉祥物",
+      "label": "2吉祥物"
+     },
+     {
+      "count": 1,
+      "name": "平民英雄",
+      "label": "1平民英雄"
+     }
+    ],
+    "items": [
+     {
+      "name": "泰坦的坚决",
+      "holder": "伊泽瑞尔",
+      "role": "mainCarry",
+      "components": [
+       "反曲之弓",
+       "锁子甲"
+      ]
+     },
+     {
+      "name": "水银",
+      "holder": "伊泽瑞尔",
+      "role": "mainCarry",
+      "components": [
+       "负极斗篷",
+       "拳套"
+      ]
+     },
+     {
+      "name": "鬼索的狂暴之刃",
+      "holder": "伊泽瑞尔",
+      "role": "mainCarry",
+      "components": [
+       "反曲之弓",
+       "无用大棒"
+      ]
+     },
+     {
+      "name": "泰坦的坚决",
+      "holder": "伊泽瑞尔",
+      "role": "route",
+      "components": [
+       "反曲之弓",
+       "锁子甲"
+      ]
+     },
+     {
+      "name": "水银",
+      "holder": "伊泽瑞尔",
+      "role": "route",
+      "components": [
+       "负极斗篷",
+       "拳套"
+      ]
+     },
+     {
+      "name": "鬼索的狂暴之刃",
+      "holder": "伊泽瑞尔",
+      "role": "route",
+      "components": [
+       "反曲之弓",
+       "无用大棒"
       ]
      }
     ]
@@ -28447,7 +30675,7 @@
      ]
     }
    ],
-   "researchChecked": 8
+   "researchChecked": 7
   }
  },
  "assumptions": [

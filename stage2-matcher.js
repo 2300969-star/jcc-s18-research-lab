@@ -32,7 +32,7 @@ const avg = arr => arr.length ? arr.reduce((s, x) => s + x, 0) / arr.length : 0;
 const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
 const modelResults = readOptional('model_results.json') || {};
 const mechaPrimeResults = readOptional('mecha_prime_results.json') || null;
-const jinxSistersResults = readOptional('jinx_sisters_results.json') || null;
+const metaDiscoveryResults = readOptional('meta_discovery_results.json') || null;
 const mechaPrimeNames = new Set(((mechaPrimeResults && mechaPrimeResults.mechaMembers) || []).map(x => x.name));
 
 const COMPONENTS = [
@@ -725,7 +725,9 @@ const manualTemplates = [
     },
   },
 ];
-if (jinxSistersResults && jinxSistersResults.route) manualTemplates.push(jinxSistersResults.route);
+if (metaDiscoveryResults && Array.isArray(metaDiscoveryResults.routes)) {
+  manualTemplates.push(...metaDiscoveryResults.routes);
+}
 manualTemplates.forEach(t => { t.role = roleOf(t); });
 
 function optionCounts(templates, field) {
