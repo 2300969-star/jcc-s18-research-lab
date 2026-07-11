@@ -1,0 +1,1961 @@
+{
+ "version": "17.17.6b-S18",
+ "generated": "2026-07-12",
+ "sampleSize": 5000,
+ "seed": 20260712,
+ "methodology": {
+  "sampleSize": 5000,
+  "seed": 20260712,
+  "method": "同随机种子蒙特卡洛：经济、商店费用运气、三类装备供给、四类对手与转型节奏联合扰动。",
+  "utilityFormula": "U=基础强度+19×搜卡就绪+14×装备就绪+8×装备方向+9×转型平滑+7×前排+8×对局适配-依赖风险+噪声",
+  "robustnessFormula": "R=40%×前25%进入率+20%×前5率+25%×(1-失速率)+15%×尾部归一值",
+  "decisionFormula": "现场最终分=资产/概率/抗脆弱分+clamp((R-50)/10,-5,+5)",
+  "failureThreshold": "样本效用<105记为模型失速；不等同真实第八率。",
+  "ceiling": "L2.5；未接入真实战绩留出集，不授予L3/L4。"
+ },
+ "certificates": [
+  {
+   "templateId": "meta-完美的日炎耀斑-蕾欧娜-0",
+   "templateName": "完美的日炎耀斑蕾欧娜机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L2.5 模型扰动稳健",
+   "priorPoints": 5,
+   "metrics": {
+    "meanUtility": 127.7,
+    "interval95": [
+     116.4,
+     138.8
+    ],
+    "cvar10": 117.6,
+    "top1Rate": 77,
+    "top5Rate": 98.8,
+    "topQuartileRate": 95.9,
+    "failureRate": 0,
+    "robustness": 96.7
+   },
+   "drivers": [
+    "转型重合67%",
+    "装备弹性96%",
+    "9级追蕾欧娜2星"
+   ],
+   "dependencies": [
+    "符文:完美的日炎耀斑",
+    "机制棋子:蕾欧娜",
+    "蕾欧娜2星",
+    "三件套:朔极之矛+水银+鬼索的狂暴之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1378",
+   "templateName": "95秘卫枪手3秘书卫士2福牛守护者",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L2.5 模型扰动稳健",
+   "priorPoints": 4,
+   "metrics": {
+    "meanUtility": 124,
+    "interval95": [
+     112.4,
+     135.3
+    ],
+    "cvar10": 113.5,
+    "top1Rate": 13.9,
+    "top5Rate": 67.1,
+    "topQuartileRate": 92.9,
+    "failureRate": 0,
+    "robustness": 86.6
+   },
+   "drivers": [
+    "转型重合12%",
+    "装备弹性72%",
+    "8级追莎弥拉2星"
+   ],
+   "dependencies": [
+    "莎弥拉2星",
+    "三件套:巨人捕手+卢安娜的飓风+锐利之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1406",
+   "templateName": "情报特工怪兽卡莎4情报特工3怪兽",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L2.5 模型扰动稳健",
+   "priorPoints": 4,
+   "metrics": {
+    "meanUtility": 123.8,
+    "interval95": [
+     113.2,
+     134.4
+    ],
+    "cvar10": 114.3,
+    "top1Rate": 18.6,
+    "top5Rate": 62.3,
+    "topQuartileRate": 93.6,
+    "failureRate": 0,
+    "robustness": 86.5
+   },
+   "drivers": [
+    "转型重合55%",
+    "装备弹性86%",
+    "7级追卡莎3星"
+   ],
+   "dependencies": [
+    "卡莎3星",
+    "三件套:巨人捕手+斯塔缇克电刃+海克斯科技枪刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1571",
+   "templateName": "机甲秘术枪手3战斗机甲2枪手2吉祥物",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L2.5 模型扰动稳健",
+   "priorPoints": 4,
+   "metrics": {
+    "meanUtility": 123.7,
+    "interval95": [
+     112.2,
+     135.5
+    ],
+    "cvar10": 113.2,
+    "top1Rate": 23.8,
+    "top5Rate": 60.5,
+    "topQuartileRate": 94.1,
+    "failureRate": 0,
+    "robustness": 85.7
+   },
+   "drivers": [
+    "转型重合17%",
+    "装备弹性86%",
+    "9级追厄加特2星"
+   ],
+   "dependencies": [
+    "厄加特2星",
+    "三件套:最后的轻语+卢安娜的飓风+锐利之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1338",
+   "templateName": "福牛混沌九五4福牛守护者3混沌战士2吉祥物",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L2.5 模型扰动稳健",
+   "priorPoints": 3,
+   "metrics": {
+    "meanUtility": 123.3,
+    "interval95": [
+     111.7,
+     134
+    ],
+    "cvar10": 113,
+    "top1Rate": 14,
+    "top5Rate": 59.3,
+    "topQuartileRate": 91.3,
+    "failureRate": 0.1,
+    "robustness": 84.2
+   },
+   "drivers": [
+    "转型重合17%",
+    "装备弹性86%",
+    "8级追佛耶戈2星"
+   ],
+   "dependencies": [
+    "佛耶戈2星",
+    "三件套:珠光护手+汲取剑+正义之手"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1294",
+   "templateName": "鸟盾劫6决斗大师3源计划特工3黑客",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L2.5 模型扰动稳健",
+   "priorPoints": 3,
+   "metrics": {
+    "meanUtility": 122.5,
+    "interval95": [
+     110.8,
+     133.3
+    ],
+    "cvar10": 112,
+    "top1Rate": 5.5,
+    "top5Rate": 51.1,
+    "topQuartileRate": 87.2,
+    "failureRate": 0.1,
+    "robustness": 80.3
+   },
+   "drivers": [
+    "转型重合44%",
+    "装备弹性100%",
+    "8级追劫2星"
+   ],
+   "dependencies": [
+    "劫2星",
+    "三件套:卢安娜的飓风"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1570",
+   "templateName": "小天才九五5小天才2福牛守护者2吉祥物",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L2.5 模型扰动稳健",
+   "priorPoints": 3,
+   "metrics": {
+    "meanUtility": 121,
+    "interval95": [
+     111.6,
+     130.8
+    ],
+    "cvar10": 112.4,
+    "top1Rate": 6.7,
+    "top5Rate": 36.8,
+    "topQuartileRate": 88,
+    "failureRate": 0,
+    "robustness": 78
+   },
+   "drivers": [
+    "转型重合33%",
+    "装备弹性72%",
+    "7级追佐伊3星"
+   ],
+   "dependencies": [
+    "佐伊3星",
+    "三件套:蓝霸符+珠光护手+班克斯的魔法帽"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1402",
+   "templateName": "登神决斗天使6决斗大师3源计划",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L2.5 模型扰动稳健",
+   "priorPoints": 2,
+   "metrics": {
+    "meanUtility": 120.1,
+    "interval95": [
+     108.1,
+     132.2
+    ],
+    "cvar10": 109.3,
+    "top1Rate": 5.1,
+    "top5Rate": 30.9,
+    "topQuartileRate": 76,
+    "failureRate": 0.5,
+    "robustness": 70
+   },
+   "drivers": [
+    "转型重合43%",
+    "装备弹性86%",
+    "5级追凯尔3星"
+   ],
+   "dependencies": [
+    "凯尔3星",
+    "三件套:卢安娜的飓风+无尽之刃+最后的轻语"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1379",
+   "templateName": "怪兽厄运小姐8怪兽1精英战士",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L2.5 模型扰动稳健",
+   "priorPoints": 2,
+   "metrics": {
+    "meanUtility": 119.7,
+    "interval95": [
+     108.3,
+     130.5
+    ],
+    "cvar10": 109.4,
+    "top1Rate": 3.6,
+    "top5Rate": 25,
+    "topQuartileRate": 77.9,
+    "failureRate": 0.4,
+    "robustness": 69.7
+   },
+   "drivers": [
+    "转型重合28%",
+    "装备弹性72%",
+    "8级追厄运小姐2星"
+   ],
+   "dependencies": [
+    "厄运小姐2星",
+    "三件套:朔极之矛+珠光护手+班克斯的魔法帽"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "meta-咒能高涨-伊泽瑞尔-8",
+   "templateName": "咒能高涨伊泽瑞尔机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L2 模型候选",
+   "priorPoints": 2,
+   "metrics": {
+    "meanUtility": 120.5,
+    "interval95": [
+     109.8,
+     131.4
+    ],
+    "cvar10": 110.9,
+    "top1Rate": 2.1,
+    "top5Rate": 84.2,
+    "topQuartileRate": 38.3,
+    "failureRate": 0.1,
+    "robustness": 66.7
+   },
+   "drivers": [
+    "转型重合79%",
+    "装备弹性86%",
+    "6级追伊泽瑞尔3星"
+   ],
+   "dependencies": [
+    "符文:咒能高涨",
+    "机制棋子:伊泽瑞尔",
+    "伊泽瑞尔3星",
+    "三件套:泰坦的坚决+水银+鬼索的狂暴之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1269",
+   "templateName": "九五平民枪手3平民英雄2枪手2吉祥物",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L2.5 模型扰动稳健",
+   "priorPoints": 2,
+   "metrics": {
+    "meanUtility": 119.4,
+    "interval95": [
+     108.3,
+     130.7
+    ],
+    "cvar10": 109.3,
+    "top1Rate": 2.5,
+    "top5Rate": 22.9,
+    "topQuartileRate": 70.8,
+    "failureRate": 0.5,
+    "robustness": 66.3
+   },
+   "drivers": [
+    "转型重合27%",
+    "装备弹性86%",
+    "9级追厄斐琉斯2星"
+   ],
+   "dependencies": [
+    "厄斐琉斯2星",
+    "三件套:卢安娜的飓风+锐利之刃+鬼索的狂暴之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "meta-姐妹-金克丝-7",
+   "templateName": "姐妹金克丝机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L2 模型候选",
+   "priorPoints": 1,
+   "metrics": {
+    "meanUtility": 119.6,
+    "interval95": [
+     109.1,
+     130.6
+    ],
+    "cvar10": 110,
+    "top1Rate": 9.2,
+    "top5Rate": 58,
+    "topQuartileRate": 45.9,
+    "failureRate": 0.3,
+    "robustness": 63.9
+   },
+   "drivers": [
+    "转型重合76%",
+    "装备弹性86%",
+    "6级追金克丝3星"
+   ],
+   "dependencies": [
+    "符文:姐妹",
+    "机制棋子:金克丝+蔚",
+    "金克丝3星",
+    "三件套:泰坦的坚决+水银+鬼索的狂暴之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "meta-德莱文联盟-德莱文-2",
+   "templateName": "德莱文联盟德莱文机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L2 模型候选",
+   "priorPoints": 1,
+   "metrics": {
+    "meanUtility": 119.1,
+    "interval95": [
+     108.3,
+     130
+    ],
+    "cvar10": 109.4,
+    "top1Rate": 8.4,
+    "top5Rate": 55.1,
+    "topQuartileRate": 41.1,
+    "failureRate": 0.5,
+    "robustness": 61
+   },
+   "drivers": [
+    "转型重合85%",
+    "装备弹性72%",
+    "6级追德莱文3星"
+   ],
+   "dependencies": [
+    "符文:德莱文联盟",
+    "机制棋子:德莱文",
+    "德莱文3星",
+    "三件套:最后的轻语+鬼索的狂暴之刃+卢安娜的飓风"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "meta-进入夜晚-薇恩-3",
+   "templateName": "进入夜晚薇恩机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L2 模型候选",
+   "priorPoints": 1,
+   "metrics": {
+    "meanUtility": 119,
+    "interval95": [
+     108.1,
+     129.9
+    ],
+    "cvar10": 109.2,
+    "top1Rate": 1.4,
+    "top5Rate": 64.6,
+    "topQuartileRate": 36.4,
+    "failureRate": 0.4,
+    "robustness": 60.9
+   },
+   "drivers": [
+    "转型重合86%",
+    "装备弹性86%",
+    "7级追薇恩3星"
+   ],
+   "dependencies": [
+    "符文:进入夜晚",
+    "机制棋子:薇恩",
+    "薇恩3星",
+    "三件套:泰坦的坚决+锐利之刃+鬼索的狂暴之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1566",
+   "templateName": "秘卫斗士贾克斯4斗士3秘术卫士3战斗机甲",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L2.5 模型扰动稳健",
+   "priorPoints": 1,
+   "metrics": {
+    "meanUtility": 117.9,
+    "interval95": [
+     108.3,
+     128.1
+    ],
+    "cvar10": 109.3,
+    "top1Rate": 0.2,
+    "top5Rate": 13.1,
+    "topQuartileRate": 58.9,
+    "failureRate": 0.4,
+    "robustness": 59.6
+   },
+   "drivers": [
+    "转型重合25%",
+    "装备弹性58%",
+    "7级追贾克斯3星"
+   ],
+   "dependencies": [
+    "贾克斯3星",
+    "三件套:泰坦的坚决+疾射火炮+鬼索的狂暴之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "manual-civilian-gunner",
+   "templateName": "平民枪手 -> 莎弥拉/九五枪手",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L2 模型候选",
+   "priorPoints": 0,
+   "metrics": {
+    "meanUtility": 117.4,
+    "interval95": [
+     105.5,
+     129.1
+    ],
+    "cvar10": 106.4,
+    "top1Rate": 0.2,
+    "top5Rate": 11.8,
+    "topQuartileRate": 52,
+    "failureRate": 2.2,
+    "robustness": 54.5
+   },
+   "drivers": [
+    "转型重合14%",
+    "装备弹性86%",
+    "8级追莎弥拉2星"
+   ],
+   "dependencies": [
+    "莎弥拉2星",
+    "三件套:最后的轻语+锐利之刃+卢安娜的飓风"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1376",
+   "templateName": "超英露露3超级英雄5吉祥物2爱心使者",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L2 模型候选",
+   "priorPoints": 0,
+   "metrics": {
+    "meanUtility": 116.7,
+    "interval95": [
+     105.9,
+     128.4
+    ],
+    "cvar10": 106.8,
+    "top1Rate": 1.4,
+    "top5Rate": 12.9,
+    "topQuartileRate": 47.7,
+    "failureRate": 1.8,
+    "robustness": 53.3
+   },
+   "drivers": [
+    "转型重合75%",
+    "装备弹性86%",
+    "5级追璐璐3星"
+   ],
+   "dependencies": [
+    "璐璐3星",
+    "三件套:蓝霸符+珠光护手+巨人捕手"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1256",
+   "templateName": "超英伊泽瑞尔4情报特工3超级英雄2斗士",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L2 模型候选",
+   "priorPoints": 0,
+   "metrics": {
+    "meanUtility": 116.4,
+    "interval95": [
+     105.5,
+     127.3
+    ],
+    "cvar10": 106.9,
+    "top1Rate": 2.1,
+    "top5Rate": 11.3,
+    "topQuartileRate": 45.5,
+    "failureRate": 1.8,
+    "robustness": 52.1
+   },
+   "drivers": [
+    "转型重合66%",
+    "装备弹性86%",
+    "6级追伊泽瑞尔3星"
+   ],
+   "dependencies": [
+    "伊泽瑞尔3星",
+    "三件套:珠光护手+蓝霸符+巨人捕手"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "meta-适应性防守-卡蜜尔-4",
+   "templateName": "适应性防守卡蜜尔机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": 0,
+   "metrics": {
+    "meanUtility": 118.1,
+    "interval95": [
+     107.5,
+     129.3
+    ],
+    "cvar10": 108.4,
+    "top1Rate": 1.2,
+    "top5Rate": 59.7,
+    "topQuartileRate": 16.7,
+    "failureRate": 0.8,
+    "robustness": 51.5
+   },
+   "drivers": [
+    "转型重合85%",
+    "装备弹性72%",
+    "6级追卡蜜尔3星"
+   ],
+   "dependencies": [
+    "符文:适应性防守",
+    "机制棋子:卡蜜尔",
+    "卡蜜尔3星",
+    "三件套:最后的轻语+鬼索的狂暴之刃+卢安娜的飓风"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-4548",
+   "templateName": "决斗剑姬6决斗大师2福牛守护者",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L2 模型候选",
+   "priorPoints": 0,
+   "metrics": {
+    "meanUtility": 116,
+    "interval95": [
+     105.4,
+     126.7
+    ],
+    "cvar10": 106.5,
+    "top1Rate": 0.8,
+    "top5Rate": 7.7,
+    "topQuartileRate": 42.2,
+    "failureRate": 2.1,
+    "robustness": 49.8
+   },
+   "drivers": [
+    "转型重合41%",
+    "装备弹性86%",
+    "6级追菲奥娜3星"
+   ],
+   "dependencies": [
+    "菲奥娜3星",
+    "三件套:泰坦的坚决+汲取剑+鬼索的狂暴之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1290",
+   "templateName": "星守灵能塔利娅5星之守护者4灵能使",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L2 模型候选",
+   "priorPoints": 0,
+   "metrics": {
+    "meanUtility": 115.2,
+    "interval95": [
+     103.6,
+     126.4
+    ],
+    "cvar10": 104.9,
+    "top1Rate": 0.3,
+    "top5Rate": 7.1,
+    "topQuartileRate": 40.1,
+    "failureRate": 4.2,
+    "robustness": 47.3
+   },
+   "drivers": [
+    "转型重合47%",
+    "装备弹性72%",
+    "8级追塔莉垭2星"
+   ],
+   "dependencies": [
+    "塔莉垭2星",
+    "三件套:朔极之矛+珠光护手+班克斯的魔法帽"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "meta-浪客精神-亚索-5",
+   "templateName": "浪客精神亚索机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": 0,
+   "metrics": {
+    "meanUtility": 117.5,
+    "interval95": [
+     106.8,
+     128
+    ],
+    "cvar10": 108,
+    "top1Rate": 0.7,
+    "top5Rate": 46.2,
+    "topQuartileRate": 11.9,
+    "failureRate": 1,
+    "robustness": 46.5
+   },
+   "drivers": [
+    "转型重合86%",
+    "装备弹性72%",
+    "6级追亚索3星"
+   ],
+   "dependencies": [
+    "符文:浪客精神",
+    "机制棋子:亚索",
+    "亚索3星",
+    "三件套:泰坦的坚决+鬼索的狂暴之刃+卢安娜的飓风"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1412",
+   "templateName": "超英猫咪3超级英雄3星之守护者2爱心使者",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L2 模型候选",
+   "priorPoints": -1,
+   "metrics": {
+    "meanUtility": 114.4,
+    "interval95": [
+     103.6,
+     125.2
+    ],
+    "cvar10": 104.7,
+    "top1Rate": 0.3,
+    "top5Rate": 5.3,
+    "topQuartileRate": 34.6,
+    "failureRate": 4.5,
+    "robustness": 44.6
+   },
+   "drivers": [
+    "转型重合43%",
+    "装备弹性86%",
+    "6级追悠米3星"
+   ],
+   "dependencies": [
+    "悠米3星",
+    "三件套:蓝霸符+珠光护手+巨人捕手"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "meta-评级与交火-莎弥拉-1",
+   "templateName": "评级与交火莎弥拉机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -1,
+   "metrics": {
+    "meanUtility": 115.6,
+    "interval95": [
+     103.7,
+     126.8
+    ],
+    "cvar10": 105.1,
+    "top1Rate": 0.2,
+    "top5Rate": 33.2,
+    "topQuartileRate": 13.7,
+    "failureRate": 4.3,
+    "robustness": 42.1
+   },
+   "drivers": [
+    "转型重合58%",
+    "装备弹性72%",
+    "8级追莎弥拉2星"
+   ],
+   "dependencies": [
+    "符文:评级与交火",
+    "机制棋子:莎弥拉",
+    "莎弥拉2星",
+    "三件套:最后的轻语+鬼索的狂暴之刃+卢安娜的飓风"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-4524",
+   "templateName": "无情连打贾克斯5战队机甲4斗士2护卫",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -1,
+   "metrics": {
+    "meanUtility": 114.4,
+    "interval95": [
+     104.7,
+     124.5
+    ],
+    "cvar10": 105.6,
+    "top1Rate": 0,
+    "top5Rate": 2.4,
+    "topQuartileRate": 25,
+    "failureRate": 2.8,
+    "robustness": 41.1
+   },
+   "drivers": [
+    "转型重合41%",
+    "装备弹性58%",
+    "7级追贾克斯3星"
+   ],
+   "dependencies": [
+    "贾克斯3星",
+    "三件套:泰坦的坚决+疾射火炮+鬼索的狂暴之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1567",
+   "templateName": "黑客贾克斯3战斗机甲2黑客2斗士",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -1,
+   "metrics": {
+    "meanUtility": 114.4,
+    "interval95": [
+     104.7,
+     124.4
+    ],
+    "cvar10": 105.7,
+    "top1Rate": 0.1,
+    "top5Rate": 2.5,
+    "topQuartileRate": 23.1,
+    "failureRate": 2.9,
+    "robustness": 40.4
+   },
+   "drivers": [
+    "转型重合25%",
+    "装备弹性58%",
+    "7级追贾克斯3星"
+   ],
+   "dependencies": [
+    "贾克斯3星",
+    "三件套:泰坦的坚决+疾射火炮+鬼索的狂暴之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1374",
+   "templateName": "平民怪兽枪3平民英雄2枪手",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -1,
+   "metrics": {
+    "meanUtility": 114,
+    "interval95": [
+     101.3,
+     126.4
+    ],
+    "cvar10": 102.8,
+    "top1Rate": 0.1,
+    "top5Rate": 1.4,
+    "topQuartileRate": 24.2,
+    "failureRate": 8.1,
+    "robustness": 37.6
+   },
+   "drivers": [
+    "转型重合43%",
+    "装备弹性86%",
+    "8级追莎弥拉2星"
+   ],
+   "dependencies": [
+    "莎弥拉2星",
+    "三件套:卢安娜的飓风+最后的轻语+锐利之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "manual-laser-duelist",
+   "templateName": "源计划斗士/决斗 -> 卡莎/枪手/九五",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -1,
+   "metrics": {
+    "meanUtility": 113.2,
+    "interval95": [
+     101.5,
+     124.5
+    ],
+    "cvar10": 102.6,
+    "top1Rate": 0,
+    "top5Rate": 0.6,
+    "topQuartileRate": 24,
+    "failureRate": 8.8,
+    "robustness": 37.1
+   },
+   "drivers": [
+    "转型重合0%",
+    "装备弹性72%",
+    "8级追莎弥拉2星"
+   ],
+   "dependencies": [
+    "莎弥拉2星",
+    "三件套:最后的轻语+卢安娜的飓风+巨人捕手"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1576",
+   "templateName": "84机甲怪兽双子星3战斗机甲2护卫怪兽",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -2,
+   "metrics": {
+    "meanUtility": 112.9,
+    "interval95": [
+     100.9,
+     124.2
+    ],
+    "cvar10": 102.1,
+    "top1Rate": 0.1,
+    "top5Rate": 1.1,
+    "topQuartileRate": 17.3,
+    "failureRate": 9.7,
+    "robustness": 34
+   },
+   "drivers": [
+    "转型重合23%",
+    "装备弹性86%",
+    "8级追卑尔维斯2星"
+   ],
+   "dependencies": [
+    "卑尔维斯2星",
+    "三件套:水银+巨人捕手+汲取剑"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1327",
+   "templateName": "怪兽佐伊2黑客2淘气包怪兽",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -2,
+   "metrics": {
+    "meanUtility": 111.8,
+    "interval95": [
+     101.3,
+     122
+    ],
+    "cvar10": 102.4,
+    "top1Rate": 0.1,
+    "top5Rate": 1.7,
+    "topQuartileRate": 14.4,
+    "failureRate": 10.7,
+    "robustness": 32.9
+   },
+   "drivers": [
+    "转型重合28%",
+    "装备弹性72%",
+    "7级追佐伊3星"
+   ],
+   "dependencies": [
+    "佐伊3星",
+    "三件套:蓝霸符+珠光护手+班克斯的魔法帽"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "manual-mascot-heart",
+   "templateName": "吉祥物爱心 -> 猫咪/超英法系",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -2,
+   "metrics": {
+    "meanUtility": 111.4,
+    "interval95": [
+     100.5,
+     122.1
+    ],
+    "cvar10": 101.7,
+    "top1Rate": 0.2,
+    "top5Rate": 1.7,
+    "topQuartileRate": 15.6,
+    "failureRate": 12.9,
+    "robustness": 32.4
+   },
+   "drivers": [
+    "转型重合46%",
+    "装备弹性86%",
+    "6级追悠米3星"
+   ],
+   "dependencies": [
+    "悠米3星",
+    "三件套:蓝霸符+珠光护手+巨人捕手"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-4532",
+   "templateName": "小天才璐璐5小天才4吉祥物",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -2,
+   "metrics": {
+    "meanUtility": 111.6,
+    "interval95": [
+     100.8,
+     123.1
+    ],
+    "cvar10": 101.6,
+    "top1Rate": 0.3,
+    "top5Rate": 1.9,
+    "topQuartileRate": 13.5,
+    "failureRate": 13.3,
+    "robustness": 31.4
+   },
+   "drivers": [
+    "转型重合71%",
+    "装备弹性86%",
+    "5级追璐璐3星"
+   ],
+   "dependencies": [
+    "璐璐3星",
+    "三件套:珠光护手+蓝霸符+巨人捕手"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-4534",
+   "templateName": "6斗拉面贾克斯6斗士3战斗机甲3护卫",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -2,
+   "metrics": {
+    "meanUtility": 111,
+    "interval95": [
+     101.2,
+     120.7
+    ],
+    "cvar10": 102.2,
+    "top1Rate": 0,
+    "top5Rate": 0.1,
+    "topQuartileRate": 9.8,
+    "failureRate": 11.3,
+    "robustness": 30.5
+   },
+   "drivers": [
+    "转型重合31%",
+    "装备弹性58%",
+    "7级追贾克斯3星"
+   ],
+   "dependencies": [
+    "贾克斯3星",
+    "三件套:疾射火炮+鬼索的狂暴之刃+泰坦的坚决"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-4540",
+   "templateName": "幻灵厄运小姐5幻灵战队2淘气包2吉祥物",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -2,
+   "metrics": {
+    "meanUtility": 112.2,
+    "interval95": [
+     101,
+     123
+    ],
+    "cvar10": 102,
+    "top1Rate": 0,
+    "top5Rate": 0.6,
+    "topQuartileRate": 9.8,
+    "failureRate": 11.6,
+    "robustness": 30.4
+   },
+   "drivers": [
+    "转型重合50%",
+    "装备弹性72%",
+    "8级追厄运小姐2星"
+   ],
+   "dependencies": [
+    "厄运小姐2星",
+    "三件套:朔极之矛+珠光护手+班克斯的魔法帽"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-4544",
+   "templateName": "大闹天宫5战斗机甲3超级英雄2护卫",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -2,
+   "metrics": {
+    "meanUtility": 111.1,
+    "interval95": [
+     100,
+     122.8
+    ],
+    "cvar10": 101.1,
+    "top1Rate": 0,
+    "top5Rate": 0.3,
+    "topQuartileRate": 8.5,
+    "failureRate": 15.6,
+    "robustness": 28.2
+   },
+   "drivers": [
+    "转型重合67%",
+    "装备弹性96%",
+    "5级追孙悟空3星"
+   ],
+   "dependencies": [
+    "孙悟空3星",
+    "三件套:汲取剑+珠光护手+泰坦的坚决"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-4526",
+   "templateName": "决斗薇恩6决斗大师3源计划激光特工",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -2,
+   "metrics": {
+    "meanUtility": 111.2,
+    "interval95": [
+     100.3,
+     122
+    ],
+    "cvar10": 101.6,
+    "top1Rate": 0,
+    "top5Rate": 0.2,
+    "topQuartileRate": 5.9,
+    "failureRate": 13.9,
+    "robustness": 27.9
+   },
+   "drivers": [
+    "转型重合49%",
+    "装备弹性72%",
+    "7级追薇恩3星"
+   ],
+   "dependencies": [
+    "薇恩3星",
+    "三件套:卢安娜的飓风+巨人捕手+锐利之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1328",
+   "templateName": "超英希维尔4枪手3超级英雄2吉祥物",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -3,
+   "metrics": {
+    "meanUtility": 109,
+    "interval95": [
+     97.8,
+     120.1
+    ],
+    "cvar10": 99,
+    "top1Rate": 0,
+    "top5Rate": 0.1,
+    "topQuartileRate": 2.2,
+    "failureRate": 25.8,
+    "robustness": 21.8
+   },
+   "drivers": [
+    "转型重合75%",
+    "装备弹性72%",
+    "6级追希维尔3星"
+   ],
+   "dependencies": [
+    "希维尔3星",
+    "三件套:鬼索的狂暴之刃+锐利之刃+巨人捕手"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1394",
+   "templateName": "怪兽平民4精英4精英战士2平民英雄2枪手",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -3,
+   "metrics": {
+    "meanUtility": 108.6,
+    "interval95": [
+     97.2,
+     119.5
+    ],
+    "cvar10": 98.5,
+    "top1Rate": 0,
+    "top5Rate": 0,
+    "topQuartileRate": 1,
+    "failureRate": 27.4,
+    "robustness": 20.6
+   },
+   "drivers": [
+    "转型重合12%",
+    "装备弹性72%",
+    "8级追厄运小姐2星"
+   ],
+   "dependencies": [
+    "厄运小姐2星",
+    "三件套:朔极之矛+珠光护手+班克斯的魔法帽"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1415",
+   "templateName": "福牛泰隆6福牛守护者3混沌战士",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -3,
+   "metrics": {
+    "meanUtility": 107.5,
+    "interval95": [
+     97.1,
+     118.5
+    ],
+    "cvar10": 98.1,
+    "top1Rate": 0,
+    "top5Rate": 0.1,
+    "topQuartileRate": 2.6,
+    "failureRate": 33.3,
+    "robustness": 19.6
+   },
+   "drivers": [
+    "转型重合58%",
+    "装备弹性72%",
+    "5级追泰隆3星"
+   ],
+   "dependencies": [
+    "泰隆3星",
+    "三件套:班克斯的魔法帽+珠光护手+汲取剑"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1321",
+   "templateName": "超英泰隆3超级英雄3混沌战士4福牛守护者",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -3,
+   "metrics": {
+    "meanUtility": 108.1,
+    "interval95": [
+     96.9,
+     119.7
+    ],
+    "cvar10": 98,
+    "top1Rate": 0,
+    "top5Rate": 0,
+    "topQuartileRate": 1.5,
+    "failureRate": 32,
+    "robustness": 19.4
+   },
+   "drivers": [
+    "转型重合49%",
+    "装备弹性86%",
+    "5级追泰隆3星"
+   ],
+   "dependencies": [
+    "泰隆3星",
+    "三件套:珠光护手+疾射火炮+正义之手"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "meta-旺盛精力-悠米-6",
+   "templateName": "旺盛精力悠米机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -3,
+   "metrics": {
+    "meanUtility": 107.5,
+    "interval95": [
+     97.1,
+     118
+    ],
+    "cvar10": 98.2,
+    "top1Rate": 0,
+    "top5Rate": 0.3,
+    "topQuartileRate": 0,
+    "failureRate": 32.5,
+    "robustness": 18.9
+   },
+   "drivers": [
+    "转型重合85%",
+    "装备弹性72%",
+    "6级追悠米3星"
+   ],
+   "dependencies": [
+    "符文:旺盛精力",
+    "机制棋子:悠米",
+    "悠米3星",
+    "三件套:朔极之矛+班克斯的魔法帽+鬼索的狂暴之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "manual-gadget-ap",
+   "templateName": "小天才法系 -> 佐伊/九五",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -3,
+   "metrics": {
+    "meanUtility": 107.2,
+    "interval95": [
+     96.9,
+     117.5
+    ],
+    "cvar10": 97.9,
+    "top1Rate": 0,
+    "top5Rate": 0.1,
+    "topQuartileRate": 1.3,
+    "failureRate": 35.6,
+    "robustness": 18.4
+   },
+   "drivers": [
+    "转型重合27%",
+    "装备弹性72%",
+    "7级追佐伊3星"
+   ],
+   "dependencies": [
+    "佐伊3星",
+    "三件套:蓝霸符+珠光护手+班克斯的魔法帽"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-4546",
+   "templateName": "超英亚索6决斗大师3超级英雄3源计划激光特工",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -3,
+   "metrics": {
+    "meanUtility": 107.2,
+    "interval95": [
+     96.3,
+     118.2
+    ],
+    "cvar10": 97.5,
+    "top1Rate": 0,
+    "top5Rate": 0,
+    "topQuartileRate": 0.7,
+    "failureRate": 35.6,
+    "robustness": 17.9
+   },
+   "drivers": [
+    "转型重合55%",
+    "装备弹性86%",
+    "6级追亚索3星"
+   ],
+   "dependencies": [
+    "亚索3星",
+    "三件套:汲取剑+珠光护手+水银"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1565",
+   "templateName": "小天才安妮5小天才2灵能使2黑客",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -3,
+   "metrics": {
+    "meanUtility": 106.5,
+    "interval95": [
+     96.5,
+     116.6
+    ],
+    "cvar10": 97.5,
+    "top1Rate": 0,
+    "top5Rate": 0,
+    "topQuartileRate": 0.3,
+    "failureRate": 37.5,
+    "robustness": 17.2
+   },
+   "drivers": [
+    "转型重合69%",
+    "装备弹性86%",
+    "7级追乐芙兰3星"
+   ],
+   "dependencies": [
+    "乐芙兰3星",
+    "三件套:蓝霸符+珠光护手+强袭者的链枷"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "manual-mecha-draven-jax-leona",
+   "templateName": "机甲德莱文 -> 贾克斯 -> 蕾欧娜",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -3,
+   "metrics": {
+    "meanUtility": 106.2,
+    "interval95": [
+     96.4,
+     116.2
+    ],
+    "cvar10": 97.5,
+    "top1Rate": 0,
+    "top5Rate": 0,
+    "topQuartileRate": 0.5,
+    "failureRate": 41.6,
+    "robustness": 16.3
+   },
+   "drivers": [
+    "转型重合52%",
+    "装备弹性58%",
+    "7级追贾克斯3星"
+   ],
+   "dependencies": [
+    "贾克斯3星",
+    "三件套:鬼索的狂暴之刃+疾射火炮+泰坦的坚决"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1257",
+   "templateName": "超英艾希5激光特工3超级英雄2决斗大师",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -3,
+   "metrics": {
+    "meanUtility": 106.6,
+    "interval95": [
+     94.9,
+     118.3
+    ],
+    "cvar10": 96.4,
+    "top1Rate": 0,
+    "top5Rate": 0,
+    "topQuartileRate": 0.5,
+    "failureRate": 40.8,
+    "robustness": 15.8
+   },
+   "drivers": [
+    "转型重合71%",
+    "装备弹性72%",
+    "5级追艾希3星"
+   ],
+   "dependencies": [
+    "艾希3星",
+    "三件套:鬼索的狂暴之刃+巨人捕手+最后的轻语"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-4545",
+   "templateName": "怒之领域6斗士3源计划激光特工2爱心使者",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -3,
+   "metrics": {
+    "meanUtility": 106.1,
+    "interval95": [
+     94.9,
+     117.5
+    ],
+    "cvar10": 96.1,
+    "top1Rate": 0,
+    "top5Rate": 0,
+    "topQuartileRate": 1.8,
+    "failureRate": 42,
+    "robustness": 15.8
+   },
+   "drivers": [
+    "转型重合51%",
+    "装备弹性72%",
+    "5级追雷克顿3星"
+   ],
+   "dependencies": [
+    "雷克顿3星",
+    "三件套:海克斯科技枪刃+疾射火炮+泰坦的坚决"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1323",
+   "templateName": "吉祥鸡牛猫队6吉祥物3超级英雄2爱心使者",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -3,
+   "metrics": {
+    "meanUtility": 106,
+    "interval95": [
+     94.6,
+     117.1
+    ],
+    "cvar10": 96,
+    "top1Rate": 0,
+    "top5Rate": 0.2,
+    "topQuartileRate": 1.4,
+    "failureRate": 43.7,
+    "robustness": 15.3
+   },
+   "drivers": [
+    "转型重合79%",
+    "装备弹性72%",
+    "6级追悠米3星"
+   ],
+   "dependencies": [
+    "悠米3星",
+    "三件套:蓝霸符+珠光护手+班克斯的魔法帽"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "manual-duelist",
+   "templateName": "决斗连胜 -> 薇恩/剑姬/劫",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -3,
+   "metrics": {
+    "meanUtility": 105.9,
+    "interval95": [
+     95.5,
+     116.2
+    ],
+    "cvar10": 96.7,
+    "top1Rate": 0,
+    "top5Rate": 0,
+    "topQuartileRate": 0.1,
+    "failureRate": 43.2,
+    "robustness": 15.2
+   },
+   "drivers": [
+    "转型重合42%",
+    "装备弹性72%",
+    "7级追薇恩3星"
+   ],
+   "dependencies": [
+    "薇恩3星",
+    "三件套:鬼索的狂暴之刃+最后的轻语+卢安娜的飓风"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-4533",
+   "templateName": "超英赛娜3平民英雄3超级英雄2斗士",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -4,
+   "metrics": {
+    "meanUtility": 105.6,
+    "interval95": [
+     94.9,
+     116.4
+    ],
+    "cvar10": 95.8,
+    "top1Rate": 0,
+    "top5Rate": 0,
+    "topQuartileRate": 0.1,
+    "failureRate": 45.9,
+    "robustness": 14.1
+   },
+   "drivers": [
+    "转型重合79%",
+    "装备弹性72%",
+    "7级追赛娜3星"
+   ],
+   "dependencies": [
+    "赛娜3星",
+    "三件套:最后的轻语+巨人捕手+卢安娜的飓风"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1288",
+   "templateName": "超级机甲德莱文5战斗机甲3超级英雄2斗士",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -4,
+   "metrics": {
+    "meanUtility": 105.2,
+    "interval95": [
+     94.6,
+     115.9
+    ],
+    "cvar10": 95.7,
+    "top1Rate": 0,
+    "top5Rate": 0,
+    "topQuartileRate": 0.1,
+    "failureRate": 48.1,
+    "robustness": 13.4
+   },
+   "drivers": [
+    "转型重合66%",
+    "装备弹性58%",
+    "6级追德莱文3星"
+   ],
+   "dependencies": [
+    "德莱文3星",
+    "三件套:朔极之矛+无尽之刃+锐利之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-4529",
+   "templateName": "小天才佐伊5小天才2福牛守护者",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -4,
+   "metrics": {
+    "meanUtility": 104.6,
+    "interval95": [
+     94.1,
+     114.9
+    ],
+    "cvar10": 95.1,
+    "top1Rate": 0,
+    "top5Rate": 0,
+    "topQuartileRate": 0.9,
+    "failureRate": 52.9,
+    "robustness": 12.2
+   },
+   "drivers": [
+    "转型重合43%",
+    "装备弹性86%",
+    "7级追佐伊3星"
+   ],
+   "dependencies": [
+    "佐伊3星",
+    "三件套:蓝霸符+海克斯科技枪刃+莫雷洛秘典"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1312",
+   "templateName": "灵能佐伊4灵能使3小天才2AI程序",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -4,
+   "metrics": {
+    "meanUtility": 104.5,
+    "interval95": [
+     94.3,
+     115.1
+    ],
+    "cvar10": 95.3,
+    "top1Rate": 0,
+    "top5Rate": 0,
+    "topQuartileRate": 0.6,
+    "failureRate": 53.6,
+    "robustness": 12
+   },
+   "drivers": [
+    "转型重合27%",
+    "装备弹性86%",
+    "7级追佐伊3星"
+   ],
+   "dependencies": [
+    "佐伊3星",
+    "三件套:蓝霸符+珠光护手+莫雷洛秘典"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1355",
+   "templateName": "灵能娑娜4灵能使3秘术2福牛2斗士",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -4,
+   "metrics": {
+    "meanUtility": 104.1,
+    "interval95": [
+     94.6,
+     113.8
+    ],
+    "cvar10": 95.5,
+    "top1Rate": 0,
+    "top5Rate": 0,
+    "topQuartileRate": 0.2,
+    "failureRate": 57,
+    "robustness": 11.1
+   },
+   "drivers": [
+    "转型重合40%",
+    "装备弹性72%",
+    "7级追娑娜3星"
+   ],
+   "dependencies": [
+    "娑娜3星",
+    "三件套:蓝霸符+珠光护手+大天使之杖"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-4541",
+   "templateName": "AI妖姬乐芙兰4AI程序3黑客2淘气包",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -4,
+   "metrics": {
+    "meanUtility": 104.1,
+    "interval95": [
+     94.1,
+     114.7
+    ],
+    "cvar10": 95,
+    "top1Rate": 0,
+    "top5Rate": 0,
+    "topQuartileRate": 0.1,
+    "failureRate": 56.4,
+    "robustness": 10.9
+   },
+   "drivers": [
+    "转型重合43%",
+    "装备弹性86%",
+    "7级追乐芙兰3星"
+   ],
+   "dependencies": [
+    "乐芙兰3星",
+    "三件套:蓝霸符+珠光护手+巨人捕手"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1347",
+   "templateName": "单核克星维克兹6斗士2爱心使者2秘术卫士",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -4,
+   "metrics": {
+    "meanUtility": 103.7,
+    "interval95": [
+     93.3,
+     114.4
+    ],
+    "cvar10": 94.3,
+    "top1Rate": 0,
+    "top5Rate": 0,
+    "topQuartileRate": 0.2,
+    "failureRate": 58.9,
+    "robustness": 10.4
+   },
+   "drivers": [
+    "转型重合56%",
+    "装备弹性72%",
+    "7级追维克兹3星"
+   ],
+   "dependencies": [
+    "维克兹3星",
+    "三件套:蓝霸符+珠光护手+班克斯的魔法帽"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "manual-gadget-jax",
+   "templateName": "小天才过渡 -> 贾克斯机甲",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -4,
+   "metrics": {
+    "meanUtility": 103.4,
+    "interval95": [
+     93.5,
+     113.2
+    ],
+    "cvar10": 94.6,
+    "top1Rate": 0,
+    "top5Rate": 0,
+    "topQuartileRate": 0.1,
+    "failureRate": 62.2,
+    "robustness": 9.5
+   },
+   "drivers": [
+    "转型重合36%",
+    "装备弹性58%",
+    "7级追贾克斯3星"
+   ],
+   "dependencies": [
+    "贾克斯3星",
+    "三件套:鬼索的狂暴之刃+疾射火炮+泰坦的坚决"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1589",
+   "templateName": "金钟罩李青4爱心使者3秘术卫士2AI程序",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -4,
+   "metrics": {
+    "meanUtility": 103.1,
+    "interval95": [
+     93.2,
+     113
+    ],
+    "cvar10": 94.1,
+    "top1Rate": 0,
+    "top5Rate": 0,
+    "topQuartileRate": 0,
+    "failureRate": 65.3,
+    "robustness": 8.7
+   },
+   "drivers": [
+    "转型重合69%",
+    "装备弹性72%",
+    "7级追娑娜3星"
+   ],
+   "dependencies": [
+    "娑娜3星",
+    "三件套:蓝霸符+珠光护手+大天使之杖"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-1271",
+   "templateName": "地下魔盗团转952吉祥物2秘术卫士",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -4,
+   "metrics": {
+    "meanUtility": 101.4,
+    "interval95": [
+     90.3,
+     112.6
+    ],
+    "cvar10": 91.4,
+    "top1Rate": 0,
+    "top5Rate": 0,
+    "topQuartileRate": 0,
+    "failureRate": 72.4,
+    "robustness": 6.9
+   },
+   "drivers": [
+    "转型重合22%",
+    "装备弹性72%",
+    "9级追厄加特2星"
+   ],
+   "dependencies": [
+    "厄加特2星",
+    "三件套:最后的轻语+鬼索的狂暴之刃+巨人捕手"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-4536",
+   "templateName": "灵风原计划7原计划2强袭枪手",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -4,
+   "metrics": {
+    "meanUtility": 100.5,
+    "interval95": [
+     88.7,
+     112.1
+    ],
+    "cvar10": 89.9,
+    "top1Rate": 0,
+    "top5Rate": 0,
+    "topQuartileRate": 0.1,
+    "failureRate": 75.5,
+    "robustness": 6.2
+   },
+   "drivers": [
+    "转型重合49%",
+    "装备弹性86%",
+    "9级追厄斐琉斯2星"
+   ],
+   "dependencies": [
+    "厄斐琉斯2星",
+    "三件套:鬼索的狂暴之刃+最后的轻语+无尽之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  }
+ ],
+ "limitations": [
+  "这是模型不确定性与资源扰动实验，不是真实玩家对局样本。",
+  "条件路线在其专属符文和必需棋子已经满足的条件下，与其他条件路线比较。",
+  "L3需要独立战斗模拟校准；L4需要未参与调参的真实排位留出集。"
+ ]
+}
