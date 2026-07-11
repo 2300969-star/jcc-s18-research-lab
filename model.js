@@ -2,8 +2,10 @@
 // 输出 model_results.json 供可视化前端使用
 const fs = require('fs');
 const path = require('path');
+const { currentVersion, currentLineups } = require('./version-context.js');
 const D = p => JSON.parse(fs.readFileSync(path.join(__dirname, 'data', p), 'utf8'));
 
+const version = currentVersion(__dirname);
 const chess = D('chess.js').data;
 const equip = D('equip.js').data;
 const race = D('race.js').data;
@@ -144,7 +146,8 @@ function tankEHP(heroId, itemIds, star, bonusDef = {}) {
 
 // ---------- 逐阵容计算 ----------
 const Q = { S: 0, A: 1, B: 2 };
-const comps = lineup_list.filter(l => l.simulator_edition === '17.17.6').map(l => {
+const currentOfficialLineups = currentLineups(lineup_list, __dirname);
+const comps = currentOfficialLineups.map(l => {
   const d = JSON.parse(l.detail);
   const hl = d.hero_location || [];
   let carry = hl.find(x => x.is_carry_hero) || hl.slice().sort((a, b) => (b.equipment_id || '').length - (a.equipment_id || '').length)[0];
@@ -225,7 +228,7 @@ const econ = [
 
 // ---------- 结论层：最强英雄 / 组合 / 符文 / 装备 ----------
 const hexData = D('hex.js').data;
-const Slist = lineup_list.filter(l => l.simulator_edition === '17.17.6' && l.quality === 'S');
+const Slist = currentOfficialLineups.filter(l => l.quality === 'S');
 
 // 最强英雄：主C榜（被当主C的次数+模拟DPS）、前排榜（坦装出场+EHP）、万金油榜（S级出场率）
 const carryAgg = {}, tankAgg = {}, useAgg = {};
@@ -314,12 +317,15 @@ const guardians = Object.values(monsterD)
 // 模型实测①：增益型战力怪兽对主C DPS 的提升（同一模拟引擎，加 buff 重跑）
 const carryOf = short => comps.find(c => c.name.includes(short));
 const buffTests = [];
+const percentValues = text => [...String(text || '').matchAll(/(\d+)%/g)].map(m => Number(m[1]));
+const fatDragon = Object.values(monsterD).find(g => g.name === '胖胖龙（战力）');
+const [fatDragonPower = 0, fatDragonOmnivamp = 0] = percentValues(fatDragon && fatDragon.skillDesc);
 [['贾克斯', carryOf('黑客贾克斯')], ['佐伊', carryOf('小天才九五')]].forEach(([nm, c]) => {
   if (!c) return;
   const base = c.carry.dps;
   const run = bonus => simulate(c.carryHeroId, c.carryItemIds, c.carryStar, 30, bonus).dps;
   buffTests.push(
-    { carry: nm + c.carryStar + '星', guardian: '胖胖龙（战力）', effect: '全队+30%双强(触发后)', base: Math.round(base), buffed: Math.round(run({ adPct: 30, ap: 30 })), },
+    { carry: nm + c.carryStar + '星', guardian: '胖胖龙（战力）', effect: `全队+${fatDragonPower}%双强、${fatDragonOmnivamp}%全能汲取(触发后)`, base: Math.round(base), buffed: Math.round(run({ adPct: fatDragonPower, ap: fatDragonPower })), },
     { carry: nm + c.carryStar + '星', guardian: '魄罗粉丝（战力）', effect: '聚光灯格+20%增幅', base: Math.round(base), buffed: Math.round(run({ ampPct: 20 })) },
   );
 });
@@ -328,9 +334,10 @@ buffTests.forEach(t => t.gain = Math.round((t.buffed / t.base - 1) * 1000) / 10)
 // 模型实测②：站场型怪兽面板折算（同口径：物魔各半调和、木桩魔抗100）
 const amumu = Object.values(monsterD).find(g => g.name === '阿木木（战力）');
 const tower = Object.values(monsterD).find(g => g.name === '防御塔（战力）');
+const amumuDamage = Number((String(amumu && amumu.skillDesc).match(/每秒(\d+)/) || [])[1]) || 0;
 const mit2 = (a, m) => 2 / (100 / (100 + a) + 100 / (100 + m));
 const fieldTests = [
-  { name: '阿木木（战力）', ehp: Math.round(Number(amumu.initHP) * mit2(66, 66)), dps: Math.round(100 * 100 / 200), note: '光环每秒100魔法伤害(可用情书叠法强，未计叠层)；EHP≈' + Math.round(Number(amumu.initHP) * mit2(66, 66)) + '，约等于白嫖0.7个带肉装的二星四费前排' },
+  { name: '阿木木（战力）', ehp: Math.round(Number(amumu.initHP) * mit2(66, 66)), dps: Math.round(amumuDamage * 100 / 200), note: `光环每秒${amumuDamage}魔法伤害(可用情书叠法强，未计叠层)；EHP≈${Math.round(Number(amumu.initHP) * mit2(66, 66))}，约等于白嫖0.7个带肉装的二星四费前排` },
   { name: '防御塔（战力）', ehp: Math.round(1000 * mit2(50, 50)), dps: Math.round(50 * 0.5 * 100 / 200), note: '射程无限免控；前排摆法被摧毁回血、后排摆法击杀叠永久攻击——面板DPS低，价值在挡刀与斩杀成长' },
   { name: '卡牌大师（战力）', ehp: 0, dps: 0, note: '红牌使敌方最强弈子6秒内伤害-30%：折算全队等效EHP约+6%（30秒战斗口径），另有蓝牌残局翻盘' },
   { name: '胖胖龙（经济）', ehp: 0, dps: 0, note: '血量降至30时+25金币+1金铲铲：约等于白嫖半件成装+2.5轮利息，S级阵容里作为经济替补出现5次' },
@@ -350,7 +357,7 @@ const formLadder = {
   ],
 };
 
-const out = { version: '17.17.6-S18', generated: new Date().toISOString().slice(0, 10), comps, spearman: Math.round(spearman * 1000) / 1000, tierStats, units, econ, rounds, heroRank, augRank, itemRank, componentFirst, verdicts, guardians, buffTests, fieldTests, formLadder };
+const out = { version: version.label, generated: new Date().toISOString().slice(0, 10), comps, spearman: Math.round(spearman * 1000) / 1000, tierStats, units, econ, rounds, heroRank, augRank, itemRank, componentFirst, verdicts, guardians, buffTests, fieldTests, formLadder };
 
 // 供 search.js / teamsearch.js 复用引擎；仅直接运行时写文件（否则会抹掉它们补写的 combosearch/teamsearch 字段）
 module.exports = { simulate, tankEHP, itemStats, chess, equip, comps, monsterD };

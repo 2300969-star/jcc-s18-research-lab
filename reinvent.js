@@ -2,6 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 const { simulate, itemStats, chess, equip } = require('./model.js');
+const { currentVersion, currentLineups } = require('./version-context.js');
 
 const ROOT = __dirname;
 const read = file => JSON.parse(fs.readFileSync(path.join(ROOT, file), 'utf8'));
@@ -11,6 +12,7 @@ const data = {
   job: read('data/job.js').data,
   lineups: read('data/lineup_detail_total.json').lineup_list,
 };
+const version = currentVersion(ROOT);
 
 const itemByName = {};
 Object.values(equip).forEach(e => { if (e && e.name && !itemByName[e.name]) itemByName[e.name] = e.id; });
@@ -84,8 +86,7 @@ function dpsStack({ name, star = 2, items = [], bonus = {} }) {
   };
 }
 
-const official = data.lineups
-  .filter(l => l.simulator_edition === '17.17.6')
+const official = currentLineups(data.lineups, ROOT)
   .map(l => {
     const d = JSON.parse(l.detail || '{}');
     const heroes = (d.hero_location || []).map(h => (chess[h.hero_id] || {}).name).filter(Boolean);
@@ -356,7 +357,7 @@ const matrix = [
 ];
 
 const out = {
-  version: '17.17.6-S18',
+  version: version.label,
   generated: new Date().toISOString().slice(0, 10),
   summary: {
     title: '官方阵容再发明：从数值闭环重组阵容',

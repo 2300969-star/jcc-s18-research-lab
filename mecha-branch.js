@@ -1,9 +1,11 @@
 // 机甲线分叉实验：同一套机甲前中期壳子下，比较贾克斯/蕾欧娜/瑟提/佛耶戈终局分支。
 const fs = require('fs');
 const path = require('path');
+const { currentVersion } = require('./version-context.js');
 const { simulate, tankEHP, chess, equip } = require('./model.js');
 
 const ROOT = __dirname;
+const version = currentVersion(ROOT);
 const readData = p => JSON.parse(fs.readFileSync(path.join(ROOT, 'data', p), 'utf8')).data;
 const race = readData('race.js');
 const job = readData('job.js');
@@ -379,7 +381,7 @@ const summary = BRANCHES.map(b => rows.filter(r => r.branch === b.key).sort((a, 
   .filter(Boolean)
   .sort((a, b) => b.score - a.score);
 const out = {
-  version: '17.17.6-S18',
+  version: version.label,
   generated: generatedDate(),
   assumptions: [
     '这是同壳分叉实验：候选池固定为机甲、混沌、护卫、斗士、秘术、五费补强等与机甲线自然相关的棋子。',

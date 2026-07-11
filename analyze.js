@@ -1,8 +1,10 @@
 // 解析 jcc.qq.com 怪兽入侵(mode8 S18) 官方阵容数据 → notes/阵容全量明细.md + 聚合统计
 const fs = require('fs');
 const path = require('path');
+const { currentVersion, currentLineups } = require('./version-context.js');
 const D = p => JSON.parse(fs.readFileSync(path.join(__dirname, 'data', p), 'utf8'));
 
+const version = currentVersion(__dirname);
 const chess = D('chess.js').data;
 const equip = D('equip.js').data;
 const hex = D('hex.js').data;
@@ -24,12 +26,11 @@ const traitName = c => {
 const csv = (s, fn) => (s || '').split(',').filter(Boolean).map(fn);
 
 const Q = { S: 0, A: 1, B: 2 };
-const list = lineup_list
-  .filter(l => l.simulator_edition === '17.17.6')
+const list = currentLineups(lineup_list, __dirname)
   .sort((a, b) => (Q[a.quality] - Q[b.quality]) || (Number(b.sortID) - Number(a.sortID)));
 
 const hexCount = {}, itemCount = {}, monsterCount = {}, carryItemCount = {};
-let md = `# 怪兽入侵（S18 铲铲市危机）官方全量阵容明细\n\n> 数据源：jcc.qq.com 阵容库 lineup_detail_total.json，模拟器版本 17.17.6（2026-06-24 生效），共 ${list.length} 套。S 级 ${list.filter(l => l.quality === 'S').length} 套。\n`;
+let md = `# 怪兽入侵（${version.season} 铲铲市危机）官方全量阵容明细\n\n> 数据源：jcc.qq.com 阵容库 lineup_detail_total.json，模拟器版本 ${version.edition}（数据时间 ${version.time || '未知'}），共 ${list.length} 套。S 级 ${list.filter(l => l.quality === 'S').length} 套。\n`;
 
 for (const l of list) {
   const d = JSON.parse(l.detail);

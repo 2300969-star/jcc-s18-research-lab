@@ -23,6 +23,7 @@ done
 SEASON_NUM=$(echo "$VER" | sed 's/.*-S//')
 curl -s "https://game.gtimg.cn/images/lol/act/jkzlkauto/json/lineupJson/m${SEASON_NUM}/11/8/lineup_detail_total.json" -o data/lineup_detail_total.json
 echo "  已更新 data/lineup_detail_total.json"
+node -e 'const {currentVersion,currentLineups}=require("./version-context.js");const rows=require("./data/lineup_detail_total.json").lineup_list;const v=currentVersion();console.log(`  数据一致性通过: ${v.label}, 官方阵容 ${currentLineups(rows).length} 套`);'
 echo
 echo "== 重新生成明细与统计 =="
 node analyze.js

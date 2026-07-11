@@ -2,12 +2,15 @@
 const fs = require('fs');
 const path = require('path');
 const { simulate, tankEHP, chess, equip, comps } = require('./model.js');
+const { currentVersion } = require('./version-context.js');
 
 const ROOT = __dirname;
+const version = currentVersion(ROOT);
 const D = p => JSON.parse(fs.readFileSync(path.join(ROOT, 'data', p), 'utf8')).data;
 const race = D('race.js');
 const job = D('job.js');
 const hex = D('hex.js');
+const duelistPerStack = ((job['124'] || {}).desc2 || '').match(/\+(\d+)%攻击速度/g)?.map(x => Number(x.match(/\d+/)[0])) || [5, 8, 13, 24];
 
 const byName = {};
 Object.values(equip).forEach(e => { if (e && e.name && !byName[e.name]) byName[e.name] = e.id; });
@@ -30,7 +33,7 @@ const TFX = {
   121: { tiers: [3, 4, 5], fx: t => ({ util: [1.5, 2.5, 4][t] }) },
   122: { tiers: [2, 4, 6], fx: t => ({ util: [1, 1.5, 2][t] }) },
   123: { tiers: [2, 4, 6, 8], fx: t => ({ team: { ap: [25, 50, 80, 120][t] } }) },
-  124: { tiers: [2, 4, 6, 8], fx: t => ({ member: { asPct: [30, 54, 90, 144][t] }, util: [0, 0, 1, 2][t] }) },
+  124: { tiers: [2, 4, 6, 8], fx: t => ({ member: { asPct: duelistPerStack[t] * 6 }, util: [0, 0, 1, 2][t] }) },
   125: { tiers: [2, 3, 4, 5], fx: t => ({ team: { adPct: [5, 10, 15, 20][t] } }) },
   126: { tiers: [2, 4, 6], fx: t => ({ team: { armor: [25, 75, 200][t] }, member: { armor: [50, 150, 400][t] } }) },
   127: { tiers: [2, 4, 6], fx: t => ({ team: { ehpMult: [1.015, 1.03, 1.06][t] } }) },
@@ -515,7 +518,7 @@ function generatedDate() {
 }
 
 const out = {
-  version: '17.17.6-S18',
+  version: version.label,
   generated: generatedDate(),
   searchSpace: {
     heroes: units.length,
