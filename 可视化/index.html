@@ -76,6 +76,19 @@ h3 { font-size:14px; font-weight:650; margin:16px 0 8px; }
 .tierRow { display:flex; gap:12px; align-items:flex-start; padding:10px 0; border-bottom:1px solid var(--grid); }
 .tierRow:last-child { border-bottom:none; }
 .certSummary { border-left:3px solid var(--s5); padding:7px 10px; margin:2px 0 10px; color:var(--ink2); font-size:12.5px; background:color-mix(in srgb, var(--surface) 92%, var(--s5) 8%); }
+.certKpis { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin:12px 0 18px; }
+.certKpi { border-top:3px solid var(--s5); padding:9px 10px; background:color-mix(in srgb, var(--surface) 94%, var(--s5) 6%); }
+.certKpi .v { font-size:24px; font-weight:850; line-height:1.15; }
+.certKpi .l { color:var(--muted); font-size:11.5px; margin-top:3px; }
+.certCols { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px; }
+.certList { border-top:1px solid var(--grid); }
+.certRoute { width:100%; display:grid; grid-template-columns:28px minmax(0,1fr) auto; gap:9px; align-items:center; text-align:left; border:0; border-bottom:1px solid var(--grid); background:transparent; color:var(--ink); padding:9px 2px; cursor:pointer; font:inherit; }
+.certRoute:hover { background:color-mix(in srgb, var(--surface) 90%, var(--s5) 10%); }
+.certRoute .n { color:var(--muted); font-size:11.5px; text-align:center; }
+.certRoute .name { display:block; font-weight:700; font-size:12.5px; overflow-wrap:anywhere; }
+.certRoute .sub { display:block; color:var(--muted); font-size:11px; margin-top:2px; }
+.certRoute .metric { color:var(--s5); font-size:12px; font-weight:800; text-align:right; white-space:nowrap; }
+.certFormula { margin-top:16px; color:var(--ink2); font-size:12px; }
 .tierBadge { flex:0 0 44px; text-align:center; font-weight:700; font-size:15px; border-radius:8px; padding:6px 0; color:#fff; }
 .tierRow .fam { font-weight:650; }
 .tierRow .cmp { color:var(--ink2); font-size:12.5px; margin:2px 0; }
@@ -328,7 +341,8 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
 .s2Signal.aug .bar i { background:var(--s3); }
 .s2Empty { border:1px dashed var(--border); border-radius:8px; padding:16px; color:var(--ink2); }
 @media (max-width: 860px) {
-  .auditGrid, .discoverGrid, .discoverOdds, .labTop, .labMatrix, .reinventHero, .reinventGrid, .stage2Intro, .stage2Shell, .s2SearchRow, .s2Cols { grid-template-columns:1fr; }
+  .auditGrid, .discoverGrid, .discoverOdds, .labTop, .labMatrix, .reinventHero, .reinventGrid, .stage2Intro, .stage2Shell, .s2SearchRow, .s2Cols, .certCols { grid-template-columns:1fr; }
+  .certKpis { grid-template-columns:repeat(2,minmax(0,1fr)); }
   .auditSide, .discoverSide { position:static; }
   .loopDetail { position:static; }
   .auditFilters { grid-template-columns:1fr; }
@@ -355,6 +369,7 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
     <a href="#sec-stage2" class="hot">二阶段匹配</a>
     <a href="#sec-mecha">机甲分叉</a>
     <a href="#sec-verdict">版本结果</a>
+    <a href="#sec-certification">样本认证</a>
     <a href="match.html" style="margin-left:auto; color:#fff; background:var(--s2); border-color:var(--s2); font-weight:650;">比赛模式 ▸</a>
   </nav>
 
@@ -489,6 +504,17 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
     <h3>关键装备</h3>
     <div class="itemCols" id="v-items"></div>
     <div class="note" id="v-comp"></div>
+  </div>
+
+  <div class="card" id="sec-certification">
+    <h2>样本认证</h2>
+    <div class="desc">同一批随机种子下，对经济、商店、装备供给、对手类型和转型节奏做联合扰动。这里只展示结论；模型样本不冒充真实排位。</div>
+    <div id="cert-kpis" class="certKpis"></div>
+    <div class="certCols">
+      <div><h3>常规路线稳健榜</h3><div id="cert-stable" class="certList"></div></div>
+      <div><h3>条件路线稳健榜</h3><div id="cert-conditional" class="certList"></div></div>
+    </div>
+    <details class="certFormula"><summary>公式与证据边界</summary><div id="cert-formulas" class="noteP"></div></details>
   </div>
 
   <div class="card processOnly" id="sec-dps">
@@ -1086,7 +1112,8 @@ function renderStage2Matcher() {
         const body = document.getElementById("dlgBody");
         const title = document.createElement("div"); title.className = "secT"; title.textContent = "路线认证样本";
         const line = document.createElement("div"); line.className = "noteP";
-        line.textContent = `${r.sampleDecision.evidenceLevel}；${r.sampleDecision.sampleSize}次模型扰动；稳健${r.sampleDecision.robustness}%；95%区间${(r.sampleDecision.interval95 || []).join("~")}；尾部${r.sampleDecision.cvar10}；当前支持${r.sampleDecision.decisionShare}%。`;
+        const support = r.sampleDecision.decisionShare != null && Number.isFinite(Number(r.sampleDecision.decisionShare)) ? `；当前支持${r.sampleDecision.decisionShare}%` : "";
+        line.textContent = `${r.sampleDecision.evidenceLevel}；${r.sampleDecision.sampleSize}次模型扰动；稳健${r.sampleDecision.robustness}%；95%区间${(r.sampleDecision.interval95 || []).join("~")}；尾部${r.sampleDecision.cvar10}${support}。`;
         body.append(title, line);
         if ((r.sampleDecision.dependencies || []).length) {
           const dep = document.createElement("div"); dep.className = "noteP"; dep.textContent = `关键依赖：${r.sampleDecision.dependencies.join("；")}。`;
@@ -1109,10 +1136,14 @@ function renderStage2Matcher() {
     mk("h2", null, "#" + (idx + 1) + " " + t.name, head);
     const x = mk("button", "closeX", "✕", head);
     x.addEventListener("click", () => dlg.close());
-    mk("div", "dlgMeta", `${t.family} ｜ ${t.goal} ｜ 强度${r.stageStrength}分 ｜ 认证后${r.finalScore}分 ｜ 信心 ${confidence(r.finalScore)}`, body);
+    const detailMeta = r.certificationOnly
+      ? `${t.family} ｜ 认证视图 ｜ 模型扰动均值${r.sampleDecision?.meanUtility || "-"} ｜ 尾部${r.sampleDecision?.cvar10 || "-"}`
+      : `${t.family} ｜ ${t.goal} ｜ 强度${r.stageStrength}分 ｜ 认证后${r.finalScore}分 ｜ 现场匹配 ${confidence(r.finalScore)}`;
+    mk("div", "dlgMeta", detailMeta, body);
     if (r.sampleDecision) {
       mk("div", "secT", "路线认证样本", body);
-      mk("div", "noteP", `${r.sampleDecision.evidenceLevel}；${r.sampleDecision.sampleSize}次模型扰动；稳健${r.sampleDecision.robustness}%；95%区间${(r.sampleDecision.interval95 || []).join("~")}；尾部${r.sampleDecision.cvar10}；当前支持${r.sampleDecision.decisionShare}%。`, body);
+      const support = r.sampleDecision.decisionShare != null && Number.isFinite(Number(r.sampleDecision.decisionShare)) ? `；当前支持${r.sampleDecision.decisionShare}%` : "";
+      mk("div", "noteP", `${r.sampleDecision.evidenceLevel}；${r.sampleDecision.sampleSize}次模型扰动；稳健${r.sampleDecision.robustness}%；95%区间${(r.sampleDecision.interval95 || []).join("~")}；尾部${r.sampleDecision.cvar10}${support}。`, body);
       if ((r.sampleDecision.dependencies || []).length) mk("div", "noteP", `关键依赖：${r.sampleDecision.dependencies.join("；")}。稳健驱动：${(r.sampleDecision.drivers || []).join("；")}。`, body);
       mk("div", "noteP", r.sampleDecision.warning, body);
     }
@@ -1299,6 +1330,7 @@ function renderStage2Matcher() {
     if (unknownBox) unknownBox.textContent = "";
     draw();
   });
+  window.openStage2RouteDetail = openStage2Detail;
   draw();
 }
 renderStage2Matcher();
@@ -1649,6 +1681,70 @@ function openMetaComp(name) {
   document.getElementById("v-comp").textContent =
     "散件抢夺共识：第一优先 " + M.componentFirst.map(c => c.name + "（" + c.n + "/15套）").join("、") +
     "；暴风之剑进入全部15套的前五优先。主C三件套公式——物理C：鬼索+火炮/飓风+泰坦/锐利；法系C：珠光护手+蓝霸符+巨人捕手（三套阵容出装一字不差）。";
+})();
+
+// ---------- route certification module ----------
+(function renderCertificationModule() {
+  const summary = MATCHER && MATCHER.certification;
+  const templates = MATCHER && MATCHER.templates || [];
+  const certified = templates.filter(t => t.certification);
+  if (!summary || !certified.length) return;
+  const levelCount = level => certified.filter(t => String(t.certification.evidenceLevel || "").split(" ")[0] === level).length;
+  const kpis = [
+    [`${(certified.length * summary.sampleSize).toLocaleString("zh-CN")}`, "路线扰动样本"],
+    [levelCount("L2.5"), "L2.5 稳健路线"],
+    [levelCount("L2"), "L2 模型候选"],
+    [levelCount("L1.5"), "L1.5 高敏感"],
+  ];
+  document.getElementById("cert-kpis").innerHTML = kpis.map(([value, label]) => `<div class="certKpi"><div class="v">${value}</div><div class="l">${label}</div></div>`).join("");
+
+  function detailRow(template) {
+    const cert = template.certification;
+    return {
+      template,
+      certificationOnly: true,
+      stageStrength: 0,
+      finalScore: 0,
+      evidence: cert.drivers || [],
+      penalties: [],
+      missing: cert.dependencies || [],
+      sampleDecision: {
+        sampleSize: cert.sampleSize,
+        evidenceLevel: cert.evidenceLevel,
+        robustness: cert.metrics.robustness,
+        interval95: cert.metrics.interval95,
+        cvar10: cert.metrics.cvar10,
+        failureRate: cert.metrics.failureRate,
+        meanUtility: cert.metrics.meanUtility,
+        priorPoints: cert.priorPoints,
+        decisionShare: null,
+        dependencies: cert.dependencies || [],
+        drivers: cert.drivers || [],
+        warning: cert.warning,
+      },
+    };
+  }
+
+  function drawList(id, rows) {
+    const host = document.getElementById(id);
+    host.innerHTML = rows.slice(0, 8).map((t, index) => {
+      const cert = t.certification, metrics = cert.metrics;
+      return `<button class="certRoute" data-cert-id="${escText(t.id)}">
+        <span class="n">${index + 1}</span>
+        <span><span class="name">${escText(t.name)}</span><span class="sub">${escText(cert.evidenceLevel)} · 失速${metrics.failureRate}% · 尾部${metrics.cvar10}</span></span>
+        <span class="metric">稳健${metrics.robustness}%<br>前25% ${metrics.topQuartileRate}%</span>
+      </button>`;
+    }).join("");
+    host.querySelectorAll("[data-cert-id]").forEach(button => button.addEventListener("click", () => {
+      const template = templates.find(t => t.id === button.dataset.certId);
+      if (template && window.openStage2RouteDetail) window.openStage2RouteDetail(detailRow(template), 0);
+    }));
+  }
+
+  const sorted = certified.slice().sort((a, b) => b.certification.metrics.robustness - a.certification.metrics.robustness || b.certification.metrics.cvar10 - a.certification.metrics.cvar10);
+  drawList("cert-stable", sorted.filter(t => String(t.certification.peerGroup).startsWith("常规")));
+  drawList("cert-conditional", sorted.filter(t => String(t.certification.peerGroup).startsWith("条件")));
+  document.getElementById("cert-formulas").textContent = [summary.utilityFormula, summary.robustnessFormula, summary.decisionFormula, summary.failureThreshold, summary.ceiling].join("；");
 })();
 
 // ---------- chart 1: stacked horizontal bars, S carry DPS ----------
