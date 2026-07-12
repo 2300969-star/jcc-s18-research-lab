@@ -65,6 +65,15 @@
   const AUGMENT_ECON_DISCOUNT_CAP = 0.3;
   const AUGMENT_ITEM_MISSING_CAP = 3;
   const AUGMENT_ITEM_BONUS_CAP = 10;
+  // 英雄强化回合只提供费用可行域；具体的1/2、2/3等同局组合仍由游戏随机决定。
+  const HERO_AUGMENT_ROUND_COSTS = {
+    "2-1": [1, 2, 3],
+    "3-2": [2, 3, 4],
+    "4-2": [3, 4, 5],
+  };
+  // 可出现的主C专属强化提供有限期权值；本局不可能出现时只关闭专属分支，不误杀基础阵容。
+  const HERO_AUGMENT_OPTION_BONUS = 6;
+  const HERO_AUGMENT_UNAVAILABLE_PENALTY = 6;
   const MIN_LEVEL = 1;
   const MAX_LEVEL = 9;
   const DEFAULT_LEVEL = 6;
@@ -280,6 +289,69 @@
     const map = new Map();
     activeTraitRows(t).forEach(x => map.set(x.name, Math.max(map.get(x.name) || 0, Number(x.count) || 0)));
     return map;
+  }
+
+  function normalizeHeroAugmentRound(value) {
+    const raw = String(value || "").trim().replace("阶段", "").replace("杠", "-");
+    return HERO_AUGMENT_ROUND_COSTS[raw] ? raw : "unknown";
+  }
+
+  function heroAugmentDecision(t, selected) {
+    const round = normalizeHeroAugmentRound(selected && selected.heroAugmentRound);
+    if (round === "unknown") return null;
+    const costs = HERO_AUGMENT_ROUND_COSTS[round];
+    const plan = t && t.heroAugmentPlan || {};
+    const options = (plan.options || []).filter(row => row && row.name && row.hero && Number(row.cost));
+    const requiredNames = new Set(plan.requiredNames || []);
+    const required = options.filter(row => requiredNames.has(row.name));
+    const mainCarry = plan.mainCarry || (profile(t).mainCarry || {}).name || "";
+    const mainOptions = options.filter(row => row.hero === mainCarry);
+    const selectedAugments = new Set(selected && selected.augments || []);
+    const selectedHit = options.find(row => selectedAugments.has(row.name));
+    const candidates = required.length ? required : (mainOptions.length ? mainOptions : options);
+    const eligible = candidates.filter(row => costs.includes(Number(row.cost)));
+    const excludedCosts = [1, 2, 3, 4, 5].filter(cost => !costs.includes(cost));
+    const traits = uniq(eligible.flatMap(row => row.traits || [])).slice(0, 3);
+    const heroes = uniq(eligible.map(row => row.hero));
+    const optionNames = uniq(candidates.map(row => row.name));
+    const base = { round, costs, excludedCosts, mainCarry, traits, heroes, options, eligible, required: !!required.length, scoreDelta: 0, hardBlock: false };
+    if (selectedHit) {
+      return { ...base, status: "locked", text: `已命中${selectedHit.name}：${selectedHit.hero}${selectedHit.cost}费专属` };
+    }
+    if (!options.length) {
+      return { ...base, status: "lock", text: `现在可锁：不依赖英雄强化（${round}费用池${costs.join("/")}费）` };
+    }
+    if (required.length && !eligible.length) {
+      return {
+        ...base,
+        status: "closed",
+        hardBlock: true,
+        text: `本局关闭：${optionNames.join("/")}需要${uniq(candidates.map(row => row.cost)).join("/")}费，${round}只含${costs.join("/")}费`,
+      };
+    }
+    if (required.length) {
+      return { ...base, status: "waiting", text: `等${round}强化决定：${heroes.join("/")}专属仍在费用池` };
+    }
+    if (mainOptions.length && !eligible.length) {
+      return {
+        ...base,
+        status: "base-only",
+        scoreDelta: -HERO_AUGMENT_UNAVAILABLE_PENALTY,
+        text: `专属分支关闭：${mainCarry}${uniq(mainOptions.map(row => row.cost)).join("/")}费强化不在${round}费用池，保留基础阵容`,
+      };
+    }
+    if (mainOptions.length) {
+      return {
+        ...base,
+        status: "waiting",
+        scoreDelta: HERO_AUGMENT_OPTION_BONUS,
+        text: `等${round}强化决定：${heroes.join("/")}专属可出现，期权+${HERO_AUGMENT_OPTION_BONUS}分`,
+      };
+    }
+    if (eligible.length) {
+      return { ...base, status: "available", text: `${round}可出现支线：${heroes.join("/")}，主线不强依赖` };
+    }
+    return { ...base, status: "lock", text: `现在可锁：本路线不依赖${round}可用的英雄专属` };
   }
 
   function roleUnitWeight(role, w) {
@@ -970,6 +1042,24 @@
       evidence.push(`至尊计划：${primeRule.text || primeRule.holder}`);
     }
 
+    const heroAugment = heroAugmentDecision(t, selected);
+    if (heroAugment) {
+      if (heroAugment.scoreDelta > 0) {
+        score += heroAugment.scoreDelta;
+        futureValue += heroAugment.scoreDelta;
+        breakdown.future += heroAugment.scoreDelta;
+        evidence.unshift(`英雄强化期权：${heroAugment.text}`);
+      } else if (heroAugment.scoreDelta < 0) {
+        score += heroAugment.scoreDelta;
+        breakdown.penalty += heroAugment.scoreDelta;
+        penalties.unshift(heroAugment.text);
+      }
+      if (heroAugment.hardBlock) {
+        mechanicBlocked = true;
+        penalties.unshift(heroAugment.text);
+      }
+    }
+
     if (!items.size) missing.push("还没选择装备，路线暂按来牌判断");
     if (!augments.size && !augCats.size) missing.push("还没选择符文，符文权重未生效");
 
@@ -994,6 +1084,7 @@
       penalties: uniq(penalties).slice(0, 4),
       mechanicBlocked,
       augmentOperator,
+      heroAugment,
     };
   }
 
@@ -1300,6 +1391,7 @@
       ...(selected.augments || []),
       ...(selected.traits || []).map(x => x.label || `${x.count}${x.name}`),
       selected.level ? `等级${selected.level}` : "",
+      normalizeHeroAugmentRound(selected.heroAugmentRound) !== "unknown" ? `英雄强化${normalizeHeroAugmentRound(selected.heroAugmentRound)}` : "",
     ].filter(Boolean).join("、") || "无";
     const top = ranked[0];
     const t = top.template;
@@ -1427,6 +1519,20 @@
     const mechanic = template.mechanic;
     const mechanicActive = mechanic && (!mechanic.requiredAugment || (selected.augments || []).includes(mechanic.requiredAugment))
       && (mechanic.requiredUnits || []).every(name => selectedUnits.has(name));
+    const heroAugment = top && top.heroAugment;
+    if (heroAugment) {
+      if (heroAugment.status === "waiting" && ["3-2", "4-2"].includes(heroAugment.round) && heroAugment.traits.length) {
+        lines.push(`${heroAugment.round}英雄强化：前一轮优先激活${heroAugment.traits.slice(0, 2).join("/")}，等${heroAugment.heroes.slice(0, 2).join("/")}专属`);
+      } else if (heroAugment.status === "waiting") {
+        lines.push(heroAugment.text);
+      } else if (heroAugment.status === "base-only" || heroAugment.status === "closed") {
+        lines.push(heroAugment.text);
+      } else if (heroAugment.status === "locked") {
+        lines.push(heroAugment.text);
+      } else {
+        lines.push(`${heroAugment.round}英雄强化：当前路线可直接按来牌运营`);
+      }
+    }
     if (top && top.antiFragile) {
       const af = top.antiFragile;
       lines.push(`${af.label}，核心度${af.readyPct}%`);
@@ -1479,6 +1585,30 @@
       poolCopies: { 1: 29, 2: 22, 3: 18, 4: 12, 5: 10 },
     };
     const unitPrices = { A: 1, B: 2, C: 3, D: 4 };
+    const heroRoundTemplate = (id, cost, required = false) => ({
+      id,
+      name: id,
+      quality: "S",
+      coreUnits: ["B"],
+      earlyUnits: ["B"],
+      midUnits: ["B"],
+      completedPrefs: [],
+      actions: {},
+      routeProfile: { mainCarry: { name: "B", starTarget: 3, items: [] }, units: [{ name: "B", role: "mainCarry", starTarget: 3, traits: ["测试羁绊"] }], items: [], activeTraits: [{ name: "测试羁绊", count: 2 }] },
+      heroAugmentPlan: { mainCarry: "B", options: [{ name: `${id}专属`, hero: "B", cost, traits: ["测试羁绊"] }], requiredNames: required ? [`${id}专属`] : [] },
+    });
+    const lowOptional = heroRoundTemplate("二费基础线", 2);
+    const threeOptional = heroRoundTemplate("三费候选线", 3);
+    const lowRequired = heroRoundTemplate("二费硬门槛", 2, true);
+    const noRoundBefore = scoreTemplate(lowOptional, { units: [], items: [], augments: [], augmentCats: [] }, fallbackWeights, {});
+    const noRoundAfter = scoreTemplate(lowOptional, { units: [], items: [], augments: [], augmentCats: [], heroAugmentRound: "unknown" }, fallbackWeights, {});
+    assert(noRoundBefore.stageStrength === noRoundAfter.stageStrength, "未知英雄强化回合时计分必须逐值不变");
+    const lowAtFour = scoreTemplate(lowOptional, { units: [], items: [], augments: [], augmentCats: [], heroAugmentRound: "4-2" }, fallbackWeights, {});
+    const threeAtFour = scoreTemplate(threeOptional, { units: [], items: [], augments: [], augmentCats: [], heroAugmentRound: "4-2" }, fallbackWeights, {});
+    const hardAtFour = scoreTemplate(lowRequired, { units: [], items: [], augments: [], augmentCats: [], heroAugmentRound: "4-2" }, fallbackWeights, {});
+    assert(lowAtFour.heroAugment.status === "base-only" && !lowAtFour.mechanicBlocked, "4-2应关闭二费专属分支但保留基础阵容");
+    assert(threeAtFour.heroAugment.status === "waiting" && threeAtFour.stageStrength > noRoundBefore.stageStrength, "4-2必须保留三费英雄强化并计入期权");
+    assert(hardAtFour.heroAugment.status === "closed" && hardAtFour.stageStrength === 0, "4-2应硬关闭二费专属门槛路线");
     const fullCore = [{
       id: "full",
       name: "全集core",
@@ -1698,6 +1828,9 @@
     AUGMENT_OPERATOR_EVIDENCE,
     AUGMENT_OPERATOR_SINGLE_CAP,
     AUGMENT_OPERATOR_TOTAL_CAP,
+    HERO_AUGMENT_ROUND_COSTS,
+    HERO_AUGMENT_OPTION_BONUS,
+    HERO_AUGMENT_UNAVAILABLE_PENALTY,
     DEFAULT_LEVEL,
     scoreTemplate,
     rank,
@@ -1708,6 +1841,8 @@
     actionLines,
     primeActionLine,
     activeTraitsForTemplate,
+    heroAugmentDecision,
+    normalizeHeroAugmentRound,
     parseTraitsInText,
     normalizeSelectedUnits,
     runTests,

@@ -230,6 +230,37 @@ function traitsForHero(name) {
     .filter(Boolean));
 }
 
+function heroFromAugment(hex) {
+  const text = String(hex && (hex.description || hex.desc) || '');
+  const provided = text.match(/提供(?:1个|一个)【([^】]+)】/);
+  const standardNames = { '奥瑞利安 索尔': '奥瑞利安 · 索尔', 努努: '努努和威朗普' };
+  const providedName = provided && (standardNames[provided[1]] || provided[1]);
+  if (providedName && heroByName(providedName)) return providedName;
+  return Object.values(data.chess)
+    .filter(h => h.name && String(h.setid) === '8' && String(h.showHeroTag) === '1' && text.includes(h.name))
+    .sort((a, b) => String(b.name).length - String(a.name).length || Number(a.price) - Number(b.price))[0]?.name || '';
+}
+
+function buildHeroAugmentCatalog() {
+  return Object.values(data.hex)
+    .filter(hex => hex && hex.name && String(hex.level) === '4')
+    .map(hex => {
+      const hero = heroFromAugment(hex);
+      return {
+        name: hex.name,
+        hero,
+        cost: priceOf(hero),
+        traits: traitsForHero(hero),
+        desc: hex.description || hex.desc || '',
+      };
+    })
+    .filter(row => row.hero && row.cost)
+    .sort((a, b) => a.cost - b.cost || a.hero.localeCompare(b.hero, 'zh-Hans-CN') || a.name.localeCompare(b.name, 'zh-Hans-CN'));
+}
+
+const heroAugmentCatalog = buildHeroAugmentCatalog();
+const heroAugmentByName = new Map(heroAugmentCatalog.map(row => [row.name, row]));
+
 function parseTraitLabel(label) {
   const m = String(label || '').match(/^(\d+)(.+)$/);
   if (!m) return null;
@@ -351,6 +382,33 @@ function attachRouteProfiles(templatesIn) {
   return templatesIn.map(t => {
     const comp = modelCompForLine(t.name);
     return { ...t, routeProfile: comp ? profileFromModel(t, comp) : profileFromTemplate(t) };
+  });
+}
+
+function attachHeroAugmentPlans(templatesIn) {
+  return templatesIn.map(template => {
+    const mainCarry = template.routeProfile && template.routeProfile.mainCarry && template.routeProfile.mainCarry.name || '';
+    const recommendedOptions = (template.augmentPrefs || [])
+      .map(name => heroAugmentByName.get(name))
+      .filter(Boolean);
+    const carryOptions = heroAugmentCatalog.filter(row => row.hero === mainCarry);
+    const options = uniq([...carryOptions, ...recommendedOptions]
+      .map(row => JSON.stringify(row))).map(row => JSON.parse(row));
+    if (!options.length) return template;
+    const text = `${template.name || ''} ${template.officialText && template.officialText.hex || ''}`;
+    const mechanicRequired = template.mechanic && template.mechanic.requiredAugment;
+    const requiredNames = options
+      .filter(row => row.name === mechanicRequired || String(template.name || '').includes(row.name)
+        || (/(刚需|必拿|必须)/.test(text) && text.includes(row.name)))
+      .map(row => row.name);
+    return {
+      ...template,
+      heroAugmentPlan: {
+        options,
+        requiredNames: uniq(requiredNames),
+        mainCarry,
+      },
+    };
   });
 }
 
@@ -841,8 +899,12 @@ function buildOptions(templates) {
       priority: augmentCount[name] || 0,
       cats: hexByName[name] ? classifyAug(hexByName[name]) : ['战力'],
       desc: hexByName[name] ? (hexByName[name].description || hexByName[name].desc || '') : '',
+      hero: heroAugmentByName.get(name)?.hero || '',
+      heroCost: heroAugmentByName.get(name)?.cost || null,
+      heroTraits: heroAugmentByName.get(name)?.traits || [],
       aliases: augmentAliasesFor(name),
     })).sort((a, b) => b.priority - a.priority || a.name.localeCompare(b.name, 'zh-Hans-CN')),
+    heroAugments: heroAugmentCatalog,
     augmentSignals: ['经济', '装备', '战力', '英雄强化', '羁绊'],
   };
 }
@@ -953,7 +1015,7 @@ function rank(templates, selected, weights) {
     .slice(0, 6);
 }
 
-const templates = attachPrimePlans(attachRouteProfiles([...manualTemplates, ...officialTemplates()]));
+const templates = attachHeroAugmentPlans(attachPrimePlans(attachRouteProfiles([...manualTemplates, ...officialTemplates()])));
 
 function sameSet(a, b) {
   const aa = uniq(a).sort();
@@ -1000,6 +1062,8 @@ function assertCoreData(templatesIn) {
 }
 
 const coreAssertions = assertCoreData(templates);
+if (heroAugmentCatalog.length !== 122) throw new Error(`英雄强化目录应为122条，实际${heroAugmentCatalog.length}`);
+if (heroAugmentCatalog.some(row => !row.hero || !row.cost)) throw new Error('英雄强化目录存在未映射英雄或费用');
 const options = buildOptions(templates);
 const weights = computeModelWeights();
 const examples = [
@@ -1025,7 +1089,7 @@ const out = {
   templates,
   weights,
   examples,
-  assertions: { coreData: coreAssertions },
+  assertions: { coreData: coreAssertions, heroAugments: { count: heroAugmentCatalog.length, mapped: true } },
   assumptions: [
     '二阶段匹配器只根据你点击的信号重排路线，不读取游戏画面。',
     '路线模板来自官方早期阵容/散件优先级/符文推荐，并补充研究型过渡模板。',

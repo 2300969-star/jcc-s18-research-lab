@@ -32,7 +32,7 @@ The browser application contains two working surfaces:
 | Surface | Purpose |
 |---|---|
 | **Research Dashboard** | Version results, generated lineups, certified conditional routes, stage transitions, numerical audits, and experiment reports |
-| **Match Mode** | Fast Chinese signal parsing, live route ranking, star-level and shop-odds modeling, concrete actions, positioning, and optional LLM fallback |
+| **Match Mode** | Fast Chinese signal parsing, hero-augment round pruning, live route ranking, star-level and shop-odds modeling, concrete actions, positioning, and optional LLM fallback |
 
 <details>
 <summary><strong>Match Mode preview / 比赛模式预览</strong></summary>

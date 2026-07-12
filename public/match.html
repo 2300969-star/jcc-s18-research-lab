@@ -44,12 +44,15 @@ button, input { font:inherit; }
 .banner.show { opacity:1; }
 .status { display:grid; grid-template-columns:1fr; gap:8px; min-height:94px; }
 .pending, .signals { display:flex; gap:8px; flex-wrap:wrap; align-items:center; min-height:42px; }
-.levelRow { display:flex; gap:8px; flex-wrap:wrap; align-items:center; min-height:38px; }
+.levelRow, .heroAugRow { display:flex; gap:8px; flex-wrap:wrap; align-items:center; min-height:38px; }
 .label { color:var(--muted); font-size:15px; font-weight:800; margin-right:2px; }
 .chip, .candidate { min-height:44px; border:1px solid var(--border); border-radius:999px; background:var(--surface); color:var(--ink); padding:6px 14px; cursor:pointer; font-size:18px; }
 .chip { border-color:color-mix(in srgb, var(--s2) 55%, var(--border)); }
 .levelChip { min-height:36px; border:1px solid var(--border); border-radius:999px; background:var(--plane); color:var(--ink2); padding:4px 11px; cursor:pointer; font-size:16px; font-weight:850; }
 .levelChip.on { background:var(--s2); border-color:var(--s2); color:#fff; }
+.heroAugChip { min-height:36px; border:1px solid var(--border); border-radius:999px; background:var(--plane); color:var(--ink2); padding:4px 13px; cursor:pointer; font-size:16px; font-weight:850; }
+.heroAugChip.on { background:var(--s5); border-color:var(--s5); color:#fff; }
+.heroAugHint { color:var(--muted); font-size:14px; font-weight:750; }
 .candidate { border-color:color-mix(in srgb, var(--s3) 65%, var(--border)); }
 .drop { min-width:44px; padding:6px 12px; color:var(--s6); }
 .main { min-height:0; display:grid; grid-template-columns:minmax(0,1fr); }
@@ -69,6 +72,11 @@ button, input { font:inherit; }
 .gateStrip.red { color:#fff; background:var(--s6); border-color:var(--s6); }
 .formulaLine { color:var(--muted); font-size:14px; margin-top:4px; overflow-wrap:anywhere; }
 .sampleStrip { margin-top:5px; padding:5px 9px; border-radius:10px; border:1px solid color-mix(in srgb, var(--s5) 45%, var(--border)); color:var(--ink2); background:color-mix(in srgb, var(--surface) 90%, var(--s5) 10%); font-size:15px; overflow-wrap:anywhere; }
+.heroAugStrip { margin-top:6px; padding:7px 10px; border-radius:10px; border:1px solid var(--border); font-size:16px; font-weight:900; overflow-wrap:anywhere; }
+.heroAugStrip.locked, .heroAugStrip.lock { color:#fff; background:var(--s2); border-color:var(--s2); }
+.heroAugStrip.waiting, .heroAugStrip.available { color:#1f1800; background:color-mix(in srgb, var(--s3) 70%, #fff 30%); border-color:var(--s3); }
+.heroAugStrip.base-only { color:var(--ink2); background:color-mix(in srgb, var(--surface) 82%, var(--muted) 18%); }
+.heroAugStrip.closed { color:#fff; background:var(--s6); border-color:var(--s6); }
 .followBadge { display:inline-grid; place-items:center; margin-left:8px; padding:2px 8px; border-radius:999px; background:var(--s2); color:#fff; font-size:14px; font-weight:950; vertical-align:middle; }
 .followStrip { margin-top:6px; padding:7px 10px; border-radius:10px; border:1px solid color-mix(in srgb, var(--s2) 45%, var(--border)); color:var(--ink2); background:color-mix(in srgb, var(--surface) 88%, var(--s2) 12%); font-size:15px; overflow-wrap:anywhere; }
 .reachBox { color:var(--ink2); font-size:16px; line-height:1.45; margin-top:4px; overflow-wrap:anywhere; }
@@ -159,6 +167,7 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
   <div class="status">
     <div class="pending" id="pending"></div>
     <div class="levelRow" id="levelRow"></div>
+    <div class="heroAugRow" id="heroAugRow"></div>
     <div class="signals" id="signals"></div>
   </div>
   <main class="main">
@@ -195,9 +204,9 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
 <dialog id="routeDialog"><div id="routeDialogBody"></div></dialog>
 
 <script src="data.js?v=meta-20260712a"></script>
-<script src="stage2-matcher-data.js?v=cert-20260712a"></script>
+<script src="stage2-matcher-data.js?v=hero-round-20260712a"></script>
 <script src="odds-data.js?v=match-20260706e"></script>
-<script src="matcher-core.js?v=cert-20260712a"></script>
+<script src="matcher-core.js?v=hero-round-20260712a"></script>
 <script src="signal-parser.js?v=match-20260706e"></script>
 <script src="llm-lane.js?v=match-20260712b"></script>
 <script>
@@ -215,11 +224,13 @@ const DEFAULT_LEVEL = MatcherCore.DEFAULT_LEVEL || 6;
 const MIN_LEVEL = MatcherCore.MIN_LEVEL || 1;
 const MAX_LEVEL = MatcherCore.MAX_LEVEL || 9;
 const LEVEL_CHOICES = Array.from({ length: MAX_LEVEL - MIN_LEVEL + 1 }, (_, i) => MIN_LEVEL + i);
+const HERO_AUGMENT_CHOICES = ["unknown", "2-1", "3-2", "4-2"];
 const savedTheme = localStorage.getItem(LS + "theme");
 if (savedTheme) document.documentElement.dataset.theme = savedTheme;
 
 let signals = [];
 let currentLevel = normalizeLevel(localStorage.getItem(LS + "level"));
+let currentHeroAugmentRound = normalizeHeroAugmentRound(localStorage.getItem(LS + "hero-augment-round"));
 let pending = [];
 let unheard = [];
 let augChoices = null;
@@ -239,6 +250,7 @@ function load() {
 function save() {
   localStorage.setItem(LS + "signals", JSON.stringify(signals));
   localStorage.setItem(LS + "level", String(currentLevel));
+  localStorage.setItem(LS + "hero-augment-round", currentHeroAugmentRound);
 }
 function normalizeLevel(level) {
   return Math.max(MIN_LEVEL, Math.min(MAX_LEVEL, Number(level) || DEFAULT_LEVEL));
@@ -247,6 +259,17 @@ function setLevel(level) {
   const n = normalizeLevel(level);
   currentLevel = n;
   save();
+  render();
+}
+function normalizeHeroAugmentRound(value) {
+  return MatcherCore.normalizeHeroAugmentRound ? MatcherCore.normalizeHeroAugmentRound(value) : (HERO_AUGMENT_CHOICES.includes(value) ? value : "unknown");
+}
+function setHeroAugmentRound(round) {
+  currentHeroAugmentRound = normalizeHeroAugmentRound(round);
+  save();
+  previousOrder = [];
+  lastTop = "";
+  lastTopId = "";
   render();
 }
 function signalKey(s) {
@@ -354,6 +377,7 @@ function clearGame() {
   unheard = [];
   augChoices = null;
   currentLevel = DEFAULT_LEVEL;
+  currentHeroAugmentRound = "unknown";
   previousOrder = [];
   lastTop = "";
   lastTopId = "";
@@ -366,6 +390,7 @@ function clearGame() {
 function selectedObj() {
   const selected = MatcherCore.selectedFromSignals(signals);
   selected.level = currentLevel;
+  selected.heroAugmentRound = currentHeroAugmentRound;
   return selected;
 }
 function focusInput() {
@@ -432,6 +457,17 @@ function renderLevel() {
     `<button class="levelChip ${n === currentLevel ? "on" : ""}" data-level="${n}">等级${n}</button>`
   ).join("");
   box.querySelectorAll("[data-level]").forEach(btn => btn.addEventListener("click", () => setLevel(Number(btn.dataset.level))));
+}
+function renderHeroAugmentRound() {
+  const box = $("heroAugRow");
+  const costs = MatcherCore.HERO_AUGMENT_ROUND_COSTS && MatcherCore.HERO_AUGMENT_ROUND_COSTS[currentHeroAugmentRound];
+  const excluded = costs ? [1, 2, 3, 4, 5].filter(x => !costs.includes(x)) : [];
+  box.innerHTML = `<span class="label">英雄强化</span>` + HERO_AUGMENT_CHOICES.map(round =>
+    `<button class="heroAugChip ${round === currentHeroAugmentRound ? "on" : ""}" data-hero-round="${round}">${round === "unknown" ? "未知" : round}</button>`
+  ).join("") + (costs
+    ? `<span class="heroAugHint">候选${costs.join("/")}费；排除${excluded.join("/")}费专属强化</span>`
+    : `<span class="heroAugHint">开局按预告选择，立即裁剪不可能路线</span>`);
+  box.querySelectorAll("[data-hero-round]").forEach(btn => btn.addEventListener("click", () => setHeroAugmentRound(btn.dataset.heroRound)));
 }
 function renderPending() {
   const box = $("pending");
@@ -685,6 +721,11 @@ function openRouteDetail(row) {
   close.type = "button";
   close.addEventListener("click", () => $("routeDialog").close());
   mk("div", "detailMeta", `${t.family || "-"} ｜ ${t.goal || "-"} ｜ 强度${row.stageStrength}分 ｜ 最终${rowScore(row)}分`, body);
+  if (row.heroAugment) {
+    mk("div", "detailSection", "英雄强化窗口", body);
+    mk("div", "detailLine", `${row.heroAugment.text}。回合${row.heroAugment.round}候选费用：${row.heroAugment.costs.join("/")}费；已排除：${row.heroAugment.excludedCosts.join("/") || "无"}。`, body);
+    if ((row.heroAugment.eligible || []).length) mk("div", "detailLine", "可出现专属：" + row.heroAugment.eligible.map(x => `${x.hero}·${x.name}`).join("、"), body);
+  }
   if (row.antiFragile) {
     const af = row.antiFragile;
     mk("div", "detailSection", "抗脆弱诊断", body);
@@ -770,12 +811,17 @@ function reachHtml(row) {
   const toggle = costItems.length > 3 || lateRows.length > 3 ? `<button class="reachToggle" data-reach="${esc(id)}">${expanded ? "收起" : "展开"}</button>` : "";
   return `<div class="reachBox">缺口：${esc(costText)}${toggle}${late ? `<br>${esc(late)}` : ""}</div>`;
 }
+function heroAugmentHtml(row) {
+  const hero = row && row.heroAugment;
+  if (!hero) return "";
+  return `<div class="heroAugStrip ${esc(hero.status)}">${esc(hero.text)}</div>`;
+}
 function renderRoute() {
   $("augView").classList.add("hidden");
   $("routeView").classList.remove("hidden");
   const box = $("routeView");
   const ranked = rankedRoutes();
-  if (!signals.length || !ranked.length) {
+  if ((!signals.length && currentHeroAugmentRound === "unknown") || !ranked.length) {
     box.classList.remove("clickable");
     box.removeAttribute("tabindex");
     box.removeAttribute("role");
@@ -826,6 +872,7 @@ function renderRoute() {
       </div>
       <div class="subRank">领先#2 ${delta}分 ｜ #2 ${second ? esc(second.template.name) + " " + secondScore + "分" : "-"} ｜ #3 ${third ? esc(third.template.name) + " " + thirdScore + "分" : "-"}</div>
       <div class="openHint">点击查看前期 / 中期 / 后期阵容</div>
+      ${heroAugmentHtml(top)}
       ${gateHtml}
       ${sampleHtml}
       <div class="strengthBreak">${esc(breakLine)}</div>
@@ -921,6 +968,7 @@ function renderLog() {
 }
 function render() {
   renderLevel();
+  renderHeroAugmentRound();
   renderSignals();
   renderPending();
   if (augChoices && augChoices.length) renderAugTriple();
