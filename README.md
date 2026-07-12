@@ -58,6 +58,56 @@ flowchart LR
 
 The LLM is deliberately outside the ranking loop. It may translate unrecognized Chinese speech into a closed vocabulary, but all lineup scoring, shop probability, equipment inference, augment operators, and recommendations remain deterministic.
 
+## Research Figures / 研究图谱
+
+These figures are generated from the repository's deterministic outputs rather than drawn as presentation-only mockups. Run `npm run figures` after rebuilding the model to refresh every number shown below.
+
+### Formula calculations / 公式计算
+
+<p align="center">
+  <img src="docs/images/research/formula-asset-value.svg" alt="Asset-role value formula" width="49%">
+  <img src="docs/images/research/formula-shop-odds.svg" alt="Shop odds and reachability formula" width="49%">
+</p>
+
+The first graph exposes the role coefficients used by Match Mode. The second graph maps the complete level 1-9 shop matrix and explains how an unavailable high-cost unit becomes a zero-value late target instead of a fake `999`-gold estimate.
+
+<p align="center">
+  <img src="docs/images/research/formula-augment-operator.svg" alt="Conditional augment operator formula" width="78%">
+</p>
+
+The augment graph separates hard hero-mechanism gates from soft combat, economy, and item operators. Soft bonuses must survive both the condition-lift cap and the evidence-level discount before entering a recommendation.
+
+### Lineup derivation / 阵容推导
+
+<p align="center">
+  <img src="docs/images/research/lineup-mecha-transition.svg" alt="Mecha carry transition derivation" width="49%">
+  <img src="docs/images/research/lineup-jinx-growth.svg" alt="Jinx sisters growth derivation" width="49%">
+</p>
+
+- **Mecha transition:** jointly optimizes stage strength, retained units, and item inheritance instead of scoring only the final board.
+- **Jinx sisters:** independently validates the AP stacking curve, missile breakpoints, and three candidate end-board shells.
+
+<p align="center">
+  <img src="docs/images/research/lineup-solver-frontier.svg" alt="Lineup solver Pareto frontier" width="78%">
+</p>
+
+The solver frontier shows why the highest carry DPS is not automatically the best lineup. Orange points are non-dominated boards for carry output and frontline EHP; bubble size adds full-team value.
+
+### Model verification / 模型验算
+
+<p align="center">
+  <img src="docs/images/research/validation-certification.svg" alt="Route robustness certification" width="49%">
+  <img src="docs/images/research/validation-mecha-prime.svg" alt="Mecha Prime counterfactual experiment" width="49%">
+</p>
+
+The certification chart summarizes the current top ten under shared uncertainty samples. The Prime experiment fixes the board and items, changes only the Prime holder, and reruns the combat model to isolate causal impact.
+
+<p align="center">
+  <img src="docs/images/research/validation-tier-correlation.svg" alt="Official tier and model score correlation" width="78%">
+</p>
+
+The validation boundary is intentionally visible: the current official-tier correlation is only `Spearman ρ = 0.244` across 44 lineups. The system therefore reports model evidence, not a claim that its ranking is already ground truth.
+
 ## Model Highlights
 
 ### Asset-role value model
@@ -135,6 +185,7 @@ npm run build:discovery    # lineup discovery, transitions, numeric lens
 npm run build:experiments  # Jinx sisters and Mecha experiments
 npm run build:matcher      # stage matcher and route certification
 npm run audit              # data, skill, item, and outlier audits
+npm run figures            # regenerate README research figures
 ```
 
 Run the complete deterministic pipeline:

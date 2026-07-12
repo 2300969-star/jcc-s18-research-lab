@@ -14,6 +14,7 @@
     "build:matcher": "node src/pipeline/stage2-matcher.js && node src/pipeline/route-certifier.js",
     "build:experiments": "node src/experiments/jinx-sisters-lab.js && node src/experiments/mecha-branch.js && node src/experiments/mecha-prime-lab.js",
     "audit": "node src/audit/audit.js",
+    "figures": "node tools/generate-readme-figures.js",
     "build": "npm run build:model && npm run build:discovery && npm run build:experiments && node src/pipeline/meta-solver.js && npm run build:matcher && npm run audit",
     "serve": "python3 -m http.server 8766 --bind 127.0.0.1",
     "proxy": "node tools/llm-proxy.js",
