@@ -1,0 +1,5049 @@
+{
+ "version": "17.17.6b-S18",
+ "generated": "2026-07-12",
+ "routes": [
+  {
+   "name": "战斗机甲：贾克斯 -> 蕾欧娜",
+   "routeScore": 100,
+   "routeTags": [
+    "战斗机甲壳",
+    "同C继承",
+    "装备平滑",
+    "高费上限",
+    "贾克斯过渡"
+   ],
+   "verdict": "前中期可保留 贾克斯、德莱文、孙悟空、波比；中后期可保留 贾克斯、德莱文、孙悟空；主C装备继承较顺；终局上限高但依赖上9/五费二星；实战校准：贾克斯更适合作为中期吃分桥，后期转蕾欧娜/五费控制补争一上限",
+   "routeComponents": {
+    "strength": 96,
+    "smooth": 94,
+    "risk": 29,
+    "pivotCost": 17,
+    "strategic": 26
+   },
+   "transition": {
+    "earlyToMid": {
+     "keep": [
+      "贾克斯",
+      "德莱文",
+      "孙悟空",
+      "波比"
+     ],
+     "add": [
+      "安妮",
+      "拉克丝",
+      "璐璐"
+     ],
+     "remove": [
+      "布里茨"
+     ],
+     "sharedTraits": [
+      "战斗机甲",
+      "护卫",
+      "精英战士"
+     ],
+     "itemOverlap": 3
+    },
+    "midToLate": {
+     "keep": [
+      "贾克斯",
+      "德莱文",
+      "孙悟空"
+     ],
+     "add": [
+      "蕾欧娜",
+      "瑟提",
+      "佛耶戈",
+      "泰隆",
+      "迦娜",
+      "娑娜"
+     ],
+     "remove": [
+      "安妮",
+      "拉克丝",
+      "波比",
+      "璐璐"
+     ],
+     "sharedTraits": [
+      "战斗机甲",
+      "灵能使",
+      "护卫",
+      "精英战士"
+     ],
+     "itemOverlap": 2
+    }
+   },
+   "stages": {
+    "early": {
+     "label": "前期",
+     "score": 1338,
+     "team": [
+      {
+       "name": "贾克斯",
+       "price": 3
+      },
+      {
+       "name": "德莱文",
+       "price": 2
+      },
+      {
+       "name": "孙悟空",
+       "price": 1
+      },
+      {
+       "name": "布里茨",
+       "price": 1
+      },
+      {
+       "name": "波比",
+       "price": 1
+      }
+     ],
+     "traits": [
+      "3战斗机甲",
+      "2护卫",
+      "2斗士",
+      "1精英战士"
+     ],
+     "carry": {
+      "hero": "贾克斯",
+      "star": 1,
+      "price": 3,
+      "items": [
+       "泰坦的坚决",
+       "水银",
+       "鬼索的狂暴之刃"
+      ],
+      "dps": 359,
+      "baseDps": 35,
+      "itemsOnlyDps": 242,
+      "traitsOnlyDps": 60,
+      "auto": 157,
+      "spell": 203,
+      "proc": 0,
+      "itemGainX": 6.85,
+      "traitGainX": 1.7,
+      "fullGainX": 10.17,
+      "interaction": 93,
+      "interactionPct": 25.8,
+      "itemDrops": [
+       {
+        "item": "鬼索的狂暴之刃",
+        "dpsWithout": 162,
+        "drop": 197,
+        "dropPct": 55
+       },
+       {
+        "item": "水银",
+        "dpsWithout": 236,
+        "drop": 123,
+        "dropPct": 34.2
+       },
+       {
+        "item": "泰坦的坚决",
+        "dpsWithout": 251,
+        "drop": 108,
+        "dropPct": 30
+       }
+      ],
+      "traitDrops": [
+       {
+        "trait": "3战斗机甲",
+        "appliesToCarry": true,
+        "dpsWithout": 256,
+        "drop": 103,
+        "dropPct": 28.6
+       },
+       {
+        "trait": "1精英战士",
+        "appliesToCarry": true,
+        "dpsWithout": 339,
+        "drop": 20,
+        "dropPct": 5.7
+       }
+      ],
+      "activeTraits": [
+       "2护卫",
+       "2斗士",
+       "1精英战士",
+       "3战斗机甲"
+      ],
+      "bonus": {
+       "adPct": 60,
+       "ap": 60,
+       "asPct": 0,
+       "ampPct": 6,
+       "critPct": 0,
+       "armor": 25,
+       "mr": 0,
+       "hpPct": 20,
+       "manaMult": 1,
+       "onHitMagic": 0,
+       "ehpMult": 1
+      }
+     },
+     "front": {
+      "ehp": 14810,
+      "noTraitEhp": 12731,
+      "traitGainPct": 16.3,
+      "tanks": [
+       {
+        "hero": "布里茨",
+        "star": 2,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ],
+        "ehp": 8384,
+        "traitGainPct": 18.4
+       },
+       {
+        "hero": "波比",
+        "star": 2,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ],
+        "ehp": 6426,
+        "traitGainPct": 13.8
+       }
+      ]
+     },
+     "originalReason": "前排羁绊能把输出时间拉长；装备强化攻击频率/施法频率"
+    },
+    "mid": {
+     "label": "中期",
+     "score": 1461,
+     "team": [
+      {
+       "name": "贾克斯",
+       "price": 3
+      },
+      {
+       "name": "德莱文",
+       "price": 2
+      },
+      {
+       "name": "孙悟空",
+       "price": 1
+      },
+      {
+       "name": "安妮",
+       "price": 2
+      },
+      {
+       "name": "拉克丝",
+       "price": 1
+      },
+      {
+       "name": "波比",
+       "price": 1
+      },
+      {
+       "name": "璐璐",
+       "price": 1
+      }
+     ],
+     "traits": [
+      "3小天才",
+      "3战斗机甲",
+      "2灵能使",
+      "2护卫",
+      "1精英战士"
+     ],
+     "carry": {
+      "hero": "贾克斯",
+      "star": 2,
+      "price": 3,
+      "items": [
+       "泰坦的坚决",
+       "水银",
+       "鬼索的狂暴之刃"
+      ],
+      "dps": 596,
+      "baseDps": 54,
+      "itemsOnlyDps": 366,
+      "traitsOnlyDps": 100,
+      "auto": 241,
+      "spell": 354,
+      "proc": 0,
+      "itemGainX": 6.84,
+      "traitGainX": 1.87,
+      "fullGainX": 11.13,
+      "interaction": 183,
+      "interactionPct": 30.7,
+      "itemDrops": [
+       {
+        "item": "鬼索的狂暴之刃",
+        "dpsWithout": 269,
+        "drop": 327,
+        "dropPct": 54.9
+       },
+       {
+        "item": "水银",
+        "dpsWithout": 393,
+        "drop": 203,
+        "dropPct": 34
+       },
+       {
+        "item": "泰坦的坚决",
+        "dpsWithout": 424,
+        "drop": 172,
+        "dropPct": 28.8
+       }
+      ],
+      "traitDrops": [
+       {
+        "trait": "3战斗机甲",
+        "appliesToCarry": true,
+        "dpsWithout": 436,
+        "drop": 160,
+        "dropPct": 26.8
+       },
+       {
+        "trait": "2灵能使",
+        "appliesToCarry": true,
+        "dpsWithout": 559,
+        "drop": 37,
+        "dropPct": 6.2
+       },
+       {
+        "trait": "1精英战士",
+        "appliesToCarry": true,
+        "dpsWithout": 563,
+        "drop": 33,
+        "dropPct": 5.5
+       },
+       {
+        "trait": "3小天才",
+        "appliesToCarry": true,
+        "dpsWithout": 579,
+        "drop": 16,
+        "dropPct": 2.8
+       }
+      ],
+      "activeTraits": [
+       "2灵能使",
+       "2护卫",
+       "1精英战士",
+       "3小天才",
+       "3战斗机甲"
+      ],
+      "bonus": {
+       "adPct": 60,
+       "ap": 85,
+       "asPct": 0,
+       "ampPct": 9,
+       "critPct": 0,
+       "armor": 25,
+       "mr": 0,
+       "hpPct": 0,
+       "manaMult": 1,
+       "onHitMagic": 0,
+       "ehpMult": 1.03
+      }
+     },
+     "front": {
+      "ehp": 14827,
+      "noTraitEhp": 13093,
+      "traitGainPct": 13.2,
+      "tanks": [
+       {
+        "hero": "安妮",
+        "star": 2,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ],
+        "ehp": 8208,
+        "traitGainPct": 10.3
+       },
+       {
+        "hero": "波比",
+        "star": 2,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ],
+        "ehp": 6619,
+        "traitGainPct": 17.2
+       }
+      ]
+     },
+     "originalReason": "三费战力窗口明确，可围绕追三；前排羁绊能把输出时间拉长；输出羁绊直接喂主C或全队"
+    },
+    "late": {
+     "label": "后期",
+     "score": 2634,
+     "team": [
+      {
+       "name": "蕾欧娜",
+       "price": 5
+      },
+      {
+       "name": "德莱文",
+       "price": 2
+      },
+      {
+       "name": "孙悟空",
+       "price": 1
+      },
+      {
+       "name": "瑟提",
+       "price": 4
+      },
+      {
+       "name": "贾克斯",
+       "price": 3
+      },
+      {
+       "name": "佛耶戈",
+       "price": 4
+      },
+      {
+       "name": "泰隆",
+       "price": 1
+      },
+      {
+       "name": "迦娜",
+       "price": 5
+      },
+      {
+       "name": "娑娜",
+       "price": 3
+      }
+     ],
+     "traits": [
+      "5战斗机甲",
+      "3混沌战士",
+      "2灵能使",
+      "2护卫",
+      "2爱心使者",
+      "2福牛守护者",
+      "1气象主播",
+      "1精英战士",
+      "1平民英雄"
+     ],
+     "carry": {
+      "hero": "蕾欧娜",
+      "star": 2,
+      "price": 5,
+      "items": [
+       "朔极之矛",
+       "水银",
+       "鬼索的狂暴之刃"
+      ],
+      "dps": 1551,
+      "baseDps": 105,
+      "itemsOnlyDps": 572,
+      "traitsOnlyDps": 312,
+      "auto": 378,
+      "spell": 1173,
+      "proc": 0,
+      "itemGainX": 5.44,
+      "traitGainX": 2.97,
+      "fullGainX": 14.78,
+      "interaction": 772,
+      "interactionPct": 49.8,
+      "itemDrops": [
+       {
+        "item": "鬼索的狂暴之刃",
+        "dpsWithout": 831,
+        "drop": 720,
+        "dropPct": 46.4
+       },
+       {
+        "item": "水银",
+        "dpsWithout": 984,
+        "drop": 568,
+        "dropPct": 36.6
+       },
+       {
+        "item": "朔极之矛",
+        "dpsWithout": 1057,
+        "drop": 494,
+        "dropPct": 31.9
+       }
+      ],
+      "traitDrops": [
+       {
+        "trait": "5战斗机甲",
+        "appliesToCarry": true,
+        "dpsWithout": 878,
+        "drop": 674,
+        "dropPct": 43.4
+       },
+       {
+        "trait": "3混沌战士",
+        "appliesToCarry": true,
+        "dpsWithout": 1255,
+        "drop": 296,
+        "dropPct": 19.1
+       },
+       {
+        "trait": "2灵能使",
+        "appliesToCarry": true,
+        "dpsWithout": 1440,
+        "drop": 111,
+        "dropPct": 7.2
+       },
+       {
+        "trait": "1精英战士",
+        "appliesToCarry": true,
+        "dpsWithout": 1480,
+        "drop": 71,
+        "dropPct": 4.6
+       },
+       {
+        "trait": "2爱心使者",
+        "appliesToCarry": true,
+        "dpsWithout": 1533,
+        "drop": 18,
+        "dropPct": 1.1
+       }
+      ],
+      "activeTraits": [
+       "3混沌战士",
+       "2灵能使",
+       "2护卫",
+       "2爱心使者",
+       "1气象主播",
+       "1精英战士",
+       "1平民英雄",
+       "2福牛守护者",
+       "5战斗机甲"
+      ],
+      "bonus": {
+       "adPct": 110,
+       "ap": 139,
+       "asPct": 0,
+       "ampPct": 31,
+       "critPct": 0,
+       "armor": 35,
+       "mr": 10,
+       "hpPct": 0,
+       "manaMult": 1.04,
+       "onHitMagic": 0,
+       "ehpMult": 1
+      }
+     },
+     "front": {
+      "ehp": 20303,
+      "noTraitEhp": 17355,
+      "traitGainPct": 17,
+      "tanks": [
+       {
+        "hero": "瑟提",
+        "star": 2,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ],
+        "ehp": 12174,
+        "traitGainPct": 22.4
+       },
+       {
+        "hero": "佛耶戈",
+        "star": 2,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ],
+        "ehp": 8129,
+        "traitGainPct": 9.7
+       }
+      ]
+     },
+     "originalReason": "高费主C上限高，但依赖经济与搜卡节奏；前排羁绊能把输出时间拉长；输出羁绊直接喂主C或全队"
+    }
+   },
+   "keyFindings": [
+    "后期蕾欧娜最怕少鬼索的狂暴之刃：DPS -46.4%",
+    "后期第一羁绊杠杆是5战斗机甲：DPS -43.4%",
+    "后期装备与羁绊存在正乘法：额外 +772 DPS",
+    "中期贾克斯从裸装到完整口径提升 11.13x，吃装备/羁绊程度极高",
+    "中后期保留贾克斯、德莱文、孙悟空，换壳成本可控"
+   ]
+  },
+  {
+   "name": "战斗机甲：德莱文 -> 贾克斯 -> 蕾欧娜",
+   "routeScore": 95,
+   "routeTags": [
+    "战斗机甲壳",
+    "装备平滑",
+    "高费上限",
+    "贾克斯过渡"
+   ],
+   "verdict": "前中期可保留 德莱文、孙悟空、贾克斯、波比；中后期可保留 贾克斯、德莱文、孙悟空；主C装备继承较顺；终局上限高但依赖上9/五费二星；实战校准：贾克斯更适合作为中期吃分桥，后期转蕾欧娜/五费控制补争一上限",
+   "routeComponents": {
+    "strength": 96,
+    "smooth": 84,
+    "risk": 29,
+    "pivotCost": 17,
+    "strategic": 26
+   },
+   "transition": {
+    "earlyToMid": {
+     "keep": [
+      "德莱文",
+      "孙悟空",
+      "贾克斯",
+      "波比"
+     ],
+     "add": [
+      "安妮",
+      "拉克丝",
+      "璐璐"
+     ],
+     "remove": [
+      "布里茨"
+     ],
+     "sharedTraits": [
+      "战斗机甲",
+      "护卫",
+      "精英战士"
+     ],
+     "itemOverlap": 1
+    },
+    "midToLate": {
+     "keep": [
+      "贾克斯",
+      "德莱文",
+      "孙悟空"
+     ],
+     "add": [
+      "蕾欧娜",
+      "瑟提",
+      "佛耶戈",
+      "泰隆",
+      "迦娜",
+      "娑娜"
+     ],
+     "remove": [
+      "安妮",
+      "拉克丝",
+      "波比",
+      "璐璐"
+     ],
+     "sharedTraits": [
+      "战斗机甲",
+      "灵能使",
+      "护卫",
+      "精英战士"
+     ],
+     "itemOverlap": 2
+    }
+   },
+   "stages": {
+    "early": {
+     "label": "前期",
+     "score": 1321,
+     "team": [
+      {
+       "name": "德莱文",
+       "price": 2
+      },
+      {
+       "name": "孙悟空",
+       "price": 1
+      },
+      {
+       "name": "贾克斯",
+       "price": 3
+      },
+      {
+       "name": "布里茨",
+       "price": 1
+      },
+      {
+       "name": "波比",
+       "price": 1
+      }
+     ],
+     "traits": [
+      "3战斗机甲",
+      "2护卫",
+      "2斗士",
+      "1精英战士"
+     ],
+     "carry": {
+      "hero": "德莱文",
+      "star": 2,
+      "price": 2,
+      "items": [
+       "最后的轻语",
+       "鬼索的狂暴之刃",
+       "卢安娜的飓风"
+      ],
+      "dps": 431,
+      "baseDps": 51,
+      "itemsOnlyDps": 267,
+      "traitsOnlyDps": 86,
+      "auto": 255,
+      "spell": 48,
+      "proc": 128,
+      "itemGainX": 5.24,
+      "traitGainX": 1.7,
+      "fullGainX": 8.46,
+      "interaction": 129,
+      "interactionPct": 29.8,
+      "itemDrops": [
+       {
+        "item": "鬼索的狂暴之刃",
+        "dpsWithout": 218,
+        "drop": 213,
+        "dropPct": 49.4
+       },
+       {
+        "item": "卢安娜的飓风",
+        "dpsWithout": 270,
+        "drop": 161,
+        "dropPct": 37.4
+       },
+       {
+        "item": "最后的轻语",
+        "dpsWithout": 281,
+        "drop": 150,
+        "dropPct": 34.8
+       }
+      ],
+      "traitDrops": [
+       {
+        "trait": "3战斗机甲",
+        "appliesToCarry": true,
+        "dpsWithout": 283,
+        "drop": 148,
+        "dropPct": 34.3
+       },
+       {
+        "trait": "1精英战士",
+        "appliesToCarry": true,
+        "dpsWithout": 407,
+        "drop": 24,
+        "dropPct": 5.7
+       }
+      ],
+      "activeTraits": [
+       "2护卫",
+       "2斗士",
+       "1精英战士",
+       "3战斗机甲"
+      ],
+      "bonus": {
+       "adPct": 60,
+       "ap": 60,
+       "asPct": 0,
+       "ampPct": 6,
+       "critPct": 0,
+       "armor": 25,
+       "mr": 0,
+       "hpPct": 0,
+       "manaMult": 1,
+       "onHitMagic": 0,
+       "ehpMult": 1
+      }
+     },
+     "front": {
+      "ehp": 13496,
+      "noTraitEhp": 11523,
+      "traitGainPct": 17.1,
+      "tanks": [
+       {
+        "hero": "贾克斯",
+        "star": 1,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ],
+        "ehp": 6836,
+        "traitGainPct": 16.3
+       },
+       {
+        "hero": "布里茨",
+        "star": 2,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ],
+        "ehp": 6660,
+        "traitGainPct": 17.9
+       }
+      ]
+     },
+     "originalReason": "低费高效率，适合保血连胜；前排羁绊能把输出时间拉长；装备强化攻击频率/施法频率"
+    },
+    "mid": {
+     "label": "中期",
+     "score": 1461,
+     "team": [
+      {
+       "name": "贾克斯",
+       "price": 3
+      },
+      {
+       "name": "德莱文",
+       "price": 2
+      },
+      {
+       "name": "孙悟空",
+       "price": 1
+      },
+      {
+       "name": "安妮",
+       "price": 2
+      },
+      {
+       "name": "拉克丝",
+       "price": 1
+      },
+      {
+       "name": "波比",
+       "price": 1
+      },
+      {
+       "name": "璐璐",
+       "price": 1
+      }
+     ],
+     "traits": [
+      "3小天才",
+      "3战斗机甲",
+      "2灵能使",
+      "2护卫",
+      "1精英战士"
+     ],
+     "carry": {
+      "hero": "贾克斯",
+      "star": 2,
+      "price": 3,
+      "items": [
+       "泰坦的坚决",
+       "水银",
+       "鬼索的狂暴之刃"
+      ],
+      "dps": 596,
+      "baseDps": 54,
+      "itemsOnlyDps": 366,
+      "traitsOnlyDps": 100,
+      "auto": 241,
+      "spell": 354,
+      "proc": 0,
+      "itemGainX": 6.84,
+      "traitGainX": 1.87,
+      "fullGainX": 11.13,
+      "interaction": 183,
+      "interactionPct": 30.7,
+      "itemDrops": [
+       {
+        "item": "鬼索的狂暴之刃",
+        "dpsWithout": 269,
+        "drop": 327,
+        "dropPct": 54.9
+       },
+       {
+        "item": "水银",
+        "dpsWithout": 393,
+        "drop": 203,
+        "dropPct": 34
+       },
+       {
+        "item": "泰坦的坚决",
+        "dpsWithout": 424,
+        "drop": 172,
+        "dropPct": 28.8
+       }
+      ],
+      "traitDrops": [
+       {
+        "trait": "3战斗机甲",
+        "appliesToCarry": true,
+        "dpsWithout": 436,
+        "drop": 160,
+        "dropPct": 26.8
+       },
+       {
+        "trait": "2灵能使",
+        "appliesToCarry": true,
+        "dpsWithout": 559,
+        "drop": 37,
+        "dropPct": 6.2
+       },
+       {
+        "trait": "1精英战士",
+        "appliesToCarry": true,
+        "dpsWithout": 563,
+        "drop": 33,
+        "dropPct": 5.5
+       },
+       {
+        "trait": "3小天才",
+        "appliesToCarry": true,
+        "dpsWithout": 579,
+        "drop": 16,
+        "dropPct": 2.8
+       }
+      ],
+      "activeTraits": [
+       "2灵能使",
+       "2护卫",
+       "1精英战士",
+       "3小天才",
+       "3战斗机甲"
+      ],
+      "bonus": {
+       "adPct": 60,
+       "ap": 85,
+       "asPct": 0,
+       "ampPct": 9,
+       "critPct": 0,
+       "armor": 25,
+       "mr": 0,
+       "hpPct": 0,
+       "manaMult": 1,
+       "onHitMagic": 0,
+       "ehpMult": 1.03
+      }
+     },
+     "front": {
+      "ehp": 14827,
+      "noTraitEhp": 13093,
+      "traitGainPct": 13.2,
+      "tanks": [
+       {
+        "hero": "安妮",
+        "star": 2,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ],
+        "ehp": 8208,
+        "traitGainPct": 10.3
+       },
+       {
+        "hero": "波比",
+        "star": 2,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ],
+        "ehp": 6619,
+        "traitGainPct": 17.2
+       }
+      ]
+     },
+     "originalReason": "三费战力窗口明确，可围绕追三；前排羁绊能把输出时间拉长；输出羁绊直接喂主C或全队"
+    },
+    "late": {
+     "label": "后期",
+     "score": 2634,
+     "team": [
+      {
+       "name": "蕾欧娜",
+       "price": 5
+      },
+      {
+       "name": "德莱文",
+       "price": 2
+      },
+      {
+       "name": "孙悟空",
+       "price": 1
+      },
+      {
+       "name": "瑟提",
+       "price": 4
+      },
+      {
+       "name": "贾克斯",
+       "price": 3
+      },
+      {
+       "name": "佛耶戈",
+       "price": 4
+      },
+      {
+       "name": "泰隆",
+       "price": 1
+      },
+      {
+       "name": "迦娜",
+       "price": 5
+      },
+      {
+       "name": "娑娜",
+       "price": 3
+      }
+     ],
+     "traits": [
+      "5战斗机甲",
+      "3混沌战士",
+      "2灵能使",
+      "2护卫",
+      "2爱心使者",
+      "2福牛守护者",
+      "1气象主播",
+      "1精英战士",
+      "1平民英雄"
+     ],
+     "carry": {
+      "hero": "蕾欧娜",
+      "star": 2,
+      "price": 5,
+      "items": [
+       "朔极之矛",
+       "水银",
+       "鬼索的狂暴之刃"
+      ],
+      "dps": 1551,
+      "baseDps": 105,
+      "itemsOnlyDps": 572,
+      "traitsOnlyDps": 312,
+      "auto": 378,
+      "spell": 1173,
+      "proc": 0,
+      "itemGainX": 5.44,
+      "traitGainX": 2.97,
+      "fullGainX": 14.78,
+      "interaction": 772,
+      "interactionPct": 49.8,
+      "itemDrops": [
+       {
+        "item": "鬼索的狂暴之刃",
+        "dpsWithout": 831,
+        "drop": 720,
+        "dropPct": 46.4
+       },
+       {
+        "item": "水银",
+        "dpsWithout": 984,
+        "drop": 568,
+        "dropPct": 36.6
+       },
+       {
+        "item": "朔极之矛",
+        "dpsWithout": 1057,
+        "drop": 494,
+        "dropPct": 31.9
+       }
+      ],
+      "traitDrops": [
+       {
+        "trait": "5战斗机甲",
+        "appliesToCarry": true,
+        "dpsWithout": 878,
+        "drop": 674,
+        "dropPct": 43.4
+       },
+       {
+        "trait": "3混沌战士",
+        "appliesToCarry": true,
+        "dpsWithout": 1255,
+        "drop": 296,
+        "dropPct": 19.1
+       },
+       {
+        "trait": "2灵能使",
+        "appliesToCarry": true,
+        "dpsWithout": 1440,
+        "drop": 111,
+        "dropPct": 7.2
+       },
+       {
+        "trait": "1精英战士",
+        "appliesToCarry": true,
+        "dpsWithout": 1480,
+        "drop": 71,
+        "dropPct": 4.6
+       },
+       {
+        "trait": "2爱心使者",
+        "appliesToCarry": true,
+        "dpsWithout": 1533,
+        "drop": 18,
+        "dropPct": 1.1
+       }
+      ],
+      "activeTraits": [
+       "3混沌战士",
+       "2灵能使",
+       "2护卫",
+       "2爱心使者",
+       "1气象主播",
+       "1精英战士",
+       "1平民英雄",
+       "2福牛守护者",
+       "5战斗机甲"
+      ],
+      "bonus": {
+       "adPct": 110,
+       "ap": 139,
+       "asPct": 0,
+       "ampPct": 31,
+       "critPct": 0,
+       "armor": 35,
+       "mr": 10,
+       "hpPct": 0,
+       "manaMult": 1.04,
+       "onHitMagic": 0,
+       "ehpMult": 1
+      }
+     },
+     "front": {
+      "ehp": 20303,
+      "noTraitEhp": 17355,
+      "traitGainPct": 17,
+      "tanks": [
+       {
+        "hero": "瑟提",
+        "star": 2,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ],
+        "ehp": 12174,
+        "traitGainPct": 22.4
+       },
+       {
+        "hero": "佛耶戈",
+        "star": 2,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ],
+        "ehp": 8129,
+        "traitGainPct": 9.7
+       }
+      ]
+     },
+     "originalReason": "高费主C上限高，但依赖经济与搜卡节奏；前排羁绊能把输出时间拉长；输出羁绊直接喂主C或全队"
+    }
+   },
+   "keyFindings": [
+    "后期蕾欧娜最怕少鬼索的狂暴之刃：DPS -46.4%",
+    "后期第一羁绊杠杆是5战斗机甲：DPS -43.4%",
+    "后期装备与羁绊存在正乘法：额外 +772 DPS",
+    "中期贾克斯从裸装到完整口径提升 11.13x，吃装备/羁绊程度极高",
+    "中后期保留贾克斯、德莱文、孙悟空，换壳成本可控"
+   ]
+  },
+  {
+   "name": "护卫：璐璐 -> 贾克斯 -> 蕾欧娜",
+   "routeScore": 86,
+   "routeTags": [
+    "护卫壳",
+    "装备平滑",
+    "高费上限",
+    "贾克斯过渡"
+   ],
+   "verdict": "前中期可保留 璐璐、德莱文、波比、孙悟空；中后期可保留 贾克斯、德莱文、孙悟空；主C装备继承较顺；终局上限高但依赖上9/五费二星；实战校准：贾克斯更适合作为中期吃分桥，后期转蕾欧娜/五费控制补争一上限",
+   "routeComponents": {
+    "strength": 95,
+    "smooth": 91,
+    "risk": 29,
+    "pivotCost": 17,
+    "strategic": 14
+   },
+   "transition": {
+    "earlyToMid": {
+     "keep": [
+      "璐璐",
+      "德莱文",
+      "波比",
+      "孙悟空"
+     ],
+     "add": [
+      "贾克斯",
+      "安妮",
+      "拉克丝"
+     ],
+     "remove": [
+      "加里奥"
+     ],
+     "sharedTraits": [
+      "护卫",
+      "精英战士"
+     ],
+     "itemOverlap": 3
+    },
+    "midToLate": {
+     "keep": [
+      "贾克斯",
+      "德莱文",
+      "孙悟空"
+     ],
+     "add": [
+      "蕾欧娜",
+      "瑟提",
+      "佛耶戈",
+      "泰隆",
+      "迦娜",
+      "娑娜"
+     ],
+     "remove": [
+      "安妮",
+      "拉克丝",
+      "波比",
+      "璐璐"
+     ],
+     "sharedTraits": [
+      "战斗机甲",
+      "灵能使",
+      "护卫",
+      "精英战士"
+     ],
+     "itemOverlap": 2
+    }
+   },
+   "stages": {
+    "early": {
+     "label": "前期",
+     "score": 1222,
+     "team": [
+      {
+       "name": "璐璐",
+       "price": 1
+      },
+      {
+       "name": "加里奥",
+       "price": 1
+      },
+      {
+       "name": "德莱文",
+       "price": 2
+      },
+      {
+       "name": "波比",
+       "price": 1
+      },
+      {
+       "name": "孙悟空",
+       "price": 1
+      }
+     ],
+     "traits": [
+      "2护卫",
+      "1精英战士",
+      "1平民英雄"
+     ],
+     "carry": {
+      "hero": "璐璐",
+      "star": 2,
+      "price": 1,
+      "items": [
+       "泰坦的坚决",
+       "水银",
+       "鬼索的狂暴之刃"
+      ],
+      "dps": 312,
+      "baseDps": 61,
+      "itemsOnlyDps": 295,
+      "traitsOnlyDps": 65,
+      "auto": 87,
+      "spell": 225,
+      "proc": 0,
+      "itemGainX": 4.83,
+      "traitGainX": 1.06,
+      "fullGainX": 5.12,
+      "interaction": 14,
+      "interactionPct": 4.5,
+      "itemDrops": [
+       {
+        "item": "鬼索的狂暴之刃",
+        "dpsWithout": 160,
+        "drop": 152,
+        "dropPct": 48.7
+       },
+       {
+        "item": "泰坦的坚决",
+        "dpsWithout": 194,
+        "drop": 118,
+        "dropPct": 37.8
+       },
+       {
+        "item": "水银",
+        "dpsWithout": 198,
+        "drop": 115,
+        "dropPct": 36.7
+       }
+      ],
+      "traitDrops": [
+       {
+        "trait": "1精英战士",
+        "appliesToCarry": true,
+        "dpsWithout": 295,
+        "drop": 18,
+        "dropPct": 5.7
+       }
+      ],
+      "activeTraits": [
+       "2护卫",
+       "1精英战士",
+       "1平民英雄"
+      ],
+      "bonus": {
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "ampPct": 6,
+       "critPct": 0,
+       "armor": 25,
+       "mr": 0,
+       "hpPct": 0,
+       "manaMult": 1.04,
+       "onHitMagic": 0,
+       "ehpMult": 1
+      }
+     },
+     "front": {
+      "ehp": 13994,
+      "noTraitEhp": 12731,
+      "traitGainPct": 9.9,
+      "tanks": [
+       {
+        "hero": "加里奥",
+        "star": 2,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ],
+        "ehp": 7568,
+        "traitGainPct": 6.8
+       },
+       {
+        "hero": "波比",
+        "star": 2,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ],
+        "ehp": 6426,
+        "traitGainPct": 13.8
+       }
+      ]
+     },
+     "originalReason": "低费高效率，适合保血连胜；前排羁绊能把输出时间拉长；装备强化攻击频率/施法频率"
+    },
+    "mid": {
+     "label": "中期",
+     "score": 1461,
+     "team": [
+      {
+       "name": "贾克斯",
+       "price": 3
+      },
+      {
+       "name": "德莱文",
+       "price": 2
+      },
+      {
+       "name": "孙悟空",
+       "price": 1
+      },
+      {
+       "name": "安妮",
+       "price": 2
+      },
+      {
+       "name": "拉克丝",
+       "price": 1
+      },
+      {
+       "name": "波比",
+       "price": 1
+      },
+      {
+       "name": "璐璐",
+       "price": 1
+      }
+     ],
+     "traits": [
+      "3小天才",
+      "3战斗机甲",
+      "2灵能使",
+      "2护卫",
+      "1精英战士"
+     ],
+     "carry": {
+      "hero": "贾克斯",
+      "star": 2,
+      "price": 3,
+      "items": [
+       "泰坦的坚决",
+       "水银",
+       "鬼索的狂暴之刃"
+      ],
+      "dps": 596,
+      "baseDps": 54,
+      "itemsOnlyDps": 366,
+      "traitsOnlyDps": 100,
+      "auto": 241,
+      "spell": 354,
+      "proc": 0,
+      "itemGainX": 6.84,
+      "traitGainX": 1.87,
+      "fullGainX": 11.13,
+      "interaction": 183,
+      "interactionPct": 30.7,
+      "itemDrops": [
+       {
+        "item": "鬼索的狂暴之刃",
+        "dpsWithout": 269,
+        "drop": 327,
+        "dropPct": 54.9
+       },
+       {
+        "item": "水银",
+        "dpsWithout": 393,
+        "drop": 203,
+        "dropPct": 34
+       },
+       {
+        "item": "泰坦的坚决",
+        "dpsWithout": 424,
+        "drop": 172,
+        "dropPct": 28.8
+       }
+      ],
+      "traitDrops": [
+       {
+        "trait": "3战斗机甲",
+        "appliesToCarry": true,
+        "dpsWithout": 436,
+        "drop": 160,
+        "dropPct": 26.8
+       },
+       {
+        "trait": "2灵能使",
+        "appliesToCarry": true,
+        "dpsWithout": 559,
+        "drop": 37,
+        "dropPct": 6.2
+       },
+       {
+        "trait": "1精英战士",
+        "appliesToCarry": true,
+        "dpsWithout": 563,
+        "drop": 33,
+        "dropPct": 5.5
+       },
+       {
+        "trait": "3小天才",
+        "appliesToCarry": true,
+        "dpsWithout": 579,
+        "drop": 16,
+        "dropPct": 2.8
+       }
+      ],
+      "activeTraits": [
+       "2灵能使",
+       "2护卫",
+       "1精英战士",
+       "3小天才",
+       "3战斗机甲"
+      ],
+      "bonus": {
+       "adPct": 60,
+       "ap": 85,
+       "asPct": 0,
+       "ampPct": 9,
+       "critPct": 0,
+       "armor": 25,
+       "mr": 0,
+       "hpPct": 0,
+       "manaMult": 1,
+       "onHitMagic": 0,
+       "ehpMult": 1.03
+      }
+     },
+     "front": {
+      "ehp": 14827,
+      "noTraitEhp": 13093,
+      "traitGainPct": 13.2,
+      "tanks": [
+       {
+        "hero": "安妮",
+        "star": 2,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ],
+        "ehp": 8208,
+        "traitGainPct": 10.3
+       },
+       {
+        "hero": "波比",
+        "star": 2,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ],
+        "ehp": 6619,
+        "traitGainPct": 17.2
+       }
+      ]
+     },
+     "originalReason": "三费战力窗口明确，可围绕追三；前排羁绊能把输出时间拉长；输出羁绊直接喂主C或全队"
+    },
+    "late": {
+     "label": "后期",
+     "score": 2634,
+     "team": [
+      {
+       "name": "蕾欧娜",
+       "price": 5
+      },
+      {
+       "name": "德莱文",
+       "price": 2
+      },
+      {
+       "name": "孙悟空",
+       "price": 1
+      },
+      {
+       "name": "瑟提",
+       "price": 4
+      },
+      {
+       "name": "贾克斯",
+       "price": 3
+      },
+      {
+       "name": "佛耶戈",
+       "price": 4
+      },
+      {
+       "name": "泰隆",
+       "price": 1
+      },
+      {
+       "name": "迦娜",
+       "price": 5
+      },
+      {
+       "name": "娑娜",
+       "price": 3
+      }
+     ],
+     "traits": [
+      "5战斗机甲",
+      "3混沌战士",
+      "2灵能使",
+      "2护卫",
+      "2爱心使者",
+      "2福牛守护者",
+      "1气象主播",
+      "1精英战士",
+      "1平民英雄"
+     ],
+     "carry": {
+      "hero": "蕾欧娜",
+      "star": 2,
+      "price": 5,
+      "items": [
+       "朔极之矛",
+       "水银",
+       "鬼索的狂暴之刃"
+      ],
+      "dps": 1551,
+      "baseDps": 105,
+      "itemsOnlyDps": 572,
+      "traitsOnlyDps": 312,
+      "auto": 378,
+      "spell": 1173,
+      "proc": 0,
+      "itemGainX": 5.44,
+      "traitGainX": 2.97,
+      "fullGainX": 14.78,
+      "interaction": 772,
+      "interactionPct": 49.8,
+      "itemDrops": [
+       {
+        "item": "鬼索的狂暴之刃",
+        "dpsWithout": 831,
+        "drop": 720,
+        "dropPct": 46.4
+       },
+       {
+        "item": "水银",
+        "dpsWithout": 984,
+        "drop": 568,
+        "dropPct": 36.6
+       },
+       {
+        "item": "朔极之矛",
+        "dpsWithout": 1057,
+        "drop": 494,
+        "dropPct": 31.9
+       }
+      ],
+      "traitDrops": [
+       {
+        "trait": "5战斗机甲",
+        "appliesToCarry": true,
+        "dpsWithout": 878,
+        "drop": 674,
+        "dropPct": 43.4
+       },
+       {
+        "trait": "3混沌战士",
+        "appliesToCarry": true,
+        "dpsWithout": 1255,
+        "drop": 296,
+        "dropPct": 19.1
+       },
+       {
+        "trait": "2灵能使",
+        "appliesToCarry": true,
+        "dpsWithout": 1440,
+        "drop": 111,
+        "dropPct": 7.2
+       },
+       {
+        "trait": "1精英战士",
+        "appliesToCarry": true,
+        "dpsWithout": 1480,
+        "drop": 71,
+        "dropPct": 4.6
+       },
+       {
+        "trait": "2爱心使者",
+        "appliesToCarry": true,
+        "dpsWithout": 1533,
+        "drop": 18,
+        "dropPct": 1.1
+       }
+      ],
+      "activeTraits": [
+       "3混沌战士",
+       "2灵能使",
+       "2护卫",
+       "2爱心使者",
+       "1气象主播",
+       "1精英战士",
+       "1平民英雄",
+       "2福牛守护者",
+       "5战斗机甲"
+      ],
+      "bonus": {
+       "adPct": 110,
+       "ap": 139,
+       "asPct": 0,
+       "ampPct": 31,
+       "critPct": 0,
+       "armor": 35,
+       "mr": 10,
+       "hpPct": 0,
+       "manaMult": 1.04,
+       "onHitMagic": 0,
+       "ehpMult": 1
+      }
+     },
+     "front": {
+      "ehp": 20303,
+      "noTraitEhp": 17355,
+      "traitGainPct": 17,
+      "tanks": [
+       {
+        "hero": "瑟提",
+        "star": 2,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ],
+        "ehp": 12174,
+        "traitGainPct": 22.4
+       },
+       {
+        "hero": "佛耶戈",
+        "star": 2,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ],
+        "ehp": 8129,
+        "traitGainPct": 9.7
+       }
+      ]
+     },
+     "originalReason": "高费主C上限高，但依赖经济与搜卡节奏；前排羁绊能把输出时间拉长；输出羁绊直接喂主C或全队"
+    }
+   },
+   "keyFindings": [
+    "后期蕾欧娜最怕少鬼索的狂暴之刃：DPS -46.4%",
+    "后期第一羁绊杠杆是5战斗机甲：DPS -43.4%",
+    "后期装备与羁绊存在正乘法：额外 +772 DPS",
+    "中期贾克斯从裸装到完整口径提升 11.13x，吃装备/羁绊程度极高",
+    "中后期保留贾克斯、德莱文、孙悟空，换壳成本可控"
+   ]
+  },
+  {
+   "name": "战斗机甲：德莱文 -> 蕾欧娜",
+   "routeScore": 84,
+   "routeTags": [
+    "战斗机甲壳",
+    "同C继承",
+    "装备平滑",
+    "高费上限"
+   ],
+   "verdict": "中后期可保留 德莱文、孙悟空、瑟提；主C装备继承较顺；终局上限高但依赖上9/五费二星；中期需要围绕德莱文追三稳血",
+   "routeComponents": {
+    "strength": 98,
+    "smooth": 87,
+    "risk": 34,
+    "pivotCost": 22,
+    "strategic": 18
+   },
+   "transition": {
+    "earlyToMid": {
+     "keep": [
+      "德莱文",
+      "孙悟空"
+     ],
+     "add": [
+      "瑟提",
+      "安妮",
+      "拉克丝",
+      "加里奥",
+      "菲奥娜"
+     ],
+     "remove": [
+      "贾克斯",
+      "布里茨",
+      "波比"
+     ],
+     "sharedTraits": [
+      "战斗机甲",
+      "护卫",
+      "精英战士"
+     ],
+     "itemOverlap": 3
+    },
+    "midToLate": {
+     "keep": [
+      "德莱文",
+      "孙悟空",
+      "瑟提"
+     ],
+     "add": [
+      "蕾欧娜",
+      "贾克斯",
+      "佛耶戈",
+      "泰隆",
+      "迦娜",
+      "娑娜"
+     ],
+     "remove": [
+      "安妮",
+      "拉克丝",
+      "加里奥",
+      "菲奥娜"
+     ],
+     "sharedTraits": [
+      "战斗机甲",
+      "灵能使",
+      "护卫",
+      "福牛守护者",
+      "精英战士",
+      "平民英雄"
+     ],
+     "itemOverlap": 1
+    }
+   },
+   "stages": {
+    "early": {
+     "label": "前期",
+     "score": 1321,
+     "team": [
+      {
+       "name": "德莱文",
+       "price": 2
+      },
+      {
+       "name": "孙悟空",
+       "price": 1
+      },
+      {
+       "name": "贾克斯",
+       "price": 3
+      },
+      {
+       "name": "布里茨",
+       "price": 1
+      },
+      {
+       "name": "波比",
+       "price": 1
+      }
+     ],
+     "traits": [
+      "3战斗机甲",
+      "2护卫",
+      "2斗士",
+      "1精英战士"
+     ],
+     "carry": {
+      "hero": "德莱文",
+      "star": 2,
+      "price": 2,
+      "items": [
+       "最后的轻语",
+       "鬼索的狂暴之刃",
+       "卢安娜的飓风"
+      ],
+      "dps": 431,
+      "baseDps": 51,
+      "itemsOnlyDps": 267,
+      "traitsOnlyDps": 86,
+      "auto": 255,
+      "spell": 48,
+      "proc": 128,
+      "itemGainX": 5.24,
+      "traitGainX": 1.7,
+      "fullGainX": 8.46,
+      "interaction": 129,
+      "interactionPct": 29.8,
+      "itemDrops": [
+       {
+        "item": "鬼索的狂暴之刃",
+        "dpsWithout": 218,
+        "drop": 213,
+        "dropPct": 49.4
+       },
+       {
+        "item": "卢安娜的飓风",
+        "dpsWithout": 270,
+        "drop": 161,
+        "dropPct": 37.4
+       },
+       {
+        "item": "最后的轻语",
+        "dpsWithout": 281,
+        "drop": 150,
+        "dropPct": 34.8
+       }
+      ],
+      "traitDrops": [
+       {
+        "trait": "3战斗机甲",
+        "appliesToCarry": true,
+        "dpsWithout": 283,
+        "drop": 148,
+        "dropPct": 34.3
+       },
+       {
+        "trait": "1精英战士",
+        "appliesToCarry": true,
+        "dpsWithout": 407,
+        "drop": 24,
+        "dropPct": 5.7
+       }
+      ],
+      "activeTraits": [
+       "2护卫",
+       "2斗士",
+       "1精英战士",
+       "3战斗机甲"
+      ],
+      "bonus": {
+       "adPct": 60,
+       "ap": 60,
+       "asPct": 0,
+       "ampPct": 6,
+       "critPct": 0,
+       "armor": 25,
+       "mr": 0,
+       "hpPct": 0,
+       "manaMult": 1,
+       "onHitMagic": 0,
+       "ehpMult": 1
+      }
+     },
+     "front": {
+      "ehp": 13496,
+      "noTraitEhp": 11523,
+      "traitGainPct": 17.1,
+      "tanks": [
+       {
+        "hero": "贾克斯",
+        "star": 1,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ],
+        "ehp": 6836,
+        "traitGainPct": 16.3
+       },
+       {
+        "hero": "布里茨",
+        "star": 2,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ],
+        "ehp": 6660,
+        "traitGainPct": 17.9
+       }
+      ]
+     },
+     "originalReason": "低费高效率，适合保血连胜；前排羁绊能把输出时间拉长；装备强化攻击频率/施法频率"
+    },
+    "mid": {
+     "label": "中期",
+     "score": 1535,
+     "team": [
+      {
+       "name": "德莱文",
+       "price": 2
+      },
+      {
+       "name": "孙悟空",
+       "price": 1
+      },
+      {
+       "name": "瑟提",
+       "price": 4
+      },
+      {
+       "name": "安妮",
+       "price": 2
+      },
+      {
+       "name": "拉克丝",
+       "price": 1
+      },
+      {
+       "name": "加里奥",
+       "price": 1
+      },
+      {
+       "name": "菲奥娜",
+       "price": 2
+      }
+     ],
+     "traits": [
+      "3战斗机甲",
+      "2灵能使",
+      "2护卫",
+      "2福牛守护者",
+      "1精英战士",
+      "1平民英雄"
+     ],
+     "carry": {
+      "hero": "德莱文",
+      "star": 3,
+      "price": 2,
+      "items": [
+       "最后的轻语",
+       "鬼索的狂暴之刃",
+       "卢安娜的飓风"
+      ],
+      "dps": 649,
+      "baseDps": 76,
+      "itemsOnlyDps": 401,
+      "traitsOnlyDps": 131,
+      "auto": 383,
+      "spell": 75,
+      "proc": 191,
+      "itemGainX": 5.24,
+      "traitGainX": 1.71,
+      "fullGainX": 8.5,
+      "interaction": 194,
+      "interactionPct": 29.9,
+      "itemDrops": [
+       {
+        "item": "鬼索的狂暴之刃",
+        "dpsWithout": 329,
+        "drop": 320,
+        "dropPct": 49.4
+       },
+       {
+        "item": "卢安娜的飓风",
+        "dpsWithout": 408,
+        "drop": 242,
+        "dropPct": 37.2
+       },
+       {
+        "item": "最后的轻语",
+        "dpsWithout": 424,
+        "drop": 225,
+        "dropPct": 34.7
+       }
+      ],
+      "traitDrops": [
+       {
+        "trait": "3战斗机甲",
+        "appliesToCarry": true,
+        "dpsWithout": 427,
+        "drop": 222,
+        "dropPct": 34.2
+       },
+       {
+        "trait": "1精英战士",
+        "appliesToCarry": true,
+        "dpsWithout": 613,
+        "drop": 37,
+        "dropPct": 5.7
+       },
+       {
+        "trait": "2灵能使",
+        "appliesToCarry": true,
+        "dpsWithout": 647,
+        "drop": 3,
+        "dropPct": 0.4
+       }
+      ],
+      "activeTraits": [
+       "2灵能使",
+       "2护卫",
+       "1精英战士",
+       "1平民英雄",
+       "2福牛守护者",
+       "3战斗机甲"
+      ],
+      "bonus": {
+       "adPct": 60,
+       "ap": 85,
+       "asPct": 0,
+       "ampPct": 6,
+       "critPct": 0,
+       "armor": 35,
+       "mr": 10,
+       "hpPct": 0,
+       "manaMult": 1.04,
+       "onHitMagic": 0,
+       "ehpMult": 1
+      }
+     },
+     "front": {
+      "ehp": 15933,
+      "noTraitEhp": 13700,
+      "traitGainPct": 16.3,
+      "tanks": [
+       {
+        "hero": "瑟提",
+        "star": 1,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ],
+        "ehp": 8696,
+        "traitGainPct": 22.4
+       },
+       {
+        "hero": "菲奥娜",
+        "star": 2,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ],
+        "ehp": 7237,
+        "traitGainPct": 9.7
+       }
+      ]
+     },
+     "originalReason": "低费高效率，适合保血连胜；前排羁绊能把输出时间拉长；输出羁绊直接喂主C或全队"
+    },
+    "late": {
+     "label": "后期",
+     "score": 2634,
+     "team": [
+      {
+       "name": "蕾欧娜",
+       "price": 5
+      },
+      {
+       "name": "德莱文",
+       "price": 2
+      },
+      {
+       "name": "孙悟空",
+       "price": 1
+      },
+      {
+       "name": "瑟提",
+       "price": 4
+      },
+      {
+       "name": "贾克斯",
+       "price": 3
+      },
+      {
+       "name": "佛耶戈",
+       "price": 4
+      },
+      {
+       "name": "泰隆",
+       "price": 1
+      },
+      {
+       "name": "迦娜",
+       "price": 5
+      },
+      {
+       "name": "娑娜",
+       "price": 3
+      }
+     ],
+     "traits": [
+      "5战斗机甲",
+      "3混沌战士",
+      "2灵能使",
+      "2护卫",
+      "2爱心使者",
+      "2福牛守护者",
+      "1气象主播",
+      "1精英战士",
+      "1平民英雄"
+     ],
+     "carry": {
+      "hero": "蕾欧娜",
+      "star": 2,
+      "price": 5,
+      "items": [
+       "朔极之矛",
+       "水银",
+       "鬼索的狂暴之刃"
+      ],
+      "dps": 1551,
+      "baseDps": 105,
+      "itemsOnlyDps": 572,
+      "traitsOnlyDps": 312,
+      "auto": 378,
+      "spell": 1173,
+      "proc": 0,
+      "itemGainX": 5.44,
+      "traitGainX": 2.97,
+      "fullGainX": 14.78,
+      "interaction": 772,
+      "interactionPct": 49.8,
+      "itemDrops": [
+       {
+        "item": "鬼索的狂暴之刃",
+        "dpsWithout": 831,
+        "drop": 720,
+        "dropPct": 46.4
+       },
+       {
+        "item": "水银",
+        "dpsWithout": 984,
+        "drop": 568,
+        "dropPct": 36.6
+       },
+       {
+        "item": "朔极之矛",
+        "dpsWithout": 1057,
+        "drop": 494,
+        "dropPct": 31.9
+       }
+      ],
+      "traitDrops": [
+       {
+        "trait": "5战斗机甲",
+        "appliesToCarry": true,
+        "dpsWithout": 878,
+        "drop": 674,
+        "dropPct": 43.4
+       },
+       {
+        "trait": "3混沌战士",
+        "appliesToCarry": true,
+        "dpsWithout": 1255,
+        "drop": 296,
+        "dropPct": 19.1
+       },
+       {
+        "trait": "2灵能使",
+        "appliesToCarry": true,
+        "dpsWithout": 1440,
+        "drop": 111,
+        "dropPct": 7.2
+       },
+       {
+        "trait": "1精英战士",
+        "appliesToCarry": true,
+        "dpsWithout": 1480,
+        "drop": 71,
+        "dropPct": 4.6
+       },
+       {
+        "trait": "2爱心使者",
+        "appliesToCarry": true,
+        "dpsWithout": 1533,
+        "drop": 18,
+        "dropPct": 1.1
+       }
+      ],
+      "activeTraits": [
+       "3混沌战士",
+       "2灵能使",
+       "2护卫",
+       "2爱心使者",
+       "1气象主播",
+       "1精英战士",
+       "1平民英雄",
+       "2福牛守护者",
+       "5战斗机甲"
+      ],
+      "bonus": {
+       "adPct": 110,
+       "ap": 139,
+       "asPct": 0,
+       "ampPct": 31,
+       "critPct": 0,
+       "armor": 35,
+       "mr": 10,
+       "hpPct": 0,
+       "manaMult": 1.04,
+       "onHitMagic": 0,
+       "ehpMult": 1
+      }
+     },
+     "front": {
+      "ehp": 20303,
+      "noTraitEhp": 17355,
+      "traitGainPct": 17,
+      "tanks": [
+       {
+        "hero": "瑟提",
+        "star": 2,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ],
+        "ehp": 12174,
+        "traitGainPct": 22.4
+       },
+       {
+        "hero": "佛耶戈",
+        "star": 2,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ],
+        "ehp": 8129,
+        "traitGainPct": 9.7
+       }
+      ]
+     },
+     "originalReason": "高费主C上限高，但依赖经济与搜卡节奏；前排羁绊能把输出时间拉长；输出羁绊直接喂主C或全队"
+    }
+   },
+   "keyFindings": [
+    "后期蕾欧娜最怕少鬼索的狂暴之刃：DPS -46.4%",
+    "后期第一羁绊杠杆是5战斗机甲：DPS -43.4%",
+    "后期装备与羁绊存在正乘法：额外 +772 DPS",
+    "中期德莱文从裸装到完整口径提升 8.5x，吃装备/羁绊程度极高",
+    "中后期保留德莱文、孙悟空、瑟提，换壳成本可控"
+   ]
+  },
+  {
+   "name": "护卫：佐伊 -> 贾克斯 -> 蕾欧娜",
+   "routeScore": 80,
+   "routeTags": [
+    "护卫壳",
+    "装备平滑",
+    "高费上限",
+    "贾克斯过渡"
+   ],
+   "verdict": "前中期可保留 德莱文、波比、璐璐、孙悟空；中后期可保留 贾克斯、德莱文、孙悟空；主C装备继承较顺；终局上限高但依赖上9/五费二星；实战校准：贾克斯更适合作为中期吃分桥，后期转蕾欧娜/五费控制补争一上限",
+   "routeComponents": {
+    "strength": 96,
+    "smooth": 76,
+    "risk": 29,
+    "pivotCost": 17,
+    "strategic": 14
+   },
+   "transition": {
+    "earlyToMid": {
+     "keep": [
+      "德莱文",
+      "波比",
+      "璐璐",
+      "孙悟空"
+     ],
+     "add": [
+      "贾克斯",
+      "安妮",
+      "拉克丝"
+     ],
+     "remove": [
+      "佐伊"
+     ],
+     "sharedTraits": [
+      "小天才",
+      "护卫",
+      "精英战士"
+     ],
+     "itemOverlap": 1
+    },
+    "midToLate": {
+     "keep": [
+      "贾克斯",
+      "德莱文",
+      "孙悟空"
+     ],
+     "add": [
+      "蕾欧娜",
+      "瑟提",
+      "佛耶戈",
+      "泰隆",
+      "迦娜",
+      "娑娜"
+     ],
+     "remove": [
+      "安妮",
+      "拉克丝",
+      "波比",
+      "璐璐"
+     ],
+     "sharedTraits": [
+      "战斗机甲",
+      "灵能使",
+      "护卫",
+      "精英战士"
+     ],
+     "itemOverlap": 2
+    }
+   },
+   "stages": {
+    "early": {
+     "label": "前期",
+     "score": 1308,
+     "team": [
+      {
+       "name": "佐伊",
+       "price": 3
+      },
+      {
+       "name": "德莱文",
+       "price": 2
+      },
+      {
+       "name": "波比",
+       "price": 1
+      },
+      {
+       "name": "璐璐",
+       "price": 1
+      },
+      {
+       "name": "孙悟空",
+       "price": 1
+      }
+     ],
+     "traits": [
+      "3小天才",
+      "2护卫",
+      "1精英战士"
+     ],
+     "carry": {
+      "hero": "佐伊",
+      "star": 1,
+      "price": 3,
+      "items": [
+       "班克斯的魔法帽",
+       "鬼索的狂暴之刃",
+       "蓝霸符"
+      ],
+      "dps": 321,
+      "baseDps": 61,
+      "itemsOnlyDps": 298,
+      "traitsOnlyDps": 66,
+      "auto": 39,
+      "spell": 282,
+      "proc": 0,
+      "itemGainX": 4.89,
+      "traitGainX": 1.09,
+      "fullGainX": 5.27,
+      "interaction": 18,
+      "interactionPct": 5.6,
+      "itemDrops": [
+       {
+        "item": "鬼索的狂暴之刃",
+        "dpsWithout": 167,
+        "drop": 154,
+        "dropPct": 47.9
+       },
+       {
+        "item": "班克斯的魔法帽",
+        "dpsWithout": 204,
+        "drop": 117,
+        "dropPct": 36.4
+       },
+       {
+        "item": "蓝霸符",
+        "dpsWithout": 208,
+        "drop": 113,
+        "dropPct": 35.1
+       }
+      ],
+      "traitDrops": [
+       {
+        "trait": "1精英战士",
+        "appliesToCarry": true,
+        "dpsWithout": 306,
+        "drop": 16,
+        "dropPct": 4.8
+       },
+       {
+        "trait": "3小天才",
+        "appliesToCarry": true,
+        "dpsWithout": 313,
+        "drop": 8,
+        "dropPct": 2.4
+       }
+      ],
+      "activeTraits": [
+       "2护卫",
+       "1精英战士",
+       "3小天才"
+      ],
+      "bonus": {
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "ampPct": 9,
+       "critPct": 0,
+       "armor": 25,
+       "mr": 0,
+       "hpPct": 0,
+       "manaMult": 1,
+       "onHitMagic": 0,
+       "ehpMult": 1.03
+      }
+     },
+     "front": {
+      "ehp": 15089,
+      "noTraitEhp": 12596,
+      "traitGainPct": 19.8,
+      "tanks": [
+       {
+        "hero": "波比",
+        "star": 2,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ],
+        "ehp": 8614,
+        "traitGainPct": 21.6
+       },
+       {
+        "hero": "孙悟空",
+        "star": 2,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ],
+        "ehp": 6475,
+        "traitGainPct": 17.4
+       }
+      ]
+     },
+     "originalReason": "前排羁绊能把输出时间拉长；装备强化攻击频率/施法频率"
+    },
+    "mid": {
+     "label": "中期",
+     "score": 1461,
+     "team": [
+      {
+       "name": "贾克斯",
+       "price": 3
+      },
+      {
+       "name": "德莱文",
+       "price": 2
+      },
+      {
+       "name": "孙悟空",
+       "price": 1
+      },
+      {
+       "name": "安妮",
+       "price": 2
+      },
+      {
+       "name": "拉克丝",
+       "price": 1
+      },
+      {
+       "name": "波比",
+       "price": 1
+      },
+      {
+       "name": "璐璐",
+       "price": 1
+      }
+     ],
+     "traits": [
+      "3小天才",
+      "3战斗机甲",
+      "2灵能使",
+      "2护卫",
+      "1精英战士"
+     ],
+     "carry": {
+      "hero": "贾克斯",
+      "star": 2,
+      "price": 3,
+      "items": [
+       "泰坦的坚决",
+       "水银",
+       "鬼索的狂暴之刃"
+      ],
+      "dps": 596,
+      "baseDps": 54,
+      "itemsOnlyDps": 366,
+      "traitsOnlyDps": 100,
+      "auto": 241,
+      "spell": 354,
+      "proc": 0,
+      "itemGainX": 6.84,
+      "traitGainX": 1.87,
+      "fullGainX": 11.13,
+      "interaction": 183,
+      "interactionPct": 30.7,
+      "itemDrops": [
+       {
+        "item": "鬼索的狂暴之刃",
+        "dpsWithout": 269,
+        "drop": 327,
+        "dropPct": 54.9
+       },
+       {
+        "item": "水银",
+        "dpsWithout": 393,
+        "drop": 203,
+        "dropPct": 34
+       },
+       {
+        "item": "泰坦的坚决",
+        "dpsWithout": 424,
+        "drop": 172,
+        "dropPct": 28.8
+       }
+      ],
+      "traitDrops": [
+       {
+        "trait": "3战斗机甲",
+        "appliesToCarry": true,
+        "dpsWithout": 436,
+        "drop": 160,
+        "dropPct": 26.8
+       },
+       {
+        "trait": "2灵能使",
+        "appliesToCarry": true,
+        "dpsWithout": 559,
+        "drop": 37,
+        "dropPct": 6.2
+       },
+       {
+        "trait": "1精英战士",
+        "appliesToCarry": true,
+        "dpsWithout": 563,
+        "drop": 33,
+        "dropPct": 5.5
+       },
+       {
+        "trait": "3小天才",
+        "appliesToCarry": true,
+        "dpsWithout": 579,
+        "drop": 16,
+        "dropPct": 2.8
+       }
+      ],
+      "activeTraits": [
+       "2灵能使",
+       "2护卫",
+       "1精英战士",
+       "3小天才",
+       "3战斗机甲"
+      ],
+      "bonus": {
+       "adPct": 60,
+       "ap": 85,
+       "asPct": 0,
+       "ampPct": 9,
+       "critPct": 0,
+       "armor": 25,
+       "mr": 0,
+       "hpPct": 0,
+       "manaMult": 1,
+       "onHitMagic": 0,
+       "ehpMult": 1.03
+      }
+     },
+     "front": {
+      "ehp": 14827,
+      "noTraitEhp": 13093,
+      "traitGainPct": 13.2,
+      "tanks": [
+       {
+        "hero": "安妮",
+        "star": 2,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ],
+        "ehp": 8208,
+        "traitGainPct": 10.3
+       },
+       {
+        "hero": "波比",
+        "star": 2,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ],
+        "ehp": 6619,
+        "traitGainPct": 17.2
+       }
+      ]
+     },
+     "originalReason": "三费战力窗口明确，可围绕追三；前排羁绊能把输出时间拉长；输出羁绊直接喂主C或全队"
+    },
+    "late": {
+     "label": "后期",
+     "score": 2634,
+     "team": [
+      {
+       "name": "蕾欧娜",
+       "price": 5
+      },
+      {
+       "name": "德莱文",
+       "price": 2
+      },
+      {
+       "name": "孙悟空",
+       "price": 1
+      },
+      {
+       "name": "瑟提",
+       "price": 4
+      },
+      {
+       "name": "贾克斯",
+       "price": 3
+      },
+      {
+       "name": "佛耶戈",
+       "price": 4
+      },
+      {
+       "name": "泰隆",
+       "price": 1
+      },
+      {
+       "name": "迦娜",
+       "price": 5
+      },
+      {
+       "name": "娑娜",
+       "price": 3
+      }
+     ],
+     "traits": [
+      "5战斗机甲",
+      "3混沌战士",
+      "2灵能使",
+      "2护卫",
+      "2爱心使者",
+      "2福牛守护者",
+      "1气象主播",
+      "1精英战士",
+      "1平民英雄"
+     ],
+     "carry": {
+      "hero": "蕾欧娜",
+      "star": 2,
+      "price": 5,
+      "items": [
+       "朔极之矛",
+       "水银",
+       "鬼索的狂暴之刃"
+      ],
+      "dps": 1551,
+      "baseDps": 105,
+      "itemsOnlyDps": 572,
+      "traitsOnlyDps": 312,
+      "auto": 378,
+      "spell": 1173,
+      "proc": 0,
+      "itemGainX": 5.44,
+      "traitGainX": 2.97,
+      "fullGainX": 14.78,
+      "interaction": 772,
+      "interactionPct": 49.8,
+      "itemDrops": [
+       {
+        "item": "鬼索的狂暴之刃",
+        "dpsWithout": 831,
+        "drop": 720,
+        "dropPct": 46.4
+       },
+       {
+        "item": "水银",
+        "dpsWithout": 984,
+        "drop": 568,
+        "dropPct": 36.6
+       },
+       {
+        "item": "朔极之矛",
+        "dpsWithout": 1057,
+        "drop": 494,
+        "dropPct": 31.9
+       }
+      ],
+      "traitDrops": [
+       {
+        "trait": "5战斗机甲",
+        "appliesToCarry": true,
+        "dpsWithout": 878,
+        "drop": 674,
+        "dropPct": 43.4
+       },
+       {
+        "trait": "3混沌战士",
+        "appliesToCarry": true,
+        "dpsWithout": 1255,
+        "drop": 296,
+        "dropPct": 19.1
+       },
+       {
+        "trait": "2灵能使",
+        "appliesToCarry": true,
+        "dpsWithout": 1440,
+        "drop": 111,
+        "dropPct": 7.2
+       },
+       {
+        "trait": "1精英战士",
+        "appliesToCarry": true,
+        "dpsWithout": 1480,
+        "drop": 71,
+        "dropPct": 4.6
+       },
+       {
+        "trait": "2爱心使者",
+        "appliesToCarry": true,
+        "dpsWithout": 1533,
+        "drop": 18,
+        "dropPct": 1.1
+       }
+      ],
+      "activeTraits": [
+       "3混沌战士",
+       "2灵能使",
+       "2护卫",
+       "2爱心使者",
+       "1气象主播",
+       "1精英战士",
+       "1平民英雄",
+       "2福牛守护者",
+       "5战斗机甲"
+      ],
+      "bonus": {
+       "adPct": 110,
+       "ap": 139,
+       "asPct": 0,
+       "ampPct": 31,
+       "critPct": 0,
+       "armor": 35,
+       "mr": 10,
+       "hpPct": 0,
+       "manaMult": 1.04,
+       "onHitMagic": 0,
+       "ehpMult": 1
+      }
+     },
+     "front": {
+      "ehp": 20303,
+      "noTraitEhp": 17355,
+      "traitGainPct": 17,
+      "tanks": [
+       {
+        "hero": "瑟提",
+        "star": 2,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ],
+        "ehp": 12174,
+        "traitGainPct": 22.4
+       },
+       {
+        "hero": "佛耶戈",
+        "star": 2,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ],
+        "ehp": 8129,
+        "traitGainPct": 9.7
+       }
+      ]
+     },
+     "originalReason": "高费主C上限高，但依赖经济与搜卡节奏；前排羁绊能把输出时间拉长；输出羁绊直接喂主C或全队"
+    }
+   },
+   "keyFindings": [
+    "后期蕾欧娜最怕少鬼索的狂暴之刃：DPS -46.4%",
+    "后期第一羁绊杠杆是5战斗机甲：DPS -43.4%",
+    "后期装备与羁绊存在正乘法：额外 +772 DPS",
+    "中期贾克斯从裸装到完整口径提升 11.13x，吃装备/羁绊程度极高",
+    "中后期保留贾克斯、德莱文、孙悟空，换壳成本可控"
+   ]
+  },
+  {
+   "name": "战斗机甲：菲奥娜 -> 德莱文 -> 蕾欧娜",
+   "routeScore": 80,
+   "routeTags": [
+    "战斗机甲壳",
+    "装备平滑",
+    "高费上限",
+    "中期追三"
+   ],
+   "verdict": "前中期可保留 菲奥娜、德莱文、加里奥；中后期可保留 德莱文、孙悟空、瑟提；主C装备继承较顺；终局上限高但依赖上9/五费二星；中期需要围绕德莱文追三稳血",
+   "routeComponents": {
+    "strength": 96,
+    "smooth": 76,
+    "risk": 34,
+    "pivotCost": 20,
+    "strategic": 18
+   },
+   "transition": {
+    "earlyToMid": {
+     "keep": [
+      "菲奥娜",
+      "德莱文",
+      "加里奥"
+     ],
+     "add": [
+      "孙悟空",
+      "瑟提",
+      "安妮",
+      "拉克丝"
+     ],
+     "remove": [
+      "凯尔",
+      "内瑟斯"
+     ],
+     "sharedTraits": [
+      "精英战士",
+      "平民英雄"
+     ],
+     "itemOverlap": 2
+    },
+    "midToLate": {
+     "keep": [
+      "德莱文",
+      "孙悟空",
+      "瑟提"
+     ],
+     "add": [
+      "蕾欧娜",
+      "贾克斯",
+      "佛耶戈",
+      "泰隆",
+      "迦娜",
+      "娑娜"
+     ],
+     "remove": [
+      "安妮",
+      "拉克丝",
+      "加里奥",
+      "菲奥娜"
+     ],
+     "sharedTraits": [
+      "战斗机甲",
+      "灵能使",
+      "护卫",
+      "福牛守护者",
+      "精英战士",
+      "平民英雄"
+     ],
+     "itemOverlap": 1
+    }
+   },
+   "stages": {
+    "early": {
+     "label": "前期",
+     "score": 1220,
+     "team": [
+      {
+       "name": "菲奥娜",
+       "price": 2
+      },
+      {
+       "name": "凯尔",
+       "price": 1
+      },
+      {
+       "name": "德莱文",
+       "price": 2
+      },
+      {
+       "name": "加里奥",
+       "price": 1
+      },
+      {
+       "name": "内瑟斯",
+       "price": 1
+      }
+     ],
+     "traits": [
+      "2决斗大师",
+      "2吉祥物",
+      "1精英战士",
+      "1平民英雄"
+     ],
+     "carry": {
+      "hero": "菲奥娜",
+      "star": 2,
+      "price": 2,
+      "items": [
+       "锐利之刃",
+       "鬼索的狂暴之刃",
+       "卢安娜的飓风"
+      ],
+      "dps": 354,
+      "baseDps": 45,
+      "itemsOnlyDps": 269,
+      "traitsOnlyDps": 64,
+      "auto": 199,
+      "spell": 56,
+      "proc": 99,
+      "itemGainX": 5.97,
+      "traitGainX": 1.43,
+      "fullGainX": 7.83,
+      "interaction": 65,
+      "interactionPct": 18.4,
+      "itemDrops": [
+       {
+        "item": "鬼索的狂暴之刃",
+        "dpsWithout": 172,
+        "drop": 182,
+        "dropPct": 51.5
+       },
+       {
+        "item": "锐利之刃",
+        "dpsWithout": 208,
+        "drop": 145,
+        "dropPct": 41
+       },
+       {
+        "item": "卢安娜的飓风",
+        "dpsWithout": 221,
+        "drop": 133,
+        "dropPct": 37.5
+       }
+      ],
+      "traitDrops": [
+       {
+        "trait": "2决斗大师",
+        "appliesToCarry": true,
+        "dpsWithout": 284,
+        "drop": 70,
+        "dropPct": 19.7
+       },
+       {
+        "trait": "1精英战士",
+        "appliesToCarry": true,
+        "dpsWithout": 335,
+        "drop": 18,
+        "dropPct": 5.2
+       }
+      ],
+      "activeTraits": [
+       "2决斗大师",
+       "2吉祥物",
+       "1精英战士",
+       "1平民英雄"
+      ],
+      "bonus": {
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 30,
+       "ampPct": 6,
+       "critPct": 0,
+       "armor": 0,
+       "mr": 0,
+       "hpPct": 0,
+       "manaMult": 1.04,
+       "onHitMagic": 0,
+       "ehpMult": 1.015
+      }
+     },
+     "front": {
+      "ehp": 13220,
+      "noTraitEhp": 13025,
+      "traitGainPct": 1.5,
+      "tanks": [
+       {
+        "hero": "内瑟斯",
+        "star": 2,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ],
+        "ehp": 7487,
+        "traitGainPct": 1.5
+       },
+       {
+        "hero": "加里奥",
+        "star": 2,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ],
+        "ehp": 5733,
+        "traitGainPct": 1.5
+       }
+      ]
+     },
+     "originalReason": "低费高效率，适合保血连胜；前排羁绊能把输出时间拉长；输出羁绊直接喂主C或全队"
+    },
+    "mid": {
+     "label": "中期",
+     "score": 1535,
+     "team": [
+      {
+       "name": "德莱文",
+       "price": 2
+      },
+      {
+       "name": "孙悟空",
+       "price": 1
+      },
+      {
+       "name": "瑟提",
+       "price": 4
+      },
+      {
+       "name": "安妮",
+       "price": 2
+      },
+      {
+       "name": "拉克丝",
+       "price": 1
+      },
+      {
+       "name": "加里奥",
+       "price": 1
+      },
+      {
+       "name": "菲奥娜",
+       "price": 2
+      }
+     ],
+     "traits": [
+      "3战斗机甲",
+      "2灵能使",
+      "2护卫",
+      "2福牛守护者",
+      "1精英战士",
+      "1平民英雄"
+     ],
+     "carry": {
+      "hero": "德莱文",
+      "star": 3,
+      "price": 2,
+      "items": [
+       "最后的轻语",
+       "鬼索的狂暴之刃",
+       "卢安娜的飓风"
+      ],
+      "dps": 649,
+      "baseDps": 76,
+      "itemsOnlyDps": 401,
+      "traitsOnlyDps": 131,
+      "auto": 383,
+      "spell": 75,
+      "proc": 191,
+      "itemGainX": 5.24,
+      "traitGainX": 1.71,
+      "fullGainX": 8.5,
+      "interaction": 194,
+      "interactionPct": 29.9,
+      "itemDrops": [
+       {
+        "item": "鬼索的狂暴之刃",
+        "dpsWithout": 329,
+        "drop": 320,
+        "dropPct": 49.4
+       },
+       {
+        "item": "卢安娜的飓风",
+        "dpsWithout": 408,
+        "drop": 242,
+        "dropPct": 37.2
+       },
+       {
+        "item": "最后的轻语",
+        "dpsWithout": 424,
+        "drop": 225,
+        "dropPct": 34.7
+       }
+      ],
+      "traitDrops": [
+       {
+        "trait": "3战斗机甲",
+        "appliesToCarry": true,
+        "dpsWithout": 427,
+        "drop": 222,
+        "dropPct": 34.2
+       },
+       {
+        "trait": "1精英战士",
+        "appliesToCarry": true,
+        "dpsWithout": 613,
+        "drop": 37,
+        "dropPct": 5.7
+       },
+       {
+        "trait": "2灵能使",
+        "appliesToCarry": true,
+        "dpsWithout": 647,
+        "drop": 3,
+        "dropPct": 0.4
+       }
+      ],
+      "activeTraits": [
+       "2灵能使",
+       "2护卫",
+       "1精英战士",
+       "1平民英雄",
+       "2福牛守护者",
+       "3战斗机甲"
+      ],
+      "bonus": {
+       "adPct": 60,
+       "ap": 85,
+       "asPct": 0,
+       "ampPct": 6,
+       "critPct": 0,
+       "armor": 35,
+       "mr": 10,
+       "hpPct": 0,
+       "manaMult": 1.04,
+       "onHitMagic": 0,
+       "ehpMult": 1
+      }
+     },
+     "front": {
+      "ehp": 15933,
+      "noTraitEhp": 13700,
+      "traitGainPct": 16.3,
+      "tanks": [
+       {
+        "hero": "瑟提",
+        "star": 1,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ],
+        "ehp": 8696,
+        "traitGainPct": 22.4
+       },
+       {
+        "hero": "菲奥娜",
+        "star": 2,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ],
+        "ehp": 7237,
+        "traitGainPct": 9.7
+       }
+      ]
+     },
+     "originalReason": "低费高效率，适合保血连胜；前排羁绊能把输出时间拉长；输出羁绊直接喂主C或全队"
+    },
+    "late": {
+     "label": "后期",
+     "score": 2634,
+     "team": [
+      {
+       "name": "蕾欧娜",
+       "price": 5
+      },
+      {
+       "name": "德莱文",
+       "price": 2
+      },
+      {
+       "name": "孙悟空",
+       "price": 1
+      },
+      {
+       "name": "瑟提",
+       "price": 4
+      },
+      {
+       "name": "贾克斯",
+       "price": 3
+      },
+      {
+       "name": "佛耶戈",
+       "price": 4
+      },
+      {
+       "name": "泰隆",
+       "price": 1
+      },
+      {
+       "name": "迦娜",
+       "price": 5
+      },
+      {
+       "name": "娑娜",
+       "price": 3
+      }
+     ],
+     "traits": [
+      "5战斗机甲",
+      "3混沌战士",
+      "2灵能使",
+      "2护卫",
+      "2爱心使者",
+      "2福牛守护者",
+      "1气象主播",
+      "1精英战士",
+      "1平民英雄"
+     ],
+     "carry": {
+      "hero": "蕾欧娜",
+      "star": 2,
+      "price": 5,
+      "items": [
+       "朔极之矛",
+       "水银",
+       "鬼索的狂暴之刃"
+      ],
+      "dps": 1551,
+      "baseDps": 105,
+      "itemsOnlyDps": 572,
+      "traitsOnlyDps": 312,
+      "auto": 378,
+      "spell": 1173,
+      "proc": 0,
+      "itemGainX": 5.44,
+      "traitGainX": 2.97,
+      "fullGainX": 14.78,
+      "interaction": 772,
+      "interactionPct": 49.8,
+      "itemDrops": [
+       {
+        "item": "鬼索的狂暴之刃",
+        "dpsWithout": 831,
+        "drop": 720,
+        "dropPct": 46.4
+       },
+       {
+        "item": "水银",
+        "dpsWithout": 984,
+        "drop": 568,
+        "dropPct": 36.6
+       },
+       {
+        "item": "朔极之矛",
+        "dpsWithout": 1057,
+        "drop": 494,
+        "dropPct": 31.9
+       }
+      ],
+      "traitDrops": [
+       {
+        "trait": "5战斗机甲",
+        "appliesToCarry": true,
+        "dpsWithout": 878,
+        "drop": 674,
+        "dropPct": 43.4
+       },
+       {
+        "trait": "3混沌战士",
+        "appliesToCarry": true,
+        "dpsWithout": 1255,
+        "drop": 296,
+        "dropPct": 19.1
+       },
+       {
+        "trait": "2灵能使",
+        "appliesToCarry": true,
+        "dpsWithout": 1440,
+        "drop": 111,
+        "dropPct": 7.2
+       },
+       {
+        "trait": "1精英战士",
+        "appliesToCarry": true,
+        "dpsWithout": 1480,
+        "drop": 71,
+        "dropPct": 4.6
+       },
+       {
+        "trait": "2爱心使者",
+        "appliesToCarry": true,
+        "dpsWithout": 1533,
+        "drop": 18,
+        "dropPct": 1.1
+       }
+      ],
+      "activeTraits": [
+       "3混沌战士",
+       "2灵能使",
+       "2护卫",
+       "2爱心使者",
+       "1气象主播",
+       "1精英战士",
+       "1平民英雄",
+       "2福牛守护者",
+       "5战斗机甲"
+      ],
+      "bonus": {
+       "adPct": 110,
+       "ap": 139,
+       "asPct": 0,
+       "ampPct": 31,
+       "critPct": 0,
+       "armor": 35,
+       "mr": 10,
+       "hpPct": 0,
+       "manaMult": 1.04,
+       "onHitMagic": 0,
+       "ehpMult": 1
+      }
+     },
+     "front": {
+      "ehp": 20303,
+      "noTraitEhp": 17355,
+      "traitGainPct": 17,
+      "tanks": [
+       {
+        "hero": "瑟提",
+        "star": 2,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ],
+        "ehp": 12174,
+        "traitGainPct": 22.4
+       },
+       {
+        "hero": "佛耶戈",
+        "star": 2,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ],
+        "ehp": 8129,
+        "traitGainPct": 9.7
+       }
+      ]
+     },
+     "originalReason": "高费主C上限高，但依赖经济与搜卡节奏；前排羁绊能把输出时间拉长；输出羁绊直接喂主C或全队"
+    }
+   },
+   "keyFindings": [
+    "后期蕾欧娜最怕少鬼索的狂暴之刃：DPS -46.4%",
+    "后期第一羁绊杠杆是5战斗机甲：DPS -43.4%",
+    "后期装备与羁绊存在正乘法：额外 +772 DPS",
+    "中期德莱文从裸装到完整口径提升 8.5x，吃装备/羁绊程度极高",
+    "中后期保留德莱文、孙悟空、瑟提，换壳成本可控"
+   ]
+  },
+  {
+   "name": "战斗机甲：贾克斯 -> 瑟提",
+   "routeScore": 79,
+   "routeTags": [
+    "战斗机甲壳",
+    "同C继承",
+    "装备平滑",
+    "贾克斯过渡"
+   ],
+   "verdict": "前中期可保留 贾克斯、德莱文、孙悟空、波比；中后期可保留 贾克斯、德莱文、孙悟空；主C装备继承较顺；实战校准：贾克斯更适合作为中期吃分桥，后期转蕾欧娜/五费控制补争一上限",
+   "routeComponents": {
+    "strength": 82,
+    "smooth": 86,
+    "risk": 37,
+    "pivotCost": 17,
+    "strategic": 20
+   },
+   "transition": {
+    "earlyToMid": {
+     "keep": [
+      "贾克斯",
+      "德莱文",
+      "孙悟空",
+      "波比"
+     ],
+     "add": [
+      "安妮",
+      "拉克丝",
+      "璐璐"
+     ],
+     "remove": [
+      "布里茨"
+     ],
+     "sharedTraits": [
+      "战斗机甲",
+      "护卫",
+      "精英战士"
+     ],
+     "itemOverlap": 3
+    },
+    "midToLate": {
+     "keep": [
+      "贾克斯",
+      "德莱文",
+      "孙悟空"
+     ],
+     "add": [
+      "瑟提",
+      "蕾欧娜",
+      "泰隆",
+      "佛耶戈",
+      "迦娜",
+      "蔚"
+     ],
+     "remove": [
+      "安妮",
+      "拉克丝",
+      "波比",
+      "璐璐"
+     ],
+     "sharedTraits": [
+      "战斗机甲",
+      "护卫",
+      "精英战士"
+     ],
+     "itemOverlap": 1
+    }
+   },
+   "stages": {
+    "early": {
+     "label": "前期",
+     "score": 1338,
+     "team": [
+      {
+       "name": "贾克斯",
+       "price": 3
+      },
+      {
+       "name": "德莱文",
+       "price": 2
+      },
+      {
+       "name": "孙悟空",
+       "price": 1
+      },
+      {
+       "name": "布里茨",
+       "price": 1
+      },
+      {
+       "name": "波比",
+       "price": 1
+      }
+     ],
+     "traits": [
+      "3战斗机甲",
+      "2护卫",
+      "2斗士",
+      "1精英战士"
+     ],
+     "carry": {
+      "hero": "贾克斯",
+      "star": 1,
+      "price": 3,
+      "items": [
+       "泰坦的坚决",
+       "水银",
+       "鬼索的狂暴之刃"
+      ],
+      "dps": 359,
+      "baseDps": 35,
+      "itemsOnlyDps": 242,
+      "traitsOnlyDps": 60,
+      "auto": 157,
+      "spell": 203,
+      "proc": 0,
+      "itemGainX": 6.85,
+      "traitGainX": 1.7,
+      "fullGainX": 10.17,
+      "interaction": 93,
+      "interactionPct": 25.8,
+      "itemDrops": [
+       {
+        "item": "鬼索的狂暴之刃",
+        "dpsWithout": 162,
+        "drop": 197,
+        "dropPct": 55
+       },
+       {
+        "item": "水银",
+        "dpsWithout": 236,
+        "drop": 123,
+        "dropPct": 34.2
+       },
+       {
+        "item": "泰坦的坚决",
+        "dpsWithout": 251,
+        "drop": 108,
+        "dropPct": 30
+       }
+      ],
+      "traitDrops": [
+       {
+        "trait": "3战斗机甲",
+        "appliesToCarry": true,
+        "dpsWithout": 256,
+        "drop": 103,
+        "dropPct": 28.6
+       },
+       {
+        "trait": "1精英战士",
+        "appliesToCarry": true,
+        "dpsWithout": 339,
+        "drop": 20,
+        "dropPct": 5.7
+       }
+      ],
+      "activeTraits": [
+       "2护卫",
+       "2斗士",
+       "1精英战士",
+       "3战斗机甲"
+      ],
+      "bonus": {
+       "adPct": 60,
+       "ap": 60,
+       "asPct": 0,
+       "ampPct": 6,
+       "critPct": 0,
+       "armor": 25,
+       "mr": 0,
+       "hpPct": 20,
+       "manaMult": 1,
+       "onHitMagic": 0,
+       "ehpMult": 1
+      }
+     },
+     "front": {
+      "ehp": 14810,
+      "noTraitEhp": 12731,
+      "traitGainPct": 16.3,
+      "tanks": [
+       {
+        "hero": "布里茨",
+        "star": 2,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ],
+        "ehp": 8384,
+        "traitGainPct": 18.4
+       },
+       {
+        "hero": "波比",
+        "star": 2,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ],
+        "ehp": 6426,
+        "traitGainPct": 13.8
+       }
+      ]
+     },
+     "originalReason": "前排羁绊能把输出时间拉长；装备强化攻击频率/施法频率"
+    },
+    "mid": {
+     "label": "中期",
+     "score": 1461,
+     "team": [
+      {
+       "name": "贾克斯",
+       "price": 3
+      },
+      {
+       "name": "德莱文",
+       "price": 2
+      },
+      {
+       "name": "孙悟空",
+       "price": 1
+      },
+      {
+       "name": "安妮",
+       "price": 2
+      },
+      {
+       "name": "拉克丝",
+       "price": 1
+      },
+      {
+       "name": "波比",
+       "price": 1
+      },
+      {
+       "name": "璐璐",
+       "price": 1
+      }
+     ],
+     "traits": [
+      "3小天才",
+      "3战斗机甲",
+      "2灵能使",
+      "2护卫",
+      "1精英战士"
+     ],
+     "carry": {
+      "hero": "贾克斯",
+      "star": 2,
+      "price": 3,
+      "items": [
+       "泰坦的坚决",
+       "水银",
+       "鬼索的狂暴之刃"
+      ],
+      "dps": 596,
+      "baseDps": 54,
+      "itemsOnlyDps": 366,
+      "traitsOnlyDps": 100,
+      "auto": 241,
+      "spell": 354,
+      "proc": 0,
+      "itemGainX": 6.84,
+      "traitGainX": 1.87,
+      "fullGainX": 11.13,
+      "interaction": 183,
+      "interactionPct": 30.7,
+      "itemDrops": [
+       {
+        "item": "鬼索的狂暴之刃",
+        "dpsWithout": 269,
+        "drop": 327,
+        "dropPct": 54.9
+       },
+       {
+        "item": "水银",
+        "dpsWithout": 393,
+        "drop": 203,
+        "dropPct": 34
+       },
+       {
+        "item": "泰坦的坚决",
+        "dpsWithout": 424,
+        "drop": 172,
+        "dropPct": 28.8
+       }
+      ],
+      "traitDrops": [
+       {
+        "trait": "3战斗机甲",
+        "appliesToCarry": true,
+        "dpsWithout": 436,
+        "drop": 160,
+        "dropPct": 26.8
+       },
+       {
+        "trait": "2灵能使",
+        "appliesToCarry": true,
+        "dpsWithout": 559,
+        "drop": 37,
+        "dropPct": 6.2
+       },
+       {
+        "trait": "1精英战士",
+        "appliesToCarry": true,
+        "dpsWithout": 563,
+        "drop": 33,
+        "dropPct": 5.5
+       },
+       {
+        "trait": "3小天才",
+        "appliesToCarry": true,
+        "dpsWithout": 579,
+        "drop": 16,
+        "dropPct": 2.8
+       }
+      ],
+      "activeTraits": [
+       "2灵能使",
+       "2护卫",
+       "1精英战士",
+       "3小天才",
+       "3战斗机甲"
+      ],
+      "bonus": {
+       "adPct": 60,
+       "ap": 85,
+       "asPct": 0,
+       "ampPct": 9,
+       "critPct": 0,
+       "armor": 25,
+       "mr": 0,
+       "hpPct": 0,
+       "manaMult": 1,
+       "onHitMagic": 0,
+       "ehpMult": 1.03
+      }
+     },
+     "front": {
+      "ehp": 14827,
+      "noTraitEhp": 13093,
+      "traitGainPct": 13.2,
+      "tanks": [
+       {
+        "hero": "安妮",
+        "star": 2,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ],
+        "ehp": 8208,
+        "traitGainPct": 10.3
+       },
+       {
+        "hero": "波比",
+        "star": 2,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ],
+        "ehp": 6619,
+        "traitGainPct": 17.2
+       }
+      ]
+     },
+     "originalReason": "三费战力窗口明确，可围绕追三；前排羁绊能把输出时间拉长；输出羁绊直接喂主C或全队"
+    },
+    "late": {
+     "label": "后期",
+     "score": 1852,
+     "team": [
+      {
+       "name": "瑟提",
+       "price": 4
+      },
+      {
+       "name": "德莱文",
+       "price": 2
+      },
+      {
+       "name": "孙悟空",
+       "price": 1
+      },
+      {
+       "name": "蕾欧娜",
+       "price": 5
+      },
+      {
+       "name": "贾克斯",
+       "price": 3
+      },
+      {
+       "name": "泰隆",
+       "price": 1
+      },
+      {
+       "name": "佛耶戈",
+       "price": 4
+      },
+      {
+       "name": "迦娜",
+       "price": 5
+      },
+      {
+       "name": "蔚",
+       "price": 2
+      }
+     ],
+     "traits": [
+      "5战斗机甲",
+      "3混沌战士",
+      "2护卫",
+      "2斗士",
+      "2秘术卫士",
+      "2福牛守护者",
+      "1气象主播",
+      "1精英战士",
+      "1平民英雄"
+     ],
+     "carry": {
+      "hero": "瑟提",
+      "star": 2,
+      "price": 4,
+      "items": [
+       "最后的轻语",
+       "鬼索的狂暴之刃",
+       "卢安娜的飓风"
+      ],
+      "dps": 768,
+      "baseDps": 57,
+      "itemsOnlyDps": 300,
+      "traitsOnlyDps": 157,
+      "auto": 442,
+      "spell": 105,
+      "proc": 221,
+      "itemGainX": 5.24,
+      "traitGainX": 2.75,
+      "fullGainX": 13.44,
+      "interaction": 368,
+      "interactionPct": 48,
+      "itemDrops": [
+       {
+        "item": "鬼索的狂暴之刃",
+        "dpsWithout": 408,
+        "drop": 360,
+        "dropPct": 46.9
+       },
+       {
+        "item": "卢安娜的飓风",
+        "dpsWithout": 457,
+        "drop": 311,
+        "dropPct": 40.5
+       },
+       {
+        "item": "最后的轻语",
+        "dpsWithout": 485,
+        "drop": 284,
+        "dropPct": 36.9
+       }
+      ],
+      "traitDrops": [
+       {
+        "trait": "5战斗机甲",
+        "appliesToCarry": true,
+        "dpsWithout": 393,
+        "drop": 376,
+        "dropPct": 48.9
+       },
+       {
+        "trait": "3混沌战士",
+        "appliesToCarry": true,
+        "dpsWithout": 622,
+        "drop": 147,
+        "dropPct": 19.1
+       },
+       {
+        "trait": "1精英战士",
+        "appliesToCarry": true,
+        "dpsWithout": 733,
+        "drop": 35,
+        "dropPct": 4.6
+       }
+      ],
+      "activeTraits": [
+       "3混沌战士",
+       "2护卫",
+       "1气象主播",
+       "2斗士",
+       "2秘术卫士",
+       "1精英战士",
+       "1平民英雄",
+       "2福牛守护者",
+       "5战斗机甲"
+      ],
+      "bonus": {
+       "adPct": 110,
+       "ap": 110,
+       "asPct": 0,
+       "ampPct": 31,
+       "critPct": 0,
+       "armor": 85,
+       "mr": 30,
+       "hpPct": 0,
+       "manaMult": 1.04,
+       "onHitMagic": 0,
+       "ehpMult": 1
+      }
+     },
+     "front": {
+      "ehp": 20294,
+      "noTraitEhp": 16515,
+      "traitGainPct": 22.9,
+      "tanks": [
+       {
+        "hero": "蕾欧娜",
+        "star": 2,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ],
+        "ehp": 11767,
+        "traitGainPct": 29.2
+       },
+       {
+        "hero": "佛耶戈",
+        "star": 2,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ],
+        "ehp": 8526,
+        "traitGainPct": 15.1
+       }
+      ]
+     },
+     "originalReason": "高费主C上限高，但依赖经济与搜卡节奏；前排羁绊能把输出时间拉长；输出羁绊直接喂主C或全队"
+    }
+   },
+   "keyFindings": [
+    "后期瑟提最怕少鬼索的狂暴之刃：DPS -46.9%",
+    "后期第一羁绊杠杆是5战斗机甲：DPS -48.9%",
+    "后期装备与羁绊存在正乘法：额外 +368 DPS",
+    "中期贾克斯从裸装到完整口径提升 11.13x，吃装备/羁绊程度极高",
+    "中后期保留贾克斯、德莱文、孙悟空，换壳成本可控"
+   ]
+  },
+  {
+   "name": "战斗机甲：菲奥娜 -> 贾克斯 -> 蕾欧娜",
+   "routeScore": 78,
+   "routeTags": [
+    "战斗机甲壳",
+    "装备平滑",
+    "高费上限",
+    "贾克斯过渡"
+   ],
+   "verdict": "中后期可保留 贾克斯、德莱文、孙悟空；主C装备继承较顺；终局上限高但依赖上9/五费二星；实战校准：贾克斯更适合作为中期吃分桥，后期转蕾欧娜/五费控制补争一上限",
+   "routeComponents": {
+    "strength": 95,
+    "smooth": 63,
+    "risk": 29,
+    "pivotCost": 24,
+    "strategic": 26
+   },
+   "transition": {
+    "earlyToMid": {
+     "keep": [
+      "德莱文"
+     ],
+     "add": [
+      "贾克斯",
+      "孙悟空",
+      "安妮",
+      "拉克丝",
+      "波比",
+      "璐璐"
+     ],
+     "remove": [
+      "菲奥娜",
+      "凯尔",
+      "加里奥",
+      "内瑟斯"
+     ],
+     "sharedTraits": [
+      "精英战士"
+     ],
+     "itemOverlap": 1
+    },
+    "midToLate": {
+     "keep": [
+      "贾克斯",
+      "德莱文",
+      "孙悟空"
+     ],
+     "add": [
+      "蕾欧娜",
+      "瑟提",
+      "佛耶戈",
+      "泰隆",
+      "迦娜",
+      "娑娜"
+     ],
+     "remove": [
+      "安妮",
+      "拉克丝",
+      "波比",
+      "璐璐"
+     ],
+     "sharedTraits": [
+      "战斗机甲",
+      "灵能使",
+      "护卫",
+      "精英战士"
+     ],
+     "itemOverlap": 2
+    }
+   },
+   "stages": {
+    "early": {
+     "label": "前期",
+     "score": 1220,
+     "team": [
+      {
+       "name": "菲奥娜",
+       "price": 2
+      },
+      {
+       "name": "凯尔",
+       "price": 1
+      },
+      {
+       "name": "德莱文",
+       "price": 2
+      },
+      {
+       "name": "加里奥",
+       "price": 1
+      },
+      {
+       "name": "内瑟斯",
+       "price": 1
+      }
+     ],
+     "traits": [
+      "2决斗大师",
+      "2吉祥物",
+      "1精英战士",
+      "1平民英雄"
+     ],
+     "carry": {
+      "hero": "菲奥娜",
+      "star": 2,
+      "price": 2,
+      "items": [
+       "锐利之刃",
+       "鬼索的狂暴之刃",
+       "卢安娜的飓风"
+      ],
+      "dps": 354,
+      "baseDps": 45,
+      "itemsOnlyDps": 269,
+      "traitsOnlyDps": 64,
+      "auto": 199,
+      "spell": 56,
+      "proc": 99,
+      "itemGainX": 5.97,
+      "traitGainX": 1.43,
+      "fullGainX": 7.83,
+      "interaction": 65,
+      "interactionPct": 18.4,
+      "itemDrops": [
+       {
+        "item": "鬼索的狂暴之刃",
+        "dpsWithout": 172,
+        "drop": 182,
+        "dropPct": 51.5
+       },
+       {
+        "item": "锐利之刃",
+        "dpsWithout": 208,
+        "drop": 145,
+        "dropPct": 41
+       },
+       {
+        "item": "卢安娜的飓风",
+        "dpsWithout": 221,
+        "drop": 133,
+        "dropPct": 37.5
+       }
+      ],
+      "traitDrops": [
+       {
+        "trait": "2决斗大师",
+        "appliesToCarry": true,
+        "dpsWithout": 284,
+        "drop": 70,
+        "dropPct": 19.7
+       },
+       {
+        "trait": "1精英战士",
+        "appliesToCarry": true,
+        "dpsWithout": 335,
+        "drop": 18,
+        "dropPct": 5.2
+       }
+      ],
+      "activeTraits": [
+       "2决斗大师",
+       "2吉祥物",
+       "1精英战士",
+       "1平民英雄"
+      ],
+      "bonus": {
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 30,
+       "ampPct": 6,
+       "critPct": 0,
+       "armor": 0,
+       "mr": 0,
+       "hpPct": 0,
+       "manaMult": 1.04,
+       "onHitMagic": 0,
+       "ehpMult": 1.015
+      }
+     },
+     "front": {
+      "ehp": 13220,
+      "noTraitEhp": 13025,
+      "traitGainPct": 1.5,
+      "tanks": [
+       {
+        "hero": "内瑟斯",
+        "star": 2,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ],
+        "ehp": 7487,
+        "traitGainPct": 1.5
+       },
+       {
+        "hero": "加里奥",
+        "star": 2,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ],
+        "ehp": 5733,
+        "traitGainPct": 1.5
+       }
+      ]
+     },
+     "originalReason": "低费高效率，适合保血连胜；前排羁绊能把输出时间拉长；输出羁绊直接喂主C或全队"
+    },
+    "mid": {
+     "label": "中期",
+     "score": 1461,
+     "team": [
+      {
+       "name": "贾克斯",
+       "price": 3
+      },
+      {
+       "name": "德莱文",
+       "price": 2
+      },
+      {
+       "name": "孙悟空",
+       "price": 1
+      },
+      {
+       "name": "安妮",
+       "price": 2
+      },
+      {
+       "name": "拉克丝",
+       "price": 1
+      },
+      {
+       "name": "波比",
+       "price": 1
+      },
+      {
+       "name": "璐璐",
+       "price": 1
+      }
+     ],
+     "traits": [
+      "3小天才",
+      "3战斗机甲",
+      "2灵能使",
+      "2护卫",
+      "1精英战士"
+     ],
+     "carry": {
+      "hero": "贾克斯",
+      "star": 2,
+      "price": 3,
+      "items": [
+       "泰坦的坚决",
+       "水银",
+       "鬼索的狂暴之刃"
+      ],
+      "dps": 596,
+      "baseDps": 54,
+      "itemsOnlyDps": 366,
+      "traitsOnlyDps": 100,
+      "auto": 241,
+      "spell": 354,
+      "proc": 0,
+      "itemGainX": 6.84,
+      "traitGainX": 1.87,
+      "fullGainX": 11.13,
+      "interaction": 183,
+      "interactionPct": 30.7,
+      "itemDrops": [
+       {
+        "item": "鬼索的狂暴之刃",
+        "dpsWithout": 269,
+        "drop": 327,
+        "dropPct": 54.9
+       },
+       {
+        "item": "水银",
+        "dpsWithout": 393,
+        "drop": 203,
+        "dropPct": 34
+       },
+       {
+        "item": "泰坦的坚决",
+        "dpsWithout": 424,
+        "drop": 172,
+        "dropPct": 28.8
+       }
+      ],
+      "traitDrops": [
+       {
+        "trait": "3战斗机甲",
+        "appliesToCarry": true,
+        "dpsWithout": 436,
+        "drop": 160,
+        "dropPct": 26.8
+       },
+       {
+        "trait": "2灵能使",
+        "appliesToCarry": true,
+        "dpsWithout": 559,
+        "drop": 37,
+        "dropPct": 6.2
+       },
+       {
+        "trait": "1精英战士",
+        "appliesToCarry": true,
+        "dpsWithout": 563,
+        "drop": 33,
+        "dropPct": 5.5
+       },
+       {
+        "trait": "3小天才",
+        "appliesToCarry": true,
+        "dpsWithout": 579,
+        "drop": 16,
+        "dropPct": 2.8
+       }
+      ],
+      "activeTraits": [
+       "2灵能使",
+       "2护卫",
+       "1精英战士",
+       "3小天才",
+       "3战斗机甲"
+      ],
+      "bonus": {
+       "adPct": 60,
+       "ap": 85,
+       "asPct": 0,
+       "ampPct": 9,
+       "critPct": 0,
+       "armor": 25,
+       "mr": 0,
+       "hpPct": 0,
+       "manaMult": 1,
+       "onHitMagic": 0,
+       "ehpMult": 1.03
+      }
+     },
+     "front": {
+      "ehp": 14827,
+      "noTraitEhp": 13093,
+      "traitGainPct": 13.2,
+      "tanks": [
+       {
+        "hero": "安妮",
+        "star": 2,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ],
+        "ehp": 8208,
+        "traitGainPct": 10.3
+       },
+       {
+        "hero": "波比",
+        "star": 2,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ],
+        "ehp": 6619,
+        "traitGainPct": 17.2
+       }
+      ]
+     },
+     "originalReason": "三费战力窗口明确，可围绕追三；前排羁绊能把输出时间拉长；输出羁绊直接喂主C或全队"
+    },
+    "late": {
+     "label": "后期",
+     "score": 2634,
+     "team": [
+      {
+       "name": "蕾欧娜",
+       "price": 5
+      },
+      {
+       "name": "德莱文",
+       "price": 2
+      },
+      {
+       "name": "孙悟空",
+       "price": 1
+      },
+      {
+       "name": "瑟提",
+       "price": 4
+      },
+      {
+       "name": "贾克斯",
+       "price": 3
+      },
+      {
+       "name": "佛耶戈",
+       "price": 4
+      },
+      {
+       "name": "泰隆",
+       "price": 1
+      },
+      {
+       "name": "迦娜",
+       "price": 5
+      },
+      {
+       "name": "娑娜",
+       "price": 3
+      }
+     ],
+     "traits": [
+      "5战斗机甲",
+      "3混沌战士",
+      "2灵能使",
+      "2护卫",
+      "2爱心使者",
+      "2福牛守护者",
+      "1气象主播",
+      "1精英战士",
+      "1平民英雄"
+     ],
+     "carry": {
+      "hero": "蕾欧娜",
+      "star": 2,
+      "price": 5,
+      "items": [
+       "朔极之矛",
+       "水银",
+       "鬼索的狂暴之刃"
+      ],
+      "dps": 1551,
+      "baseDps": 105,
+      "itemsOnlyDps": 572,
+      "traitsOnlyDps": 312,
+      "auto": 378,
+      "spell": 1173,
+      "proc": 0,
+      "itemGainX": 5.44,
+      "traitGainX": 2.97,
+      "fullGainX": 14.78,
+      "interaction": 772,
+      "interactionPct": 49.8,
+      "itemDrops": [
+       {
+        "item": "鬼索的狂暴之刃",
+        "dpsWithout": 831,
+        "drop": 720,
+        "dropPct": 46.4
+       },
+       {
+        "item": "水银",
+        "dpsWithout": 984,
+        "drop": 568,
+        "dropPct": 36.6
+       },
+       {
+        "item": "朔极之矛",
+        "dpsWithout": 1057,
+        "drop": 494,
+        "dropPct": 31.9
+       }
+      ],
+      "traitDrops": [
+       {
+        "trait": "5战斗机甲",
+        "appliesToCarry": true,
+        "dpsWithout": 878,
+        "drop": 674,
+        "dropPct": 43.4
+       },
+       {
+        "trait": "3混沌战士",
+        "appliesToCarry": true,
+        "dpsWithout": 1255,
+        "drop": 296,
+        "dropPct": 19.1
+       },
+       {
+        "trait": "2灵能使",
+        "appliesToCarry": true,
+        "dpsWithout": 1440,
+        "drop": 111,
+        "dropPct": 7.2
+       },
+       {
+        "trait": "1精英战士",
+        "appliesToCarry": true,
+        "dpsWithout": 1480,
+        "drop": 71,
+        "dropPct": 4.6
+       },
+       {
+        "trait": "2爱心使者",
+        "appliesToCarry": true,
+        "dpsWithout": 1533,
+        "drop": 18,
+        "dropPct": 1.1
+       }
+      ],
+      "activeTraits": [
+       "3混沌战士",
+       "2灵能使",
+       "2护卫",
+       "2爱心使者",
+       "1气象主播",
+       "1精英战士",
+       "1平民英雄",
+       "2福牛守护者",
+       "5战斗机甲"
+      ],
+      "bonus": {
+       "adPct": 110,
+       "ap": 139,
+       "asPct": 0,
+       "ampPct": 31,
+       "critPct": 0,
+       "armor": 35,
+       "mr": 10,
+       "hpPct": 0,
+       "manaMult": 1.04,
+       "onHitMagic": 0,
+       "ehpMult": 1
+      }
+     },
+     "front": {
+      "ehp": 20303,
+      "noTraitEhp": 17355,
+      "traitGainPct": 17,
+      "tanks": [
+       {
+        "hero": "瑟提",
+        "star": 2,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ],
+        "ehp": 12174,
+        "traitGainPct": 22.4
+       },
+       {
+        "hero": "佛耶戈",
+        "star": 2,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ],
+        "ehp": 8129,
+        "traitGainPct": 9.7
+       }
+      ]
+     },
+     "originalReason": "高费主C上限高，但依赖经济与搜卡节奏；前排羁绊能把输出时间拉长；输出羁绊直接喂主C或全队"
+    }
+   },
+   "keyFindings": [
+    "后期蕾欧娜最怕少鬼索的狂暴之刃：DPS -46.4%",
+    "后期第一羁绊杠杆是5战斗机甲：DPS -43.4%",
+    "后期装备与羁绊存在正乘法：额外 +772 DPS",
+    "中期贾克斯从裸装到完整口径提升 11.13x，吃装备/羁绊程度极高",
+    "中后期保留贾克斯、德莱文、孙悟空，换壳成本可控"
+   ]
+  }
+ ],
+ "globalLevers": {
+  "highestDps": [
+   {
+    "route": "战斗机甲：贾克斯 -> 蕾欧娜",
+    "stage": "后期",
+    "hero": "蕾欧娜",
+    "dps": 1551,
+    "fullGainX": 14.78,
+    "itemGainX": 5.44,
+    "traitGainX": 2.97,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 46.4,
+    "topTrait": "5战斗机甲",
+    "topTraitDropPct": 43.4
+   },
+   {
+    "route": "战斗机甲：德莱文 -> 贾克斯 -> 蕾欧娜",
+    "stage": "后期",
+    "hero": "蕾欧娜",
+    "dps": 1551,
+    "fullGainX": 14.78,
+    "itemGainX": 5.44,
+    "traitGainX": 2.97,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 46.4,
+    "topTrait": "5战斗机甲",
+    "topTraitDropPct": 43.4
+   },
+   {
+    "route": "护卫：璐璐 -> 贾克斯 -> 蕾欧娜",
+    "stage": "后期",
+    "hero": "蕾欧娜",
+    "dps": 1551,
+    "fullGainX": 14.78,
+    "itemGainX": 5.44,
+    "traitGainX": 2.97,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 46.4,
+    "topTrait": "5战斗机甲",
+    "topTraitDropPct": 43.4
+   },
+   {
+    "route": "战斗机甲：德莱文 -> 蕾欧娜",
+    "stage": "后期",
+    "hero": "蕾欧娜",
+    "dps": 1551,
+    "fullGainX": 14.78,
+    "itemGainX": 5.44,
+    "traitGainX": 2.97,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 46.4,
+    "topTrait": "5战斗机甲",
+    "topTraitDropPct": 43.4
+   },
+   {
+    "route": "护卫：佐伊 -> 贾克斯 -> 蕾欧娜",
+    "stage": "后期",
+    "hero": "蕾欧娜",
+    "dps": 1551,
+    "fullGainX": 14.78,
+    "itemGainX": 5.44,
+    "traitGainX": 2.97,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 46.4,
+    "topTrait": "5战斗机甲",
+    "topTraitDropPct": 43.4
+   },
+   {
+    "route": "战斗机甲：菲奥娜 -> 德莱文 -> 蕾欧娜",
+    "stage": "后期",
+    "hero": "蕾欧娜",
+    "dps": 1551,
+    "fullGainX": 14.78,
+    "itemGainX": 5.44,
+    "traitGainX": 2.97,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 46.4,
+    "topTrait": "5战斗机甲",
+    "topTraitDropPct": 43.4
+   },
+   {
+    "route": "战斗机甲：菲奥娜 -> 贾克斯 -> 蕾欧娜",
+    "stage": "后期",
+    "hero": "蕾欧娜",
+    "dps": 1551,
+    "fullGainX": 14.78,
+    "itemGainX": 5.44,
+    "traitGainX": 2.97,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 46.4,
+    "topTrait": "5战斗机甲",
+    "topTraitDropPct": 43.4
+   },
+   {
+    "route": "战斗机甲：贾克斯 -> 瑟提",
+    "stage": "后期",
+    "hero": "瑟提",
+    "dps": 768,
+    "fullGainX": 13.44,
+    "itemGainX": 5.24,
+    "traitGainX": 2.75,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 46.9,
+    "topTrait": "5战斗机甲",
+    "topTraitDropPct": 48.9
+   },
+   {
+    "route": "战斗机甲：德莱文 -> 蕾欧娜",
+    "stage": "中期",
+    "hero": "德莱文",
+    "dps": 649,
+    "fullGainX": 8.5,
+    "itemGainX": 5.24,
+    "traitGainX": 1.71,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 49.4,
+    "topTrait": "3战斗机甲",
+    "topTraitDropPct": 34.2
+   },
+   {
+    "route": "战斗机甲：菲奥娜 -> 德莱文 -> 蕾欧娜",
+    "stage": "中期",
+    "hero": "德莱文",
+    "dps": 649,
+    "fullGainX": 8.5,
+    "itemGainX": 5.24,
+    "traitGainX": 1.71,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 49.4,
+    "topTrait": "3战斗机甲",
+    "topTraitDropPct": 34.2
+   }
+  ],
+  "mostItemDependent": [
+   {
+    "route": "战斗机甲：贾克斯 -> 蕾欧娜",
+    "stage": "前期",
+    "hero": "贾克斯",
+    "dps": 359,
+    "fullGainX": 10.17,
+    "itemGainX": 6.85,
+    "traitGainX": 1.7,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 55,
+    "topTrait": "3战斗机甲",
+    "topTraitDropPct": 28.6
+   },
+   {
+    "route": "战斗机甲：贾克斯 -> 瑟提",
+    "stage": "前期",
+    "hero": "贾克斯",
+    "dps": 359,
+    "fullGainX": 10.17,
+    "itemGainX": 6.85,
+    "traitGainX": 1.7,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 55,
+    "topTrait": "3战斗机甲",
+    "topTraitDropPct": 28.6
+   },
+   {
+    "route": "战斗机甲：贾克斯 -> 蕾欧娜",
+    "stage": "中期",
+    "hero": "贾克斯",
+    "dps": 596,
+    "fullGainX": 11.13,
+    "itemGainX": 6.84,
+    "traitGainX": 1.87,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 54.9,
+    "topTrait": "3战斗机甲",
+    "topTraitDropPct": 26.8
+   },
+   {
+    "route": "战斗机甲：德莱文 -> 贾克斯 -> 蕾欧娜",
+    "stage": "中期",
+    "hero": "贾克斯",
+    "dps": 596,
+    "fullGainX": 11.13,
+    "itemGainX": 6.84,
+    "traitGainX": 1.87,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 54.9,
+    "topTrait": "3战斗机甲",
+    "topTraitDropPct": 26.8
+   },
+   {
+    "route": "护卫：璐璐 -> 贾克斯 -> 蕾欧娜",
+    "stage": "中期",
+    "hero": "贾克斯",
+    "dps": 596,
+    "fullGainX": 11.13,
+    "itemGainX": 6.84,
+    "traitGainX": 1.87,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 54.9,
+    "topTrait": "3战斗机甲",
+    "topTraitDropPct": 26.8
+   },
+   {
+    "route": "护卫：佐伊 -> 贾克斯 -> 蕾欧娜",
+    "stage": "中期",
+    "hero": "贾克斯",
+    "dps": 596,
+    "fullGainX": 11.13,
+    "itemGainX": 6.84,
+    "traitGainX": 1.87,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 54.9,
+    "topTrait": "3战斗机甲",
+    "topTraitDropPct": 26.8
+   },
+   {
+    "route": "战斗机甲：贾克斯 -> 瑟提",
+    "stage": "中期",
+    "hero": "贾克斯",
+    "dps": 596,
+    "fullGainX": 11.13,
+    "itemGainX": 6.84,
+    "traitGainX": 1.87,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 54.9,
+    "topTrait": "3战斗机甲",
+    "topTraitDropPct": 26.8
+   },
+   {
+    "route": "战斗机甲：菲奥娜 -> 贾克斯 -> 蕾欧娜",
+    "stage": "中期",
+    "hero": "贾克斯",
+    "dps": 596,
+    "fullGainX": 11.13,
+    "itemGainX": 6.84,
+    "traitGainX": 1.87,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 54.9,
+    "topTrait": "3战斗机甲",
+    "topTraitDropPct": 26.8
+   },
+   {
+    "route": "战斗机甲：菲奥娜 -> 德莱文 -> 蕾欧娜",
+    "stage": "前期",
+    "hero": "菲奥娜",
+    "dps": 354,
+    "fullGainX": 7.83,
+    "itemGainX": 5.97,
+    "traitGainX": 1.43,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 51.5,
+    "topTrait": "2决斗大师",
+    "topTraitDropPct": 19.7
+   },
+   {
+    "route": "战斗机甲：菲奥娜 -> 贾克斯 -> 蕾欧娜",
+    "stage": "前期",
+    "hero": "菲奥娜",
+    "dps": 354,
+    "fullGainX": 7.83,
+    "itemGainX": 5.97,
+    "traitGainX": 1.43,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 51.5,
+    "topTrait": "2决斗大师",
+    "topTraitDropPct": 19.7
+   }
+  ],
+  "mostTraitDependent": [
+   {
+    "route": "战斗机甲：贾克斯 -> 瑟提",
+    "stage": "后期",
+    "hero": "瑟提",
+    "dps": 768,
+    "fullGainX": 13.44,
+    "itemGainX": 5.24,
+    "traitGainX": 2.75,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 46.9,
+    "topTrait": "5战斗机甲",
+    "topTraitDropPct": 48.9
+   },
+   {
+    "route": "战斗机甲：贾克斯 -> 蕾欧娜",
+    "stage": "后期",
+    "hero": "蕾欧娜",
+    "dps": 1551,
+    "fullGainX": 14.78,
+    "itemGainX": 5.44,
+    "traitGainX": 2.97,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 46.4,
+    "topTrait": "5战斗机甲",
+    "topTraitDropPct": 43.4
+   },
+   {
+    "route": "战斗机甲：德莱文 -> 贾克斯 -> 蕾欧娜",
+    "stage": "后期",
+    "hero": "蕾欧娜",
+    "dps": 1551,
+    "fullGainX": 14.78,
+    "itemGainX": 5.44,
+    "traitGainX": 2.97,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 46.4,
+    "topTrait": "5战斗机甲",
+    "topTraitDropPct": 43.4
+   },
+   {
+    "route": "护卫：璐璐 -> 贾克斯 -> 蕾欧娜",
+    "stage": "后期",
+    "hero": "蕾欧娜",
+    "dps": 1551,
+    "fullGainX": 14.78,
+    "itemGainX": 5.44,
+    "traitGainX": 2.97,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 46.4,
+    "topTrait": "5战斗机甲",
+    "topTraitDropPct": 43.4
+   },
+   {
+    "route": "战斗机甲：德莱文 -> 蕾欧娜",
+    "stage": "后期",
+    "hero": "蕾欧娜",
+    "dps": 1551,
+    "fullGainX": 14.78,
+    "itemGainX": 5.44,
+    "traitGainX": 2.97,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 46.4,
+    "topTrait": "5战斗机甲",
+    "topTraitDropPct": 43.4
+   },
+   {
+    "route": "护卫：佐伊 -> 贾克斯 -> 蕾欧娜",
+    "stage": "后期",
+    "hero": "蕾欧娜",
+    "dps": 1551,
+    "fullGainX": 14.78,
+    "itemGainX": 5.44,
+    "traitGainX": 2.97,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 46.4,
+    "topTrait": "5战斗机甲",
+    "topTraitDropPct": 43.4
+   },
+   {
+    "route": "战斗机甲：菲奥娜 -> 德莱文 -> 蕾欧娜",
+    "stage": "后期",
+    "hero": "蕾欧娜",
+    "dps": 1551,
+    "fullGainX": 14.78,
+    "itemGainX": 5.44,
+    "traitGainX": 2.97,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 46.4,
+    "topTrait": "5战斗机甲",
+    "topTraitDropPct": 43.4
+   },
+   {
+    "route": "战斗机甲：菲奥娜 -> 贾克斯 -> 蕾欧娜",
+    "stage": "后期",
+    "hero": "蕾欧娜",
+    "dps": 1551,
+    "fullGainX": 14.78,
+    "itemGainX": 5.44,
+    "traitGainX": 2.97,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 46.4,
+    "topTrait": "5战斗机甲",
+    "topTraitDropPct": 43.4
+   },
+   {
+    "route": "战斗机甲：德莱文 -> 贾克斯 -> 蕾欧娜",
+    "stage": "前期",
+    "hero": "德莱文",
+    "dps": 431,
+    "fullGainX": 8.46,
+    "itemGainX": 5.24,
+    "traitGainX": 1.7,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 49.4,
+    "topTrait": "3战斗机甲",
+    "topTraitDropPct": 34.3
+   },
+   {
+    "route": "战斗机甲：德莱文 -> 蕾欧娜",
+    "stage": "前期",
+    "hero": "德莱文",
+    "dps": 431,
+    "fullGainX": 8.46,
+    "itemGainX": 5.24,
+    "traitGainX": 1.7,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 49.4,
+    "topTrait": "3战斗机甲",
+    "topTraitDropPct": 34.3
+   }
+  ],
+  "biggestMultiplier": [
+   {
+    "route": "战斗机甲：贾克斯 -> 蕾欧娜",
+    "stage": "后期",
+    "hero": "蕾欧娜",
+    "dps": 1551,
+    "fullGainX": 14.78,
+    "itemGainX": 5.44,
+    "traitGainX": 2.97,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 46.4,
+    "topTrait": "5战斗机甲",
+    "topTraitDropPct": 43.4
+   },
+   {
+    "route": "战斗机甲：德莱文 -> 贾克斯 -> 蕾欧娜",
+    "stage": "后期",
+    "hero": "蕾欧娜",
+    "dps": 1551,
+    "fullGainX": 14.78,
+    "itemGainX": 5.44,
+    "traitGainX": 2.97,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 46.4,
+    "topTrait": "5战斗机甲",
+    "topTraitDropPct": 43.4
+   },
+   {
+    "route": "护卫：璐璐 -> 贾克斯 -> 蕾欧娜",
+    "stage": "后期",
+    "hero": "蕾欧娜",
+    "dps": 1551,
+    "fullGainX": 14.78,
+    "itemGainX": 5.44,
+    "traitGainX": 2.97,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 46.4,
+    "topTrait": "5战斗机甲",
+    "topTraitDropPct": 43.4
+   },
+   {
+    "route": "战斗机甲：德莱文 -> 蕾欧娜",
+    "stage": "后期",
+    "hero": "蕾欧娜",
+    "dps": 1551,
+    "fullGainX": 14.78,
+    "itemGainX": 5.44,
+    "traitGainX": 2.97,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 46.4,
+    "topTrait": "5战斗机甲",
+    "topTraitDropPct": 43.4
+   },
+   {
+    "route": "护卫：佐伊 -> 贾克斯 -> 蕾欧娜",
+    "stage": "后期",
+    "hero": "蕾欧娜",
+    "dps": 1551,
+    "fullGainX": 14.78,
+    "itemGainX": 5.44,
+    "traitGainX": 2.97,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 46.4,
+    "topTrait": "5战斗机甲",
+    "topTraitDropPct": 43.4
+   },
+   {
+    "route": "战斗机甲：菲奥娜 -> 德莱文 -> 蕾欧娜",
+    "stage": "后期",
+    "hero": "蕾欧娜",
+    "dps": 1551,
+    "fullGainX": 14.78,
+    "itemGainX": 5.44,
+    "traitGainX": 2.97,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 46.4,
+    "topTrait": "5战斗机甲",
+    "topTraitDropPct": 43.4
+   },
+   {
+    "route": "战斗机甲：菲奥娜 -> 贾克斯 -> 蕾欧娜",
+    "stage": "后期",
+    "hero": "蕾欧娜",
+    "dps": 1551,
+    "fullGainX": 14.78,
+    "itemGainX": 5.44,
+    "traitGainX": 2.97,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 46.4,
+    "topTrait": "5战斗机甲",
+    "topTraitDropPct": 43.4
+   },
+   {
+    "route": "战斗机甲：贾克斯 -> 瑟提",
+    "stage": "后期",
+    "hero": "瑟提",
+    "dps": 768,
+    "fullGainX": 13.44,
+    "itemGainX": 5.24,
+    "traitGainX": 2.75,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 46.9,
+    "topTrait": "5战斗机甲",
+    "topTraitDropPct": 48.9
+   },
+   {
+    "route": "战斗机甲：贾克斯 -> 蕾欧娜",
+    "stage": "中期",
+    "hero": "贾克斯",
+    "dps": 596,
+    "fullGainX": 11.13,
+    "itemGainX": 6.84,
+    "traitGainX": 1.87,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 54.9,
+    "topTrait": "3战斗机甲",
+    "topTraitDropPct": 26.8
+   },
+   {
+    "route": "战斗机甲：德莱文 -> 贾克斯 -> 蕾欧娜",
+    "stage": "中期",
+    "hero": "贾克斯",
+    "dps": 596,
+    "fullGainX": 11.13,
+    "itemGainX": 6.84,
+    "traitGainX": 1.87,
+    "topItem": "鬼索的狂暴之刃",
+    "topItemDropPct": 54.9,
+    "topTrait": "3战斗机甲",
+    "topTraitDropPct": 26.8
+   }
+  ]
+ },
+ "assumptions": [
+  "反事实拆解使用同一个30秒木桩战斗模拟。",
+  "装备边际 = 保留星级/羁绊，移除单件装备后的DPS损失。",
+  "羁绊边际 = 保留装备/星级，移除单个已激活羁绊效果后的DPS损失。",
+  "这层仍未解决站位、控制、AOE命中人数、专属强化完整逻辑，需要继续补实战校准。"
+ ]
+}

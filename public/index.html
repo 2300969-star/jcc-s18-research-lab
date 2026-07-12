@@ -1,0 +1,2678 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>怪兽入侵 S18 · 阵容研究实验室</title>
+<style>
+:root {
+  --plane:#f9f9f7; --surface:#fcfcfb; --ink:#0b0b0b; --ink2:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --axis:#c3c2b7; --border:rgba(11,11,11,.10);
+  --s1:#2a78d6; --s2:#1baf7a; --s3:#eda100; --s4:#008300; --s5:#4a3aa7; --s6:#e34948;
+  --seq250:#86b6ef; --seq350:#5598e7; --seq450:#2a78d6; --seq550:#1c5cab; --seq650:#104281;
+}
+:root[data-theme="dark"] {
+  --plane:#0d0d0d; --surface:#1a1a19; --ink:#ffffff; --ink2:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,.10);
+  --s1:#3987e5; --s2:#199e70; --s3:#c98500; --s4:#008300; --s5:#9085e9; --s6:#e66767;
+  --seq250:#6da7ec; --seq350:#3987e5; --seq450:#256abf; --seq550:#1c5cab; --seq650:#184f95;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --plane:#0d0d0d; --surface:#1a1a19; --ink:#ffffff; --ink2:#c3c2b7; --muted:#898781;
+    --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,.10);
+    --s1:#3987e5; --s2:#199e70; --s3:#c98500; --s4:#008300; --s5:#9085e9; --s6:#e66767;
+    --seq250:#6da7ec; --seq350:#3987e5; --seq450:#256abf; --seq550:#1c5cab; --seq650:#184f95;
+  }
+}
+* { box-sizing:border-box; margin:0; }
+body { background:var(--plane); color:var(--ink); font:14px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif; padding:28px 20px 80px; }
+.wrap { max-width:1060px; margin:0 auto; }
+header { display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; margin-bottom:6px; }
+h1 { font-size:22px; font-weight:650; }
+h2 { font-size:16px; font-weight:650; margin:0 0 2px; }
+.sub { color:var(--ink2); font-size:13px; margin-bottom:20px; }
+.card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:18px 20px 14px; margin-bottom:18px; }
+.processOnly { display:none !important; }
+.desc { color:var(--ink2); font-size:13px; margin-bottom:10px; }
+.tiles { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin-bottom:18px; }
+.tile { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px 16px; }
+.tile .lb { font-size:12px; color:var(--ink2); }
+.tile .v { font-size:30px; font-weight:600; margin-top:2px; }
+.tile .d { font-size:12px; color:var(--muted); }
+.legend { display:flex; gap:16px; flex-wrap:wrap; font-size:12px; color:var(--ink2); margin:2px 0 8px; }
+.legend .it { display:inline-flex; align-items:center; gap:6px; }
+.sw { width:10px; height:10px; border-radius:3px; display:inline-block; }
+.lk { width:14px; height:2px; border-radius:1px; display:inline-block; }
+svg { display:block; width:100%; height:auto; }
+svg text { font-family:system-ui,-apple-system,"Segoe UI",sans-serif; }
+.tick { font-variant-numeric:tabular-nums; }
+#tip { position:fixed; pointer-events:none; background:var(--surface); border:1px solid var(--border);
+  border-radius:8px; box-shadow:0 4px 16px rgba(0,0,0,.14); padding:8px 11px; font-size:12px; z-index:9;
+  display:none; max-width:280px; }
+#tip .tv { font-size:14px; font-weight:650; }
+#tip .tr { display:flex; align-items:center; gap:6px; color:var(--ink2); margin-top:2px; }
+#tip .tr b { color:var(--ink); font-weight:600; font-variant-numeric:tabular-nums; margin-left:auto; padding-left:12px; }
+details { margin-top:8px; }
+summary { font-size:12px; color:var(--muted); cursor:pointer; user-select:none; }
+table { border-collapse:collapse; font-size:12px; margin-top:8px; width:100%; }
+th,td { text-align:left; padding:4px 10px 4px 0; border-bottom:1px solid var(--grid); font-variant-numeric:tabular-nums; }
+th { color:var(--ink2); font-weight:600; }
+.note { font-size:12px; color:var(--muted); margin-top:8px; }
+#themeBtn { background:none; border:1px solid var(--border); border-radius:8px; color:var(--ink2); padding:4px 12px; cursor:pointer; font-size:12px; }
+nav.toc { position:sticky; top:0; z-index:5; background:var(--plane); padding:8px 0 10px; margin-bottom:12px;
+  display:flex; gap:8px; flex-wrap:wrap; border-bottom:1px solid var(--grid); }
+nav.toc a { text-decoration:none; color:var(--ink2); font-size:12.5px; border:1px solid var(--border);
+  border-radius:20px; padding:3px 12px; white-space:nowrap; }
+nav.toc a:hover { color:var(--s1); border-color:var(--s1); }
+nav.toc a.hot { color:#fff; background:var(--s1); border-color:var(--s1); }
+.card { scroll-margin-top:88px; }
+ul.assump { padding-left:18px; color:var(--ink2); font-size:13px; }
+ul.assump li { margin-bottom:5px; }
+.good { color:#0ca30c; }
+/* 结论层 */
+h3 { font-size:14px; font-weight:650; margin:16px 0 8px; }
+.tierRow { display:flex; gap:12px; align-items:flex-start; padding:10px 0; border-bottom:1px solid var(--grid); }
+.tierRow:last-child { border-bottom:none; }
+.certSummary { border-left:3px solid var(--s5); padding:7px 10px; margin:2px 0 10px; color:var(--ink2); font-size:12.5px; background:color-mix(in srgb, var(--surface) 92%, var(--s5) 8%); }
+.certKpis { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin:12px 0 18px; }
+.certKpi { border-top:3px solid var(--s5); padding:9px 10px; background:color-mix(in srgb, var(--surface) 94%, var(--s5) 6%); }
+.certKpi .v { font-size:24px; font-weight:850; line-height:1.15; }
+.certKpi .l { color:var(--muted); font-size:11.5px; margin-top:3px; }
+.certCols { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px; }
+.certList { border-top:1px solid var(--grid); }
+.certRoute { width:100%; display:grid; grid-template-columns:28px minmax(0,1fr) auto; gap:9px; align-items:center; text-align:left; border:0; border-bottom:1px solid var(--grid); background:transparent; color:var(--ink); padding:9px 2px; cursor:pointer; font:inherit; }
+.certRoute:hover { background:color-mix(in srgb, var(--surface) 90%, var(--s5) 10%); }
+.certRoute .n { color:var(--muted); font-size:11.5px; text-align:center; }
+.certRoute .name { display:block; font-weight:700; font-size:12.5px; overflow-wrap:anywhere; }
+.certRoute .sub { display:block; color:var(--muted); font-size:11px; margin-top:2px; }
+.certRoute .metric { color:var(--s5); font-size:12px; font-weight:800; text-align:right; white-space:nowrap; }
+.certConditionTabs { display:flex; flex-wrap:wrap; gap:6px; margin:-2px 0 7px; }
+.certConditionTab { border:1px solid var(--border); border-radius:999px; padding:3px 10px; background:transparent; color:var(--ink2); font:inherit; font-size:11.5px; cursor:pointer; }
+.certConditionTab.active { border-color:var(--s5); background:color-mix(in srgb, var(--surface) 82%, var(--s5) 18%); color:var(--ink); font-weight:750; }
+.certGates { display:flex; flex-wrap:wrap; gap:4px; margin-top:5px; }
+.certGate { display:inline-flex; align-items:center; min-height:20px; border:1px solid color-mix(in srgb, var(--s5) 60%, var(--border)); border-radius:999px; padding:1px 7px; color:var(--ink2); background:color-mix(in srgb, var(--surface) 92%, var(--s5) 8%); font-size:10.5px; font-weight:650; line-height:1.25; }
+.certFormula { margin-top:16px; color:var(--ink2); font-size:12px; }
+.tierBadge { flex:0 0 44px; text-align:center; font-weight:700; font-size:15px; border-radius:8px; padding:6px 0; color:#fff; }
+.tierRow .fam { font-weight:650; }
+.tierRow .cmp { color:var(--ink2); font-size:12.5px; margin:2px 0; }
+.tierRow .why { color:var(--ink2); font-size:12.5px; }
+.cols3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; }
+.rk { display:flex; align-items:center; gap:8px; padding:5px 0; border-bottom:1px solid var(--grid); font-size:13px; }
+.rk:last-child { border-bottom:none; }
+.rk .no { flex:0 0 18px; color:var(--muted); font-variant-numeric:tabular-nums; font-size:12px; }
+.rk .nm { font-weight:600; white-space:nowrap; }
+.rk .meta { color:var(--muted); font-size:12px; margin-left:auto; text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums; }
+.meter { position:relative; flex:1 1 auto; height:6px; border-radius:3px; background:color-mix(in srgb, var(--s1) 18%, transparent); min-width:40px; }
+.meter > i { position:absolute; inset:0 auto 0 0; border-radius:3px; background:var(--s1); }
+.chip { display:inline-block; font-size:11px; border:1px solid var(--border); border-radius:20px; padding:0 8px; color:var(--ink2); white-space:nowrap; }
+.chip i { display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:5px; }
+.itemCols { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px; }
+/* 阵容详情弹窗 */
+.compChip { background:none; font:inherit; border:1px solid var(--border); border-radius:20px; padding:2px 12px;
+  color:var(--ink); cursor:pointer; margin:2px 6px 2px 0; font-size:12.5px; }
+.compChip:hover { border-color:var(--s1); color:var(--s1); }
+.cmp .chip { margin:2px 6px 2px 0; }
+dialog { border:1px solid var(--border); border-radius:14px; background:var(--surface); color:var(--ink);
+  width:min(940px,94vw); max-height:88vh; padding:22px 24px; margin:auto; overflow:auto; }
+dialog::backdrop { background:rgba(0,0,0,.55); }
+.dlgHead { display:flex; align-items:flex-start; gap:10px; margin-bottom:4px; }
+.dlgHead h2 { font-size:17px; flex:1; }
+.qbadge { flex:0 0 auto; font-weight:700; font-size:13px; border-radius:6px; padding:2px 10px; color:#fff; background:var(--seq650); }
+.dlgMeta { color:var(--ink2); font-size:12.5px; margin-bottom:12px; }
+.closeX { background:none; border:none; color:var(--muted); font-size:20px; cursor:pointer; line-height:1; padding:2px 6px; }
+.board { display:flex; flex-direction:column; gap:5px; margin:10px 0 4px; overflow-x:auto; padding-bottom:4px; }
+.brow { display:flex; gap:5px; }
+.brow.off { margin-left:47px; }
+.cell { flex:0 0 89px; min-height:88px; border:1px solid var(--grid); border-radius:8px; padding:5px 6px; font-size:11px; }
+.cell.empty { border-style:dashed; opacity:.45; }
+.cell .cn { font-weight:650; font-size:12px; white-space:nowrap; }
+.cell .cost { font-size:10px; color:var(--muted); }
+.cell .it { color:var(--ink2); font-size:10.5px; line-height:1.45; }
+.cell .role { color:var(--muted); font-size:10px; margin-top:2px; }
+.cell .itemIcons { display:flex; gap:3px; margin-top:5px; }
+.cell .itemIcon { width:22px; height:22px; border-radius:4px; border:1px solid var(--border); object-fit:cover; }
+.cell.carry { box-shadow:inset 0 0 0 2px var(--s1); }
+.cell .tag3 { color:var(--s3); font-weight:700; }
+.secT { font-size:12px; color:var(--muted); margin:14px 0 5px; }
+.augLine { font-size:13px; margin-bottom:6px; }
+.augLine b { font-weight:650; }
+.augLine .lv { color:var(--muted); font-size:11.5px; }
+.augLine .ds { color:var(--ink2); font-size:12px; }
+.noteP { font-size:12.5px; color:var(--ink2); margin-bottom:6px; }
+.noteP b { color:var(--ink); font-weight:600; }
+.traitChips .chip { margin:0 6px 6px 0; }
+.metaStageTabs { display:flex; gap:8px; margin:6px 0 8px; }
+.metaStageTab { border:1px solid var(--border); background:transparent; color:var(--ink2); border-radius:7px; padding:6px 13px; cursor:pointer; font:inherit; font-size:12.5px; }
+.metaStageTab.active { background:var(--s1); border-color:var(--s1); color:#fff; }
+.metaStageSummary { display:flex; gap:14px; flex-wrap:wrap; color:var(--ink2); font-size:12.5px; margin-bottom:4px; }
+.metaItemGrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:8px; }
+.metaItem { display:flex; align-items:center; gap:9px; border:1px solid var(--grid); border-radius:8px; padding:7px 9px; min-width:0; }
+.metaItem > img { width:38px; height:38px; border-radius:6px; object-fit:cover; flex:0 0 auto; }
+.metaItem b { display:block; font-size:12.5px; }
+.metaItem small { color:var(--muted); font-size:10.5px; }
+.metaOps { margin:4px 0 0; padding-left:22px; color:var(--ink2); font-size:12.5px; }
+.metaOps li { margin:6px 0; line-height:1.55; }
+.auditFilters { display:grid; grid-template-columns:minmax(220px,1fr) 120px 150px; gap:10px; margin:12px 0 14px; }
+.auditFilters input, .auditFilters select { width:100%; background:var(--surface); color:var(--ink); border:1px solid var(--border); border-radius:8px; padding:7px 10px; font:inherit; font-size:12.5px; }
+.auditTabs { display:flex; gap:8px; flex-wrap:wrap; margin:10px 0 12px; }
+.auditTab { background:none; border:1px solid var(--border); border-radius:20px; color:var(--ink2); padding:4px 12px; cursor:pointer; font:inherit; font-size:12.5px; }
+.auditTab.active { background:var(--s1); border-color:var(--s1); color:#fff; }
+.auditStats { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin:10px 0 14px; }
+.auditStat { border:1px solid var(--border); border-radius:8px; padding:10px 12px; background:color-mix(in srgb, var(--surface) 92%, var(--s1) 8%); }
+.auditStat .lb { color:var(--ink2); font-size:12px; }
+.auditStat .vv { font-size:24px; font-weight:700; font-variant-numeric:tabular-nums; }
+.auditStat .dd { color:var(--muted); font-size:11.5px; }
+.auditGrid { display:grid; grid-template-columns:minmax(0,1fr) 280px; gap:14px; align-items:start; }
+.auditSide { border:1px solid var(--border); border-radius:8px; padding:12px; background:var(--surface); position:sticky; top:58px; }
+.auditSide h3 { margin-top:0; }
+.sev { display:inline-flex; align-items:center; justify-content:center; min-width:30px; height:21px; border-radius:6px; color:#fff; font-size:11px; font-weight:700; }
+.sev.P1 { background:var(--s6); }
+.sev.P2 { background:var(--s3); }
+.sev.P3 { background:var(--s1); }
+.auditPill { display:inline-block; border:1px solid var(--border); border-radius:20px; padding:0 7px; margin:0 4px 4px 0; color:var(--ink2); font-size:11.5px; white-space:nowrap; }
+.auditTableWrap { overflow-x:auto; }
+.auditTable tr { cursor:pointer; }
+.auditTable tr:hover td { background:color-mix(in srgb, var(--s1) 8%, transparent); }
+.auditProblem { color:var(--ink2); max-width:560px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.auditDetail { color:var(--ink2); font-size:12.5px; }
+.auditDetail b { color:var(--ink); }
+.auditDetail pre { white-space:pre-wrap; word-break:break-word; max-height:260px; overflow:auto; border:1px solid var(--grid); border-radius:8px; padding:8px; margin-top:8px; color:var(--muted); font-size:11px; }
+.discoverStats { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px; margin:10px 0 14px; }
+.discoverStat { border:1px solid var(--border); border-radius:8px; padding:10px 12px; background:color-mix(in srgb, var(--surface) 92%, var(--s2) 8%); }
+.discoverStat .lb { color:var(--ink2); font-size:12px; }
+.discoverStat .vv { font-size:23px; font-weight:700; font-variant-numeric:tabular-nums; line-height:1.25; }
+.discoverStat .dd { color:var(--muted); font-size:11.5px; }
+.discoverTabs { display:flex; gap:8px; flex-wrap:wrap; margin:10px 0 12px; }
+.discoverTab { background:none; border:1px solid var(--border); border-radius:20px; color:var(--ink2); padding:4px 12px; cursor:pointer; font:inherit; font-size:12.5px; }
+.discoverTab.active { background:var(--s2); border-color:var(--s2); color:#fff; }
+.discoverGrid { display:grid; grid-template-columns:minmax(0,1fr) 300px; gap:14px; align-items:start; }
+.discoverRows { border-top:1px solid var(--grid); }
+.discoverRow { display:grid; grid-template-columns:46px minmax(150px,1fr) 90px 110px; gap:10px; align-items:start; padding:10px 0; border-bottom:1px solid var(--grid); cursor:pointer; }
+.discoverRow:hover { background:color-mix(in srgb, var(--s2) 8%, transparent); }
+.discoverRow .rank { font-weight:800; color:var(--s2); font-variant-numeric:tabular-nums; }
+.discoverRow .main { min-width:0; }
+.discoverRow .title { font-weight:700; }
+.discoverRow .subr { color:var(--ink2); font-size:12px; overflow-wrap:anywhere; }
+.discoverRow .score { font-weight:800; font-size:17px; text-align:right; font-variant-numeric:tabular-nums; }
+.discoverRow .flag { text-align:right; }
+.discoverSide { border:1px solid var(--border); border-radius:8px; padding:12px; background:var(--surface); position:sticky; top:58px; }
+.discoverSide h3 { margin-top:0; }
+.discoverList .rk .nm { max-width:160px; overflow:hidden; text-overflow:ellipsis; }
+.discoverOdds { display:grid; grid-template-columns:minmax(0,1fr) minmax(260px,.75fr); gap:16px; align-items:start; }
+.discoverAugCols { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
+.discoverWarn { border-left:3px solid var(--s3); padding:6px 0 6px 10px; color:var(--ink2); font-size:12.5px; margin-top:10px; }
+.routeGrid { display:grid; gap:10px; }
+.routeCard { border:1px solid var(--border); border-radius:8px; padding:12px 14px; background:var(--surface); }
+.routeHead { display:flex; gap:8px; align-items:center; justify-content:space-between; flex-wrap:wrap; margin-bottom:6px; }
+.routeName { font-weight:750; }
+.routeScore { font-weight:800; color:var(--s2); font-variant-numeric:tabular-nums; }
+.routeStages { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin:8px 0; }
+.routeStage { border:1px solid var(--grid); border-radius:8px; padding:8px; min-width:0; }
+.routeStage b { display:block; font-size:12.5px; margin-bottom:2px; }
+.routeStage .tiny { color:var(--muted); font-size:11.5px; overflow-wrap:anywhere; }
+.routeTrans { color:var(--ink2); font-size:12.5px; }
+.lensGrid { display:grid; gap:10px; }
+.lensCard { border:1px solid var(--border); border-radius:8px; padding:12px 14px; background:var(--surface); }
+.lensHead { display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; margin-bottom:6px; }
+.lensHead b { font-size:13.5px; }
+.lensFind { color:var(--ink2); font-size:12.5px; margin:4px 0 8px; }
+.lensStages { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+.lensStage { border:1px solid var(--grid); border-radius:8px; padding:8px; }
+.lensStage b { display:block; font-size:12.5px; }
+.lensStage .num { font-variant-numeric:tabular-nums; color:var(--ink2); font-size:12px; }
+.lensStage .hotline { color:var(--muted); font-size:11.5px; overflow-wrap:anywhere; }
+.leverCols { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:10px; }
+.researchLab { border-top:1px solid var(--grid); border-bottom:1px solid var(--grid); padding:18px 0 20px; margin:10px 0 18px; scroll-margin-top:88px; }
+.labTop { display:grid; grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr); gap:18px; align-items:start; }
+.labEyebrow { color:var(--s2); font-size:12px; font-weight:750; letter-spacing:.04em; text-transform:uppercase; }
+.labTheory h2 { font-size:22px; margin:2px 0 8px; }
+.labTheory .claim { font-size:15px; color:var(--ink); max-width:760px; }
+.labTheory .why { color:var(--ink2); font-size:12.5px; margin-top:10px; display:grid; gap:4px; }
+.labKpis { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+.labKpi { border:1px solid var(--border); border-radius:8px; padding:10px 12px; background:color-mix(in srgb, var(--surface) 92%, var(--s2) 8%); min-height:74px; }
+.labKpi .lb { color:var(--ink2); font-size:11.5px; }
+.labKpi .vv { font-size:22px; font-weight:800; font-variant-numeric:tabular-nums; line-height:1.25; }
+.labKpi .dd { color:var(--muted); font-size:11.5px; }
+.labMatrix { display:grid; grid-template-columns:minmax(0,1fr) minmax(300px,.78fr); gap:18px; margin-top:18px; align-items:start; }
+.labBlock { min-width:0; }
+.labBlock h3 { margin-top:0; }
+.hypothesis { display:grid; grid-template-columns:48px minmax(0,1fr) 70px; gap:10px; padding:10px 0; border-bottom:1px solid var(--grid); }
+.hypothesis:last-child { border-bottom:none; }
+.hypothesis .hid { color:var(--s2); font-weight:800; }
+.hypothesis .ht { font-weight:750; }
+.hypothesis .he { color:var(--ink2); font-size:12.3px; margin-top:2px; }
+.hypothesis .hn { color:var(--muted); font-size:11.5px; margin-top:3px; }
+.status { justify-self:end; align-self:start; border-radius:6px; padding:2px 8px; font-size:11.5px; font-weight:750; color:#fff; }
+.status.支持, .status.强支持 { background:var(--s2); }
+.status.修正 { background:var(--s3); color:#111; }
+.status.待证伪 { background:var(--s5); }
+.labFrontier { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:10px; margin-top:10px; }
+.frontierItem { border:1px solid var(--border); border-radius:8px; padding:10px 12px; background:var(--surface); }
+.frontierItem .fl { color:var(--muted); font-size:11.5px; }
+.frontierItem .ft { font-weight:800; margin:2px 0; }
+.frontierItem .fs { color:var(--s2); font-weight:800; font-variant-numeric:tabular-nums; }
+.frontierItem .fc { color:var(--ink2); font-size:12.2px; }
+.experiment { display:grid; grid-template-columns:38px minmax(0,1fr); gap:10px; padding:9px 0; border-bottom:1px solid var(--grid); }
+.experiment:last-child { border-bottom:none; }
+.priority { width:32px; height:22px; display:inline-flex; align-items:center; justify-content:center; border-radius:6px; font-size:11px; font-weight:800; background:var(--s6); color:#fff; }
+.priority.P2 { background:var(--s1); }
+.experiment b { display:block; }
+.experiment .ed { color:var(--ink2); font-size:12.2px; }
+.labAnoms { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:10px; margin-top:12px; }
+.anom { border-left:3px solid var(--s3); padding:4px 0 4px 10px; }
+.anom .ak { color:var(--s3); font-size:11.5px; font-weight:800; }
+.anom .at { font-weight:750; }
+.anom .ad { color:var(--ink2); font-size:12.2px; }
+.reinventHero { display:grid; grid-template-columns:minmax(0,1.08fr) minmax(280px,.72fr); gap:14px; align-items:start; }
+.reinventClaim { border:1px solid color-mix(in srgb, var(--s5) 42%, var(--border)); border-radius:8px; padding:14px; background:color-mix(in srgb, var(--surface) 92%, var(--s5) 8%); }
+.reinventClaim .ey { color:var(--s5); font-size:12px; font-weight:800; }
+.reinventClaim .big { font-size:18px; font-weight:850; margin:4px 0 6px; }
+.reinventKpis { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+.reinventKpi { border:1px solid var(--border); border-radius:8px; padding:10px; background:var(--surface); }
+.reinventKpi .lb { color:var(--muted); font-size:11.5px; }
+.reinventKpi .vv { font-size:21px; font-weight:850; line-height:1.25; }
+.reinventGrid { display:grid; grid-template-columns:minmax(0,1fr) minmax(300px,.66fr); gap:14px; align-items:start; margin-top:14px; }
+.loopCards { display:grid; gap:10px; }
+.loopCard { border:1px solid var(--border); border-radius:8px; padding:12px; background:var(--surface); cursor:pointer; }
+.loopCard.hot { border-color:color-mix(in srgb, var(--s5) 70%, var(--border)); background:color-mix(in srgb, var(--surface) 91%, var(--s5) 9%); }
+.loopCard:hover { border-color:var(--s5); box-shadow:0 0 0 1px color-mix(in srgb, var(--s5) 45%, transparent); }
+.loopHead { display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap; }
+.loopTitle { font-weight:850; }
+.loopScore { color:var(--s5); font-weight:900; font-variant-numeric:tabular-nums; }
+.loopMeta { color:var(--muted); font-size:11.8px; margin:2px 0 6px; }
+.loopFormula { color:var(--ink2); font-size:12.3px; }
+.loopDetail { position:sticky; top:58px; border:1px solid var(--border); border-radius:8px; padding:12px; background:var(--surface); }
+.loopDetail h3 { margin-top:0; }
+.loopMetric { font-size:18px; font-weight:850; color:var(--s5); margin:4px 0 8px; }
+.miniCols { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:8px; margin:8px 0; }
+.miniBox { border:1px solid var(--grid); border-radius:8px; padding:8px; min-width:0; }
+.miniBox .lb { color:var(--muted); font-size:11.2px; }
+.miniBox .vv { font-weight:800; font-variant-numeric:tabular-nums; }
+.seedList { display:grid; gap:6px; margin-top:6px; }
+.seedItem { border-left:3px solid var(--s5); padding-left:8px; color:var(--ink2); font-size:12px; }
+.matrixTable td, .matrixTable th { vertical-align:top; }
+.stage2Lab { scroll-margin-top:88px; padding:20px; }
+.stage2Shell { display:grid; grid-template-columns:minmax(300px,.72fr) minmax(0,1.28fr); gap:16px; align-items:start; }
+.stage2Panel { border:1px solid var(--border); border-radius:8px; padding:14px; background:var(--surface); min-width:0; }
+.stage2Panel h3 { margin-top:0; }
+.stage2Intro { display:grid; grid-template-columns:minmax(0,1fr) minmax(280px,.65fr); gap:14px; align-items:start; margin:10px 0 16px; }
+.stage2Search { border:1px solid color-mix(in srgb, var(--s2) 45%, var(--border)); border-radius:8px; padding:12px; background:color-mix(in srgb, var(--surface) 93%, var(--s2) 7%); }
+.stage2Search label { display:block; font-weight:750; margin-bottom:6px; }
+.s2SearchRow { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px; align-items:center; }
+.s2Input { width:100%; min-width:0; border:1px solid var(--border); border-radius:8px; background:var(--surface); color:var(--ink); padding:9px 10px; font:inherit; }
+.s2Primary { border:1px solid var(--s2); border-radius:8px; background:var(--s2); color:#fff; padding:8px 14px; cursor:pointer; font:inherit; font-weight:750; }
+.s2Hint { color:var(--muted); font-size:11.8px; margin-top:6px; }
+.s2Unknown { color:var(--s6); font-size:12px; min-height:18px; margin-top:6px; }
+.stage2Group { margin-bottom:12px; }
+.stage2Group .gt { color:var(--muted); font-size:12px; margin-bottom:5px; }
+.s2Btns { display:flex; flex-wrap:wrap; gap:6px; max-height:150px; overflow:auto; padding-right:2px; }
+.s2Btn { background:none; border:1px solid var(--border); border-radius:20px; color:var(--ink2); padding:3px 9px; cursor:pointer; font:inherit; font-size:12px; }
+.s2Btn.active { background:var(--s2); border-color:var(--s2); color:#fff; }
+.s2Btn.item { border-radius:7px; }
+.s2Btn.signal { border-color:color-mix(in srgb, var(--s3) 55%, var(--border)); }
+.stage2Selected { display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 10px; min-height:36px; align-content:flex-start; }
+.stage2Selected .chip { background:color-mix(in srgb, var(--s2) 10%, transparent); }
+.stage2Clear, .s2Copy { background:none; border:1px solid var(--border); border-radius:8px; color:var(--ink2); padding:6px 10px; cursor:pointer; font:inherit; font-size:12px; }
+.stage2Tools { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-bottom:12px; }
+.s2OutputWrap { border:1px solid var(--border); border-radius:8px; padding:10px; background:var(--surface); }
+.s2OutputHead { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:8px; }
+.s2OutputHead h3 { margin:0; }
+.s2Output { width:100%; min-height:88px; resize:vertical; border:1px solid var(--grid); border-radius:8px; background:color-mix(in srgb, var(--surface) 96%, var(--ink) 4%); color:var(--ink2); padding:8px; font:12px/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+.stage2Result { border:1px solid var(--border); border-radius:8px; padding:12px 14px; margin-bottom:10px; background:var(--surface); }
+.stage2Result.top { border-color:color-mix(in srgb, var(--s2) 60%, var(--border)); background:color-mix(in srgb, var(--surface) 91%, var(--s2) 9%); }
+.stage2Result[data-template-id] { cursor:pointer; }
+.stage2Result[data-template-id]:hover { border-color:var(--s2); box-shadow:0 0 0 1px color-mix(in srgb, var(--s2) 45%, transparent); }
+.stage2Result[data-template-id]:focus-visible { outline:2px solid var(--s2); outline-offset:2px; }
+.s2Head { display:flex; justify-content:space-between; gap:10px; align-items:flex-start; flex-wrap:wrap; }
+.s2Title { font-weight:800; }
+.s2OpenHint { color:var(--s2); font-size:11.5px; font-weight:750; margin-top:2px; }
+.s2Score { font-weight:850; color:var(--s2); font-variant-numeric:tabular-nums; }
+.s2Meta { color:var(--muted); font-size:11.5px; margin:2px 0 6px; }
+.s2Cert { color:var(--s5); font-size:11.5px; font-weight:750; margin:2px 0 6px; }
+.s2Cols { display:grid; grid-template-columns:minmax(0,.85fr) minmax(0,.85fr) minmax(220px,1.3fr); gap:8px; margin-top:8px; }
+.s2Box { border:1px solid var(--grid); border-radius:8px; padding:8px; min-width:0; color:var(--ink2); font-size:12px; }
+.s2Box b { color:var(--ink); display:block; margin-bottom:2px; }
+.s2Route { color:var(--ink2); font-size:12.2px; margin-top:4px; }
+.s2SignalTower { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin:8px 0; }
+.s2Signal { border:1px solid var(--grid); border-radius:8px; padding:6px 8px; min-width:0; }
+.s2Signal .lb { color:var(--muted); font-size:11px; display:flex; justify-content:space-between; gap:6px; }
+.s2Signal .bar { height:5px; border-radius:4px; background:color-mix(in srgb, var(--s2) 14%, transparent); overflow:hidden; margin-top:4px; }
+.s2Signal .bar i { display:block; height:100%; border-radius:4px; background:var(--s2); }
+.s2Signal.item .bar { background:color-mix(in srgb, var(--s1) 14%, transparent); }
+.s2Signal.item .bar i { background:var(--s1); }
+.s2Signal.aug .bar { background:color-mix(in srgb, var(--s3) 18%, transparent); }
+.s2Signal.aug .bar i { background:var(--s3); }
+.s2Empty { border:1px dashed var(--border); border-radius:8px; padding:16px; color:var(--ink2); }
+@media (max-width: 860px) {
+  .auditGrid, .discoverGrid, .discoverOdds, .labTop, .labMatrix, .reinventHero, .reinventGrid, .stage2Intro, .stage2Shell, .s2SearchRow, .s2Cols, .certCols { grid-template-columns:1fr; }
+  .certKpis { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .auditSide, .discoverSide { position:static; }
+  .loopDetail { position:static; }
+  .auditFilters { grid-template-columns:1fr; }
+  .labKpis { grid-template-columns:1fr; }
+  .rk { flex-wrap:wrap; align-items:flex-start; }
+  .rk .nm { white-space:normal; overflow-wrap:anywhere; }
+  .rk .meta { white-space:normal; text-align:left; margin-left:26px; flex-basis:calc(100% - 26px); }
+  .meter { min-width:80px; }
+  .discoverRow { grid-template-columns:34px minmax(0,1fr); }
+  .discoverRow .score, .discoverRow .flag { text-align:left; }
+  .routeStages { grid-template-columns:1fr; }
+  .lensStages { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>怪兽入侵 S18「铲铲市危机」阵容结果面板</h1>
+    <button id="themeBtn">切换明暗</button>
+  </header>
+  <div class="sub" id="subline"></div>
+  <nav class="toc">
+    <a href="#sec-stage2" class="hot">二阶段匹配</a>
+    <a href="#sec-mecha">机甲分叉</a>
+    <a href="#sec-verdict">版本结果</a>
+    <a href="#sec-certification">样本认证</a>
+    <a href="match.html" style="margin-left:auto; color:#fff; background:var(--s2); border-color:var(--s2); font-weight:650;">比赛模式 ▸</a>
+  </nav>
+
+  <div class="card stage2Lab" id="sec-stage2">
+    <h2>二阶段交互匹配器：直接输入你这把的信号</h2>
+    <div class="desc">把二阶段已经看到的棋子、装备、符文写进搜索框，系统会直接匹配路线；按钮只作为补充选择，不需要一个个翻。<a href="match.html">进入比赛模式</a></div>
+    <div class="stage2Intro">
+      <div class="stage2Search">
+        <label for="stage2-query">搜索 / 粘贴信号</label>
+        <div class="s2SearchRow">
+          <input id="stage2-query" class="s2Input" placeholder="例：安妮 波比 羊刀 火炮 无情连打 经济">
+          <button id="stage2-apply" class="s2Primary">匹配</button>
+        </div>
+        <div class="s2Hint">支持空格、逗号、顿号、加号；可搜男刀/刀锋、琴女、瞎子/盲僧、武器、石头人，也支持羊刀、火炮、泰坦、法爆、蓝buff、日炎、眼泪、弓。</div>
+        <div id="stage2-unknown" class="s2Unknown"></div>
+      </div>
+      <div class="s2OutputWrap">
+        <div class="s2OutputHead">
+          <h3>可复制输出</h3>
+          <button id="stage2-copy" class="s2Copy">复制</button>
+        </div>
+        <textarea id="stage2-output" class="s2Output" readonly></textarea>
+      </div>
+    </div>
+    <div class="stage2Shell">
+      <div class="stage2Panel">
+        <h3>当前信号</h3>
+        <div id="stage2-selected" class="stage2Selected"></div>
+        <div class="stage2Tools">
+          <button id="stage2-clear" class="stage2Clear">清空选择</button>
+        </div>
+        <details class="stage2Manual">
+          <summary>手动补充按钮</summary>
+          <div class="stage2Group">
+            <div class="gt">补充棋子</div>
+            <div id="stage2-units" class="s2Btns"></div>
+          </div>
+          <div class="stage2Group">
+            <div class="gt">补充装备 / 散件</div>
+            <div id="stage2-items" class="s2Btns"></div>
+          </div>
+          <div class="stage2Group">
+            <div class="gt">符文方向</div>
+            <div id="stage2-aug-signals" class="s2Btns"></div>
+          </div>
+          <div class="stage2Group">
+            <div class="gt">常见关键符文</div>
+            <div id="stage2-augs" class="s2Btns"></div>
+          </div>
+        </details>
+      </div>
+      <div>
+        <h3>实时推荐路线</h3>
+        <div id="stage2-results"></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="researchLab processOnly" id="sec-research">
+    <div class="labTop">
+      <div class="labTheory">
+        <div class="labEyebrow">Research cockpit</div>
+        <h2 id="lab-title">科研驾驶舱</h2>
+        <div class="claim" id="lab-claim"></div>
+        <div class="why" id="lab-why"></div>
+      </div>
+      <div class="labKpis" id="lab-kpis"></div>
+    </div>
+    <div class="labMatrix">
+      <div class="labBlock">
+        <h3>① 当前假设与证据链</h3>
+        <div id="lab-hypotheses"></div>
+      </div>
+      <div class="labBlock">
+        <h3>② 下一轮实验</h3>
+        <div id="lab-experiments"></div>
+      </div>
+    </div>
+    <div class="labBlock">
+      <h3>③ 颠覆候选前沿</h3>
+      <div class="labFrontier" id="lab-frontier"></div>
+    </div>
+    <div class="labBlock">
+      <h3>④ 异常信号</h3>
+      <div class="labAnoms" id="lab-anoms"></div>
+    </div>
+  </section>
+
+  <div class="card processOnly" id="sec-reinvent">
+    <h2>官方阵容再发明：从数值闭环重组阵容</h2>
+    <div class="desc">把官方阵容当作种子，不当答案。模型会寻找“同一属性被输出、防御、回复、护盾重复利用”的闭环，再反推装备、符文和阵容替换。</div>
+    <div class="reinventHero">
+      <div class="reinventClaim">
+        <div class="ey">Attribute loop research</div>
+        <div class="big" id="reinvent-title">加载中</div>
+        <div id="reinvent-claim"></div>
+      </div>
+      <div class="reinventKpis" id="reinvent-kpis"></div>
+    </div>
+    <div class="reinventGrid">
+      <div>
+        <h3>① 闭环候选：哪些官方阵容能被重组</h3>
+        <div id="reinvent-loops" class="loopCards"></div>
+      </div>
+      <div class="loopDetail" id="reinvent-detail"></div>
+    </div>
+    <h3>② 属性矩阵：下一批应该挖哪里</h3>
+    <div id="reinvent-matrix"></div>
+    <h3>③ 下一轮实验</h3>
+    <div id="reinvent-next" class="labFrontier"></div>
+  </div>
+
+  <div class="card" id="sec-mecha">
+    <h2>机甲线当前结果</h2>
+    <div class="desc">只展示结论：这条线最终应该玩什么、装备给谁、其它分支排第几。</div>
+    <div id="mecha-result"></div>
+    <h3>分支排名</h3>
+    <div id="mecha-summary" class="loopCards"></div>
+  </div>
+
+  <div class="tiles processOnly" id="tiles"></div>
+
+  <div class="card" id="sec-verdict">
+    <h2>版本结果</h2>
+    <div class="desc">稳定梯队来自全队模拟总分；CT为英雄强化条件梯队，来自同棋盘有/无强化的反事实差分。</div>
+    <h3>阵容优先级</h3>
+    <div id="v-tiers"></div>
+    <h3>关键英雄</h3>
+    <div class="cols3" id="v-heroes"></div>
+    <h3>关键符文</h3>
+    <div id="v-augs"></div>
+    <h3>关键装备</h3>
+    <div class="itemCols" id="v-items"></div>
+    <div class="note" id="v-comp"></div>
+  </div>
+
+  <div class="card" id="sec-certification">
+    <h2>样本认证</h2>
+    <div class="desc">同一批随机种子下，对经济、商店、装备供给、对手类型和转型节奏做联合扰动。这里只展示结论；模型样本不冒充真实排位。</div>
+    <div id="cert-kpis" class="certKpis"></div>
+    <div class="certCols">
+      <div><h3>常规路线稳健榜</h3><div id="cert-stable" class="certList"></div></div>
+      <div><h3>条件路线适配榜</h3><div id="cert-condition-tabs" class="certConditionTabs" aria-label="条件类型"></div><div id="cert-conditional" class="certList"></div></div>
+    </div>
+    <details class="certFormula"><summary>公式与证据边界</summary><div id="cert-formulas" class="noteP"></div></details>
+  </div>
+
+  <div class="card processOnly" id="sec-dps">
+    <h2>S级主C 30秒输出模拟（伤害构成）</h2>
+    <div class="desc">事件级模拟：攻速叠层（鬼索/泰坦/卡莎被动）、法力回蓝与施放、装备特效（飓风弹体/电刃/破甲）。木桩双抗100。3费以下主C按追三星计，4–5费按二星。<b>本图只算主C个体（星级+装备），不含羁绊——同英雄同出装的阵容（如三套贾克斯）必然并列，先后只是官方排序号；体系内真实强弱看下方「自由搜索①」的全阵容同口径总分。</b></div>
+    <div class="legend" id="lg-dps"></div>
+    <div id="ch-dps"></div>
+    <details><summary>数据表</summary><div id="tb-dps"></div></details>
+  </div>
+
+  <div class="card processOnly" id="sec-ehp">
+    <h2>S级阵容前排有效生命（EHP）</h2>
+    <div class="desc">带防御装棋子合计：EHP = 生命×(物/魔各半减伤调和)×站场15秒回复折算，含石像鬼叠甲、圣盾/钢铁护盾、振奋减伤。</div>
+    <div id="ch-ehp"></div>
+    <details><summary>数据表</summary><div id="tb-ehp"></div></details>
+  </div>
+
+  <div class="card processOnly" id="sec-val">
+    <h2>模型验证：模型强度分 vs 官方 S/A/B 分级（全部44套）</h2>
+    <div class="desc" id="valid-desc"></div>
+    <div class="legend" id="lg-val"></div>
+    <div id="ch-val"></div>
+    <div class="note">模型分 = 0.55×主C输出(z分) + 0.45×前排EHP(z分)。横杠为各级中位数。结论：模型能把 S 级与 A 级的中位数分开（纯数值确有差距），但相关性中等——官方分级还编码了羁绊联动、符文依赖、运营容错等数值外因素，恰好说明"强阵容≠裸数值堆叠"。</div>
+    <details><summary>数据表</summary><div id="tb-val"></div></details>
+  </div>
+
+  <div class="card processOnly" id="sec-econ">
+    <h2>经济符文价值曲线（假设模型）</h2>
+    <div class="desc">相对无符文基线的累计金币等值，回合1≈2-1，回合20≈5-1。假设：免费刷新≈2金/回合；明智消费按每回合刷3次折算经验价值；对冲基金第6回合起存满利息。</div>
+    <div class="legend" id="lg-econ"></div>
+    <div id="ch-econ"></div>
+    <details><summary>数据表</summary><div id="tb-econ"></div></details>
+  </div>
+
+  <div class="card processOnly" id="sec-guard">
+    <h2>城市怪兽（守护者）：阵容关联与模型实测</h2>
+    <div class="desc">「铲铲市危机」特色机制，对应 jcc.qq.com hex 页的「怪兽」库：每局可招募怪兽伙伴，同一只怪兽有<b>经济</b>/<b>战力</b>两种形态，收益完全不同。下表按 S 级 15 套阵容的首推次数排序，阵容名可点开详情。</div>
+    <h3>① 守护者推荐榜（S级首推/替补 + 官方技能）</h3>
+    <div id="g-rank"></div>
+    <h3>② 模型实测：增益型战力怪兽对主C输出的提升（同一模拟引擎加 buff 重跑）</h3>
+    <div class="legend" id="lg-gbuff"></div>
+    <div id="ch-gbuff"></div>
+    <h3>③ 站场型怪兽面板折算（与前排 EHP 同口径）</h3>
+    <div id="g-field"></div>
+    <details><summary>数据表（全部19只守护者）</summary><div id="tb-guard"></div></details>
+  </div>
+
+  <div class="card processOnly" id="sec-discover">
+    <h2>阵容发现：从数值反推更强组合</h2>
+    <div class="desc" id="discover-desc"></div>
+    <div class="discoverStats" id="discover-stats"></div>
+    <h3>① 前期 / 中期 / 后期最强候选</h3>
+    <div class="discoverTabs" id="discover-stage-tabs"></div>
+    <div class="discoverGrid">
+      <div id="discover-stage-main"></div>
+      <div class="discoverSide">
+        <h3>当前候选</h3>
+        <div id="discover-stage-detail" class="auditDetail"></div>
+      </div>
+    </div>
+    <h3>② 平滑过渡路线</h3>
+    <div id="transition-routes" class="routeGrid"></div>
+    <h3>③ 数值透视：真正的杠杆在哪里</h3>
+    <div id="numeric-lens" class="lensGrid"></div>
+    <h3>④ 现有数值怪</h3>
+    <div class="discoverTabs" id="discover-monster-tabs"></div>
+    <div id="discover-monsters" class="discoverList"></div>
+    <h3>⑤ 抽卡概率模型</h3>
+    <div class="discoverOdds">
+      <div id="discover-roll"></div>
+      <div id="discover-odds"></div>
+    </div>
+    <h3>⑥ 符文属性线索</h3>
+    <div class="discoverTabs" id="discover-aug-tabs"></div>
+    <div id="discover-augs" class="discoverAugCols"></div>
+    <div class="discoverWarn">这块不是官方阵容复述，而是研究候选生成器：先找“数值异常/组合上限/抽卡可行性”，再拿实战录像和对局样本回填胜率。</div>
+  </div>
+
+  <div class="card processOnly" id="sec-search">
+    <h2>自由组合搜索：不看官方推荐，从数值和机制里直接找强组合</h2>
+    <div class="desc" id="cs-desc"></div>
+    <h3>① 全阵容搜索：模型自建8人阵容 vs 官方S级（羁绊已建模、同一评分口径；点条形看阵容详情）</h3>
+    <div class="desc" id="ts-desc"></div>
+    <div class="legend" id="lg-ts"></div>
+    <div id="ch-ts"></div>
+    <details><summary>阵容评分数据表</summary><div id="tb-ts"></div></details>
+    <h3>①+ 对位速算器：任选两套阵容头对头（队伍DPS互啃对方前排EHP，先击穿者优）</h3>
+    <div id="h2h"></div>
+    <h3>② 每个英雄的最优三件套 Top 12（虚线 = 官方最优主C基准）</h3>
+    <div class="legend" id="lg-cs"></div>
+    <div id="ch-cs"></div>
+    <h3>③ 机制发现</h3>
+    <div id="cs-findings"></div>
+    <h3>④ 官方没当主C用的最强候选（野路子提名）</h3>
+    <div id="cs-offmeta"></div>
+    <h3>⑤ 最硬坦克组合 Top 10（自由搭配坦装）</h3>
+    <div id="cs-tank"></div>
+    <div class="note">口径警告：30秒单体木桩模拟偏爱叠层与低蓝耗持续输出；全阵容评分已建模27个羁绊中可量化的约20个（幻灵/混沌/斗士/决斗/星守等数值羁绊），黑客/魔盗团/AI程序等机制羁绊按保守机制分折算；未建模站位、控制、施法打断与生存压力。<b>榜上组合是值得实战验证的候选，不是保证</b>。</div>
+    <details><summary>数据表（全局Top20）</summary><div id="tb-cs"></div></details>
+  </div>
+
+  <div class="card processOnly" id="sec-audit">
+    <h2>数值与 Bug 审计</h2>
+    <div class="desc">自动审计官方数据字段、技能解析覆盖、装备建模覆盖、异常组合。用于定位“数据错/模型漏/机制超模”的候选点。</div>
+    <div class="auditStats" id="audit-stats"></div>
+    <div class="auditFilters">
+      <input id="audit-q" placeholder="搜索阵容、英雄、装备、技能、问题摘要">
+      <select id="audit-sev">
+        <option value="all">全部级别</option>
+        <option value="P1">只看 P1</option>
+        <option value="P2">只看 P2</option>
+        <option value="P3">只看 P3</option>
+      </select>
+      <select id="audit-scope">
+        <option value="all">全部范围</option>
+        <option value="S">官方 S 级</option>
+        <option value="carry">S级主C相关</option>
+        <option value="used">S级上场相关</option>
+        <option value="wild">野路子/非官方C</option>
+      </select>
+    </div>
+    <div class="auditTabs" id="audit-tabs"></div>
+    <div class="auditGrid">
+      <div id="audit-main"></div>
+      <div class="auditSide">
+        <h3>当前焦点</h3>
+        <div id="audit-detail" class="auditDetail"></div>
+      </div>
+    </div>
+    <div class="note">完整全屏版仍保留在 <code>public/audit/index.html</code>；本模块作为主仪表盘内嵌入口。</div>
+  </div>
+
+  <div class="card processOnly" id="sec-units">
+    <h2>全棋子数值地图（62个英雄，二星基础面板）</h2>
+    <div class="desc">横轴：有效生命（生命×双抗调和减伤）；纵轴：普攻DPS（攻击×攻速×暴击期望）。颜色深浅 = 费用1→5。技能与羁绊未计入——离群点即"面板怪"。</div>
+    <div class="legend" id="lg-units"></div>
+    <div id="ch-units"></div>
+    <details><summary>数据表</summary><div id="tb-units"></div></details>
+  </div>
+
+  <div class="card processOnly" id="sec-assump">
+    <h2>模型假设与已知局限</h2>
+    <ul class="assump">
+      <li><b>单目标木桩</b>（双抗100）会低估 AoE 型主C——厄运小姐（8波弹幕全场覆盖）、佛耶戈（群体溅射）的真实强度高于图中数值。</li>
+      <li><b>羁绊口径分层</b>：模型验证分主要看官方阵容主C输出与前排EHP；「阵容发现/自由搜索」会额外计入可量化羁绊，黑客、魔盗团、AI程序等机制羁绊按保守机制分折算。</li>
+      <li><b>强化符文需逐个建模</b>：默认按符文文本做属性线索排序；已建立专属实验的机制路线（如姐妹金克丝）使用独立条件模型，其余专属强化仍按保守口径。</li>
+      <li>星级规则统一假定：3费以下主C=3星、4/5费主C=2星、前排≤4费=2星、5费前排=1星。</li>
+      <li>经济曲线是<b>假设驱动</b>的粗模型（刷新频率、存钱节奏因局而异），用于展示"即时到账 vs 滚雪球"的形态差异，非精确期望值。</li>
+      <li>数据全部来自 jcc.qq.com 官方数据文件 17.17.6b-S18（装备/技能数值为国服原文数字）。</li>
+    </ul>
+  </div>
+</div>
+<div id="tip"></div>
+<dialog id="dlg"><div id="dlgBody"></div></dialog>
+
+<script src="data.js?v=cert-20260712a"></script>
+<script src="discovery-data.js?v=meta-20260712a"></script>
+<script src="transition-data.js?v=transition-20260705a"></script>
+<script src="numeric-lens-data.js?v=lens-20260705a"></script>
+<script src="research-lab-data.js?v=lab-20260705a"></script>
+<script src="reinvent-data.js?v=reinvent-20260706a"></script>
+<script src="mecha-branch-data.js?v=mecha-20260706a"></script>
+<script src="stage2-matcher-data.js?v=cert-20260712a"></script>
+<script src="matcher-core.js?v=cert-20260712a"></script>
+<script src="audit-data.js?v=tiers-20260705b"></script>
+<script>
+"use strict";
+const savedTheme = localStorage.getItem("viz-theme");
+if (savedTheme) document.documentElement.dataset.theme = savedTheme;
+const M = window.MODEL;
+const DISC = window.DISCOVERY;
+const TRANS = window.TRANSITIONS;
+const LENS = window.NUMERIC_LENS;
+const LAB = window.RESEARCH_LAB;
+const REINVENT = window.REINVENT;
+const MECHA = window.MECHA_BRANCH;
+const MATCHER = window.STAGE2_MATCHER;
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const NS = "http://www.w3.org/2000/svg";
+function el(t, a, parent) { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (parent) parent.appendChild(e); return e; }
+function txt(e, s) { e.textContent = s; return e; }
+const fmt = n => Math.round(n).toLocaleString("en-US");
+const escText = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+
+function updateTocHot() {
+  const hash = location.hash && !location.hash.startsWith("#comp=") ? location.hash : "#sec-stage2";
+  const links = document.querySelectorAll("nav.toc a");
+  const hasMatch = [...links].some(a => a.getAttribute("href") === hash);
+  links.forEach(a => a.classList.toggle("hot", a.getAttribute("href") === (hasMatch ? hash : "#sec-stage2")));
+}
+function syncHashTarget() {
+  updateTocHot();
+  if (!location.hash || location.hash.startsWith("#comp=")) return;
+  const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+  if (target) requestAnimationFrame(() => target.scrollIntoView({ block:"start" }));
+}
+if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+window.addEventListener("hashchange", syncHashTarget);
+window.addEventListener("load", syncHashTarget);
+syncHashTarget();
+
+// ---------- research cockpit ----------
+function renderResearchLab() {
+  const host = document.getElementById("sec-research");
+  if (!host) return;
+  if (!LAB) {
+    host.innerHTML = "<div class='note'>未找到科研驾驶舱数据。请运行 <code>node research-lab.js</code> 生成。</div>";
+    return;
+  }
+  const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+  document.getElementById("lab-title").textContent = LAB.thesis.headline;
+  document.getElementById("lab-claim").textContent = LAB.thesis.currentTheory;
+  document.getElementById("lab-why").innerHTML = (LAB.thesis.why || []).map(x => `<div>· ${esc(x)}</div>`).join("");
+
+  const topRoute = (LAB.frontier || [])[0];
+  const jax = (LAB.frontier || []).find(x => x.label === "实战反例");
+  const kpis = [
+    ["研究置信度", LAB.thesis.confidence, "随实战样本更新"],
+    ["当前主线", topRoute ? topRoute.score + "分" : "-", topRoute ? topRoute.title : "-"],
+    ["官方相关性", "ρ=" + M.spearman, "越低越有研究空间"],
+    ["贾克斯反例", jax ? jax.score + "%" : "-", "实战启动率/风险信号"],
+  ];
+  document.getElementById("lab-kpis").innerHTML = kpis.map(t =>
+    `<div class="labKpi"><div class="lb">${esc(t[0])}</div><div class="vv">${esc(t[1])}</div><div class="dd">${esc(t[2])}</div></div>`).join("");
+
+  document.getElementById("lab-hypotheses").innerHTML = (LAB.hypotheses || []).map(h =>
+    `<div class="hypothesis">
+      <div class="hid">${esc(h.id)}</div>
+      <div>
+        <div class="ht">${esc(h.title)}</div>
+        <div class="he">${esc(h.evidence)}</div>
+        <div class="hn">下一步：${esc(h.next)}</div>
+      </div>
+      <div class="status ${esc(h.status)}">${esc(h.status)}</div>
+    </div>`).join("");
+
+  document.getElementById("lab-experiments").innerHTML = (LAB.experimentQueue || []).map(e =>
+    `<div class="experiment">
+      <span class="priority ${esc(e.priority)}">${esc(e.priority)}</span>
+      <div>
+        <b>${esc(e.name)}</b>
+        <div class="ed">变量：${esc(e.variable)}</div>
+        <div class="ed">方法：${esc(e.method)}</div>
+        <div class="ed">成功标准：${esc(e.success)}</div>
+      </div>
+    </div>`).join("");
+
+  document.getElementById("lab-frontier").innerHTML = (LAB.frontier || []).map(f =>
+    `<div class="frontierItem">
+      <div class="fl">${esc(f.label)}</div>
+      <div class="ft">${esc(f.title)}</div>
+      <div class="fs">${esc(f.score)}</div>
+      <div class="fc">${esc(f.claim)}</div>
+      <div>${(f.team || []).map(x => `<span class="chip">${esc(x)}</span>`).join("")}</div>
+    </div>`).join("");
+
+  document.getElementById("lab-anoms").innerHTML = (LAB.anomalies || []).map(a =>
+    `<div class="anom">
+      <div class="ak">${esc(a.kind)}</div>
+      <div class="at">${esc(a.title)}</div>
+      <div class="ad">${esc(a.detail)}</div>
+    </div>`).join("");
+}
+renderResearchLab();
+
+// ---------- official lineup reinvention ----------
+function renderReinvent() {
+  const root = document.getElementById("sec-reinvent");
+  if (!root) return;
+  if (!REINVENT) {
+    root.innerHTML = "<div class='note'>未找到官方再发明数据。请运行 <code>node reinvent.js</code> 生成。</div>";
+    return;
+  }
+  let current = REINVENT.variants[0];
+  const esc = escText;
+  document.getElementById("reinvent-title").textContent = REINVENT.summary.title;
+  document.getElementById("reinvent-claim").textContent = REINVENT.summary.claim;
+  document.getElementById("reinvent-kpis").innerHTML = [
+    ["闭环候选", REINVENT.summary.counts.loops, "属性/装备/符文联动"],
+    ["官方种子", REINVENT.summary.counts.officialSeeds, "可被改造的阵容"],
+    ["S级闭环", REINVENT.summary.counts.sTierLoops, "优先实战验证"],
+  ].map(x => `<div class="reinventKpi"><div class="lb">${esc(x[0])}</div><div class="vv">${esc(x[1])}</div><div class="dd">${esc(x[2])}</div></div>`).join("");
+
+  function calcBoxes(v) {
+    const c = v.calc || {};
+    if (c.ehp) {
+      return [
+        ["混合EHP", fmt(c.ehp)],
+        ["物理口径", fmt(c.physicalEhp || c.ehp)],
+        ["护甲/魔抗", `${c.armor || "-"} / ${c.mr || "-"}`],
+        ["护盾+回复", `${fmt(c.shield || 0)} + ${fmt(c.sustain || 0)}`],
+      ];
+    }
+    return [
+      ["30秒DPS", fmt(c.dps || 0)],
+      ["裸装倍率", (c.gainX || 0) + "x"],
+      ["平A/技能", `${fmt(c.auto || 0)} / ${fmt(c.spell || 0)}`],
+      ["特效", fmt(c.proc || 0)],
+    ];
+  }
+
+  function drawCards() {
+    const box = document.getElementById("reinvent-loops");
+    box.innerHTML = REINVENT.variants.map(v => `<div class="loopCard ${v.id === current.id ? "hot" : ""}" data-id="${esc(v.id)}" tabindex="0" role="button">
+      <div class="loopHead">
+        <div class="loopTitle">#${v.rank} ${esc(v.title)}</div>
+        <div class="loopScore">${v.score}分</div>
+      </div>
+      <div class="loopMeta">${esc(v.tier)} ｜ ${esc(v.type)} ｜ 属性：${esc(v.attribute)}</div>
+      <div>${v.trigger.map(t => `<span class="chip">${esc(t)}</span>`).join("")}</div>
+      <div class="loopFormula">${esc(v.formula)}</div>
+    </div>`).join("");
+    box.querySelectorAll(".loopCard").forEach(card => {
+      const pick = () => {
+        current = REINVENT.variants.find(v => v.id === card.dataset.id) || current;
+        drawCards();
+        drawDetail();
+      };
+      card.addEventListener("click", pick);
+      card.addEventListener("keydown", ev => {
+        if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); pick(); }
+      });
+    });
+  }
+
+  function drawDetail() {
+    const v = current;
+    const boxes = calcBoxes(v);
+    document.getElementById("reinvent-detail").innerHTML = `
+      <h3>${esc(v.title)}</h3>
+      <div class="loopMeta">${esc(v.type)} ｜ 核心英雄：${esc(v.hero)} ｜ 属性：${esc(v.attribute)}</div>
+      <div class="loopMetric">${esc(v.metric)}</div>
+      <div class="miniCols">${boxes.map(b => `<div class="miniBox"><div class="lb">${esc(b[0])}</div><div class="vv">${esc(b[1])}</div></div>`).join("")}</div>
+      <div class="secT">模型公式</div>
+      <div class="noteP">${esc(v.formula)}</div>
+      <div class="secT">官方阵容怎么改</div>
+      <div class="noteP"><b>原版：</b>${esc(v.swap.from)}</div>
+      <div class="noteP"><b>改造：</b>${esc(v.swap.to)}</div>
+      <div>${v.swap.items.map(x => `<span class="chip">${esc(x)}</span>`).join("")}</div>
+      <div class="secT">可改造官方种子</div>
+      <div class="seedList">${(v.seeds || []).slice(0, 6).map(s => `<div class="seedItem"><b>${esc(s.quality)}</b> ${esc(s.name)}<br><span>${esc((s.keep || []).join("、"))}</span></div>`).join("") || "<div class='note'>暂无匹配官方种子</div>"}</div>
+      <div class="secT">风险</div>
+      <div>${v.risk.map(x => `<span class="chip">${esc(x)}</span>`).join("")}</div>
+    `;
+  }
+
+  document.getElementById("reinvent-matrix").innerHTML = `<table class="matrixTable">
+    <tr><th>属性</th><th>候选棋子</th><th>关键装备</th><th>关键符文</th><th>判断</th></tr>
+    ${REINVENT.matrix.map(r => `<tr>
+      <td><b>${esc(r.attr)}</b></td>
+      <td>${esc(r.heroes.join("、"))}</td>
+      <td>${esc(r.items.join("、"))}</td>
+      <td>${esc(r.augments.join("、"))}</td>
+      <td>${esc(r.verdict)}</td>
+    </tr>`).join("")}
+  </table>`;
+  document.getElementById("reinvent-next").innerHTML = REINVENT.nextExperiments.map((x, i) =>
+    `<div class="frontierItem"><div class="fl">Experiment ${i + 1}</div><div class="ft">${esc(x)}</div></div>`).join("");
+  drawCards();
+  drawDetail();
+}
+renderReinvent();
+
+// ---------- mecha branch lab ----------
+function renderMechaBranch() {
+  const root = document.getElementById("sec-mecha");
+  if (!root) return;
+  if (!MECHA) {
+    root.innerHTML = "<div class='note'>未找到机甲分叉数据。请运行 <code>node mecha-branch.js</code> 生成。</div>";
+    return;
+  }
+  const esc = escText;
+  const rows = (MECHA.summary || []).slice();
+  const top = rows[0];
+  if (!top) return;
+  const jax = rows.find(r => r.branch === "jax");
+  const gap = jax ? top.score - jax.score : null;
+  document.getElementById("mecha-result").innerHTML = `
+    <div class="reinventClaim">
+      <div class="ey">Final answer</div>
+      <div class="big">${esc(top.label)}：${esc(top.carry)}${top.carryStar}星</div>
+      <div>${top.level}人口 ｜ ${esc(top.items.join(" + "))} ｜ ${esc(top.traits.slice(0, 5).join(" / "))}</div>
+      <div style="margin-top:8px">${top.team.map(u => `<span class="chip">${esc(u.name)}${u.price}费</span>`).join("")}</div>
+    </div>
+    <div class="reinventKpis" style="margin-top:8px">
+      <div class="reinventKpi"><div class="lb">模型分</div><div class="vv">${top.score}</div><div class="dd">当前最高</div></div>
+      <div class="reinventKpi"><div class="lb">领先贾克斯</div><div class="vv">${gap == null ? "-" : gap}</div><div class="dd">同壳终局对比</div></div>
+      <div class="reinventKpi"><div class="lb">实战动作</div><div class="vv">转蕾欧娜</div><div class="dd">蕾欧娜2星+青龙刀时</div></div>
+    </div>
+    <div class="noteP"><b>判断：</b>贾克斯负责前中期稳血；后期有蕾欧娜2星和青龙刀条件就转蕾欧娜。没有这个条件，继续停贾克斯。</div>
+  `;
+  document.getElementById("mecha-summary").innerHTML = rows.map((r, i) => `<div class="loopCard ${i === 0 ? "hot" : ""}">
+    <div class="loopHead">
+      <div class="loopTitle">#${i + 1} ${esc(r.label)}</div>
+      <div class="loopScore">${esc(r.score)}分</div>
+    </div>
+    <div class="loopMeta">${r.level}人口 ｜ ${esc(r.carry)}${r.carryStar}星 ｜ ${esc(r.items.join(" + "))}</div>
+    <div class="loopFormula">${esc(r.team.map(u => u.name).join("、"))}</div>
+  </div>`).join("");
+}
+renderMechaBranch();
+
+// ---------- stage 2 interactive matcher ----------
+function renderStage2Matcher() {
+  const root = document.getElementById("sec-stage2");
+  if (!root) return;
+  if (!MATCHER) {
+    document.getElementById("stage2-results").innerHTML = "<div class='note'>未找到二阶段匹配数据。请运行 <code>npm run build:matcher</code> 生成。</div>";
+    return;
+  }
+  const state = {
+    units: new Set(),
+    items: new Set(),
+    augments: new Set(),
+    augmentCats: new Set(),
+  };
+  const COMPONENTS2 = ['暴风之剑', '反曲之弓', '无用大棒', '女神之泪', '锁子甲', '负极斗篷', '巨人腰带', '拳套', '金铲铲'];
+  const ATTACK2 = ['鬼索的狂暴之刃', '疾射火炮', '卢安娜的飓风', '最后的轻语', '锐利之刃', '无尽之刃', '巨人捕手', '泰坦的坚决', '水银', '海克斯科技枪刃', '汲取剑'];
+  const AP2 = ['蓝霸符', '珠光护手', '班克斯的魔法帽', '巨人捕手', '斯塔缇克电刃', '朔极之矛'];
+  const TANK2 = ['狂徒铠甲', '日炎斗篷', '石像鬼石板甲', '棘刺背心', '巨龙之爪', '圣盾使的誓约', '离子火花', '振奋盔甲'];
+  let queryTimer = null;
+  let searchCatalog = [];
+
+  function normSignal(s) {
+    return String(s || "").toLowerCase().replace(/[\s,，、+＋/|;；:：!！?？。,.()（）\[\]【】·.\-_—>→]/g, "");
+  }
+  function splitSignals(raw) {
+    return String(raw || "").split(/[\s,，、+＋/|;；:：!！?？。,.()（）\[\]【】]+/).map(x => x.trim()).filter(Boolean);
+  }
+  function buildSearchCatalog() {
+    if (searchCatalog.length) return searchCatalog;
+    const unitSearchOptions = (MATCHER.options.unitSearch && MATCHER.options.unitSearch.length)
+      ? MATCHER.options.unitSearch
+      : (MATCHER.options.units || []);
+    const valuesByKind = {
+      units: new Set(unitSearchOptions.map(x => x.name)),
+      items: new Set((MATCHER.options.items || []).map(x => x.name)),
+      augments: new Set(((MATCHER.options.augmentSearch || MATCHER.options.augments) || []).map(x => x.name)),
+      augmentCats: new Set(MATCHER.options.augmentSignals || []),
+    };
+    const rows = [];
+    function add(kind, value, aliases) {
+      if (!valuesByKind[kind]?.has(value)) return;
+      [value, ...(aliases || [])].forEach(label => {
+        const norm = normSignal(label);
+        if (norm.length) rows.push({ kind, value, label, norm });
+      });
+    }
+    unitSearchOptions.forEach(x => add("units", x.name, x.aliases || []));
+    (MATCHER.options.items || []).forEach(x => add("items", x.name));
+    ((MATCHER.options.augmentSearch || MATCHER.options.augments) || []).forEach(x => add("augments", x.name, x.aliases || []));
+    (MATCHER.options.augmentSignals || []).forEach(x => add("augmentCats", x));
+    [
+      ["units", "蔚", ["vi", "皮城执法官", "执法官"]],
+      ["units", "雷克顿", ["鳄鱼", "renekton", "怒之领域"]],
+      ["units", "亚索", ["风男", "快乐风男", "托儿索", "疾风剑豪", "yasuo"]],
+      ["units", "普朗克", ["船长", "海洋之灾", "gp", "gangplank"]],
+      ["units", "布里茨", ["机器人", "蒸汽机器人", "blitz", "blitzcrank"]],
+      ["units", "璐璐", ["露露", "lulu", "仙灵女巫"]],
+      ["units", "凯尔", ["天使", "正义天使", "kayle"]],
+      ["units", "波比", ["poppy", "圣锤之毅"]],
+      ["units", "李青", ["瞎子", "盲僧", "lee", "leesin", "lee sin"]],
+      ["units", "安妮", ["火女", "黑暗之女", "annie"]],
+      ["units", "艾希", ["寒冰", "冰弓", "冰霜射手", "ashe"]],
+      ["units", "加里奥", ["正义巨像", "巨像", "galio"]],
+      ["units", "悠米", ["猫咪", "猫", "魔法猫咪", "yuumi"]],
+      ["units", "菲奥娜", ["剑姬", "女剑", "无双剑姬", "fiora"]],
+      ["units", "伊泽瑞尔", ["ez", "ezreal", "黄毛", "小黄毛", "探险家"]],
+      ["units", "贾克斯", ["武器", "武器大师", "jax", "拉面"]],
+      ["units", "墨菲特", ["石头人", "石头", "熔岩巨兽", "malphite"]],
+      ["units", "希维尔", ["轮子妈", "战争女神", "sivir"]],
+      ["units", "泰隆", ["男刀", "刀锋", "刀锋之影", "talon"]],
+      ["units", "孙悟空", ["猴子", "悟空", "大圣", "齐天大圣", "wukong"]],
+      ["units", "内瑟斯", ["狗头", "沙漠死神", "nasus"]],
+      ["units", "佐伊", ["zoe", "暮光星灵"]],
+      ["units", "德莱文", ["draven", "荣耀行刑官"]],
+      ["units", "赛娜", ["senna", "涤魂圣枪"]],
+      ["units", "芮尔", ["rell", "镕铁少女", "熔铁少女"]],
+      ["units", "拉克丝", ["光女", "光辉", "光辉女郎", "lux"]],
+      ["units", "卡蜜尔", ["青钢影", "卡密尔", "卡米尔", "camille"]],
+      ["units", "塞拉斯", ["偷男", "解脱者", "sylas"]],
+      ["units", "亚托克斯", ["剑魔", "暗裔剑魔", "aatrox"]],
+      ["units", "娑娜", ["琴女", "琴瑟仙女", "sona"]],
+      ["units", "阿利斯塔", ["牛头", "老牛", "牛", "牛头酋长", "alistar"]],
+      ["units", "乐芙兰", ["妖姬", "诡术妖姬", "leblanc", "lb"]],
+      ["units", "维克兹", ["大眼", "虚空之眼", "velkoz", "vel'koz"]],
+      ["units", "薇恩", ["vn", "维恩", "暗夜猎手", "vayne"]],
+      ["units", "锐雯", ["瑞文", "瑞雯", "放逐之刃", "锐萌萌", "riven"]],
+      ["units", "金克丝", ["金克斯", "暴走萝莉", "jinx"]],
+      ["items", "鬼索的狂暴之刃", ["羊刀", "鬼索"]],
+      ["items", "疾射火炮", ["火炮", "双火炮"]],
+      ["items", "泰坦的坚决", ["泰坦"]],
+      ["items", "卢安娜的飓风", ["飓风"]],
+      ["items", "最后的轻语", ["轻语", "破甲弓"]],
+      ["items", "锐利之刃", ["杀人剑"]],
+      ["items", "汲取剑", ["饮血", "饮血剑"]],
+      ["items", "珠光护手", ["法爆"]],
+      ["items", "班克斯的魔法帽", ["帽子"]],
+      ["items", "蓝霸符", ["蓝buff", "蓝霸服", "蓝buff符"]],
+      ["items", "朔极之矛", ["青龙刀"]],
+      ["items", "离子火花", ["离子"]],
+      ["items", "日炎斗篷", ["日炎"]],
+      ["items", "狂徒铠甲", ["狂徒"]],
+      ["items", "石像鬼石板甲", ["石像鬼", "板甲"]],
+      ["items", "巨龙之爪", ["龙牙"]],
+      ["items", "暴风之剑", ["大剑", "bf"]],
+      ["items", "反曲之弓", ["反曲弓", "攻速", "弓"]],
+      ["items", "无用大棒", ["大棒"]],
+      ["items", "女神之泪", ["眼泪", "泪滴"]],
+      ["items", "负极斗篷", ["魔抗", "斗篷"]],
+      ["items", "巨人腰带", ["腰带"]],
+      ["items", "金铲铲", ["铲子", "铲铲"]],
+      ["augmentCats", "经济", ["经济符文", "钱"]],
+      ["augmentCats", "装备", ["装备符文", "锻炉"]],
+      ["augmentCats", "战力", ["战斗", "战力符文"]],
+      ["augmentCats", "英雄强化", ["英雄", "专属", "专属强化"]],
+      ["augmentCats", "羁绊", ["转职", "徽", "羁绊符文"]],
+    ].forEach(([kind, value, aliases]) => add(kind, value, aliases));
+    const seen = new Set();
+    searchCatalog = rows
+      .filter(x => {
+        const key = x.kind + "|" + x.value + "|" + x.norm;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      })
+      .sort((a, b) => b.norm.length - a.norm.length);
+    return searchCatalog;
+  }
+
+  function selectedObj() {
+    return {
+      units: [...state.units],
+      items: [...state.items],
+      augments: [...state.augments],
+      augmentCats: [...state.augmentCats],
+    };
+  }
+  function hasAnySelection() {
+    return state.units.size || state.items.size || state.augments.size || state.augmentCats.size;
+  }
+  function toggle(kind, value) {
+    const set = state[kind];
+    if (set.has(value)) set.delete(value);
+    else set.add(value);
+    draw();
+  }
+  function clearState() {
+    state.units.clear();
+    state.items.clear();
+    state.augments.clear();
+    state.augmentCats.clear();
+  }
+  function applyQuery() {
+    const input = document.getElementById("stage2-query");
+    const unknownBox = document.getElementById("stage2-unknown");
+    const raw = input ? input.value : "";
+    const compact = normSignal(raw);
+    clearState();
+    if (!compact) {
+      if (unknownBox) unknownBox.textContent = "";
+      draw();
+      return;
+    }
+    const matched = [];
+    buildSearchCatalog().forEach(entry => {
+      if (compact.includes(entry.norm)) {
+        state[entry.kind].add(entry.value);
+        matched.push(entry);
+      }
+    });
+    const tokens = splitSignals(raw);
+    const unknown = tokens.filter(token => {
+      const n = normSignal(token);
+      if (n.length < 2) return false;
+      return !matched.some(entry => n.includes(entry.norm) || entry.norm.includes(n));
+    }).slice(0, 6);
+    if (unknownBox) unknownBox.textContent = unknown.length ? `未识别：${unknown.join("、")}` : "";
+    draw();
+  }
+  function writeOutput(text) {
+    const out = document.getElementById("stage2-output");
+    if (out) out.value = text;
+  }
+  function buildOutput(ranked) {
+    return MatcherCore.buildOutput(ranked, selectedObj());
+  }
+  function signalTowerHtml(r) {
+    return MatcherCore.signalTowerHtml(r);
+  }
+  function openStage2Detail(r, idx) {
+    const t = r.template;
+    if (t.source === "official" && openComp(t.name)) {
+      if (r.sampleDecision) {
+        const body = document.getElementById("dlgBody");
+        const title = document.createElement("div"); title.className = "secT"; title.textContent = "路线认证样本";
+        const line = document.createElement("div"); line.className = "noteP";
+        const support = r.sampleDecision.decisionShare != null && Number.isFinite(Number(r.sampleDecision.decisionShare)) ? `；当前支持${r.sampleDecision.decisionShare}%` : "";
+        line.textContent = `${r.sampleDecision.evidenceLevel}；${r.sampleDecision.sampleSize}次模型扰动；稳健${r.sampleDecision.robustness}%；95%区间${(r.sampleDecision.interval95 || []).join("~")}；尾部${r.sampleDecision.cvar10}${support}。`;
+        body.append(title, line);
+        if ((r.sampleDecision.dependencies || []).length) {
+          const dep = document.createElement("div"); dep.className = "noteP"; dep.textContent = `关键依赖：${r.sampleDecision.dependencies.join("；")}。`;
+          body.appendChild(dep);
+        }
+      }
+      return;
+    }
+    const body = document.getElementById("dlgBody");
+    body.textContent = "";
+    const mk = (tag, cls, text, parent) => {
+      const e = document.createElement(tag);
+      if (cls) e.className = cls;
+      if (text != null) e.textContent = text;
+      if (parent) parent.appendChild(e);
+      return e;
+    };
+    const head = mk("div", "dlgHead", null, body);
+    mk("span", "qbadge", t.source === "official" ? "官方 " + t.quality + " 级" : "研究路线", head);
+    mk("h2", null, "#" + (idx + 1) + " " + t.name, head);
+    const x = mk("button", "closeX", "✕", head);
+    x.addEventListener("click", () => dlg.close());
+    const detailMeta = r.certificationOnly
+      ? `${t.family} ｜ 认证视图 ｜ 模型扰动均值${r.sampleDecision?.meanUtility || "-"} ｜ 尾部${r.sampleDecision?.cvar10 || "-"}`
+      : `${t.family} ｜ ${t.goal} ｜ 强度${r.stageStrength}分 ｜ 认证后${r.finalScore}分 ｜ 现场匹配 ${confidence(r.finalScore)}`;
+    mk("div", "dlgMeta", detailMeta, body);
+    if (r.sampleDecision) {
+      mk("div", "secT", "路线认证样本", body);
+      const support = r.sampleDecision.decisionShare != null && Number.isFinite(Number(r.sampleDecision.decisionShare)) ? `；当前支持${r.sampleDecision.decisionShare}%` : "";
+      mk("div", "noteP", `${r.sampleDecision.evidenceLevel}；${r.sampleDecision.sampleSize}次模型扰动；稳健${r.sampleDecision.robustness}%；95%区间${(r.sampleDecision.interval95 || []).join("~")}；尾部${r.sampleDecision.cvar10}${support}。`, body);
+      if ((r.sampleDecision.dependencies || []).length) mk("div", "noteP", `关键依赖：${r.sampleDecision.dependencies.join("；")}。稳健驱动：${(r.sampleDecision.drivers || []).join("；")}。`, body);
+      mk("div", "noteP", r.sampleDecision.warning, body);
+    }
+
+    const traitBox = mk("div", "traitChips", null, body);
+    (t.earlyTraits || []).forEach(x => mk("span", "chip", x, traitBox));
+
+    if ((t.board || []).length) {
+      mk("div", "secT", "模型建议站位草图（非官方站位 ｜ 行1靠敌方）", body);
+      if (t.boardNote) mk("div", "noteP", t.boardNote, body);
+      const board = mk("div", "board", null, body);
+      for (let row = 1; row <= 4; row++) {
+        const brow = mk("div", "brow" + (row % 2 === 0 ? " off" : ""), null, board);
+        for (let col = 1; col <= 7; col++) {
+          const u = (t.board || []).find(x => x.row === row && x.col === col);
+          const cell = mk("div", "cell" + (u ? (u.carry ? " carry" : "") : " empty"), null, brow);
+          if (!u) continue;
+          cell.style.borderTop = "3px solid " + (u.carry ? "var(--s2)" : "var(--seq350)");
+          mk("div", "cn", (u.carry ? "⭐" : "") + u.name, cell);
+          mk("div", "cost", u.role || "-", cell);
+          (u.items || []).forEach(it => mk("div", "it", it, cell));
+        }
+      }
+    }
+
+    mk("div", "secT", "阵容骨架", body);
+    const stages = [
+      ["二阶段可拿", t.earlyUnits || []],
+      ["三/四阶段承接", t.midUnits || []],
+      ["终局核心", t.coreUnits || []],
+    ];
+    stages.forEach(([label, rows]) => {
+      const line = mk("div", "noteP", null, body);
+      const b = mk("b", null, label + "：", line);
+      b.style.color = "var(--ink)";
+      line.appendChild(document.createTextNode(rows.length ? rows.join("、") : "-"));
+    });
+    if (t.route?.length) {
+      mk("div", "secT", "路线", body);
+      mk("div", "noteP", t.route.join(" -> "), body);
+    }
+
+    mk("div", "secT", "装备 / 符文 / 怪兽", body);
+    mk("div", "noteP", "装备优先：" + ((t.completedPrefs || []).slice(0, 8).join("、") || "-"), body);
+    mk("div", "noteP", "散件优先：" + ((t.componentPrefs || []).slice(0, 8).join("、") || "-"), body);
+    mk("div", "noteP", "符文优先：" + ((t.augmentPrefs || []).slice(0, 8).join("、") || "-"), body);
+    mk("div", "noteP", "怪兽：" + ((t.monsterPrefs || []).slice(0, 6).join("、") || "-"), body);
+
+    mk("div", "secT", "当前命中", body);
+    mk("div", "noteP", (r.evidence || []).length ? r.evidence.join("；") : "当前命中较少，更多按基础强度排序。", body);
+    const warns = [...(r.penalties || []), ...(r.missing || [])];
+    if (warns.length) mk("div", "noteP", "缺口/扣分：" + warns.join("；"), body);
+
+    mk("div", "secT", "现在怎么打", body);
+    mk("div", "noteP", "留：" + ((t.actions.keep || []).slice(0, 10).join("、") || "-"), body);
+    mk("div", "noteP", "装：" + (t.actions.item || "-"), body);
+    mk("div", "noteP", "判：" + (t.actions.checkpoint || "-"), body);
+    mk("div", "noteP", "止：" + (t.actions.stopLoss || "-"), body);
+
+    if (t.officialText) {
+      mk("div", "secT", "数据文本依据", body);
+      if (t.officialText.early) mk("div", "noteP", "过渡：" + t.officialText.early, body);
+      if (t.officialText.equipment) mk("div", "noteP", "装备：" + t.officialText.equipment, body);
+      if (t.officialText.hex) mk("div", "noteP", "符文：" + t.officialText.hex, body);
+      if (t.officialText.enemy) mk("div", "noteP", "风险：" + t.officialText.enemy, body);
+    }
+    dlg.showModal();
+  }
+  function drawButtons(id, rows, kind, cls) {
+    const box = document.getElementById(id);
+    box.innerHTML = rows.map(r => {
+      const value = typeof r === "string" ? r : r.name;
+      const active = state[kind].has(value);
+      const label = value;
+      return `<button class="s2Btn ${cls || ""} ${active ? "active" : ""}" data-kind="${kind}" data-value="${escText(value)}">${escText(label)}</button>`;
+    }).join("");
+    box.querySelectorAll("button").forEach(btn => {
+      btn.addEventListener("click", () => toggle(btn.dataset.kind, btn.dataset.value));
+    });
+  }
+  function confidence(score) {
+    return MatcherCore.confidence(score);
+  }
+  function drawSelected() {
+    const all = [
+      ...[...state.units].map(x => ["units", x]),
+      ...[...state.items].map(x => ["items", x]),
+      ...[...state.augmentCats].map(x => ["augmentCats", x]),
+      ...[...state.augments].map(x => ["augments", x]),
+    ];
+    const box = document.getElementById("stage2-selected");
+    box.innerHTML = all.length ? all.map(([kind, x]) => `<button class="compChip" data-kind="${kind}" data-value="${escText(x)}">${escText(x)} ×</button>`).join("") : "<span class='note'>还没选择信号</span>";
+    box.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => toggle(btn.dataset.kind, btn.dataset.value)));
+  }
+  function drawResults() {
+    const box = document.getElementById("stage2-results");
+    if (!hasAnySelection()) {
+      writeOutput("输入棋子、装备、符文后，这里会输出可复制的路线结论。");
+      box.innerHTML = `<div class="s2Empty">
+        直接在上方输入这把的信号。示例：<b>安妮 波比</b> 会偏小天才；输入 <b>安妮 波比 羊刀 火炮</b>，会转向小天才过渡进贾克斯/机甲。
+      </div>`;
+      return;
+    }
+    const selected = selectedObj();
+    const ranked = MatcherCore.rank(MATCHER.templates, selected, MATCHER.weights, 5, { certification: true });
+    writeOutput(buildOutput(ranked));
+    box.innerHTML = ranked.map((r, i) => {
+      const t = r.template;
+      const evidence = r.evidence.length ? r.evidence : ["当前命中较少，更多按官方基础强度排序"];
+      const warns = [...r.penalties, ...r.missing].slice(0, 5);
+      return `<div class="stage2Result ${i === 0 ? "top" : ""}" data-template-id="${escText(t.id)}" tabindex="0" role="button" aria-label="查看 ${escText(t.name)} 实际阵容">
+        <div class="s2Head">
+          <div>
+            <div class="s2Title">#${i + 1} ${escText(t.name)}</div>
+            <div class="s2Meta">${escText(t.family)} ｜ ${escText(t.goal)} ｜ 现场匹配 ${confidence(r.finalScore)}</div>
+            ${r.sampleDecision ? `<div class="s2Cert">${escText(r.sampleDecision.evidenceLevel)} ｜ ${r.sampleDecision.sampleSize}样本 ｜ 稳健${r.sampleDecision.robustness}% ｜ 当前支持${r.sampleDecision.decisionShare}%</div>` : ""}
+            <div class="s2OpenHint">点击查看实际阵容 / 路线详情</div>
+          </div>
+          <div class="s2Score">${r.finalScore}分</div>
+        </div>
+        <div>${(t.earlyTraits || []).slice(0, 5).map(x => `<span class="chip">${escText(x)}</span>`).join("")}</div>
+        <div class="s2Route"><b>路线：</b>${escText((t.route || []).join(" -> "))}</div>
+        ${signalTowerHtml(r)}
+        <div class="s2Cols">
+          <div class="s2Box"><b>加分证据</b>${evidence.map(x => `<div>+ ${escText(x)}</div>`).join("")}</div>
+          <div class="s2Box"><b>缺口/扣分</b>${warns.length ? warns.map(x => `<div>- ${escText(x)}</div>`).join("") : "<div>当前没有明显冲突</div>"}</div>
+          <div class="s2Box"><b>现在动作</b>
+            <div>留：${escText((t.actions.keep || []).slice(0, 8).join("、"))}</div>
+            <div>装：${escText(t.actions.item || "-")}</div>
+            <div>判：${escText(t.actions.checkpoint || "-")}</div>
+            <div>止：${escText(t.actions.stopLoss || "-")}</div>
+          </div>
+        </div>
+      </div>`;
+    }).join("");
+    box.querySelectorAll(".stage2Result[data-template-id]").forEach((card, i) => {
+      const r = ranked[i];
+      card.addEventListener("click", () => openStage2Detail(r, i));
+      card.addEventListener("keydown", ev => {
+        if (ev.key === "Enter" || ev.key === " ") {
+          ev.preventDefault();
+          openStage2Detail(r, i);
+        }
+      });
+    });
+  }
+  function draw() {
+    drawSelected();
+    drawButtons("stage2-units", MATCHER.options.units.slice(0, 32), "units");
+    drawButtons("stage2-items", MATCHER.options.items.slice(0, 32), "items", "item");
+    drawButtons("stage2-aug-signals", MATCHER.options.augmentSignals, "augmentCats", "signal");
+    drawButtons("stage2-augs", MATCHER.options.augments.slice(0, 26), "augments");
+    drawResults();
+  }
+  const queryInput = document.getElementById("stage2-query");
+  const applyBtn = document.getElementById("stage2-apply");
+  const copyBtn = document.getElementById("stage2-copy");
+  if (queryInput) {
+    queryInput.addEventListener("input", () => {
+      clearTimeout(queryTimer);
+      queryTimer = setTimeout(applyQuery, 120);
+    });
+    queryInput.addEventListener("keydown", ev => {
+      if (ev.key === "Enter") {
+        ev.preventDefault();
+        applyQuery();
+      }
+    });
+  }
+  if (applyBtn) applyBtn.addEventListener("click", applyQuery);
+  if (copyBtn) copyBtn.addEventListener("click", () => {
+    const out = document.getElementById("stage2-output");
+    if (!out) return;
+    out.focus();
+    out.select();
+    document.execCommand("copy");
+    copyBtn.textContent = "已复制";
+    setTimeout(() => { copyBtn.textContent = "复制"; }, 900);
+  });
+  document.getElementById("stage2-clear").addEventListener("click", () => {
+    clearState();
+    if (queryInput) queryInput.value = "";
+    const unknownBox = document.getElementById("stage2-unknown");
+    if (unknownBox) unknownBox.textContent = "";
+    draw();
+  });
+  window.openStage2RouteDetail = openStage2Detail;
+  draw();
+}
+renderStage2Matcher();
+
+// ---------- tooltip ----------
+const tip = document.getElementById("tip");
+function showTip(ev, rows) { // rows: [{key?, label, val, strong?}]
+  tip.textContent = "";
+  rows.forEach(r => {
+    const d = document.createElement("div");
+    if (r.strong) { d.className = "tv"; d.textContent = r.label; }
+    else {
+      d.className = "tr";
+      if (r.key) { const k = document.createElement("span"); k.className = r.lineKey ? "lk" : "sw"; k.style.background = r.key; d.appendChild(k); }
+      const lb = document.createElement("span"); lb.textContent = r.label; d.appendChild(lb);
+      if (r.val !== undefined) { const b = document.createElement("b"); b.textContent = r.val; d.appendChild(b); }
+    }
+    tip.appendChild(d);
+  });
+  tip.style.display = "block";
+  moveTip(ev);
+}
+function moveTip(ev) {
+  const w = tip.offsetWidth, h = tip.offsetHeight;
+  let x = ev.clientX + 14, y = ev.clientY + 12;
+  if (x + w > innerWidth - 8) x = ev.clientX - w - 14;
+  if (y + h > innerHeight - 8) y = ev.clientY - h - 12;
+  tip.style.left = x + "px"; tip.style.top = y + "px";
+}
+function hideTip() { tip.style.display = "none"; }
+
+// ---------- legend helper ----------
+function legend(id, items, line) {
+  const box = document.getElementById(id); box.textContent = "";
+  items.forEach(it => {
+    const s = document.createElement("span"); s.className = "it";
+    const sw = document.createElement("span"); sw.className = line ? "lk" : "sw"; sw.style.background = it.c;
+    s.appendChild(sw); s.appendChild(document.createTextNode(it.n)); box.appendChild(s);
+  });
+}
+function table(id, headers, rows) {
+  const host = document.getElementById(id); host.textContent = "";
+  const t = document.createElement("table");
+  const tr = document.createElement("tr");
+  headers.forEach(h => { const th = document.createElement("th"); th.textContent = h; tr.appendChild(th); });
+  t.appendChild(tr);
+  rows.forEach(r => { const x = document.createElement("tr"); r.forEach(c => { const td = document.createElement("td"); td.textContent = c; x.appendChild(td); }); t.appendChild(x); });
+  host.appendChild(t);
+}
+
+// ---------- header tiles ----------
+const S = M.comps.filter(c => c.quality === "S");
+const topC = S.slice().sort((a, b) => b.carry.dps - a.carry.dps)[0];
+document.getElementById("subline").textContent =
+  `数据版本 ${M.version}（官方数据文件） · 官方阵容 ${M.comps.length} 套（S级 ${S.length}） · 研究样本/模型生成 ${M.generated}`;
+const tiles = [
+  { lb: "游戏数据版本", v: M.version, d: "2026-06-24 生效" },
+  { lb: "官方S级阵容", v: S.length + " 套", d: "共 " + M.comps.length + " 套推荐阵容" },
+  { lb: "模拟最高主C输出", v: fmt(topC.carry.dps) + "/秒", d: topC.carry.hero + topC.carry.star + "星 · " + topC.name.match(/【(.+?)】/)[1] },
+  { lb: "模型分 vs 官方梯队", v: "ρ = " + M.spearman, d: "Spearman 等级相关 · n=" + M.comps.length },
+];
+document.getElementById("tiles").innerHTML = tiles.map(t =>
+  `<div class="tile"><div class="lb">${t.lb}</div><div class="v">${t.v}</div><div class="d">${t.d}</div></div>`).join("");
+
+// ---------- comp detail modal ----------
+const dlg = document.getElementById("dlg");
+dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
+function openComp(shortName) {
+  const normCompName = s => String(s || "").replace(/[【】\s,，、+＋/|;；:：()（）\[\]·.\-_—>→]/g, "");
+  const target = normCompName(shortName);
+  const c = M.comps.find(x => x.name.includes("【" + shortName + "】")) ||
+    M.comps.find(x => x.name.includes(shortName)) ||
+    M.comps.find(x => {
+      const n = normCompName(x.name);
+      return n.includes(target) || target.includes(n);
+    });
+  if (!c || !c.detail) return false;
+  const d = c.detail, body = document.getElementById("dlgBody");
+  body.textContent = "";
+  const mk = (tag, cls, text, parent) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text) e.textContent = text; if (parent) parent.appendChild(e); return e; };
+  // 头部
+  const head = mk("div", "dlgHead", null, body);
+  mk("span", "qbadge", "官方 " + c.quality + " 级", head);
+  mk("h2", null, c.name, head);
+  const x = mk("button", "closeX", "✕", head); x.addEventListener("click", () => dlg.close());
+  mk("div", "dlgMeta", "作者 " + d.author + " ｜ 模拟：主C " + (c.carry ? c.carry.hero + c.carry.star + "星 " + fmt(c.carry.dps) + "/秒" : "-") +
+    " · 前排EHP " + fmt(c.frontEHP) + " · 模型分 " + c.score, body);
+  // 羁绊（官方数据会列出未激活羁绊=预留的转型/后期开启位，灰显标注）
+  const tc = mk("div", "traitChips", null, body);
+  d.traits.forEach(t => {
+    if (typeof t === "string") { mk("span", "chip", t, tc); return; }
+    const chip = mk("span", "chip", t.label + (t.active ? "" : "（未激活，需" + t.need + "）"), tc);
+    if (!t.active) { chip.style.opacity = ".55"; chip.style.borderStyle = "dashed"; }
+  });
+  // 棋盘 4×7
+  mk("div", "secT", "成型站位（⭐主C ｜ 3★=官方要求追三星 ｜ 行1靠敌方）", body);
+  const board = mk("div", "board", null, body);
+  const ramp = [css("--seq250"), css("--seq350"), css("--seq450"), css("--seq550"), css("--seq650")];
+  for (let r = 1; r <= 4; r++) {
+    const row = mk("div", "brow" + (r % 2 === 0 ? " off" : ""), null, board);
+    for (let col = 1; col <= 7; col++) {
+      const u = d.heroes.find(h => h.row === r && h.col === col);
+      const cell = mk("div", "cell" + (u ? (u.carry ? " carry" : "") : " empty"), null, row);
+      if (!u) continue;
+      cell.style.borderTop = "3px solid " + ramp[u.price - 1];
+      const cn = mk("div", "cn", null, cell);
+      cn.textContent = (u.carry ? "⭐" : "") + u.name;
+      if (u.star3) mk("span", "tag3", " 3★", cn);
+      mk("div", "cost", u.price + "费", cell);
+      u.items.forEach(it => mk("div", "it", it, cell));
+    }
+  }
+  // 符文
+  mk("div", "secT", "推荐强化符文", body);
+  d.augRec.forEach(a => {
+    const line = mk("div", "augLine", null, body);
+    mk("b", null, a.name, line); mk("span", "lv", "（" + a.level + "级）", line);
+    mk("div", "ds", a.desc, line);
+  });
+  if (d.augRep.length) { mk("div", "secT", "替补符文", body); mk("div", "noteP", d.augRep.map(a => a.name + "（" + a.level + "级）").join("、"), body); }
+  if (d.notes.hex) mk("div", "noteP", "符文思路：" + d.notes.hex, body);
+  // 怪兽
+  if (d.monsters.length) {
+    mk("div", "secT", "推荐城市怪兽（守护者）", body);
+    mk("div", "noteP", d.monsters.join("、") + (d.monsterRep.length ? "　替补：" + d.monsterRep.join("、") : ""), body);
+    if (d.notes.monster) mk("div", "noteP", "怪兽思路：" + d.notes.monster, body);
+  }
+  // 装备
+  if (d.order.length) { mk("div", "secT", "散件优先级", body); mk("div", "noteP", d.order.join(" > "), body); }
+  if (d.notes.equip) mk("div", "noteP", "装备思路：" + d.notes.equip, body);
+  // 运营
+  if (d.notes.early || d.notes.enemy) {
+    mk("div", "secT", "运营与克制", body);
+    if (d.notes.early) mk("div", "noteP", "运营：" + d.notes.early, body);
+    if (d.notes.enemy) mk("div", "noteP", "克制：" + d.notes.enemy, body);
+  }
+  const versionRow = metaCandidate(shortName);
+  if (versionRow && versionRow.certification) {
+    const cert = versionRow.certification;
+    mk("div", "secT", "版本答案认证", body);
+    mk("div", "noteP", `${cert.evidenceLevel}；匹配路线：${cert.matchedRoute}；${cert.sampleSize}次模型扰动；稳健${cert.metrics.robustness}%；前25%进入率${cert.metrics.topQuartileRate}%；失败率${cert.metrics.failureRate}%；95%区间${cert.metrics.interval95.join("~")}。`, body);
+    mk("div", "noteP", `关键依赖：${(cert.dependencies || []).join("；") || "无硬依赖"}。稳健驱动：${(cert.drivers || []).join("；")}。`, body);
+    mk("div", "noteP", cert.warning, body);
+  }
+  dlg.showModal();
+  return true;
+}
+
+function metaCandidate(name) {
+  const meta = M.metaDiscovery || {};
+  return (meta.stable || []).find(x => x.displayName === name) ||
+    (meta.conditional || []).find(x => `${x.augment}·${x.carry}` === name);
+}
+
+function openMetaComp(name) {
+  const c = metaCandidate(name);
+  if (!c) return false;
+  const body = document.getElementById("dlgBody"); body.textContent = "";
+  const mk = (tag, cls, text, parent) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text) e.textContent = text; if (parent) parent.appendChild(e); return e; };
+  const addImage = (src, alt, cls, parent) => {
+    const img = mk("img", cls, null, parent); img.src = src; img.alt = alt; img.title = alt;
+    img.addEventListener("error", () => img.style.display = "none");
+    return img;
+  };
+  const head = mk("div", "dlgHead", null, body);
+  mk("span", "qbadge", c.augment ? "条件模拟" : "算法生成", head);
+  mk("h2", null, name, head);
+  const x = mk("button", "closeX", "✕", head); x.addEventListener("click", () => dlg.close());
+  const scoreText = c.augment ? `无强化 ${c.baselineScore} → 有强化 ${c.score}（+${c.upliftPct}%）` : `全队总分 ${c.score}`;
+  mk("div", "dlgMeta", `${scoreText} ｜ 主C ${c.carry} ${c.carryDps || "-"}/秒 ｜ 前排EHP ${fmt(c.frontEHP || 0)}`, body);
+  if (c.certification) {
+    const cert = c.certification;
+    mk("div", "secT", "版本答案认证", body);
+    mk("div", "noteP", `${cert.evidenceLevel}；匹配路线：${cert.matchedRoute}；${cert.sampleSize}次模型扰动；稳健${cert.metrics.robustness}%；前25%进入率${cert.metrics.topQuartileRate}%；失败率${cert.metrics.failureRate}%；95%区间${cert.metrics.interval95.join("~")}。`, body);
+    mk("div", "noteP", `关键依赖：${(cert.dependencies || []).join("；") || "无硬依赖"}。稳健驱动：${(cert.drivers || []).join("；")}。`, body);
+    mk("div", "noteP", cert.warning, body);
+  }
+  if (c.augment) mk("div", "noteP", `模型依据：${c.basis}。硬门槛：${(c.requiredUnits || []).join("、")}。`, body);
+  mk("div", "secT", "自动求解阵容", body);
+  const team = mk("div", "traitChips", null, body);
+  (c.team || []).forEach(u => mk("span", "chip", `${u.name}${u.price ? `（${u.price}费）` : ""}`, team));
+  if ((c.traits || c.acts || []).length) {
+    mk("div", "secT", "激活羁绊", body);
+    const traits = mk("div", "traitChips", null, body);
+    (c.traits || c.acts || []).forEach(t => mk("span", "chip", t, traits));
+  }
+  const presentation = c.presentation;
+  if (presentation && presentation.stages && presentation.stages.length) {
+    mk("div", "secT", "模型推导的前期 / 中期 / 后期站位", body);
+    const tabs = mk("div", "metaStageTabs", null, body);
+    const stageSummary = mk("div", "metaStageSummary", null, body);
+    const board = mk("div", "board", null, body);
+    const traitLine = mk("div", "traitChips", null, body);
+    const ramp = [css("--seq250"), css("--seq350"), css("--seq450"), css("--seq550"), css("--seq650")];
+    const renderStage = (stage, activeButton) => {
+      [...tabs.children].forEach(button => button.classList.toggle("active", button === activeButton));
+      stageSummary.textContent = ""; board.textContent = ""; traitLine.textContent = "";
+      mk("b", null, `${stage.level}人口 · 装备承载者 ${stage.carry}`, stageSummary);
+      mk("span", null, stage.method, stageSummary);
+      for (let rowNo = 1; rowNo <= 4; rowNo++) {
+        const row = mk("div", "brow" + (rowNo % 2 === 0 ? " off" : ""), null, board);
+        for (let col = 1; col <= 7; col++) {
+          const unit = stage.board.find(item => item.row === rowNo && item.col === col);
+          const cell = mk("div", "cell" + (unit ? (unit.carry ? " carry" : "") : " empty"), null, row);
+          if (!unit) continue;
+          cell.style.borderTop = "3px solid " + ramp[Math.max(0, Math.min(4, unit.price - 1))];
+          mk("div", "cn", (unit.carry ? "★ " : "") + unit.name, cell);
+          mk("div", "cost", `${unit.price}费`, cell);
+          mk("div", "role", unit.role, cell);
+          if (unit.items && unit.items.length) {
+            const icons = mk("div", "itemIcons", null, cell);
+            unit.items.forEach(itemName => {
+              const item = ((M.metaDiscovery || {}).itemCatalog || []).find(entry => entry.name === itemName);
+              if (item && item.picture) addImage(item.picture, item.name, "itemIcon", icons);
+            });
+          }
+        }
+      }
+      (stage.traits || []).forEach(trait => mk("span", "chip", trait, traitLine));
+    };
+    presentation.stages.forEach((stage, index) => {
+      const button = mk("button", "metaStageTab", `${stage.label} · ${stage.level}人口`, tabs);
+      button.addEventListener("click", () => renderStage(stage, button));
+      if (index === presentation.stages.length - 1) renderStage(stage, button);
+    });
+    mk("div", "noteP", `站位依据：${presentation.positioningBasis}`, body);
+    mk("div", "noteP", `推导方式：${presentation.derivation}`, body);
+  }
+  const itemCatalog = (M.metaDiscovery || {}).itemCatalog || [];
+  const itemRows = (presentation && presentation.items || c.carryItems || [])
+    .map(name => itemCatalog.find(item => item.name === name) || { name, picture: "", components: [] });
+  if (itemRows.length) {
+    mk("div", "secT", `${c.carry}联合优化三件套`, body);
+    const itemGrid = mk("div", "metaItemGrid", null, body);
+    itemRows.forEach(item => {
+      const card = mk("div", "metaItem", null, itemGrid);
+      if (item.picture) addImage(item.picture, item.name, null, card);
+      const text = mk("div", null, null, card);
+      mk("b", null, item.name, text);
+      mk("small", null, (item.components || []).map(component => component.name).join(" + ") || "模型成装", text);
+    });
+  }
+  if (presentation && presentation.operations && presentation.operations.length) {
+    mk("div", "secT", "模型运营思路", body);
+    const list = mk("ol", "metaOps", null, body);
+    presentation.operations.forEach(line => mk("li", null, line, list));
+  }
+  dlg.showModal();
+  return true;
+}
+
+// ---------- verdict layer ----------
+(function () {
+  // ① 体系梯队
+  const tierCol = { T0: css("--seq650"), T1: css("--seq450"), "T1.5": css("--seq250"), CT0: css("--s3"), CT1: css("--s2"), "CT1.5": css("--s1") };
+  const vt = document.getElementById("v-tiers");
+  if (MATCHER && MATCHER.certification) {
+    const proof = document.createElement("div"); proof.className = "certSummary";
+    proof.textContent = `认证证据：${MATCHER.templates.length}条路线 × ${MATCHER.certification.sampleSize}次模型扰动；样本先验最多±5分。${MATCHER.certification.ceiling}`;
+    vt.appendChild(proof);
+  }
+  M.verdicts.forEach(v => {
+    const row = document.createElement("div"); row.className = "tierRow";
+    const b = document.createElement("div"); b.className = "tierBadge"; b.textContent = v.tier; b.style.background = tierCol[v.tier];
+    if (v.tier === "T1.5") b.style.color = "#0b0b0b";
+    if (v.kind === "conditional") b.style.fontSize = "12px";
+    const body = document.createElement("div");
+    const f = document.createElement("div"); f.className = "fam"; f.textContent = v.family;
+    const c = document.createElement("div"); c.className = "cmp";
+    v.comps.forEach(x => {
+      const official = M.comps.some(o => o.name.includes("【" + x + "】") || o.name.includes(x));
+      const meta = metaCandidate(x);
+      if (official || meta) {
+        const btn = document.createElement("button"); btn.className = "compChip";
+        const cert = meta && meta.certification;
+        btn.textContent = x + (cert ? ` · ${cert.evidenceLevel.split(" ")[0]}` : "") + " ▸";
+        btn.addEventListener("click", () => official ? openComp(x) : openMetaComp(x));
+        c.appendChild(btn);
+      } else {
+        const sp = document.createElement("span"); sp.className = "chip"; sp.textContent = x;
+        c.appendChild(sp);
+      }
+    });
+    body.append(f, c);
+    if (v.reason) { const why = document.createElement("div"); why.className = "why"; why.textContent = v.reason; body.appendChild(why); }
+    row.append(b, body); vt.appendChild(row);
+  });
+  // ② 最强英雄三列
+  const vh = document.getElementById("v-heroes");
+  const colDefs = [
+    { title: "主C", rows: M.heroRank.carry.slice(0, 3).map(h => ({ nm: h.hero + h.star + "星", v: h.n, meta: h.n + "套 · " + fmt(h.dps) + "/秒" })) },
+    { title: "前排", rows: M.heroRank.tank.slice(0, 3).map(h => ({ nm: h.hero, v: h.n, meta: h.n + "套 · EHP " + fmt(h.ehp) })) },
+    { title: "通用挂件", rows: M.heroRank.glue.slice(0, 3).map(h => ({ nm: h.hero + "（" + h.price + "费）", v: h.n, meta: h.n + "/15 套" })) },
+  ];
+  colDefs.forEach(cd => {
+    const box = document.createElement("div");
+    const t = document.createElement("div"); t.style.cssText = "font-size:12px;color:var(--muted);margin-bottom:4px"; t.textContent = cd.title;
+    box.appendChild(t);
+    const vmax = Math.max(...cd.rows.map(r => r.v));
+    cd.rows.forEach((r, i) => {
+      const d = document.createElement("div"); d.className = "rk";
+      const no = document.createElement("span"); no.className = "no"; no.textContent = i + 1;
+      const nm = document.createElement("span"); nm.className = "nm"; nm.textContent = r.nm;
+      const m = document.createElement("span"); m.className = "meter";
+      const fill = document.createElement("i"); fill.style.width = (r.v / vmax * 100) + "%"; m.appendChild(fill);
+      const meta = document.createElement("span"); meta.className = "meta"; meta.textContent = r.meta;
+      d.append(no, nm, m, meta); box.appendChild(d);
+    });
+    vh.appendChild(box);
+  });
+  // ③ 符文 Top10（分类色点）
+  const catCol = { 经济: css("--s3"), 战力: css("--s6"), 棋子资源: css("--s2"), 装备: css("--s5"), 专属强化: css("--s1") };
+  const va = document.getElementById("v-augs");
+  const top = M.augRank.slice(0, 6), smax = top[0].score;
+  top.forEach((a, i) => {
+    const d = document.createElement("div"); d.className = "rk";
+    const no = document.createElement("span"); no.className = "no"; no.textContent = i + 1;
+    const nm = document.createElement("span"); nm.className = "nm"; nm.textContent = a.name;
+    const chip = document.createElement("span"); chip.className = "chip";
+    const dot = document.createElement("i"); dot.style.background = catCol[a.cat] || css("--muted");
+    chip.append(dot, document.createTextNode(a.cat + " · " + a.level + "级"));
+    const m = document.createElement("span"); m.className = "meter";
+    const fill = document.createElement("i"); fill.style.width = (a.score / smax * 100) + "%"; m.appendChild(fill);
+    const meta = document.createElement("span"); meta.className = "meta"; meta.textContent = a.score + " 分（推" + a.rec + "/替" + a.rep + "）";
+    d.append(no, nm, chip, m, meta); va.appendChild(d);
+  });
+  // ④ 装备四类
+  const vi = document.getElementById("v-items");
+  ["攻击", "法系", "防御", "功能"].forEach(cat => {
+    const items = M.itemRank.filter(x => x.cat === cat).slice(0, 3);
+    if (!items.length) return;
+    const box = document.createElement("div");
+    const t = document.createElement("div"); t.style.cssText = "font-size:12px;color:var(--muted);margin-bottom:4px";
+    t.textContent = { 攻击: "物理/通用输出", 法系: "法系输出", 防御: "防御", 功能: "功能/挂件" }[cat];
+    box.appendChild(t);
+    const vmax = items[0].n;
+    items.forEach((r, i) => {
+      const d = document.createElement("div"); d.className = "rk";
+      const no = document.createElement("span"); no.className = "no"; no.textContent = i + 1;
+      const nm = document.createElement("span"); nm.className = "nm"; nm.textContent = r.name;
+      const m = document.createElement("span"); m.className = "meter";
+      const fill = document.createElement("i"); fill.style.width = (r.n / vmax * 100) + "%"; m.appendChild(fill);
+      const meta = document.createElement("span"); meta.className = "meta"; meta.textContent = "x" + r.n + (r.carry ? " · 主C x" + r.carry : "");
+      d.append(no, nm, m, meta); box.appendChild(d);
+    });
+    vi.appendChild(box);
+  });
+  document.getElementById("v-comp").textContent =
+    "散件抢夺共识：第一优先 " + M.componentFirst.map(c => c.name + "（" + c.n + "/15套）").join("、") +
+    "；暴风之剑进入全部15套的前五优先。主C三件套公式——物理C：鬼索+火炮/飓风+泰坦/锐利；法系C：珠光护手+蓝霸符+巨人捕手（三套阵容出装一字不差）。";
+})();
+
+// ---------- route certification module ----------
+(function renderCertificationModule() {
+  const summary = MATCHER && MATCHER.certification;
+  const templates = MATCHER && MATCHER.templates || [];
+  const certified = templates.filter(t => t.certification);
+  if (!summary || !certified.length) return;
+  const levelCount = level => certified.filter(t => String(t.certification.evidenceLevel || "").split(" ")[0] === level).length;
+  const kpis = [
+    [`${(certified.length * summary.sampleSize).toLocaleString("zh-CN")}`, "路线扰动样本"],
+    [levelCount("L2.5"), "L2.5 稳健路线"],
+    [levelCount("L2"), "L2 模型候选"],
+    [levelCount("L1.5"), "L1.5 高敏感"],
+  ];
+  document.getElementById("cert-kpis").innerHTML = kpis.map(([value, label]) => `<div class="certKpi"><div class="v">${value}</div><div class="l">${label}</div></div>`).join("");
+
+  function detailRow(template, condition) {
+    const cert = template.certification;
+    const conditionText = condition && (condition.gates || []).map(g => `${g.kind}：${g.value}`);
+    return {
+      template,
+      certificationOnly: true,
+      stageStrength: 0,
+      finalScore: 0,
+      evidence: [...(conditionText && conditionText.length ? [`条件门槛：${conditionText.join("；")}`] : []), ...(condition && condition.reasons || []), ...(cert.drivers || [])],
+      penalties: [],
+      missing: [...(conditionText || []), ...(cert.dependencies || [])],
+      sampleDecision: {
+        sampleSize: cert.sampleSize,
+        evidenceLevel: cert.evidenceLevel,
+        robustness: cert.metrics.robustness,
+        interval95: cert.metrics.interval95,
+        cvar10: cert.metrics.cvar10,
+        failureRate: cert.metrics.failureRate,
+        meanUtility: cert.metrics.meanUtility,
+        priorPoints: cert.priorPoints,
+        decisionShare: null,
+        dependencies: [...(conditionText || []), ...(cert.dependencies || [])],
+        drivers: [...(condition && condition.reasons || []), ...(cert.drivers || [])],
+        warning: cert.warning,
+      },
+    };
+  }
+
+  function drawList(id, rows) {
+    const host = document.getElementById(id);
+    host.innerHTML = rows.slice(0, 8).map((t, index) => {
+      const cert = t.certification, metrics = cert.metrics;
+      return `<button class="certRoute" data-cert-id="${escText(t.id)}">
+        <span class="n">${index + 1}</span>
+        <span><span class="name">${escText(t.name)}</span><span class="sub">${escText(cert.evidenceLevel)} · 失速${metrics.failureRate}% · 尾部${metrics.cvar10}</span></span>
+        <span class="metric">稳健${metrics.robustness}%<br>前25% ${metrics.topQuartileRate}%</span>
+      </button>`;
+    }).join("");
+    host.querySelectorAll("[data-cert-id]").forEach(button => button.addEventListener("click", () => {
+      const template = templates.find(t => t.id === button.dataset.certId);
+      if (template && window.openStage2RouteDetail) window.openStage2RouteDetail(detailRow(template), 0);
+    }));
+  }
+
+  const sorted = certified.slice().sort((a, b) => b.certification.metrics.robustness - a.certification.metrics.robustness || b.certification.metrics.cvar10 - a.certification.metrics.cvar10);
+  drawList("cert-stable", sorted.filter(t => String(t.certification.peerGroup).startsWith("常规")));
+  const conditionRankings = summary.conditionRankings || {};
+  const conditionTypes = ["英雄专属", "战力", "经济", "装备"].filter(type => (conditionRankings[type] || []).length);
+  const tabs = document.getElementById("cert-condition-tabs");
+  let activeCondition = conditionTypes.includes("战力") ? "战力" : conditionTypes[0];
+
+  function drawConditionList(type) {
+    const host = document.getElementById("cert-conditional");
+    const rows = conditionRankings[type] || [];
+    host.innerHTML = rows.slice(0, 8).map((row, index) => {
+      const gates = (row.gates || []).map(g => `<span class="certGate">${escText(g.kind)}：${escText(g.value)}</span>`).join("");
+      return `<button class="certRoute" data-condition-index="${index}">
+        <span class="n">${index + 1}</span>
+        <span><span class="name">${escText(row.templateName)}</span><span class="certGates">${gates}</span><span class="sub">${escText(row.evidenceLevel)} · 失速${row.metrics.failureRate}% · 尾部${row.metrics.cvar10}</span></span>
+        <span class="metric">适配${row.conditionScore}<br>稳健${row.metrics.robustness}%</span>
+      </button>`;
+    }).join("");
+    host.querySelectorAll("[data-condition-index]").forEach(button => button.addEventListener("click", () => {
+      const row = rows[Number(button.dataset.conditionIndex)];
+      const template = row && templates.find(t => t.id === row.templateId);
+      if (template && window.openStage2RouteDetail) window.openStage2RouteDetail(detailRow(template, row), 0);
+    }));
+  }
+
+  tabs.innerHTML = conditionTypes.map(type => `<button class="certConditionTab" data-condition-type="${escText(type)}">${escText(type)}</button>`).join("");
+  function activateCondition(type) {
+    activeCondition = type;
+    tabs.querySelectorAll("[data-condition-type]").forEach(button => button.classList.toggle("active", button.dataset.conditionType === activeCondition));
+    drawConditionList(activeCondition);
+  }
+  tabs.querySelectorAll("[data-condition-type]").forEach(button => button.addEventListener("click", () => activateCondition(button.dataset.conditionType)));
+  activateCondition(activeCondition);
+  document.getElementById("cert-formulas").textContent = [summary.utilityFormula, summary.robustnessFormula, summary.decisionFormula, summary.failureThreshold, summary.ceiling].join("；");
+})();
+
+// ---------- chart 1: stacked horizontal bars, S carry DPS ----------
+(function () {
+  // 并列时按全阵容同口径总分(teamsearch)排序，避免官方排序号冒充强度
+  const teamScore = {};
+  ((M.teamsearch || {}).officialScored || []).forEach(o => teamScore[o.name] = o.score);
+  const data = S.map(c => ({
+    name: c.carry.hero + c.carry.star + "星", comp: c.name.match(/【(.+?)】/)[1],
+    parts: [c.carry.auto, c.carry.spell, c.carry.proc], total: c.carry.dps,
+    bare: c.carryBare.dps, items: c.carryItems,
+  })).sort((a, b) => (b.total - a.total) || ((teamScore[b.comp] || 0) - (teamScore[a.comp] || 0)));
+  const seriesC = [css("--s1"), css("--s2"), css("--s3")], seriesN = ["平A", "技能", "装备特效"];
+  legend("lg-dps", seriesN.map((n, i) => ({ n, c: seriesC[i] })));
+  const W = 960, rowH = 34, L = 170, R = 70, T = 8;
+  const H = T + data.length * rowH + 24;
+  const xmax = Math.ceil(data[0].total / 100) * 100;
+  const x = v => L + v / xmax * (W - L - R);
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}` }, document.getElementById("ch-dps"));
+  for (let g = 0; g <= 5; g++) { const gx = x(xmax * g / 5);
+    el("line", { x1: gx, y1: T, x2: gx, y2: H - 24, stroke: "var(--grid)", "stroke-width": 1, style: "stroke:var(--grid)" }, svg).setAttribute("stroke", css("--grid"));
+    txt(el("text", { x: gx, y: H - 8, "text-anchor": "middle", "font-size": 11, fill: css("--muted"), class: "tick" }, svg), fmt(xmax * g / 5));
+  }
+  data.forEach((d, i) => {
+    const y = T + i * rowH + 5, bh = 22;
+    txt(el("text", { x: L - 8, y: y + bh / 2 + 4, "text-anchor": "end", "font-size": 12.5, fill: css("--ink") }, svg), d.name + "·" + d.comp.slice(0, 7));
+    let cx = L;
+    d.parts.forEach((p, j) => {
+      if (p <= 0.5) return;
+      const w = Math.max(0, x(p) - L - 2);
+      const isLast = j === d.parts.slice(0, 3).map((v, k) => v > 0.5 ? k : -1).filter(k => k >= 0).pop();
+      const r = isLast ? 4 : 0;
+      const rect = el("path", {
+        d: `M${cx},${y} h${Math.max(0, w - r)} ${r ? `a${r},${r} 0 0 1 ${r},${r} v${bh - 2 * r} a${r},${r} 0 0 1 -${r},${r}` : `v${bh}`} h-${Math.max(0, w - r)} z`,
+        fill: seriesC[j], tabindex: 0,
+      }, svg);
+      const rows = [
+        { label: d.name + " · " + d.comp, strong: true },
+        ...seriesN.map((n, k) => ({ key: seriesC[k], label: n, val: fmt(d.parts[k]) + "/秒" })),
+        { label: "合计", val: fmt(d.total) + "/秒" },
+        { label: "裸装", val: fmt(d.bare) + "/秒（装备×" + (d.total / d.bare).toFixed(1) + "）" },
+        { label: d.items.join("+") || "无装备" },
+      ];
+      rect.addEventListener("pointermove", ev => showTip(ev, rows));
+      rect.addEventListener("pointerleave", hideTip);
+      rect.addEventListener("focus", ev => { const b = rect.getBoundingClientRect(); showTip({ clientX: b.right, clientY: b.top }, rows); });
+      rect.addEventListener("blur", hideTip);
+      cx += w + 2;
+    });
+    txt(el("text", { x: cx + 6, y: y + bh / 2 + 4, "font-size": 12, fill: css("--ink2"), class: "tick" }, svg), fmt(d.total));
+  });
+  table("tb-dps", ["主C", "阵容", "合计DPS", "平A", "技能", "特效", "裸装DPS", "装备"],
+    data.map(d => [d.name, d.comp, fmt(d.total), fmt(d.parts[0]), fmt(d.parts[1]), fmt(d.parts[2]), fmt(d.bare), d.items.join("+")]));
+  // 成型悬崖：榜单是"满成型上限"，未成型时的真实强度阶梯
+  const FL = M.formLadder;
+  if (FL) {
+    const host = document.getElementById("ch-dps").parentElement;
+    const box = document.createElement("div");
+    const h = document.createElement("h3"); h.textContent = "成型悬崖：榜单数字的前提条件（以" + FL.hero + "为例）"; box.appendChild(h);
+    const dsc = document.createElement("div"); dsc.className = "desc";
+    dsc.textContent = "上面的排名全部是满成型口径（追三主C+三神装+羁绊拉满）。没到成型点时的真实强度（S级成型主C均值 " + fmt(FL.avgS) + "/秒做参照）：";
+    box.appendChild(dsc);
+    const vmax = Math.max(...FL.steps.map(s => s.dps));
+    FL.steps.forEach(s => {
+      const d = document.createElement("div"); d.className = "rk";
+      const nm = document.createElement("span"); nm.className = "nm"; nm.style.flex = "0 0 220px"; nm.textContent = s.label;
+      const m = document.createElement("span"); m.className = "meter";
+      const fill = document.createElement("i"); fill.style.width = (s.dps / vmax * 100) + "%"; m.appendChild(fill);
+      const meta = document.createElement("span"); meta.className = "meta";
+      meta.textContent = fmt(s.dps) + "/秒（成型值的" + Math.round(s.dps / vmax * 100) + "%" + (s.dps < FL.avgS ? "，低于S级成型均值" : "") + "）";
+      d.append(nm, m, meta); box.appendChild(d);
+    });
+    const note = document.createElement("div"); note.className = "note";
+    note.textContent = "含义：这类追三体系的强度是台阶式而非线性——三星到手前哪怕装备齐了也只有六成功力，卡三失败（同行争抢、经济崩）就是下水道。官方攻略里的克制警告（怕精英战士斩杀、没水银/泰坦怕控制、怕同行）都发生在这个窗口期。模型分回答的是『成型后谁强』，不回答『这把能不能成型』。";
+    box.appendChild(note);
+    host.appendChild(box);
+  }
+})();
+
+// ---------- chart 2: EHP bars ----------
+(function () {
+  const data = S.map(c => ({ name: c.name.match(/【(.+?)】/)[1], v: c.frontEHP, tanks: c.tanks })).sort((a, b) => b.v - a.v);
+  const W = 960, rowH = 30, L = 150, R = 80, T = 8, H = T + data.length * rowH + 24;
+  const xmax = Math.ceil(data[0].v / 5000) * 5000;
+  const x = v => L + v / xmax * (W - L - R);
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}` }, document.getElementById("ch-ehp"));
+  for (let g = 0; g <= 4; g++) { const gx = x(xmax * g / 4);
+    el("line", { x1: gx, y1: T, x2: gx, y2: H - 24, stroke: css("--grid") }, svg);
+    txt(el("text", { x: gx, y: H - 8, "text-anchor": "middle", "font-size": 11, fill: css("--muted"), class: "tick" }, svg), fmt(xmax * g / 4));
+  }
+  data.forEach((d, i) => {
+    const y = T + i * rowH + 4, bh = 20, w = x(d.v) - L;
+    txt(el("text", { x: L - 8, y: y + bh / 2 + 4, "text-anchor": "end", "font-size": 12.5, fill: css("--ink") }, svg), d.name.slice(0, 9));
+    const rect = el("path", { d: `M${L},${y} h${w - 4} a4,4 0 0 1 4,4 v${bh - 8} a4,4 0 0 1 -4,4 h-${w - 4} z`, fill: css("--s1"), tabindex: 0 }, svg);
+    txt(el("text", { x: L + w + 6, y: y + bh / 2 + 4, "font-size": 12, fill: css("--ink2"), class: "tick" }, svg), fmt(d.v));
+    const rows = [{ label: d.name, strong: true }, { label: "前排合计 EHP", val: fmt(d.v) },
+      ...d.tanks.map(t => ({ label: t.hero + t.star + "星", val: fmt(t.ehp) }))];
+    rect.addEventListener("pointermove", ev => showTip(ev, rows));
+    rect.addEventListener("pointerleave", hideTip);
+    rect.addEventListener("focus", ev => { const b = rect.getBoundingClientRect(); showTip({ clientX: b.right, clientY: b.top }, rows); });
+    rect.addEventListener("blur", hideTip);
+  });
+  table("tb-ehp", ["阵容", "前排EHP", "构成"], data.map(d => [d.name, fmt(d.v), d.tanks.map(t => `${t.hero}${t.star}星:${fmt(t.ehp)}`).join(" / ")]));
+})();
+
+// ---------- chart 3: validation strip plot ----------
+(function () {
+  const tiers = ["S", "A", "B"];
+  const cols = { S: css("--seq650"), A: css("--seq450"), B: css("--seq250") };
+  legend("lg-val", tiers.map(t => ({ n: "官方 " + t + " 级（n=" + M.comps.filter(c => c.quality === t).length + "）", c: cols[t] })));
+  document.getElementById("valid-desc").textContent =
+    `每个点是一套官方阵容；纵轴为模型强度分（主C输出 + 前排EHP 的加权标准分）。Spearman ρ = ${M.spearman}。`;
+  const W = 960, H = 320, L = 60, R = 30, T = 16, B = 34;
+  const ys = M.comps.map(c => c.score);
+  const ymin = Math.floor(Math.min(...ys) * 2) / 2 - 0.25, ymax = Math.ceil(Math.max(...ys) * 2) / 2 + 0.25;
+  const y = v => T + (ymax - v) / (ymax - ymin) * (H - T - B);
+  const cx = t => L + (tiers.indexOf(t) + 0.5) * (W - L - R) / 3;
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}` }, document.getElementById("ch-val"));
+  for (let g = Math.ceil(ymin); g <= ymax; g += 0.5) {
+    el("line", { x1: L, y1: y(g), x2: W - R, y2: y(g), stroke: css("--grid") }, svg);
+    txt(el("text", { x: L - 8, y: y(g) + 4, "text-anchor": "end", "font-size": 11, fill: css("--muted"), class: "tick" }, svg), g.toFixed(1));
+  }
+  tiers.forEach(t => txt(el("text", { x: cx(t), y: H - 10, "text-anchor": "middle", "font-size": 13, fill: css("--ink2") }, svg), t + " 级"));
+  // deterministic jitter
+  let seed = 7; const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+  M.comps.forEach(c => {
+    const px = cx(c.quality) + (rnd() - 0.5) * 120, py = y(c.score);
+    el("circle", { cx: px, cy: py, r: 6.5, fill: cols[c.quality], stroke: css("--surface"), "stroke-width": 2 }, svg);
+    const hit = el("circle", { cx: px, cy: py, r: 13, fill: "transparent", tabindex: 0 }, svg);
+    const rows = [{ label: c.name, strong: true }, { label: "模型分", val: c.score },
+      { label: "主C " + (c.carry ? c.carry.hero + c.carry.star + "星" : "-"), val: c.carry ? fmt(c.carry.dps) + "/秒" : "-" },
+      { label: "前排EHP", val: fmt(c.frontEHP) }, { label: "官方评级", val: c.quality }];
+    hit.addEventListener("pointermove", ev => showTip(ev, rows));
+    hit.addEventListener("pointerleave", hideTip);
+    hit.addEventListener("focus", ev => { const b = hit.getBoundingClientRect(); showTip({ clientX: b.right, clientY: b.top }, rows); });
+    hit.addEventListener("blur", hideTip);
+    hit.style.cursor = "pointer";
+    hit.addEventListener("click", () => { hideTip(); const m = c.name.match(/【(.+?)】/); openComp(m ? m[1] : c.name); });
+  });
+  M.tierStats.forEach(ts => {
+    const mx = cx(ts.tier);
+    el("line", { x1: mx - 75, y1: y(ts.median), x2: mx + 75, y2: y(ts.median), stroke: css("--ink"), "stroke-width": 2 }, svg);
+    txt(el("text", { x: mx + 82, y: y(ts.median) + 4, "font-size": 11.5, fill: css("--ink2"), class: "tick" }, svg), "中位 " + ts.median.toFixed(2));
+  });
+  table("tb-val", ["阵容", "官方级", "模型分", "主C DPS", "前排EHP"],
+    M.comps.map(c => [c.name, c.quality, c.score, c.carry ? fmt(c.carry.dps) : "-", fmt(c.frontEHP)]));
+})();
+
+// ---------- chart 4: econ lines ----------
+(function () {
+  const cols = [css("--s1"), css("--s2"), css("--s3"), css("--s4"), css("--s5"), css("--s6")];
+  legend("lg-econ", M.econ.map((e, i) => ({ n: e.name, c: cols[i] })), true);
+  const W = 960, H = 340, L = 56, R = 110, T = 12, B = 34;
+  const all = M.econ.flatMap(e => e.curve);
+  const ymin = Math.min(0, Math.min(...all)) - 5, ymax = Math.max(...all) + 8;
+  const x = r => L + (r - 1) / (M.rounds.length - 1) * (W - L - R);
+  const y = v => T + (ymax - v) / (ymax - ymin) * (H - T - B);
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}` }, document.getElementById("ch-econ"));
+  for (let g = Math.ceil(ymin / 20) * 20; g <= ymax; g += 20) {
+    el("line", { x1: L, y1: y(g), x2: W - R, y2: y(g), stroke: css("--grid") }, svg);
+    txt(el("text", { x: L - 8, y: y(g) + 4, "text-anchor": "end", "font-size": 11, fill: css("--muted"), class: "tick" }, svg), g);
+  }
+  el("line", { x1: L, y1: y(0), x2: W - R, y2: y(0), stroke: css("--axis"), "stroke-width": 1 }, svg);
+  [1, 5, 10, 15, 20].forEach(r => txt(el("text", { x: x(r), y: H - 10, "text-anchor": "middle", "font-size": 11, fill: css("--muted"), class: "tick" }, svg), "回合" + r));
+  M.econ.forEach((e, i) => {
+    el("path", { d: e.curve.map((v, j) => (j ? "L" : "M") + x(j + 1) + "," + y(v)).join(""), fill: "none", stroke: cols[i], "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" }, svg);
+    const last = e.curve[e.curve.length - 1];
+    el("circle", { cx: x(20), cy: y(last), r: 4, fill: cols[i], stroke: css("--surface"), "stroke-width": 2 }, svg);
+    txt(el("text", { x: x(20) + 8, y: y(last) + 4, "font-size": 11.5, fill: css("--ink2") }, svg), e.name + " " + last);
+  });
+  // crosshair + unified tooltip
+  const hair = el("line", { y1: T, y2: H - B, stroke: css("--axis"), "stroke-width": 1, opacity: 0 }, svg);
+  const overlay = el("rect", { x: L, y: T, width: W - L - R, height: H - T - B, fill: "transparent" }, svg);
+  overlay.addEventListener("pointermove", ev => {
+    const box = svg.getBoundingClientRect();
+    const mx = (ev.clientX - box.left) / box.width * W;
+    const r = Math.max(1, Math.min(20, Math.round((mx - L) / (W - L - R) * 19 + 1)));
+    hair.setAttribute("x1", x(r)); hair.setAttribute("x2", x(r)); hair.setAttribute("opacity", 1);
+    showTip(ev, [{ label: "回合 " + r, strong: true },
+      ...M.econ.map((e, i) => ({ key: cols[i], lineKey: true, label: e.name, val: e.curve[r - 1] + " 金" }))]);
+  });
+  overlay.addEventListener("pointerleave", () => { hair.setAttribute("opacity", 0); hideTip(); });
+  table("tb-econ", ["回合", ...M.econ.map(e => e.name)],
+    M.rounds.filter(r => r % 2 === 0 || r === 1).map(r => [r, ...M.econ.map(e => e.curve[r - 1])]));
+})();
+
+// ---------- guardians section ----------
+(function () {
+  // ① 推荐榜
+  const kindCol = { 经济: css("--s3"), 战力: css("--s6") };
+  const gr = document.getElementById("g-rank");
+  const shown = M.guardians.filter(g => g.recBy.length + g.repBy.length > 0);
+  const vmax = Math.max(...shown.map(g => g.recBy.length)) || 1;
+  shown.forEach((g, i) => {
+    const d = document.createElement("div"); d.className = "rk";
+    const no = document.createElement("span"); no.className = "no"; no.textContent = i + 1;
+    const nm = document.createElement("span"); nm.className = "nm"; nm.textContent = g.name.replace(/（.+）/, "");
+    const chip = document.createElement("span"); chip.className = "chip";
+    const dot = document.createElement("i"); dot.style.background = kindCol[g.kind];
+    chip.append(dot, document.createTextNode(g.kind + "型"));
+    const m = document.createElement("span"); m.className = "meter";
+    const fill = document.createElement("i"); fill.style.width = (g.recBy.length / vmax * 100) + "%"; m.appendChild(fill);
+    const meta = document.createElement("span"); meta.className = "meta"; meta.textContent = "首推 " + g.recBy.length + " · 替补 " + g.repBy.length;
+    d.append(no, nm, chip, m, meta); gr.appendChild(d);
+    const sub = document.createElement("div");
+    sub.style.cssText = "font-size:11.5px;color:var(--muted);padding:0 0 2px 26px";
+    sub.textContent = (g.skill ? "【" + g.skill + "】" : "") + g.desc.slice(0, 90) + (g.desc.length > 90 ? "…" : "");
+    gr.appendChild(sub);
+    if (g.recBy.length) {
+      const cc = document.createElement("div"); cc.style.cssText = "padding:0 0 6px 26px";
+      g.recBy.forEach(s => {
+        const b = document.createElement("button"); b.className = "compChip"; b.textContent = s + " ▸";
+        b.addEventListener("click", () => openComp(s)); cc.appendChild(b);
+      });
+      gr.appendChild(cc);
+    }
+  });
+  // ② buff 实测条形图
+  const gcol = { "胖胖龙（战力）": css("--s2"), "魄罗粉丝（战力）": css("--s5") };
+  legend("lg-gbuff", Object.keys(gcol).map(n => ({ n: n + "（" + M.buffTests.find(t => t.guardian === n).effect + "）", c: gcol[n] })));
+  const W = 960, rowH = 32, L = 230, R = 120, T = 6;
+  const H = T + M.buffTests.length * rowH + 24;
+  const gmax = Math.ceil(Math.max(...M.buffTests.map(t => t.gain)) / 5) * 5;
+  const x = v => L + v / gmax * (W - L - R);
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}` }, document.getElementById("ch-gbuff"));
+  for (let g = 0; g <= gmax; g += 5) {
+    el("line", { x1: x(g), y1: T, x2: x(g), y2: H - 24, stroke: css("--grid") }, svg);
+    txt(el("text", { x: x(g), y: H - 8, "text-anchor": "middle", "font-size": 11, fill: css("--muted"), class: "tick" }, svg), "+" + g + "%");
+  }
+  M.buffTests.forEach((t, i) => {
+    const y = T + i * rowH + 4, bh = 20, w = Math.max(4, x(t.gain) - L);
+    txt(el("text", { x: L - 8, y: y + bh / 2 + 4, "text-anchor": "end", "font-size": 12.5, fill: css("--ink") }, svg), t.carry + " × " + t.guardian.replace(/（.+）/, ""));
+    const bar = el("path", { d: `M${L},${y} h${w - 4} a4,4 0 0 1 4,4 v${bh - 8} a4,4 0 0 1 -4,4 h-${w - 4} z`, fill: gcol[t.guardian], tabindex: 0 }, svg);
+    txt(el("text", { x: L + w + 6, y: y + bh / 2 + 4, "font-size": 12, fill: css("--ink2"), class: "tick" }, svg), "+" + t.gain + "%（" + fmt(t.base) + "→" + fmt(t.buffed) + "）");
+    const rows = [{ label: t.carry + " + " + t.guardian, strong: true },
+      { label: "触发效果", val: t.effect }, { label: "基准DPS", val: fmt(t.base) }, { label: "加成后", val: fmt(t.buffed) }, { label: "提升", val: "+" + t.gain + "%" }];
+    bar.addEventListener("pointermove", ev => showTip(ev, rows));
+    bar.addEventListener("pointerleave", hideTip);
+    bar.addEventListener("focus", ev => { const b = bar.getBoundingClientRect(); showTip({ clientX: b.right, clientY: b.top }, rows); });
+    bar.addEventListener("blur", hideTip);
+  });
+  // ③ 站场折算
+  const gf = document.getElementById("g-field");
+  M.fieldTests.forEach(t => {
+    const p = document.createElement("div"); p.className = "noteP";
+    const b = document.createElement("b");
+    b.textContent = t.name + (t.ehp ? "（EHP " + fmt(t.ehp) + (t.dps ? " · 木桩DPS " + t.dps : "") + "）" : "");
+    p.appendChild(b); p.appendChild(document.createTextNode("：" + t.note));
+    gf.appendChild(p);
+  });
+  table("tb-guard", ["守护者", "形态", "S级首推", "替补", "技能", "面板(HP/AD/AS/双抗)"],
+    M.guardians.map(g => [g.name, g.kind, g.recBy.join("、") || "-", g.repBy.length, (g.skill || "-") + " " + g.desc.slice(0, 60), `${g.hp}/${g.ad}/${g.as}/${g.armor}+${g.mr}`]));
+})();
+
+// ---------- discovery section ----------
+(function () {
+  const D = DISC;
+  const main = document.getElementById("discover-stage-main");
+  if (!D || !main) {
+    if (main) main.innerHTML = "<div class='note'>未找到阵容发现数据。请先运行 <code>npm run build:discovery</code> 生成 <code>public/discovery-data.js</code>。</div>";
+    return;
+  }
+  const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+  const pct = p => (Math.round(p * 10) / 10).toFixed(p % 1 ? 1 : 0) + "%";
+  let stageView = "late";
+  let monsterView = "carry";
+  let augView = "combat";
+  let selected = null;
+  const stageMap = Object.fromEntries(D.stages.map(s => [s.key, s]));
+  const stageLabels = { early: "前期", mid: "中期", late: "后期" };
+  const monsterTabs = [["carry","输出怪"],["efficiency","低费效率"],["tank","前排怪"]];
+  const augTabs = [["combat","战力"],["economy","经济"],["item","装备"],["trait","羁绊"],["hero","英雄强化"]];
+
+  function drawTabs(id, rows, value, onClick) {
+    const box = document.getElementById(id);
+    box.innerHTML = rows.map(r => `<button class="discoverTab ${value === r[0] ? "active" : ""}" data-v="${esc(r[0])}">${esc(r[1])}</button>`).join("");
+    box.querySelectorAll("button").forEach(b => b.addEventListener("click", () => onClick(b.dataset.v)));
+  }
+
+  function flagChip(flag) {
+    const col = flag === "野路子" ? css("--s6") : flag === "官方配角" ? css("--s3") : css("--s1");
+    return `<span class="chip"><i style="background:${col}"></i>${esc(flag)}</span>`;
+  }
+
+  function renderStats() {
+    const lateTop = D.stageComps.late[0];
+    const monster = D.numericMonsters.carry[0];
+    const threeCost = D.shopModel.generic.find(x => x.name.includes("3费"));
+    document.getElementById("discover-desc").textContent =
+      `搜索空间：${D.searchSpace.heroes} 个英雄 × ${fmt(D.searchSpace.offenseCombos)} 套输出装 × 阶段人口束搜索；结果不受官方阵容列表约束。`;
+    document.getElementById("discover-stats").innerHTML = [
+      ["后期最高候选", lateTop.carry + lateTop.carryStar + "星", lateTop.score + "分 · " + lateTop.officialFlag],
+      ["最高个体DPS", monster.hero, fmt(monster.dps) + "/秒 · " + monster.officialFlag],
+      ["3费追三概率", threeCost.pct + "%", "7级50金，从0张搜9张近似"],
+      ["模型生成", D.generated, D.version],
+    ].map(t => `<div class="discoverStat"><div class="lb">${esc(t[0])}</div><div class="vv">${esc(t[1])}</div><div class="dd">${esc(t[2])}</div></div>`).join("");
+  }
+
+  function openDiscoveredTeam(r) {
+    const body = document.getElementById("dlgBody");
+    body.textContent = "";
+    const mk = (tag, cls, text, parent) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text) e.textContent = text; if (parent) parent.appendChild(e); return e; };
+    const head = mk("div", "dlgHead", null, body);
+    const badge = mk("span", "qbadge", "模型发现", head); badge.style.background = css("--s2");
+    mk("h2", null, stageLabels[r.stage] + " · " + r.carry + r.carryStar + "星C", head);
+    const x = mk("button", "closeX", "✕", head); x.addEventListener("click", () => dlg.close());
+    mk("div", "dlgMeta", "总分 " + fmt(r.score) + " ｜ 主C " + fmt(r.carryDps) + "/秒 · 前排EHP " + fmt(r.frontEHP) + " · 副输出 " + fmt(r.subDps) + " · 成本 " + r.teamCost + "费 ｜ " + r.officialFlag, body);
+    const tc = mk("div", "traitChips", null, body);
+    (r.traits || []).forEach(a => mk("span", "chip", a, tc));
+    mk("div", "secT", "阵容棋子", body);
+    const grid = mk("div", null, null, body);
+    grid.style.cssText = "display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px";
+    const ramp = [css("--seq250"), css("--seq350"), css("--seq450"), css("--seq550"), css("--seq650")];
+    r.team.forEach(u => {
+      const cell = mk("div", "cell" + (u.name === r.carry ? " carry" : ""), null, grid);
+      cell.style.borderTop = "3px solid " + ramp[u.price - 1];
+      cell.style.minHeight = "58px";
+      mk("div", "cn", (u.name === r.carry ? "⭐" : "") + u.name, cell);
+      mk("div", "cost", u.price + "费" + (u.name === r.carry ? " · " + r.carryStar + "星" : ""), cell);
+      if (u.name === r.carry) r.carryItems.forEach(it => mk("div", "it", it, cell));
+      const td = (r.tankDetail || []).find(x => x.hero === u.name);
+      if (td) td.items.forEach(it => mk("div", "it", it, cell));
+    });
+    mk("div", "secT", "为什么它会被模型挑出来", body);
+    mk("div", "noteP", r.reason, body);
+    mk("div", "noteP", "rawScore " + fmt(r.rawScore) + "，成型成本惩罚 " + fmt(r.tempoPenalty) + "。它是研究候选：需要用实战样本继续验证站位、控制链、同行和成型速度。", body);
+    dlg.showModal();
+  }
+
+  function renderStageDetail() {
+    const box = document.getElementById("discover-stage-detail");
+    const r = selected || D.stageComps[stageView][0];
+    selected = r;
+    box.innerHTML =
+      `<p><b>${esc(r.carry)}${r.carryStar}星C</b> ${flagChip(r.officialFlag)}</p>` +
+      `<p>${esc(r.carryItems.join(" + "))}</p>` +
+      `<p><b>分数</b> ${fmt(r.score)} ｜ 主C ${fmt(r.carryDps)}/秒 ｜ 前排EHP ${fmt(r.frontEHP)}</p>` +
+      `<p><b>羁绊</b> ${esc(r.traits.slice(0, 7).join(" / "))}</p>` +
+      `<p><b>理由</b> ${esc(r.reason)}</p>` +
+      `<button class="compChip" id="discover-open-team">查看阵容详情 ▸</button>`;
+    document.getElementById("discover-open-team").addEventListener("click", () => openDiscoveredTeam(r));
+  }
+
+  function renderStage() {
+    drawTabs("discover-stage-tabs", D.stages.map(s => [s.key, `${stageLabels[s.key]} · ${s.level}人口`]), stageView, v => {
+      stageView = v; selected = D.stageComps[stageView][0]; renderStage();
+    });
+    const rows = D.stageComps[stageView];
+    const note = stageMap[stageView].note;
+    main.innerHTML = `<div class="desc">${esc(note)}</div><div class="discoverRows">${
+      rows.map((r, i) =>
+        `<div class="discoverRow" data-i="${i}">
+          <div class="rank">#${i + 1}</div>
+          <div class="main">
+            <div class="title">${esc(r.carry)}${r.carryStar}星C · ${esc(r.carryItems.join(" + "))}</div>
+            <div class="subr">${esc(r.team.map(u => u.name).join("、"))}</div>
+            <div class="subr">${esc(r.traits.slice(0, 6).join(" / "))}</div>
+          </div>
+          <div class="score">${fmt(r.score)}</div>
+          <div class="flag">${flagChip(r.officialFlag)}</div>
+        </div>`).join("")
+    }</div>`;
+    main.querySelectorAll(".discoverRow").forEach(row => row.addEventListener("click", () => {
+      selected = rows[Number(row.dataset.i)];
+      renderStageDetail();
+    }));
+    renderStageDetail();
+  }
+
+  function renderTransitions() {
+    const box = document.getElementById("transition-routes");
+    const T = TRANS;
+    if (!box) return;
+    if (!T || !T.routes || !T.routes.length) {
+      box.innerHTML = "<div class='note'>未找到过渡路线数据。请运行 <code>node transition.js</code> 生成。</div>";
+      return;
+    }
+    box.innerHTML = T.routes.slice(0, 6).map((r, i) => {
+      const stage = key => {
+        const s = r.stages[key];
+        return `<div class="routeStage">
+          <b>${s.label}：${esc(s.carry)}${s.carryStar}星 · ${s.score}分</b>
+          <div class="tiny">${esc(s.items.join(" + "))}</div>
+          <div class="tiny">${esc(s.team.map(u => u.name).join("、"))}</div>
+          <div class="tiny">${esc(s.traits.slice(0, 4).join(" / "))}</div>
+        </div>`;
+      };
+      return `<div class="routeCard">
+        <div class="routeHead">
+          <div class="routeName">#${i + 1} ${esc(r.name)}</div>
+          <div class="routeScore">${r.score}分</div>
+        </div>
+        <div>${(r.tags || []).map(t => `<span class="chip">${esc(t)}</span>`).join("")}</div>
+        <div class="routeStages">${stage("early")}${stage("mid")}${stage("late")}</div>
+        <div class="routeTrans"><b>前->中</b> 保留 ${esc(r.transition.earlyToMid.keep.join("、") || "-")}；补 ${esc(r.transition.earlyToMid.add.join("、") || "-")}</div>
+        <div class="routeTrans"><b>中->后</b> 保留 ${esc(r.transition.midToLate.keep.join("、") || "-")}；补 ${esc(r.transition.midToLate.add.join("、") || "-")}</div>
+        <div class="note">${esc(r.verdict)} ｜ 强度 ${r.strength} · 平滑 ${r.smooth} · 风险 ${r.risk}</div>
+      </div>`;
+    }).join("");
+  }
+
+  function renderNumericLens() {
+    const box = document.getElementById("numeric-lens");
+    const N = LENS;
+    if (!box) return;
+    if (!N || !N.routes || !N.routes.length) {
+      box.innerHTML = "<div class='note'>未找到数值透视数据。请运行 <code>node numeric-lens.js</code> 生成。</div>";
+      return;
+    }
+    const routeCards = N.routes.slice(0, 4).map((r, i) => {
+      const stage = key => {
+        const s = r.stages[key], c = s.carry, f = s.front;
+        const topItem = c.itemDrops[0];
+        const topTrait = c.traitDrops[0];
+        return `<div class="lensStage">
+          <b>${s.label}：${esc(c.hero)}${c.star}星</b>
+          <div class="num">裸 ${c.baseDps} -> 装备 ${c.itemsOnlyDps} -> 羁绊 ${c.traitsOnlyDps} -> 完整 ${c.dps}</div>
+          <div class="num">完整倍率 ${c.fullGainX}x ｜ 前排EHP ${f.ehp}</div>
+          <div class="hotline">装备杠杆：${topItem ? esc(topItem.item) + " -" + topItem.dropPct + "%" : "-"}</div>
+          <div class="hotline">羁绊杠杆：${topTrait ? esc(topTrait.trait) + " -" + topTrait.dropPct + "%" : "-"}</div>
+        </div>`;
+      };
+      return `<div class="lensCard">
+        <div class="lensHead">
+          <b>#${i + 1} ${esc(r.name)}</b>
+          <span class="chip">强度${r.routeComponents.strength} / 平滑${r.routeComponents.smooth} / 风险${r.routeComponents.risk}</span>
+        </div>
+        <div class="lensFind">${r.keyFindings.map(esc).join("；")}</div>
+        <div class="lensStages">${stage("early")}${stage("mid")}${stage("late")}</div>
+      </div>`;
+    }).join("");
+    const lever = (title, rows, val) => `<div>
+      <h3>${title}</h3>
+      ${rows.slice(0, 5).map((x, i) => `<div class="rk">
+        <span class="no">${i + 1}</span>
+        <span class="nm">${esc(x.stage)} ${esc(x.hero)}</span>
+        <span class="meta">${esc(val(x))}</span>
+      </div>`).join("")}
+    </div>`;
+    const levers = `<div class="leverCols">
+      ${lever("装备依赖最高", N.globalLevers.mostItemDependent, x => `${x.topItem || "-"} -${x.topItemDropPct || 0}%`)}
+      ${lever("羁绊依赖最高", N.globalLevers.mostTraitDependent, x => `${x.topTrait || "-"} -${x.topTraitDropPct || 0}%`)}
+      ${lever("完整倍率最高", N.globalLevers.biggestMultiplier, x => `${x.fullGainX}x`)}
+    </div>`;
+    box.innerHTML = routeCards + levers;
+  }
+
+  function renderMonsters() {
+    drawTabs("discover-monster-tabs", monsterTabs, monsterView, v => { monsterView = v; renderMonsters(); });
+    const rows = D.numericMonsters[monsterView];
+    const metric = monsterView === "tank" ? "ehp" : monsterView === "efficiency" ? "value" : "dps";
+    const maxv = Math.max(...rows.map(r => r[metric]));
+    document.getElementById("discover-monsters").innerHTML = rows.map((r, i) => {
+      const meta = monsterView === "tank"
+        ? `EHP ${fmt(r.ehp)} · ${r.items.join("+")}`
+        : `${fmt(r.dps)}/秒 · ${r.items.join("+")}`;
+      const title = `${r.hero}${r.star}星（${r.price}费）`;
+      return `<div class="rk">
+        <span class="no">${i + 1}</span>
+        <span class="nm">${esc(title)}</span>
+        ${r.officialFlag ? flagChip(r.officialFlag) : ""}
+        <span class="meter"><i style="width:${Math.max(4, r[metric] / maxv * 100)}%"></i></span>
+        <span class="meta">${esc(meta)}</span>
+      </div>`;
+    }).join("");
+  }
+
+  function renderShop() {
+    const roll = D.shopModel.generic;
+    const target = D.shopModel.targetHits;
+    document.getElementById("discover-roll").innerHTML =
+      `<div class="desc">概率口径：每2金刷新一次、每次5格，从0张开始搜到目标张数；未扣公共牌库和同行，所以只适合比较“哪条线更难成”。</div>` +
+      `<table><tr><th>计划</th><th>等级</th><th>目标</th><th>金币</th><th>近似概率</th></tr>` +
+      roll.map(r => `<tr><td>${esc(r.name)}</td><td>${r.level}</td><td>${r.cost}费×${r.copies}</td><td>${r.gold}</td><td>${pct(r.pct)}</td></tr>`).join("") +
+      `</table><h3>候选主C搜卡难度</h3>` +
+      `<table><tr><th>英雄</th><th>目标</th><th>推荐等级/金币</th><th>近似概率</th></tr>` +
+      target.map(r => `<tr><td>${esc(r.hero)}（${r.price}费）</td><td>${esc(r.target)}</td><td>${r.level}级 / ${r.gold}金</td><td>${pct(r.pct)}</td></tr>`).join("") +
+      `</table>`;
+    const costs = [1, 2, 3, 4, 5];
+    document.getElementById("discover-odds").innerHTML =
+      `<div class="desc">商店费用概率假设表，可后续按金铲铲真实版本校准。</div>` +
+      `<table><tr><th>等级</th>${costs.map(c => `<th>${c}费</th>`).join("")}</tr>` +
+      Object.entries(D.shopModel.odds).map(([lv, arr]) => `<tr><td>${lv}</td>${arr.map(x => `<td>${x}%</td>`).join("")}</tr>`).join("") +
+      `</table><div class="note">同费用英雄数量：${Object.entries(D.shopModel.unitCounts).map(([c, n]) => c + "费" + n + "个").join("，")}。</div>`;
+  }
+
+  function renderAugs() {
+    drawTabs("discover-aug-tabs", augTabs, augView, v => { augView = v; renderAugs(); });
+    const rows = D.augmentLeads[augView] || [];
+    document.getElementById("discover-augs").innerHTML = rows.slice(0, 10).map((r, i) =>
+      `<div>
+        <div class="rk">
+          <span class="no">${i + 1}</span>
+          <span class="nm">${esc(r.name)}</span>
+          <span class="chip">${esc(r.reason)}</span>
+          <span class="meta">${r.score}</span>
+        </div>
+        <div class="note">${esc(r.desc)}</div>
+      </div>`).join("");
+  }
+
+  renderStats();
+  renderStage();
+  renderTransitions();
+  renderNumericLens();
+  renderMonsters();
+  renderShop();
+  renderAugs();
+})();
+
+// ---------- team search section ----------
+function openTeam(t) {
+  const body = document.getElementById("dlgBody");
+  body.textContent = "";
+  const mk = (tag, cls, text, parent) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text) e.textContent = text; if (parent) parent.appendChild(e); return e; };
+  const head = mk("div", "dlgHead", null, body);
+  const badge = mk("span", "qbadge", "模型自建", head); badge.style.background = css("--s2");
+  mk("h2", null, t.carry + "C · " + (t.acts || []).slice(0, 3).join(" ") , head);
+  const x = mk("button", "closeX", "✕", head); x.addEventListener("click", () => dlg.close());
+  mk("div", "dlgMeta", "同口径总分 " + t.score + " ｜ 主C " + fmt(t.carryDps) + "/秒 · 前排EHP " + fmt(t.frontEHP) + " · 副输出 " + fmt(t.subDps) + " · 机制分 " + t.util, body);
+  const tc = mk("div", "traitChips", null, body);
+  (t.acts || []).forEach(a => mk("span", "chip", a, tc));
+  mk("div", "secT", "阵容（8人棋盘，模型不给站位——站位请参考同体系官方阵容）", body);
+  const grid = mk("div", null, null, body);
+  grid.style.cssText = "display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:6px";
+  const ramp = [css("--seq250"), css("--seq350"), css("--seq450"), css("--seq550"), css("--seq650")];
+  t.team.forEach(u => {
+    const cell = mk("div", "cell" + (u.name === t.carry ? " carry" : ""), null, grid);
+    cell.style.borderTop = "3px solid " + ramp[u.price - 1];
+    cell.style.minHeight = "56px";
+    mk("div", "cn", (u.name === t.carry ? "⭐" : "") + u.name, cell);
+    mk("div", "cost", u.price + "费" + (u.name === t.carry ? " · " + t.carryStar + "星" : ""), cell);
+    if (u.name === t.carry) t.carryItems.forEach(it => mk("div", "it", it, cell));
+    const td = (t.tankDetail || []).find(x => x.hero === u.name);
+    if (td) td.items.forEach(it => mk("div", "it", it, cell));
+  });
+  mk("div", "secT", "说明", body);
+  mk("div", "noteP", "这套阵容由束搜索自动生成：以主C最优出装为核心，逐格挑选能最大化(主C羁绊增益+前排质量+机制分)的棋子。羁绊数值取官方原文，黑客/魔盗团等机制羁绊按保守折算。属于实战验证候选。", body);
+  dlg.showModal();
+}
+(function () {
+  const TS = M.teamsearch;
+  if (!TS) return;
+  const mBest = TS.topTeams[0], oBest = TS.officialScored[0];
+  document.getElementById("ts-desc").textContent =
+    `束搜索：12个候选主C × 每步从62棋子中选边际收益最高者 × 束宽24，约2万个中间态，最终态用完整战斗模拟评分。结论：官方最强【${oBest.name}】${oBest.score}分守住第一；模型自建的${mBest.carry}体系 ${mBest.score}分（差${((1 - mBest.score / oBest.score) * 100).toFixed(1)}%）是官方没有的全新阵容。`;
+  legend("lg-ts", [{ n: "模型自建阵容", c: css("--s2") }, { n: "官方S级（同口径重评分）", c: css("--s1") }]);
+  const rows = [
+    ...TS.topTeams.map(t => ({ kind: "model", label: t.carry + (t.carryStar || 2) + "星C 模型自建", score: t.score, t })),
+    ...TS.officialScored.slice(0, 8).map(o => ({ kind: "official", label: o.name, score: o.score, o })),
+  ].sort((a, b) => b.score - a.score);
+  const W = 960, rowH = 30, L = 230, R = 90, T2 = 6, H = T2 + rows.length * rowH + 24;
+  const xmax = Math.ceil(rows[0].score / 500) * 500;
+  const x = v => L + v / xmax * (W - L - R);
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}` }, document.getElementById("ch-ts"));
+  for (let g = 0; g <= xmax; g += 500) {
+    el("line", { x1: x(g), y1: T2, x2: x(g), y2: H - 24, stroke: css("--grid") }, svg);
+    txt(el("text", { x: x(g), y: H - 8, "text-anchor": "middle", "font-size": 11, fill: css("--muted"), class: "tick" }, svg), fmt(g));
+  }
+  rows.forEach((r, i) => {
+    const y = T2 + i * rowH + 4, bh = 19, w = x(r.score) - L;
+    txt(el("text", { x: L - 8, y: y + bh / 2 + 4, "text-anchor": "end", "font-size": 12, fill: css("--ink") }, svg), r.label.slice(0, 15));
+    const bar = el("path", { d: `M${L},${y} h${w - 4} a4,4 0 0 1 4,4 v${bh - 8} a4,4 0 0 1 -4,4 h-${w - 4} z`,
+      fill: r.kind === "model" ? css("--s2") : css("--s1"), tabindex: 0 }, svg);
+    bar.style.cursor = "pointer";
+    txt(el("text", { x: L + w + 6, y: y + bh / 2 + 4, "font-size": 11.5, fill: css("--ink2"), class: "tick" }, svg), fmt(r.score));
+    const info = r.t || r.o;
+    const tipRows = [
+      { label: r.label + "（" + (r.kind === "model" ? "模型自建，点击看阵容" : "官方S级，点击看详情") + "）", strong: true },
+      { key: r.kind === "model" ? css("--s2") : css("--s1"), label: "同口径总分", val: fmt(r.score) },
+      { label: "主C DPS", val: fmt(info.carryDps) }, { label: "前排EHP", val: fmt(info.frontEHP) },
+      { label: "羁绊", val: (info.acts || []).slice(0, 5).join(" ") }];
+    bar.addEventListener("pointermove", ev => showTip(ev, tipRows));
+    bar.addEventListener("pointerleave", hideTip);
+    bar.addEventListener("click", () => { hideTip(); r.kind === "model" ? openTeam(r.t) : openComp(r.o.name); });
+    bar.addEventListener("focus", ev => { const b = bar.getBoundingClientRect(); showTip({ clientX: b.right, clientY: b.top }, tipRows); });
+    bar.addEventListener("blur", hideTip);
+  });
+  table("tb-ts", ["阵容", "来源", "总分", "主C DPS", "前排EHP", "副输出", "羁绊"],
+    rows.map(r => { const i = r.t || r.o; return [r.label, r.kind === "model" ? "模型" : "官方", fmt(r.score), fmt(i.carryDps), fmt(i.frontEHP), fmt(i.subDps || 0), (i.acts || []).join(" ")]; }));
+
+  // ①+ 对位速算器
+  const pool = [
+    ...TS.officialScored.map(o => ({ label: "官方·" + o.name, d: o })),
+    ...TS.topTeams.map(t => ({ label: "模型·" + t.carry + "C自建", d: t })),
+  ];
+  const h2h = document.getElementById("h2h");
+  const bar = document.createElement("div");
+  bar.style.cssText = "display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px";
+  const mkSel = init => {
+    const s = document.createElement("select");
+    s.style.cssText = "background:var(--surface);color:var(--ink);border:1px solid var(--border);border-radius:8px;padding:5px 10px;font:inherit;font-size:12.5px";
+    pool.forEach((p, i) => { const o = document.createElement("option"); o.value = i; o.textContent = p.label; s.appendChild(o); });
+    s.value = init; return s;
+  };
+  const iA = pool.findIndex(p => p.label.includes("无情连打")), iB = pool.findIndex(p => p.label.includes("小天才"));
+  const selA = mkSel(String(Math.max(0, iA))), selB = mkSel(String(Math.max(1, iB)));
+  const vs = document.createElement("span"); vs.textContent = "VS"; vs.style.cssText = "font-weight:700;color:var(--ink2)";
+  bar.append(selA, vs, selB); h2h.appendChild(bar);
+  const res = document.createElement("div"); h2h.appendChild(res);
+  function fight() {
+    const A = pool[selA.value], B = pool[selB.value];
+    const dpsA = A.d.carryDps + 0.5 * (A.d.subDps || 0), dpsB = B.d.carryDps + 0.5 * (B.d.subDps || 0);
+    const tA = B.d.frontEHP / dpsA, tB = A.d.frontEHP / dpsB; // A击穿B用时 / B击穿A用时
+    const ratio = tB / tA;
+    let verdict, col;
+    if (ratio > 1.3) { verdict = A.label + " 明显优势（快 " + ratio.toFixed(1) + " 倍击穿）"; col = css("--s2"); }
+    else if (ratio > 1.1) { verdict = A.label + " 小优"; col = css("--s2"); }
+    else if (ratio >= 0.9) { verdict = "五五开（差距<10%，看装备成型与站位）"; col = css("--s3"); }
+    else if (ratio >= 1 / 1.3) { verdict = B.label + " 小优"; col = css("--s6"); }
+    else { verdict = B.label + " 明显优势（快 " + (1 / ratio).toFixed(1) + " 倍击穿）"; col = css("--s6"); }
+    res.textContent = "";
+    const v = document.createElement("div"); v.style.cssText = "font-size:15px;font-weight:650;margin:4px 0 8px"; v.textContent = verdict;
+    const dot = document.createElement("span"); dot.style.cssText = "display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px;background:" + col;
+    v.prepend(dot); res.appendChild(v);
+    [[A, B, tA, dpsA], [B, A, tB, dpsB]].forEach(([X, Y, t, dps]) => {
+      const p = document.createElement("div"); p.className = "noteP";
+      p.textContent = X.label + " 击穿 " + Y.label + " 前排（EHP " + fmt(Y.d.frontEHP) + "）需 " + t.toFixed(1) + " 秒（队伍DPS≈" + fmt(dps) + "：主C " + fmt(X.d.carryDps) + " + 副输出折半）";
+      res.appendChild(p);
+    });
+    const n = document.createElement("div"); n.className = "note";
+    n.textContent = "口径：双方同时满成型；未计物/魔抗性对位、精英战士处决线、控制链与站位——差距在1.3倍内建议视为可操作对局。成型时间点不同（如贾克斯4阶段卡三 vs 九五上9），实战先到成型点的一方在窗口期内说了算。";
+    res.appendChild(n);
+  }
+  selA.addEventListener("change", fight); selB.addEventListener("change", fight);
+  fight();
+})();
+
+// ---------- combo search section ----------
+(function () {
+  const CS = M.combosearch;
+  if (!CS) return;
+  document.getElementById("cs-desc").textContent =
+    `暴力搜索：${CS.space.heroes} 个英雄 × ${fmt(CS.space.dpsCombos)} 种三件套（允许重复装备）≈ ${fmt(CS.space.heroes * CS.space.dpsCombos)} 次战斗模拟，另搜 ${fmt(CS.space.ehpCombos)} 种坦装组合。星级口径与主模型一致（≤3费按3星、4/5费按2星）。官方最优主C基准 = ${fmt(CS.officialBestDps)}/秒（贾克斯3星官方出装）。`;
+  const flagCol = { 官方同款: css("--s1"), 同C换装: css("--s2"), 官方非C: css("--s3"), 野路子: css("--s6") };
+  const flagDesc = { 官方同款: "英雄+出装与官方一致", 同C换装: "官方主C，模型给出更强出装", 官方非C: "官方只当配角/前排的英雄", 野路子: "官方44套完全没用的英雄" };
+  legend("lg-cs", Object.keys(flagCol).map(n => ({ n: n + "（" + flagDesc[n] + "）", c: flagCol[n] })));
+  // ① 每英雄最优 bars
+  const data = CS.perHeroTop;
+  const W = 960, rowH = 32, L = 200, R = 160, T = 8, H = T + data.length * rowH + 24;
+  const xmax = Math.ceil(Math.max(data[0].dps, CS.officialBestDps) / 100) * 100;
+  const x = v => L + v / xmax * (W - L - R);
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}` }, document.getElementById("ch-cs"));
+  for (let g = 0; g <= xmax; g += 200) {
+    el("line", { x1: x(g), y1: T, x2: x(g), y2: H - 24, stroke: css("--grid") }, svg);
+    txt(el("text", { x: x(g), y: H - 8, "text-anchor": "middle", "font-size": 11, fill: css("--muted"), class: "tick" }, svg), fmt(g));
+  }
+  data.forEach((d, i) => {
+    const y = T + i * rowH + 4, bh = 20, w = x(d.dps) - L;
+    txt(el("text", { x: L - 8, y: y + bh / 2 + 4, "text-anchor": "end", "font-size": 12.5, fill: css("--ink") }, svg), d.hero + d.star + "星（" + d.price + "费）");
+    const bar = el("path", { d: `M${L},${y} h${w - 4} a4,4 0 0 1 4,4 v${bh - 8} a4,4 0 0 1 -4,4 h-${w - 4} z`, fill: flagCol[d.flag], tabindex: 0 }, svg);
+    txt(el("text", { x: L + w + 6, y: y + bh / 2 + 4, "font-size": 11.5, fill: css("--ink2"), class: "tick" }, svg), fmt(d.dps) + " · " + d.items.join("+").slice(0, 16) + "…");
+    const rows = [{ label: d.hero + d.star + "星 · " + d.flag, strong: true },
+      { label: d.items.join(" + ") },
+      { key: flagCol[d.flag], label: "模拟DPS", val: fmt(d.dps) + "/秒" },
+      { label: "构成 平A/技能/特效", val: fmt(d.auto) + "/" + fmt(d.spell) + "/" + fmt(d.proc) },
+      { label: "vs 官方最优基准", val: (d.dps / CS.officialBestDps * 100 - 100).toFixed(1) + "%" }];
+    bar.addEventListener("pointermove", ev => showTip(ev, rows));
+    bar.addEventListener("pointerleave", hideTip);
+    bar.addEventListener("focus", ev => { const b = bar.getBoundingClientRect(); showTip({ clientX: b.right, clientY: b.top }, rows); });
+    bar.addEventListener("blur", hideTip);
+  });
+  // 官方基准虚线
+  el("line", { x1: x(CS.officialBestDps), y1: T, x2: x(CS.officialBestDps), y2: H - 24, stroke: css("--ink"), "stroke-width": 1.5, "stroke-dasharray": "5 4", opacity: .6 }, svg);
+  txt(el("text", { x: x(CS.officialBestDps) + 5, y: T + 12, "font-size": 11, fill: css("--ink2") }, svg), "官方最优 " + fmt(CS.officialBestDps));
+  // ② 机制发现
+  const zoe = data.find(d => d.hero === "佐伊");
+  const gsc = data.filter(d => d.items.some(i => i === "鬼索的狂暴之刃")).length;
+  const findings = [
+    ["鬼索的狂暴之刃出现在 " + gsc + "/12 个每英雄最优组合里", "羊刀无上限攻速叠层是本赛季第一机制装——官方三套贾克斯用它，但模型说它的价值适用于几乎所有主C，尤其是低蓝耗施法者。"],
+    zoe ? ["佐伊：魔法帽+羊刀+蓝霸符 = " + fmt(zoe.dps) + "/秒（官方给她的出装模拟仅 559）", "她只有30点蓝，每3次攻击≈施放一次技能，攻速就是施法频率——羊刀在她身上是双倍收益。比官方全场最优（贾克斯570）还高 " + (zoe.dps / CS.officialBestDps * 100 - 100).toFixed(0) + "%。"] : null,
+    ["蕾欧娜输出流 572/秒：官方15套全把她当前排", "这版蕾欧娜技能是每秒350真实伤害的轨道激光（且模拟只按每次施放算一跳，实际更高）。朔极+羊刀提高施法频率后，她的输出和贾克斯同档——典型的\"机制里藏着的野路子\"。"],
+    ["坦克搜索：双狂徒铠甲叠回复 > 官方常规肉装", "狂徒每秒回2%最大生命且可以带两件，站场折算后努努双狂徒+圣盾 EHP 12,100，超过官方任何单体前排（最高瑟庄妮9,360）。"],
+  ].filter(Boolean);
+  const cf = document.getElementById("cs-findings");
+  findings.forEach(f => {
+    const p = document.createElement("div"); p.className = "noteP";
+    const b = document.createElement("b"); b.textContent = f[0];
+    p.appendChild(b); p.appendChild(document.createElement("br")); p.appendChild(document.createTextNode(f[1]));
+    cf.appendChild(p);
+  });
+  // ③ 野路子提名
+  const om = document.getElementById("cs-offmeta");
+  const omax = CS.offMeta[0].dps;
+  CS.offMeta.forEach((r, i) => {
+    const d = document.createElement("div"); d.className = "rk";
+    const no = document.createElement("span"); no.className = "no"; no.textContent = i + 1;
+    const nm = document.createElement("span"); nm.className = "nm"; nm.textContent = r.hero + r.star + "星（" + r.price + "费）";
+    const chip = document.createElement("span"); chip.className = "chip";
+    const dot = document.createElement("i"); dot.style.background = flagCol[r.flag];
+    chip.append(dot, document.createTextNode(r.flag));
+    const m = document.createElement("span"); m.className = "meter";
+    const fill = document.createElement("i"); fill.style.width = (r.dps / omax * 100) + "%"; m.appendChild(fill);
+    const meta = document.createElement("span"); meta.className = "meta"; meta.textContent = fmt(r.dps) + "/秒 · " + r.items.join("+");
+    d.append(no, nm, chip, m, meta); om.appendChild(d);
+  });
+  // ④ 坦克
+  const tk = document.getElementById("cs-tank");
+  const tmax = CS.topTank[0].ehp;
+  CS.topTank.forEach((r, i) => {
+    const d = document.createElement("div"); d.className = "rk";
+    const no = document.createElement("span"); no.className = "no"; no.textContent = i + 1;
+    const nm = document.createElement("span"); nm.className = "nm"; nm.textContent = r.hero + "2星（" + r.price + "费）";
+    const m = document.createElement("span"); m.className = "meter";
+    const fill = document.createElement("i"); fill.style.width = (r.ehp / tmax * 100) + "%"; m.appendChild(fill);
+    const meta = document.createElement("span"); meta.className = "meta"; meta.textContent = "EHP " + fmt(r.ehp) + " · " + r.items.join("+");
+    d.append(no, nm, m, meta); tk.appendChild(d);
+  });
+  table("tb-cs", ["#", "英雄", "星", "装备", "DPS", "平A/技能/特效", "对照"],
+    CS.top.map((r, i) => [i + 1, r.hero + "（" + r.price + "费）", r.star, r.items.join("+"), fmt(r.dps), fmt(r.auto) + "/" + fmt(r.spell) + "/" + fmt(r.proc), r.flag]));
+})();
+
+// ---------- audit module ----------
+(function () {
+  const A = window.AUDIT;
+  const main = document.getElementById("audit-main");
+  if (!A || !main) {
+    if (main) main.innerHTML = "<div class='note'>未找到审计数据。请先运行 <code>npm run audit</code> 生成 <code>public/audit-data.js</code>。</div>";
+    return;
+  }
+  let view = "data";
+  let selected = null;
+  const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+  const textOf = x => {
+    if (x == null) return "";
+    if (typeof x === "string" || typeof x === "number" || typeof x === "boolean") return String(x);
+    if (Array.isArray(x)) return x.map(textOf).join(" ");
+    return Object.values(x).map(textOf).join(" ");
+  };
+  const sevBadge = s => `<span class="sev ${s || "P3"}">${s || "P3"}</span>`;
+  const pill = s => `<span class="auditPill">${esc(s)}</span>`;
+  function pass(row) {
+    const q = document.getElementById("audit-q").value.trim().toLowerCase();
+    const sev = document.getElementById("audit-sev").value;
+    const scope = document.getElementById("audit-scope").value;
+    if (q && !textOf(row).toLowerCase().includes(q)) return false;
+    if (sev !== "all" && row.severity && row.severity !== sev) return false;
+    if (scope === "S" && row.quality && row.quality !== "S") return false;
+    if (scope === "carry" && row.official && !row.official.sCarry) return false;
+    if (scope === "used" && row.official && !row.official.sUsed) return false;
+    if (scope === "wild" && row.flag && !/野路子|官方非C/.test(row.flag)) return false;
+    return true;
+  }
+  function renderDetail() {
+    const box = document.getElementById("audit-detail");
+    const row = selected || A.data.contactIssues.find(x => x.severity === "P1") || A.skills.highRiskHeroes[0];
+    if (!row) { box.textContent = "暂无数据"; return; }
+    const title = row.line || row.name || row.hero || row.id || "审计项";
+    const meta = row.severity || row.skillName || row.type || row.flag || "";
+    box.innerHTML = `<p><b>${esc(title)}</b></p><p>${esc(meta)}</p><pre>${esc(JSON.stringify(row, null, 2))}</pre>`;
+  }
+  function bindRows(rows, prefix) {
+    rows.forEach((r, i) => {
+      const tr = document.querySelector(`[data-audit-row="${prefix}-${i}"]`);
+      if (tr) tr.addEventListener("click", () => { selected = r; renderDetail(); });
+    });
+  }
+  function auditTable(headers, rows, fn) {
+    if (!rows.length) return "<div class='note'>没有匹配项</div>";
+    return `<div class="auditTableWrap"><table class="auditTable"><tr>${headers.map(h => `<th>${h}</th>`).join("")}</tr>${rows.map(fn).join("")}</table></div>`;
+  }
+  function renderData() {
+    const contacts = A.data.contactIssues.filter(pass);
+    const refs = A.data.referenceIssues.filter(pass);
+    const dups = A.data.duplicateHeroNames.filter(pass);
+    main.innerHTML =
+      `<h3>阵容 contact 羁绊异常</h3>` +
+      auditTable(["级别","阵容","质量","官方","反推","问题摘要"], contacts, (x, i) =>
+        `<tr data-audit-row="contact-${i}"><td>${sevBadge(x.severity)}</td><td>${esc(x.line)}</td><td>${esc(x.quality)}</td><td>${x.officialCount}</td><td>${x.inferredActiveCount}</td><td><div class="auditProblem">${esc((x.problem || []).join(" / "))}</div></td></tr>`) +
+      `<h3>引用缺失</h3>` +
+      auditTable(["级别","阵容","类型","ID","位置"], refs, (x, i) =>
+        `<tr data-audit-row="ref-${i}"><td>${sevBadge(x.severity)}</td><td>${esc(x.line)}</td><td>${esc(x.kind)}</td><td>${esc(x.id)}</td><td>${esc(x.where)}</td></tr>`) +
+      `<h3>同名英雄多记录</h3>` +
+      auditTable(["英雄","记录数","ID","技能","面板变体"], dups, (x, i) =>
+        `<tr data-audit-row="dup-${i}"><td>${esc(x.name)}</td><td>${x.count}</td><td>${esc(x.ids.join(", "))}</td><td>${esc(x.skillNames.join(" / "))}</td><td>${x.statVariantCount}</td></tr>`);
+    bindRows(contacts, "contact"); bindRows(refs, "ref"); bindRows(dups, "dup");
+  }
+  function renderSkills() {
+    const high = A.skills.highRiskHeroes.filter(pass);
+    const zero = A.skills.zeroParsedDamageWithDamageText.filter(pass);
+    main.innerHTML =
+      `<h3>技能解析高风险</h3>` +
+      auditTable(["风险","英雄","费用","技能","吃到","漏伤害","机制标签","S级相关"], high, (x, i) =>
+        `<tr data-audit-row="skill-${i}"><td>${x.riskScore}</td><td>${esc(x.name)}</td><td>${x.price}</td><td>${esc(x.skillName)}</td><td>${x.consumedDamageGroups}</td><td>${x.ignoredDamageGroups}</td><td>${(x.utilityLabels || []).map(pill).join("")}</td><td>${x.official.sCarry ? pill("S主C") : ""}${x.official.sUsed ? pill("S上场") : ""}</td></tr>`) +
+      `<h3>有伤害文本但模型零解析</h3>` +
+      auditTable(["英雄","费用","技能","漏掉片段","机制标签"], zero, (x, i) =>
+        `<tr data-audit-row="zero-${i}"><td>${esc(x.name)}</td><td>${x.price}</td><td>${esc(x.skillName)}</td><td><div class="auditProblem">${esc(x.groups.filter(g => g.ignoredDamage).map(g => `${g.label}(${g.reason})`).join(" / "))}</div></td><td>${(x.utilityLabels || []).map(pill).join("")}</td></tr>`);
+    bindRows(high, "skill"); bindRows(zero, "zero");
+  }
+  function renderItems() {
+    const gaps = A.items.basicStatGaps.filter(pass);
+    const effects = A.items.unmodeledImportantEffects.filter(pass);
+    main.innerHTML =
+      `<h3>基础属性漏解析</h3>` +
+      auditTable(["装备","类型","漏掉属性","S级出现","主C出现"], gaps, (x, i) =>
+        `<tr data-audit-row="gap-${i}"><td>${esc(x.name)}</td><td>${esc(x.type)}</td><td>${esc(x.raw)}</td><td>${x.usedInS}</td><td>${x.carryUses}</td></tr>`) +
+      `<h3>高价值但未建模的装备特效</h3>` +
+      auditTable(["装备","类型","标签","S级出现","主C出现","效果摘要"], effects, (x, i) =>
+        `<tr data-audit-row="effect-${i}"><td>${esc(x.name)}</td><td>${esc(x.type)}</td><td>${(x.tagLabels || []).map(pill).join("")}</td><td>${x.usedInS}</td><td>${x.carryUses}</td><td><div class="auditProblem">${esc(x.desc)}</div></td></tr>`);
+    bindRows(gaps, "gap"); bindRows(effects, "effect");
+  }
+  function renderOutliers() {
+    const top = A.outliers.topDps.filter(pass);
+    const wild = A.outliers.nonOfficialCarryOutliers.filter(pass);
+    const tank = A.outliers.topTankByHero.filter(pass);
+    main.innerHTML =
+      `<h3>全局 DPS Top</h3>` +
+      auditTable(["英雄","星级","装备","DPS","平A","技能","特效","标记"], top, (x, i) =>
+        `<tr data-audit-row="top-${i}"><td>${esc(x.hero)}</td><td>${x.star}</td><td>${esc(x.items.join(" + "))}</td><td>${x.dps}</td><td>${x.auto}</td><td>${x.spell}</td><td>${x.proc}</td><td>${esc(x.flag)}</td></tr>`) +
+      `<h3>非官方主C高 DPS 候选</h3>` +
+      auditTable(["英雄","费用","星级","装备","DPS","标记"], wild, (x, i) =>
+        `<tr data-audit-row="wild-${i}"><td>${esc(x.hero)}</td><td>${x.price}</td><td>${x.star}</td><td>${esc(x.items.join(" + "))}</td><td>${x.dps}</td><td>${esc(x.flag)}</td></tr>`) +
+      `<h3>EHP Top</h3>` +
+      auditTable(["英雄","费用","装备","EHP"], tank, (x, i) =>
+        `<tr data-audit-row="tank-${i}"><td>${esc(x.hero)}</td><td>${x.price}</td><td>${esc(x.items.join(" + "))}</td><td>${x.ehp}</td></tr>`);
+    bindRows(top, "top"); bindRows(wild, "wild"); bindRows(tank, "tank");
+  }
+  function renderAudit() {
+    const ds = A.data.summary, ss = A.skills.summary, is = A.items.summary, os = A.outliers.summary;
+    document.getElementById("audit-stats").innerHTML = [
+      ["P1 contact", ds.p1ContactIssues, `${ds.contactIssues} 套羁绊异常`],
+      ["缺失引用", ds.referenceIssues, "hex/equip/monster"],
+      ["高风险技能", ss.highRiskHeroes, `${ss.zeroParsedDamageWithDamageText} 个零解析`],
+      ["属性漏算", is.basicStatGaps, Object.keys(is.basicGapCounts).join(" / ")],
+      ["未建模特效", is.unmodeledImportantEffects, "装备效果覆盖率"],
+      ["搜索空间", os.heroes + "×" + os.offenseCombos, `基准 ${os.officialBestDps} DPS`],
+    ].map(t => `<div class="auditStat"><div class="lb">${esc(t[0])}</div><div class="vv">${esc(t[1])}</div><div class="dd">${esc(t[2])}</div></div>`).join("");
+    const tabs = [["data","数据一致性"],["skills","技能解析"],["items","装备覆盖"],["outliers","异常组合"]];
+    document.getElementById("audit-tabs").innerHTML = tabs.map(t => `<button class="auditTab ${view === t[0] ? "active" : ""}" data-audit-view="${t[0]}">${t[1]}</button>`).join("");
+    document.querySelectorAll("[data-audit-view]").forEach(b => b.addEventListener("click", () => { view = b.dataset.auditView; renderAudit(); }));
+    if (view === "data") renderData();
+    if (view === "skills") renderSkills();
+    if (view === "items") renderItems();
+    if (view === "outliers") renderOutliers();
+    renderDetail();
+  }
+  ["audit-q", "audit-sev", "audit-scope"].forEach(id => document.getElementById(id).addEventListener("input", renderAudit));
+  document.getElementById("audit-sev").addEventListener("change", renderAudit);
+  document.getElementById("audit-scope").addEventListener("change", renderAudit);
+  renderAudit();
+})();
+
+// ---------- chart 5: units scatter ----------
+(function () {
+  const ramp = [css("--seq250"), css("--seq350"), css("--seq450"), css("--seq550"), css("--seq650")];
+  legend("lg-units", [1, 2, 3, 4, 5].map(p => ({ n: p + "费", c: ramp[p - 1] })));
+  const W = 960, H = 420, L = 60, R = 24, T = 14, B = 40;
+  const xmax = Math.max(...M.units.map(u => u.ehp)) * 1.06, ymaxv = Math.max(...M.units.map(u => u.dps)) * 1.1;
+  const x = v => L + v / xmax * (W - L - R), y = v => T + (ymaxv - v) / ymaxv * (H - T - B);
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}` }, document.getElementById("ch-units"));
+  for (let g = 0; g <= ymaxv; g += 50) {
+    el("line", { x1: L, y1: y(g), x2: W - R, y2: y(g), stroke: css("--grid") }, svg);
+    txt(el("text", { x: L - 8, y: y(g) + 4, "text-anchor": "end", "font-size": 11, fill: css("--muted"), class: "tick" }, svg), g);
+  }
+  for (let g = 0; g <= xmax; g += 2000) {
+    txt(el("text", { x: x(g), y: H - 20, "text-anchor": "middle", "font-size": 11, fill: css("--muted"), class: "tick" }, svg), fmt(g));
+  }
+  txt(el("text", { x: (L + W - R) / 2, y: H - 4, "text-anchor": "middle", "font-size": 11.5, fill: css("--ink2") }, svg), "有效生命 EHP（二星）");
+  txt(el("text", { x: 14, y: T + 2, "font-size": 11.5, fill: css("--ink2") }, svg), "普攻DPS");
+  const label = new Set([...M.units.slice().sort((a, b) => b.dps - a.dps).slice(0, 3).map(u => u.name),
+                         ...M.units.slice().sort((a, b) => b.ehp - a.ehp).slice(0, 3).map(u => u.name)]);
+  M.units.forEach(u => {
+    const px = x(u.ehp), py = y(u.dps);
+    el("circle", { cx: px, cy: py, r: 5.5, fill: ramp[u.price - 1], stroke: css("--surface"), "stroke-width": 2 }, svg);
+    if (label.has(u.name)) {
+      const flip = px > W - 150;
+      txt(el("text", { x: flip ? px - 8 : px + 8, y: py + 4, "font-size": 11, fill: css("--ink2"), "text-anchor": flip ? "end" : "start" }, svg), u.name);
+    }
+    const hit = el("circle", { cx: px, cy: py, r: 12, fill: "transparent", tabindex: 0 }, svg);
+    const rows = [{ label: u.name + "（" + u.price + "费）", strong: true },
+      { label: "普攻DPS", val: u.dps }, { label: "EHP", val: fmt(u.ehp) }];
+    hit.addEventListener("pointermove", ev => showTip(ev, rows));
+    hit.addEventListener("pointerleave", hideTip);
+    hit.addEventListener("focus", ev => { const b = hit.getBoundingClientRect(); showTip({ clientX: b.right, clientY: b.top }, rows); });
+    hit.addEventListener("blur", hideTip);
+  });
+  table("tb-units", ["英雄", "费用", "普攻DPS", "EHP"],
+    M.units.slice().sort((a, b) => b.price - a.price || b.dps - a.dps).map(u => [u.name, u.price, u.dps, fmt(u.ehp)]));
+})();
+
+// ---------- theme toggle: re-render by reload-free repaint ----------
+// 深链：#comp=阵容名 直接打开详情
+if (location.hash.startsWith("#comp=")) {
+  try { openComp(decodeURIComponent(location.hash.slice(6))); } catch (e) {}
+}
+
+document.getElementById("themeBtn").addEventListener("click", () => {
+  const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+  const cur = document.documentElement.dataset.theme || (dark ? "dark" : "light");
+  localStorage.setItem("viz-theme", cur === "dark" ? "light" : "dark");
+  location.reload(); // 图表颜色在构建时读取，重载最简单可靠
+});
+</script>
+</body>
+</html>
