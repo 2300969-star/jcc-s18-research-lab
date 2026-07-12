@@ -241,6 +241,28 @@ function heroFromAugment(hex) {
     .sort((a, b) => String(b.name).length - String(a.name).length || Number(a.price) - Number(b.price))[0]?.name || '';
 }
 
+// 英雄强化只描述局面变化，不携带任何阵容答案。评分层据此做确定性归约。
+function heroAugmentEffect(hex, hero) {
+  const desc = String(hex && (hex.description || hex.desc) || '');
+  const stun = desc.match(/(?:眩晕|晕眩)\s*(\d+(?:\.\d+)?)\s*秒/);
+  const grant = desc.match(/提供\s*(?:1\s*个|一个)【([^】]+)】/);
+  const tags = [];
+  if (grant) tags.push('grant-unit');
+  if (/范围更广|范围扩大|范围增加/.test(desc)) tags.push('area');
+  if (stun) tags.push('crowd-control');
+  if (/金币|利息|商店|刷新|经验/.test(desc)) tags.push('economy');
+  if (/装备|组件|散件|成装/.test(desc)) tags.push('item');
+  if (/护盾|治疗|回复生命|伤害减免/.test(desc)) tags.push('defense');
+  if (/攻击速度|物理加成|法术加成|伤害增幅/.test(desc)) tags.push('combat-stat');
+  return {
+    grantedHero: grant ? hero : '',
+    grantedCopies: grant ? 1 : 0,
+    tags,
+    stunSeconds: stun ? Number(stun[1]) : 0,
+    areaExpanded: tags.includes('area'),
+  };
+}
+
 function buildHeroAugmentCatalog() {
   return Object.values(data.hex)
     .filter(hex => hex && hex.name && String(hex.level) === '4')
@@ -252,6 +274,7 @@ function buildHeroAugmentCatalog() {
         cost: priceOf(hero),
         traits: traitsForHero(hero),
         desc: hex.description || hex.desc || '',
+        effect: heroAugmentEffect(hex, hero),
       };
     })
     .filter(row => row.hero && row.cost)
@@ -1064,6 +1087,17 @@ function assertCoreData(templatesIn) {
 const coreAssertions = assertCoreData(templates);
 if (heroAugmentCatalog.length !== 122) throw new Error(`英雄强化目录应为122条，实际${heroAugmentCatalog.length}`);
 if (heroAugmentCatalog.some(row => !row.hero || !row.cost)) throw new Error('英雄强化目录存在未映射英雄或费用');
+if (heroAugmentCatalog.some(row => !row.effect)) {
+  throw new Error('英雄强化目录必须携带局面效果');
+}
+const grantsInText = heroAugmentCatalog.filter(row => /提供\s*(?:1\s*个|一个)【/.test(row.desc));
+if (grantsInText.some(row => row.effect.grantedCopies !== 1 || row.effect.grantedHero !== row.hero)) {
+  throw new Error('英雄强化赠送棋子效果解析失败');
+}
+const fireAugment = heroAugmentByName.get('嗜火');
+if (!fireAugment || !fireAugment.effect.areaExpanded || fireAugment.effect.stunSeconds !== 2) {
+  throw new Error('嗜火范围群控效果解析失败');
+}
 const options = buildOptions(templates);
 const weights = computeModelWeights();
 const examples = [
@@ -1089,7 +1123,7 @@ const out = {
   templates,
   weights,
   examples,
-  assertions: { coreData: coreAssertions, heroAugments: { count: heroAugmentCatalog.length, mapped: true } },
+  assertions: { coreData: coreAssertions, heroAugments: { count: heroAugmentCatalog.length, mapped: true, effects: true } },
   assumptions: [
     '二阶段匹配器只根据你点击的信号重排路线，不读取游戏画面。',
     '路线模板来自官方早期阵容/散件优先级/符文推荐，并补充研究型过渡模板。',

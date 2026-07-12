@@ -48,6 +48,7 @@ button, input { font:inherit; }
 .label { color:var(--muted); font-size:15px; font-weight:800; margin-right:2px; }
 .chip, .candidate { min-height:44px; border:1px solid var(--border); border-radius:999px; background:var(--surface); color:var(--ink); padding:6px 14px; cursor:pointer; font-size:18px; }
 .chip { border-color:color-mix(in srgb, var(--s2) 55%, var(--border)); }
+.derivedChip { min-height:36px; display:inline-flex; align-items:center; border:1px dashed color-mix(in srgb, var(--s5) 65%, var(--border)); border-radius:999px; color:var(--ink2); padding:5px 12px; font-size:16px; font-weight:800; background:color-mix(in srgb, var(--surface) 90%, var(--s5) 10%); }
 .levelChip { min-height:36px; border:1px solid var(--border); border-radius:999px; background:var(--plane); color:var(--ink2); padding:4px 11px; cursor:pointer; font-size:16px; font-weight:850; }
 .levelChip.on { background:var(--s2); border-color:var(--s2); color:#fff; }
 .heroAugChip { min-height:36px; border:1px solid var(--border); border-radius:999px; background:var(--plane); color:var(--ink2); padding:4px 13px; cursor:pointer; font-size:16px; font-weight:850; }
@@ -74,6 +75,7 @@ button, input { font:inherit; }
 .sampleStrip { margin-top:5px; padding:5px 9px; border-radius:10px; border:1px solid color-mix(in srgb, var(--s5) 45%, var(--border)); color:var(--ink2); background:color-mix(in srgb, var(--surface) 90%, var(--s5) 10%); font-size:15px; overflow-wrap:anywhere; }
 .heroAugStrip { margin-top:6px; padding:7px 10px; border-radius:10px; border:1px solid var(--border); font-size:16px; font-weight:900; overflow-wrap:anywhere; }
 .heroAugStrip.locked, .heroAugStrip.lock { color:#fff; background:var(--s2); border-color:var(--s2); }
+.heroAugStrip.resolved { color:#fff; background:var(--s5); border-color:var(--s5); }
 .heroAugStrip.waiting, .heroAugStrip.available { color:#1f1800; background:color-mix(in srgb, var(--s3) 70%, #fff 30%); border-color:var(--s3); }
 .heroAugStrip.base-only { color:var(--ink2); background:color-mix(in srgb, var(--surface) 82%, var(--muted) 18%); }
 .heroAugStrip.closed { color:#fff; background:var(--s6); border-color:var(--s6); }
@@ -391,7 +393,7 @@ function selectedObj() {
   const selected = MatcherCore.selectedFromSignals(signals);
   selected.level = currentLevel;
   selected.heroAugmentRound = currentHeroAugmentRound;
-  return selected;
+  return MatcherCore.resolveGameState(selected, STAGE2_MATCHER.options.heroAugments || []);
 }
 function focusInput() {
   setTimeout(() => $("voiceInput").focus(), 0);
@@ -443,9 +445,13 @@ function parseInput() {
 }
 function renderSignals() {
   const box = $("signals");
+  const state = selectedObj();
+  const derived = state.derivedAssets || [];
   box.innerHTML = `<span class="label">信号</span>` + (signals.length
     ? signals.map(s => `<button class="chip" data-k="${esc(s.kind)}" data-v="${esc(s.value)}" data-c="${esc(s.count || "")}">${esc(s.label || s.value)}${s.via === "llm" ? '<span class="aiMark">AI</span>' : ""} ×</button>`).join("")
-    : `<span class="label">还没识别到信号</span>`);
+    : `<span class="label">还没识别到信号</span>`) + (derived.length
+    ? `<span class="label">派生</span>${derived.map(row => `<span class="derivedChip">${esc(row.label || `${row.value}+${row.copies}`)}</span>`).join("")}`
+    : "");
   box.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => {
     removeSignal({ kind: btn.dataset.k, value: btn.dataset.v, count: btn.dataset.c ? Number(btn.dataset.c) : undefined });
     render();
@@ -462,11 +468,16 @@ function renderHeroAugmentRound() {
   const box = $("heroAugRow");
   const costs = MatcherCore.HERO_AUGMENT_ROUND_COSTS && MatcherCore.HERO_AUGMENT_ROUND_COSTS[currentHeroAugmentRound];
   const excluded = costs ? [1, 2, 3, 4, 5].filter(x => !costs.includes(x)) : [];
+  const resolved = selectedObj();
+  const state = resolved.heroAugment || {};
+  const resolvedHint = state.status === "resolved" && state.selected
+    ? `已结算：${state.selected.name}${(resolved.derivedAssets || []).length ? `；赠送${resolved.derivedAssets.map(x => `${x.value}+${x.copies}`).join("、")}` : ""}；其他专属期权关闭`
+    : "";
   box.innerHTML = `<span class="label">英雄强化</span>` + HERO_AUGMENT_CHOICES.map(round =>
     `<button class="heroAugChip ${round === currentHeroAugmentRound ? "on" : ""}" data-hero-round="${round}">${round === "unknown" ? "未知" : round}</button>`
   ).join("") + (costs
-    ? `<span class="heroAugHint">候选${costs.join("/")}费；排除${excluded.join("/")}费专属强化</span>`
-    : `<span class="heroAugHint">开局按预告选择，立即裁剪不可能路线</span>`);
+    ? `<span class="heroAugHint">${resolvedHint || `候选${costs.join("/")}费；排除${excluded.join("/")}费专属强化`}</span>`
+    : `<span class="heroAugHint">${resolvedHint || "开局按预告选择，立即裁剪不可能路线"}</span>`);
   box.querySelectorAll("[data-hero-round]").forEach(btn => btn.addEventListener("click", () => setHeroAugmentRound(btn.dataset.heroRound)));
 }
 function renderPending() {
@@ -496,6 +507,7 @@ function rankedRoutes() {
     oddsData: window.JCC_ODDS,
     unitPrices: UNIT_PRICES,
     unitTraits: UNIT_TRAITS,
+    heroAugments: STAGE2_MATCHER.options.heroAugments || [],
     previousOrder,
     stickyTopId: lastTopId,
     antiFragile: currentLevel >= 4,
@@ -725,6 +737,8 @@ function openRouteDetail(row) {
     mk("div", "detailSection", "英雄强化窗口", body);
     mk("div", "detailLine", `${row.heroAugment.text}。回合${row.heroAugment.round}候选费用：${row.heroAugment.costs.join("/")}费；已排除：${row.heroAugment.excludedCosts.join("/") || "无"}。`, body);
     if ((row.heroAugment.eligible || []).length) mk("div", "detailLine", "可出现专属：" + row.heroAugment.eligible.map(x => `${x.hero}·${x.name}`).join("、"), body);
+    const state = selectedObj();
+    if ((state.auditTrail || []).length) mk("div", "detailLine", "局面结算：" + state.auditTrail.join("；"), body);
   }
   if (row.antiFragile) {
     const af = row.antiFragile;
@@ -814,7 +828,8 @@ function reachHtml(row) {
 function heroAugmentHtml(row) {
   const hero = row && row.heroAugment;
   if (!hero) return "";
-  return `<div class="heroAugStrip ${esc(hero.status)}">${esc(hero.text)}</div>`;
+  const audit = selectedObj().auditTrail || [];
+  return `<div class="heroAugStrip ${esc(hero.status)}">${esc(hero.text)}${audit.length ? `<br><small>${esc(audit.join("；"))}</small>` : ""}</div>`;
 }
 function renderRoute() {
   $("augView").classList.add("hidden");
@@ -903,12 +918,15 @@ function augOptionInfo(sig) {
   const hot = (MODEL.augRank || []).find(a => a.name === name);
   const option = ((STAGE2_MATCHER.options.augmentSearch || STAGE2_MATCHER.options.augments) || []).find(x => x.name === name) || {};
   const hero = (option.cats || []).includes("英雄强化");
-  const selected = selectedObj();
+  const selected = MatcherCore.selectedFromSignals(signals);
+  selected.level = currentLevel;
+  selected.heroAugmentRound = currentHeroAugmentRound;
   selected.augments = [...new Set([...(selected.augments || []), name])];
   const ranked = MatcherCore.rank(STAGE2_MATCHER.templates, selected, STAGE2_MATCHER.weights, 3, {
     oddsData: window.JCC_ODDS,
     unitPrices: UNIT_PRICES,
     unitTraits: UNIT_TRAITS,
+    heroAugments: STAGE2_MATCHER.options.heroAugments || [],
     antiFragile: currentLevel >= 4,
     certification: true,
   });

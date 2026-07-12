@@ -74,6 +74,11 @@
   // 可出现的主C专属强化提供有限期权值；本局不可能出现时只关闭专属分支，不误杀基础阵容。
   const HERO_AUGMENT_OPTION_BONUS = 6;
   const HERO_AUGMENT_UNAVAILABLE_PENALTY = 6;
+  // 已选英雄强化属于全局局面，而非某一条路线的局部标签。控制类效果采用保守代理，
+  // 防止未经战斗回放校准的单个强化压过已握棋子与装备。
+  const HERO_AUGMENT_CONTROL_PER_SECOND = 4;
+  const HERO_AUGMENT_AREA_MULTIPLIER = 1.35;
+  const HERO_AUGMENT_CONTROL_CAP = 12;
   const MIN_LEVEL = 1;
   const MAX_LEVEL = 9;
   const DEFAULT_LEVEL = 6;
@@ -307,6 +312,7 @@
     const mainCarry = plan.mainCarry || (profile(t).mainCarry || {}).name || "";
     const mainOptions = options.filter(row => row.hero === mainCarry);
     const selectedAugments = new Set(selected && selected.augments || []);
+    const globalHeroAugment = selected && selected.heroAugment || {};
     const selectedHit = options.find(row => selectedAugments.has(row.name));
     const candidates = required.length ? required : (mainOptions.length ? mainOptions : options);
     const eligible = candidates.filter(row => costs.includes(Number(row.cost)));
@@ -315,6 +321,25 @@
     const heroes = uniq(eligible.map(row => row.hero));
     const optionNames = uniq(candidates.map(row => row.name));
     const base = { round, costs, excludedCosts, mainCarry, traits, heroes, options, eligible, required: !!required.length, scoreDelta: 0, hardBlock: false };
+    if (globalHeroAugment.status === "resolved") {
+      const chosen = globalHeroAugment.selected || {};
+      if (selectedHit) {
+        return { ...base, status: "locked", text: `${round === "unknown" ? "英雄强化" : round + "英雄强化"}已结算：${selectedHit.name}→${selectedHit.hero}${selectedHit.cost}费专属` };
+      }
+      if (required.length) {
+        return {
+          ...base,
+          status: "closed",
+          hardBlock: true,
+          text: `${round === "unknown" ? "英雄强化已结算" : round + "已结算"}：已选${chosen.name || "其他强化"}，${optionNames.join("/")}刚需分支关闭`,
+        };
+      }
+      return {
+        ...base,
+        status: "resolved",
+        text: `${round === "unknown" ? "英雄强化已结算" : round + "英雄强化已结算"}：已选${chosen.name || "其他强化"}，${mainCarry || "本路线"}不再保留专属期权`,
+      };
+    }
     if (selectedHit) {
       return { ...base, status: "locked", text: `已命中${selectedHit.name}：${selectedHit.hero}${selectedHit.cost}费专属` };
     }
@@ -821,7 +846,34 @@
     return { ...(opts || {}), augmentEconomy: operator.economy };
   }
 
+  function heroAugmentMechanic(t, selected, opts) {
+    const state = selected.heroAugment || {};
+    const chosen = state.selected;
+    const effect = chosen && chosen.effect || {};
+    if (state.status !== "resolved" || (!effect.stunSeconds && !effect.areaExpanded)) return null;
+    const target = effect.grantedHero || chosen.hero;
+    const unitMap = profileUnitMap(t);
+    const routeUnit = unitMap.get(target);
+    const activeTraits = activeTraitMap(t);
+    const traitOverlap = (chosen.traits || []).filter(name => activeTraits.has(name)).length;
+    // 有该英雄在成型阵容最适配；只共享羁绊时保留小额兼容性，不把所有路线都抬高。
+    const fit = clamp((routeUnit ? 0.62 : 0.16) + Math.min(0.24, traitOverlap * 0.08), 0, 1);
+    if (fit <= 0.2) return null;
+    const controlSeconds = Number(effect.stunSeconds) || 0;
+    const area = effect.areaExpanded ? HERO_AUGMENT_AREA_MULTIPLIER : 1;
+    const raw = controlSeconds * HERO_AUGMENT_CONTROL_PER_SECOND * area * fit;
+    const bonus = Math.round(Math.min(HERO_AUGMENT_CONTROL_CAP, raw));
+    if (!bonus) return null;
+    const role = routeUnit ? roleLabel(routeUnit.role) : "羁绊填充";
+    return {
+      bonus,
+      fit,
+      text: `${chosen.name}机制：${target}${effect.areaExpanded ? "范围扩大" : ""}${controlSeconds ? `${effect.areaExpanded ? "、" : ""}群控${controlSeconds}秒` : ""}，${role}适配+${bonus}`,
+    };
+  }
+
   function scoreTemplate(t, selected, weights, opts) {
+    selected = resolveGameState(selected, opts && opts.heroAugments);
     const unitRows = normalizeSelectedUnits(selected.units || []);
     const units = new Set(unitRows.map(x => x.name));
     const unitStars = new Map(unitRows.map(x => [x.name, x.star || 0]));
@@ -850,6 +902,7 @@
     const selectedComponents = selectedComponentList(items);
     const mainCarryName = p.mainCarry && p.mainCarry.name;
     const augmentOperator = activeAugmentOperators(t, selected);
+    const heroMechanic = heroAugmentMechanic(t, selected, opts);
     let operatorBudget = AUGMENT_OPERATOR_TOTAL_CAP;
     if (strengthPrior) evidence.push(`版本数值先验 ${strengthPrior > 0 ? "+" : ""}${strengthPrior}`);
 
@@ -968,6 +1021,13 @@
       }
     });
 
+    if (heroMechanic) {
+      score += heroMechanic.bonus;
+      heldValue += heroMechanic.bonus;
+      breakdown.augment += heroMechanic.bonus;
+      evidence.unshift(heroMechanic.text);
+    }
+
     augmentOperator.rows.filter(x => x.category !== "经济").forEach(op => {
       let rawBonus = 0;
       let line = "";
@@ -1085,6 +1145,7 @@
       mechanicBlocked,
       augmentOperator,
       heroAugment,
+      heroMechanic,
     };
   }
 
@@ -1105,6 +1166,9 @@
   function ownedCopyMap(selected) {
     const map = new Map();
     normalizeSelectedUnits(selected.units || []).forEach(u => map.set(u.name, unitCopies(u.star)));
+    Object.entries(selected.unitCopies || {}).forEach(([name, copies]) => {
+      map.set(name, Math.max(map.get(name) || 0, Number(copies) || 0));
+    });
     return map;
   }
 
@@ -1185,7 +1249,7 @@
     const evidence = [];
     let value = 0;
     (p.units || []).forEach(unit => {
-      if (!unit || !unit.name || selectedUnitNames.has(unit.name)) return;
+      if (!unit || !unit.name) return;
       const cost = unitPrice(unit.name, opts);
       const target = targetCopiesFor(t, unit.name, cost);
       const row = expectedCostForUnit(unit.name, target, selected, opts);
@@ -1194,11 +1258,16 @@
         lateTargets.push(unit.name);
         return;
       }
+      // 已握棋子仍要进入缺口/概率计算，但不把“未来还要D到的同一张牌”再次当作强度资产加分。
+      if (selectedUnitNames.has(unit.name)) {
+        rows.push(row);
+        return;
+      }
       const base = futureUnitBaseValue(t, unit, w);
       const pts = discountedValue(base, row.expectedGold);
       if (pts > 0) {
         value += pts;
-        evidence.push(`未持有${roleLabel(unit.role)}${unit.name}折现+${pts}（约${Math.round(row.expectedGold)}金）`);
+        evidence.push(`缺${roleLabel(unit.role)}${unit.name}${row.need}张折现+${pts}（约${Math.round(row.expectedGold)}金）`);
       }
       rows.push(row);
     });
@@ -1343,6 +1412,7 @@
   }
 
   function rank(templates, selected, weights, limit, opts) {
+    selected = resolveGameState(selected, opts && opts.heroAugments);
     const rows = (templates || []).map(t => {
       const stageResult = scoreTemplate(t, selected, weights, opts);
       const base = { template: t, ...stageResult };
@@ -1462,6 +1532,62 @@
     return selected;
   }
 
+  // 归约层只读取原始信号；它每次重新构造派生状态，因此删除、纠正和重复口述都不会留下增量残影。
+  function resolveGameState(input, heroAugments) {
+    if (input && input.stateResolved) return input;
+    const selected = input || {};
+    const units = normalizeSelectedUnits(selected.units || []).map(row => row.star ? { name: row.name, value: row.name, star: row.star, label: starLabel(row.name, row.star) } : row.name);
+    const unitCopiesMap = {};
+    normalizeSelectedUnits(units).forEach(row => { unitCopiesMap[row.name] = unitCopies(row.star); });
+    const augments = uniq(selected.augments || []);
+    const catalog = new Map((heroAugments || []).filter(Boolean).map(row => [row.name, row]));
+    const selectedHeroes = augments.map(name => catalog.get(name)).filter(Boolean);
+    // 同一局只能落一个英雄强化。发生口述修正而解析器尚未移除旧值时，最后一个有效输入胜出并留下审计记录。
+    const chosen = selectedHeroes.length ? selectedHeroes[selectedHeroes.length - 1] : null;
+    const derivedAssets = [];
+    const auditTrail = [];
+    const heroAugment = chosen ? {
+      status: "resolved",
+      round: normalizeHeroAugmentRound(selected.heroAugmentRound),
+      selected: chosen,
+      alternativesClosed: true,
+      conflict: selectedHeroes.length > 1,
+    } : {
+      status: "waiting",
+      round: normalizeHeroAugmentRound(selected.heroAugmentRound),
+      selected: null,
+      alternativesClosed: false,
+      conflict: false,
+    };
+    if (chosen) {
+      auditTrail.push(`${heroAugment.round === "unknown" ? "英雄强化" : heroAugment.round + "英雄强化"}已结算：${chosen.name}`);
+      const effect = chosen.effect || {};
+      const grantedHero = effect.grantedHero || chosen.hero;
+      const grantedCopies = Number(effect.grantedCopies) || 0;
+      if (grantedHero && grantedCopies > 0) {
+        const wasHeld = Object.prototype.hasOwnProperty.call(unitCopiesMap, grantedHero);
+        unitCopiesMap[grantedHero] = (unitCopiesMap[grantedHero] || 0) + grantedCopies;
+        if (!wasHeld) units.push(grantedHero);
+        derivedAssets.push({ kind: "units", value: grantedHero, copies: grantedCopies, source: chosen.name, label: `${grantedHero}+${grantedCopies}（${chosen.name}）` });
+        auditTrail.push(`赠送资产：${grantedHero}+${grantedCopies}`);
+      }
+      if (effect.stunSeconds || effect.areaExpanded) {
+        auditTrail.push(`${chosen.name}机制：${effect.areaExpanded ? "范围扩大" : ""}${effect.stunSeconds ? `${effect.areaExpanded ? "、" : ""}群体眩晕${effect.stunSeconds}秒` : ""}`);
+      }
+      if (heroAugment.conflict) auditTrail.push(`检测到多个英雄强化，按最后输入的${chosen.name}结算`);
+    }
+    return {
+      ...selected,
+      units,
+      unitCopies: unitCopiesMap,
+      augments,
+      derivedAssets,
+      auditTrail,
+      heroAugment,
+      stateResolved: true,
+    };
+  }
+
   function selectedUnitMap(selected) {
     const map = new Map();
     normalizeSelectedUnits(selected.units || []).forEach(row => {
@@ -1527,11 +1653,14 @@
         lines.push(heroAugment.text);
       } else if (heroAugment.status === "base-only" || heroAugment.status === "closed") {
         lines.push(heroAugment.text);
-      } else if (heroAugment.status === "locked") {
+      } else if (heroAugment.status === "locked" || heroAugment.status === "resolved") {
         lines.push(heroAugment.text);
       } else {
         lines.push(`${heroAugment.round}英雄强化：当前路线可直接按来牌运营`);
       }
+    }
+    if (selected.derivedAssets && selected.derivedAssets.length) {
+      lines.push(`已落袋：${selected.derivedAssets.map(x => x.label || `${x.value}+${x.copies}`).join("、")}`);
     }
     if (top && top.antiFragile) {
       const af = top.antiFragile;
@@ -1609,6 +1738,31 @@
     assert(lowAtFour.heroAugment.status === "base-only" && !lowAtFour.mechanicBlocked, "4-2应关闭二费专属分支但保留基础阵容");
     assert(threeAtFour.heroAugment.status === "waiting" && threeAtFour.stageStrength > noRoundBefore.stageStrength, "4-2必须保留三费英雄强化并计入期权");
     assert(hardAtFour.heroAugment.status === "closed" && hardAtFour.stageStrength === 0, "4-2应硬关闭二费专属门槛路线");
+    const heroCatalog = [
+      { name: "嗜火", hero: "安妮", cost: 2, traits: ["小天才", "福牛守护者", "灵能使"], effect: { grantedHero: "安妮", grantedCopies: 1, areaExpanded: true, stunSeconds: 2 } },
+      { name: "无情连打", hero: "贾克斯", cost: 3, traits: ["战斗机甲", "斗士"], effect: { grantedHero: "贾克斯", grantedCopies: 1, areaExpanded: false, stunSeconds: 0 } },
+    ];
+    const fireRaw = selectedFromSignals([{ kind: "units", value: "贾克斯" }, { kind: "augments", value: "嗜火" }]);
+    fireRaw.level = 5;
+    fireRaw.heroAugmentRound = "3-2";
+    const fireState = resolveGameState(fireRaw, heroCatalog);
+    assert(fireState.heroAugment.status === "resolved" && fireState.heroAugment.selected.name === "嗜火", "选中英雄强化必须全局结算");
+    assert(fireState.unitCopies["安妮"] === 1 && fireState.derivedAssets.some(x => x.value === "安妮" && x.copies === 1), "嗜火必须派生安妮+1资产");
+    const fireDuplicate = resolveGameState({ ...fireRaw, augments: ["嗜火", "嗜火"] }, heroCatalog);
+    assert(fireDuplicate.unitCopies["安妮"] === 1, "重复口述同一英雄强化不得重复赠送");
+    const fireWithTwoStar = resolveGameState({ ...fireRaw, units: [{ name: "安妮", star: 2 }] }, heroCatalog);
+    assert(fireWithTwoStar.unitCopies["安妮"] === 4, "安妮二星加嗜火应按四张副本计算");
+    const jaxAfterFire = scoreTemplate(threeOptional, fireState, fallbackWeights, { heroAugments: heroCatalog });
+    assert(jaxAfterFire.heroAugment.status === "resolved" && jaxAfterFire.heroAugment.scoreDelta === 0, "已选嗜火后其他路线不得继续领取贾克斯期权");
+    const fireTemplate = {
+      ...heroRoundTemplate("嗜火安妮线", 2),
+      augmentPrefs: ["嗜火"],
+      routeProfile: { mainCarry: { name: "安妮", starTarget: 3, items: [] }, units: [{ name: "安妮", role: "frontline", starTarget: 1, traits: ["小天才", "灵能使"] }], items: [], activeTraits: [{ name: "小天才", count: 3 }, { name: "灵能使", count: 2 }] },
+      heroAugmentPlan: { mainCarry: "安妮", options: [heroCatalog[0]], requiredNames: [] },
+    };
+    const fireOff = scoreTemplate(fireTemplate, { units: [], items: [], augments: [], augmentCats: [], level: 5, heroAugmentRound: "3-2" }, fallbackWeights, { heroAugments: heroCatalog });
+    const fireOn = scoreTemplate(fireTemplate, fireState, fallbackWeights, { heroAugments: heroCatalog });
+    assert(fireOn.stageStrength > fireOff.stageStrength && fireOn.evidence.some(x => x.includes("嗜火机制")), "嗜火应通过赠送资产和保守群控算子抬升安妮路线");
     const fullCore = [{
       id: "full",
       name: "全集core",
@@ -1831,6 +1985,7 @@
     HERO_AUGMENT_ROUND_COSTS,
     HERO_AUGMENT_OPTION_BONUS,
     HERO_AUGMENT_UNAVAILABLE_PENALTY,
+    HERO_AUGMENT_CONTROL_CAP,
     DEFAULT_LEVEL,
     scoreTemplate,
     rank,
@@ -1838,6 +1993,7 @@
     buildOutput,
     signalTowerHtml,
     selectedFromSignals,
+    resolveGameState,
     actionLines,
     primeActionLine,
     activeTraitsForTemplate,
