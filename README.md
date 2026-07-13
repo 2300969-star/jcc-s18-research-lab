@@ -8,7 +8,7 @@
 
 [![version](https://img.shields.io/badge/version-17.17.6b--S18-0969da?style=flat-square)](data/chess.js)
 [![routes](https://img.shields.io/badge/certified_routes-60-8250df?style=flat-square)](artifacts/results/route_certification_results.json)
-[![samples](https://img.shields.io/badge/model_samples-300%2C000-1f883d?style=flat-square)](docs/reports/版本路线认证实验.md)
+[![virtual battles](https://img.shields.io/badge/paired_virtual_battles-21%2C240-1f883d?style=flat-square)](docs/reports/虚拟实战数字孪生.md)
 [![CI](https://img.shields.io/github/actions/workflow/status/2300969-star/jcc-s18-research-lab/ci.yml?style=flat-square&label=tests)](https://github.com/2300969-star/jcc-s18-research-lab/actions)
 [![license](https://img.shields.io/badge/code_license-MIT-f1e05a?style=flat-square)](LICENSE)
 
@@ -44,16 +44,17 @@ The browser application contains two working surfaces:
 
 ```mermaid
 flowchart LR
-  A[Official local game data] --> B[Combat and EHP model]
+  A[Official local game data] --> B[Event-driven combat twin]
   A --> C[Shop odds and economy model]
-  B --> D[Lineup search and experiments]
+  B --> D[Paired full-team virtual battles]
   C --> D
-  D --> E[Stage transition solver]
-  E --> F[Monte Carlo route certification]
-  F --> G[Asset-role value matcher]
-  G --> H[Research Dashboard]
-  G --> I[Match Mode]
-  J[Optional LLM parser] -->|standardized signals only| G
+  D --> E[Lineup search and transition solver]
+  E --> F[Robust score and CVaR]
+  F --> G[Bounded teacher-model distillation]
+  G --> K[Asset-role value matcher]
+  K --> H[Research Dashboard]
+  K --> I[Match Mode]
+  J[Optional LLM parser] -->|standardized signals only| K
 ```
 
 The LLM is deliberately outside the ranking loop. It may translate unrecognized Chinese speech into a closed vocabulary, but all lineup scoring, shop probability, equipment inference, augment operators, and recommendations remain deterministic.
@@ -116,7 +117,7 @@ Each held signal is valued by its role in a route rather than by flat checklist 
 
 ```text
 route score = held role value + probability-discounted future value
-            + certified augment operators + bounded robustness prior
+            + augment operators + bounded virtual-battle prior
 ```
 
 - Main carry body and star level receive the highest unit value.
@@ -139,9 +140,15 @@ q_e = { L2.5: 1.00, L2: 0.65, L1.5: 0.35 }
 - **Item augments** compensate missing carry items and decay after the build is complete.
 - **Hero augments** remain hard mechanism gates with explicit required units.
 
-### Evidence boundary
+### Digital-twin boundary
 
-The certification layer currently evaluates **60 routes × 5,000 deterministic perturbations = 300,000 model samples**. These are uncertainty experiments, not real ranked matches. Evidence is capped at L2.5 until an independent real-match holdout set is available.
+The event engine currently evaluates all **60 routes in 1,770 pairings and 21,240 side-swapped battles**. Every pairing reuses the same random seed after swapping sides, then reports win rate, health margin, lower-tail CVaR, and mechanism coverage. Unsupported mechanics shrink the Match Mode prior toward zero instead of being silently treated as verified.
+
+The result is a **model-internal dominance claim**, not an observed ladder win rate. Public guides may seed candidate generation, but they do not calibrate ranking weights. The fast Match Mode model receives at most a bounded `±12` point prior from the event simulator:
+
+```text
+virtual prior = 12 × tanh((robust score - 50) / 18) × mechanism coverage
+```
 
 ## 快速开始
 
@@ -184,6 +191,7 @@ npm run build:model        # combat model, item search, full-team search
 npm run build:discovery    # lineup discovery, transitions, numeric lens
 npm run build:experiments  # Jinx sisters and Mecha experiments
 npm run build:matcher      # stage matcher and route certification
+npm run build:virtual      # 21,240 paired full-team event battles
 npm run research:community # audit public guides/videos as evidence, not ground truth
 npm run audit              # data, skill, item, and outlier audits
 npm run figures            # regenerate README research figures
@@ -207,6 +215,7 @@ npm run update:data
 .
 ├── src/
 │   ├── core/          # combat model, version context, mechanism profiles
+│   ├── sim/           # event-driven full-team combat twin
 │   ├── pipeline/      # discovery, transition, matcher, certification
 │   ├── experiments/   # focused counterfactual laboratories
 │   ├── audit/         # numerical and data-quality audits
@@ -226,6 +235,7 @@ npm run update:data
 ## Selected Reports
 
 - [版本路线认证实验](docs/reports/版本路线认证实验.md)
+- [虚拟实战数字孪生](docs/reports/虚拟实战数字孪生.md)
 - [社区公开样本证据审计](docs/reports/社区公开样本证据审计.md)
 - [元阵容自动求解](docs/reports/元阵容自动求解.md)
 - [阵容发现研究](docs/reports/阵容发现研究.md)
