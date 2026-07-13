@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "JCC S18 observable match sample",
+  "type": "object",
+  "required": ["sampleId", "version", "source", "placement", "decisions"],
+  "properties": {
+    "sampleId": { "type": "string" },
+    "version": { "type": "string" },
+    "source": {
+      "type": "object",
+      "required": ["kind", "url"],
+      "properties": {
+        "kind": { "enum": ["own-match", "full-video", "screenshot-sequence", "public-log"] },
+        "url": { "type": "string" },
+        "publishedAt": { "type": "string" },
+        "playerIdHash": { "type": "string" }
+      }
+    },
+    "placement": { "type": "integer", "minimum": 1, "maximum": 8 },
+    "finalBoard": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["unit", "star"],
+        "properties": {
+          "unit": { "type": "string" },
+          "star": { "type": "integer", "minimum": 1, "maximum": 3 },
+          "items": { "type": "array", "items": { "type": "string" }, "maxItems": 3 }
+        }
+      }
+    },
+    "augments": { "type": "array", "items": { "type": "string" } },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["round", "level", "gold", "hp", "board", "action"],
+        "properties": {
+          "round": { "type": "string" },
+          "level": { "type": "integer", "minimum": 1, "maximum": 10 },
+          "gold": { "type": "integer", "minimum": 0 },
+          "hp": { "type": "integer", "minimum": 0, "maximum": 200 },
+          "board": { "type": "array", "items": { "type": "string" } },
+          "bench": { "type": "array", "items": { "type": "string" } },
+          "components": { "type": "array", "items": { "type": "string" } },
+          "shop": { "type": "array", "items": { "type": "string" }, "maxItems": 5 },
+          "observedOpponents": { "type": "array", "items": { "type": "string" } },
+          "action": { "type": "string" },
+          "nextCombatDamage": { "type": "integer" },
+          "recommendedRoute": { "type": "string" },
+          "recommendedScore": { "type": "number" }
+        }
+      }
+    }
+  }
+}

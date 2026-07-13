@@ -184,6 +184,7 @@ npm run build:model        # combat model, item search, full-team search
 npm run build:discovery    # lineup discovery, transitions, numeric lens
 npm run build:experiments  # Jinx sisters and Mecha experiments
 npm run build:matcher      # stage matcher and route certification
+npm run research:community # audit public guides/videos as evidence, not ground truth
 npm run audit              # data, skill, item, and outlier audits
 npm run figures            # regenerate README research figures
 ```
@@ -225,6 +226,7 @@ npm run update:data
 ## Selected Reports
 
 - [版本路线认证实验](docs/reports/版本路线认证实验.md)
+- [社区公开样本证据审计](docs/reports/社区公开样本证据审计.md)
 - [元阵容自动求解](docs/reports/元阵容自动求解.md)
 - [阵容发现研究](docs/reports/阵容发现研究.md)
 - [姐妹无限金克丝实验](docs/reports/姐妹无限金克丝实验.md)
