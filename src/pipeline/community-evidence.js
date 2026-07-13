@@ -1,7 +1,7 @@
 "use strict";
 
 const fs = require("fs");
-const { dataPath, resultPath, reportPath, ensureOutputDirs } = require("../lib/project-paths");
+const { dataPath, resultPath, reportPath, publicPath, ensureOutputDirs } = require("../lib/project-paths");
 
 const TARGET_VERSION = "17.6b";
 const TYPE_PRIOR = { official: 1, patch: 0.95, "structured-guide": 0.58, "full-match": 0.68, claim: 0.22 };
@@ -142,6 +142,7 @@ const result = buildResult(manifest);
 ensureOutputDirs();
 fs.writeFileSync(resultPath("community_evidence_results.json"), JSON.stringify(result, null, 2));
 fs.writeFileSync(reportPath("社区公开样本证据审计.md"), report(result));
+fs.writeFileSync(publicPath("community-evidence-data.js"), `window.COMMUNITY_EVIDENCE=${JSON.stringify(result)};`);
 
 if (result.currentOutcomeSamples !== 0) throw new Error("当前来源清单没有同版本独立结果样本，审计值应为0");
 if (!result.lineupHypotheses.some(row => row.name === "姐妹金克丝")) throw new Error("姐妹金克丝候选没有进入公开证据池");

@@ -94,6 +94,29 @@ h3 { font-size:14px; font-weight:650; margin:16px 0 8px; }
 .certGates { display:flex; flex-wrap:wrap; gap:4px; margin-top:5px; }
 .certGate { display:inline-flex; align-items:center; min-height:20px; border:1px solid color-mix(in srgb, var(--s5) 60%, var(--border)); border-radius:999px; padding:1px 7px; color:var(--ink2); background:color-mix(in srgb, var(--surface) 92%, var(--s5) 8%); font-size:10.5px; font-weight:650; line-height:1.25; }
 .certFormula { margin-top:16px; color:var(--ink2); font-size:12px; }
+.evidenceKpis { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); border-top:1px solid var(--grid); border-bottom:1px solid var(--grid); margin:12px 0 18px; }
+.evidenceKpi { padding:12px 14px; border-right:1px solid var(--grid); min-width:0; }
+.evidenceKpi:last-child { border-right:0; }
+.evidenceKpi .v { font-size:25px; font-weight:850; line-height:1.15; }
+.evidenceKpi .l { color:var(--muted); font-size:11.5px; margin-top:3px; }
+.evidenceWarning { border-left:3px solid var(--s3); padding:8px 11px; color:var(--ink2); background:color-mix(in srgb, var(--surface) 91%, var(--s3) 9%); margin-bottom:16px; }
+.evidenceCols { display:grid; grid-template-columns:minmax(0,1.05fr) minmax(280px,.75fr); gap:24px; align-items:start; }
+.researchLine { display:grid; grid-template-columns:minmax(150px,.8fr) 78px minmax(0,1.35fr); gap:10px; align-items:center; padding:9px 0; border-bottom:1px solid var(--grid); }
+.researchLine:last-child { border-bottom:0; }
+.researchLine b { font-size:12.5px; }
+.researchLine .next { color:var(--ink2); font-size:11.8px; overflow-wrap:anywhere; }
+.researchStatus { display:inline-flex; justify-content:center; border-radius:999px; padding:2px 8px; font-size:10.5px; font-weight:800; color:#fff; }
+.researchStatus.ready { background:var(--s2); }
+.researchStatus.partial { background:var(--s3); color:#171100; }
+.researchStatus.data-gap { background:var(--s6); }
+.evidenceCandidate { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px; padding:7px 0; border-bottom:1px solid var(--grid); }
+.evidenceCandidate:last-child { border-bottom:0; }
+.evidenceCandidate b { font-size:12.5px; }
+.evidenceCandidate span { color:var(--muted); font-size:11px; white-space:nowrap; }
+.evidenceSources { margin-top:16px; }
+.evidenceSources a { color:var(--ink); text-decoration:none; }
+.evidenceSources a:hover { color:var(--s1); }
+.sourceGrade { display:inline-flex; min-width:22px; justify-content:center; border-radius:5px; background:var(--s5); color:#fff; font-size:10px; font-weight:800; margin-right:6px; }
 .tierBadge { flex:0 0 44px; text-align:center; font-weight:700; font-size:15px; border-radius:8px; padding:6px 0; color:#fff; }
 .tierRow .fam { font-weight:650; }
 .tierRow .cmp { color:var(--ink2); font-size:12.5px; margin:2px 0; }
@@ -346,8 +369,13 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
 .s2Signal.aug .bar i { background:var(--s3); }
 .s2Empty { border:1px dashed var(--border); border-radius:8px; padding:16px; color:var(--ink2); }
 @media (max-width: 860px) {
-  .auditGrid, .discoverGrid, .discoverOdds, .labTop, .labMatrix, .reinventHero, .reinventGrid, .stage2Intro, .stage2Shell, .s2SearchRow, .s2Cols, .certCols { grid-template-columns:1fr; }
+  .auditGrid, .discoverGrid, .discoverOdds, .labTop, .labMatrix, .reinventHero, .reinventGrid, .stage2Intro, .stage2Shell, .s2SearchRow, .s2Cols, .certCols, .evidenceCols { grid-template-columns:1fr; }
   .certKpis { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .evidenceKpis { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .evidenceKpi:nth-child(2) { border-right:0; }
+  .evidenceKpi:nth-child(-n+2) { border-bottom:1px solid var(--grid); }
+  .researchLine { grid-template-columns:minmax(0,1fr) 78px; }
+  .researchLine .next { grid-column:1 / -1; }
   .auditSide, .discoverSide { position:static; }
   .loopDetail { position:static; }
   .auditFilters { grid-template-columns:1fr; }
@@ -374,6 +402,7 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
     <a href="#sec-stage2" class="hot">二阶段匹配</a>
     <a href="#sec-mecha">机甲分叉</a>
     <a href="#sec-verdict">版本结果</a>
+    <a href="#sec-evidence">科研证据</a>
     <a href="#sec-certification">样本认证</a>
     <a href="match.html" style="margin-left:auto; color:#fff; background:var(--s2); border-color:var(--s2); font-weight:650;">比赛模式 ▸</a>
   </nav>
@@ -509,6 +538,27 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
     <h3>关键装备</h3>
     <div class="itemCols" id="v-items"></div>
     <div class="note" id="v-comp"></div>
+  </div>
+
+  <div class="card" id="sec-evidence">
+    <h2>科研证据：网上结论能不能进入模型</h2>
+    <div class="desc">公开攻略和视频先进入候选池，再按版本、完整度、独立结果样本进行折扣。这里展示的是证据边界，不把热度或标题当作胜率。</div>
+    <div id="evidence-kpis" class="evidenceKpis"></div>
+    <div id="evidence-warning" class="evidenceWarning"></div>
+    <div class="evidenceCols">
+      <div>
+        <h3>六条研究线</h3>
+        <div id="evidence-readiness"></div>
+      </div>
+      <div>
+        <h3>网络发现的候选阵容</h3>
+        <div id="evidence-candidates"></div>
+      </div>
+    </div>
+    <details class="evidenceSources">
+      <summary>查看公开来源与证据等级</summary>
+      <div id="evidence-sources"></div>
+    </details>
   </div>
 
   <div class="card" id="sec-certification">
@@ -684,6 +734,7 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
 <script src="mecha-branch-data.js?v=mecha-20260706a"></script>
 <script src="stage2-matcher-data.js?v=cert-20260712a"></script>
 <script src="matcher-core.js?v=cert-20260712a"></script>
+<script src="community-evidence-data.js?v=evidence-20260713a"></script>
 <script src="audit-data.js?v=tiers-20260705b"></script>
 <script>
 "use strict";
@@ -697,6 +748,7 @@ const LAB = window.RESEARCH_LAB;
 const REINVENT = window.REINVENT;
 const MECHA = window.MECHA_BRANCH;
 const MATCHER = window.STAGE2_MATCHER;
+const EVIDENCE = window.COMMUNITY_EVIDENCE;
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const NS = "http://www.w3.org/2000/svg";
 function el(t, a, parent) { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (parent) parent.appendChild(e); return e; }
@@ -720,6 +772,45 @@ if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 window.addEventListener("hashchange", syncHashTarget);
 window.addEventListener("load", syncHashTarget);
 syncHashTarget();
+
+// ---------- public evidence ----------
+function renderCommunityEvidence() {
+  const host = document.getElementById("sec-evidence");
+  if (!host) return;
+  if (!EVIDENCE) {
+    host.innerHTML = "<h2>科研证据</h2><div class='note'>未找到公开证据数据。请运行 <code>npm run research:community</code>。</div>";
+    return;
+  }
+  const hypotheses = EVIDENCE.lineupHypotheses || [];
+  const readiness = EVIDENCE.researchReadiness || [];
+  const readyCount = readiness.filter(row => row.status === "ready").length;
+  const statusText = { ready:"可运行", partial:"模型基础", "data-gap":"缺实战" };
+  document.getElementById("evidence-kpis").innerHTML = [
+    [EVIDENCE.sourceCount || 0, "公开来源"],
+    [hypotheses.length, "候选阵容"],
+    [EVIDENCE.currentOutcomeSamples || 0, "同版本独立结果"],
+    [`${readyCount}/${readiness.length}`, "研究线已就绪"],
+  ].map(([value, label]) => `<div class="evidenceKpi"><div class="v">${escText(value)}</div><div class="l">${escText(label)}</div></div>`).join("");
+  document.getElementById("evidence-warning").textContent = `网络内容已发现${hypotheses.length}个候选，但同版本独立结果样本只有${EVIDENCE.currentOutcomeSamples || 0}条；候选会进入本地模拟，不会直接改变比赛模式权重。`;
+  document.getElementById("evidence-readiness").innerHTML = readiness.map(row => `
+    <div class="researchLine">
+      <b>${escText(row.name)}</b>
+      <span class="researchStatus ${escText(row.status)}">${escText(statusText[row.status] || row.status)}</span>
+      <span class="next">${escText(row.next)}</span>
+    </div>`).join("");
+  document.getElementById("evidence-candidates").innerHTML = hypotheses.map(row => `
+    <div class="evidenceCandidate">
+      <b>${escText(row.name)}</b>
+      <span>${row.currentOutcomeSamples ? `${row.currentOutcomeSamples}局结果` : `证据${row.strongestEvidence} · 待验证`}</span>
+    </div>`).join("") || "<div class='note'>还没有网络候选。</div>";
+  document.getElementById("evidence-sources").innerHTML = (EVIDENCE.sources || []).map(source => `
+    <div class="rk">
+      <span class="sourceGrade">${escText(source.evidenceGrade)}</span>
+      <a class="nm" href="${escText(source.url)}" target="_blank" rel="noreferrer">${escText(source.title)}</a>
+      <span class="meta">${escText(source.evidenceType)} · ${escText(source.version)} · ${source.evidenceScore}分</span>
+    </div>`).join("");
+}
+renderCommunityEvidence();
 
 // ---------- research cockpit ----------
 function renderResearchLab() {
