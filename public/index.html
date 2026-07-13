@@ -117,6 +117,20 @@ h3 { font-size:14px; font-weight:650; margin:16px 0 8px; }
 .evidenceSources a { color:var(--ink); text-decoration:none; }
 .evidenceSources a:hover { color:var(--s1); }
 .sourceGrade { display:inline-flex; min-width:22px; justify-content:center; border-radius:5px; background:var(--s5); color:#fff; font-size:10px; font-weight:800; margin-right:6px; }
+.battleRank { display:grid; grid-template-columns:32px minmax(0,1fr) 68px 68px 62px; gap:8px; align-items:center; min-height:36px; border-bottom:1px solid var(--grid); font-size:12px; }
+.battleRank:last-child { border-bottom:0; }
+.battleRank .pos { color:var(--muted); text-align:center; }
+.battleRank .nm { font-weight:700; overflow-wrap:anywhere; }
+.battleRank .metric { text-align:right; color:var(--ink2); white-space:nowrap; }
+.battleMatrixWrap { overflow:auto; margin-top:12px; border:1px solid var(--grid); border-radius:6px; }
+.battleMatrix { width:100%; min-width:760px; border-collapse:collapse; font-size:10.5px; }
+.battleMatrix th, .battleMatrix td { border:1px solid var(--grid); padding:5px 6px; text-align:center; }
+.battleMatrix th { background:var(--surface2); font-weight:700; }
+.battleMatrix th:first-child { min-width:180px; text-align:left; }
+.battleMatrix td:first-child { text-align:left; font-weight:650; }
+.battleMatrix td.win { color:var(--s2); font-weight:800; }
+.battleMatrix td.loss { color:var(--s6); }
+.battleLimit { color:var(--ink2); padding:7px 0; border-bottom:1px solid var(--grid); font-size:11.8px; }
 .tierBadge { flex:0 0 44px; text-align:center; font-weight:700; font-size:15px; border-radius:8px; padding:6px 0; color:#fff; }
 .tierRow .fam { font-weight:650; }
 .tierRow .cmp { color:var(--ink2); font-size:12.5px; margin:2px 0; }
@@ -402,7 +416,7 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
     <a href="#sec-stage2" class="hot">二阶段匹配</a>
     <a href="#sec-mecha">机甲分叉</a>
     <a href="#sec-verdict">版本结果</a>
-    <a href="#sec-evidence">科研证据</a>
+    <a href="#sec-evidence">虚拟实战</a>
     <a href="#sec-certification">样本认证</a>
     <a href="match.html" style="margin-left:auto; color:#fff; background:var(--s2); border-color:var(--s2); font-weight:650;">比赛模式 ▸</a>
   </nav>
@@ -541,24 +555,22 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
   </div>
 
   <div class="card" id="sec-evidence">
-    <h2>科研证据：网上结论能不能进入模型</h2>
-    <div class="desc">公开攻略和视频先进入候选池，再按版本、完整度、独立结果样本进行折扣。这里展示的是证据边界，不把热度或标题当作胜率。</div>
+    <h2>虚拟实战实验室</h2>
+    <div class="desc">全部结果由本地官方数值驱动的事件战斗引擎生成。每组对位使用同一随机种子交换左右方重跑，不使用真实对局胜率校准。</div>
     <div id="evidence-kpis" class="evidenceKpis"></div>
     <div id="evidence-warning" class="evidenceWarning"></div>
     <div class="evidenceCols">
       <div>
-        <h3>六条研究线</h3>
-        <div id="evidence-readiness"></div>
+        <h3>全对全稳健排名</h3>
+        <div id="battle-rankings"></div>
       </div>
       <div>
-        <h3>网络发现的候选阵容</h3>
-        <div id="evidence-candidates"></div>
+        <h3>引擎覆盖与边界</h3>
+        <div id="battle-coverage"></div>
       </div>
     </div>
-    <details class="evidenceSources">
-      <summary>查看公开来源与证据等级</summary>
-      <div id="evidence-sources"></div>
-    </details>
+    <h3>Top 6 对位胜率矩阵</h3>
+    <div id="battle-matrix" class="battleMatrixWrap"></div>
   </div>
 
   <div class="card" id="sec-certification">
@@ -734,7 +746,7 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
 <script src="mecha-branch-data.js?v=mecha-20260706a"></script>
 <script src="stage2-matcher-data.js?v=cert-20260712a"></script>
 <script src="matcher-core.js?v=cert-20260712a"></script>
-<script src="community-evidence-data.js?v=evidence-20260713a"></script>
+<script src="virtual-battle-data.js?v=twin-20260713a"></script>
 <script src="audit-data.js?v=tiers-20260705b"></script>
 <script>
 "use strict";
@@ -748,7 +760,7 @@ const LAB = window.RESEARCH_LAB;
 const REINVENT = window.REINVENT;
 const MECHA = window.MECHA_BRANCH;
 const MATCHER = window.STAGE2_MATCHER;
-const EVIDENCE = window.COMMUNITY_EVIDENCE;
+const VIRTUAL_BATTLE = window.VIRTUAL_BATTLE;
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const NS = "http://www.w3.org/2000/svg";
 function el(t, a, parent) { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (parent) parent.appendChild(e); return e; }
@@ -773,44 +785,39 @@ window.addEventListener("hashchange", syncHashTarget);
 window.addEventListener("load", syncHashTarget);
 syncHashTarget();
 
-// ---------- public evidence ----------
-function renderCommunityEvidence() {
+// ---------- virtual battle twin ----------
+function renderVirtualBattle() {
   const host = document.getElementById("sec-evidence");
   if (!host) return;
-  if (!EVIDENCE) {
-    host.innerHTML = "<h2>科研证据</h2><div class='note'>未找到公开证据数据。请运行 <code>npm run research:community</code>。</div>";
+  if (!VIRTUAL_BATTLE) {
+    host.innerHTML = "<h2>虚拟实战实验室</h2><div class='note'>未找到虚拟实战数据。请运行 <code>npm run build:virtual</code>。</div>";
     return;
   }
-  const hypotheses = EVIDENCE.lineupHypotheses || [];
-  const readiness = EVIDENCE.researchReadiness || [];
-  const readyCount = readiness.filter(row => row.status === "ready").length;
-  const statusText = { ready:"可运行", partial:"模型基础", "data-gap":"缺实战" };
+  const rankings = VIRTUAL_BATTLE.rankings || [];
   document.getElementById("evidence-kpis").innerHTML = [
-    [EVIDENCE.sourceCount || 0, "公开来源"],
-    [hypotheses.length, "候选阵容"],
-    [EVIDENCE.currentOutcomeSamples || 0, "同版本独立结果"],
-    [`${readyCount}/${readiness.length}`, "研究线已就绪"],
+    [(VIRTUAL_BATTLE.totalBattles || 0).toLocaleString("zh-CN"), "成对虚拟战斗"],
+    [VIRTUAL_BATTLE.matchupCount || 0, "阵容对位"],
+    [`${VIRTUAL_BATTLE.averageCoverage || 0}%`, "机制覆盖"],
+    [`${VIRTUAL_BATTLE.sideBias || 0}%`, "左右方偏差"],
   ].map(([value, label]) => `<div class="evidenceKpi"><div class="v">${escText(value)}</div><div class="l">${escText(label)}</div></div>`).join("");
-  document.getElementById("evidence-warning").textContent = `网络内容已发现${hypotheses.length}个候选，但同版本独立结果样本只有${EVIDENCE.currentOutcomeSamples || 0}条；候选会进入本地模拟，不会直接改变比赛模式权重。`;
-  document.getElementById("evidence-readiness").innerHTML = readiness.map(row => `
-    <div class="researchLine">
-      <b>${escText(row.name)}</b>
-      <span class="researchStatus ${escText(row.status)}">${escText(statusText[row.status] || row.status)}</span>
-      <span class="next">${escText(row.next)}</span>
+  document.getElementById("evidence-warning").textContent = `稳健分公式：${VIRTUAL_BATTLE.engine.scoreFormula}。该分数只表示当前数字孪生内的相对优势，未建模机制会通过覆盖率收缩比赛模式先验。`;
+  document.getElementById("battle-rankings").innerHTML = rankings.slice(0, 12).map((row, index) => `
+    <div class="battleRank">
+      <span class="pos">${index + 1}</span><span class="nm">${escText(row.name)}</span>
+      <span class="metric">胜${row.winRate}%</span><span class="metric">CVaR ${row.cvar10}</span><span class="metric">${row.robustScore}分</span>
     </div>`).join("");
-  document.getElementById("evidence-candidates").innerHTML = hypotheses.map(row => `
-    <div class="evidenceCandidate">
-      <b>${escText(row.name)}</b>
-      <span>${row.currentOutcomeSamples ? `${row.currentOutcomeSamples}局结果` : `证据${row.strongestEvidence} · 待验证`}</span>
-    </div>`).join("") || "<div class='note'>还没有网络候选。</div>";
-  document.getElementById("evidence-sources").innerHTML = (EVIDENCE.sources || []).map(source => `
-    <div class="rk">
-      <span class="sourceGrade">${escText(source.evidenceGrade)}</span>
-      <a class="nm" href="${escText(source.url)}" target="_blank" rel="noreferrer">${escText(source.title)}</a>
-      <span class="meta">${escText(source.evidenceType)} · ${escText(source.version)} · ${source.evidenceScore}分</span>
-    </div>`).join("");
+  document.getElementById("battle-coverage").innerHTML = [
+    `引擎：${VIRTUAL_BATTLE.engine.name}`,
+    `随机种子：${VIRTUAL_BATTLE.engine.seed}`,
+    `时间步长：${VIRTUAL_BATTLE.engine.stepSeconds}秒`,
+    `换边重跑：每个对位${VIRTUAL_BATTLE.engine.seedsPerSide * 2}场`,
+    ...(VIRTUAL_BATTLE.limitations || []),
+  ].map(line => `<div class="battleLimit">${escText(line)}</div>`).join("");
+  const labels = (VIRTUAL_BATTLE.matrix.labels || []).slice(0, 6);
+  const rows = (VIRTUAL_BATTLE.matrix.rows || []).slice(0, 6);
+  document.getElementById("battle-matrix").innerHTML = `<table class="battleMatrix"><thead><tr><th>阵容</th>${labels.map((_, i) => `<th>#${i + 1}</th>`).join("")}</tr></thead><tbody>${rows.map((row, i) => `<tr><td>#${i + 1} ${escText(row.name)}</td>${row.cells.slice(0, 6).map(value => value == null ? "<td>—</td>" : `<td class="${value >= 50 ? "win" : "loss"}">${value}%</td>`).join("")}</tr>`).join("")}</tbody></table>`;
 }
-renderCommunityEvidence();
+renderVirtualBattle();
 
 // ---------- research cockpit ----------
 function renderResearchLab() {
@@ -1204,15 +1211,14 @@ function renderStage2Matcher() {
   function openStage2Detail(r, idx) {
     const t = r.template;
     if (t.source === "official" && openComp(t.name)) {
-      if (r.sampleDecision) {
+      if (r.virtualDecision) {
         const body = document.getElementById("dlgBody");
-        const title = document.createElement("div"); title.className = "secT"; title.textContent = "路线认证样本";
+        const title = document.createElement("div"); title.className = "secT"; title.textContent = "虚拟实战数字孪生";
         const line = document.createElement("div"); line.className = "noteP";
-        const support = r.sampleDecision.decisionShare != null && Number.isFinite(Number(r.sampleDecision.decisionShare)) ? `；当前支持${r.sampleDecision.decisionShare}%` : "";
-        line.textContent = `${r.sampleDecision.evidenceLevel}；${r.sampleDecision.sampleSize}次模型扰动；稳健${r.sampleDecision.robustness}%；95%区间${(r.sampleDecision.interval95 || []).join("~")}；尾部${r.sampleDecision.cvar10}${support}。`;
+        line.textContent = `${r.virtualDecision.battles}场全队对战；胜率${r.virtualDecision.winRate}%；稳健${r.virtualDecision.robustScore}；CVaR ${r.virtualDecision.cvar10}；覆盖${r.virtualDecision.coverage}%；蒸馏${r.virtualDecision.priorPoints >= 0 ? "+" : ""}${r.virtualDecision.priorPoints}分。`;
         body.append(title, line);
-        if ((r.sampleDecision.dependencies || []).length) {
-          const dep = document.createElement("div"); dep.className = "noteP"; dep.textContent = `关键依赖：${r.sampleDecision.dependencies.join("；")}。`;
+        if ((r.virtualDecision.unsupported || []).length) {
+          const dep = document.createElement("div"); dep.className = "noteP"; dep.textContent = `未完整建模：${r.virtualDecision.unsupported.join("、")}。`;
           body.appendChild(dep);
         }
       }
@@ -1234,14 +1240,13 @@ function renderStage2Matcher() {
     x.addEventListener("click", () => dlg.close());
     const detailMeta = r.certificationOnly
       ? `${t.family} ｜ 认证视图 ｜ 模型扰动均值${r.sampleDecision?.meanUtility || "-"} ｜ 尾部${r.sampleDecision?.cvar10 || "-"}`
-      : `${t.family} ｜ ${t.goal} ｜ 强度${r.stageStrength}分 ｜ 认证后${r.finalScore}分 ｜ 现场匹配 ${confidence(r.finalScore)}`;
+      : `${t.family} ｜ ${t.goal} ｜ 现场强度${r.stageStrength}分 ｜ 虚拟校准后${r.finalScore}分 ｜ 现场匹配 ${confidence(r.finalScore)}`;
     mk("div", "dlgMeta", detailMeta, body);
-    if (r.sampleDecision) {
-      mk("div", "secT", "路线认证样本", body);
-      const support = r.sampleDecision.decisionShare != null && Number.isFinite(Number(r.sampleDecision.decisionShare)) ? `；当前支持${r.sampleDecision.decisionShare}%` : "";
-      mk("div", "noteP", `${r.sampleDecision.evidenceLevel}；${r.sampleDecision.sampleSize}次模型扰动；稳健${r.sampleDecision.robustness}%；95%区间${(r.sampleDecision.interval95 || []).join("~")}；尾部${r.sampleDecision.cvar10}${support}。`, body);
-      if ((r.sampleDecision.dependencies || []).length) mk("div", "noteP", `关键依赖：${r.sampleDecision.dependencies.join("；")}。稳健驱动：${(r.sampleDecision.drivers || []).join("；")}。`, body);
-      mk("div", "noteP", r.sampleDecision.warning, body);
+    if (r.virtualDecision) {
+      mk("div", "secT", "虚拟实战数字孪生", body);
+      mk("div", "noteP", `${r.virtualDecision.battles}场全队对战；胜率${r.virtualDecision.winRate}%；稳健${r.virtualDecision.robustScore}；90%区间${(r.virtualDecision.interval90 || []).join("~")}；CVaR ${r.virtualDecision.cvar10}；覆盖${r.virtualDecision.coverage}%。`, body);
+      mk("div", "noteP", `教师模型蒸馏${r.virtualDecision.priorPoints >= 0 ? "+" : ""}${r.virtualDecision.priorPoints}分；同随机种子左右换边重跑。`, body);
+      if ((r.virtualDecision.unsupported || []).length) mk("div", "noteP", `未完整建模：${r.virtualDecision.unsupported.join("、")}。`, body);
     }
 
     const traitBox = mk("div", "traitChips", null, body);
@@ -1344,7 +1349,7 @@ function renderStage2Matcher() {
       return;
     }
     const selected = selectedObj();
-    const ranked = MatcherCore.rank(MATCHER.templates, selected, MATCHER.weights, 5, { certification: true });
+    const ranked = MatcherCore.rank(MATCHER.templates, selected, MATCHER.weights, 5, { virtualBattle: true });
     writeOutput(buildOutput(ranked));
     box.innerHTML = ranked.map((r, i) => {
       const t = r.template;
@@ -1355,7 +1360,7 @@ function renderStage2Matcher() {
           <div>
             <div class="s2Title">#${i + 1} ${escText(t.name)}</div>
             <div class="s2Meta">${escText(t.family)} ｜ ${escText(t.goal)} ｜ 现场匹配 ${confidence(r.finalScore)}</div>
-            ${r.sampleDecision ? `<div class="s2Cert">${escText(r.sampleDecision.evidenceLevel)} ｜ ${r.sampleDecision.sampleSize}样本 ｜ 稳健${r.sampleDecision.robustness}% ｜ 当前支持${r.sampleDecision.decisionShare}%</div>` : ""}
+            ${r.virtualDecision ? `<div class="s2Cert">虚拟实战 ${r.virtualDecision.battles}场 ｜ 胜率${r.virtualDecision.winRate}% ｜ CVaR ${r.virtualDecision.cvar10} ｜ 覆盖${r.virtualDecision.coverage}% ｜ 蒸馏${r.virtualDecision.priorPoints >= 0 ? "+" : ""}${r.virtualDecision.priorPoints}分</div>` : ""}
             <div class="s2OpenHint">点击查看实际阵容 / 路线详情</div>
           </div>
           <div class="s2Score">${r.finalScore}分</div>

@@ -749,12 +749,12 @@ function openRouteDetail(row) {
       mk("div", "detailLine", "核心组件：" + af.core.map(x => `${x.label}${Math.round(x.readiness * 100)}%`).join("、"), body);
     }
   }
-  if (row.sampleDecision) {
-    const sample = row.sampleDecision;
-    mk("div", "detailSection", "路线认证样本", body);
-    mk("div", "detailLine", `${sample.evidenceLevel}；${sample.sampleSize}次模型扰动；稳健${sample.robustness}%；95%区间${(sample.interval95 || []).join("~")}；后10%均值${sample.cvar10}；模型失败率${sample.failureRate}%。`, body);
-    mk("div", "detailLine", `当前输入后的决策支持度${sample.decisionShare}%；样本先验${sample.priorPoints >= 0 ? "+" : ""}${sample.priorPoints}分。${sample.warning}`, body);
-    if ((sample.dependencies || []).length) mk("div", "detailLine", `关键依赖：${sample.dependencies.join("；")}。稳健驱动：${(sample.drivers || []).join("；")}。`, body);
+  if (row.virtualDecision) {
+    const sample = row.virtualDecision;
+    mk("div", "detailSection", "虚拟实战数字孪生", body);
+    mk("div", "detailLine", `${sample.battles}场全队对战；胜率${sample.winRate}%；稳健分${sample.robustScore}；90%区间${(sample.interval90 || []).join("~")}；CVaR10 ${sample.cvar10}。`, body);
+    mk("div", "detailLine", `机制覆盖${sample.coverage}%；蒸馏先验${sample.priorPoints >= 0 ? "+" : ""}${sample.priorPoints}分。对位采用同随机种子左右换边重跑。`, body);
+    if ((sample.unsupported || []).length) mk("div", "detailLine", `尚未完整建模：${sample.unsupported.join("、")}；该部分已通过覆盖率收缩。`, body);
   }
   if (t.mechanic) {
     mk("div", "detailSection", "专属机制模型", body);
@@ -858,14 +858,14 @@ function renderRoute() {
   if (lastTop && lastTop !== nextFollow.template.name) showBanner(`路线切换 ${lastTop} → ${nextFollow.template.name}`);
   lastTop = nextFollow.template.name;
   lastTopId = routeId(nextFollow);
-  lastRenderedTop = { name: t.name, finalScore: topScore, sample: top.sampleDecision ? top.sampleDecision.decisionShare : null };
+  lastRenderedTop = { name: t.name, finalScore: topScore, sample: top.virtualDecision ? top.virtualDecision.robustScore : null };
   lastDetailRow = top;
   const delta = Math.max(0, second ? topScore - secondScore : topScore);
   const actions = MatcherCore.actionLines(t, selectedObj(), top);
   const reach = top.reachability;
   const af = top.antiFragile;
   const breakLine = af
-    ? `基础强度${top.stageStrength || 0}分 → 抗脆弱${top.preCertificationScore ?? topScore}分 → 样本先验${topScore}分`
+    ? `基础强度${top.stageStrength || 0}分 → 抗脆弱${top.preSimulationScore ?? topScore}分 → 虚拟实战蒸馏${topScore}分`
     : `已握资产${top.heldValue || 0}分 + 概率折现${top.futureValue || 0}分 = ${topScore}分`;
   const evidenceLine = (top.evidence || []).slice(0, 3).join("；");
   const stickyLine = top.followAdvice || (following && routeId(following) !== topId ? `建议继续跟 ${following.template.name}（挑战者领先不足）` : "跟随：当前最高分路线");
@@ -876,8 +876,8 @@ function renderRoute() {
   const gateHtml = af
     ? `<div class="gateStrip ${esc(af.status)}">${esc(af.label)} · 核心度${af.readyPct}% · 瓶颈：${esc(af.bottleneckText)}</div><div class="formulaLine">${esc(af.formula)}</div>`
     : "";
-  const sampleHtml = top.sampleDecision
-    ? `<div class="sampleStrip">${esc(top.sampleDecision.evidenceLevel)} · ${top.sampleDecision.sampleSize}样本 · 稳健${top.sampleDecision.robustness}% · 当前决策支持${top.sampleDecision.decisionShare}% · 先验${top.sampleDecision.priorPoints >= 0 ? "+" : ""}${top.sampleDecision.priorPoints}分</div>`
+  const sampleHtml = top.virtualDecision
+    ? `<div class="sampleStrip">虚拟实战 ${top.virtualDecision.battles}场 · 胜率${top.virtualDecision.winRate}% · CVaR ${top.virtualDecision.cvar10} · 覆盖${top.virtualDecision.coverage}% · 蒸馏${top.virtualDecision.priorPoints >= 0 ? "+" : ""}${top.virtualDecision.priorPoints}分</div>`
     : "";
   box.innerHTML = `
     <div>
@@ -928,7 +928,7 @@ function augOptionInfo(sig) {
     unitTraits: UNIT_TRAITS,
     heroAugments: STAGE2_MATCHER.options.heroAugments || [],
     antiFragile: currentLevel >= 4,
-    certification: true,
+    virtualBattle: true,
   });
   const top = ranked[0];
   const current = rankedRoutes()[0];
@@ -943,7 +943,7 @@ function augOptionInfo(sig) {
   if (hero && top) verdict += " 英雄强化按机制硬门槛重算。";
   else if (routeHits.length) verdict += ` 命中${routeHits.length}条路线推荐位。`;
   else if (hot) verdict += ` 通用热度${hot.score || 0}分。`;
-  return { name, routeHits, hot, hero, augScore: top ? rowScore(top) : 0, verdict, top, sample: top && top.sampleDecision };
+  return { name, routeHits, hot, hero, augScore: top ? rowScore(top) : 0, verdict, top, sample: top && top.virtualDecision };
 }
 function renderAugTriple() {
   $("routeView").classList.add("hidden");
@@ -958,7 +958,7 @@ function renderAugTriple() {
       <button class="augCard ${i === 0 ? "best" : ""}" data-name="${esc(r.name)}">
         <div class="augName">${esc(r.name)}</div>
         <div class="augVerdict">${esc(r.verdict)}</div>
-        ${r.sample ? `<div class="augSample">${esc(r.sample.evidenceLevel)} · 稳健${r.sample.robustness}% · 当前支持${r.sample.decisionShare}%</div>` : ""}
+        ${r.sample ? `<div class="augSample">虚拟胜率${r.sample.winRate}% · CVaR ${r.sample.cvar10} · 覆盖${r.sample.coverage}%</div>` : ""}
         <div class="augScore">${r.augScore}分</div>
       </button>`).join("")}</div>
     <div></div>

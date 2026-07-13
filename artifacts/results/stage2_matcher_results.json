@@ -8927,7 +8927,21 @@
       "文本数值折算+5.6适配"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "manual-gadget-jax",
+    "battles": 708,
+    "winRate": 50.9,
+    "meanMargin": -0.066,
+    "interval90": [
+     -0.708,
+     0.643
+    ],
+    "cvar10": -0.752,
+    "robustScore": 42.2,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "manual-gadget-ap",
@@ -9442,7 +9456,21 @@
       "命中路线推荐符文位"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "manual-gadget-ap",
+    "battles": 708,
+    "winRate": 53.9,
+    "meanMargin": 0.069,
+    "interval90": [
+     -0.516,
+     0.664
+    ],
+    "cvar10": -0.582,
+    "robustScore": 47.2,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "manual-mecha-draven-jax-leona",
@@ -9981,7 +10009,21 @@
       "命中路线推荐符文位"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "manual-mecha-draven-jax-leona",
+    "battles": 708,
+    "winRate": 52.6,
+    "meanMargin": 0.015,
+    "interval90": [
+     -0.647,
+     0.645
+    ],
+    "cvar10": -0.695,
+    "robustScore": 44.7,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "manual-laser-duelist",
@@ -10483,7 +10525,21 @@
       "命中路线推荐符文位"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "manual-laser-duelist",
+    "battles": 708,
+    "winRate": 34.5,
+    "meanMargin": -0.212,
+    "interval90": [
+     -0.722,
+     0.626
+    ],
+    "cvar10": -0.741,
+    "robustScore": 31.4,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "manual-duelist",
@@ -10931,7 +10987,21 @@
       "金币折算提升成型可达性"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "manual-duelist",
+    "battles": 708,
+    "winRate": 32.9,
+    "meanMargin": -0.153,
+    "interval90": [
+     -0.653,
+     0.504
+    ],
+    "cvar10": -0.663,
+    "robustScore": 32.1,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "manual-mascot-heart",
@@ -11410,7 +11480,21 @@
       "文本数值折算+3.4适配"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "manual-mascot-heart",
+    "battles": 708,
+    "winRate": 1.5,
+    "meanMargin": -0.665,
+    "interval90": [
+     -0.842,
+     -0.379
+    ],
+    "cvar10": -0.866,
+    "robustScore": 6.3,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "manual-civilian-gunner",
@@ -11913,7 +11997,21 @@
       "金币折算提升成型可达性"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "manual-civilian-gunner",
+    "battles": 708,
+    "winRate": 50.9,
+    "meanMargin": 0.015,
+    "interval90": [
+     -0.644,
+     0.652
+    ],
+    "cvar10": -0.669,
+    "robustScore": 44,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "meta-完美的日炎耀斑-蕾欧娜-0",
@@ -12359,7 +12457,23 @@
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
    },
-   "augmentOperators": []
+   "augmentOperators": [],
+   "virtualBattle": {
+    "templateId": "meta-完美的日炎耀斑-蕾欧娜-0",
+    "battles": 708,
+    "winRate": 83.6,
+    "meanMargin": 0.351,
+    "interval90": [
+     -0.263,
+     0.731
+    ],
+    "cvar10": -0.332,
+    "robustScore": 69.6,
+    "coverage": 88.9,
+    "unsupported": [
+     "机制:完美的日炎耀斑"
+    ]
+   }
   },
   {
    "id": "meta-评级与交火-莎弥拉-1",
@@ -12738,7 +12852,23 @@
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
    },
-   "augmentOperators": []
+   "augmentOperators": [],
+   "virtualBattle": {
+    "templateId": "meta-评级与交火-莎弥拉-1",
+    "battles": 708,
+    "winRate": 88.2,
+    "meanMargin": 0.376,
+    "interval90": [
+     -0.303,
+     0.79
+    ],
+    "cvar10": -0.35,
+    "robustScore": 72.2,
+    "coverage": 90,
+    "unsupported": [
+     "机制:评级与交火"
+    ]
+   }
   },
   {
    "id": "meta-德莱文联盟-德莱文-2",
@@ -13153,7 +13283,23 @@
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
    },
-   "augmentOperators": []
+   "augmentOperators": [],
+   "virtualBattle": {
+    "templateId": "meta-德莱文联盟-德莱文-2",
+    "battles": 708,
+    "winRate": 40.7,
+    "meanMargin": -0.01,
+    "interval90": [
+     -0.487,
+     0.643
+    ],
+    "cvar10": -0.507,
+    "robustScore": 39.7,
+    "coverage": 87.5,
+    "unsupported": [
+     "机制:德莱文联盟"
+    ]
+   }
   },
   {
    "id": "meta-进入夜晚-薇恩-3",
@@ -13503,7 +13649,23 @@
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
    },
-   "augmentOperators": []
+   "augmentOperators": [],
+   "virtualBattle": {
+    "templateId": "meta-进入夜晚-薇恩-3",
+    "battles": 708,
+    "winRate": 11.4,
+    "meanMargin": -0.476,
+    "interval90": [
+     -0.758,
+     0.245
+    ],
+    "cvar10": -0.783,
+    "robustScore": 15,
+    "coverage": 87.5,
+    "unsupported": [
+     "机制:进入夜晚"
+    ]
+   }
   },
   {
    "id": "meta-适应性防守-卡蜜尔-4",
@@ -13851,7 +14013,23 @@
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
    },
-   "augmentOperators": []
+   "augmentOperators": [],
+   "virtualBattle": {
+    "templateId": "meta-适应性防守-卡蜜尔-4",
+    "battles": 708,
+    "winRate": 17.4,
+    "meanMargin": -0.389,
+    "interval90": [
+     -0.768,
+     0.25
+    ],
+    "cvar10": -0.8,
+    "robustScore": 19.2,
+    "coverage": 87.5,
+    "unsupported": [
+     "机制:适应性防守"
+    ]
+   }
   },
   {
    "id": "meta-浪客精神-亚索-5",
@@ -14199,7 +14377,24 @@
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
    },
-   "augmentOperators": []
+   "augmentOperators": [],
+   "virtualBattle": {
+    "templateId": "meta-浪客精神-亚索-5",
+    "battles": 708,
+    "winRate": 16.8,
+    "meanMargin": -0.343,
+    "interval90": [
+     -0.783,
+     0.32
+    ],
+    "cvar10": -0.795,
+    "robustScore": 19.5,
+    "coverage": 87.5,
+    "unsupported": [
+     "艾希:射手的专注",
+     "机制:浪客精神"
+    ]
+   }
   },
   {
    "id": "meta-旺盛精力-悠米-6",
@@ -14548,7 +14743,23 @@
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
    },
-   "augmentOperators": []
+   "augmentOperators": [],
+   "virtualBattle": {
+    "templateId": "meta-旺盛精力-悠米-6",
+    "battles": 708,
+    "winRate": 16.2,
+    "meanMargin": -0.299,
+    "interval90": [
+     -0.673,
+     0.412
+    ],
+    "cvar10": -0.701,
+    "robustScore": 20.7,
+    "coverage": 87.5,
+    "unsupported": [
+     "机制:旺盛精力"
+    ]
+   }
   },
   {
    "id": "meta-姐妹-金克丝-7",
@@ -14891,7 +15102,21 @@
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
    },
-   "augmentOperators": []
+   "augmentOperators": [],
+   "virtualBattle": {
+    "templateId": "meta-姐妹-金克丝-7",
+    "battles": 708,
+    "winRate": 36.4,
+    "meanMargin": -0.085,
+    "interval90": [
+     -0.617,
+     0.612
+    ],
+    "cvar10": -0.626,
+    "robustScore": 35.2,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "meta-咒能高涨-伊泽瑞尔-8",
@@ -15239,7 +15464,24 @@
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
    },
-   "augmentOperators": []
+   "augmentOperators": [],
+   "virtualBattle": {
+    "templateId": "meta-咒能高涨-伊泽瑞尔-8",
+    "battles": 708,
+    "winRate": 3,
+    "meanMargin": -0.571,
+    "interval90": [
+     -0.81,
+     -0.106
+    ],
+    "cvar10": -0.837,
+    "robustScore": 8.6,
+    "coverage": 87.5,
+    "unsupported": [
+     "艾希:射手的专注",
+     "机制:咒能高涨"
+    ]
+   }
   },
   {
    "id": "official-1256",
@@ -15817,7 +16059,23 @@
       "文本数值折算+5.6适配"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1256",
+    "battles": 708,
+    "winRate": 7.6,
+    "meanMargin": -0.471,
+    "interval90": [
+     -0.765,
+     0.259
+    ],
+    "cvar10": -0.788,
+    "robustScore": 12.9,
+    "coverage": 100,
+    "unsupported": [
+     "艾希:射手的专注"
+    ]
+   }
   },
   {
    "id": "official-1567",
@@ -16449,7 +16707,21 @@
       "文本数值折算+1.4适配"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1567",
+    "battles": 708,
+    "winRate": 49.9,
+    "meanMargin": -0.042,
+    "interval90": [
+     -0.726,
+     0.638
+    ],
+    "cvar10": -0.773,
+    "robustScore": 41.7,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-1570",
@@ -17149,7 +17421,21 @@
       "命中路线推荐符文位"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1570",
+    "battles": 708,
+    "winRate": 90.3,
+    "meanMargin": 0.402,
+    "interval90": [
+     -0.48,
+     0.791
+    ],
+    "cvar10": -0.435,
+    "robustScore": 72.9,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-1374",
@@ -17778,7 +18064,21 @@
       "金币折算提升成型可达性"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1374",
+    "battles": 708,
+    "winRate": 46.5,
+    "meanMargin": 0.033,
+    "interval90": [
+     -0.586,
+     0.651
+    ],
+    "cvar10": -0.621,
+    "robustScore": 42.3,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-1328",
@@ -18376,7 +18676,21 @@
       "金币折算提升成型可达性"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1328",
+    "battles": 708,
+    "winRate": 79.9,
+    "meanMargin": 0.241,
+    "interval90": [
+     -0.435,
+     0.709
+    ],
+    "cvar10": -0.466,
+    "robustScore": 64.8,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-4524",
@@ -19021,7 +19335,21 @@
       "命中路线推荐符文位"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-4524",
+    "battles": 708,
+    "winRate": 82.3,
+    "meanMargin": 0.329,
+    "interval90": [
+     -0.417,
+     0.761
+    ],
+    "cvar10": -0.521,
+    "robustScore": 66.7,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-1566",
@@ -19740,7 +20068,21 @@
       "金币折算提升成型可达性"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1566",
+    "battles": 708,
+    "winRate": 87.4,
+    "meanMargin": 0.469,
+    "interval90": [
+     -0.199,
+     0.826
+    ],
+    "cvar10": -0.304,
+    "robustScore": 73.4,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-1406",
@@ -20398,7 +20740,23 @@
       "金币折算提升成型可达性"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1406",
+    "battles": 708,
+    "winRate": 11.7,
+    "meanMargin": -0.487,
+    "interval90": [
+     -0.82,
+     0.244
+    ],
+    "cvar10": -0.841,
+    "robustScore": 14.4,
+    "coverage": 100,
+    "unsupported": [
+     "艾希:射手的专注"
+    ]
+   }
   },
   {
    "id": "official-1571",
@@ -21133,7 +21491,21 @@
       "命中路线推荐符文位"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1571",
+    "battles": 708,
+    "winRate": 67.2,
+    "meanMargin": 0.22,
+    "interval90": [
+     -0.618,
+     0.765
+    ],
+    "cvar10": -0.682,
+    "robustScore": 55.4,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-1412",
@@ -21728,7 +22100,21 @@
       "文本数值折算+3.4适配"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1412",
+    "battles": 708,
+    "winRate": 11.9,
+    "meanMargin": -0.421,
+    "interval90": [
+     -0.801,
+     0.434
+    ],
+    "cvar10": -0.813,
+    "robustScore": 15.7,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-1576",
@@ -22482,7 +22868,21 @@
       "金币折算提升成型可达性"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1576",
+    "battles": 708,
+    "winRate": 60,
+    "meanMargin": 0.129,
+    "interval90": [
+     -0.592,
+     0.744
+    ],
+    "cvar10": -0.63,
+    "robustScore": 50.8,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-1589",
@@ -23105,7 +23505,21 @@
       "文本数值折算+8.4适配"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1589",
+    "battles": 708,
+    "winRate": 29.7,
+    "meanMargin": -0.259,
+    "interval90": [
+     -0.755,
+     0.454
+    ],
+    "cvar10": -0.792,
+    "robustScore": 27.7,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-4526",
@@ -23650,7 +24064,21 @@
       "金币折算提升成型可达性"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-4526",
+    "battles": 708,
+    "winRate": 80.9,
+    "meanMargin": 0.332,
+    "interval90": [
+     -0.399,
+     0.771
+    ],
+    "cvar10": -0.436,
+    "robustScore": 66.8,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-1415",
@@ -24299,7 +24727,21 @@
       "文本数值折算+8.4适配"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1415",
+    "battles": 708,
+    "winRate": 86.5,
+    "meanMargin": 0.448,
+    "interval90": [
+     -0.309,
+     0.834
+    ],
+    "cvar10": -0.291,
+    "robustScore": 72.8,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-4536",
@@ -24921,7 +25363,23 @@
       "文本数值折算+1.1适配"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-4536",
+    "battles": 708,
+    "winRate": 70.3,
+    "meanMargin": 0.239,
+    "interval90": [
+     -0.502,
+     0.747
+    ],
+    "cvar10": -0.532,
+    "robustScore": 58.8,
+    "coverage": 100,
+    "unsupported": [
+     "艾希:射手的专注"
+    ]
+   }
   },
   {
    "id": "official-1565",
@@ -25507,7 +25965,21 @@
       "命中路线推荐符文位"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1565",
+    "battles": 708,
+    "winRate": 15.5,
+    "meanMargin": -0.48,
+    "interval90": [
+     -0.876,
+     0.442
+    ],
+    "cvar10": -0.887,
+    "robustScore": 16.2,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-4541",
@@ -26141,7 +26613,21 @@
       "命中路线推荐符文位"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-4541",
+    "battles": 708,
+    "winRate": 50,
+    "meanMargin": 0,
+    "interval90": [
+     -0.615,
+     0.673
+    ],
+    "cvar10": -0.654,
+    "robustScore": 43.5,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-1394",
@@ -26783,7 +27269,21 @@
       "命中路线推荐符文位"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1394",
+    "battles": 708,
+    "winRate": 64.3,
+    "meanMargin": 0.16,
+    "interval90": [
+     -0.567,
+     0.717
+    ],
+    "cvar10": -0.614,
+    "robustScore": 53.7,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-1379",
@@ -27459,7 +27959,21 @@
       "命中路线推荐符文位"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1379",
+    "battles": 708,
+    "winRate": 49.9,
+    "meanMargin": 0.028,
+    "interval90": [
+     -0.736,
+     0.685
+    ],
+    "cvar10": -0.743,
+    "robustScore": 42.8,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-1378",
@@ -28185,7 +28699,21 @@
       "金币折算提升成型可达性"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1378",
+    "battles": 708,
+    "winRate": 80.2,
+    "meanMargin": 0.376,
+    "interval90": [
+     -0.498,
+     0.815
+    ],
+    "cvar10": -0.519,
+    "robustScore": 66.1,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-1257",
@@ -28741,7 +29269,23 @@
       "文本数值折算+4.2适配"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1257",
+    "battles": 708,
+    "winRate": 28.8,
+    "meanMargin": -0.273,
+    "interval90": [
+     -0.755,
+     0.508
+    ],
+    "cvar10": -0.798,
+    "robustScore": 27,
+    "coverage": 100,
+    "unsupported": [
+     "艾希:射手的专注"
+    ]
+   }
   },
   {
    "id": "official-1269",
@@ -29442,7 +29986,21 @@
       "金币折算提升成型可达性"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1269",
+    "battles": 708,
+    "winRate": 80.2,
+    "meanMargin": 0.331,
+    "interval90": [
+     -0.352,
+     0.773
+    ],
+    "cvar10": -0.424,
+    "robustScore": 66.5,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-1288",
@@ -30174,7 +30732,21 @@
       "命中路线推荐符文位"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1288",
+    "battles": 708,
+    "winRate": 98.7,
+    "meanMargin": 0.583,
+    "interval90": [
+     0.199,
+     0.772
+    ],
+    "cvar10": 0.102,
+    "robustScore": 85.1,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-1290",
@@ -30869,7 +31441,21 @@
       "命中路线推荐符文位"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1290",
+    "battles": 708,
+    "winRate": 99.6,
+    "meanMargin": 0.829,
+    "interval90": [
+     0.541,
+     1
+    ],
+    "cvar10": 0.479,
+    "robustScore": 92.4,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-1294",
@@ -31407,7 +31993,21 @@
       "命中路线推荐符文位"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1294",
+    "battles": 708,
+    "winRate": 32.2,
+    "meanMargin": -0.152,
+    "interval90": [
+     -0.669,
+     0.597
+    ],
+    "cvar10": -0.709,
+    "robustScore": 31.2,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-1312",
@@ -32057,7 +32657,21 @@
       "命中路线推荐符文位"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1312",
+    "battles": 708,
+    "winRate": 71.9,
+    "meanMargin": 0.278,
+    "interval90": [
+     -0.513,
+     0.817
+    ],
+    "cvar10": -0.515,
+    "robustScore": 60.4,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-1321",
@@ -32626,7 +33240,21 @@
       "文本数值折算+8.4适配"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1321",
+    "battles": 708,
+    "winRate": 27.1,
+    "meanMargin": -0.254,
+    "interval90": [
+     -0.738,
+     0.558
+    ],
+    "cvar10": -0.754,
+    "robustScore": 26.7,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-1327",
@@ -33258,7 +33886,21 @@
       "金币折算提升成型可达性"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1327",
+    "battles": 708,
+    "winRate": 46.3,
+    "meanMargin": -0.038,
+    "interval90": [
+     -0.668,
+     0.654
+    ],
+    "cvar10": -0.699,
+    "robustScore": 40.5,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-1338",
@@ -33989,7 +34631,21 @@
       "金币折算提升成型可达性"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1338",
+    "battles": 708,
+    "winRate": 87.3,
+    "meanMargin": 0.441,
+    "interval90": [
+     -0.306,
+     0.798
+    ],
+    "cvar10": -0.294,
+    "robustScore": 73.1,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-1347",
@@ -34587,7 +35243,21 @@
       "命中路线推荐符文位"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1347",
+    "battles": 708,
+    "winRate": 26.2,
+    "meanMargin": -0.315,
+    "interval90": [
+     -0.798,
+     0.573
+    ],
+    "cvar10": -0.839,
+    "robustScore": 24.6,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-1355",
@@ -35281,7 +35951,21 @@
       "命中路线推荐符文位"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1355",
+    "battles": 708,
+    "winRate": 86.6,
+    "meanMargin": 0.433,
+    "interval90": [
+     -0.296,
+     0.865
+    ],
+    "cvar10": -0.388,
+    "robustScore": 71.6,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-1376",
@@ -35947,7 +36631,21 @@
       "命中路线推荐符文位"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1376",
+    "battles": 708,
+    "winRate": 22.7,
+    "meanMargin": -0.322,
+    "interval90": [
+     -0.777,
+     0.478
+    ],
+    "cvar10": -0.81,
+    "robustScore": 22.8,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-1271",
@@ -36589,7 +37287,21 @@
       "命中路线推荐符文位"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1271",
+    "battles": 708,
+    "winRate": 50.8,
+    "meanMargin": 0.032,
+    "interval90": [
+     -0.576,
+     0.636
+    ],
+    "cvar10": -0.618,
+    "robustScore": 44.6,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-1323",
@@ -37201,7 +37913,21 @@
       "文本数值折算+3.4适配"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1323",
+    "battles": 708,
+    "winRate": 0.6,
+    "meanMargin": -0.72,
+    "interval90": [
+     -0.906,
+     -0.395
+    ],
+    "cvar10": -0.921,
+    "robustScore": 4.6,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-1402",
@@ -37772,7 +38498,21 @@
       "金币折算提升成型可达性"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-1402",
+    "battles": 708,
+    "winRate": 55.9,
+    "meanMargin": 0.123,
+    "interval90": [
+     -0.531,
+     0.723
+    ],
+    "cvar10": -0.553,
+    "robustScore": 49.2,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-4529",
@@ -38342,7 +39082,21 @@
       "文本数值折算+3.4适配"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-4529",
+    "battles": 708,
+    "winRate": 45.3,
+    "meanMargin": -0.071,
+    "interval90": [
+     -0.744,
+     0.636
+    ],
+    "cvar10": -0.752,
+    "robustScore": 39,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-4532",
@@ -38909,7 +39663,21 @@
       "文本数值折算+3.4适配"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-4532",
+    "battles": 708,
+    "winRate": 12.1,
+    "meanMargin": -0.474,
+    "interval90": [
+     -0.842,
+     0.283
+    ],
+    "cvar10": -0.846,
+    "robustScore": 14.8,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-4533",
@@ -39472,7 +40240,21 @@
       "装备弹性72%，缓解瓶颈+2.8"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-4533",
+    "battles": 708,
+    "winRate": 65.5,
+    "meanMargin": 0.161,
+    "interval90": [
+     -0.463,
+     0.742
+    ],
+    "cvar10": -0.478,
+    "robustScore": 55.8,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-4534",
@@ -40129,7 +40911,21 @@
       "文本数值折算+2.8适配"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-4534",
+    "battles": 708,
+    "winRate": 70.3,
+    "meanMargin": 0.194,
+    "interval90": [
+     -0.594,
+     0.782
+    ],
+    "cvar10": -0.657,
+    "robustScore": 57,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-4540",
@@ -40638,7 +41434,21 @@
       "文本数值折算+1.1适配"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-4540",
+    "battles": 708,
+    "winRate": 11.7,
+    "meanMargin": -0.433,
+    "interval90": [
+     -0.863,
+     0.343
+    ],
+    "cvar10": -0.875,
+    "robustScore": 14.7,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-4544",
@@ -41334,7 +42144,21 @@
       "命中路线推荐符文位"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-4544",
+    "battles": 708,
+    "winRate": 60.2,
+    "meanMargin": 0.125,
+    "interval90": [
+     -0.548,
+     0.646
+    ],
+    "cvar10": -0.602,
+    "robustScore": 51.1,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-4545",
@@ -41942,7 +42766,21 @@
       "命中路线推荐符文位"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-4545",
+    "battles": 708,
+    "winRate": 40.5,
+    "meanMargin": -0.068,
+    "interval90": [
+     -0.673,
+     0.67
+    ],
+    "cvar10": -0.727,
+    "robustScore": 36.7,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-4546",
@@ -42540,7 +43378,21 @@
       "命中路线推荐符文位"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-4546",
+    "battles": 708,
+    "winRate": 75.9,
+    "meanMargin": 0.297,
+    "interval90": [
+     -0.277,
+     0.752
+    ],
+    "cvar10": -0.391,
+    "robustScore": 64.1,
+    "coverage": 100,
+    "unsupported": []
+   }
   },
   {
    "id": "official-4548",
@@ -43117,7 +43969,21 @@
       "金币折算提升成型可达性"
      ]
     }
-   ]
+   ],
+   "virtualBattle": {
+    "templateId": "official-4548",
+    "battles": 708,
+    "winRate": 90.9,
+    "meanMargin": 0.49,
+    "interval90": [
+     -0.145,
+     0.881
+    ],
+    "cvar10": -0.2,
+    "robustScore": 76.6,
+    "coverage": 100,
+    "unsupported": []
+   }
   }
  ],
  "weights": {
@@ -46196,6 +47062,20 @@
      ]
     }
    ]
+  }
+ },
+ "virtualBattle": {
+  "generated": "2026-07-13T01:42:54.756Z",
+  "totalBattles": 21240,
+  "averageCoverage": 98.4,
+  "engine": {
+   "name": "JCC event twin v1",
+   "seed": 20260713,
+   "stepSeconds": 0.1,
+   "maxBattleSeconds": 35,
+   "seedsPerSide": 6,
+   "scoreFormula": "100*(0.55*winRate + 0.25*normalizedMeanMargin + 0.20*normalizedCVaR10)",
+   "officialInputsOnly": true
   }
  }
 }

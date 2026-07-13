@@ -51,9 +51,11 @@
   // 资产角色估值：角色判定来自 routeProfile，这里只集中放数值权重。
   const FUTURE_VALUE_GOLD_CAP = 80;
   const FUTURE_ITEM_VALUE_RATIO = 0.25;
-  // 认证样本只作为有限先验，最多±5分；现场资产与硬门槛仍决定主要排序。
-  const CERTIFICATION_PRIOR_LIMIT = 5;
-  const CERTIFICATION_SOFTMAX_TEMPERATURE = 16;
+  // 完整事件战斗引擎是教师模型；比赛模式仅吸收其有界先验。
+  // tanh让极端模拟结果不能压过现场已握棋子/装备/符文；机制覆盖率低时自动收缩到0。
+  const VIRTUAL_BATTLE_PRIOR_CAP = 12;
+  const VIRTUAL_BATTLE_CENTER = 50;
+  const VIRTUAL_BATTLE_SCALE = 18;
   // 条件符文算子：认证边际先按证据等级折扣，再分别作用于战力、D牌成本或装备缺口。
   const AUGMENT_OPERATOR_EVIDENCE = { "L2.5": 1, "L2": 0.65, "L1.5": 0.35 };
   const AUGMENT_OPERATOR_LIFT_SCALE = 0.5;
@@ -1323,42 +1325,30 @@
     return Number.isFinite(Number(row.finalScore)) ? Number(row.finalScore) : Number(row.stageStrength);
   }
 
-  function applyCertification(rows, opts) {
-    if (opts && opts.certification === false) return rows;
+  function applyVirtualBattle(rows, opts) {
+    if (opts && opts.virtualBattle === false) return rows;
     rows.forEach(row => {
-      const cert = row.template && row.template.certification;
-      if (!cert || row.mechanicBlocked) return;
-      const prior = clamp(Number(cert.priorPoints) || 0, -CERTIFICATION_PRIOR_LIMIT, CERTIFICATION_PRIOR_LIMIT);
-      row.preCertificationScore = row.finalScore;
-      row.samplePrior = prior;
+      const battle = row.template && row.template.virtualBattle;
+      if (!battle || row.mechanicBlocked) return;
+      const coverage = clamp(Number(battle.coverage) || 0, 0, 100) / 100;
+      const robust = clamp(Number(battle.robustScore) || VIRTUAL_BATTLE_CENTER, 0, 100);
+      const raw = VIRTUAL_BATTLE_PRIOR_CAP * Math.tanh((robust - VIRTUAL_BATTLE_CENTER) / VIRTUAL_BATTLE_SCALE);
+      const prior = Math.round(raw * coverage);
+      row.preSimulationScore = row.finalScore;
+      row.virtualBattlePrior = prior;
       row.finalScore = Math.max(0, Math.round(row.finalScore + prior));
-      row.certification = cert;
-      row.evidence = uniq([`样本先验${prior >= 0 ? "+" : ""}${prior}（${cert.sampleSize}次，稳健${cert.metrics?.robustness || 0}%）`, ...(row.evidence || [])]).slice(0, 6);
-    });
-    const eligible = rows.filter(row => row.finalScore > 0);
-    if (!eligible.length) return rows;
-    const maxScore = Math.max(...eligible.map(row => row.finalScore));
-    const weighted = eligible.map(row => {
-      const robustness = Number(row.certification && row.certification.metrics && row.certification.metrics.robustness) || 50;
-      const priorWeight = 0.75 + robustness / 100 * 0.25;
-      return { row, weight: Math.exp((row.finalScore - maxScore) / CERTIFICATION_SOFTMAX_TEMPERATURE) * priorWeight };
-    });
-    const total = weighted.reduce((sum, x) => sum + x.weight, 0) || 1;
-    weighted.forEach(({ row, weight }) => {
-      const cert = row.certification;
-      row.sampleDecision = {
-        sampleSize: cert ? cert.sampleSize : 0,
-        evidenceLevel: cert ? cert.evidenceLevel : "未认证",
-        robustness: cert && cert.metrics ? cert.metrics.robustness : 0,
-        interval95: cert && cert.metrics ? cert.metrics.interval95 : [],
-        cvar10: cert && cert.metrics ? cert.metrics.cvar10 : 0,
-        failureRate: cert && cert.metrics ? cert.metrics.failureRate : 0,
-        priorPoints: row.samplePrior || 0,
-        decisionShare: Math.round(weight / total * 1000) / 10,
-        drivers: cert ? cert.drivers || [] : [],
-        dependencies: cert ? cert.dependencies || [] : [],
-        warning: cert ? cert.warning : "没有认证样本",
+      row.virtualBattle = battle;
+      row.virtualDecision = {
+        battles: Number(battle.battles) || 0,
+        winRate: Number(battle.winRate) || 0,
+        cvar10: Number(battle.cvar10) || 0,
+        interval90: battle.interval90 || [],
+        robustScore: robust,
+        coverage: Math.round(coverage * 1000) / 10,
+        priorPoints: prior,
+        unsupported: battle.unsupported || [],
       };
+      row.evidence = uniq([`虚拟实战${prior >= 0 ? "+" : ""}${prior}（${battle.battles}场，胜率${battle.winRate}%，CVaR ${battle.cvar10}，覆盖${battle.coverage}%）`, ...(row.evidence || [])]).slice(0, 6);
     });
     return rows;
   }
@@ -1428,7 +1418,7 @@
       }
       return base;
     });
-    applyCertification(rows, opts);
+    applyVirtualBattle(rows, opts);
     if (!opts) return rows.sort((a, b) => rowSortScore(b) - rowSortScore(a)).slice(0, limit || 5);
     const previousRank = new Map((opts.previousOrder || []).map((id, i) => [id, i]));
     rows.sort((a, b) => {
@@ -1472,7 +1462,7 @@
       `首选：${t.name}（${topScore}分，现场匹配${confidence(topScore)}）`,
       `权重：英雄${top.shares?.hero || 0}% / 装备${top.shares?.item || 0}% / 符文${top.shares?.augment || 0}%${top.breakdown?.traitSignals ? ` / 羁绊${top.shares?.trait || 0}%` : ""}`,
       `拆分：已握资产${top.heldValue || 0}分 + 概率折现${top.futureValue || 0}分 = ${top.finalScore}分`,
-      top.sampleDecision ? `样本：${top.sampleDecision.evidenceLevel}，${top.sampleDecision.sampleSize}次，稳健${top.sampleDecision.robustness}%，决策支持${top.sampleDecision.decisionShare}%` : "",
+      top.virtualDecision ? `虚拟实战：${top.virtualDecision.battles}场，胜率${top.virtualDecision.winRate}%，CVaR ${top.virtualDecision.cvar10}，覆盖${top.virtualDecision.coverage}%，蒸馏${top.virtualDecision.priorPoints >= 0 ? "+" : ""}${top.virtualDecision.priorPoints}分` : "",
       `路线：${(t.route || []).join(" -> ")}`,
       `留牌：${(t.actions.keep || []).slice(0, 8).join("、")}`,
       `装备：${t.actions.item || "-"}`,
@@ -1919,13 +1909,14 @@
     for (let i = 1; i < dropped.length; i++) {
       assert(dropped[i - 1].finalScore >= dropped[i].finalScore, "rank结果finalScore必须单调非增");
     }
-    const certBase = id => ({ id, name: id, quality: "S", coreUnits: [], earlyUnits: [], midUnits: [], actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 1, items: [] }, units: [], items: [], activeTraits: [] } });
-    const certHigh = { ...certBase("稳健"), certification: { sampleSize: 5000, evidenceLevel: "L2.5 模型扰动稳健", priorPoints: 5, metrics: { robustness: 92, interval95: [110, 130], cvar10: 112, failureRate: 2 }, warning: "模型样本" } };
-    const certLow = { ...certBase("敏感"), certification: { sampleSize: 5000, evidenceLevel: "L1.5 高敏感假设", priorPoints: -5, metrics: { robustness: 18, interval95: [70, 120], cvar10: 74, failureRate: 42 }, warning: "模型样本" } };
-    const certRows = rank([certLow, certHigh], { units: [], items: [], augments: [], augmentCats: [] }, fallbackWeights, 2, {});
-    assert(rowId(certRows[0]) === "稳健" && certRows[0].finalScore - certRows[1].finalScore === 10, "认证先验应在±5分内参与排序");
-    assert(certRows[0].sampleDecision && Number.isFinite(certRows[0].sampleDecision.decisionShare), "每次rank应输出动态样本决策支持度");
-    assert(certRows[0].evidence.some(x => x.includes("5000次")), "认证样本应进入证据栏");
+    const virtualBase = id => ({ id, name: id, quality: "S", coreUnits: [], earlyUnits: [], midUnits: [], actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 1, items: [] }, units: [], items: [], activeTraits: [] } });
+    const virtualHigh = { ...virtualBase("稳健"), virtualBattle: { battles: 708, winRate: 82, robustScore: 90, cvar10: -0.1, interval90: [-0.2, 0.8], coverage: 100, unsupported: [] } };
+    const virtualLow = { ...virtualBase("敏感"), virtualBattle: { battles: 708, winRate: 22, robustScore: 20, cvar10: -0.8, interval90: [-0.9, 0.2], coverage: 100, unsupported: [] } };
+    const virtualRows = rank([virtualLow, virtualHigh], { units: [], items: [], augments: [], augmentCats: [] }, fallbackWeights, 2, {});
+    assert(rowId(virtualRows[0]) === "稳健" && virtualRows[0].finalScore > virtualRows[1].finalScore, "虚拟实战先验应参与排序");
+    assert(Math.abs(virtualRows[0].virtualBattlePrior) <= VIRTUAL_BATTLE_PRIOR_CAP, "虚拟实战先验不得越过有界上限");
+    assert(virtualRows[0].virtualDecision && virtualRows[0].virtualDecision.battles === 708, "rank应输出虚拟实战决策摘要");
+    assert(virtualRows[0].evidence.some(x => x.includes("708场")), "虚拟实战应进入证据栏");
     if (typeof require === "function") {
       const path = require("path");
       const rootDir = path.resolve(__dirname, "..");
@@ -1977,8 +1968,9 @@
     STAR_MILESTONE_BONUS,
     FUTURE_VALUE_GOLD_CAP,
     FUTURE_ITEM_VALUE_RATIO,
-    CERTIFICATION_PRIOR_LIMIT,
-    CERTIFICATION_SOFTMAX_TEMPERATURE,
+    VIRTUAL_BATTLE_PRIOR_CAP,
+    VIRTUAL_BATTLE_CENTER,
+    VIRTUAL_BATTLE_SCALE,
     AUGMENT_OPERATOR_EVIDENCE,
     AUGMENT_OPERATOR_SINGLE_CAP,
     AUGMENT_OPERATOR_TOTAL_CAP,
