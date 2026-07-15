@@ -8,10 +8,11 @@
   const FILLERS = [
     "来了", "来个", "拿了", "拿到", "拿着", "一个", "还有", "然后", "以及", "给我", "看到",
     "看见", "现在", "这把", "有个", "有一个", "帮我", "可以", "的话", "那个", "这个",
-    "我是", "我这边", "我现在", "这边", "嗯", "啊",
+    "我是", "我这边", "我现在", "这边", "已经", "嗯", "啊",
   ];
   const CLEAR_WORDS = ["重开", "新的一局", "新局", "清空", "重新开始"];
-  const REMOVE_WORDS = ["删掉", "去掉", "不要", "删除", "移除"];
+  const REMOVE_WORDS = ["删掉", "去掉", "不要", "删除", "移除", "卖掉", "卖了", "清除"];
+  const UNDO_WORDS = ["撤销上一个", "撤销上一条", "退回上一个", "取消上一个"];
 
   const HERO_ALIASES = {
     艾希: ["寒冰", "冰弓", "冰霜射手"],
@@ -111,6 +112,12 @@
     负极斗篷: ["魔抗", "斗篷"],
     巨人腰带: ["腰带"],
     金铲铲: ["铲子", "铲铲"],
+  };
+
+  const AUGMENT_ALIASES = {
+    高端购物: ["高端"],
+    光明圣物: ["光明神器", "光明装备", "光明武器"],
+    "升级咯！": ["升级咯", "升级吧", "升级了"],
   };
 
   const TRAIT_ALIASES = {
@@ -228,7 +235,9 @@
       push("items", x.name, ITEM_ALIASES[x.name] || []);
     });
     Object.keys(ITEM_ALIASES).filter(x => !knownItems.has(x)).forEach(x => push("items", x, ITEM_ALIASES[x]));
-    ((matcher.options.augmentSearch || matcher.options.augments) || []).forEach(x => push("augments", x.name, x.aliases || []));
+    ((matcher.options.augmentSearch || matcher.options.augments) || []).forEach(x =>
+      push("augments", x.name, [...(x.aliases || []), ...(AUGMENT_ALIASES[x.name] || [])])
+    );
     (matcher.options.augmentSignals || []).forEach(x => push("augmentCats", x, [`${x}符文`]));
     const monsters = new Set();
     (matcher.templates || []).forEach(t => (t.monsterPrefs || []).forEach(x => monsters.add(x)));
@@ -269,13 +278,19 @@
     if (text.startsWith("等级", i)) {
       offset = 2;
       allowMissingSuffix = true;
+    } else if (text.startsWith("已经", i)) {
+      offset = 2;
     } else if (text.startsWith("我", i)) {
       offset = 1;
+    } else if (["升", "上", "拉", "到"].includes(text[i])) {
+      offset = 1;
+      allowMissingSuffix = true;
     }
     const n = parseNumberAt(text, i + offset);
     if (!n) return null;
     const hasSuffix = text.startsWith("级", i + offset + n.len);
-    if (!hasSuffix && !allowMissingSuffix) return null;
+    const hasPopulationSuffix = text.startsWith("人口", i + offset + n.len);
+    if (!hasSuffix && !hasPopulationSuffix && !allowMissingSuffix) return null;
     if (n.count < 1 || n.count > 9) return null;
     return {
       entry: {
@@ -284,8 +299,25 @@
         label: `等级${n.count}`,
         level: n.count,
       },
-      len: offset + n.len + (hasSuffix ? 1 : 0),
+      len: offset + n.len + (hasSuffix ? 1 : (hasPopulationSuffix ? 2 : 0)),
       method: "level",
+    };
+  }
+
+  function parseHeroRoundAt(text, i) {
+    const rest = text.slice(i);
+    const rows = [
+      { forms: ["二杠一", "21"], round: "2-1" },
+      { forms: ["三杠二", "32"], round: "3-2" },
+      { forms: ["四杠二", "42"], round: "4-2" },
+    ];
+    const row = rows.find(x => x.forms.some(form => rest.startsWith(form)));
+    if (!row) return null;
+    const form = row.forms.find(x => rest.startsWith(x));
+    return {
+      entry: { kind: "heroRounds", value: row.round, label: `英雄强化${row.round}`, round: row.round },
+      len: form.length,
+      method: "hero-round",
     };
   }
 
@@ -389,6 +421,8 @@
 
   function findMatchAt(text, i, kindFilter) {
     if (!kindFilter) {
+      const heroRound = parseHeroRoundAt(text, i);
+      if (heroRound) return heroRound;
       const level = parseLevelAt(text, i);
       if (level) return level;
       const starUnit = findStarUnitAt(text, i);
@@ -457,6 +491,70 @@
     };
   }
 
+  function normalizedCurrentSignal(row) {
+    if (!row) return null;
+    const kind = row.kind || row.type;
+    const value = row.value || row.name || row.label;
+    if (!kind || !value) return null;
+    return {
+      kind,
+      value,
+      label: row.label || value,
+      count: row.count,
+      star: row.star,
+      level: row.level,
+      round: row.round,
+      via: "correction",
+    };
+  }
+
+  function correctionResult(raw, currentSignals) {
+    const clean = String(raw || "").trim().replace(/\s+/g, "");
+    const result = { add: [], remove: [], pending: [], unheard: [] };
+    let match = clean.match(/^把?(.+?)(?:换成|改成)(.+)$/);
+    if (!match) match = clean.match(/^不是(.+?)(?:而是|是)(.+)$/);
+    if (match) {
+      const oldRows = tokenize(match[1]);
+      const newRows = tokenize(match[2]);
+      result.remove = oldRows.add;
+      result.add = newRows.add;
+      result.pending = [...oldRows.pending, ...newRows.pending];
+      result.unheard = [...oldRows.unheard, ...newRows.unheard];
+      return result;
+    }
+
+    match = clean.match(/^(?:刚才)?不是(.+)$/);
+    if (match) {
+      const oldRows = tokenize(match[1]);
+      result.remove = oldRows.add;
+      result.pending = oldRows.pending;
+      result.unheard = oldRows.unheard;
+      return result;
+    }
+
+    match = clean.match(/^说错了(?:是|改成)?(.+)$/);
+    if (match) {
+      const newRows = tokenize(match[1]);
+      result.add = newRows.add;
+      result.pending = newRows.pending;
+      result.unheard = newRows.unheard;
+      const firstKind = result.add[0] && result.add[0].kind;
+      const previous = [...(currentSignals || [])].reverse().map(normalizedCurrentSignal).find(x => x && (!firstKind || x.kind === firstKind));
+      if (previous && !result.add.some(x => x.kind === previous.kind && x.value === previous.value)) result.remove = [previous];
+      return result;
+    }
+
+    match = clean.match(/^(.+?)(?:不要了|卖掉了|卖了|没了)$/);
+    if (match) {
+      const oldRows = tokenize(match[1]);
+      result.remove = oldRows.add;
+      result.pending = oldRows.pending;
+      result.unheard = oldRows.unheard;
+      return result;
+    }
+    return null;
+  }
+
   function parse(text, currentSignals) {
     const raw = String(text || "").trim();
     const out = { add: [], remove: [], clear: false, augTriple: [], pending: [], unheard: [] };
@@ -465,8 +563,49 @@
       out.clear = true;
       return out;
     }
+    if (UNDO_WORDS.some(w => raw.includes(w))) {
+      const previous = [...(currentSignals || [])].reverse().map(normalizedCurrentSignal).find(Boolean);
+      if (previous) out.remove = [previous];
+      return out;
+    }
 
-    const augCmd = raw.match(/(?:符文|海克斯)(.+)$/);
+    const stagePattern = /(?:当前回合|现在|当前)?\s*([234])[-杠]([12])/;
+    const goldPattern = /(?:金币\s*(\d{1,3})|(?:有|现在)?\s*(\d{1,3})\s*(?:金币|块钱|块|金))/;
+    const stageMatch = raw.match(stagePattern);
+    if (stageMatch) out.add.push({ kind: "stage", value: `${stageMatch[1]}-${stageMatch[2]}`, label: `当前回合${stageMatch[1]}-${stageMatch[2]}` });
+    const goldMatch = raw.match(goldPattern);
+    if (goldMatch) {
+      const value = Number(goldMatch[1] || goldMatch[2]);
+      out.add.push({ kind: "gold", value, label: `${value}金币` });
+    }
+    // 状态片段已结构化，后续词表解析不再重复消费，避免“30金”误识别成英雄或没听懂文本。
+    const decisionText = raw.replace(stagePattern, "").replace(goldPattern, "");
+
+    const corrected = correctionResult(decisionText, currentSignals);
+    if (corrected) {
+      Object.assign(out, corrected);
+      return out;
+    }
+
+    // Natural speech often lists an offer as "来了A、来了B、来了C，选哪个".
+    // Treat it as a proposal only when the sentence has a choice cue or repeats "来了".
+    const offerCue = /三选一|三个(?:符文|海克斯)|选哪个|哪个好|怎么选|选什么|应该选|分别是/.test(decisionText);
+    const repeatedOffer = (decisionText.match(/来了/g) || []).length >= 2;
+    if (offerCue || repeatedOffer) {
+      const offerText = decisionText
+        .replace(/(?:这)?三个(?:符文|海克斯)(?:分别)?(?:是|有)?/g, "")
+        .replace(/(?:符文|海克斯)?三选一/g, "")
+        .replace(/(?:应该)?选哪个(?:符文|海克斯)?|哪个好|怎么选|选什么/g, "");
+      const got = tokenize(offerText, "augments");
+      if (got.add.length >= 2) {
+        out.augTriple = got.add.slice(0, 3);
+        out.pending = got.pending;
+        out.unheard = got.unheard;
+        return out;
+      }
+    }
+
+    const augCmd = decisionText.match(/(?:符文|海克斯)(.+)$/);
     if (augCmd) {
       const got = tokenize(augCmd[1], "augments");
       out.augTriple = got.add.slice(0, 3);
@@ -475,9 +614,9 @@
       return out;
     }
 
-    const removeWord = REMOVE_WORDS.find(w => raw.includes(w));
+    const removeWord = REMOVE_WORDS.find(w => decisionText.includes(w));
     if (removeWord) {
-      const target = raw.slice(raw.indexOf(removeWord) + removeWord.length);
+      const target = decisionText.slice(decisionText.indexOf(removeWord) + removeWord.length);
       const got = tokenize(target);
       out.remove = got.add;
       out.pending = got.pending;
@@ -485,8 +624,8 @@
       return out;
     }
 
-    const got = tokenize(raw);
-    out.add = got.add;
+    const got = tokenize(decisionText);
+    out.add.push(...got.add);
     out.pending = got.pending;
     out.unheard = got.unheard;
     return out;
@@ -531,6 +670,13 @@
     const d = parse("符文 无情连打 DD街区 团队建设", []);
     if (d.augTriple.length !== 3) throw new Error("符文三选一失败：" + JSON.stringify(d));
 
+    const naturalOffer = parse("来了高端，来了光明神器，来了升级吧，应该选哪个符文", []);
+    if (naturalOffer.augTriple.length !== 3) throw new Error("自然口述符文三选一失败：" + JSON.stringify(naturalOffer));
+    assertIncludes(naturalOffer.augTriple, "augments", "高端购物");
+    assertIncludes(naturalOffer.augTriple, "augments", "光明圣物");
+    assertIncludes(naturalOffer.augTriple, "augments", "升级咯！");
+    if (naturalOffer.add.length) throw new Error("符文提案不应提前写入已选信号：" + JSON.stringify(naturalOffer));
+
     const e = parse("鬼锁", []);
     assertIncludes(e.add, "items", "鬼索的狂暴之刃");
 
@@ -562,6 +708,27 @@
     assertLevel(parse("我6级", []).add, 6);
     assertLevel(parse("三级", []).add, 3);
     assertLevel(parse("等级2", []).add, 2);
+    assertLevel(parse("拉六", []).add, 6);
+    assertLevel(parse("已经八级", []).add, 8);
+    assertLevel(parse("八人口", []).add, 8);
+    const sold = parse("卖掉波比", [{ kind: "units", value: "波比" }]);
+    assertIncludes(sold.remove, "units", "波比");
+    const suffixSold = parse("波比不要了", [{ kind: "units", value: "波比" }]);
+    assertIncludes(suffixSold.remove, "units", "波比");
+    const replaced = parse("不是安妮是波比", [{ kind: "units", value: "安妮" }]);
+    assertIncludes(replaced.remove, "units", "安妮");
+    assertIncludes(replaced.add, "units", "波比");
+    const undo = parse("撤销上一个", [{ kind: "units", value: "安妮" }, { kind: "units", value: "波比" }]);
+    assertIncludes(undo.remove, "units", "波比");
+    const heroRound = parse("三杠二", []);
+    if (!heroRound.add.some(x => x.kind === "heroRounds" && x.value === "3-2")) throw new Error("三杠二应识别英雄强化回合");
+    const decisionState = parse("现在3-2，有35金币，来了高端，来了光明神器，来了升级吧，选哪个", []);
+    assertIncludes(decisionState.add, "stage", "3-2");
+    if (!decisionState.add.some(x => x.kind === "gold" && x.value === 35)) throw new Error("应识别当前金币");
+    if (decisionState.augTriple.length !== 3) throw new Error("状态与符文三选一应能同句录入");
+    if (decisionState.pending.length || decisionState.unheard.length) throw new Error("已识别的状态不应残留待确认或没听懂文本");
+    const stateOnly = parse("3杠2，30金", []);
+    if (stateOnly.add.some(x => x.kind === "units") || stateOnly.unheard.length) throw new Error("状态片段不应二次误识别");
     console.log("signal-parser assertions passed");
   }
 

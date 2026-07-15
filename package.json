@@ -8,7 +8,7 @@
     "node": ">=18"
   },
   "scripts": {
-    "test": "node public/signal-parser.js && node public/llm-lane.js && node public/matcher-core.js && node src/core/mechanic-profiles.js && node src/core/research-metrics.js && node src/sim/combat-engine.js",
+    "test": "node public/signal-parser.js && node public/augment-advisor.js && node public/llm-lane.js && node public/matcher-core.js && node src/core/mechanic-profiles.js && node src/core/research-metrics.js && node src/sim/combat-engine.js",
     "build:model": "node src/core/model.js && node src/pipeline/search.js && node src/pipeline/teamsearch.js",
     "build:discovery": "node src/pipeline/discover.js && node src/pipeline/transition.js && node src/pipeline/numeric-lens.js && node src/pipeline/research-lab.js",
     "build:matcher": "node src/pipeline/stage2-matcher.js && node src/pipeline/route-certifier.js",

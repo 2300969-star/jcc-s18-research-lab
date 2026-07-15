@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.jcc/ruleset.schema.json",
+  "title": "JCC versioned ruleset",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "rulesetId",
+    "target",
+    "evidence",
+    "mechanics",
+    "openQuestions"
+  ],
+  "properties": {
+    "schemaVersion": {"type": "string"},
+    "rulesetId": {"type": "string"},
+    "target": {
+      "type": "object",
+      "required": ["game", "displayPatch", "dataEdition", "season", "modeId", "modeKind"],
+      "properties": {
+        "game": {"const": "金铲铲之战"},
+        "displayPatch": {"type": "string"},
+        "dataEdition": {"type": "string"},
+        "season": {"type": "string"},
+        "modeId": {"type": "string"},
+        "modeKind": {"enum": ["standard", "double-up", "choncc", "hyper-roll", "other"]}
+      },
+      "additionalProperties": true
+    },
+    "statusLegend": {
+      "type": "array",
+      "items": {"enum": ["confirmed", "version-dependent", "unverified", "conflict", "deprecated"]},
+      "uniqueItems": true
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "tier", "title", "source", "appliesTo"],
+        "properties": {
+          "id": {"type": "string"},
+          "tier": {"enum": ["A", "B", "C", "D"]},
+          "title": {"type": "string"},
+          "source": {"type": "string"},
+          "appliesTo": {"type": "array", "items": {"type": "string"}},
+          "notes": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "mechanics": {
+      "type": "object",
+      "additionalProperties": {"$ref": "#/$defs/mechanicNode"}
+    },
+    "openQuestions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "question", "blocks"],
+        "properties": {
+          "id": {"type": "string"},
+          "question": {"type": "string"},
+          "blocks": {"type": "array", "items": {"type": "string"}},
+          "preferredEvidence": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "$defs": {
+    "mechanicNode": {
+      "type": "object",
+      "required": ["status", "evidenceIds", "value"],
+      "properties": {
+        "status": {"enum": ["confirmed", "version-dependent", "unverified", "conflict", "deprecated"]},
+        "evidenceIds": {"type": "array", "items": {"type": "string"}},
+        "value": {},
+        "notes": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

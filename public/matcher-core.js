@@ -40,6 +40,10 @@
   // 排序黏性：挑战者需领先 max(3分, 现任分*15%) 才易主；现任跌出前3则立即让位。
   const STICKY_MIN_LEAD = 3;
   const STICKY_RELATIVE_LEAD = 0.15;
+  // 比赛模式的执行路线不能因一两张新牌立即翻转。等级越高、主C变化越大、阵容重合越低，
+  // 挑战路线需要提供更高的领先，并且必须已有成包来牌才能真正接管经营指令。
+  const OPERATIONAL_STAGE_SWITCH_COST = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 2, 6: 5, 7: 9, 8: 13, 9: 16 };
+  const OPERATIONAL_CARRY_SWITCH_COST = { early: 2, mid: 7, late: 11 };
   // 散件方向纯度达到 2/3 时，给同方向主C路线 10% 确定性加成。
   const COMPONENT_DIRECTION_BONUS = 0.1;
   // primePlan 只给含战斗机甲实验结论的路线加命中证据；不影响无 primePlan 的路线。
@@ -1357,6 +1361,72 @@
     return Math.max(STICKY_MIN_LEAD, Math.ceil(rowSortScore(current) * STICKY_RELATIVE_LEAD));
   }
 
+  function routeMainCarry(t) {
+    return (t && t.routeProfile && t.routeProfile.mainCarry && t.routeProfile.mainCarry.name)
+      || (t && t.carryUnits && t.carryUnits[0])
+      || "";
+  }
+
+  function routeUnitNames(t) {
+    return uniq([
+      ...((t && t.earlyUnits) || []),
+      ...((t && t.midUnits) || []),
+      ...((t && t.coreUnits) || []),
+      ...(((t && t.routeProfile && t.routeProfile.units) || []).map(x => x && x.name)),
+    ]);
+  }
+
+  function transitionProfile(current, challenger, selected) {
+    const level = clamp(Number(selected && selected.level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
+    const currentUnits = new Set(routeUnitNames(current && current.template));
+    const challengerUnits = new Set(routeUnitNames(challenger && challenger.template));
+    const held = new Set(normalizeSelectedUnits(selected && selected.units || []).map(x => x.name));
+    const shared = [...challengerUnits].filter(name => currentUnits.has(name));
+    const continuityBase = Math.max(1, Math.min(currentUnits.size || 1, challengerUnits.size || 1));
+    const continuity = shared.length / continuityBase;
+    const currentCarry = routeMainCarry(current && current.template);
+    const challengerCarry = routeMainCarry(challenger && challenger.template);
+    const carryChanged = Boolean(currentCarry && challengerCarry && currentCarry !== challengerCarry);
+    const carryHeld = Boolean(challengerCarry && held.has(challengerCarry));
+    const packageHits = [...challengerUnits].filter(name => held.has(name));
+    const stage = level <= 5 ? "early" : level <= 6 ? "mid" : "late";
+    const minPackageHits = level <= 5 ? 1 : level === 6 ? 2 : 3;
+    let ready = challengerUnits.size === 0 || !carryChanged;
+    if (carryChanged && level <= 5) ready = packageHits.length >= 1;
+    else if (carryChanged && level === 6) ready = carryHeld || packageHits.length >= 3;
+    else if (carryChanged) ready = carryHeld && packageHits.length >= Math.min(minPackageHits, challengerUnits.size);
+    const anti = challenger && challenger.antiFragile;
+    const antiBlocked = Boolean(anti && (anti.blocked || anti.status === "red"));
+    if (antiBlocked) ready = false;
+    const stageCost = Number(OPERATIONAL_STAGE_SWITCH_COST[level]) || 0;
+    const carryCost = carryChanged ? OPERATIONAL_CARRY_SWITCH_COST[stage] : 0;
+    const continuityCost = Math.max(0, Math.round((0.45 - continuity) * 20));
+    const readinessCost = anti && anti.status === "yellow" ? 4 : 0;
+    const cost = stageCost + carryCost + continuityCost + readinessCost;
+    const reason = !ready
+      ? (antiBlocked
+        ? `${level}级转型被瓶颈阻断：${anti.bottleneckText || "核心组件未满足"}`
+        : `${level}级转型未成包：${carryChanged && !carryHeld ? `新主C${challengerCarry || "未到"}未到；` : ""}新路线仅命中${packageHits.length}张关键牌`)
+      : `转型成本${cost}分（阶段${stageCost}+换核${carryCost}+重合${continuityCost}+准备度${readinessCost}）`;
+    return {
+      level,
+      ready,
+      cost,
+      carryChanged,
+      currentCarry,
+      challengerCarry,
+      carryHeld,
+      packageHits,
+      sharedUnits: shared,
+      continuityPct: Math.round(continuity * 100),
+      reason,
+    };
+  }
+
+  function operationalRow(rows) {
+    return (rows || []).find(row => row && row.following) || ((rows || [])[0] || null);
+  }
+
   function applySticky(rows, opts) {
     if (!opts || !opts.stickyTopId || !rows.length) return rows;
     const currentId = opts.stickyTopId;
@@ -1369,7 +1439,20 @@
     const currentIndex = rows.findIndex(r => rowId(r) === currentId);
     if (currentIndex < 0) return rows;
     const current = rows[currentIndex];
+    const transition = opts.operationalCommitment ? transitionProfile(current, challenger, opts.selected || {}) : null;
+    if (transition) challenger.transition = transition;
     if (currentIndex > 2) {
+      if (transition && !transition.ready) {
+        current.following = true;
+        challenger.followAdvice = `继续跟 ${current.template.name}（${transition.reason}）`;
+        current.sticky = {
+          state: "pivot-wait",
+          challenger: challenger.template.name,
+          transition,
+          text: `${current.template.name}虽跌出前3，但${transition.reason}`,
+        };
+        return rows;
+      }
       challenger.sticky = {
         state: "dropped",
         previous: current.template.name,
@@ -1378,16 +1461,23 @@
       return rows;
     }
     const gap = rowSortScore(challenger) - rowSortScore(current);
-    const threshold = stickyThreshold(current);
-    if (gap < threshold) {
+    const baseThreshold = stickyThreshold(current);
+    const threshold = baseThreshold + (transition ? transition.cost : 0);
+    if ((transition && !transition.ready) || gap < threshold) {
       current.following = true;
-      challenger.followAdvice = `建议继续跟 ${current.template.name}（挑战者领先不足）`;
+      challenger.followAdvice = transition && !transition.ready
+        ? `继续跟 ${current.template.name}（${transition.reason}）`
+        : `继续跟 ${current.template.name}（领先${gap}分，转型需${threshold}分）`;
       current.sticky = {
-        state: "held",
+        state: transition && !transition.ready ? "pivot-wait" : "held",
         challenger: challenger.template.name,
         gap,
         threshold,
-        text: `${challenger.template.name}领先${gap}分，未到${threshold}分阈值，继续跟随`,
+        baseThreshold,
+        transition,
+        text: transition && !transition.ready
+          ? `${challenger.template.name}暂不接管：${transition.reason}`
+          : `${challenger.template.name}领先${gap}分，未到含转型成本的${threshold}分阈值，继续跟随`,
       };
     } else {
       challenger.sticky = {
@@ -1395,7 +1485,9 @@
         previous: current.template.name,
         gap,
         threshold,
-        text: `${challenger.template.name}领先${gap}分，达到${threshold}分阈值，允许易主`,
+        baseThreshold,
+        transition,
+        text: `${challenger.template.name}领先${gap}分，达到含转型成本的${threshold}分阈值，允许易主`,
       };
     }
     return rows;
@@ -1431,8 +1523,14 @@
       if (teamDelta) return teamDelta;
       return String(a.template.name).localeCompare(String(b.template.name), "zh-Hans-CN");
     });
-    applySticky(rows, opts);
-    return rows.slice(0, limit || 5);
+    applySticky(rows, { ...opts, selected });
+    const maxRows = limit || 5;
+    const visible = rows.slice(0, maxRows);
+    if (opts.operationalCommitment) {
+      const active = rows.find(row => row.following);
+      if (active && !visible.includes(active)) visible[visible.length - 1] = active;
+    }
+    return visible;
   }
 
   function confidence(score) {
@@ -1651,6 +1749,13 @@
     }
     if (selected.derivedAssets && selected.derivedAssets.length) {
       lines.push(`已落袋：${selected.derivedAssets.map(x => x.label || `${x.value}+${x.copies}`).join("、")}`);
+    }
+    if (top && top.sticky && top.sticky.state === "pivot-wait") {
+      lines.push(`经营不转：继续当前线；${top.sticky.transition ? top.sticky.transition.reason : top.sticky.text}`);
+    } else if (top && top.sticky && top.sticky.state === "held") {
+      lines.push(`经营不转：${top.sticky.text}`);
+    } else if (top && top.sticky && top.sticky.state === "switched") {
+      lines.push(`允许转型：${top.sticky.text}`);
     }
     if (top && top.antiFragile) {
       const af = top.antiFragile;
@@ -1897,6 +2002,20 @@
     let switched = rank(stickyTemplates, { items: ["X"], units: [], augments: [], augmentCats: [] }, switchWeights, 2, { previousOrder: ["old", "new"], stickyTopId: "old" });
     assert(rowId(switched[0]) === "new", "挑战者达到相对阈值时应易主");
 
+    const commitmentTemplates = [
+      { id: "commit-old", name: "旧经营线", quality: "S", coreUnits: ["A", "C"], earlyUnits: ["A"], midUnits: ["A", "C"], completedPrefs: [], componentPrefs: [], augmentPrefs: [], augmentCats: [], actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 2, items: [] }, units: [{ name: "A", role: "mainCarry", starTarget: 2, traits: [] }, { name: "C", role: "frontline", starTarget: 1, traits: [] }], items: [], activeTraits: [] } },
+      { id: "commit-new", name: "新来牌线", quality: "S", coreUnits: ["B", "D", "E"], earlyUnits: ["B"], midUnits: ["B", "D", "E"], completedPrefs: ["X", "Y", "Z"], componentPrefs: [], augmentPrefs: [], augmentCats: [], actions: {}, routeProfile: { mainCarry: { name: "B", starTarget: 2, items: ["X", "Y", "Z"] }, units: [{ name: "B", role: "mainCarry", starTarget: 2, traits: [] }, { name: "D", role: "frontline", starTarget: 1, traits: [] }, { name: "E", role: "utility", starTarget: 1, traits: [] }], items: [{ name: "X", role: "mainCarry", holder: "B", components: [] }, { name: "Y", role: "mainCarry", holder: "B", components: [] }, { name: "Z", role: "mainCarry", holder: "B", components: [] }], activeTraits: [] } },
+    ];
+    const commitmentWeights = { ...fallbackWeights, baseS: 100, mainCarryUnit: 20, mainCarryItem: 20, frontlineUnit: 8, utilityUnit: 8, routeItem: 20, futureMainCarryUnit: 0, futureCoreUnit: 0, futureItem: 0, versionStrength: 0 };
+    const unreadySelected = selectedFromSignals([{ kind: "levels", level: 7 }, { kind: "units", value: "A" }, { kind: "items", value: "X" }, { kind: "items", value: "Y" }, { kind: "items", value: "Z" }]);
+    const unreadyRows = rank(commitmentTemplates, unreadySelected, commitmentWeights, 2, { previousOrder: ["commit-old", "commit-new"], stickyTopId: "commit-old", operationalCommitment: true });
+    assert(rowId(unreadyRows[0]) === "commit-new", "分数排序仍应展示新路线领先");
+    assert(rowId(operationalRow(unreadyRows)) === "commit-old", "新主C未到且来牌未成包时必须继续旧经营线");
+    assert(unreadyRows[0].transition && !unreadyRows[0].transition.ready, "未成包挑战路线必须返回转型阻断原因");
+    const readySelected = selectedFromSignals([{ kind: "levels", level: 7 }, { kind: "units", value: "A" }, { kind: "units", value: "B", star: 2 }, { kind: "units", value: "D" }, { kind: "units", value: "E" }, { kind: "items", value: "X" }, { kind: "items", value: "Y" }, { kind: "items", value: "Z" }]);
+    const readyRows = rank(commitmentTemplates, readySelected, commitmentWeights, 2, { previousOrder: ["commit-old", "commit-new"], stickyTopId: "commit-old", operationalCommitment: true });
+    assert(rowId(operationalRow(readyRows)) === "commit-new", "新主C与配套来牌成包且领先覆盖转型成本后应允许易主");
+
     const dropTemplates = [
       { id: "n1", name: "新1", quality: "S", completedPrefs: ["A"], coreUnits: [], earlyUnits: [], midUnits: [], actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 1, items: [] }, units: [], items: [{ name: "A", role: "route", holder: "A", components: [] }], activeTraits: [] } },
       { id: "n2", name: "新2", quality: "S", completedPrefs: ["B"], coreUnits: [], earlyUnits: [], midUnits: [], actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 1, items: [] }, units: [], items: [{ name: "B", role: "route", holder: "A", components: [] }], activeTraits: [] } },
@@ -1960,6 +2079,7 @@
     fallbackWeights,
     STICKY_MIN_LEAD,
     STICKY_RELATIVE_LEAD,
+    OPERATIONAL_STAGE_SWITCH_COST,
     MIN_LEVEL,
     MAX_LEVEL,
     COMPONENT_DIRECTION_BONUS,
@@ -1981,6 +2101,7 @@
     DEFAULT_LEVEL,
     scoreTemplate,
     rank,
+    operationalRow,
     confidence,
     buildOutput,
     signalTowerHtml,

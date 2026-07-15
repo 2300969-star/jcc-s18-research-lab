@@ -28,9 +28,10 @@ html, body { height:100%; overflow:hidden; }
 body { background:var(--plane); color:var(--ink); font:18px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif; }
 button, input { font:inherit; }
 .app { height:100vh; display:grid; grid-template-rows:auto auto 1fr; gap:12px; padding:16px; max-width:1280px; margin:0 auto; }
-.top { display:grid; grid-template-columns:minmax(0,1fr) auto auto auto auto auto auto; gap:10px; align-items:center; }
+.top { display:grid; grid-template-columns:minmax(0,1fr) auto auto auto auto auto auto auto; gap:10px; align-items:center; }
 .voice { height:62px; border:2px solid var(--s2); border-radius:12px; background:var(--surface); color:var(--ink); padding:0 18px; font-size:24px; outline:none; }
 .bigBtn { min-height:58px; border:1px solid var(--border); border-radius:12px; background:var(--surface); color:var(--ink); padding:0 18px; cursor:pointer; font-weight:800; }
+.submit { background:var(--s2); color:#fff; border-color:var(--s2); }
 .new { background:var(--s6); color:#fff; border-color:var(--s6); }
 .theme { color:var(--ink2); }
 .settingsBtn { width:58px; padding:0; font-size:25px; }
@@ -44,20 +45,22 @@ button, input { font:inherit; }
 .banner.show { opacity:1; }
 .status { display:grid; grid-template-columns:1fr; gap:8px; min-height:94px; }
 .pending, .signals { display:flex; gap:8px; flex-wrap:wrap; align-items:center; min-height:42px; }
-.levelRow, .heroAugRow { display:flex; gap:8px; flex-wrap:wrap; align-items:center; min-height:38px; }
+.levelRow, .decisionStateRow, .heroAugRow { display:flex; gap:8px; flex-wrap:wrap; align-items:center; min-height:38px; }
 .label { color:var(--muted); font-size:15px; font-weight:800; margin-right:2px; }
 .chip, .candidate { min-height:44px; border:1px solid var(--border); border-radius:999px; background:var(--surface); color:var(--ink); padding:6px 14px; cursor:pointer; font-size:18px; }
 .chip { border-color:color-mix(in srgb, var(--s2) 55%, var(--border)); }
 .derivedChip { min-height:36px; display:inline-flex; align-items:center; border:1px dashed color-mix(in srgb, var(--s5) 65%, var(--border)); border-radius:999px; color:var(--ink2); padding:5px 12px; font-size:16px; font-weight:800; background:color-mix(in srgb, var(--surface) 90%, var(--s5) 10%); }
 .levelChip { min-height:36px; border:1px solid var(--border); border-radius:999px; background:var(--plane); color:var(--ink2); padding:4px 11px; cursor:pointer; font-size:16px; font-weight:850; }
 .levelChip.on { background:var(--s2); border-color:var(--s2); color:#fff; }
+.stateChip { min-height:36px; border:1px solid var(--border); border-radius:999px; background:var(--plane); color:var(--ink2); padding:4px 11px; cursor:pointer; font-size:16px; font-weight:850; }
+.stateChip.on { background:var(--s3); border-color:var(--s3); color:#1f1800; }
 .heroAugChip { min-height:36px; border:1px solid var(--border); border-radius:999px; background:var(--plane); color:var(--ink2); padding:4px 13px; cursor:pointer; font-size:16px; font-weight:850; }
 .heroAugChip.on { background:var(--s5); border-color:var(--s5); color:#fff; }
 .heroAugHint { color:var(--muted); font-size:14px; font-weight:750; }
 .candidate { border-color:color-mix(in srgb, var(--s3) 65%, var(--border)); }
 .drop { min-width:44px; padding:6px 12px; color:var(--s6); }
 .main { min-height:0; display:grid; grid-template-columns:minmax(0,1fr); }
-.routeView, .augView { position:relative; min-width:0; min-height:0; overflow:hidden; border:1px solid var(--border); border-radius:16px; background:var(--surface); padding:16px 20px; display:grid; grid-template-rows:auto auto 1fr; gap:8px; }
+.routeView, .augView { position:relative; min-width:0; min-height:0; overflow:auto; overscroll-behavior:contain; border:1px solid var(--border); border-radius:16px; background:var(--surface); padding:16px 20px; display:grid; grid-template-rows:auto auto 1fr; gap:8px; }
 .routeView.clickable { cursor:pointer; }
 .routeView.clickable:focus-visible { outline:3px solid color-mix(in srgb, var(--s2) 70%, transparent); outline-offset:3px; }
 .rankTop { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; align-items:start; }
@@ -102,9 +105,11 @@ button, input { font:inherit; }
 .augCard { border:2px solid var(--border); border-radius:16px; background:var(--surface); padding:18px; cursor:pointer; display:grid; gap:10px; align-content:start; }
 .augCard.best { border-color:var(--s2); background:color-mix(in srgb, var(--surface) 88%, var(--s2) 12%); }
 .augName { font-size:28px; font-weight:950; }
-.augVerdict { font-size:21px; color:var(--ink2); }
-.augScore { font-size:28px; font-weight:950; color:var(--s2); }
-.augSample { color:var(--s5); font-size:15px; font-weight:850; }
+.augVerdict { font-size:19px; color:var(--ink2); }
+.augMechanic { font-size:17px; color:var(--ink); font-weight:800; }
+.augMissing { color:var(--s6); font-size:16px; font-weight:850; }
+.augEvidence { color:var(--muted); font-size:15px; }
+.augStatus { padding:9px 12px; border:1px solid color-mix(in srgb, var(--s3) 55%, var(--border)); border-radius:10px; background:color-mix(in srgb, var(--surface) 86%, var(--s3) 14%); color:var(--ink2); font-size:17px; font-weight:850; }
 .empty { height:100%; display:grid; place-items:center; color:var(--muted); font-size:24px; text-align:center; padding:20px; }
 .settingsPanel { position:fixed; right:16px; top:88px; z-index:8; width:min(520px, calc(100vw - 32px)); border:1px solid var(--border); border-radius:16px; background:var(--surface); box-shadow:0 18px 46px rgba(0,0,0,.28); padding:18px; display:grid; gap:12px; }
 .settingsPanel h2 { font-size:24px; line-height:1.2; }
@@ -144,10 +149,29 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
 .cell .cost { color:var(--muted); font-size:10.5px; }
 .cell .it { color:var(--ink2); font-size:10.5px; line-height:1.35; }
 .hidden { display:none !important; }
+@media (max-height: 760px) {
+  html, body { height:auto; min-height:100%; overflow:auto; }
+  .app { height:auto; min-height:100vh; padding:8px 12px; gap:7px; grid-template-rows:auto auto minmax(420px,auto); }
+  .top { grid-template-columns:minmax(240px,1fr) repeat(7,auto); gap:6px; }
+  .voice { height:48px; padding:0 12px; font-size:18px; }
+  .bigBtn { min-height:46px; padding:0 10px; font-size:16px; border-radius:10px; }
+  .settingsBtn { width:46px; font-size:20px; }
+  .status { min-height:0; gap:4px; }
+  .pending, .signals { min-height:34px; gap:5px; }
+  .levelRow, .decisionStateRow, .heroAugRow { min-height:32px; gap:5px; }
+  .chip, .candidate { min-height:36px; padding:4px 10px; font-size:16px; }
+  .levelChip, .stateChip, .heroAugChip { min-height:31px; padding:3px 9px; font-size:14px; }
+  .main { min-height:420px; }
+  .routeView, .augView { min-height:420px; padding:12px 16px; }
+}
 @media (max-width: 900px) {
-  .app { padding:10px; }
-  .top { grid-template-columns:1fr; }
+  html, body { height:auto; min-height:100%; overflow:auto; }
+  .app { height:auto; min-height:100vh; padding:10px; grid-template-rows:auto auto minmax(520px,auto); }
+  .top { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .voice { grid-column:1 / -1; }
   .voice { font-size:21px; }
+  .main { min-height:520px; }
+  .routeView, .augView { min-height:520px; overflow:auto; }
   .rankTop, .augCards { grid-template-columns:1fr; }
   .routeName { font-size:28px; }
   .stageGrid { grid-template-columns:1fr; }
@@ -158,7 +182,8 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
 <div class="banner" id="switchBanner"></div>
 <div class="app">
   <div class="top">
-    <input id="voiceInput" class="voice" autofocus placeholder="直接说：来了个安妮还有波比拿了养刀">
+    <input id="voiceInput" class="voice" autofocus placeholder="输入后按回车：来了个安妮还有波比拿了养刀">
+    <button id="submitInput" class="bigBtn submit">录入</button>
     <button id="newGame" class="bigBtn new">新的一局</button>
     <button id="themeBtn" class="bigBtn theme">切换明暗</button>
     <button id="logBtn" class="bigBtn theme">记录</button>
@@ -169,6 +194,7 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
   <div class="status">
     <div class="pending" id="pending"></div>
     <div class="levelRow" id="levelRow"></div>
+    <div class="decisionStateRow" id="decisionStateRow"></div>
     <div class="heroAugRow" id="heroAugRow"></div>
     <div class="signals" id="signals"></div>
   </div>
@@ -210,6 +236,7 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
 <script src="odds-data.js?v=match-20260706e"></script>
 <script src="matcher-core.js?v=hero-round-20260712a"></script>
 <script src="signal-parser.js?v=match-20260706e"></script>
+<script src="augment-advisor.js?v=match-20260715a"></script>
 <script src="llm-lane.js?v=match-20260712b"></script>
 <script>
 "use strict";
@@ -227,16 +254,27 @@ const MIN_LEVEL = MatcherCore.MIN_LEVEL || 1;
 const MAX_LEVEL = MatcherCore.MAX_LEVEL || 9;
 const LEVEL_CHOICES = Array.from({ length: MAX_LEVEL - MIN_LEVEL + 1 }, (_, i) => MIN_LEVEL + i);
 const HERO_AUGMENT_CHOICES = ["unknown", "2-1", "3-2", "4-2"];
+const STAGE_CHOICES = ["unknown", "2-1", "3-2", "4-2"];
+const GOLD_CHOICES = [
+  { value: "unknown", label: "金币未知" },
+  { value: "0", label: "0-9金" },
+  { value: "10", label: "10-19金" },
+  { value: "20", label: "20-29金" },
+  { value: "30", label: "30-39金" },
+  { value: "40", label: "40-49金" },
+  { value: "50", label: "50+金" },
+];
 const savedTheme = localStorage.getItem(LS + "theme");
 if (savedTheme) document.documentElement.dataset.theme = savedTheme;
 
 let signals = [];
 let currentLevel = normalizeLevel(localStorage.getItem(LS + "level"));
 let currentHeroAugmentRound = normalizeHeroAugmentRound(localStorage.getItem(LS + "hero-augment-round"));
+let currentStage = normalizeStage(localStorage.getItem(LS + "stage"));
+let currentGold = normalizeGold(localStorage.getItem(LS + "gold"));
 let pending = [];
 let unheard = [];
 let augChoices = null;
-let inputTimer = null;
 let lastTop = "";
 let lastTopId = "";
 let previousOrder = [];
@@ -245,6 +283,8 @@ let lastDetailRow = null;
 let expandedReachId = "";
 let bannerTimer = null;
 let llmSeq = 0;
+let llmAbortController = null;
+let isComposing = false;
 
 function load() {
   try { signals = JSON.parse(localStorage.getItem(LS + "signals") || "[]"); } catch (e) { signals = []; }
@@ -253,25 +293,49 @@ function save() {
   localStorage.setItem(LS + "signals", JSON.stringify(signals));
   localStorage.setItem(LS + "level", String(currentLevel));
   localStorage.setItem(LS + "hero-augment-round", currentHeroAugmentRound);
+  localStorage.setItem(LS + "stage", currentStage);
+  localStorage.setItem(LS + "gold", currentGold);
 }
 function normalizeLevel(level) {
   return Math.max(MIN_LEVEL, Math.min(MAX_LEVEL, Number(level) || DEFAULT_LEVEL));
 }
-function setLevel(level) {
+function setLevel(level, defer) {
   const n = normalizeLevel(level);
   currentLevel = n;
+  if (defer) return;
   save();
   render();
 }
 function normalizeHeroAugmentRound(value) {
   return MatcherCore.normalizeHeroAugmentRound ? MatcherCore.normalizeHeroAugmentRound(value) : (HERO_AUGMENT_CHOICES.includes(value) ? value : "unknown");
 }
-function setHeroAugmentRound(round) {
+function setHeroAugmentRound(round, defer) {
   currentHeroAugmentRound = normalizeHeroAugmentRound(round);
+  if (defer) return;
   save();
   previousOrder = [];
   lastTop = "";
   lastTopId = "";
+  render();
+}
+function normalizeStage(value) {
+  return STAGE_CHOICES.includes(value) ? value : "unknown";
+}
+function setStage(value, defer) {
+  currentStage = normalizeStage(value);
+  if (defer) return;
+  save();
+  render();
+}
+function normalizeGold(value) {
+  if (value === "unknown" || value == null || value === "") return "unknown";
+  const gold = Math.max(0, Number(value) || 0);
+  return String(Math.min(50, Math.floor(gold / 10) * 10));
+}
+function setGold(value, defer) {
+  currentGold = normalizeGold(value);
+  if (defer) return;
+  save();
   render();
 }
 function signalKey(s) {
@@ -290,10 +354,22 @@ function normalizeSignal(s) {
     via: s && s.via,
   };
 }
-function addSignal(s) {
+function addSignal(s, defer) {
   if (!s || !s.kind) return;
   if (s.kind === "levels") {
-    setLevel(Number(s.level || s.value));
+    setLevel(Number(s.level || s.value), defer);
+    return;
+  }
+  if (s.kind === "heroRounds") {
+    setHeroAugmentRound(s.round || s.value, defer);
+    return;
+  }
+  if (s.kind === "stage") {
+    setStage(s.value, defer);
+    return;
+  }
+  if (s.kind === "gold") {
+    setGold(s.value, defer);
     return;
   }
   const next = normalizeSignal(s);
@@ -310,11 +386,11 @@ function addSignal(s) {
   } else {
     signals.push(next);
   }
-  save();
+  if (!defer) save();
 }
-function removeSignal(s) {
+function removeSignal(s, defer) {
   signals = signals.filter(x => signalKey(x) !== signalKey(s));
-  save();
+  if (!defer) save();
 }
 function removeByValue(value) {
   signals = signals.filter(s => s.value !== value && s.label !== value);
@@ -339,6 +415,12 @@ function archiveMatchLog() {
   history.unshift({ time: new Date().toISOString(), rows });
   writeMatchHistory(history);
   writeMatchLog([]);
+}
+function cancelPendingLlm() {
+  llmSeq++;
+  if (llmAbortController) llmAbortController.abort();
+  llmAbortController = null;
+  setLlmStatus("fail");
 }
 function signalText(rows) {
   return (rows || []).map(s => {
@@ -373,6 +455,7 @@ function appendMatchLog(entry) {
   renderLog();
 }
 function clearGame() {
+  cancelPendingLlm();
   archiveMatchLog();
   signals = [];
   pending = [];
@@ -380,6 +463,8 @@ function clearGame() {
   augChoices = null;
   currentLevel = DEFAULT_LEVEL;
   currentHeroAugmentRound = "unknown";
+  currentStage = "unknown";
+  currentGold = "unknown";
   previousOrder = [];
   lastTop = "";
   lastTopId = "";
@@ -410,13 +495,15 @@ function applyParse(parsed) {
     clearGame();
     return;
   }
-  (parsed.remove || []).forEach(removeSignal);
+  (parsed.remove || []).forEach(s => removeSignal(s, true));
+  const stateRows = (parsed.add || []).filter(s => s.kind === "stage" || s.kind === "gold");
+  stateRows.forEach(s => addSignal(s, true));
   if (parsed.augTriple && parsed.augTriple.length) {
     augChoices = parsed.augTriple;
     pending = parsed.pending || [];
     unheard = parsed.unheard || [];
   } else {
-    (parsed.add || []).forEach(addSignal);
+    (parsed.add || []).filter(s => s.kind !== "stage" && s.kind !== "gold").forEach(s => addSignal(s, true));
     pending = parsed.pending || [];
     unheard = parsed.unheard || [];
   }
@@ -463,6 +550,16 @@ function renderLevel() {
     `<button class="levelChip ${n === currentLevel ? "on" : ""}" data-level="${n}">等级${n}</button>`
   ).join("");
   box.querySelectorAll("[data-level]").forEach(btn => btn.addEventListener("click", () => setLevel(Number(btn.dataset.level))));
+}
+function renderDecisionState() {
+  const box = $("decisionStateRow");
+  box.innerHTML = `<span class="label">当前回合</span>` + STAGE_CHOICES.map(stage =>
+    `<button class="stateChip ${stage === currentStage ? "on" : ""}" data-stage="${stage}">${stage === "unknown" ? "未知" : stage}</button>`
+  ).join("") + `<span class="label">金币</span>` + GOLD_CHOICES.map(row =>
+    `<button class="stateChip ${row.value === currentGold ? "on" : ""}" data-gold="${row.value}">${row.label}</button>`
+  ).join("");
+  box.querySelectorAll("[data-stage]").forEach(btn => btn.addEventListener("click", () => setStage(btn.dataset.stage)));
+  box.querySelectorAll("[data-gold]").forEach(btn => btn.addEventListener("click", () => setGold(btn.dataset.gold)));
 }
 function renderHeroAugmentRound() {
   const box = $("heroAugRow");
@@ -511,6 +608,7 @@ function rankedRoutes() {
     previousOrder,
     stickyTopId: lastTopId,
     antiFragile: currentLevel >= 4,
+    operationalCommitment: true,
   });
 }
 function unheardHtml() {
@@ -549,6 +647,9 @@ function logUnheard(raw, rows, reason) {
   writeUnheardLog([...old, ...rows.map(x => ({ time: now, raw, fragment: x, reason }))]);
 }
 async function triggerLlm(raw, rows, round) {
+  if (llmAbortController) llmAbortController.abort();
+  const controller = new AbortController();
+  llmAbortController = controller;
   const seq = ++llmSeq;
   const settings = llmSettings();
   setLlmStatus("work");
@@ -558,9 +659,12 @@ async function triggerLlm(raw, rows, round) {
     unheard: rows,
     signals,
     matcher: STAGE2_MATCHER,
+    signal: controller.signal,
   });
-  if (seq !== llmSeq) return;
+  if (seq !== llmSeq || controller.signal.aborted) return;
+  if (llmAbortController === controller) llmAbortController = null;
   if (!result.ok) {
+    if (result.status === "cancelled") return;
     setLlmStatus("fail");
     if (result.status !== "no-key") logUnheard(raw, rows, result.status);
     appendMatchLog(round || { raw, fast: "-", ai: "-" });
@@ -740,6 +844,14 @@ function openRouteDetail(row) {
     const state = selectedObj();
     if ((state.auditTrail || []).length) mk("div", "detailLine", "局面结算：" + state.auditTrail.join("；"), body);
   }
+  if (row.sticky) {
+    mk("div", "detailSection", "执行路线管理", body);
+    mk("div", "detailLine", row.sticky.text || "当前执行路线保持不变。", body);
+    if (row.sticky.transition) {
+      const tr = row.sticky.transition;
+      mk("div", "detailLine", `阵容重合${tr.continuityPct}%；新路线命中${(tr.packageHits || []).length}张关键牌；${tr.carryChanged ? `主C ${tr.currentCarry || "-"} → ${tr.challengerCarry || "-"}` : "主C不变"}。`, body);
+    }
+  }
   if (row.antiFragile) {
     const af = row.antiFragile;
     mk("div", "detailSection", "抗脆弱诊断", body);
@@ -848,19 +960,19 @@ function renderRoute() {
     previousOrder = ranked.map(r => r.template.id || r.template.name);
     return;
   }
-  const top = ranked[0], second = ranked[1], third = ranked[2], t = top.template;
-  const topId = t.id || t.name;
+  const leader = ranked[0], second = ranked[1], third = ranked[2];
+  const top = MatcherCore.operationalRow ? MatcherCore.operationalRow(ranked) : (ranked.find(r => r.following) || leader);
+  const t = top.template;
   const topScore = rowScore(top);
   const secondScore = second ? rowScore(second) : 0;
   const thirdScore = third ? rowScore(third) : 0;
-  const following = ranked.find(r => r.following);
-  const nextFollow = following || top;
-  if (lastTop && lastTop !== nextFollow.template.name) showBanner(`路线切换 ${lastTop} → ${nextFollow.template.name}`);
-  lastTop = nextFollow.template.name;
-  lastTopId = routeId(nextFollow);
+  const leaderDiffers = routeId(leader) !== routeId(top);
+  if (lastTop && lastTop !== top.template.name) showBanner(`执行路线切换 ${lastTop} → ${top.template.name}`);
+  lastTop = top.template.name;
+  lastTopId = routeId(top);
   lastRenderedTop = { name: t.name, finalScore: topScore, sample: top.virtualDecision ? top.virtualDecision.robustScore : null };
   lastDetailRow = top;
-  const delta = Math.max(0, second ? topScore - secondScore : topScore);
+  const delta = Math.max(0, second ? rowScore(leader) - secondScore : rowScore(leader));
   const actions = MatcherCore.actionLines(t, selectedObj(), top);
   const reach = top.reachability;
   const af = top.antiFragile;
@@ -868,10 +980,12 @@ function renderRoute() {
     ? `基础强度${top.stageStrength || 0}分 → 抗脆弱${top.preSimulationScore ?? topScore}分 → 虚拟实战蒸馏${topScore}分`
     : `已握资产${top.heldValue || 0}分 + 概率折现${top.futureValue || 0}分 = ${topScore}分`;
   const evidenceLine = (top.evidence || []).slice(0, 3).join("；");
-  const stickyLine = top.followAdvice || (following && routeId(following) !== topId ? `建议继续跟 ${following.template.name}（挑战者领先不足）` : "跟随：当前最高分路线");
+  const stickyLine = leaderDiffers
+    ? (leader.followAdvice || (top.sticky && top.sticky.text) || `继续执行${t.name}`)
+    : ((top.sticky && top.sticky.text) || "执行：当前最高分路线");
   const followBadge = top.following ? `<span class="followBadge">跟随中</span>` : "";
-  const followStrip = following && routeId(following) !== topId
-    ? `<div class="followStrip"><span class="followBadge">跟随中</span> ${esc(following.template.name)} · ${rowScore(following)}分</div>`
+  const followStrip = leaderDiffers
+    ? `<div class="followStrip"><span class="followBadge">暂缓转型</span> 分数领先路线：${esc(leader.template.name)} · ${rowScore(leader)}分<br>${esc(leader.followAdvice || "新路线尚未满足接管条件")}</div>`
     : "";
   const gateHtml = af
     ? `<div class="gateStrip ${esc(af.status)}">${esc(af.label)} · 核心度${af.readyPct}% · 瓶颈：${esc(af.bottleneckText)}</div><div class="formulaLine">${esc(af.formula)}</div>`
@@ -882,10 +996,12 @@ function renderRoute() {
   box.innerHTML = `
     <div>
       <div class="rankTop">
-        <div class="routeName">#1 ${esc(t.name)}${followBadge}</div>
+        <div class="routeName">执行 ${esc(t.name)}${followBadge}</div>
         <div class="routePoints">${topScore}分</div>
       </div>
-      <div class="subRank">领先#2 ${delta}分 ｜ #2 ${second ? esc(second.template.name) + " " + secondScore + "分" : "-"} ｜ #3 ${third ? esc(third.template.name) + " " + thirdScore + "分" : "-"}</div>
+      <div class="subRank">${leaderDiffers
+        ? `分数#1 ${esc(leader.template.name)} ${rowScore(leader)}分 ｜ 当前执行线保留经营连续性`
+        : `领先#2 ${delta}分 ｜ #2 ${second ? esc(second.template.name) + " " + secondScore + "分" : "-"} ｜ #3 ${third ? esc(third.template.name) + " " + thirdScore + "分" : "-"}`}</div>
       <div class="openHint">点击查看前期 / 中期 / 后期阵容</div>
       ${heroAugmentHtml(top)}
       ${gateHtml}
@@ -915,51 +1031,40 @@ function renderRoute() {
 function augOptionInfo(sig) {
   const name = sig.value;
   const routeHits = STAGE2_MATCHER.templates.filter(t => (t.augmentPrefs || []).includes(name));
-  const hot = (MODEL.augRank || []).find(a => a.name === name);
   const option = ((STAGE2_MATCHER.options.augmentSearch || STAGE2_MATCHER.options.augments) || []).find(x => x.name === name) || {};
-  const hero = (option.cats || []).includes("英雄强化");
-  const selected = MatcherCore.selectedFromSignals(signals);
-  selected.level = currentLevel;
-  selected.heroAugmentRound = currentHeroAugmentRound;
-  selected.augments = [...new Set([...(selected.augments || []), name])];
-  const ranked = MatcherCore.rank(STAGE2_MATCHER.templates, selected, STAGE2_MATCHER.weights, 3, {
-    oddsData: window.JCC_ODDS,
-    unitPrices: UNIT_PRICES,
-    unitTraits: UNIT_TRAITS,
-    heroAugments: STAGE2_MATCHER.options.heroAugments || [],
-    antiFragile: currentLevel >= 4,
-    virtualBattle: true,
-  });
-  const top = ranked[0];
-  const current = rankedRoutes()[0];
-  const gain = top && current ? rowScore(top) - rowScore(current) : 0;
-  let verdict = top ? `选择后首推 ${top.template.name}，相对当前${gain >= 0 ? "+" : ""}${gain}分。` : "没有可执行路线。";
-  const operator = top && top.augmentOperator;
-  if (operator && operator.rows.length) {
-    const categories = [...new Set(operator.rows.map(x => x.category))].join("+");
-    const operatorGain = (operator.variableBonus || 0) + (operator.economyFutureBonus || 0);
-    verdict += ` ${categories}算子重算${operatorGain ? `，认证边际额外+${operatorGain}分` : "可达性"}。`;
-  }
-  if (hero && top) verdict += " 英雄强化按机制硬门槛重算。";
-  else if (routeHits.length) verdict += ` 命中${routeHits.length}条路线推荐位。`;
-  else if (hot) verdict += ` 通用热度${hot.score || 0}分。`;
-  return { name, routeHits, hot, hero, augScore: top ? rowScore(top) : 0, verdict, top, sample: top && top.virtualDecision };
+  return { name, option, routeHits: routeHits.length, marginal: null };
 }
 function renderAugTriple() {
   $("routeView").classList.add("hidden");
   $("augView").classList.remove("hidden");
-  const rows = (augChoices || []).map(augOptionInfo).sort((a, b) => b.augScore - a.augScore);
+  const rawRows = (augChoices || []).map(augOptionInfo);
+  const decisionSignals = [
+    ...signals,
+    ...(currentStage !== "unknown" ? [{ kind: "stage", value: currentStage }] : []),
+    ...(currentGold !== "unknown" ? [{ kind: "gold", value: Number(currentGold) }] : []),
+  ];
+  const comparison = AugmentAdvisor.buildComparison(rawRows, decisionSignals, {
+    // 三张符文尚未进入同随机种子的有/无符文反事实模拟，因此只展示弱证据，不参与首推。
+    counterfactualValidated: false,
+    minGap: 2,
+  });
+  const rows = comparison.rows;
+  const status = comparison.missing.length
+    ? `信息不足，暂不可靠排序。还需补充：${comparison.missing.join("、")}。`
+    : "当前只有路线匹配弱证据，尚无符文反事实模拟，因此暂不强行首推。";
   $("augView").innerHTML = `
     <div>
       <div class="routeName">符文三选一</div>
-      <div class="subRank">点击选择一张，加入信号池后自动回到路线。</div>
+      <div class="subRank">先比较符文对当前局面的边际价值；点击后才会正式加入信号池。</div>
+      <div class="augStatus">${esc(status)}</div>
     </div>
-    <div class="augCards">${rows.map((r, i) => `
-      <button class="augCard ${i === 0 ? "best" : ""}" data-name="${esc(r.name)}">
+    <div class="augCards">${rows.map(r => `
+      <button class="augCard ${comparison.recommended === r.name ? "best" : ""}" data-name="${esc(r.name)}">
         <div class="augName">${esc(r.name)}</div>
-        <div class="augVerdict">${esc(r.verdict)}</div>
-        ${r.sample ? `<div class="augSample">虚拟胜率${r.sample.winRate}% · CVaR ${r.sample.cvar10} · 覆盖${r.sample.coverage}%</div>` : ""}
-        <div class="augScore">${r.augScore}分</div>
+        <div class="augMechanic">机制：${esc(r.effect)}</div>
+        <div class="augVerdict">适合：${esc(r.fit)}</div>
+        ${r.missingLabels.length ? `<div class="augMissing">待补：${esc(r.missingLabels.join("、"))}</div>` : ""}
+        <div class="augEvidence">命中${r.routeHits}条路线偏好（仅为覆盖统计，不代表优劣，不参与排序）</div>
       </button>`).join("")}</div>
     <div></div>
     ${unheardHtml()}
@@ -986,6 +1091,7 @@ function renderLog() {
 }
 function render() {
   renderLevel();
+  renderDecisionState();
   renderHeroAugmentRound();
   renderSignals();
   renderPending();
@@ -994,11 +1100,19 @@ function render() {
   renderLog();
 }
 
-$("voiceInput").addEventListener("input", () => {
-  clearTimeout(inputTimer);
-  inputTimer = setTimeout(parseInput, 400);
+$("voiceInput").addEventListener("compositionstart", () => { isComposing = true; });
+$("voiceInput").addEventListener("compositionend", () => { isComposing = false; });
+$("voiceInput").addEventListener("keydown", ev => {
+  if (ev.key !== "Enter" || ev.isComposing || isComposing) return;
+  ev.preventDefault();
+  parseInput();
+  focusInput();
 });
-$("voiceInput").addEventListener("blur", () => setTimeout(focusInput, 1000));
+$("submitInput").addEventListener("click", () => {
+  if (isComposing) return;
+  parseInput();
+  focusInput();
+});
 $("routeView").addEventListener("click", ev => {
   if (ev.target.closest("button,a,input,textarea,select")) return;
   openRouteDetail(lastDetailRow);

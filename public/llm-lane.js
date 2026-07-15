@@ -162,7 +162,11 @@
       return { ok: true, status: "mock", ...valid };
     }
     if (!ctx.apiKey) return { ok: false, status: "no-key", add: [], remove: [], discarded: [] };
+    const externalSignal = ctx.signal;
+    if (externalSignal && externalSignal.aborted) return { ok: false, status: "cancelled", add: [], remove: [], discarded: [] };
     const controller = new AbortController();
+    const abortFromExternal = () => controller.abort();
+    if (externalSignal) externalSignal.addEventListener("abort", abortFromExternal, { once: true });
     const timeoutMs = Number(ctx.timeoutMs) || DEFAULT_TRANSLATE_TIMEOUT_MS;
     const timer = setTimeout(() => controller.abort(), timeoutMs);
     try {
@@ -186,9 +190,11 @@
       const valid = validatePayload(safeJson(content), vocab, logger);
       return { ok: true, status: "ok", ...valid };
     } catch (e) {
-      return { ok: false, status: e && e.name === "AbortError" ? "timeout" : "error", add: [], remove: [], discarded: [] };
+      const status = e && e.name === "AbortError" ? (externalSignal && externalSignal.aborted ? "cancelled" : "timeout") : "error";
+      return { ok: false, status, add: [], remove: [], discarded: [] };
     } finally {
       clearTimeout(timer);
+      if (externalSignal) externalSignal.removeEventListener("abort", abortFromExternal);
     }
   }
 
