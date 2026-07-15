@@ -32,7 +32,7 @@ The browser application contains two working surfaces:
 | Surface | Purpose |
 |---|---|
 | **Research Dashboard** | Version results, generated lineups, certified conditional routes, stage transitions, numerical audits, and experiment reports |
-| **Match Mode** | Fast Chinese signal parsing, hero-augment round pruning, live route ranking, star-level and shop-odds modeling, concrete actions, positioning, and optional LLM fallback |
+| **Match Mode** | Fast Chinese signal parsing, persistent round/gold state, route-continuity management, honest augment comparison, hero-augment pruning, concrete actions, and optional LLM fallback |
 
 <details>
 <summary><strong>Match Mode preview / 比赛模式预览</strong></summary>
@@ -58,6 +58,36 @@ flowchart LR
 ```
 
 The LLM is deliberately outside the ranking loop. It may translate unrecognized Chinese speech into a closed vocabulary, but all lineup scoring, shop probability, equipment inference, augment operators, and recommendations remain deterministic.
+
+## Match Mode / 比赛模式
+
+比赛模式面向快速连续录入，而不是要求每次填写一张完整局面表。棋子、星级、装备、羁绊和符文可直接用自然中文输入；当前等级、强化回合、对局回合和金币档位也可通过页面快捷按钮维护。
+
+```text
+来了个安妮还有波比，拿了羊刀
+现在3-2，有35金币
+来了高端，来了光明神器，来了升级吧，选哪个
+```
+
+当前版本的关键行为：
+
+- 中文输入只在按回车或点击“录入”后提交，输入法组合阶段不会提前入池。
+- “新的一局”会取消仍在处理的 LLM 请求，并清空本局信号、回合和金币，避免异步串局。
+- 纠错支持“不是安妮是波比”“把羊刀改成轻语”“撤销上一个”等表达。
+- 路线排名考虑已持有资产、星级、装备继承、商店概率、抗脆弱性和转阵成本；小分差不会频繁切换执行路线。
+- 当前回合使用 `2-1 / 3-2 / 4-2` 快捷选择；金币只需选择 `0-9` 到 `50+` 的档位，不要求精确维护当前经验。
+- 符文三选一在点击前只是候选，不会提前写入正式信号池。
+
+### 符文三选一的可信边界
+
+三选一页面不会再把阵容总分、静态虚拟胜率或路线覆盖数冒充为符文评分。系统只在局面信息和专属反事实模型均充分、且领先差超过阈值时才允许标记最佳项。当前专属反事实模型尚未完成，因此页面会：
+
+- 展示已核验的符文机制和适用条件；
+- 明确提示仍缺少的金币、回合、棋盘或装备信息；
+- 将“命中多少条路线偏好”标为覆盖统计，不参与排序；
+- 信息不足或证据未经验证时不默认标绿第一张，也不强行给出首推。
+
+机制取值、来源等级、已确认项和未知项见 [怪兽入侵机制知识审计](docs/reports/怪兽入侵机制知识审计.md)。规则集快照位于 [`data/ruleset/monster-invasion-17.6b.json`](data/ruleset/monster-invasion-17.6b.json)。
 
 ## Research Figures / 研究图谱
 
