@@ -54,6 +54,8 @@ button, input { font:inherit; }
 .levelChip.on { background:var(--s2); border-color:var(--s2); color:#fff; }
 .stateChip { min-height:36px; border:1px solid var(--border); border-radius:999px; background:var(--plane); color:var(--ink2); padding:4px 11px; cursor:pointer; font-size:16px; font-weight:850; }
 .stateChip.on { background:var(--s3); border-color:var(--s3); color:#1f1800; }
+.healthInput { width:82px; min-height:36px; border:1px solid var(--border); border-radius:8px; background:var(--plane); color:var(--ink); padding:4px 8px; font-size:16px; font-weight:850; outline:none; }
+.healthInput:focus { border-color:var(--s3); box-shadow:0 0 0 2px color-mix(in srgb, var(--s3) 18%, transparent); }
 .heroAugChip { min-height:36px; border:1px solid var(--border); border-radius:999px; background:var(--plane); color:var(--ink2); padding:4px 13px; cursor:pointer; font-size:16px; font-weight:850; }
 .heroAugChip.on { background:var(--s5); border-color:var(--s5); color:#fff; }
 .heroAugHint { color:var(--muted); font-size:14px; font-weight:750; }
@@ -272,6 +274,7 @@ const GOLD_CHOICES = [
   { value: "40", label: "40-49金" },
   { value: "50", label: "50+金" },
 ];
+const HERO_AUGMENT_NAMES = new Set((STAGE2_MATCHER.options.heroAugments || []).map(row => row && row.name).filter(Boolean));
 const savedTheme = localStorage.getItem(LS + "theme");
 if (savedTheme) document.documentElement.dataset.theme = savedTheme;
 
@@ -280,11 +283,13 @@ let currentLevel = normalizeLevel(localStorage.getItem(LS + "level"));
 let currentHeroAugmentRound = normalizeHeroAugmentRound(localStorage.getItem(LS + "hero-augment-round"));
 let currentStage = normalizeStage(localStorage.getItem(LS + "stage"));
 let currentGold = normalizeGold(localStorage.getItem(LS + "gold"));
+let currentHealth = normalizeHealth(localStorage.getItem(LS + "health"));
 let manualLockId = localStorage.getItem(LS + "manual-lock") || "";
 let pending = [];
 let unheard = [];
 let augChoices = null;
-let lastTop = "";
+let lastExecutionId = "";
+let lastExecutionName = "";
 let lastRenderedTop = null;
 let lastDetailRow = null;
 let expandedReachId = "";
@@ -294,7 +299,13 @@ let llmAbortController = null;
 let isComposing = false;
 
 function load() {
-  try { signals = JSON.parse(localStorage.getItem(LS + "signals") || "[]"); } catch (e) { signals = []; }
+  let rows = [];
+  try { rows = JSON.parse(localStorage.getItem(LS + "signals") || "[]"); } catch (e) { rows = []; }
+  signals = [];
+  if (!Array.isArray(rows)) return;
+  const heldItems = rows.filter(row => row && row.kind === "items" && row.holder);
+  rows.filter(row => !(row && row.kind === "items" && row.holder)).forEach(row => addSignal(row, true));
+  heldItems.forEach(row => addSignal(row, true));
 }
 function save() {
   localStorage.setItem(LS + "signals", JSON.stringify(signals));
@@ -302,6 +313,7 @@ function save() {
   localStorage.setItem(LS + "hero-augment-round", currentHeroAugmentRound);
   localStorage.setItem(LS + "stage", currentStage);
   localStorage.setItem(LS + "gold", currentGold);
+  localStorage.setItem(LS + "health", currentHealth);
   if (manualLockId) localStorage.setItem(LS + "manual-lock", manualLockId);
   else localStorage.removeItem(LS + "manual-lock");
 }
@@ -322,7 +334,6 @@ function setHeroAugmentRound(round, defer) {
   currentHeroAugmentRound = normalizeHeroAugmentRound(round);
   if (defer) return;
   save();
-  lastTop = "";
   render();
 }
 function normalizeStage(value) {
@@ -345,28 +356,83 @@ function setGold(value, defer) {
   save();
   render();
 }
+function normalizeHealth(value) {
+  if (value === "unknown" || value == null || value === "") return "unknown";
+  const health = Number(value);
+  if (!Number.isFinite(health)) return "unknown";
+  return String(Math.max(1, Math.min(100, Math.round(health))));
+}
+function setHealth(value, defer) {
+  currentHealth = normalizeHealth(value);
+  if (defer) return;
+  save();
+  render();
+}
 function signalKey(s) {
   if (s.kind === "units") return `units|${s.value}`;
   if (s.kind === "items") return `items|${s.value}|${s.holder || ""}`;
-  return `${s.kind}|${s.value}|${s.kind === "traits" ? (s.count || "") : ""}`;
+  return `${s.kind}|${s.value}`;
+}
+function unitSignalLabel(value, star, location) {
+  const details = [];
+  if (star) details.push(`${star}星`);
+  if (location === "board") details.push("场上");
+  if (location === "bench") details.push("备战席");
+  return [value, ...details].join("·");
+}
+function itemSignalLabel(row) {
+  const count = Math.max(1, Number(row.count) || 1);
+  return `${row.holder ? `${row.holder}带` : ""}${row.value}${count > 1 ? `×${count}` : ""}`;
 }
 function normalizeSignal(s) {
   const value = s && (s.value || s.name || s.label);
   const star = Number(s && s.star) || 0;
+  const location = s && ["board", "bench"].includes(s.location) ? s.location : undefined;
+  const count = s && s.kind === "items"
+    ? Math.max(1, Math.min(9, Math.round(Number(s.count) || 1)))
+    : s && s.kind === "traits" ? Math.max(0, Math.round(Number(s.count) || 0)) : s && s.count;
   return {
     kind: s && s.kind,
     value,
-    label: s && s.kind === "units" && star ? `${value}·${star}星` : (s && s.label || value),
-    count: s && s.count,
+    label: s && s.kind === "units" ? unitSignalLabel(value, star, location) : (s && s.label || value),
+    count,
     star: star || undefined,
     holder: s && s.holder,
     equipped: Boolean(s && (s.equipped || s.holder)),
-    location: s && s.location,
+    location,
     commitmentType: s && s.commitmentType,
     targetUnit: s && s.targetUnit,
     gold: s && s.gold,
     via: s && s.via,
   };
+}
+function manualLockAcceptsHeroAugment(name) {
+  if (!manualLockId) return true;
+  const template = STAGE2_MATCHER.templates.find(row => (row.id || row.name) === manualLockId);
+  if (!template) return false;
+  const required = new Set([
+    ...((template.heroAugmentPlan && template.heroAugmentPlan.requiredNames) || []),
+    ...(template.mechanic && template.mechanic.requiredAugment ? [template.mechanic.requiredAugment] : []),
+  ]);
+  return !required.size || required.has(name);
+}
+function consumeUnassignedItem(value, count) {
+  let remaining = Math.max(0, Number(count) || 0);
+  for (let i = signals.length - 1; i >= 0 && remaining > 0; i--) {
+    const row = signals[i];
+    if (row.kind !== "items" || row.value !== value || row.holder) continue;
+    const available = Math.max(1, Number(row.count) || 1);
+    const moved = Math.min(available, remaining);
+    const left = available - moved;
+    if (left > 0) {
+      row.count = left;
+      row.label = itemSignalLabel(row);
+    } else {
+      signals.splice(i, 1);
+    }
+    remaining -= moved;
+  }
+  return remaining;
 }
 function addSignal(s, defer) {
   if (!s || !s.kind) return;
@@ -388,27 +454,55 @@ function addSignal(s, defer) {
   }
   const next = normalizeSignal(s);
   if (!next.value) return;
-  const existing = signals.find(x => signalKey(x) === signalKey(next));
+  if (next.kind === "augments" && HERO_AUGMENT_NAMES.has(next.value)) {
+    const previous = signals.filter(row => row.kind === "augments" && HERO_AUGMENT_NAMES.has(row.value));
+    const changed = previous.some(row => row.value !== next.value);
+    signals = signals.filter(row => row.kind !== "augments" || !HERO_AUGMENT_NAMES.has(row.value));
+    signals.push(next);
+    augChoices = null;
+    if (changed && !manualLockAcceptsHeroAugment(next.value)) manualLockId = "";
+    if (!defer) save();
+    return;
+  }
+  const existingIndex = signals.findIndex(x => signalKey(x) === signalKey(next));
+  const existing = signals[existingIndex];
   if (existing) {
-    if (next.kind === "units" && Number(next.star || 0) > Number(existing.star || 0)) {
-      existing.star = next.star;
-      existing.label = next.label;
+    if (next.kind === "units" && (next.star || next.location)) {
+      const merged = {
+        ...existing,
+        ...next,
+        star: next.star || existing.star,
+        location: next.location || existing.location,
+        via: next.via || existing.via,
+      };
+      merged.label = unitSignalLabel(merged.value, merged.star, merged.location);
+      signals[existingIndex] = merged;
+    } else if (next.kind === "units") {
       existing.via = next.via || existing.via;
-      if (next.location) existing.location = next.location;
-    } else if (next.kind === "units" && next.location && next.location !== existing.location) {
-      existing.location = next.location;
-      existing.label = next.label;
     } else if (next.kind === "items") {
-      existing.count = Math.max(Number(existing.count) || 1, Number(next.count) || 1);
-      existing.holder = next.holder || existing.holder;
+      if (next.holder) {
+        const desired = Math.max(Number(existing.count) || 1, Number(next.count) || 1);
+        consumeUnassignedItem(next.value, desired - (Number(existing.count) || 1));
+        existing.count = desired;
+      } else {
+        existing.count = Math.min(9, (Number(existing.count) || 1) + (Number(next.count) || 1));
+      }
       existing.equipped = next.equipped || existing.equipped;
-      existing.label = existing.holder
-        ? `${existing.holder}带${existing.value}${existing.count > 1 ? `×${existing.count}` : ""}`
-        : `${existing.value}${existing.count > 1 ? `×${existing.count}` : ""}`;
+      existing.via = next.via || existing.via;
+      existing.label = itemSignalLabel(existing);
+    } else if (next.kind === "traits") {
+      existing.count = next.count;
+      existing.label = next.count ? `${next.count}${next.value}` : (next.label || next.value);
+      existing.via = next.via || existing.via;
     } else if (next.via === "llm") {
       existing.via = "llm";
     }
   } else {
+    if (next.kind === "items") {
+      if (next.holder) consumeUnassignedItem(next.value, Number(next.count) || 1);
+      next.label = itemSignalLabel(next);
+    }
+    if (next.kind === "traits" && next.count) next.label = `${next.count}${next.value}`;
     signals.push(next);
   }
   if (!defer) save();
@@ -493,8 +587,10 @@ function clearGame() {
   currentHeroAugmentRound = "unknown";
   currentStage = "unknown";
   currentGold = "unknown";
+  currentHealth = "unknown";
   manualLockId = "";
-  lastTop = "";
+  lastExecutionId = "";
+  lastExecutionName = "";
   lastRenderedTop = null;
   expandedReachId = "";
   save();
@@ -505,6 +601,11 @@ function selectedObj() {
   const selected = MatcherCore.selectedFromSignals(signals);
   selected.level = currentLevel;
   selected.heroAugmentRound = currentHeroAugmentRound;
+  selected.currentStage = currentStage;
+  selected.currentGold = currentGold === "unknown" ? "unknown" : Number(currentGold);
+  selected.health = currentHealth === "unknown" ? "unknown" : Number(currentHealth);
+  selected.stage = currentStage === "unknown" ? "" : currentStage;
+  selected.gold = currentGold === "unknown" ? null : Number(currentGold);
   return MatcherCore.resolveGameState(selected, STAGE2_MATCHER.options.heroAugments || []);
 }
 function focusInput() {
@@ -584,9 +685,20 @@ function renderDecisionState() {
     `<button class="stateChip ${stage === currentStage ? "on" : ""}" data-stage="${stage}">${stage === "unknown" ? "未知" : stage}</button>`
   ).join("") + `<span class="label">金币</span>` + GOLD_CHOICES.map(row =>
     `<button class="stateChip ${row.value === currentGold ? "on" : ""}" data-gold="${row.value}">${row.label}</button>`
-  ).join("");
+  ).join("") + `<span class="label">当前血量</span>
+    <button class="stateChip ${currentHealth === "unknown" ? "on" : ""}" data-health="unknown">未知</button>
+    <input id="healthInput" class="healthInput" type="number" min="1" max="100" inputmode="numeric" placeholder="1-100" aria-label="当前血量" value="${currentHealth === "unknown" ? "" : esc(currentHealth)}">`;
   box.querySelectorAll("[data-stage]").forEach(btn => btn.addEventListener("click", () => setStage(btn.dataset.stage)));
   box.querySelectorAll("[data-gold]").forEach(btn => btn.addEventListener("click", () => setGold(btn.dataset.gold)));
+  box.querySelectorAll("[data-health]").forEach(btn => btn.addEventListener("click", () => setHealth(btn.dataset.health)));
+  const healthInput = $("healthInput");
+  healthInput.addEventListener("change", () => setHealth(healthInput.value));
+  healthInput.addEventListener("keydown", ev => {
+    if (ev.key !== "Enter") return;
+    ev.preventDefault();
+    setHealth(healthInput.value);
+    focusInput();
+  });
 }
 function renderHeroAugmentRound() {
   const box = $("heroAugRow");
@@ -626,7 +738,7 @@ function renderPending() {
     render();
   }));
 }
-function rankedRoutes() {
+function rankWithManualLock(lockId) {
   return MatcherCore.rank(STAGE2_MATCHER.templates, selectedObj(), STAGE2_MATCHER.weights, 5, {
     oddsData: window.JCC_ODDS,
     unitPrices: UNIT_PRICES,
@@ -634,8 +746,38 @@ function rankedRoutes() {
     heroAugments: STAGE2_MATCHER.options.heroAugments || [],
     antiFragile: currentLevel >= 4,
     operationalCommitment: true,
-    manualLockId,
+    manualLockId: lockId,
   });
+}
+function manualLockInvalid(ranked) {
+  if (!manualLockId) return false;
+  if (currentLevel <= 3) return true;
+  const row = (ranked || []).find(candidate => routeId(candidate) === manualLockId);
+  const decision = ranked && ranked.decision || row && row.decision || {};
+  const manualState = String(decision.manualStatus || decision.status || "").toLowerCase();
+  return !row
+    || row.blocked === true
+    || row.mechanicBlocked === true
+    || row.manualInvalid === true
+    || row.manualLockValid === false
+    || Boolean(row.manual && row.manual.valid === false)
+    || Boolean(row.antiFragile && row.antiFragile.blocked)
+    || decision.blocked === true
+    || decision.mechanicBlocked === true
+    || decision.manualInvalid === true
+    || decision.manualLockValid === false
+    || Boolean(decision.manual && decision.manual.valid === false)
+    || decision.invalidManualLockId === manualLockId
+    || ["invalid", "blocked", "mechanic-blocked", "manual-invalid", "manual_blocked", "manual-blocked"].includes(manualState);
+}
+function rankedRoutes() {
+  let ranked = rankWithManualLock(manualLockId);
+  if (manualLockInvalid(ranked)) {
+    manualLockId = "";
+    save();
+    ranked = rankWithManualLock("");
+  }
+  return ranked;
 }
 function unheardHtml() {
   return unheard.length ? `<div class="unheardLine">没听懂：${unheard.map(esc).join("、")}</div>` : "";
@@ -735,8 +877,24 @@ function downloadText(filename, text) {
 function routeId(row) {
   return row && row.template && (row.template.id || row.template.name);
 }
+function firstNumber(...values) {
+  for (const value of values) {
+    if (value == null || value === "") continue;
+    const number = Number(value);
+    if (Number.isFinite(number)) return number;
+  }
+  return null;
+}
 function rowScore(row) {
-  return Number.isFinite(Number(row && row.finalScore)) ? row.finalScore : (row ? row.stageStrength : 0);
+  return firstNumber(row && row.score, row && row.finalScore, row && row.stageStrength) ?? 0;
+}
+function scoreText(...values) {
+  const value = firstNumber(...values);
+  if (value == null) return "-";
+  return String(Math.round(value * 10) / 10);
+}
+function rowById(rows, id) {
+  return id ? (rows || []).find(row => routeId(row) === id) || null : null;
 }
 function mk(tag, cls, text, parent) {
   const el = document.createElement(tag);
@@ -980,95 +1138,122 @@ function renderRoute() {
   $("routeView").classList.remove("hidden");
   const box = $("routeView");
   const ranked = rankedRoutes();
-  if ((!signals.length && currentHeroAugmentRound === "unknown") || !ranked.length) {
+  const noGameInput = !signals.length
+    && currentHeroAugmentRound === "unknown"
+    && currentStage === "unknown"
+    && currentGold === "unknown"
+    && currentHealth === "unknown";
+  if (noGameInput || !ranked.length) {
     box.classList.remove("clickable");
     box.removeAttribute("tabindex");
     box.removeAttribute("role");
     box.innerHTML = `<div class="empty">说出这把看到的棋子、装备、符文。<br>例如：安妮波比养刀，或者符文无情连打DD街区团队建设。</div>${unheardHtml()}`;
-    lastTop = "";
+    lastExecutionId = "";
+    lastExecutionName = "";
     lastRenderedTop = null;
     lastDetailRow = null;
     return;
   }
   const leader = ranked[0], second = ranked[1], third = ranked[2];
   const decision = ranked.decision || leader.decision || {};
-  const current = ranked.find(row => row.currentBoard) || leader;
-  const committed = ranked.find(row => row.committed) || null;
-  const actionRow = committed || current;
-  const detailRow = committed || leader;
-  const t = detailRow.template;
-  const topScore = rowScore(detailRow);
-  const actionScore = committed ? rowScore(committed) : (current.currentBoardScore || 0);
+  const current = rowById(ranked, decision.currentId || decision.currentBoardId)
+    || ranked.find(row => row.currentBoard || row.current)
+    || leader;
+  const strategic = rowById(ranked, decision.strategicId)
+    || ranked.find(row => row.strategicLeader || row.strategic)
+    || leader;
+  const committed = rowById(ranked, decision.committedId)
+    || ranked.find(row => row.committed)
+    || null;
+  const operational = typeof MatcherCore.operationalRow === "function" ? MatcherCore.operationalRow(ranked) : null;
+  const execution = rowById(ranked, decision.executionId) || operational || current;
+  const executionId = decision.executionId || routeId(execution);
+  const executionName = execution.template.name;
+  const t = execution.template;
+  const selected = selectedObj();
+  const topScore = rowScore(execution);
   const secondScore = second ? rowScore(second) : 0;
-  const thirdScore = third ? rowScore(third) : 0;
-  const committedName = committed ? committed.template.name : "";
-  if (lastTop && committedName && lastTop !== committedName) showBanner(`定线切换 ${lastTop} → ${committedName}`);
-  lastTop = committedName;
+  if (lastExecutionId && executionId && lastExecutionId !== executionId) {
+    showBanner(`执行路线变化 ${lastExecutionName || lastExecutionId} → ${executionName}`);
+  }
+  lastExecutionId = executionId;
+  lastExecutionName = executionName;
   lastRenderedTop = { name: leader.template.name, finalScore: rowScore(leader), sample: leader.virtualDecision ? leader.virtualDecision.robustScore : null };
-  lastDetailRow = detailRow;
+  lastDetailRow = execution;
   const delta = Math.max(0, second ? rowScore(leader) - secondScore : rowScore(leader));
-  const actions = MatcherCore.actionLines(actionRow.template, selectedObj(), actionRow);
-  if (decision.status === "observing" && currentLevel <= 3) actions.unshift("只做当前过渡，不锁任何终局阵容");
-  const af = detailRow.antiFragile;
+  const actions = [...(MatcherCore.actionLines(execution.template, selected, execution) || [])];
+  if (currentLevel <= 3) actions.unshift("只做当前过渡，不锁任何终局阵容");
+  const af = execution.antiFragile;
   const breakLine = af
-    ? `基础强度${detailRow.stageStrength || 0}分 → 抗脆弱${detailRow.preSimulationScore ?? topScore}分 → 虚拟实战蒸馏${topScore}分`
-    : `已握资产${detailRow.heldValue || 0}分 + 概率折现${detailRow.futureValue || 0}分 = ${topScore}分`;
-  const evidenceLine = (detailRow.evidence || []).slice(0, 3).join("；");
+    ? `基础强度${execution.stageStrength || 0}分 → 抗脆弱${execution.preSimulationScore ?? topScore}分 → 虚拟实战蒸馏${topScore}分`
+    : `已握资产${execution.heldValue || 0}分 + 概率折现${execution.futureValue || 0}分 = ${topScore}分`;
+  const evidenceLine = (execution.evidence || []).slice(0, 3).join("；");
   const gateHtml = af
     ? `<div class="gateStrip ${esc(af.status)}">${esc(af.label)} · 核心度${af.readyPct}% · 瓶颈：${esc(af.bottleneckText)}</div><div class="formulaLine">${esc(af.formula)}</div>`
     : "";
-  const sampleHtml = detailRow.virtualDecision
-    ? `<div class="sampleStrip">虚拟实战 ${detailRow.virtualDecision.battles}场 · 胜率${detailRow.virtualDecision.winRate}% · CVaR ${detailRow.virtualDecision.cvar10} · 覆盖${detailRow.virtualDecision.coverage}% · 蒸馏${detailRow.virtualDecision.priorPoints >= 0 ? "+" : ""}${detailRow.virtualDecision.priorPoints}分</div>`
+  const sampleHtml = execution.virtualDecision
+    ? `<div class="sampleStrip">虚拟实战 ${execution.virtualDecision.battles}场 · 胜率${execution.virtualDecision.winRate}% · CVaR ${execution.virtualDecision.cvar10} · 覆盖${execution.virtualDecision.coverage}% · 蒸馏${execution.virtualDecision.priorPoints >= 0 ? "+" : ""}${execution.virtualDecision.priorPoints}分</div>`
     : "";
-  const strategyHtml = detailRow.strategyDecision
-    ? `<div class="strategyStrip ${detailRow.strategyDecision.switchCertified ? "ready" : ""}">条件化策略：${esc(detailRow.strategyDecision.text)} · ${detailRow.strategyDecision.evidenceCount || detailRow.strategyDecision.totalBattles}${esc(detailRow.strategyDecision.evidenceUnit || "场")}</div>`
+  const strategyHtml = execution.strategyDecision
+    ? `<div class="strategyStrip ${execution.strategyDecision.switchCertified ? "ready" : ""}">条件化策略：${esc(execution.strategyDecision.text)} · ${execution.strategyDecision.evidenceCount || execution.strategyDecision.totalBattles}${esc(execution.strategyDecision.evidenceUnit || "场")}</div>`
     : "";
-  const commitmentRow = committed || leader;
+  const commitmentRow = committed || execution;
   const commitmentFormula = currentLevel <= 3
     ? "1至3级不启用定线算子"
     : commitmentRow.commitment ? commitmentRow.commitment.formula : "尚无不可逆证据";
   const lockDisabled = currentLevel <= 3;
-  const lockLabel = manualLockId ? "解除手动锁定" : (lockDisabled ? "4级后可手动锁定" : "手动锁定战略#1");
+  const lockLabel = manualLockId ? "解除手动锁定" : (lockDisabled ? "4级后可手动锁定" : "手动锁定终局上限");
   const strategicText = [leader, second, third].filter(Boolean).map((row, index) => `#${index + 1} ${row.template.name} ${rowScore(row)}分`).join(" ｜ ");
-  const strategicCarry = leader.template.routeProfile?.mainCarry?.name || leader.template.carryUnits?.[0] || "待定";
-  const currentUnitsText = (decision.currentBoardUnits || []).join("、") || "还未录入可上场棋子";
-  const actionTitle = committed
-    ? committed.template.name
-    : currentLevel <= 3 ? `当前过渡 · ${currentUnitsText}` : current.template.name;
+  const strategicCarry = strategic.template.routeProfile?.mainCarry?.name || strategic.template.carryUnits?.[0] || "待定";
+  const currentUnits = (decision.currentUnits || decision.currentBoardUnits || current.currentBoardEvaluation?.units || [])
+    .map(row => typeof row === "string" ? row : row && (row.name || row.value))
+    .filter(Boolean);
+  const currentUnitsText = currentUnits.join("、") || "还未录入可上场棋子";
+  const currentName = decision.currentName || decision.currentBoardName || current.template.name;
+  const strategicName = decision.strategicName || strategic.template.name;
+  const currentStrength = scoreText(decision.currentStrength, current.currentStrength, decision.currentBoardScore, current.currentBoardScore, rowScore(current));
+  const top4Value = scoreText(strategic.top4Value, decision.top4Value, rowScore(strategic));
+  const top1Value = scoreText(strategic.top1Value, decision.top1Value, rowScore(strategic));
+  const executionScore = scoreText(decision.executionValue, execution.executionValue, execution.executionStrength,
+    routeId(execution) === routeId(current) ? currentStrength : null, rowScore(execution));
+  const earlyExecutionTitle = currentUnits.length ? "当前过渡" : "观察";
+  const executionConclusion = currentLevel <= 3 ? earlyExecutionTitle : executionName;
+  const actionTitle = currentLevel <= 3 ? earlyExecutionTitle : `现在执行 · ${executionName}`;
+  const statusText = decision.status === "manual" ? "手动锁定" : decision.status === "committed" ? "模型定线" : "继续观察";
   box.innerHTML = `
     <div>
       <div class="decisionGrid">
         <div class="decisionCard">
-          <div class="decisionLabel">当前最强棋盘</div>
+          <div class="decisionLabel">当前最强板</div>
           <div class="decisionValue">${esc(currentUnitsText)}</div>
-          <div class="decisionNote">现场战力 ${current.currentBoardScore || 0}；承接参考：${esc(current.template.name)}</div>
+          <div class="decisionNote">当前强度 ${currentStrength}；承接参考：${esc(currentName)}</div>
         </div>
         <div class="decisionCard">
-          <div class="decisionLabel">战略候选</div>
-          <div class="decisionValue">${esc(leader.template.name)}</div>
-          <div class="decisionNote">战略主C：${esc(strategicCarry)}<br>${esc(strategicText)}</div>
+          <div class="decisionLabel">终局最高上限</div>
+          <div class="decisionValue">${esc(strategicName)}</div>
+          <div class="decisionNote">前四价值 ${top4Value}；吃鸡上限 ${top1Value}<br>战略主C：${esc(strategicCarry)}</div>
         </div>
         <div class="decisionCard commit">
-          <div class="decisionLabel">定线状态</div>
-          <div class="decisionValue">${decision.status === "manual" ? "手动锁定" : decision.status === "committed" ? "模型定线" : "继续观察"}</div>
-          <div class="decisionNote">${esc(decision.text || "暂不定线")}<br>${esc(commitmentFormula)}</div>
+          <div class="decisionLabel">现在执行</div>
+          <div class="decisionValue">${esc(executionConclusion)}</div>
+          <div class="decisionNote">${esc(statusText)}；${esc(decision.text || "暂不定线")}<br>${esc(commitmentFormula)}</div>
           <button class="lockBtn ${manualLockId ? "on" : ""}" id="routeLockBtn" ${lockDisabled && !manualLockId ? "disabled" : ""}>${lockLabel}</button>
         </div>
       </div>
       <div class="rankTop">
-        <div class="routeName">${committed ? "已定线" : "当前动作"} ${esc(actionTitle)}</div>
-        <div class="routePoints">${actionScore}分</div>
+        <div class="routeName">${esc(actionTitle)}</div>
+        <div class="routePoints">${executionScore}分</div>
       </div>
-      <div class="subRank">战略#1领先#2 ${delta}分 ｜ #2 ${second ? esc(second.template.name) + " " + secondScore + "分" : "-"} ｜ #3 ${third ? esc(third.template.name) + " " + thirdScore + "分" : "-"}</div>
+      <div class="subRank">真分榜（按 score） ${esc(strategicText)} ｜ #1领先#2 ${delta}分</div>
       <div class="openHint">点击查看前期 / 中期 / 后期阵容</div>
-      ${heroAugmentHtml(detailRow)}
+      ${heroAugmentHtml(execution)}
       ${strategyHtml}
       ${gateHtml}
       ${sampleHtml}
       <div class="strengthBreak">${esc(breakLine)}</div>
       ${evidenceLine ? `<div class="evidenceLine">证据：${esc(evidenceLine)}</div>` : ""}
-      ${reachHtml(detailRow)}
-      ${MatcherCore.signalTowerHtml(detailRow).replaceAll("s2SignalTower", "meta").replaceAll("s2Signal", "metric")}
+      ${reachHtml(execution)}
+      ${MatcherCore.signalTowerHtml(execution).replaceAll("s2SignalTower", "meta").replaceAll("s2Signal", "metric")}
     </div>
     <div class="actions">${actions.map(x => `<div class="action">${esc(x)}</div>`).join("")}</div>
     <div></div>
@@ -1081,7 +1266,7 @@ function renderRoute() {
   }));
   const lockButton = $("routeLockBtn");
   if (lockButton) lockButton.addEventListener("click", () => {
-    manualLockId = manualLockId ? "" : routeId(leader);
+    manualLockId = manualLockId ? "" : routeId(strategic);
     save();
     render();
   });

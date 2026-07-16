@@ -50,6 +50,15 @@
     incompatibleEquippedItemCostRatio: 0.5,
     minimumCommitmentEvidence: 18,
   });
+  // 执行效用随血量与经济连续变化：低血偏现场/前四，高血高经济才逐步提高登顶权重。
+  const EXECUTION_HEALTH_LOW = 30;
+  const EXECUTION_HEALTH_HIGH = 80;
+  const EXECUTION_GOLD_LOW = 10;
+  const EXECUTION_GOLD_HIGH = 70;
+  const EXECUTION_TOP1_WEIGHT_MIN = 0.1;
+  const EXECUTION_TOP1_WEIGHT_MAX = 0.6;
+  const CERTIFICATION_TOP1_PRIOR_RATIO = 0.15;
+  const CERTIFICATION_TOP4_CURRENT_RATIO = 0.25;
   // 散件方向纯度达到 2/3 时，给同方向主C路线 10% 确定性加成。
   const COMPONENT_DIRECTION_BONUS = 0.1;
   // primePlan 只给含战斗机甲实验结论的路线加命中证据；不影响无 primePlan 的路线。
@@ -185,6 +194,14 @@
     return [...new Set((arr || []).filter(Boolean))];
   }
 
+  function stableText(value) {
+    return String(value == null ? "" : value);
+  }
+
+  function stableCompare(a, b) {
+    return stableText(a).localeCompare(stableText(b), "zh-Hans-CN");
+  }
+
   function escText(s) {
     return String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   }
@@ -226,12 +243,19 @@
   }
 
   function normalizeSelectedTraits(rows) {
-    return (rows || []).map(x => {
-      if (typeof x === "string") return parseTraitsInText(x)[0];
-      if (x && x.name && x.count) return { name: x.name, count: Number(x.count), label: x.label || `${x.count}${x.name}` };
-      if (x && x.value && x.count) return { name: x.value, count: Number(x.count), label: x.label || `${x.count}${x.value}` };
-      return x && (x.label || x.value) ? parseTraitsInText(x.label || x.value)[0] : null;
-    }).filter(Boolean);
+    const map = new Map();
+    (rows || []).flatMap(x => {
+      if (typeof x === "string") return parseTraitsInText(x);
+      if (x && x.name && x.count) return [{ name: x.name, count: Number(x.count), label: x.label || `${x.count}${x.name}` }];
+      if (x && x.value && x.count) return [{ name: x.value, count: Number(x.count), label: x.label || `${x.count}${x.value}` }];
+      return x && (x.label || x.value) ? parseTraitsInText(x.label || x.value) : [];
+    }).filter(Boolean).forEach(row => {
+      if (!row.name || !Number(row.count)) return;
+      const count = Number(row.count);
+      const prev = map.get(row.name);
+      if (!prev || count > prev.count) map.set(row.name, { name: row.name, count, label: `${count}${row.name}` });
+    });
+    return [...map.values()].sort((a, b) => stableCompare(a.name, b.name));
   }
 
   function activeTraitsForTemplate(t) {
@@ -253,15 +277,29 @@
       const cleanName = String(name).split("·")[0];
       const star = Number(typeof row === "object" ? row.star : 0) || 0;
       const location = typeof row === "object" && row.location ? row.location : "unknown";
-      const prev = map.get(cleanName);
-      if (!prev) {
-        map.set(cleanName, { name: cleanName, star, location });
-        return;
-      }
-      if (star > (prev.star || 0)) prev.star = star;
-      if (location === "board" || (location === "bench" && prev.location === "unknown")) prev.location = location;
+      const explicitCopies = Number(typeof row === "object" && (row.copies || row.count)) || 0;
+      const entity = {
+        name: cleanName,
+        star,
+        location,
+        copies: Math.max(explicitCopies, unitCopies(star)),
+        count: Math.max(explicitCopies, unitCopies(star)),
+        entityId: typeof row === "object" ? (row.entityId || row.id || "") : "",
+      };
+      if (!map.has(cleanName)) map.set(cleanName, []);
+      map.get(cleanName).push(entity);
     });
-    return [...map.values()];
+    const locationRank = { board: 3, bench: 2, unknown: 1 };
+    return [...map.entries()].map(([name, entities]) => {
+      const ordered = [...entities].sort((a, b) => b.star - a.star
+        || (locationRank[b.location] || 0) - (locationRank[a.location] || 0)
+        || b.copies - a.copies
+        || stableCompare(a.entityId, b.entityId));
+      const chosen = ordered[0];
+      const copies = Math.max(...ordered.map(x => x.copies));
+      // 星级和位置始终来自同一实体；copies/count只表达总持有进度，不反推实体星级。
+      return { ...chosen, name, copies, count: copies };
+    }).sort((a, b) => stableCompare(a.name, b.name));
   }
 
   function normalizeSelectedItems(selected) {
@@ -282,7 +320,10 @@
         });
       }
     });
-    return rows;
+    return rows.sort((a, b) => stableCompare(a.name, b.name)
+      || stableCompare(a.holder, b.holder)
+      || Number(b.equipped) - Number(a.equipped)
+      || stableCompare(a.source, b.source));
   }
 
   function unitCopies(star) {
@@ -319,8 +360,9 @@
   }
 
   function profileItems(t) {
-    return (profile(t).items || []).map(item => ({
+    return (profile(t).items || []).map((item, index) => ({
       ...item,
+      _slotIndex: index,
       name: canonicalItem(item.name),
       components: item.components && item.components.length ? item.components : (ITEM_RECIPES[canonicalItem(item.name)] || []),
     })).filter(x => x.name);
@@ -380,6 +422,13 @@
     const heroes = uniq(eligible.map(row => row.hero));
     const optionNames = uniq(candidates.map(row => row.name));
     const base = { round, costs, excludedCosts, mainCarry, traits, heroes, options, eligible, required: !!required.length, scoreDelta: 0, hardBlock: false };
+    if (globalHeroAugment.status === "conflict") {
+      return {
+        ...base,
+        status: "conflict",
+        text: `英雄强化输入冲突：${(globalHeroAugment.candidates || []).join("/")}，本次不结算任何专属项`,
+      };
+    }
     if (globalHeroAugment.status === "resolved") {
       const chosen = globalHeroAugment.selected || {};
       if (selectedHit) {
@@ -462,7 +511,7 @@
 
   function itemRankLabel(item, roleItems) {
     const sameRole = roleItems.filter(x => x.role === item.role && x.holder === item.holder);
-    const idx = sameRole.findIndex(x => x.name === item.name);
+    const idx = sameRole.findIndex(x => x._slotIndex === item._slotIndex);
     return idx === 0 ? "一号装" : idx === 1 ? "二号装" : idx === 2 ? "三号装" : "装备";
   }
 
@@ -496,47 +545,103 @@
     });
   }
 
-  function bestCrafts(t, selectedItems, w) {
-    // 贪心撮合：散件是互斥资源——一件散件只能进一个合成对或计一次单件分，
-    // 杜绝"三件散件被记成三个可立即合成"的重复计分
+  function betterAllocation(a, b) {
+    if (!b || a.score !== b.score) return !b || a.score > b.score ? a : b;
+    if ((a.crafts || 0) !== (b.crafts || 0)) return (a.crafts || 0) > (b.crafts || 0) ? a : b;
+    return stableCompare(a.signature, b.signature) <= 0 ? a : b;
+  }
+
+  function completedItemAssignments(t, selected, w, purpose = "score") {
+    const slots = profileItems(t);
+    const assets = normalizeSelectedItems(selected)
+      .filter(row => !COMPONENTS.includes(row.name))
+      .map((row, index) => ({ ...row, _assetIndex: index }));
+    const names = uniq(assets.map(x => x.name)).sort(stableCompare);
+    const assignments = [];
+    names.forEach(name => {
+      const groupAssets = assets.filter(x => x.name === name);
+      const groupSlots = slots.filter(x => x.name === name).sort((a, b) => a._slotIndex - b._slotIndex);
+      if (!groupSlots.length) return;
+      const memo = new Map();
+      const solve = (assetIndex, usedMask) => {
+        if (assetIndex >= groupAssets.length) return { score: 0, signature: "", rows: [] };
+        const key = `${assetIndex}|${usedMask.toString()}`;
+        if (memo.has(key)) return memo.get(key);
+        const asset = groupAssets[assetIndex];
+        let best = solve(assetIndex + 1, usedMask);
+        groupSlots.forEach((slot, slotIndex) => {
+          const bit = 1n << BigInt(slotIndex);
+          if (usedMask & bit) return;
+          const holderMismatch = Boolean(asset.equipped && asset.holder && slot.holder && asset.holder !== slot.holder);
+          let pts = 0;
+          if (purpose === "commitment") {
+            if (asset.equipped && asset.holder && slot.holder === asset.holder) pts = roleItemWeight(slot.role, w);
+          } else if (purpose === "current") {
+            const readiness = asset.equipped ? 1 : DECISION_MODEL.unassignedItemReadiness;
+            pts = Math.round(roleItemWeight(slot.role, w) * readiness * (holderMismatch ? DECISION_MODEL.incompatibleEquippedItemCostRatio : 1));
+          } else {
+            pts = Math.round(roleItemWeight(slot.role, w) * (holderMismatch ? DECISION_MODEL.incompatibleEquippedItemCostRatio : 1));
+          }
+          if (pts <= 0) return;
+          const tail = solve(assetIndex + 1, usedMask | bit);
+          const signature = `${asset.name}|${asset.holder}|${asset._assetIndex}->${slot._slotIndex};${tail.signature}`;
+          best = betterAllocation({
+            score: pts + tail.score,
+            signature,
+            rows: [{ asset, slot, pts, holderMismatch }, ...tail.rows],
+          }, best);
+        });
+        memo.set(key, best);
+        return best;
+      };
+      assignments.push(...solve(0, 0n).rows);
+    });
+    return assignments.sort((a, b) => a.slot._slotIndex - b.slot._slotIndex
+      || a.asset._assetIndex - b.asset._assetIndex);
+  }
+
+  function bestCrafts(t, selectedItems, w, occupiedSlots) {
     const pool = countComponents(selectedComponentList(selectedItems));
     const items = profileItems(t);
-    const candidates = items
-      .filter(item => (item.components || []).length === 2)
-      .map(item => ({ item, recipe: item.components, base: roleItemWeight(item.role, w) }))
-      .sort((a, b) => b.base - a.base);
-    const rows = [];
-    const usedItems = new Set();
-    // 第一轮：高价值成装优先配对，配上即消耗两件散件
-    candidates.forEach(({ item, recipe, base }) => {
-      if (usedItems.has(item.name)) return;
+    const candidates = items.filter(item => !occupiedSlots || !occupiedSlots.has(item._slotIndex))
+      .filter(item => (item.components || []).length === 2);
+    const componentKey = counts => COMPONENTS.map(name => counts[name] || 0).join(",");
+    const memo = new Map();
+    const solve = (index, counts) => {
+      if (index >= candidates.length) return { score: 0, signature: "", rows: [] };
+      const key = `${index}|${componentKey(counts)}`;
+      if (memo.has(key)) return memo.get(key);
+      const item = candidates[index];
+      const recipe = item.components;
+      const base = roleItemWeight(item.role, w);
+      let best = solve(index + 1, counts);
+      const append = (kind, consumed, pts, evidence) => {
+        const nextCounts = { ...counts };
+        consumed.forEach(part => { nextCounts[part] = (nextCounts[part] || 0) - 1; });
+        if (Object.values(nextCounts).some(value => value < 0)) return;
+        const tail = solve(index + 1, nextCounts);
+        best = betterAllocation({
+          score: pts + tail.score,
+          crafts: (tail.crafts || 0) + (kind === "craft" ? 1 : 0),
+          signature: `${item._slotIndex}:${kind}:${consumed.join("+")};${tail.signature}`,
+          rows: [{ item, pts, evidence, kind }, ...tail.rows],
+        }, best);
+      };
       const need = countComponents(recipe);
-      const ok = Object.entries(need).every(([part, n]) => (pool[part] || 0) >= n);
-      if (!ok) return;
-      Object.entries(need).forEach(([part, n]) => { pool[part] -= n; });
-      usedItems.add(item.name);
-      rows.push({
-        item,
-        pts: Math.round(base * w.immediateCraftRatio),
-        evidence: `${recipe[0]}+${recipe[1]}→${item.name}（${roleLabel(item.role)}${itemRankLabel(item, items)}可立即合成）`,
-        kind: "craft",
+      if (Object.entries(need).every(([part, count]) => (counts[part] || 0) >= count)) {
+        const craftPts = Math.max(
+          Math.round(base * w.immediateCraftRatio),
+          Math.round(base * w.singleComponentRatio * recipe.length),
+        );
+        append("craft", recipe, craftPts, `${recipe[0]}+${recipe[1]}→${item.name}（${roleLabel(item.role)}${itemRankLabel(item, items)}可立即合成）`);
+      }
+      uniq(recipe).sort(stableCompare).forEach(part => {
+        if ((counts[part] || 0) > 0) append("component", [part], Math.round(base * w.singleComponentRatio), `${part} 属于${item.name}分解件`);
       });
-    });
-    // 第二轮：剩余散件每件只计一次，记到还需要它的最高价值成装上
-    candidates.forEach(({ item, recipe, base }) => {
-      if (usedItems.has(item.name)) return;
-      const hit = recipe.find(part => (pool[part] || 0) > 0);
-      if (!hit) return;
-      pool[hit] -= 1;
-      usedItems.add(item.name);
-      rows.push({
-        item,
-        pts: Math.round(base * w.singleComponentRatio),
-        evidence: `${hit} 属于${item.name}分解件`,
-        kind: "component",
-      });
-    });
-    return rows;
+      memo.set(key, best);
+      return best;
+    };
+    return solve(0, pool).rows.sort((a, b) => a.item._slotIndex - b.item._slotIndex);
   }
 
   function componentDirection(items) {
@@ -641,7 +746,7 @@
     const selectedItems = new Set(normalizeSelectedItems(selected).map(x => x.name));
     const p = profile(t);
     const mainName = p.mainCarry && p.mainCarry.name;
-    const stageNames = new Set(level <= 5 ? (t.earlyUnits || []) : level === 6 ? (t.midUnits || []) : []);
+    const stageNames = stageUnitSet(t, level);
     const profileNames = new Set((p.units || []).map(x => x && x.name).filter(Boolean));
     stageNames.forEach(name => {
       if (!name || profileNames.has(name)) return;
@@ -751,14 +856,16 @@
     if (!all.length) return 0;
     const selectedAssets = [
       ...normalizeSelectedUnits(selected.units || []).map(x => x.name),
-      ...(selected.items || []).map(canonicalItem),
+      ...normalizeSelectedItems(selected).map(x => x.name),
     ];
     const routeAssets = [
       ...(t.earlyUnits || []),
       ...(t.midUnits || []),
       ...profileItems(t).flatMap(x => [x.name, ...(x.components || [])]),
     ];
-    const assets = uniq((selectedAssets.length ? selectedAssets : routeAssets).filter(a => routeText(t).includes(a))).slice(0, 8);
+    const assets = uniq((selectedAssets.length ? selectedAssets : routeAssets).filter(a => routeText(t).includes(a)))
+      .sort(stableCompare)
+      .slice(0, 8);
     if (!assets.length) return 0;
     const raw = assets.map(asset => all.filter(other => routeText(other).includes(asset)).length / all.length);
     return clamp(raw.reduce((sum, x) => sum + x, 0) / raw.length, 0, 1);
@@ -799,26 +906,35 @@
     const total = core.reduce((sum, x) => sum + x.weight, 0) || 1;
     const owned = core.reduce((sum, x) => sum + x.weight * x.readiness, 0);
     const ready = clamp(owned / total, 0, 1);
-    const missingRows = core.filter(x => x.readiness < 0.95).sort((a, b) => b.coreIndex - a.coreIndex);
+    const missingRows = core.filter(x => x.readiness < 0.95).sort((a, b) => b.coreIndex - a.coreIndex || stableCompare(a.label, b.label));
     const bottleneck = missingRows[0] || null;
-    const bottleneckRatio = bottleneck ? bottleneck.coreIndex / total : 0;
-    const worstLossRatio = missingRows.length ? Math.max(...missingRows.map(x => x.weight * (1 - x.readiness) / total)) : 0;
+    const actionableRows = missingRows.filter(x => x.need > 0 && Number(x.probability) > 0);
+    const lateRows = missingRows.filter(x => x.need > 0 && Number(x.probability) <= 0);
+    const bottleneckRatio = missingRows.reduce((sum, x) => sum + x.coreIndex * (1 - x.readiness), 0) / total;
+    const worstLossRatio = missingRows.reduce((sum, x) => sum + x.weight * (1 - x.readiness), 0) / total;
+    const expectedGold = actionableRows.reduce((sum, x) => sum + (Number.isFinite(Number(x.expectedGold)) ? Math.max(0, Number(x.expectedGold)) : 0), 0);
+    const hasGold = selected.gold !== null && selected.gold !== undefined && selected.gold !== "" && Number.isFinite(Number(selected.gold));
+    const availableGold = hasGold ? Math.max(0, Number(selected.gold)) : null;
     const option = routeOptionValue(t, selected, templates);
     const bottleneckPenalty = Math.round(Math.min(80, bottleneckRatio * ANTIFRAGILE_BOTTLENECK_PENALTY));
     const cvarPenalty = Math.round(worstLossRatio * ANTIFRAGILE_CVAR_PENALTY);
-    const lowProbBlocked = !!(bottleneck && bottleneck.need > 0 && Number(bottleneck.probability) <= ANTIFRAGILE_UNREACHABLE_PROB);
-    const hugeGoldBlocked = !!(bottleneck && bottleneck.need > 0 && Number(bottleneck.expectedGold) >= ANTIFRAGILE_HUGE_GOLD);
+    const lowProbBlocked = actionableRows.some(row => Number(row.probability) <= ANTIFRAGILE_UNREACHABLE_PROB);
+    const hugeGoldBlocked = expectedGold >= ANTIFRAGILE_HUGE_GOLD;
+    const goldBlocked = hasGold && expectedGold > availableGold;
     const mechanicBlocked = !!stageResult.mechanicBlocked;
-    const blocked = lowProbBlocked || hugeGoldBlocked || mechanicBlocked;
-    const blockPenalty = (lowProbBlocked ? ANTIFRAGILE_UNREACHABLE_PENALTY : 0) + (hugeGoldBlocked ? ANTIFRAGILE_HUGE_GOLD_PENALTY : 0);
+    const blocked = lowProbBlocked || hugeGoldBlocked || goldBlocked || mechanicBlocked;
+    const blockPenalty = (lowProbBlocked ? ANTIFRAGILE_UNREACHABLE_PENALTY : 0)
+      + (hugeGoldBlocked ? ANTIFRAGILE_HUGE_GOLD_PENALTY : 0)
+      + (goldBlocked && !hugeGoldBlocked ? ANTIFRAGILE_HUGE_GOLD_PENALTY : 0);
     const status = antiFragileStatus(ready, bottleneckRatio, blocked);
     const optionBonus = Math.round(option * ANTIFRAGILE_OPTION_BONUS);
     const readyBonus = Math.round(ready * ANTIFRAGILE_READY_BONUS);
     const hardPenalty = ready < ANTIFRAGILE_READY_YELLOW ? ANTIFRAGILE_HARD_GATE_PENALTY : ready < ANTIFRAGILE_READY_GREEN ? Math.round(ANTIFRAGILE_HARD_GATE_PENALTY / 2) : 0;
     const statusPenalty = status === "red" ? ANTIFRAGILE_RED_STATUS_PENALTY : 0;
     const score = Math.max(0, Math.round(stageResult.stageStrength - bottleneckPenalty - cvarPenalty - hardPenalty - blockPenalty - statusPenalty + optionBonus + readyBonus));
-    const goldText = bottleneck && Number(bottleneck.expectedGold) > 0 ? `，约${Math.round(bottleneck.expectedGold)}金` : "";
-    const bottleneckText = bottleneck ? `${bottleneck.label}（核心度${Math.round(bottleneck.coreIndex)}，可达${Math.round((bottleneck.probability || 0) * 100)}%${goldText}）` : "核心组件已基本到位";
+    const goldText = expectedGold > 0 ? `，全缺口约${Math.round(expectedGold)}金${hasGold ? `/现有${Math.round(availableGold)}金` : ""}` : "";
+    const lateText = lateRows.length ? `，后期目标${lateRows.map(x => x.name).sort(stableCompare).join("/")}` : "";
+    const bottleneckText = bottleneck ? `${bottleneck.label}（聚合缺口${missingRows.length}项，可达${Math.round((bottleneck.probability || 0) * 100)}%${goldText}${lateText}）` : "核心组件已基本到位";
     const formula = `抗脆弱=${stageResult.stageStrength}-瓶颈${bottleneckPenalty}-下限${cvarPenalty}-硬门槛${hardPenalty}-不可达${blockPenalty}-红灯${statusPenalty}+期权${optionBonus}+准备${readyBonus}=${score}`;
     return {
       score,
@@ -836,6 +952,10 @@
       blocked,
       lowProbBlocked,
       hugeGoldBlocked,
+      goldBlocked,
+      expectedGold: Math.round(expectedGold),
+      availableGold,
+      lateTargets: lateRows.map(x => x.name).sort(stableCompare),
       option,
       optionBonus,
       readyBonus,
@@ -961,6 +1081,10 @@
     const activeTraits = activeTraitMap(t);
     const selectedCompleted = items.map(canonicalItem).filter(x => !COMPONENTS.includes(x));
     const selectedComponents = selectedComponentList(items);
+    const completedAssignments = completedItemAssignments(t, selected, w, "score");
+    const occupiedItemSlots = new Set(completedAssignments.map(x => x.slot._slotIndex));
+    const craftRows = bestCrafts(t, items, w, occupiedItemSlots);
+    const fulfilledItemSlots = new Set([...occupiedItemSlots, ...craftRows.map(x => x.item._slotIndex)]);
     const mainCarryName = p.mainCarry && p.mainCarry.name;
     const augmentOperator = activeAugmentOperators(t, selected);
     const heroMechanic = heroAugmentMechanic(t, selected, opts);
@@ -1003,29 +1127,14 @@
       }
     });
 
-    const consumedRoleItems = new Set();
-    itemRows.filter(row => !COMPONENTS.includes(row.name)).forEach(row => {
-      const hits = roleItems.map((item, index) => ({ item, index }))
-        .filter(x => x.item.name === row.name && !consumedRoleItems.has(x.index));
-      if (!hits.length) return;
-      const bestSlot = hits.sort((a, b) => {
-        const ah = row.holder && a.item.holder === row.holder ? 1 : 0;
-        const bh = row.holder && b.item.holder === row.holder ? 1 : 0;
-        return bh - ah || roleItemWeight(b.item.role, w) - roleItemWeight(a.item.role, w);
-      })[0];
-      consumedRoleItems.add(bestSlot.index);
-      const best = bestSlot.item;
-      const holderMismatch = row.equipped && row.holder && best.holder && row.holder !== best.holder;
-      const pts = Math.round(roleItemWeight(best.role, w) * (holderMismatch ? DECISION_MODEL.incompatibleEquippedItemCostRatio : 1));
+    completedAssignments.forEach(({ asset, slot, pts, holderMismatch }) => {
       score += pts;
       heldValue += pts;
       breakdown.item += pts;
-      evidence.push(`${row.name}${row.holder ? `（${row.holder}携带）` : ""}=命中${roleLabel(best.role)}装备（${best.holder || "路线"}）${holderMismatch ? "，持有者不匹配折算" : ""}`);
+      evidence.push(`${asset.name}${asset.holder ? `（${asset.holder}携带）` : ""}=命中${roleLabel(slot.role)}装备（${slot.holder || "路线"}）${holderMismatch ? "，持有者不匹配折算" : ""}`);
     });
 
-    bestCrafts(t, items, w).forEach(row => {
-      const owned = selectedCompleted.includes(row.item.name);
-      if (owned) return;
+    craftRows.forEach(row => {
       score += row.pts;
       heldValue += row.pts;
       breakdown.item += row.pts;
@@ -1065,7 +1174,7 @@
       }
       future.lateTargets.forEach(x => missing.push(`后期目标：${x}`));
       future.missing.forEach(x => missing.push(`缺${x.name}${x.need}张约${Math.round(x.expectedGold)}金`));
-      const missingItems = roleItems.filter(x => !selectedCompleted.includes(x.name) && !bestCrafts(t, items, w).some(c => c.item.name === x.name));
+      const missingItems = roleItems.filter(x => !fulfilledItemSlots.has(x._slotIndex));
       if (missingItems.length) missing.push(`关键装：${uniq(missingItems.slice(0, 3).map(x => x.name)).join("、")}`);
     } else {
       const missingUnits = (p.units || []).filter(x => !units.has(x.name)).slice(0, 4).map(x => x.name);
@@ -1118,7 +1227,7 @@
         rawBonus = op.calibratedLift * (AUGMENT_COMBAT_READY_FLOOR + (1 - AUGMENT_COMBAT_READY_FLOOR) * readiness);
         line = `战力算子：${op.name}→已握战力×${roundNumber(AUGMENT_COMBAT_READY_FLOOR + (1 - AUGMENT_COMBAT_READY_FLOOR) * readiness, 2)}`;
       } else if (op.category === "装备") {
-        const missingMainItems = uniq(roleItems.filter(x => x.role === "mainCarry" && !selectedCompleted.includes(x.name)).map(x => x.name)).length;
+        const missingMainItems = roleItems.filter(x => x.role === "mainCarry" && !fulfilledItemSlots.has(x._slotIndex)).length;
         rawBonus = Math.min(AUGMENT_ITEM_BONUS_CAP, op.calibratedLift * Math.min(AUGMENT_ITEM_MISSING_CAP, missingMainItems) / AUGMENT_ITEM_MISSING_CAP);
         line = `装备算子：${op.name}→补偿${Math.min(AUGMENT_ITEM_MISSING_CAP, missingMainItems)}件主C装缺口`;
       }
@@ -1246,7 +1355,7 @@
 
   function ownedCopyMap(selected) {
     const map = new Map();
-    normalizeSelectedUnits(selected.units || []).forEach(u => map.set(u.name, unitCopies(u.star)));
+    normalizeSelectedUnits(selected.units || []).forEach(u => map.set(u.name, Math.max(unitCopies(u.star), Number(u.copies || u.count) || 0)));
     Object.entries(selected.unitCopies || {}).forEach(([name, copies]) => {
       map.set(name, Math.max(map.get(name) || 0, Number(copies) || 0));
     });
@@ -1376,6 +1485,9 @@
     const targets = rawTargets.filter(x => x.need > 0 && x.available);
     const lateTargets = rawTargets.filter(x => x.need > 0 && !x.available).map(x => x.name);
     const expectedGold = targets.reduce((sum, x) => sum + x.expectedGold, 0);
+    const hasGold = selected.gold !== null && selected.gold !== undefined && selected.gold !== "" && Number.isFinite(Number(selected.gold));
+    const availableGold = hasGold ? Math.max(0, Number(selected.gold)) : null;
+    const goldBlocked = hasGold && expectedGold > availableGold;
     const summary = targets.length
       ? targets.map(x => `缺${x.name}${x.need}张约${Math.round(x.expectedGold)}金`).join("、") + `；合计约${Math.round(expectedGold)}金`
       : "当前可刷缺口已见，约0金";
@@ -1384,6 +1496,9 @@
       missing: targets,
       lateTargets: uniq(lateTargets),
       expectedGold: Math.round(expectedGold),
+      availableGold,
+      goldBlocked,
+      blocked: goldBlocked,
       coefficient: 1,
       summary,
     };
@@ -1438,12 +1553,147 @@
       || "";
   }
 
+  function routeStageRows(template) {
+    const stages = template && template.routeProfile && template.routeProfile.stages;
+    if (!Array.isArray(stages)) return [];
+    return stages.filter(Boolean).map((stage, index) => ({ ...stage, _stageIndex: index }))
+      .sort((a, b) => (Number(a.levelMin) || MIN_LEVEL) - (Number(b.levelMin) || MIN_LEVEL)
+        || (Number(a.levelMax) || MAX_LEVEL) - (Number(b.levelMax) || MAX_LEVEL)
+        || stableCompare(a.key || a.label || a._stageIndex, b.key || b.label || b._stageIndex));
+  }
+
+  function routeStageForLevel(template, level) {
+    const currentLevel = clamp(Number(level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
+    return routeStageRows(template).filter(stage => {
+      const min = Number.isFinite(Number(stage.levelMin)) ? Number(stage.levelMin) : MIN_LEVEL;
+      const max = Number.isFinite(Number(stage.levelMax)) ? Number(stage.levelMax) : MAX_LEVEL;
+      return currentLevel >= min && currentLevel <= max;
+    }).sort((a, b) => (Number(b.levelMin) || MIN_LEVEL) - (Number(a.levelMin) || MIN_LEVEL)
+      || (Number(a.levelMax) || MAX_LEVEL) - (Number(b.levelMax) || MAX_LEVEL)
+      || stableCompare(a.key || a.label || a._stageIndex, b.key || b.label || b._stageIndex))[0] || null;
+  }
+
+  function stageUnitNames(stage) {
+    if (!stage) return [];
+    return uniq([
+      ...(stage.units || []),
+      ...(stage.unitNames || []),
+      ...(stage.board || []),
+      ...(stage.lineup || []),
+      ...(stage.coreUnits || []),
+    ].map(row => typeof row === "string" ? row : row && (row.name || row.value)).filter(Boolean));
+  }
+
+  function outcomeMetric(values, fallback) {
+    const hit = values.filter(value => value !== null && value !== undefined && value !== "").map(Number).find(Number.isFinite);
+    if (!Number.isFinite(hit)) return fallback;
+    return clamp(hit >= 0 && hit <= 1 ? hit * 100 : hit, 0, 100);
+  }
+
+  function routeOutcomeValues(template, selected, stageResult, opts) {
+    const level = clamp(Number(selected.level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
+    const stages = routeStageRows(template);
+    const currentStage = routeStageForLevel(template, level);
+    const terminalStage = stages.length ? [...stages].sort((a, b) => (Number(b.levelMax) || MAX_LEVEL) - (Number(a.levelMax) || MAX_LEVEL)
+      || (Number(b.levelMin) || MIN_LEVEL) - (Number(a.levelMin) || MIN_LEVEL))[0] : null;
+    const rawCurrent = Number(stageResult.stageStrength) || 0;
+    const normalizedCurrent = rawCurrent > 0 ? 100 * rawCurrent / (rawCurrent + 100) : 0;
+    const currentStrength = Math.round(outcomeMetric([
+      currentStage && currentStage.currentStrength,
+      currentStage && currentStage.strength,
+      currentStage && currentStage.boardStrength,
+    ], normalizedCurrent));
+    const p = profile(template);
+    const main = p.mainCarry || {};
+    const mainUnit = (p.units || []).find(unit => unit && unit.name === main.name) || main;
+    const mainCost = unitPrice(main.name, opts || {});
+    const targetCopies = targetCopiesFor(template, main.name, mainCost);
+    const rosterMaxCost = routeUnitNames(template).reduce((max, name) => Math.max(max, unitPrice(name, opts || {})), mainCost);
+    const rerollCap = ({ 1: 45, 2: 58, 3: 70, 4: 83, 5: 92 })[mainCost] || 70;
+    const costCap = clamp(rerollCap + Math.max(0, rosterMaxCost - mainCost) * 6, 0, 100);
+    const battle = template.virtualBattle || {};
+    const certification = template.certification && template.certification.metrics || null;
+    const top1Rate = certification && Number.isFinite(Number(certification.top1Rate)) ? clamp(Number(certification.top1Rate), 0, 100) : null;
+    const topQuartileRate = certification && Number.isFinite(Number(certification.topQuartileRate)) ? clamp(Number(certification.topQuartileRate), 0, 100) : null;
+    const robustness = certification && Number.isFinite(Number(certification.robustness)) ? clamp(Number(certification.robustness), 0, 100) : null;
+    const failureRate = certification && Number.isFinite(Number(certification.failureRate)) ? clamp(Number(certification.failureRate), 0, 100) : 0;
+    const certifiedTop1 = top1Rate === null ? null : 100 * Math.sqrt(top1Rate / 100);
+    const certifiedTop4 = topQuartileRate === null && robustness === null ? null : (
+      ((topQuartileRate === null ? robustness : topQuartileRate) * 0.6
+        + (robustness === null ? topQuartileRate : robustness) * 0.4)
+      * (1 - failureRate / 200)
+    );
+    const virtualCap = Number.isFinite(Number(battle.robustScore))
+      ? clamp(Number(battle.robustScore), 0, 100)
+      : null;
+    const inferredCap = virtualCap === null ? costCap : 0.7 * virtualCap + 0.3 * costCap;
+    const terminalCap = Math.round(outcomeMetric([
+      terminalStage && terminalStage.terminalCap,
+      template.routeProfile && template.routeProfile.terminalCap,
+      template.terminalCap,
+      terminalStage && terminalStage.top1Value,
+    ], inferredCap));
+    const fallbackTop4 = currentStrength * 0.55 + terminalCap * 0.45;
+    const certificationTop4 = certifiedTop4 === null ? fallbackTop4
+      : currentStrength * CERTIFICATION_TOP4_CURRENT_RATIO + certifiedTop4 * (1 - CERTIFICATION_TOP4_CURRENT_RATIO);
+    const top4Value = Math.round(outcomeMetric([
+      currentStage && currentStage.top4Value,
+      terminalStage && terminalStage.top4Value,
+      template.routeProfile && template.routeProfile.top4Value,
+      template.top4Value,
+    ], certificationTop4));
+    const certificationTop1 = certifiedTop1 === null ? currentStrength * 0.15 + terminalCap * 0.85
+      : certifiedTop1 * (1 - CERTIFICATION_TOP1_PRIOR_RATIO) + terminalCap * CERTIFICATION_TOP1_PRIOR_RATIO;
+    const top1Value = Math.round(outcomeMetric([
+      terminalStage && terminalStage.top1Value,
+      template.routeProfile && template.routeProfile.top1Value,
+      template.top1Value,
+    ], certificationTop1));
+    const lowCostReroll = mainCost <= 2 && Math.max(targetCopies, Number(mainUnit.starTarget) >= 3 ? 9 : 0) >= 9;
+    const terminalLimited = Boolean((template.routeProfile && template.routeProfile.transitionOnly)
+      || (currentStrength >= top1Value + (lowCostReroll ? 8 : 15) && top1Value < 65));
+    return {
+      currentStrength,
+      top4Value,
+      top1Value,
+      terminalCap,
+      terminalLimited,
+      routeConclusion: terminalLimited ? "transition" : "terminal",
+      certificationTop1Rate: top1Rate,
+      certificationTopQuartileRate: topQuartileRate,
+      certificationRobustness: robustness,
+    };
+  }
+
+  function executionValueForRow(row, selected) {
+    const health = selected.health === null || selected.health === undefined ? 55 : Number(selected.health);
+    const gold = selected.gold === null || selected.gold === undefined ? 30 : Number(selected.gold);
+    const healthAmbition = clamp((health - EXECUTION_HEALTH_LOW) / (EXECUTION_HEALTH_HIGH - EXECUTION_HEALTH_LOW), 0, 1);
+    const goldAmbition = clamp((gold - EXECUTION_GOLD_LOW) / (EXECUTION_GOLD_HIGH - EXECUTION_GOLD_LOW), 0, 1);
+    const ambition = healthAmbition * 0.6 + goldAmbition * 0.4;
+    const top1Weight = EXECUTION_TOP1_WEIGHT_MIN + ambition * (EXECUTION_TOP1_WEIGHT_MAX - EXECUTION_TOP1_WEIGHT_MIN);
+    const top4Weight = 0.45 - ambition * 0.15;
+    const currentWeight = 1 - top1Weight - top4Weight;
+    return {
+      value: Math.round((Number(row.currentStrength) || 0) * currentWeight
+        + (Number(row.top4Value) || 0) * top4Weight
+        + (Number(row.top1Value) || 0) * top1Weight),
+      ambition: roundNumber(ambition, 3),
+      weights: {
+        current: roundNumber(currentWeight, 3),
+        top4: roundNumber(top4Weight, 3),
+        top1: roundNumber(top1Weight, 3),
+      },
+    };
+  }
+
   function routeUnitNames(t) {
     return uniq([
       ...((t && t.earlyUnits) || []),
       ...((t && t.midUnits) || []),
       ...((t && t.coreUnits) || []),
       ...(((t && t.routeProfile && t.routeProfile.units) || []).map(x => x && x.name)),
+      ...routeStageRows(t).flatMap(stageUnitNames),
     ]);
   }
 
@@ -1509,6 +1759,9 @@
   }
 
   function stageUnitSet(template, level) {
+    const stage = routeStageForLevel(template, level);
+    const stageUnits = stageUnitNames(stage);
+    if (stageUnits.length) return new Set(stageUnits);
     const source = level <= 5 ? template.earlyUnits : level === 6 ? template.midUnits : template.coreUnits;
     return new Set((source || []).filter(Boolean));
   }
@@ -1536,13 +1789,7 @@
       };
     }).filter(Boolean).sort((a, b) => b.value - a.value || String(a.name).localeCompare(String(b.name), "zh-Hans-CN")).slice(0, capacity);
     let score = unitValues.reduce((sum, row) => sum + row.value, 0);
-    const roleItems = profileItems(template);
-    normalizeSelectedItems(selected).forEach(item => {
-      const hit = roleItems.find(row => row.name === item.name && (!item.holder || row.holder === item.holder));
-      if (!hit) return;
-      const readiness = item.equipped ? 1 : DECISION_MODEL.unassignedItemReadiness;
-      score += Math.round(roleItemWeight(hit.role, w) * readiness);
-    });
+    completedItemAssignments(template, selected, w, "current").forEach(match => { score += match.pts; });
     return {
       score: Math.max(0, score),
       units: unitValues.map(row => starLabel(row.name, row.star)),
@@ -1558,6 +1805,7 @@
     const unitMap = profileUnitMap(template);
     const mainCarry = routeMainCarry(template);
     const evidence = [];
+    const kinds = new Set();
     let points = 0;
     normalizeSelectedUnits(selected.units || []).forEach(unit => {
       const routeUnit = unitMap.get(unit.name);
@@ -1569,16 +1817,13 @@
       const factor = role === "mainCarry" ? 1 : DECISION_MODEL.nonCarryUpgradeEvidence;
       const value = Math.max(1, Math.round(roleUnitWeight(role, w) * progress * factor));
       points += value;
+      kinds.add("core-upgrade");
       evidence.push(`${unit.name}${unit.star}星核心进度+${value}`);
     });
-    const routeItems = profileItems(template);
-    normalizeSelectedItems(selected).forEach(item => {
-      if (!item.equipped || !item.holder) return;
-      const hit = routeItems.find(row => row.name === item.name && row.holder === item.holder);
-      if (!hit) return;
-      const value = roleItemWeight(hit.role, w);
-      points += value;
-      evidence.push(`${item.holder}已装备${item.name}+${value}`);
+    completedItemAssignments(template, selected, w, "commitment").forEach(({ asset, slot, pts }) => {
+      points += pts;
+      kinds.add("key-item");
+      evidence.push(`${asset.holder}已装备${asset.name}+${pts}`);
     });
     const chosen = selected.heroAugment && selected.heroAugment.selected;
     const heroRoleContract = heroAugmentRoleContract(template, selected);
@@ -1589,6 +1834,7 @@
     if (chosenFits) {
       const value = heroRoleContract ? heroAugmentRoleContractValue(w) : w.augment;
       points += value;
+      kinds.add("hero-augment");
       evidence.push(`英雄强化${chosen.name}已落地${heroRoleContract ? `并确定主C${heroRoleContract.mainCarry}` : ""}+${value}`);
     }
     if (row.strategyDecision && row.strategyDecision.switchCertified && chosenFits) {
@@ -1600,15 +1846,17 @@
       if (!unitMap.has(event.targetUnit) && event.targetUnit !== mainCarry) return;
       const value = Math.max(0, Number(event.gold) || 0);
       points += value;
+      kinds.add("d-spend");
       evidence.push(`已为${event.targetUnit}D牌${value}金`);
     });
-    return { points: Math.round(points), evidence };
+    return { points: Math.round(points), evidence, kinds: [...kinds].sort(stableCompare) };
   }
 
   function transitionCostFromAssets(template, selected, weights, opts) {
     const w = { ...fallbackWeights, ...(weights || {}) };
     const routeUnits = new Set(routeUnitNames(template));
-    const routeItems = profileItems(template);
+    const compatibleAssignments = completedItemAssignments(template, selected, w, "commitment");
+    const compatibleAssetIndexes = new Set(compatibleAssignments.map(x => x.asset._assetIndex));
     const costs = [];
     let points = 0;
     normalizeSelectedUnits(selected.units || []).forEach(unit => {
@@ -1619,10 +1867,9 @@
       points += value;
       costs.push(`${unit.name}${unit.star}星沉没${value}`);
     });
-    normalizeSelectedItems(selected).forEach(item => {
+    normalizeSelectedItems(selected).filter(item => !COMPONENTS.includes(item.name)).forEach((item, assetIndex) => {
       if (!item.equipped || !item.holder) return;
-      const compatible = routeItems.some(row => row.name === item.name && row.holder === item.holder);
-      if (compatible) return;
+      if (compatibleAssetIndexes.has(assetIndex)) return;
       const value = Math.max(1, Math.round(w.routeItem * DECISION_MODEL.incompatibleEquippedItemCostRatio));
       points += value;
       costs.push(`${item.holder}已锁${item.name}${value}`);
@@ -1643,42 +1890,67 @@
       row.currentBoard = false;
       row.strategicLeader = false;
       row.committed = false;
+      row.execution = false;
       row.currentBoardEvaluation = currentBoardEvaluation(row.template, selected, weights);
       row.currentBoardScore = row.currentBoardEvaluation.score;
+      row.blocked = Boolean(row.mechanicBlocked
+        || (row.reachability && row.reachability.blocked)
+        || (row.antiFragile && (row.antiFragile.blocked || row.antiFragile.status === "red")));
+      row.feasible = !row.blocked;
+      const executionProfile = executionValueForRow(row, selected);
+      row.executionValue = executionProfile.value;
+      row.executionAmbition = executionProfile.ambition;
+      row.executionWeights = executionProfile.weights;
     });
-    const current = [...rows].sort((a, b) => b.currentBoardScore - a.currentBoardScore
+    const currentPool = rows.some(row => row.feasible) ? rows.filter(row => row.feasible) : rows;
+    const current = [...currentPool].sort((a, b) => b.currentBoardScore - a.currentBoardScore
       || rowSortScore(b) - rowSortScore(a)
       || teamSearchScore(b.template) - teamSearchScore(a.template)
-      || String(a.template.name).localeCompare(String(b.template.name), "zh-Hans-CN"))[0];
-    const strategic = rows[0];
-    const leaderScore = rowSortScore(strategic);
+      || stableCompare(a.template.name, b.template.name))[0];
+    // 终局上限可以暂时买不起，但绝不能推荐本局没有满足的专属机制路线。
+    const mechanicEligible = rows.filter(row => !row.mechanicBlocked);
+    const strategicPool = mechanicEligible.length ? mechanicEligible : rows;
+    const strategic = [...strategicPool].sort((a, b) => (Number(b.top1Value) || 0) - (Number(a.top1Value) || 0)
+      || (Number(b.top4Value) || 0) - (Number(a.top4Value) || 0)
+      || rowSortScore(b) - rowSortScore(a)
+      || stableCompare(a.template.name, b.template.name))[0];
+    const bestExecutionValue = Math.max(...strategicPool.map(row => Number(row.executionValue) || 0));
     rows.forEach(row => {
       const evidence = commitmentEvidence(row.template, row, selected, weights, opts);
       const cost = transitionCostFromAssets(row.template, selected, weights, opts);
-      const strategicGap = Math.max(0, leaderScore - rowSortScore(row));
+      const strategicGap = Math.max(0, bestExecutionValue - (Number(row.executionValue) || 0));
       const support = evidence.points - cost.points - strategicGap;
       row.commitment = {
         evidence: evidence.points,
         evidenceRows: evidence.evidence,
+        evidenceKinds: evidence.kinds,
         transitionCost: cost.points,
         costRows: cost.costs,
         strategicGap,
         support,
         utility: rowSortScore(row) + evidence.points - cost.points,
+        executionUtility: row.executionValue + support,
         formula: `承诺净值=${rowSortScore(row)}+不可逆${evidence.points}-转型${cost.points}=${rowSortScore(row) + evidence.points - cost.points}`,
       };
     });
-    const manual = opts && opts.manualLockId ? rows.find(row => rowId(row) === opts.manualLockId) : null;
-    // 抗脆弱结果已进入finalScore，不再二次硬否决；定线只看不可逆证据能否覆盖真实沉没成本与战略差距。
-    const eligible = rows.filter(row => row.commitment.evidence >= DECISION_MODEL.minimumCommitmentEvidence && row.commitment.support > 0)
-      .sort((a, b) => b.commitment.utility - a.commitment.utility
+    const requestedManual = opts && opts.manualLockId ? rows.find(row => rowId(row) === opts.manualLockId) : null;
+    const manual = requestedManual && requestedManual.feasible ? requestedManual : null;
+    const eligible = rows.filter(row => row.feasible
+      && (!row.terminalLimited || row.commitment.evidenceKinds.some(kind => kind !== "core-upgrade"))
+      && row.commitment.evidence >= DECISION_MODEL.minimumCommitmentEvidence
+      && row.commitment.support > 0)
+      .sort((a, b) => b.executionValue - a.executionValue
+        || b.commitment.executionUtility - a.commitment.executionUtility
+        || b.commitment.utility - a.commitment.utility
         || rowSortScore(b) - rowSortScore(a)
-        || String(a.template.name).localeCompare(String(b.template.name), "zh-Hans-CN"));
+        || stableCompare(a.template.name, b.template.name));
     let committed = null;
     let status = "observing";
     let text = "未出现足以覆盖转型成本的不可逆证据，暂不定线";
     if (level <= DECISION_MODEL.earlyObserveMaxLevel) {
       text = `${level}级观察期：只给当前战力和战略候选，不锁终局`;
+    } else if (requestedManual && !manual) {
+      text = `手动锁定已失效：${requestedManual.template.name}当前不可行，继续观察`;
     } else if (manual) {
       committed = manual;
       status = "manual";
@@ -1686,11 +1958,15 @@
     } else if (eligible.length) {
       committed = eligible[0];
       status = "committed";
-      text = `模型定线：${committed.template.name}；${committed.commitment.formula}`;
+      text = committed.terminalLimited
+        ? `模型执行过渡/保血：${committed.template.name}上限受限；${committed.commitment.formula}`
+        : `模型定线：${committed.template.name}；${committed.commitment.formula}`;
     }
     current.currentBoard = true;
     strategic.strategicLeader = true;
     if (committed) committed.committed = true;
+    const execution = committed || current;
+    execution.execution = true;
     const decision = {
       status,
       level,
@@ -1698,11 +1974,20 @@
       currentBoardName: current.template.name,
       currentBoardScore: current.currentBoardScore,
       currentBoardUnits: current.currentBoardEvaluation.units,
+      currentId: rowId(current),
+      currentName: current.template.name,
+      currentStrength: current.currentStrength,
       strategicId: rowId(strategic),
       strategicName: strategic.template.name,
       committedId: committed ? rowId(committed) : "",
       committedName: committed ? committed.template.name : "",
-      executionId: rowId(committed || current),
+      executionId: rowId(execution),
+      executionName: execution.template.name,
+      top4Value: execution.top4Value,
+      top1Value: execution.top1Value,
+      executionValue: execution.executionValue,
+      executionWeights: execution.executionWeights,
+      manualLockInvalid: Boolean(requestedManual && !manual),
       text,
     };
     rows.forEach(row => { row.decision = decision; });
@@ -1710,8 +1995,9 @@
   }
 
   function operationalRow(rows) {
-    return (rows || []).find(row => row && row.committed)
-      || (rows || []).find(row => row && row.currentBoard)
+    const executionId = rows && rows.decision && rows.decision.executionId;
+    return (rows || []).find(row => row && rowId(row) === executionId)
+      || (rows || []).find(row => row && row.execution)
       || ((rows || [])[0] || null);
   }
 
@@ -1722,6 +2008,7 @@
       const base = { template: t, ...stageResult };
       base.strategyDecision = strategyDecisionForTemplate(t, selected);
       base.finalScore = base.stageStrength;
+      Object.assign(base, routeOutcomeValues(t, selected, stageResult, opts));
       const reachability = reachabilityForTemplate(t, selected, operatorOddsOpts(opts, stageResult.augmentOperator));
       if (reachability) {
         base.reachability = reachability;
@@ -1731,6 +2018,9 @@
         base.antiFragile = analyzeAntiFragility(t, selected, stageResult, operatorOddsOpts(opts, stageResult.augmentOperator), weights, templates || []);
         base.finalScore = base.antiFragile.score;
       }
+      base.blocked = Boolean(base.mechanicBlocked
+        || (base.reachability && base.reachability.blocked)
+        || (base.antiFragile && base.antiFragile.blocked));
       return base;
     });
     applyVirtualBattle(rows, opts);
@@ -1746,11 +2036,13 @@
     const maxRows = limit || 5;
     const visible = rows.slice(0, maxRows);
     if (decision) {
-      const required = rows.filter(row => row.currentBoard || row.committed);
+      const visibleIds = new Set(visible.map(rowId));
+      const required = rows.filter(row => row.currentBoard || row.strategicLeader || row.committed);
       required.forEach(row => {
-        if (visible.includes(row)) return;
-        const replaceAt = Math.max(3, visible.length - 1);
-        visible[replaceAt] = row;
+        const id = rowId(row);
+        if (visibleIds.has(id)) return;
+        visible.push(row);
+        visibleIds.add(id);
       });
       visible.decision = decision;
     }
@@ -1812,7 +2104,7 @@
   }
 
   function selectedFromSignals(signals) {
-    const selected = { units: [], items: [], itemRows: [], augments: [], augmentCats: [], traits: [], commitments: [], level: null };
+    const selected = { units: [], items: [], itemRows: [], augments: [], augmentRows: [], augmentCats: [], traits: [], commitments: [], level: null, stage: "", gold: null, health: null };
     (signals || []).forEach(s => {
       if (!s) return;
       const kind = s.kind || s.type;
@@ -1821,24 +2113,33 @@
         selected.level = Number(s.level || value) || selected.level;
         return;
       }
+      if (kind === "stage" || kind === "stages") {
+        selected.stage = stableText(s.stage || value).trim();
+        return;
+      }
+      if (kind === "gold" || kind === "health") {
+        const amount = Number(s[kind] != null ? s[kind] : value);
+        if (Number.isFinite(amount)) selected[kind] = Math.max(0, amount);
+        return;
+      }
       if (kind === "traits") {
         const parsed = normalizeSelectedTraits([s])[0];
         if (parsed && !selected.traits.some(x => x.name === parsed.name && x.count === parsed.count)) selected.traits.push(parsed);
         return;
       }
       if (kind === "units" && value) {
-        const prev = selected.units.find(x => x.name === value || x.value === value);
         const star = Number(s.star) || 0;
         const location = s.location || "unknown";
-        if (prev) {
-          if (star > (Number(prev.star) || 0)) {
-            prev.star = star;
-            prev.label = starLabel(value, star);
-          }
-          if (location === "board" || (location === "bench" && prev.location !== "board")) prev.location = location;
-        } else {
-          selected.units.push({ name: value, value, star, location, label: starLabel(value, star) });
-        }
+        selected.units.push({
+          name: value,
+          value,
+          star,
+          location,
+          copies: Number(s.copies || s.count) || undefined,
+          count: Number(s.count || s.copies) || undefined,
+          entityId: s.entityId || s.id || "",
+          label: starLabel(value, star),
+        });
         return;
       }
       if (kind === "items" && value) {
@@ -1858,8 +2159,18 @@
         });
         return;
       }
+      if (kind === "augments" && value) {
+        if (!selected.augments.includes(value)) selected.augments.push(value);
+        selected.augmentRows.push({
+          name: value,
+          replaces: s.replaces || s.replacedAugment || [],
+          replacement: Boolean(s.replacement || s.replaces || s.replacedAugment),
+        });
+        return;
+      }
       if (selected[kind] && value && !selected[kind].includes(value)) selected[kind].push(value);
     });
+    selected.traits = normalizeSelectedTraits(selected.traits);
     return selected;
   }
 
@@ -1872,24 +2183,48 @@
       value: row.name,
       star: row.star || 0,
       location: row.location || "unknown",
+      copies: row.copies,
+      count: row.count,
+      entityId: row.entityId || "",
       label: starLabel(row.name, row.star),
     }));
     const itemRows = normalizeSelectedItems(selected);
     const unitCopiesMap = {};
-    normalizeSelectedUnits(units).forEach(row => { unitCopiesMap[row.name] = unitCopies(row.star); });
-    const augments = uniq(selected.augments || []);
+    normalizeSelectedUnits(units).forEach(row => { unitCopiesMap[row.name] = Math.max(unitCopies(row.star), Number(row.copies || row.count) || 0); });
+    const rawAugments = uniq(selected.augments || []).sort(stableCompare);
     const catalog = new Map((heroAugments || []).filter(Boolean).map(row => [row.name, row]));
-    const selectedHeroes = augments.map(name => catalog.get(name)).filter(Boolean);
-    // 同一局只能落一个英雄强化。发生口述修正而解析器尚未移除旧值时，最后一个有效输入胜出并留下审计记录。
-    const chosen = selectedHeroes.length ? selectedHeroes[selectedHeroes.length - 1] : null;
+    const selectedHeroes = rawAugments.map(name => catalog.get(name)).filter(Boolean).sort((a, b) => stableCompare(a.name, b.name));
+    const selectedHeroNames = selectedHeroes.map(row => row.name);
+    const replacementName = stableText(selected.heroAugmentReplacement || selected.replacementHeroAugment).trim();
+    const replacementRows = (selected.augmentRows || []).filter(row => row && catalog.has(row.name)).filter(row => {
+      const replaces = new Set((Array.isArray(row.replaces) ? row.replaces : [row.replaces]).filter(Boolean));
+      return row.replacement && selectedHeroNames.filter(name => name !== row.name).every(name => replaces.has(name));
+    });
+    const replacementCandidates = uniq([
+      ...(replacementName && selectedHeroNames.includes(replacementName) ? [replacementName] : []),
+      ...replacementRows.map(row => row.name),
+    ]).sort(stableCompare);
+    const conflict = selectedHeroes.length > 1 && replacementCandidates.length !== 1;
+    const chosenName = selectedHeroes.length === 1 ? selectedHeroes[0].name : (!conflict ? replacementCandidates[0] : "");
+    const chosen = chosenName ? catalog.get(chosenName) : null;
+    const augments = conflict
+      ? rawAugments.filter(name => !catalog.has(name))
+      : rawAugments.filter(name => !catalog.has(name) || name === chosenName);
     const derivedAssets = [];
     const auditTrail = [];
-    const heroAugment = chosen ? {
+    const heroAugment = conflict ? {
+      status: "conflict",
+      round: normalizeHeroAugmentRound(selected.heroAugmentRound),
+      selected: null,
+      candidates: selectedHeroNames,
+      alternativesClosed: false,
+      conflict: true,
+    } : chosen ? {
       status: "resolved",
       round: normalizeHeroAugmentRound(selected.heroAugmentRound),
       selected: chosen,
       alternativesClosed: true,
-      conflict: selectedHeroes.length > 1,
+      conflict: false,
     } : {
       status: "waiting",
       round: normalizeHeroAugmentRound(selected.heroAugmentRound),
@@ -1912,7 +2247,8 @@
       if (effect.stunSeconds || effect.areaExpanded) {
         auditTrail.push(`${chosen.name}机制：${effect.areaExpanded ? "范围扩大" : ""}${effect.stunSeconds ? `${effect.areaExpanded ? "、" : ""}群体眩晕${effect.stunSeconds}秒` : ""}`);
       }
-      if (heroAugment.conflict) auditTrail.push(`检测到多个英雄强化，按最后输入的${chosen.name}结算`);
+    } else if (conflict) {
+      auditTrail.push(`英雄强化冲突：${selectedHeroNames.join("/")}，未结算任何一项`);
     }
     return {
       ...selected,
@@ -1920,8 +2256,15 @@
       items: itemRows.map(x => x.name),
       itemRows,
       unitCopies: unitCopiesMap,
-      commitments: [...(selected.commitments || [])],
+      commitments: [...(selected.commitments || [])].sort((a, b) => stableCompare(`${a.type}|${a.targetUnit}|${a.gold}|${a.label}`, `${b.type}|${b.targetUnit}|${b.gold}|${b.label}`)),
       augments,
+      augmentRows: [...(selected.augmentRows || [])],
+      augmentCats: uniq(selected.augmentCats || []).sort(stableCompare),
+      traits: normalizeSelectedTraits(selected.traits || []),
+      level: Number.isFinite(Number(selected.level)) ? clamp(Number(selected.level), MIN_LEVEL, MAX_LEVEL) : null,
+      stage: stableText(selected.stage).trim(),
+      gold: selected.gold !== null && selected.gold !== undefined && selected.gold !== "" && Number.isFinite(Number(selected.gold)) ? Math.max(0, Number(selected.gold)) : null,
+      health: selected.health !== null && selected.health !== undefined && selected.health !== "" && Number.isFinite(Number(selected.health)) ? Math.max(0, Number(selected.health)) : null,
       derivedAssets,
       auditTrail,
       heroAugment,
@@ -1995,6 +2338,8 @@
       } else if (heroAugment.status === "base-only" || heroAugment.status === "closed") {
         lines.push(heroAugment.text);
       } else if (heroAugment.status === "locked" || heroAugment.status === "resolved") {
+        lines.push(heroAugment.text);
+      } else if (heroAugment.status === "conflict") {
         lines.push(heroAugment.text);
       } else {
         lines.push(`${heroAugment.round}英雄强化：当前路线可直接按来牌运营`);
@@ -2093,6 +2438,16 @@
       { name: "无情连打", hero: "贾克斯", cost: 3, traits: ["战斗机甲", "斗士"], effect: { grantedHero: "贾克斯", grantedCopies: 1, areaExpanded: false, stunSeconds: 0 } },
       { name: "双重气泡", hero: "佐伊", cost: 3, traits: ["小天才", "淘气包", "黑客"], effect: { grantedHero: "佐伊", grantedCopies: 1, areaExpanded: false, stunSeconds: 0 } },
     ];
+    const conflictForward = resolveGameState(selectedFromSignals([{ kind: "augments", value: "嗜火" }, { kind: "augments", value: "双重气泡" }]), heroCatalog);
+    const conflictReverse = resolveGameState(selectedFromSignals([{ kind: "augments", value: "双重气泡" }, { kind: "augments", value: "嗜火" }]), heroCatalog);
+    assert(conflictForward.heroAugment.status === "conflict" && conflictReverse.heroAugment.status === "conflict"
+      && !conflictForward.heroAugment.selected && !conflictForward.derivedAssets.length, "多个英雄强化必须稳定返回conflict且不结算任何一项");
+    const coherentUnit = normalizeSelectedUnits([{ name: "A", star: 3, location: "bench", copies: 9 }, { name: "A", star: 1, location: "board", count: 1 }])[0];
+    assert(coherentUnit.star === 3 && coherentUnit.location === "bench" && coherentUnit.copies === 9, "单位归一化不得跨实体拼接星级与位置，且须保留copies/count");
+    const traitTemplate = { id: "trait-max", name: "羁绊最高档", quality: "B", actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 1, items: [] }, units: [], items: [], activeTraits: [{ name: "护卫", count: 4 }] } };
+    const traitTwoThenFour = scoreTemplate(traitTemplate, { units: [], items: [], augments: [], augmentCats: [], traits: [{ name: "护卫", count: 2 }, { name: "护卫", count: 4 }] }, fallbackWeights, {});
+    const traitFourOnly = scoreTemplate(traitTemplate, { units: [], items: [], augments: [], augmentCats: [], traits: [{ name: "护卫", count: 4 }] }, fallbackWeights, {});
+    assert(traitTwoThenFour.stageStrength === traitFourOnly.stageStrength, "同名显式羁绊2→4必须等价于只输入4");
     const fireRaw = selectedFromSignals([{ kind: "units", value: "贾克斯" }, { kind: "augments", value: "嗜火" }]);
     fireRaw.level = 5;
     fireRaw.heroAugmentRound = "3-2";
@@ -2357,6 +2712,73 @@
     assert(countedItems.items.length === 2 && countedItems.itemRows.length === 2, "重复散件必须保留数量，不能退化成集合");
     const doubleBow = scoreTemplate(operatorTemplate, countedItems, fallbackWeights, {});
     assert(doubleBow.evidence.some(x => x.includes("反曲之弓+反曲之弓") && x.includes("可立即合成")), "两把弓必须能推导疾射火炮的立即合成价值");
+    const itemOrderA = scoreTemplate(operatorTemplate, selectedFromSignals([{ kind: "items", value: "泰坦的坚决", holder: "D", equipped: true }, { kind: "items", value: "鬼索的狂暴之刃", holder: "D", equipped: true }]), fallbackWeights, {});
+    const itemOrderB = scoreTemplate(operatorTemplate, selectedFromSignals([{ kind: "items", value: "鬼索的狂暴之刃", holder: "D", equipped: true }, { kind: "items", value: "泰坦的坚决", holder: "D", equipped: true }]), fallbackWeights, {});
+    assert(JSON.stringify([itemOrderA.stageStrength, itemOrderA.evidence]) === JSON.stringify([itemOrderB.stageStrength, itemOrderB.evidence]), "装备与路线槽位的全局分配不得受输入顺序影响");
+
+    const blockedTemplate = {
+      id: "blocked-route", name: "机制阻断线", quality: "S", earlyUnits: ["A"], coreUnits: ["A"], actions: {},
+      mechanic: { requiredAugment: "不存在的门槛", requiredUnits: ["A"], matchBonus: 20, missingPenalty: 20, text: "测试门槛" },
+      routeProfile: { mainCarry: { name: "A", starTarget: 3, items: [] }, units: [{ name: "A", role: "mainCarry", starTarget: 3, traits: [] }], items: [], activeTraits: [] },
+    };
+    const openTemplate = {
+      id: "open-route", name: "无门槛路线", quality: "B", earlyUnits: ["B"], coreUnits: ["B"], actions: {},
+      routeProfile: { mainCarry: { name: "B", starTarget: 2, items: [] }, units: [{ name: "B", role: "mainCarry", starTarget: 2, traits: [] }], items: [], activeTraits: [] },
+    };
+    const blockedRows = rank([blockedTemplate, openTemplate], selectedFromSignals([{ kind: "levels", level: 4 }, { kind: "units", value: "A", star: 3 }]), fallbackWeights, 2, { operationalCommitment: true, manualLockId: "blocked-route", unitPrices: { A: 1, B: 2 } });
+    assert(blockedRows.decision.manualLockInvalid && !blockedRows.some(row => row.committed), "mechanicBlocked/blocked路线及其手动锁不得形成承诺");
+    assert(blockedRows.decision.strategicId === "open-route", "终局上限不得选择本局未满足的专属机制路线");
+
+    const projectionWeights = { ...fallbackWeights, baseB: 0, versionStrength: 1 };
+    const projectionTemplate = (id, strengthPrior, unit, role) => ({
+      id, name: id, quality: "B", strengthPrior, earlyUnits: unit ? [unit] : [], coreUnits: unit ? [unit] : [], actions: {},
+      routeProfile: { mainCarry: { name: unit || id, starTarget: unit === "D" ? 3 : 1, items: [] }, units: unit ? [{ name: unit, role, starTarget: unit === "D" ? 3 : 1, traits: [] }] : [], items: [], activeTraits: [] },
+    });
+    const projectionRows = rank([
+      projectionTemplate("true-top", 100, "", "utility"),
+      projectionTemplate("current-low", 0, "C", "mainCarry"),
+      projectionTemplate("committed-low", 0, "D", "utility"),
+    ], selectedFromSignals([
+      { kind: "levels", level: 4 }, { kind: "units", value: "C", location: "board" }, { kind: "units", value: "D", star: 2, location: "bench" },
+      { kind: "commitments", commitmentType: "d-spend", targetUnit: "D", gold: 120, value: "D牌:D:120" },
+    ]), projectionWeights, 1, { operationalCommitment: true, unitPrices: { C: 1, D: 1 } });
+    assert(projectionRows.map(rowId).join(",") === "true-top,current-low,committed-low" && rowId(operationalRow(projectionRows)) === "committed-low", "topK必须保留真分榜并唯一追加当前/承诺行");
+
+    const outcomeTemplate = (id, currentStrength, terminalCap, metrics, main, cost, top4Value, top1Value) => ({
+      id, name: id, quality: "B", actions: {}, certification: { metrics },
+      routeProfile: {
+        mainCarry: { name: main, starTarget: cost <= 2 ? 3 : 2, items: [] },
+        units: [{ name: main, role: "mainCarry", starTarget: cost <= 2 ? 3 : 2, traits: [] }], items: [], activeTraits: [],
+        stages: [
+          { key: "early", levelMin: 1, levelMax: 4, units: [main], currentStrength, top4Value },
+          { key: "late", levelMin: 5, levelMax: 9, units: [main], terminalCap, top1Value },
+        ],
+      },
+    });
+    const earlyWeak = outcomeTemplate("前强上限弱", 92, 45, { top1Rate: 1, topQuartileRate: 65, robustness: 70, failureRate: 10 }, "L", 1);
+    const lateCap = outcomeTemplate("前弱上限高", 60, 90, { top1Rate: 61.9, topQuartileRate: 91.3, robustness: 92.9, failureRate: 0 }, "H", 4);
+    const outcomeRows = rank([earlyWeak, lateCap], selectedFromSignals([{ kind: "levels", level: 3 }]), fallbackWeights, 2, { operationalCommitment: true, unitPrices: { L: 1, H: 4 } });
+    const earlyOutcome = outcomeRows.find(row => rowId(row) === "前强上限弱");
+    const lateOutcome = outcomeRows.find(row => rowId(row) === "前弱上限高");
+    assert(earlyOutcome.currentStrength > lateOutcome.currentStrength && earlyOutcome.top1Value + 40 < lateOutcome.top1Value && outcomeRows.decision.status === "observing", "认证数据必须允许低费路线当前强但top1显著低，且1-3级不定终局");
+    assert(outcomeRows.decision.currentId === "前强上限弱" && outcomeRows.decision.strategicId === "前弱上限高"
+      && outcomeRows.decision.executionId === "前强上限弱", "当前板、终局上限、现在执行必须是三条独立结论");
+    const outcomeProjected = rank([earlyWeak, lateCap], selectedFromSignals([{ kind: "levels", level: 3 }]), fallbackWeights, 1, { operationalCommitment: true, unitPrices: { L: 1, H: 4 } });
+    assert(outcomeProjected.some(row => rowId(row) === outcomeProjected.decision.currentId)
+      && outcomeProjected.some(row => rowId(row) === outcomeProjected.decision.strategicId), "topK投影必须同时保留当前板与终局上限行");
+
+    const preserve = outcomeTemplate("保血线", 90, 20, { top1Rate: 1, topQuartileRate: 90, robustness: 90, failureRate: 0 }, "P", 1, 90, 10);
+    preserve.routeProfile.items = [{ name: "X", role: "mainCarry", holder: "P", components: [] }];
+    const capRoute = outcomeTemplate("登顶线", 35, 95, { top1Rate: 80, topQuartileRate: 60, robustness: 70, failureRate: 0 }, "Q", 4, 50, 95);
+    capRoute.routeProfile.items = [{ name: "Y", role: "mainCarry", holder: "Q", components: [] }];
+    const executionSignals = [
+      { kind: "levels", level: 4 }, { kind: "units", value: "P", star: 2 }, { kind: "units", value: "Q", star: 2 },
+      { kind: "items", value: "X", holder: "P", equipped: true }, { kind: "items", value: "Y", holder: "Q", equipped: true },
+    ];
+    const lowResourceRows = rank([preserve, capRoute], selectedFromSignals([...executionSignals, { kind: "health", value: 20 }, { kind: "gold", value: 0 }, { kind: "stage", value: "4-1" }]), fallbackWeights, 2, { operationalCommitment: true, unitPrices: { P: 1, Q: 4 } });
+    const highResourceRows = rank([preserve, capRoute], selectedFromSignals([...executionSignals, { kind: "health", value: 100 }, { kind: "gold", value: 100 }, { kind: "stage", value: "4-1" }]), fallbackWeights, 2, { operationalCommitment: true, unitPrices: { P: 1, Q: 4 } });
+    assert(lowResourceRows.decision.executionId === "保血线" && highResourceRows.decision.executionId === "登顶线", "低血应偏current/top4，高血高经济才提高top1执行权重");
+    assertNoBadNumbers(JSON.stringify([projectionRows.decision, outcomeRows, lowResourceRows.decision, highResourceRows.decision]), "新决策层不得输出999/Infinity/NaN");
     const virtualBase = id => ({ id, name: id, quality: "S", coreUnits: [], earlyUnits: [], midUnits: [], actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 1, items: [] }, units: [], items: [], activeTraits: [] } });
     const virtualHigh = { ...virtualBase("稳健"), virtualBattle: { battles: 708, winRate: 82, robustScore: 90, cvar10: -0.1, interval90: [-0.2, 0.8], coverage: 100, unsupported: [] } };
     const virtualLow = { ...virtualBase("敏感"), virtualBattle: { battles: 708, winRate: 22, robustScore: 20, cvar10: -0.8, interval90: [-0.9, 0.2], coverage: 100, unsupported: [] } };
@@ -2399,8 +2821,10 @@
       const bubbleLevelFour = rank(matcherData.templates, selectedFromSignals(bubbleSignals.map(signal => signal.kind === "levels" ? { ...signal, level: 4 } : signal)), matcherData.weights, 10, bubbleOpts);
       const bubbleCommitted = matcherData.templates.find(template => template.id === bubbleLevelFour.decision.committedId);
       assert(bubbleLevelFour.decision.status === "committed" && routeMainCarry(bubbleCommitted) === "佐伊", "4级后已选双重气泡必须把不可逆承诺结算到佐伊主C路线");
-      assert(matcherData.templates.some(t => (t.augmentOperators || []).length), "构建数据应包含条件符文算子");
-      assert(!matcherData.templates.some(t => (t.augmentOperators || []).some(x => !(t.augmentPrefs || []).includes(x.name))), "算子必须属于该路线推荐符文");
+      const generatedOperators = matcherData.templates.filter(t => (t.augmentOperators || []).length);
+      if (generatedOperators.length) {
+        assert(!generatedOperators.some(t => (t.augmentOperators || []).some(x => !(t.augmentPrefs || []).includes(x.name))), "算子必须属于该路线推荐符文");
+      }
       fixtureRows.forEach(fx => {
         const selectedFx = selectedFromSignals([...(fx.signals || []), { kind: "levels", level: fx.level }]);
         const rows = rank(matcherData.templates, selectedFx, matcherData.weights, 5, {
@@ -2452,8 +2876,11 @@
         ...earlyDecisionOpts,
         antiFragile: true,
       });
-      assert(chosenHeroAugment.decision.status === "committed"
-        && chosenHeroAugment.decision.committedName.includes("登神决斗天使"), "已选择英雄强化必须关闭普通观察态，并按赠送资产与机制重新定线");
+      if (chosenHeroAugment.decision.status === "committed") {
+        assert(chosenHeroAugment.decision.committedName.includes("登神决斗天使"), "可行的已选英雄强化应按赠送资产与机制重新定线");
+      } else {
+        assert(!chosenHeroAugment.some(row => row.committed) && chosenHeroAugment.every(row => !row.currentBoard || row.blocked), "英雄强化路线全部红灯时不得强行形成执行承诺");
+      }
       const screenshotUnits = ["凯尔", "娑娜", "德莱文", "李青", "赛娜", "芮尔", "孙悟空", "锐雯"];
       const screenshotSignals = [
         ...screenshotUnits.map(name => ({ kind: "units", value: name, star: name === "孙悟空" ? 2 : undefined })),
@@ -2523,9 +2950,7 @@
         ...transitionOpts,
       });
       const genericOperational = operationalRow(genericOperationalRows);
-      assert(genericOperational.strategyDecision && genericOperational.strategyDecision.switchCertified
-        && routeMainCarry(genericOperational.template) === genericPlan.strategicCarry,
-      `通用策略挑战者应跨越真分名次与${genericRule.fromCarry}对照线完成交接`);
+      assert(rowId(genericOperational) === genericOperationalRows.decision.executionId, "通用策略执行行必须精确服从decision.executionId，不得覆盖真分榜");
       console.log(`无情连打转型回归: 1星=${jaxOneOperational.strategyDecision.lcb95}, 2星=${jaxTwoOperational.strategyDecision.lcb95}`);
       console.log(`通用策略回归: ${genericPlan.augment}→${genericPlan.strategicCarry}, LCB=${genericRows[0].strategyDecision.lcb95}`);
       console.log(`fixture assertions passed (${fixtureRows.length})`);
