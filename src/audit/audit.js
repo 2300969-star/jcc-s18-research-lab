@@ -37,7 +37,8 @@ function buildReport(results) {
   report.push(`- 引用缺失：${data.summary.referenceIssues} 条。`);
   report.push(`- 同名英雄多记录：${data.summary.duplicateHeroNames} 组，需要在数值审计中明确规范 ID。`);
   report.push(`- 技能解析高风险英雄：${skills.summary.highRiskHeroes} 个；有伤害文本但当前模型完全未吃到伤害的英雄 ${skills.summary.zeroParsedDamageWithDamageText} 个。`);
-  report.push(`- 装备基础属性漏解析：${items.summary.basicStatGaps} 处；高价值但未建模的装备特效 ${items.summary.unmodeledImportantEffects} 个。`);
+  report.push(`- 装备目录：${items.summary.items} 条有效记录、${items.summary.searchableItemNames} 个可搜索标准名；基础属性漏解析 ${items.summary.basicStatGaps} 处。`);
+  report.push(`- 装备主动特效：已建模 ${items.summary.modeledEffectItems}/${items.summary.effectRows}，全量未建模 ${items.summary.unmodeledEffectItems} 个；其中当前高优先缺口 ${items.summary.unmodeledImportantEffects} 个。`);
   report.push(`- 异常组合搜索：${outliers.summary.heroes} 个英雄 x ${outliers.summary.offenseCombos} 套输出装；官方主C基准 ${outliers.summary.officialBestDps} DPS。`);
   report.push('');
 
@@ -115,6 +116,26 @@ function buildReport(results) {
 
   report.push('## 3. 装备建模覆盖率');
   report.push('');
+  report.push('装备搜索目录、基础属性解析和主动特效模拟是三层独立覆盖率；“能搜到”不等于“完整算过”。');
+  report.push('');
+  report.push(table(
+    ['官方类型', '记录', '标准名', '含静态属性', '静态属性完整', '含主动特效', '已建模特效', '未建模特效'],
+    items.coverageByType.map(x => [
+      x.type,
+      x.records,
+      x.names,
+      x.staticStatItems,
+      x.staticStatsComplete,
+      x.effectItems,
+      x.modeledEffects,
+      x.unmodeledEffects,
+    ]),
+  ));
+  const mittens = items.spotChecks && items.spotChecks.mittens;
+  if (mittens) {
+    report.push(`- 样本“连指手套”：静态属性${mittens.staticStatsComplete ? '已完整解析' : '存在缺口'}（攻速 +${mittens.stats.asPct}%、伤害增幅 +${mittens.stats.ampPct}%）；免疫减速/灼烧/重伤特效状态为 ${mittens.effectCoverage === 'unmodeled' ? '未建模' : mittens.effectCoverage}。`);
+    report.push('');
+  }
   report.push('### 3.1 基础属性漏解析');
   report.push('');
   report.push('这里的“漏解析”指装备 `basicDesc` 中有 `+数值属性`，但当前 `itemStats()` 正则不会计入模型。');
@@ -125,7 +146,9 @@ function buildReport(results) {
       .map(x => [x.name, x.type, x.raw, x.usedInS, x.carryUses]),
   ));
 
-  report.push('### 3.2 高价值但未建模的装备特效');
+  report.push('### 3.2 当前高优先但未建模的装备特效');
+  report.push('');
+  report.push('这是全量缺口的高优先子集：官方 S 级阵容使用过、主 C 使用过，或属于常规成装；不能拿这个数字代表装备全集覆盖率。');
   report.push('');
   report.push(table(
     ['装备', '类型', '标签', 'S级出现次数', '主C出现次数', '效果摘要'],
@@ -133,6 +156,20 @@ function buildReport(results) {
       x.name,
       x.type,
       x.tagLabels.join(' / '),
+      x.usedInS,
+      x.carryUses,
+      x.desc.slice(0, 90),
+    ]),
+  ));
+
+  report.push('### 3.3 全量未建模主动特效');
+  report.push('');
+  report.push(table(
+    ['装备', '类型', '标签', 'S级出现次数', '主C出现次数', '效果摘要'],
+    topRows(items.unmodeledEffects, 60).map(x => [
+      x.name,
+      x.type,
+      x.tagLabels.join(' / ') || '未分类',
       x.usedInS,
       x.carryUses,
       x.desc.slice(0, 90),
@@ -200,10 +237,10 @@ function buildReport(results) {
 
   report.push('## 5. 下一步优先级');
   report.push('');
-  report.push('1. 先修 `itemStats()`：至少把 `法力回复`、`全能吸血`、`伤害减免` 识别出来，否则法系启动、续航和坦度都系统性偏差。');
+  report.push('1. 把神器、光明武器和特殊装备的官方描述编译成确定性装备事件；未建模特效只允许静态属性进入模型。');
   report.push('2. 给技能解析加“机制桶”：伤害、护盾、治疗、控制、百分比伤害、抗性缩放、召唤/备战席，不要只抽伤害。');
   report.push('3. 阵容羁绊不要依赖官方 `contact` 字段，统一从棋子和转职装备反推，再把官方字段作为可疑数据源。');
-  report.push('4. 对 `outliers` 里的非官方主C和重复装备候选做录像/训练模式复核，确认是模型假阳性还是实际超模。');
+  report.push('4. 对 `outliers` 里的非官方主C和重复装备候选做虚拟实战复核，确认是模型假阳性还是实际超模。');
   report.push('');
 
   return report.join('\n');
@@ -234,7 +271,8 @@ function main() {
     contactIssues: results.data.summary.contactIssues,
     skillHighRisk: results.skills.summary.highRiskHeroes,
     itemBasicGaps: results.items.summary.basicStatGaps,
-    unmodeledItemEffects: results.items.summary.unmodeledImportantEffects,
+    unmodeledItemEffects: results.items.summary.unmodeledEffectItems,
+    highPriorityUnmodeledItemEffects: results.items.summary.unmodeledImportantEffects,
     officialBestDps: results.outliers.summary.officialBestDps,
   }, null, 2));
 }

@@ -272,7 +272,7 @@ function renderChrome() {
     ["缺失引用", ds.referenceIssues, "hex/equip/monster", ds.referenceIssues ? "warn" : "good"],
     ["高风险技能", ss.highRiskHeroes, `${ss.zeroParsedDamageWithDamageText} 个零解析`, "warn"],
     ["属性漏算", is.basicStatGaps, Object.keys(is.basicGapCounts).join(" / "), "warn"],
-    ["未建模特效", is.unmodeledImportantEffects, "装备效果覆盖率", "warn"],
+    ["未建模特效", is.unmodeledEffectItems, `高优先 ${is.unmodeledImportantEffects}`, "warn"],
     ["搜索空间", os.heroes + "×" + os.offenseCombos, `基准 ${os.officialBestDps} DPS`, ""],
   ];
   $("tiles").innerHTML = tiles.map(t => `
@@ -400,7 +400,7 @@ function renderSkills() {
 
 function renderItems() {
   const gaps = A.items.basicStatGaps.filter(matches);
-  const effects = A.items.unmodeledImportantEffects.filter(matches);
+  const effects = (A.items.unmodeledEffects || A.items.unmodeledImportantEffects).filter(matches);
   $("view-items").innerHTML = `
     <div class="panel">
       <h2>基础属性漏解析</h2>
@@ -410,7 +410,7 @@ function renderItems() {
         </tr>`)}
     </div>
     <div class="panel">
-      <h2>高价值但未建模的装备特效</h2>
+      <h2>全量未建模的装备特效</h2>
       ${table(["装备","类型","标签","S级出现","主C出现","效果摘要"], effects, (x,i) => `
         <tr class="clickable" data-row="effect-${i}">
           <td>${escapeHtml(x.name)}</td><td>${escapeHtml(x.type)}</td><td>${(x.tagLabels||[]).map(t=>pill(t)).join("")}</td>

@@ -2669,12 +2669,12 @@ function openTeam(t) {
   }
   function renderItems() {
     const gaps = A.items.basicStatGaps.filter(pass);
-    const effects = A.items.unmodeledImportantEffects.filter(pass);
+    const effects = (A.items.unmodeledEffects || A.items.unmodeledImportantEffects).filter(pass);
     main.innerHTML =
       `<h3>基础属性漏解析</h3>` +
       auditTable(["装备","类型","漏掉属性","S级出现","主C出现"], gaps, (x, i) =>
         `<tr data-audit-row="gap-${i}"><td>${esc(x.name)}</td><td>${esc(x.type)}</td><td>${esc(x.raw)}</td><td>${x.usedInS}</td><td>${x.carryUses}</td></tr>`) +
-      `<h3>高价值但未建模的装备特效</h3>` +
+      `<h3>全量未建模的装备特效</h3>` +
       auditTable(["装备","类型","标签","S级出现","主C出现","效果摘要"], effects, (x, i) =>
         `<tr data-audit-row="effect-${i}"><td>${esc(x.name)}</td><td>${esc(x.type)}</td><td>${(x.tagLabels || []).map(pill).join("")}</td><td>${x.usedInS}</td><td>${x.carryUses}</td><td><div class="auditProblem">${esc(x.desc)}</div></td></tr>`);
     bindRows(gaps, "gap"); bindRows(effects, "effect");

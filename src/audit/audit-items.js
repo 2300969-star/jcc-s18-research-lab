@@ -4,38 +4,12 @@ const {
   detailOf,
   officialLineups,
 } = require('./audit-shared');
-
-const MODEL_STAT_LABELS = new Set([
-  '生命上限',
-  '护甲',
-  '魔法抗性',
-  '物理加成',
-  '法术加成',
-  '攻击速度',
-  '暴击率',
-  '伤害增幅',
-  '法力值',
-  '法力回复',
-  '全能吸血',
-  '伤害减免',
-]);
-
-const MODEL_SPECIAL_IDS = new Set([
-  '2810', // Guinsoo
-  '2012', // Titan
-  '2813', // Hurricane
-  '2811', // Statikk
-  '2822', // Blue Buff
-  '2004', // Shojin
-  '2037', // Last Whisper
-  '2846', // Giant Slayer
-  '2038', // Jeweled Gauntlet
-  '2001', // Infinity Edge
-  '2041', // Quicksilver
-]);
-
-const MODEL_TANK_IDS = new Set(['2834', '2029', '2028', '2025', '2027', '2031', '2023', '2818', '2019']);
-const MODEL_COVERED_IDS = new Set([...MODEL_SPECIAL_IDS, ...MODEL_TANK_IDS]);
+const {
+  MODEL_EFFECT_IDS,
+  extractBasicTokens,
+  searchableItemRecords,
+  buildItemCatalog,
+} = require('../core/item-catalog');
 
 const EFFECT_TAGS = [
   ['offense', /伤害|攻击|法术加成|物理加成|攻击速度|暴击|击碎|灼烧|增幅|弹体/],
@@ -71,22 +45,14 @@ function officialItemUsage() {
   return usage;
 }
 
-function extractBasicTokens(desc) {
-  const tokens = [];
-  const re = /\+(\d+(?:\.\d+)?)%?([A-Za-z\u4e00-\u9fa5]+)/g;
-  for (const m of String(desc || '').matchAll(re)) {
-    tokens.push({ raw: m[0], value: Number(m[1]), label: m[2], parsedByModel: MODEL_STAT_LABELS.has(m[2]) });
-  }
-  return tokens;
-}
-
 function tagsFor(desc) {
   return EFFECT_TAGS.filter(([, re]) => re.test(desc || '')).map(([tag]) => tag);
 }
 
 function runItemsAudit() {
   const usage = officialItemUsage();
-  const items = Object.values(data.equip);
+  const items = searchableItemRecords(data.equip);
+  const catalog = buildItemCatalog(data.equip);
 
   const basicStatGaps = [];
   const basicGapCounts = {};
@@ -115,7 +81,7 @@ function runItemsAudit() {
         id: item.id,
         name: item.name,
         type: item.type,
-        modeled: MODEL_COVERED_IDS.has(item.id),
+        modeled: MODEL_EFFECT_IDS.has(String(item.id)),
         tags,
         tagLabels: tags.map(t => TAG_LABEL[t] || t),
         usedInS: (usage[item.id] || {}).sTier || 0,
@@ -124,24 +90,60 @@ function runItemsAudit() {
       };
     });
 
+  const unmodeledEffects = effectRows
+    .filter(row => !row.modeled)
+    .sort((a, b) => b.usedInS - a.usedInS || b.carryUses - a.carryUses || a.type.localeCompare(b.type, 'zh-Hans-CN') || a.name.localeCompare(b.name, 'zh-Hans-CN'));
+
   const unmodeledImportantEffects = effectRows
     .filter(r => !r.modeled && r.tags.length && (r.usedInS > 0 || r.carryUses > 0 || r.type === '成型装备'))
     .sort((a, b) => b.usedInS - a.usedInS || b.carryUses - a.carryUses || a.type.localeCompare(b.type, 'zh-Hans-CN'));
 
   const modeledEffects = effectRows.filter(r => r.modeled);
+  const coverageByType = [...new Set(items.map(item => item.type))].map(type => {
+    const typeItems = items.filter(item => item.type === type);
+    const typeEffects = effectRows.filter(item => item.type === type);
+    const statItems = typeItems.filter(item => extractBasicTokens(item.basicDesc).length);
+    return {
+      type,
+      records: typeItems.length,
+      names: new Set(typeItems.map(item => item.name)).size,
+      staticStatItems: statItems.length,
+      staticStatsComplete: statItems.filter(item => extractBasicTokens(item.basicDesc).every(token => token.parsedByModel)).length,
+      effectItems: typeEffects.length,
+      modeledEffects: typeEffects.filter(item => item.modeled).length,
+      unmodeledEffects: typeEffects.filter(item => !item.modeled).length,
+    };
+  });
+  const mittens = catalog.find(item => item.name === '连指手套');
+  if (!mittens || mittens.effectCoverage !== 'unmodeled' || !mittens.staticStatsComplete) {
+    throw new Error('装备审计必须识别连指手套的静态属性覆盖与主动特效缺口');
+  }
 
   return {
     summary: {
       items: items.length,
+      searchableItemNames: catalog.length,
       basicStatGaps: basicStatGaps.length,
       basicGapCounts: Object.fromEntries(Object.entries(basicGapCounts).sort((a, b) => b[1] - a[1])),
       effectRows: effectRows.length,
       modeledEffectItems: modeledEffects.length,
+      unmodeledEffectItems: unmodeledEffects.length,
       unmodeledImportantEffects: unmodeledImportantEffects.length,
     },
     basicStatGaps,
+    coverageByType,
+    unmodeledEffects,
     unmodeledImportantEffects,
     modeledEffects,
+    spotChecks: {
+      mittens: {
+        name: mittens.name,
+        staticStatsComplete: mittens.staticStatsComplete,
+        stats: mittens.stats,
+        effectCoverage: mittens.effectCoverage,
+        desc: mittens.desc,
+      },
+    },
     tagLabels: TAG_LABEL,
   };
 }

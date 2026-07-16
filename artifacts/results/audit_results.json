@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-16T20:37:13.279Z",
+  "generated": "2026-07-16T20:54:12.303Z",
   "version": "17.17.7",
   "edition": "17.17.7",
   "data": {
@@ -7761,14 +7761,1646 @@
   },
   "items": {
     "summary": {
-      "items": 149,
+      "items": 148,
+      "searchableItemNames": 146,
       "basicStatGaps": 0,
       "basicGapCounts": {},
-      "effectRows": 117,
+      "effectRows": 116,
       "modeledEffectItems": 20,
+      "unmodeledEffectItems": 96,
       "unmodeledImportantEffects": 19
     },
     "basicStatGaps": [],
+    "coverageByType": [
+      {
+        "type": "基础装备",
+        "records": 10,
+        "names": 10,
+        "staticStatItems": 8,
+        "staticStatsComplete": 8,
+        "effectItems": 0,
+        "modeledEffects": 0,
+        "unmodeledEffects": 0
+      },
+      {
+        "type": "成型装备",
+        "records": 39,
+        "names": 39,
+        "staticStatItems": 36,
+        "staticStatsComplete": 36,
+        "effectItems": 39,
+        "modeledEffects": 20,
+        "unmodeledEffects": 19
+      },
+      {
+        "type": "光明武器",
+        "records": 36,
+        "names": 36,
+        "staticStatItems": 36,
+        "staticStatsComplete": 36,
+        "effectItems": 36,
+        "modeledEffects": 0,
+        "unmodeledEffects": 36
+      },
+      {
+        "type": "转职纹章",
+        "records": 22,
+        "names": 22,
+        "staticStatItems": 22,
+        "staticStatsComplete": 22,
+        "effectItems": 0,
+        "modeledEffects": 0,
+        "unmodeledEffects": 0
+      },
+      {
+        "type": "神器装备",
+        "records": 30,
+        "names": 30,
+        "staticStatItems": 29,
+        "staticStatsComplete": 29,
+        "effectItems": 30,
+        "modeledEffects": 0,
+        "unmodeledEffects": 30
+      },
+      {
+        "type": "特殊装备",
+        "records": 11,
+        "names": 11,
+        "staticStatItems": 11,
+        "staticStatsComplete": 11,
+        "effectItems": 11,
+        "modeledEffects": 0,
+        "unmodeledEffects": 11
+      }
+    ],
+    "unmodeledEffects": [
+      {
+        "id": "2016",
+        "name": "班克斯的魔法帽",
+        "type": "成型装备",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "这顶不起眼的帽子可以帮助你创造，或毁灭，这个世界本身。 额外法术加成:0%"
+      },
+      {
+        "id": "2017",
+        "name": "大天使之杖",
+        "type": "成型装备",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "战斗开始时：在战斗期间，每5秒获得20%法术加成。"
+      },
+      {
+        "id": "2003",
+        "name": "海克斯科技枪刃",
+        "type": "成型装备",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "defense"
+        ],
+        "tagLabels": [
+          "输出",
+          "防御/续航"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "为生命值百分比最低的友军提供相当于20%造成伤害值的治疗。"
+      },
+      {
+        "id": "2807",
+        "name": "基克的先驱",
+        "type": "成型装备",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "战斗开始时：提供【攻击速度】20%攻击速度给携带者和同一排1格内的友军们。 [怪兽入侵专属]"
+      },
+      {
+        "id": "2006",
+        "name": "汲取剑",
+        "type": "成型装备",
+        "modeled": false,
+        "tags": [
+          "defense"
+        ],
+        "tagLabels": [
+          "防御/续航"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "每场战斗仅触发1次：在40%生命值时，获得一个护盾，护盾值相当于携带者25%的最大生命值，至多持续5秒。"
+      },
+      {
+        "id": "2809",
+        "name": "疾射火炮",
+        "type": "成型装备",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "攻击距离+1。 [怪兽入侵专属]"
+      },
+      {
+        "id": "2036",
+        "name": "金铲铲冠冕",
+        "type": "成型装备",
+        "modeled": false,
+        "tags": [
+          "economyOrBoard"
+        ],
+        "tagLabels": [
+          "经济/棋盘"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "你的队伍获得+1最大队伍规模。 在你赢下战斗时，有10%几率掉落1金币。 “……某位英雄的心……”"
+      },
+      {
+        "id": "2048",
+        "name": "金锅铲冠冕",
+        "type": "成型装备",
+        "modeled": false,
+        "tags": [
+          "economyOrBoard"
+        ],
+        "tagLabels": [
+          "经济/棋盘"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "你的队伍获得+1最大队伍规模。 在战斗10秒后，有10%几率掉落1金币。 “……以及一点运气。”"
+      },
+      {
+        "id": "2047",
+        "name": "金锅锅冠冕",
+        "type": "成型装备",
+        "modeled": false,
+        "tags": [
+          "economyOrBoard"
+        ],
+        "tagLabels": [
+          "经济/棋盘"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "你的队伍获得+1最大队伍规模。 在携带者倒下时，有10%几率掉落1金币。 “充满了某位哲学家的智慧……”"
+      },
+      {
+        "id": "2840",
+        "name": "静止法衣",
+        "type": "成型装备",
+        "modeled": false,
+        "tags": [
+          "mana"
+        ],
+        "tagLabels": [
+          "法力/施法"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "战斗开始时：射出一道光束，对敌人们施加35%破法。 [怪兽入侵专属] 破法：最大法力值提升，持续到施放技能为止。 [唯一-每位英雄仅限1件]"
+      },
+      {
+        "id": "2832",
+        "name": "灵风",
+        "type": "成型装备",
+        "modeled": false,
+        "tags": [
+          "defense",
+          "economyOrBoard"
+        ],
+        "tagLabels": [
+          "防御/续航",
+          "经济/棋盘"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "战斗开始时：在棋盘对面召唤一道飓风，来将与飓风相距最近的那个敌人移出战斗5秒。 [无视控制免疫效果。] [怪兽入侵专属] [唯一-每位英雄仅限1件]"
+      },
+      {
+        "id": "2044",
+        "name": "秘法手套",
+        "type": "成型装备",
+        "modeled": false,
+        "tags": [
+          "economyOrBoard"
+        ],
+        "tagLabels": [
+          "经济/棋盘"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "每一回合：装备2件随机装备。 [需要用掉3个装备格。]"
+      },
+      {
+        "id": "2020",
+        "name": "莫雷洛秘典",
+        "type": "成型装备",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "defense",
+          "mana",
+          "controlOrDebuff"
+        ],
+        "tagLabels": [
+          "输出",
+          "防御/续航",
+          "法力/施法",
+          "控制/负面效果"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "攻击和技能的伤害对敌人们造成持续10秒的1%灼烧效果和33%重伤效果。 灼烧：每秒造成目标一部分最大生命值的真实伤害 重伤：降低受到的治疗效果"
+      },
+      {
+        "id": "2824",
+        "name": "能量圣杯",
+        "type": "成型装备",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "战斗开始时：提供25%法术加成给携带者和同一排1格内的友军们。 [怪兽入侵专属]"
+      },
+      {
+        "id": "2042",
+        "name": "强袭者的链枷",
+        "type": "成型装备",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "暴击提供持续5秒的5%伤害增幅，可叠加至多4次。"
+      },
+      {
+        "id": "2045",
+        "name": "锐利之刃",
+        "type": "成型装备",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "将完美的安宁和平静带给携带者——和所有面对它的人。 额外物理加成:0%"
+      },
+      {
+        "id": "2005",
+        "name": "夜之锋刃",
+        "type": "成型装备",
+        "modeled": false,
+        "tags": [
+          "defense"
+        ],
+        "tagLabels": [
+          "防御/续航"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "救主灵刃：在60%生命值时，短暂变为不可被选取状态、摆脱负面效果、并治疗20%已损失生命值。"
+      },
+      {
+        "id": "2039",
+        "name": "正义之手",
+        "type": "成型装备",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "defense"
+        ],
+        "tagLabels": [
+          "输出",
+          "防御/续航"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "获得2个效果： -15%物理加成和15%法术加成。 -12%全能汲取。 生命值高于50%时，物理加成和法术加成翻倍。生命值低于50%时，全能汲取效果翻倍。"
+      },
+      {
+        "id": "2814",
+        "name": "兹若特传送门",
+        "type": "成型装备",
+        "modeled": false,
+        "tags": [
+          "economyOrBoard"
+        ],
+        "tagLabels": [
+          "经济/棋盘"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "召唤一个大型虚空生物。它的强度会在每个阶段提升。 [怪兽入侵专属] [唯一-每位英雄仅限1件]"
+      },
+      {
+        "id": "2071",
+        "name": "光明版班克斯的魔法帽",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "它见证过——并释放过——奇迹和灾难。 额外法术加成:0%"
+      },
+      {
+        "id": "2072",
+        "name": "光明版大天使之杖",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "战斗开始时：在战斗期间，每5秒获得40%法术加成。"
+      },
+      {
+        "id": "2873",
+        "name": "光明版钢铁烈阳之匣",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "defense"
+        ],
+        "tagLabels": [
+          "防御/续航"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "战斗开始时：携带者和同一排2格内的友军们获得持续20秒的500/650/800护盾值(随携带者的等级成长)。 [怪兽入侵专属]"
+      },
+      {
+        "id": "2866",
+        "name": "光明版鬼索的狂暴之刃",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "攻击提供10%可叠加的攻击速度。 [怪兽入侵专属]"
+      },
+      {
+        "id": "2060",
+        "name": "光明版海克斯科技枪刃",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "defense"
+        ],
+        "tagLabels": [
+          "输出",
+          "防御/续航"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "为生命值百分比最低的友军提供相当于40%造成伤害值的治疗。"
+      },
+      {
+        "id": "2864",
+        "name": "光明版基克的先驱",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "战斗开始时：提供【攻击速度】40%攻击速度给携带者和同一排1格内的友军们。 [怪兽入侵专属]"
+      },
+      {
+        "id": "2063",
+        "name": "光明版汲取剑",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "defense"
+        ],
+        "tagLabels": [
+          "防御/续航"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "每场战斗一次：在40%生命值时，获得一个护盾，护盾值相当于携带者50%的最大生命值，至多持续5秒。"
+      },
+      {
+        "id": "2865",
+        "name": "光明版疾射火炮",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "攻击距离+2。 [怪兽入侵专属]"
+      },
+      {
+        "id": "2080",
+        "name": "光明版棘刺背心",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "defense",
+          "controlOrDebuff"
+        ],
+        "tagLabels": [
+          "输出",
+          "防御/续航",
+          "控制/负面效果"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "获得12%最大生命值。 使来自攻击的伤害降低10%。在被任一攻击命中时，对邻格所有敌人造成200魔法伤害。 冷却时间：2秒"
+      },
+      {
+        "id": "2889",
+        "name": "光明版静止法衣",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "mana"
+        ],
+        "tagLabels": [
+          "法力/施法"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "战斗开始时：射出一道光束，对敌人们施加60%破法。 [怪兽入侵专属] 破法：最大法力值提升，持续到施放技能为止。 [唯一-每位英雄仅限1件]"
+      },
+      {
+        "id": "2083",
+        "name": "光明版巨龙之爪",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "defense"
+        ],
+        "tagLabels": [
+          "防御/续航"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "获得28%最大生命值。 每2秒治疗5%最大生命值。"
+      },
+      {
+        "id": "2894",
+        "name": "光明版巨人捕手",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "defense",
+          "mana"
+        ],
+        "tagLabels": [
+          "输出",
+          "防御/续航",
+          "法力/施法"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "攻击和技能对最大生命值超过了1600的敌人们造成50%额外伤害。 [怪兽入侵专属]"
+      },
+      {
+        "id": "2885",
+        "name": "光明版狂徒铠甲",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "defense"
+        ],
+        "tagLabels": [
+          "防御/续航"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "每秒回复 4% 最大生命。 [怪兽入侵专属]"
+      },
+      {
+        "id": "2876",
+        "name": "光明版蓝霸符",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "mana",
+          "controlOrDebuff"
+        ],
+        "tagLabels": [
+          "法力/施法",
+          "控制/负面效果"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "施放技能的法力值消耗降低10。如果携带者在施放技能后的3秒内至少参与了一次击败，就会获得15法力值。 [怪兽入侵专属] [唯一-每位英雄仅限1件]"
+      },
+      {
+        "id": "2074",
+        "name": "光明版离子火花",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "mana",
+          "controlOrDebuff",
+          "economyOrBoard"
+        ],
+        "tagLabels": [
+          "输出",
+          "法力/施法",
+          "控制/负面效果",
+          "经济/棋盘"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "对2格内的敌人们施加30%魔抗击碎。在敌人施放一次技能时，对该敌人造成相当于该敌人300%法力值消耗的魔法伤害。 [直接伤害类装备] 魔抗击碎：降低魔抗值"
+      },
+      {
+        "id": "2884",
+        "name": "光明版灵风",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "defense",
+          "economyOrBoard"
+        ],
+        "tagLabels": [
+          "防御/续航",
+          "经济/棋盘"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "战斗开始时：在棋盘对面召唤一道飓风，来将与飓风相距最近的那个敌人移出战斗8秒。 [无视控制免疫效果。] [怪兽入侵专属] [唯一-每位英雄仅限1件]"
+      },
+      {
+        "id": "2869",
+        "name": "光明版卢安娜的飓风",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "携带者的攻击会对附近的另一名敌人发射一个弹体，造成携带者100%攻击力【攻击力】的物理伤害。 [怪兽入侵专属]"
+      },
+      {
+        "id": "2092",
+        "name": "光明版秘法手套",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "economyOrBoard"
+        ],
+        "tagLabels": [
+          "经济/棋盘"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "每一回合：装备2件随机光明武器。 [需要用掉3个装备格。]"
+      },
+      {
+        "id": "2075",
+        "name": "光明版莫雷洛秘典",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "defense",
+          "mana",
+          "controlOrDebuff"
+        ],
+        "tagLabels": [
+          "输出",
+          "防御/续航",
+          "法力/施法",
+          "控制/负面效果"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "攻击和技能的伤害对敌人们造成持续10秒的2%灼烧效果和33%重伤效果。 灼烧：每秒造成目标一部分最大生命值的真实伤害 重伤：降低受到的治疗效果"
+      },
+      {
+        "id": "2878",
+        "name": "光明版能量圣杯",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "战斗开始时：提供50%法术加成给携带者和同一排1格内的友军们。 [怪兽入侵专属]"
+      },
+      {
+        "id": "2091",
+        "name": "光明版强袭者的链枷",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "暴击提供持续5秒的10%伤害增幅，可叠加至多4次。"
+      },
+      {
+        "id": "2082",
+        "name": "光明版日炎斗篷",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "defense",
+          "controlOrDebuff"
+        ],
+        "tagLabels": [
+          "输出",
+          "防御/续航",
+          "控制/负面效果"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "获得16%最大生命值。 每2秒，对2格内的一名敌人施加持续10秒的2%灼烧效果和33%重伤效果。 灼烧：每秒造成目标一部分最大生命值的真实伤害 重伤：降低受到的治疗效果"
+      },
+      {
+        "id": "2093",
+        "name": "光明版锐利之刃",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "它在敌人面前发光。或在朋友面前。或在任何活着的东西面前，真的。 额外物理加成:0%"
+      },
+      {
+        "id": "2077",
+        "name": "光明版圣盾使的誓约",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "defense",
+          "mana"
+        ],
+        "tagLabels": [
+          "防御/续航",
+          "法力/施法"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "战斗开始时：获得40法力值。 在40%生命值时，获得30法力值和相当于50%最大生命值的护盾值。"
+      },
+      {
+        "id": "2081",
+        "name": "光明版石像鬼石板甲",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [],
+        "tagLabels": [],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "每有一个敌人正在以携带者为目标，携带者就会获得20护甲和20魔抗。"
+      },
+      {
+        "id": "2090",
+        "name": "光明版水银",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "defense"
+        ],
+        "tagLabels": [
+          "输出",
+          "防御/续航"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "战斗开始时：获得持续45秒的控制免疫效果。 每秒获得6%可叠加的攻击速度。"
+      },
+      {
+        "id": "2061",
+        "name": "光明版朔极之矛",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "mana"
+        ],
+        "tagLabels": [
+          "法力/施法"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "每次普攻提供10额外法力值。"
+      },
+      {
+        "id": "2867",
+        "name": "光明版斯塔缇克狂热",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "controlOrDebuff"
+        ],
+        "tagLabels": [
+          "输出",
+          "控制/负面效果"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "每第3次攻击对8名敌人造成60魔法伤害和持续5秒的30%魔抗击碎。 [怪兽入侵专属] 魔抗击碎：降低魔抗值"
+      },
+      {
+        "id": "2068",
+        "name": "光明版泰坦的坚决",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "defense"
+        ],
+        "tagLabels": [
+          "输出",
+          "防御/续航"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "在攻击或承受伤害时获得4%物理加成和4%法术加成，至多可叠加25次。 在叠满层数后，获得20%伤害增幅，并获得控制免疫。"
+      },
+      {
+        "id": "2059",
+        "name": "光明版无尽之刃",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "mana"
+        ],
+        "tagLabels": [
+          "输出",
+          "法力/施法"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "获得【技能暴击】。 技能暴击：技能伤害可产生暴击。额外的【技能暴击】提供10%暴击伤害。"
+      },
+      {
+        "id": "2062",
+        "name": "光明版夜之锋刃",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "defense"
+        ],
+        "tagLabels": [
+          "防御/续航"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "救主灵刃：在60%生命值时，短暂变为不可被选取状态并摆脱负面效果、并治疗所有已损失生命值。"
+      },
+      {
+        "id": "2079",
+        "name": "光明版振奋盔甲",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "defense"
+        ],
+        "tagLabels": [
+          "防御/续航"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "每秒回复4%已损失生命值。"
+      },
+      {
+        "id": "2088",
+        "name": "光明版正义之手",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "defense"
+        ],
+        "tagLabels": [
+          "输出",
+          "防御/续航"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "获得2个效果： -30%物理加成和30%法术加成。 -24%全能汲取。 生命值高于50%时，物理加成和法术加成翻倍。生命值低于50%时，全能汲取效果翻倍。"
+      },
+      {
+        "id": "2087",
+        "name": "光明版珠光护手",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "mana"
+        ],
+        "tagLabels": [
+          "输出",
+          "法力/施法"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "获得【技能暴击】。 技能暴击：技能伤害可产生暴击。额外的【技能暴击】提供10%暴击伤害。"
+      },
+      {
+        "id": "2870",
+        "name": "光明版兹若特传送门",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "economyOrBoard"
+        ],
+        "tagLabels": [
+          "经济/棋盘"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "召唤一个大型虚空生物。它的强度会在每个阶段提升。 [怪兽入侵专属] [唯一-每位英雄仅限1件]"
+      },
+      {
+        "id": "2086",
+        "name": "光明版最后的轻语",
+        "type": "光明武器",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "mana",
+          "controlOrDebuff"
+        ],
+        "tagLabels": [
+          "输出",
+          "法力/施法",
+          "控制/负面效果"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "来自攻击和技能的伤害会对目标施加持续到战斗环节结束的30%护甲击碎。这个效果不会叠加。 护甲击碎：降低护甲值"
+      },
+      {
+        "id": "6073",
+        "name": "暗行者之爪",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "在击败一个目标后，摆脱负面效果并冲刺到4格内相距最远的那个目标处。下两次暴击攻击造成50%额外暴击伤害。"
+      },
+      {
+        "id": "6052",
+        "name": "大亨之铠",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "defense",
+          "economyOrBoard"
+        ],
+        "tagLabels": [
+          "输出",
+          "防御/续航",
+          "经济/棋盘"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "在承受伤害时提供1护甲、1魔抗和5生命值，这个效果至多叠加35次。 在满层时，提供【金币】1金币并且每11秒继续提供【金币】1金币。 [唯一-每位英雄仅限1件]"
+      },
+      {
+        "id": "6096",
+        "name": "恶火小斧",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "defense"
+        ],
+        "tagLabels": [
+          "输出",
+          "防御/续航"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "攻击造成相当于携带者3%最大生命值的额外物理伤害。每1%已损失生命值，获得1%攻击速度。"
+      },
+      {
+        "id": "6067",
+        "name": "飞升护符",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "defense"
+        ],
+        "tagLabels": [
+          "输出",
+          "防御/续航"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "在22秒后，获得100%最大生命值和120%伤害增幅，持续到战斗环节结束。"
+      },
+      {
+        "id": "6085",
+        "name": "光盾徽章",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "defense"
+        ],
+        "tagLabels": [
+          "防御/续航"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "每3秒，为生命值百分比最低的那个友军提供护盾，护盾值相当于携带者70%的护甲与魔抗总和，持续5秒。 在倒下时，将这个护盾效果提供给所有友军。"
+      },
+      {
+        "id": "6093",
+        "name": "黄昏圣盾",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "economyOrBoard"
+        ],
+        "tagLabels": [
+          "输出",
+          "经济/棋盘"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "每2.5秒，从1格内的敌人们处偷取3魔抗，并造成相当于携带者15%魔抗值的魔法伤害。 如果还携带了【黎明圣盾】，则转而每1.25秒触发这件装备的效果。 伤害基于阶段提升。"
+      },
+      {
+        "id": "6080",
+        "name": "疾射火炮",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "获得+1攻击距离，并且这个距离会在携带者每击败一个敌人时提升1。"
+      },
+      {
+        "id": "6059",
+        "name": "金币收集者",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "defense",
+          "mana",
+          "economyOrBoard"
+        ],
+        "tagLabels": [
+          "输出",
+          "防御/续航",
+          "法力/施法",
+          "经济/棋盘"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "携带者的攻击和技能会处决低于12%最大生命值的目标。处决有33%几率掉落【金币】1金币。 [唯一-每个弈子仅可装备1件]"
+      },
+      {
+        "id": "6063",
+        "name": "狙击手的专注",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "在对抗相距4格或更远的目标们时获得40%伤害增幅。"
+      },
+      {
+        "id": "6090",
+        "name": "巨型九头蛇",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "defense"
+        ],
+        "tagLabels": [
+          "输出",
+          "防御/续航"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "攻击对目标和邻格敌人造成相当于携带者4%最大生命值外加6%物理加成的额外物理伤害。"
+      },
+      {
+        "id": "6083",
+        "name": "枯萎珠宝",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "mana",
+          "controlOrDebuff"
+        ],
+        "tagLabels": [
+          "输出",
+          "法力/施法",
+          "控制/负面效果"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "造成魔法伤害时会将目标的魔抗削减6。如果目标的魔抗是0，则转而会为携带者提供2法力值。 技能伤害每0.5秒仅能在每个敌人身上触发一次此效果。"
+      },
+      {
+        "id": "6092",
+        "name": "黎明圣盾",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "defense",
+          "economyOrBoard"
+        ],
+        "tagLabels": [
+          "防御/续航",
+          "经济/棋盘"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "每2.5秒，从1格内的敌人们处偷取3护甲，并治疗相当于携带者15%护甲值的生命值。 如果还携带了【黄昏圣盾】，则转而每1.25秒触发这件装备的效果。 治疗效果基于阶段提升。"
+      },
+      {
+        "id": "6070",
+        "name": "连指手套",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "defense",
+          "controlOrDebuff"
+        ],
+        "tagLabels": [
+          "输出",
+          "防御/续航",
+          "控制/负面效果"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "将携带者缩小，为其提供移动速度提升并免疫减速、灼烧、以及重伤。 减速：降低攻击速度 灼烧：每秒造成目标一部分最大生命值的真实伤害 重伤：降低受到的治疗效果"
+      },
+      {
+        "id": "6071",
+        "name": "卢登的激荡",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "在击败目标时，会对与目标相距最近的2个敌人造成魔法伤害，伤害值为100%的过量伤害外加100。"
+      },
+      {
+        "id": "6095",
+        "name": "帽子饮品",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "携带者在每次参与击败后带上一顶帽子。携带者从每顶帽子中获得1%物理加成和法术加成。倒下时，失去20%总帽子数。(帽子数：0)"
+      },
+      {
+        "id": "6072",
+        "name": "密银黎明",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "controlOrDebuff"
+        ],
+        "tagLabels": [
+          "输出",
+          "控制/负面效果"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "为携带者提供免疫晕眩的效果，并且携带者的攻击可以使目标晕眩0.8秒。 携带者的攻击速度锁定为0.5。"
+      },
+      {
+        "id": "6057",
+        "name": "三相之力",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [],
+        "tagLabels": [],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "成吨的一切！"
+      },
+      {
+        "id": "6087",
+        "name": "烁刃",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "攻击提供5%可叠加的攻击速度。每3次攻击还会提供2%物理加成和2%法术加成。"
+      },
+      {
+        "id": "6088",
+        "name": "斯塔缇克电刃",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "每第3次攻击对4名敌人造成30+40%携带者额外法术加成的额外魔法伤害。"
+      },
+      {
+        "id": "6054",
+        "name": "死亡之蔑",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "携带者受到的50%伤害会转而在4秒里作为非关键伤害来持续扣除。 [唯一-每位英雄仅限1件]"
+      },
+      {
+        "id": "6061",
+        "name": "碎舰者",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "defense"
+        ],
+        "tagLabels": [
+          "输出",
+          "防御/续航"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "战斗开始时：如果邻格内没有己方弈子，获得400生命值、10%物理加成和10%法术加成。"
+      },
+      {
+        "id": "6084",
+        "name": "探索者的护臂",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "参与击败后会使携带者的护甲、魔抗和法术加成提升20。"
+      },
+      {
+        "id": "6065",
+        "name": "投机者之刃",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "economyOrBoard"
+        ],
+        "tagLabels": [
+          "输出",
+          "经济/棋盘"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "获得【攻击速度】1%x你的【金币】金币存款的攻击速度(在【金币】30金币时达到最大值)。 每次攻击有6%几率掉落【金币】1金币。 [唯一-每位英雄仅限1件]"
+      },
+      {
+        "id": "6089",
+        "name": "顽强不屈",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "defense",
+          "controlOrDebuff"
+        ],
+        "tagLabels": [
+          "防御/续航",
+          "控制/负面效果"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "携带者的移动速度大幅降低。 获得15%最大生命值、晕眩免疫，并将当前目标拉到近战距离。"
+      },
+      {
+        "id": "6086",
+        "name": "巫妖之祸",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "mana"
+        ],
+        "tagLabels": [
+          "输出",
+          "法力/施法"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "携带者在每次技能施放后的第一次攻击造成250额外魔法伤害。 这个伤害基于阶段而提升。"
+      },
+      {
+        "id": "6094",
+        "name": "虚空护手",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "defense"
+        ],
+        "tagLabels": [
+          "输出",
+          "防御/续航"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "战斗开始时：储存30%最大生命值并且每秒储存额外的2.5%。在倒下时，释放相当于生命值储量的魔法伤害，分摊给4格内的敌人们。 唯一：一个弈子仅限一件"
+      },
+      {
+        "id": "6098",
+        "name": "永恒契约",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "defense",
+          "mana"
+        ],
+        "tagLabels": [
+          "输出",
+          "防御/续航",
+          "法力/施法"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "战斗开始时：与生命值最高的那个友军形成一个契约，如果其倒下，则获得10法力回复和40%法术加成。 当该友军使用其技能时，获得15法力值。每6秒，为该友军提供护盾值，数额相当于携带者的200%法术加成。"
+      },
+      {
+        "id": "6069",
+        "name": "鱼骨头",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "携带者的攻击会瞄准随机的敌人。"
+      },
+      {
+        "id": "6075",
+        "name": "智慧末刃",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "defense"
+        ],
+        "tagLabels": [
+          "输出",
+          "防御/续航"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "攻击造成30额外魔法伤害。 治疗携带者，数额为30%的所有已造成魔法伤害。 这个伤害基于阶段而提升。"
+      },
+      {
+        "id": "6060",
+        "name": "中娅悖论",
+        "type": "神器装备",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "defense"
+        ],
+        "tagLabels": [
+          "输出",
+          "防御/续航"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "每场战斗一次：在40%生命值时，携带者进入持续3秒的免疫伤害和无法被选取状态。 [唯一-每位英雄仅限1件]"
+      },
+      {
+        "id": "5807",
+        "name": "超频的日炎斗篷",
+        "type": "特殊装备",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "defense",
+          "controlOrDebuff"
+        ],
+        "tagLabels": [
+          "输出",
+          "防御/续航",
+          "控制/负面效果"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "每过1秒，对3格内的一名敌人施加持续10秒的10%灼烧效果和33%重伤效果。 会在1个与玩家的战斗回合后自毁。 灼烧：造成目标一部分最大生命值的真实伤害 重伤：使受到的治疗效果降低"
+      },
+      {
+        "id": "5808",
+        "name": "磁化的离子火花",
+        "type": "特殊装备",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "mana",
+          "controlOrDebuff",
+          "economyOrBoard"
+        ],
+        "tagLabels": [
+          "输出",
+          "法力/施法",
+          "控制/负面效果",
+          "经济/棋盘"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "对2格内的敌人们施加50%魔抗击碎。在敌人施放一次技能时，该敌人还会被震击并受到相当于该敌人250%最大法力值的魔法伤害。携带者每4秒进行一次嘲讽。 会在1个与玩家的战斗回合后自毁。 [直接伤害类装备] 魔抗击碎：使魔抗降低 嘲讽：能够攻击且已将嘲讽者纳入攻击距离的敌人都必须攻击嘲讽者"
+      },
+      {
+        "id": "5801",
+        "name": "弹簧式疾射火炮",
+        "type": "特殊装备",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "提供3额外攻击距离并且你的攻击不再会未命中。 会在1个与玩家的战斗回合后自毁。"
+      },
+      {
+        "id": "5806",
+        "name": "非确定正义之手",
+        "type": "特殊装备",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "defense"
+        ],
+        "tagLabels": [
+          "输出",
+          "防御/续航"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "提供2个效果： - 25%物理加成和25%法术加成。 - 20％全能汲取。 会在1个与玩家的战斗回合后自毁。 全能汲取：获得相当于一部分实际伤害值的治疗效果。"
+      },
+      {
+        "id": "5805",
+        "name": "感应式供电的狂徒铠甲",
+        "type": "特殊装备",
+        "modeled": false,
+        "tags": [
+          "defense"
+        ],
+        "tagLabels": [
+          "防御/续航"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "每秒回复0.5%最大生命值。 会在1个与玩家的战斗回合后自毁。"
+      },
+      {
+        "id": "5803",
+        "name": "更加静止法衣",
+        "type": "特殊装备",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "mana",
+          "controlOrDebuff"
+        ],
+        "tagLabels": [
+          "输出",
+          "法力/施法",
+          "控制/负面效果"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "战斗环节开始时：射出一道光束，对敌人们施加35%破法、20%冰冷和持续3秒的20%移动速度减缓。 会在1个与玩家的战斗回合后自毁。 破法：最大法力值提升，持续到施放技能为止。 冰冷：使攻击速度减缓"
+      },
+      {
+        "id": "6091",
+        "name": "黎明核心",
+        "type": "特殊装备",
+        "modeled": false,
+        "tags": [
+          "mana"
+        ],
+        "tagLabels": [
+          "法力/施法"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "携带者的最大法力值缩减10。后续的技能施放会使最大法力值缩减10%，直至最小值10。"
+      },
+      {
+        "id": "5809",
+        "name": "链锯汲取剑",
+        "type": "特殊装备",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "defense"
+        ],
+        "tagLabels": [
+          "输出",
+          "防御/续航"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "提供25%全能汲取。 每场战斗一次：在40%生命值时，提供一个护盾，护盾值相当于携带者25%的最大生命值，至多持续8秒。在护盾处于激活状态时，携带者获得50%攻击力。 会在1个与玩家的战斗回合后自毁。 全能汲取：获得相当于一部分实际伤害值的治疗效果。"
+      },
+      {
+        "id": "5810",
+        "name": "少年泰坦的坚决",
+        "type": "特殊装备",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "在攻击或承受伤害时提供[1]2%物理加成、[0]2法术加成以及[2]2%攻击速度，至多可叠加30次。 在叠满层数后，提供[3]30护甲和[5]30魔法抗性。 会在1个与玩家的战斗回合后自毁。"
+      },
+      {
+        "id": "5804",
+        "name": "跳线启动的朔极之矛",
+        "type": "特殊装备",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "defense",
+          "mana"
+        ],
+        "tagLabels": [
+          "输出",
+          "防御/续航",
+          "法力/施法"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "每第3次攻击回复[8]20额外法力值。 会在1个与玩家的战斗回合后自毁。"
+      },
+      {
+        "id": "5802",
+        "name": "溢出错误//巨人捕手",
+        "type": "特殊装备",
+        "modeled": false,
+        "tags": [
+          "offense",
+          "defense",
+          "mana"
+        ],
+        "tagLabels": [
+          "输出",
+          "防御/续航",
+          "法力/施法"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "如果目标超过了1最大生命值，则技能和攻击对其造成30%额外伤害。 会在1个与玩家的战斗回合后自毁。"
+      }
+    ],
     "unmodeledImportantEffects": [
       {
         "id": "2003",
@@ -7816,6 +9448,51 @@
         "usedInS": 0,
         "carryUses": 0,
         "desc": "每场战斗仅触发1次：在40%生命值时，获得一个护盾，护盾值相当于携带者25%的最大生命值，至多持续5秒。"
+      },
+      {
+        "id": "2807",
+        "name": "基克的先驱",
+        "type": "成型装备",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "战斗开始时：提供【攻击速度】20%攻击速度给携带者和同一排1格内的友军们。 [怪兽入侵专属]"
+      },
+      {
+        "id": "2809",
+        "name": "疾射火炮",
+        "type": "成型装备",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "攻击距离+1。 [怪兽入侵专属]"
+      },
+      {
+        "id": "2814",
+        "name": "兹若特传送门",
+        "type": "成型装备",
+        "modeled": false,
+        "tags": [
+          "economyOrBoard"
+        ],
+        "tagLabels": [
+          "经济/棋盘"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "召唤一个大型虚空生物。它的强度会在每个阶段提升。 [怪兽入侵专属] [唯一-每位英雄仅限1件]"
       },
       {
         "id": "2016",
@@ -7869,6 +9546,38 @@
         "desc": "攻击和技能的伤害对敌人们造成持续10秒的1%灼烧效果和33%重伤效果。 灼烧：每秒造成目标一部分最大生命值的真实伤害 重伤：降低受到的治疗效果"
       },
       {
+        "id": "2824",
+        "name": "能量圣杯",
+        "type": "成型装备",
+        "modeled": false,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "战斗开始时：提供25%法术加成给携带者和同一排1格内的友军们。 [怪兽入侵专属]"
+      },
+      {
+        "id": "2832",
+        "name": "灵风",
+        "type": "成型装备",
+        "modeled": false,
+        "tags": [
+          "defense",
+          "economyOrBoard"
+        ],
+        "tagLabels": [
+          "防御/续航",
+          "经济/棋盘"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "战斗开始时：在棋盘对面召唤一道飓风，来将与飓风相距最近的那个敌人移出战斗5秒。 [无视控制免疫效果。] [怪兽入侵专属] [唯一-每位英雄仅限1件]"
+      },
+      {
         "id": "2036",
         "name": "金铲铲冠冕",
         "type": "成型装备",
@@ -7899,6 +9608,21 @@
         "usedInS": 0,
         "carryUses": 0,
         "desc": "获得2个效果： -15%物理加成和15%法术加成。 -12%全能汲取。 生命值高于50%时，物理加成和法术加成翻倍。生命值低于50%时，全能汲取效果翻倍。"
+      },
+      {
+        "id": "2840",
+        "name": "静止法衣",
+        "type": "成型装备",
+        "modeled": false,
+        "tags": [
+          "mana"
+        ],
+        "tagLabels": [
+          "法力/施法"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "战斗开始时：射出一道光束，对敌人们施加35%破法。 [怪兽入侵专属] 破法：最大法力值提升，持续到施放技能为止。 [唯一-每位英雄仅限1件]"
       },
       {
         "id": "2042",
@@ -7974,98 +9698,6 @@
         "usedInS": 0,
         "carryUses": 0,
         "desc": "你的队伍获得+1最大队伍规模。 在战斗10秒后，有10%几率掉落1金币。 “……以及一点运气。”"
-      },
-      {
-        "id": "2807",
-        "name": "基克的先驱",
-        "type": "成型装备",
-        "modeled": false,
-        "tags": [
-          "offense"
-        ],
-        "tagLabels": [
-          "输出"
-        ],
-        "usedInS": 0,
-        "carryUses": 0,
-        "desc": "战斗开始时：提供【攻击速度】20%攻击速度给携带者和同一排1格内的友军们。 [怪兽入侵专属]"
-      },
-      {
-        "id": "2809",
-        "name": "疾射火炮",
-        "type": "成型装备",
-        "modeled": false,
-        "tags": [
-          "offense"
-        ],
-        "tagLabels": [
-          "输出"
-        ],
-        "usedInS": 0,
-        "carryUses": 0,
-        "desc": "攻击距离+1。 [怪兽入侵专属]"
-      },
-      {
-        "id": "2814",
-        "name": "兹若特传送门",
-        "type": "成型装备",
-        "modeled": false,
-        "tags": [
-          "economyOrBoard"
-        ],
-        "tagLabels": [
-          "经济/棋盘"
-        ],
-        "usedInS": 0,
-        "carryUses": 0,
-        "desc": "召唤一个大型虚空生物。它的强度会在每个阶段提升。 [怪兽入侵专属] [唯一-每位英雄仅限1件]"
-      },
-      {
-        "id": "2824",
-        "name": "能量圣杯",
-        "type": "成型装备",
-        "modeled": false,
-        "tags": [
-          "offense"
-        ],
-        "tagLabels": [
-          "输出"
-        ],
-        "usedInS": 0,
-        "carryUses": 0,
-        "desc": "战斗开始时：提供25%法术加成给携带者和同一排1格内的友军们。 [怪兽入侵专属]"
-      },
-      {
-        "id": "2832",
-        "name": "灵风",
-        "type": "成型装备",
-        "modeled": false,
-        "tags": [
-          "defense",
-          "economyOrBoard"
-        ],
-        "tagLabels": [
-          "防御/续航",
-          "经济/棋盘"
-        ],
-        "usedInS": 0,
-        "carryUses": 0,
-        "desc": "战斗开始时：在棋盘对面召唤一道飓风，来将与飓风相距最近的那个敌人移出战斗5秒。 [无视控制免疫效果。] [怪兽入侵专属] [唯一-每位英雄仅限1件]"
-      },
-      {
-        "id": "2840",
-        "name": "静止法衣",
-        "type": "成型装备",
-        "modeled": false,
-        "tags": [
-          "mana"
-        ],
-        "tagLabels": [
-          "法力/施法"
-        ],
-        "usedInS": 0,
-        "carryUses": 0,
-        "desc": "战斗开始时：射出一道光束，对敌人们施加35%破法。 [怪兽入侵专属] 破法：最大法力值提升，持续到施放技能为止。 [唯一-每位英雄仅限1件]"
       }
     ],
     "modeledEffects": [
@@ -8102,6 +9734,38 @@
         "desc": "每次普攻提供5额外法力值。"
       },
       {
+        "id": "2810",
+        "name": "鬼索的狂暴之刃",
+        "type": "成型装备",
+        "modeled": true,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "每次攻击提供5%额外攻击速度。这个效果可叠加！ [怪兽入侵专属]"
+      },
+      {
+        "id": "2811",
+        "name": "斯塔缇克电刃",
+        "type": "成型装备",
+        "modeled": true,
+        "tags": [
+          "offense",
+          "controlOrDebuff"
+        ],
+        "tagLabels": [
+          "输出",
+          "控制/负面效果"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "每第3次攻击对4名敌人造成30魔法伤害和持续5秒的30%魔抗击碎。 [怪兽入侵专属] 魔抗击碎：降低魔抗值"
+      },
+      {
         "id": "2012",
         "name": "泰坦的坚决",
         "type": "成型装备",
@@ -8117,6 +9781,36 @@
         "usedInS": 0,
         "carryUses": 0,
         "desc": "在攻击或承受伤害时获得2%物理加成和2%法术加成，至多可叠加25次。 在叠满层数后，获得10%伤害增幅，并获得控制免疫。"
+      },
+      {
+        "id": "2813",
+        "name": "卢安娜的飓风",
+        "type": "成型装备",
+        "modeled": true,
+        "tags": [
+          "offense"
+        ],
+        "tagLabels": [
+          "输出"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "携带者的攻击会对附近的另一名敌人发射一个弹体，造成携带者50%攻击力【攻击力】的物理伤害。 [怪兽入侵专属]"
+      },
+      {
+        "id": "2818",
+        "name": "钢铁烈阳之匣",
+        "type": "成型装备",
+        "modeled": true,
+        "tags": [
+          "defense"
+        ],
+        "tagLabels": [
+          "防御/续航"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "战斗开始时：携带者和同一排2格内的友军们获得持续15秒的300/350/400护盾值（随携带者星级增加）。 [怪兽入侵专属]"
       },
       {
         "id": "2019",
@@ -8136,6 +9830,23 @@
         "usedInS": 0,
         "carryUses": 0,
         "desc": "对2格内的敌人们施加30%魔抗击碎。在敌人施放一次技能时，对该敌人造成相当于该敌人150%法力值消耗的魔法伤害。 魔抗击碎：降低魔抗值"
+      },
+      {
+        "id": "2822",
+        "name": "蓝霸符",
+        "type": "成型装备",
+        "modeled": true,
+        "tags": [
+          "mana",
+          "controlOrDebuff"
+        ],
+        "tagLabels": [
+          "法力/施法",
+          "控制/负面效果"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "施放技能的法力值消耗降低10。如果携带者在施放技能后的3秒内至少参与了一次击败，就会获得10法力值。 [怪兽入侵专属] [唯一-每位英雄仅限1件]"
       },
       {
         "id": "2023",
@@ -8234,6 +9945,21 @@
         "desc": "获得6%最大生命值。 每2秒治疗2.5%最大生命值。"
       },
       {
+        "id": "2834",
+        "name": "狂徒铠甲",
+        "type": "成型装备",
+        "modeled": true,
+        "tags": [
+          "defense"
+        ],
+        "tagLabels": [
+          "防御/续航"
+        ],
+        "usedInS": 0,
+        "carryUses": 0,
+        "desc": "每秒回复 2% 最大生命。 [怪兽入侵专属]"
+      },
+      {
         "id": "2037",
         "name": "最后的轻语",
         "type": "成型装备",
@@ -8287,100 +10013,6 @@
         "desc": "战斗开始时：获得持续18秒的控制免疫效果。 每秒获得3%可叠加的攻击速度。"
       },
       {
-        "id": "2810",
-        "name": "鬼索的狂暴之刃",
-        "type": "成型装备",
-        "modeled": true,
-        "tags": [
-          "offense"
-        ],
-        "tagLabels": [
-          "输出"
-        ],
-        "usedInS": 0,
-        "carryUses": 0,
-        "desc": "每次攻击提供5%额外攻击速度。这个效果可叠加！ [怪兽入侵专属]"
-      },
-      {
-        "id": "2811",
-        "name": "斯塔缇克电刃",
-        "type": "成型装备",
-        "modeled": true,
-        "tags": [
-          "offense",
-          "controlOrDebuff"
-        ],
-        "tagLabels": [
-          "输出",
-          "控制/负面效果"
-        ],
-        "usedInS": 0,
-        "carryUses": 0,
-        "desc": "每第3次攻击对4名敌人造成30魔法伤害和持续5秒的30%魔抗击碎。 [怪兽入侵专属] 魔抗击碎：降低魔抗值"
-      },
-      {
-        "id": "2813",
-        "name": "卢安娜的飓风",
-        "type": "成型装备",
-        "modeled": true,
-        "tags": [
-          "offense"
-        ],
-        "tagLabels": [
-          "输出"
-        ],
-        "usedInS": 0,
-        "carryUses": 0,
-        "desc": "携带者的攻击会对附近的另一名敌人发射一个弹体，造成携带者50%攻击力【攻击力】的物理伤害。 [怪兽入侵专属]"
-      },
-      {
-        "id": "2818",
-        "name": "钢铁烈阳之匣",
-        "type": "成型装备",
-        "modeled": true,
-        "tags": [
-          "defense"
-        ],
-        "tagLabels": [
-          "防御/续航"
-        ],
-        "usedInS": 0,
-        "carryUses": 0,
-        "desc": "战斗开始时：携带者和同一排2格内的友军们获得持续15秒的300/350/400护盾值（随携带者星级增加）。 [怪兽入侵专属]"
-      },
-      {
-        "id": "2822",
-        "name": "蓝霸符",
-        "type": "成型装备",
-        "modeled": true,
-        "tags": [
-          "mana",
-          "controlOrDebuff"
-        ],
-        "tagLabels": [
-          "法力/施法",
-          "控制/负面效果"
-        ],
-        "usedInS": 0,
-        "carryUses": 0,
-        "desc": "施放技能的法力值消耗降低10。如果携带者在施放技能后的3秒内至少参与了一次击败，就会获得10法力值。 [怪兽入侵专属] [唯一-每位英雄仅限1件]"
-      },
-      {
-        "id": "2834",
-        "name": "狂徒铠甲",
-        "type": "成型装备",
-        "modeled": true,
-        "tags": [
-          "defense"
-        ],
-        "tagLabels": [
-          "防御/续航"
-        ],
-        "usedInS": 0,
-        "carryUses": 0,
-        "desc": "每秒回复 2% 最大生命。 [怪兽入侵专属]"
-      },
-      {
         "id": "2846",
         "name": "巨人捕手",
         "type": "成型装备",
@@ -8400,6 +10032,28 @@
         "desc": "攻击和技能对最大生命值超过了1600的敌人们造成20%额外伤害。 [怪兽入侵专属]"
       }
     ],
+    "spotChecks": {
+      "mittens": {
+        "name": "连指手套",
+        "staticStatsComplete": true,
+        "stats": {
+          "hp": 0,
+          "armor": 0,
+          "mr": 0,
+          "adPct": 0,
+          "ap": 0,
+          "asPct": 65,
+          "critPct": 0,
+          "ampPct": 15,
+          "startMana": 0,
+          "manaRegen": 0,
+          "omnivamp": 0,
+          "damageReduction": 0
+        },
+        "effectCoverage": "unmodeled",
+        "desc": "将携带者缩小，为其提供移动速度提升并免疫减速、灼烧、以及重伤。 减速：降低攻击速度 灼烧：每秒造成目标一部分最大生命值的真实伤害 重伤：降低受到的治疗效果"
+      }
+    },
     "tagLabels": {
       "offense": "输出",
       "defense": "防御/续航",
