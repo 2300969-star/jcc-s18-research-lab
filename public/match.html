@@ -857,7 +857,7 @@ function openRouteDetail(row) {
   if (row.strategyDecision) {
     const strategy = row.strategyDecision;
     mk("div", "detailSection", "条件化策略实验", body);
-    mk("div", "detailLine", `${strategy.totalBattles}场条件化虚拟实战；原始强化机制进入战斗事件，官方阵容不作为正确答案。`, body);
+    mk("div", "detailLine", `${strategy.evidenceCount || strategy.totalBattles}${strategy.evidenceUnit || "场条件化虚拟实战"}；原始强化机制进入战斗事件，官方阵容不作为正确答案。`, body);
     mk("div", "detailLine", `战略主C：${strategy.strategicCarry}；当前装备架：${strategy.currentHolder}；${strategy.handoffText}。`, body);
     mk("div", "detailLine", `${strategy.text}；当前分层样本${strategy.sampleCount}组，均值差${strategy.meanDelta >= 0 ? "+" : ""}${strategy.meanDelta}，95%单侧LCB ${strategy.lcb95 >= 0 ? "+" : ""}${strategy.lcb95}。`, body);
     mk("div", "detailLine", `后期：${strategy.terminalText}`, body);
@@ -1004,7 +1004,7 @@ function renderRoute() {
     ? `<div class="sampleStrip">虚拟实战 ${top.virtualDecision.battles}场 · 胜率${top.virtualDecision.winRate}% · CVaR ${top.virtualDecision.cvar10} · 覆盖${top.virtualDecision.coverage}% · 蒸馏${top.virtualDecision.priorPoints >= 0 ? "+" : ""}${top.virtualDecision.priorPoints}分</div>`
     : "";
   const strategyHtml = top.strategyDecision
-    ? `<div class="strategyStrip ${top.strategyDecision.switchCertified ? "ready" : ""}">条件化策略：${esc(top.strategyDecision.text)} · ${top.strategyDecision.totalBattles}场</div>`
+    ? `<div class="strategyStrip ${top.strategyDecision.switchCertified ? "ready" : ""}">条件化策略：${esc(top.strategyDecision.text)} · ${top.strategyDecision.evidenceCount || top.strategyDecision.totalBattles}${esc(top.strategyDecision.evidenceUnit || "场")}</div>`
     : "";
   box.innerHTML = `
     <div>

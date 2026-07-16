@@ -1379,7 +1379,11 @@
   function strategyConditionMet(when, selected) {
     if (!when) return true;
     const units = selectedUnitMap(selected || {});
+    const level = clamp(Number(selected && selected.level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
+    if (Number(when.levelGte) && level < Number(when.levelGte)) return false;
+    if (Number(when.levelLte) && level > Number(when.levelLte)) return false;
     if (when.hasUnit && !units.has(when.hasUnit)) return false;
+    if ((when.hasUnits || []).some(name => !units.has(name))) return false;
     if (when.unit) {
       const star = units.has(when.unit) ? (units.get(when.unit) || 1) : 0;
       if (!star || (Number(when.starGte) && star < Number(when.starGte))) return false;
@@ -1394,8 +1398,9 @@
     const rule = (plan.holderRules || []).find(row => strategyConditionMet(row.when, selected)) || null;
     const holder = rule && rule.holder || plan.currentHolder || plan.strategicCarry;
     const switchCertified = Boolean(rule && rule.certified && holder === plan.strategicCarry);
-    const handoffState = Boolean(rule && rule.inference === "handoff");
-    const inference = handoffState ? plan.handoffInference : plan.currentInference;
+    const handoffState = Boolean(rule && (rule.inference === "handoff" || rule.stageKey === "handoff"));
+    const embeddedInference = rule && rule.inference && typeof rule.inference === "object" ? rule.inference : null;
+    const inference = embeddedInference || (handoffState ? plan.handoffInference : plan.currentInference) || null;
     const lcb = Number(inference && inference.lcb95);
     const unit = plan.handoff && plan.handoff.unit || plan.strategicCarry;
     const star = plan.handoff && plan.handoff.starGte || 2;
@@ -1403,20 +1408,26 @@
       augment: plan.augment,
       source: plan.source,
       experiment: plan.experiment,
-      baselineCarry: plan.baselineCarry,
+      baselineCarry: rule && rule.fromCarry || plan.baselineCarry,
       strategicCarry: plan.strategicCarry,
       currentHolder: holder,
       switchCertified,
       handoffState,
-      handoffCertified: Boolean(plan.handoffCertified),
+      handoffCertified: Boolean(plan.handoffCertified || plan.certified),
       handoff: plan.handoff,
       handoffText: plan.handoffText,
       terminalText: plan.terminalText,
-      totalBattles: Number(plan.totalBattles) || 0,
+      totalBattles: Number(plan.totalBattles || plan.evidenceCount) || 0,
+      evidenceCount: Number(plan.evidenceCount || plan.totalBattles) || 0,
+      evidenceUnit: plan.evidenceUnit || "条模型证据",
+      stageKey: rule && rule.stageKey || "",
+      modelCoverage: plan.modelCoverage || null,
       sampleCount: Number(inference && inference.sampleCount) || 0,
       lcb95: Number.isFinite(lcb) ? lcb : 0,
       meanDelta: Number(inference && inference.meanDelta) || 0,
-      text: switchCertified && handoffState
+      text: rule && rule.text
+        ? `${switchCertified ? `模型认证转${plan.strategicCarry}` : `模型维持${holder}`}：${rule.text}`
+        : switchCertified && handoffState
         ? `模型认证转${plan.strategicCarry}：${unit}${star}星优势扩大（LCB ${Number.isFinite(lcb) ? lcb : 0}）`
         : switchCertified
         ? `模型认证立即转${plan.strategicCarry}：${plan.augment}已达换核门槛（LCB ${Number.isFinite(lcb) ? lcb : 0}）`
@@ -1490,15 +1501,19 @@
   function applySticky(rows, opts) {
     if (!opts || !opts.stickyTopId || !rows.length) return rows;
     const currentId = opts.stickyTopId;
-    const challenger = rows[0];
+    const currentIndex = rows.findIndex(r => rowId(r) === currentId);
+    if (currentIndex < 0) return rows;
+    const current = rows[currentIndex];
+    const currentCarry = routeMainCarry(current.template);
+    const strategyChallenger = rows.find(row => rowId(row) !== currentId
+      && row.strategyDecision
+      && row.strategyDecision.baselineCarry === currentCarry) || null;
+    const challenger = strategyChallenger || rows[0];
     if (rowId(challenger) === currentId) {
       challenger.following = true;
       challenger.sticky = { state: "current", text: "当前跟随路线仍是最高分" };
       return rows;
     }
-    const currentIndex = rows.findIndex(r => rowId(r) === currentId);
-    if (currentIndex < 0) return rows;
-    const current = rows[currentIndex];
     const transition = opts.operationalCommitment ? transitionProfile(current, challenger, opts.selected || {}) : null;
     if (transition) challenger.transition = transition;
     const strategyDecision = challenger.strategyDecision;
@@ -2201,7 +2216,40 @@
         && jaxTwoOperational.strategyDecision && jaxTwoOperational.strategyDecision.handoffState
         && jaxTwoOperational.strategyDecision.lcb95 > jaxOneOperational.strategyDecision.lcb95,
       "贾克斯2星应继续执行贾克斯线，并切换到2星优势扩大推断");
+      const genericTemplate = matcherData.templates.find(t => t.augmentTransitionPlan
+        && t.augmentTransitionPlan.source === "generic-policy-compiler"
+        && (t.augmentTransitionPlan.holderRules || []).some(rule => rule.certified));
+      const genericPlan = genericTemplate && genericTemplate.augmentTransitionPlan;
+      const genericRule = genericPlan && genericPlan.holderRules.find(rule => rule.certified);
+      assert(genericTemplate && genericRule, "比赛模式必须接入至少一条非贾克斯的通用策略");
+      const genericSignals = [
+        ...(genericRule.when.hasUnits || []).map(name => ({ kind: "units", value: name })),
+        ...(genericRule.when.unit ? [{ kind: "units", value: genericRule.when.unit, star: genericRule.when.starGte || 1 }] : []),
+        { kind: "augments", value: genericPlan.augment },
+        { kind: "levels", level: genericRule.when.levelGte || 6 },
+      ];
+      const selectedGeneric = selectedFromSignals(genericSignals);
+      const genericRows = rank([genericTemplate], selectedGeneric, matcherData.weights, 1, {
+        ...transitionOpts,
+        previousOrder: [genericTemplate.id],
+      });
+      assert(genericRows[0].strategyDecision && genericRows[0].strategyDecision.switchCertified
+        && genericRows[0].strategyDecision.strategicCarry === genericPlan.strategicCarry
+        && genericRows[0].strategyDecision.lcb95 > 0,
+      `通用策略${genericPlan.augment}应按星级/等级条件输出正LCB转核`);
+      const genericBaseline = matcherData.templates.find(t => routeMainCarry(t) === genericRule.fromCarry);
+      assert(genericBaseline, `通用策略${genericPlan.augment}缺少对照主C路线${genericRule.fromCarry}`);
+      const genericOperationalRows = rank(matcherData.templates, selectedGeneric, matcherData.weights, 8, {
+        ...transitionOpts,
+        stickyTopId: genericBaseline.id,
+        previousOrder: [genericBaseline.id],
+      });
+      const genericOperational = operationalRow(genericOperationalRows);
+      assert(genericOperational.strategyDecision && genericOperational.strategyDecision.switchCertified
+        && routeMainCarry(genericOperational.template) === genericPlan.strategicCarry,
+      `通用策略挑战者应跨越真分名次与${genericRule.fromCarry}对照线完成交接`);
       console.log(`无情连打转型回归: 1星=${jaxOneOperational.strategyDecision.lcb95}, 2星=${jaxTwoOperational.strategyDecision.lcb95}`);
+      console.log(`通用策略回归: ${genericPlan.augment}→${genericPlan.strategicCarry}, LCB=${genericRows[0].strategyDecision.lcb95}`);
       console.log(`fixture assertions passed (${fixtureRows.length})`);
     }
     console.log("matcher-core assertions passed");

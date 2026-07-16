@@ -35,6 +35,7 @@ const modelResults = readOptional('model_results.json') || {};
 const mechaPrimeResults = readOptional('mecha_prime_results.json') || null;
 const metaDiscoveryResults = readOptional('meta_discovery_results.json') || null;
 const augmentTransitionResults = readOptional('augment_transition_results.json') || null;
+const strategyPolicyResults = readOptional('strategy_policy_results.json') || null;
 const mechaPrimeNames = new Set(((mechaPrimeResults && mechaPrimeResults.mechaMembers) || []).map(x => x.name));
 
 const COMPONENTS = [
@@ -462,6 +463,17 @@ function attachHeroAugmentPlans(templatesIn) {
 }
 
 function attachAugmentTransitionPlans(templatesIn) {
+  const compiledPlans = (strategyPolicyResults && strategyPolicyResults.plans) || [];
+  if (compiledPlans.length) {
+    return templatesIn.map(template => {
+      const heroPlan = template.heroAugmentPlan || {};
+      const mainCarry = template.routeProfile && template.routeProfile.mainCarry && template.routeProfile.mainCarry.name || '';
+      const mechanicRequired = template.mechanic && template.mechanic.requiredAugment;
+      const requiredNames = new Set([...(heroPlan.requiredNames || []), mechanicRequired].filter(Boolean));
+      const plan = compiledPlans.find(row => row.strategicCarry === mainCarry && requiredNames.has(row.augment));
+      return plan ? { ...template, augmentTransitionPlan: plan } : template;
+    });
+  }
   const decision = augmentTransitionResults && augmentTransitionResults.decision;
   if (!decision || !decision.augment || !decision.strategicCarry) return templatesIn;
   return templatesIn.map(template => {
@@ -1167,6 +1179,14 @@ if (augmentTransitionResults) {
     || !(transitionTemplate.augmentTransitionPlan.handoffInference.lcb95 > 0)) {
     throw new Error('无情连打的条件化转型实验未正确蒸馏进路线模板');
   }
+}
+if (strategyPolicyResults) {
+  const compiledTemplates = templates.filter(t => t.augmentTransitionPlan);
+  const compiledIds = new Set(compiledTemplates.map(t => t.augmentTransitionPlan.id));
+  if (compiledIds.size < 8) throw new Error(`通用强化策略接入过少：${compiledIds.size}`);
+  const badCertifiedRule = compiledTemplates.flatMap(t => t.augmentTransitionPlan.holderRules || [])
+    .find(rule => rule.certified && !(rule.inference && Number(rule.inference.lcb95) > 0));
+  if (badCertifiedRule) throw new Error('认证的换核规则必须携带正LCB证据');
 }
 const options = buildOptions(templates);
 const weights = computeModelWeights();
