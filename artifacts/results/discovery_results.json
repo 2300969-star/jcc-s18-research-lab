@@ -3962,6 +3962,97 @@
     "stage": "early",
     "stageTitle": "前期最强候选",
     "level": 5,
+    "carry": "雷克顿",
+    "carryPrice": 1,
+    "carryStar": 2,
+    "carryId": "11158",
+    "carryItems": [
+     "水银",
+     "鬼索的狂暴之刃",
+     "卢安娜的飓风"
+    ],
+    "carryItemIds": [
+     "2041",
+     "2810",
+     "2813"
+    ],
+    "carryTraitBonus": {
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "ampPct": 6,
+     "critPct": 0,
+     "armor": 25,
+     "mr": 0,
+     "hpPct": 0,
+     "manaMult": 1.04,
+     "onHitMagic": 0,
+     "ehpMult": 1
+    },
+    "officialFlag": "官方主C",
+    "team": [
+     {
+      "name": "雷克顿",
+      "price": 1
+     },
+     {
+      "name": "德莱文",
+      "price": 2
+     },
+     {
+      "name": "加里奥",
+      "price": 1
+     },
+     {
+      "name": "波比",
+      "price": 1
+     },
+     {
+      "name": "孙悟空",
+      "price": 1
+     }
+    ],
+    "score": 1130,
+    "rawScore": 1147,
+    "tempoPenalty": 16,
+    "carryDps": 221,
+    "frontEHP": 13994,
+    "subDps": 60,
+    "util": 0,
+    "teamCost": 6,
+    "traits": [
+     "2护卫",
+     "1精英战士",
+     "1平民英雄"
+    ],
+    "tankDetail": [
+     {
+      "hero": "加里奥",
+      "star": 2,
+      "ehp": 7568,
+      "items": [
+       "狂徒铠甲",
+       "狂徒铠甲",
+       "圣盾使的誓约"
+      ]
+     },
+     {
+      "hero": "波比",
+      "star": 2,
+      "ehp": 6426,
+      "items": [
+       "石像鬼石板甲",
+       "日炎斗篷",
+       "狂徒铠甲"
+      ]
+     }
+    ],
+    "reason": "低费高效率，适合保血连胜；前排羁绊能把输出时间拉长；装备强化攻击频率/施法频率"
+   },
+   {
+    "stage": "early",
+    "stageTitle": "前期最强候选",
+    "level": 5,
     "carry": "伊泽瑞尔",
     "carryPrice": 2,
     "carryStar": 2,
@@ -4329,6 +4420,98 @@
     "stage": "early",
     "stageTitle": "前期最强候选",
     "level": 5,
+    "carry": "波比",
+    "carryPrice": 1,
+    "carryStar": 2,
+    "carryId": "11165",
+    "carryItems": [
+     "最后的轻语",
+     "鬼索的狂暴之刃",
+     "卢安娜的飓风"
+    ],
+    "carryItemIds": [
+     "2037",
+     "2810",
+     "2813"
+    ],
+    "carryTraitBonus": {
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "ampPct": 6,
+     "critPct": 0,
+     "armor": 75,
+     "mr": 0,
+     "hpPct": 0,
+     "manaMult": 1.04,
+     "onHitMagic": 0,
+     "ehpMult": 1.015
+    },
+    "officialFlag": "官方配角",
+    "team": [
+     {
+      "name": "波比",
+      "price": 1
+     },
+     {
+      "name": "德莱文",
+      "price": 2
+     },
+     {
+      "name": "加里奥",
+      "price": 1
+     },
+     {
+      "name": "孙悟空",
+      "price": 1
+     },
+     {
+      "name": "内瑟斯",
+      "price": 1
+     }
+    ],
+    "score": 1086,
+    "rawScore": 1102,
+    "tempoPenalty": 16,
+    "carryDps": 166,
+    "frontEHP": 14026,
+    "subDps": 60,
+    "util": 0,
+    "teamCost": 6,
+    "traits": [
+     "2护卫",
+     "2吉祥物",
+     "1精英战士",
+     "1平民英雄"
+    ],
+    "tankDetail": [
+     {
+      "hero": "内瑟斯",
+      "star": 2,
+      "ehp": 8000,
+      "items": [
+       "狂徒铠甲",
+       "狂徒铠甲",
+       "圣盾使的誓约"
+      ]
+     },
+     {
+      "hero": "加里奥",
+      "star": 2,
+      "ehp": 6026,
+      "items": [
+       "石像鬼石板甲",
+       "日炎斗篷",
+       "狂徒铠甲"
+      ]
+     }
+    ],
+    "reason": "低费高效率，适合保血连胜；前排羁绊能把输出时间拉长；装备强化攻击频率/施法频率"
+   },
+   {
+    "stage": "early",
+    "stageTitle": "前期最强候选",
+    "level": 5,
     "carry": "加里奥",
     "carryPrice": 1,
     "carryStar": 2,
@@ -4604,17 +4787,17 @@
     "stage": "early",
     "stageTitle": "前期最强候选",
     "level": 5,
-    "carry": "雷克顿",
-    "carryPrice": 1,
-    "carryStar": 2,
-    "carryId": "11158",
+    "carry": "科加斯",
+    "carryPrice": 3,
+    "carryStar": 1,
+    "carryId": "13161",
     "carryItems": [
-     "锐利之刃",
+     "最后的轻语",
      "鬼索的狂暴之刃",
      "卢安娜的飓风"
     ],
     "carryItemIds": [
-     "2045",
+     "2037",
      "2810",
      "2813"
     ],
@@ -4631,11 +4814,11 @@
      "onHitMagic": 0,
      "ehpMult": 1
     },
-    "officialFlag": "官方主C",
+    "officialFlag": "官方配角",
     "team": [
      {
-      "name": "雷克顿",
-      "price": 1
+      "name": "科加斯",
+      "price": 3
      },
      {
       "name": "德莱文",
@@ -4654,18 +4837,19 @@
       "price": 1
      }
     ],
-    "score": 1065,
-    "rawScore": 1081,
-    "tempoPenalty": 16,
-    "carryDps": 156,
+    "score": 1055,
+    "rawScore": 1077,
+    "tempoPenalty": 22,
+    "carryDps": 143,
     "frontEHP": 13994,
     "subDps": 60,
     "util": 0,
-    "teamCost": 6,
+    "teamCost": 8,
     "traits": [
      "2护卫",
      "1精英战士",
-     "1平民英雄"
+     "1平民英雄",
+     "1怪兽"
     ],
     "tankDetail": [
      {
@@ -4689,16 +4873,16 @@
       ]
      }
     ],
-    "reason": "低费高效率，适合保血连胜；前排羁绊能把输出时间拉长；装备强化攻击频率/施法频率"
+    "reason": "前排羁绊能把输出时间拉长；装备强化攻击频率/施法频率"
    },
    {
     "stage": "early",
     "stageTitle": "前期最强候选",
     "level": 5,
-    "carry": "波比",
-    "carryPrice": 1,
-    "carryStar": 2,
-    "carryId": "11165",
+    "carry": "拉莫斯",
+    "carryPrice": 3,
+    "carryStar": 1,
+    "carryId": "13165",
     "carryItems": [
      "锐利之刃",
      "鬼索的狂暴之刃",
@@ -4715,18 +4899,18 @@
      "asPct": 0,
      "ampPct": 6,
      "critPct": 0,
-     "armor": 75,
+     "armor": 25,
      "mr": 0,
      "hpPct": 0,
      "manaMult": 1.04,
      "onHitMagic": 0,
-     "ehpMult": 1.015
+     "ehpMult": 1
     },
     "officialFlag": "官方配角",
     "team": [
      {
-      "name": "波比",
-      "price": 1
+      "name": "拉莫斯",
+      "price": 3
      },
      {
       "name": "德莱文",
@@ -4737,33 +4921,33 @@
       "price": 1
      },
      {
-      "name": "孙悟空",
+      "name": "波比",
       "price": 1
      },
      {
-      "name": "内瑟斯",
+      "name": "孙悟空",
       "price": 1
      }
     ],
-    "score": 1062,
-    "rawScore": 1078,
-    "tempoPenalty": 16,
-    "carryDps": 142,
-    "frontEHP": 14026,
+    "score": 1055,
+    "rawScore": 1077,
+    "tempoPenalty": 22,
+    "carryDps": 143,
+    "frontEHP": 13994,
     "subDps": 60,
     "util": 0,
-    "teamCost": 6,
+    "teamCost": 8,
     "traits": [
      "2护卫",
-     "2吉祥物",
      "1精英战士",
-     "1平民英雄"
+     "1平民英雄",
+     "1怪兽"
     ],
     "tankDetail": [
      {
-      "hero": "内瑟斯",
+      "hero": "加里奥",
       "star": 2,
-      "ehp": 8000,
+      "ehp": 7568,
       "items": [
        "狂徒铠甲",
        "狂徒铠甲",
@@ -4771,9 +4955,9 @@
       ]
      },
      {
-      "hero": "加里奥",
+      "hero": "波比",
       "star": 2,
-      "ehp": 6026,
+      "ehp": 6426,
       "items": [
        "石像鬼石板甲",
        "日炎斗篷",
@@ -4781,7 +4965,7 @@
       ]
      }
     ],
-    "reason": "低费高效率，适合保血连胜；前排羁绊能把输出时间拉长；装备强化攻击频率/施法频率"
+    "reason": "前排羁绊能把输出时间拉长；装备强化攻击频率/施法频率"
    },
    {
     "stage": "early",
@@ -5245,190 +5429,6 @@
     "stage": "early",
     "stageTitle": "前期最强候选",
     "level": 5,
-    "carry": "科加斯",
-    "carryPrice": 3,
-    "carryStar": 1,
-    "carryId": "13161",
-    "carryItems": [
-     "锐利之刃",
-     "鬼索的狂暴之刃",
-     "卢安娜的飓风"
-    ],
-    "carryItemIds": [
-     "2045",
-     "2810",
-     "2813"
-    ],
-    "carryTraitBonus": {
-     "adPct": 0,
-     "ap": 0,
-     "asPct": 0,
-     "ampPct": 6,
-     "critPct": 0,
-     "armor": 25,
-     "mr": 0,
-     "hpPct": 0,
-     "manaMult": 1.04,
-     "onHitMagic": 0,
-     "ehpMult": 1
-    },
-    "officialFlag": "官方配角",
-    "team": [
-     {
-      "name": "科加斯",
-      "price": 3
-     },
-     {
-      "name": "德莱文",
-      "price": 2
-     },
-     {
-      "name": "加里奥",
-      "price": 1
-     },
-     {
-      "name": "波比",
-      "price": 1
-     },
-     {
-      "name": "孙悟空",
-      "price": 1
-     }
-    ],
-    "score": 1041,
-    "rawScore": 1063,
-    "tempoPenalty": 22,
-    "carryDps": 129,
-    "frontEHP": 13994,
-    "subDps": 60,
-    "util": 0,
-    "teamCost": 8,
-    "traits": [
-     "2护卫",
-     "1精英战士",
-     "1平民英雄",
-     "1怪兽"
-    ],
-    "tankDetail": [
-     {
-      "hero": "加里奥",
-      "star": 2,
-      "ehp": 7568,
-      "items": [
-       "狂徒铠甲",
-       "狂徒铠甲",
-       "圣盾使的誓约"
-      ]
-     },
-     {
-      "hero": "波比",
-      "star": 2,
-      "ehp": 6426,
-      "items": [
-       "石像鬼石板甲",
-       "日炎斗篷",
-       "狂徒铠甲"
-      ]
-     }
-    ],
-    "reason": "前排羁绊能把输出时间拉长；装备强化攻击频率/施法频率"
-   },
-   {
-    "stage": "early",
-    "stageTitle": "前期最强候选",
-    "level": 5,
-    "carry": "拉莫斯",
-    "carryPrice": 3,
-    "carryStar": 1,
-    "carryId": "13165",
-    "carryItems": [
-     "锐利之刃",
-     "鬼索的狂暴之刃",
-     "卢安娜的飓风"
-    ],
-    "carryItemIds": [
-     "2045",
-     "2810",
-     "2813"
-    ],
-    "carryTraitBonus": {
-     "adPct": 0,
-     "ap": 0,
-     "asPct": 0,
-     "ampPct": 6,
-     "critPct": 0,
-     "armor": 25,
-     "mr": 0,
-     "hpPct": 0,
-     "manaMult": 1.04,
-     "onHitMagic": 0,
-     "ehpMult": 1
-    },
-    "officialFlag": "官方配角",
-    "team": [
-     {
-      "name": "拉莫斯",
-      "price": 3
-     },
-     {
-      "name": "德莱文",
-      "price": 2
-     },
-     {
-      "name": "加里奥",
-      "price": 1
-     },
-     {
-      "name": "波比",
-      "price": 1
-     },
-     {
-      "name": "孙悟空",
-      "price": 1
-     }
-    ],
-    "score": 1039,
-    "rawScore": 1061,
-    "tempoPenalty": 22,
-    "carryDps": 127,
-    "frontEHP": 13994,
-    "subDps": 60,
-    "util": 0,
-    "teamCost": 8,
-    "traits": [
-     "2护卫",
-     "1精英战士",
-     "1平民英雄",
-     "1怪兽"
-    ],
-    "tankDetail": [
-     {
-      "hero": "加里奥",
-      "star": 2,
-      "ehp": 7568,
-      "items": [
-       "狂徒铠甲",
-       "狂徒铠甲",
-       "圣盾使的誓约"
-      ]
-     },
-     {
-      "hero": "波比",
-      "star": 2,
-      "ehp": 6426,
-      "items": [
-       "石像鬼石板甲",
-       "日炎斗篷",
-       "狂徒铠甲"
-      ]
-     }
-    ],
-    "reason": "前排羁绊能把输出时间拉长；装备强化攻击频率/施法频率"
-   },
-   {
-    "stage": "early",
-    "stageTitle": "前期最强候选",
-    "level": 5,
     "carry": "蔚",
     "carryPrice": 2,
     "carryStar": 2,
@@ -5887,6 +5887,97 @@
     "stage": "early",
     "stageTitle": "前期最强候选",
     "level": 5,
+    "carry": "塞拉斯",
+    "carryPrice": 1,
+    "carryStar": 2,
+    "carryId": "11153",
+    "carryItems": [
+     "最后的轻语",
+     "鬼索的狂暴之刃",
+     "卢安娜的飓风"
+    ],
+    "carryItemIds": [
+     "2037",
+     "2810",
+     "2813"
+    ],
+    "carryTraitBonus": {
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "ampPct": 25,
+     "critPct": 0,
+     "armor": 0,
+     "mr": 0,
+     "hpPct": 0,
+     "manaMult": 1,
+     "onHitMagic": 0,
+     "ehpMult": 1
+    },
+    "officialFlag": "官方配角",
+    "team": [
+     {
+      "name": "塞拉斯",
+      "price": 1
+     },
+     {
+      "name": "泰隆",
+      "price": 1
+     },
+     {
+      "name": "卡蜜尔",
+      "price": 2
+     },
+     {
+      "name": "布里茨",
+      "price": 1
+     },
+     {
+      "name": "雷克顿",
+      "price": 1
+     }
+    ],
+    "score": 976,
+    "rawScore": 993,
+    "tempoPenalty": 16,
+    "carryDps": 154,
+    "frontEHP": 12048,
+    "subDps": 70,
+    "util": 1.5,
+    "teamCost": 6,
+    "traits": [
+     "3混沌战士",
+     "2斗士",
+     "2AI程序"
+    ],
+    "tankDetail": [
+     {
+      "hero": "卡蜜尔",
+      "star": 1,
+      "ehp": 5712,
+      "items": [
+       "狂徒铠甲",
+       "狂徒铠甲",
+       "圣盾使的誓约"
+      ]
+     },
+     {
+      "hero": "布里茨",
+      "star": 2,
+      "ehp": 6336,
+      "items": [
+       "石像鬼石板甲",
+       "日炎斗篷",
+       "狂徒铠甲"
+      ]
+     }
+    ],
+    "reason": "低费高效率，适合保血连胜；前排羁绊能把输出时间拉长；输出羁绊直接喂主C或全队"
+   },
+   {
+    "stage": "early",
+    "stageTitle": "前期最强候选",
+    "level": 5,
     "carry": "尼菈",
     "carryPrice": 3,
     "carryStar": 1,
@@ -5973,97 +6064,6 @@
      }
     ],
     "reason": "前排羁绊能把输出时间拉长；输出羁绊直接喂主C或全队；装备强化攻击频率/施法频率"
-   },
-   {
-    "stage": "early",
-    "stageTitle": "前期最强候选",
-    "level": 5,
-    "carry": "塞拉斯",
-    "carryPrice": 1,
-    "carryStar": 2,
-    "carryId": "11153",
-    "carryItems": [
-     "最后的轻语",
-     "鬼索的狂暴之刃",
-     "卢安娜的飓风"
-    ],
-    "carryItemIds": [
-     "2037",
-     "2810",
-     "2813"
-    ],
-    "carryTraitBonus": {
-     "adPct": 0,
-     "ap": 0,
-     "asPct": 0,
-     "ampPct": 25,
-     "critPct": 0,
-     "armor": 0,
-     "mr": 0,
-     "hpPct": 0,
-     "manaMult": 1,
-     "onHitMagic": 0,
-     "ehpMult": 1
-    },
-    "officialFlag": "官方配角",
-    "team": [
-     {
-      "name": "塞拉斯",
-      "price": 1
-     },
-     {
-      "name": "泰隆",
-      "price": 1
-     },
-     {
-      "name": "卡蜜尔",
-      "price": 2
-     },
-     {
-      "name": "布里茨",
-      "price": 1
-     },
-     {
-      "name": "雷克顿",
-      "price": 1
-     }
-    ],
-    "score": 960,
-    "rawScore": 977,
-    "tempoPenalty": 16,
-    "carryDps": 138,
-    "frontEHP": 12048,
-    "subDps": 70,
-    "util": 1.5,
-    "teamCost": 6,
-    "traits": [
-     "3混沌战士",
-     "2斗士",
-     "2AI程序"
-    ],
-    "tankDetail": [
-     {
-      "hero": "卡蜜尔",
-      "star": 1,
-      "ehp": 5712,
-      "items": [
-       "狂徒铠甲",
-       "狂徒铠甲",
-       "圣盾使的誓约"
-      ]
-     },
-     {
-      "hero": "布里茨",
-      "star": 2,
-      "ehp": 6336,
-      "items": [
-       "石像鬼石板甲",
-       "日炎斗篷",
-       "狂徒铠甲"
-      ]
-     }
-    ],
-    "reason": "低费高效率，适合保血连胜；前排羁绊能把输出时间拉长；输出羁绊直接喂主C或全队"
    },
    {
     "stage": "early",
@@ -9425,12 +9425,12 @@
     "carryStar": 2,
     "carryId": "13161",
     "carryItems": [
-     "锐利之刃",
+     "最后的轻语",
      "鬼索的狂暴之刃",
      "卢安娜的飓风"
     ],
     "carryItemIds": [
-     "2045",
+     "2037",
      "2810",
      "2813"
     ],
@@ -9478,10 +9478,112 @@
       "price": 1
      }
     ],
-    "score": 1030,
-    "rawScore": 1044,
+    "score": 1053,
+    "rawScore": 1067,
     "tempoPenalty": 13,
-    "carryDps": 200,
+    "carryDps": 222,
+    "frontEHP": 13847,
+    "subDps": 142,
+    "util": 2,
+    "teamCost": 14,
+    "traits": [
+     "3地下魔盗团",
+     "2平民英雄",
+     "2强袭枪手",
+     "2斗士",
+     "1精英战士",
+     "1怪兽"
+    ],
+    "tankDetail": [
+     {
+      "hero": "蔚",
+      "star": 2,
+      "ehp": 8199,
+      "items": [
+       "狂徒铠甲",
+       "狂徒铠甲",
+       "圣盾使的誓约"
+      ]
+     },
+     {
+      "hero": "加里奥",
+      "star": 2,
+      "ehp": 5648,
+      "items": [
+       "石像鬼石板甲",
+       "日炎斗篷",
+       "狂徒铠甲"
+      ]
+     }
+    ],
+    "reason": "三费战力窗口明确，可围绕追三；前排羁绊能把输出时间拉长；装备强化攻击频率/施法频率"
+   },
+   {
+    "stage": "mid",
+    "stageTitle": "中期最强候选",
+    "level": 7,
+    "carry": "拉莫斯",
+    "carryPrice": 3,
+    "carryStar": 2,
+    "carryId": "13165",
+    "carryItems": [
+     "锐利之刃",
+     "鬼索的狂暴之刃",
+     "卢安娜的飓风"
+    ],
+    "carryItemIds": [
+     "2045",
+     "2810",
+     "2813"
+    ],
+    "carryTraitBonus": {
+     "adPct": 5,
+     "ap": 0,
+     "asPct": 0,
+     "ampPct": 6,
+     "critPct": 0,
+     "armor": 0,
+     "mr": 0,
+     "hpPct": 0,
+     "manaMult": 1.08,
+     "onHitMagic": 0,
+     "ehpMult": 1
+    },
+    "officialFlag": "官方配角",
+    "team": [
+     {
+      "name": "拉莫斯",
+      "price": 3
+     },
+     {
+      "name": "莎弥拉",
+      "price": 4
+     },
+     {
+      "name": "希维尔",
+      "price": 2
+     },
+     {
+      "name": "蔚",
+      "price": 2
+     },
+     {
+      "name": "凯尔",
+      "price": 1
+     },
+     {
+      "name": "加里奥",
+      "price": 1
+     },
+     {
+      "name": "布里茨",
+      "price": 1
+     }
+    ],
+    "score": 1048,
+    "rawScore": 1061,
+    "tempoPenalty": 13,
+    "carryDps": 217,
     "frontEHP": 13847,
     "subDps": 142,
     "util": 2,
@@ -9611,108 +9713,6 @@
       "hero": "内瑟斯",
       "star": 2,
       "ehp": 6002,
-      "items": [
-       "石像鬼石板甲",
-       "日炎斗篷",
-       "狂徒铠甲"
-      ]
-     }
-    ],
-    "reason": "三费战力窗口明确，可围绕追三；前排羁绊能把输出时间拉长；装备强化攻击频率/施法频率"
-   },
-   {
-    "stage": "mid",
-    "stageTitle": "中期最强候选",
-    "level": 7,
-    "carry": "拉莫斯",
-    "carryPrice": 3,
-    "carryStar": 2,
-    "carryId": "13165",
-    "carryItems": [
-     "锐利之刃",
-     "鬼索的狂暴之刃",
-     "卢安娜的飓风"
-    ],
-    "carryItemIds": [
-     "2045",
-     "2810",
-     "2813"
-    ],
-    "carryTraitBonus": {
-     "adPct": 5,
-     "ap": 0,
-     "asPct": 0,
-     "ampPct": 6,
-     "critPct": 0,
-     "armor": 0,
-     "mr": 0,
-     "hpPct": 0,
-     "manaMult": 1.08,
-     "onHitMagic": 0,
-     "ehpMult": 1
-    },
-    "officialFlag": "官方配角",
-    "team": [
-     {
-      "name": "拉莫斯",
-      "price": 3
-     },
-     {
-      "name": "莎弥拉",
-      "price": 4
-     },
-     {
-      "name": "希维尔",
-      "price": 2
-     },
-     {
-      "name": "蔚",
-      "price": 2
-     },
-     {
-      "name": "凯尔",
-      "price": 1
-     },
-     {
-      "name": "加里奥",
-      "price": 1
-     },
-     {
-      "name": "布里茨",
-      "price": 1
-     }
-    ],
-    "score": 1028,
-    "rawScore": 1041,
-    "tempoPenalty": 13,
-    "carryDps": 197,
-    "frontEHP": 13847,
-    "subDps": 142,
-    "util": 2,
-    "teamCost": 14,
-    "traits": [
-     "3地下魔盗团",
-     "2平民英雄",
-     "2强袭枪手",
-     "2斗士",
-     "1精英战士",
-     "1怪兽"
-    ],
-    "tankDetail": [
-     {
-      "hero": "蔚",
-      "star": 2,
-      "ehp": 8199,
-      "items": [
-       "狂徒铠甲",
-       "狂徒铠甲",
-       "圣盾使的誓约"
-      ]
-     },
-     {
-      "hero": "加里奥",
-      "star": 2,
-      "ehp": 5648,
       "items": [
        "石像鬼石板甲",
        "日炎斗篷",
@@ -12417,6 +12417,122 @@
     "stage": "late",
     "stageTitle": "后期最强候选",
     "level": 9,
+    "carry": "科加斯",
+    "carryPrice": 3,
+    "carryStar": 3,
+    "carryId": "13161",
+    "carryItems": [
+     "最后的轻语",
+     "鬼索的狂暴之刃",
+     "卢安娜的飓风"
+    ],
+    "carryItemIds": [
+     "2037",
+     "2810",
+     "2813"
+    ],
+    "carryTraitBonus": {
+     "adPct": 5,
+     "ap": 29,
+     "asPct": 0,
+     "ampPct": 31,
+     "critPct": 0,
+     "armor": 10,
+     "mr": 30,
+     "hpPct": 0,
+     "manaMult": 1.04,
+     "onHitMagic": 0,
+     "ehpMult": 1
+    },
+    "officialFlag": "官方配角",
+    "team": [
+     {
+      "name": "科加斯",
+      "price": 3
+     },
+     {
+      "name": "莎弥拉",
+      "price": 4
+     },
+     {
+      "name": "迦娜",
+      "price": 5
+     },
+     {
+      "name": "娑娜",
+      "price": 3
+     },
+     {
+      "name": "厄斐琉斯",
+      "price": 5
+     },
+     {
+      "name": "蔚",
+      "price": 2
+     },
+     {
+      "name": "佛耶戈",
+      "price": 4
+     },
+     {
+      "name": "蕾欧娜",
+      "price": 5
+     },
+     {
+      "name": "卡蜜尔",
+      "price": 2
+     }
+    ],
+    "score": 1483,
+    "rawScore": 1488,
+    "tempoPenalty": 5,
+    "carryDps": 427,
+    "frontEHP": 18873,
+    "subDps": 312,
+    "util": 3.5,
+    "teamCost": 33,
+    "traits": [
+     "3混沌战士",
+     "3地下魔盗团",
+     "2灵能使",
+     "2强袭枪手",
+     "2爱心使者",
+     "2秘术卫士",
+     "2福牛守护者",
+     "1气象主播",
+     "1枪神",
+     "1精英战士",
+     "1平民英雄",
+     "1怪兽"
+    ],
+    "tankDetail": [
+     {
+      "hero": "佛耶戈",
+      "star": 2,
+      "ehp": 10120,
+      "items": [
+       "狂徒铠甲",
+       "狂徒铠甲",
+       "圣盾使的誓约"
+      ]
+     },
+     {
+      "hero": "蕾欧娜",
+      "star": 2,
+      "ehp": 8753,
+      "items": [
+       "石像鬼石板甲",
+       "日炎斗篷",
+       "狂徒铠甲"
+      ]
+     }
+    ],
+    "reason": "三费战力窗口明确，可围绕追三；前排羁绊能把输出时间拉长；输出羁绊直接喂主C或全队"
+   },
+   {
+    "stage": "late",
+    "stageTitle": "后期最强候选",
+    "level": 9,
     "carry": "尼菈",
     "carryPrice": 3,
     "carryStar": 3,
@@ -12534,133 +12650,17 @@
     "stage": "late",
     "stageTitle": "后期最强候选",
     "level": 9,
-    "carry": "科加斯",
-    "carryPrice": 3,
-    "carryStar": 3,
-    "carryId": "13161",
-    "carryItems": [
-     "最后的轻语",
-     "鬼索的狂暴之刃",
-     "卢安娜的飓风"
-    ],
-    "carryItemIds": [
-     "2037",
-     "2810",
-     "2813"
-    ],
-    "carryTraitBonus": {
-     "adPct": 5,
-     "ap": 29,
-     "asPct": 0,
-     "ampPct": 31,
-     "critPct": 0,
-     "armor": 10,
-     "mr": 30,
-     "hpPct": 0,
-     "manaMult": 1.04,
-     "onHitMagic": 0,
-     "ehpMult": 1
-    },
-    "officialFlag": "官方配角",
-    "team": [
-     {
-      "name": "科加斯",
-      "price": 3
-     },
-     {
-      "name": "莎弥拉",
-      "price": 4
-     },
-     {
-      "name": "迦娜",
-      "price": 5
-     },
-     {
-      "name": "娑娜",
-      "price": 3
-     },
-     {
-      "name": "厄斐琉斯",
-      "price": 5
-     },
-     {
-      "name": "蔚",
-      "price": 2
-     },
-     {
-      "name": "佛耶戈",
-      "price": 4
-     },
-     {
-      "name": "蕾欧娜",
-      "price": 5
-     },
-     {
-      "name": "卡蜜尔",
-      "price": 2
-     }
-    ],
-    "score": 1429,
-    "rawScore": 1435,
-    "tempoPenalty": 5,
-    "carryDps": 374,
-    "frontEHP": 18873,
-    "subDps": 312,
-    "util": 3.5,
-    "teamCost": 33,
-    "traits": [
-     "3混沌战士",
-     "3地下魔盗团",
-     "2灵能使",
-     "2强袭枪手",
-     "2爱心使者",
-     "2秘术卫士",
-     "2福牛守护者",
-     "1气象主播",
-     "1枪神",
-     "1精英战士",
-     "1平民英雄",
-     "1怪兽"
-    ],
-    "tankDetail": [
-     {
-      "hero": "佛耶戈",
-      "star": 2,
-      "ehp": 10120,
-      "items": [
-       "狂徒铠甲",
-       "狂徒铠甲",
-       "圣盾使的誓约"
-      ]
-     },
-     {
-      "hero": "蕾欧娜",
-      "star": 2,
-      "ehp": 8753,
-      "items": [
-       "石像鬼石板甲",
-       "日炎斗篷",
-       "狂徒铠甲"
-      ]
-     }
-    ],
-    "reason": "三费战力窗口明确，可围绕追三；前排羁绊能把输出时间拉长；输出羁绊直接喂主C或全队"
-   },
-   {
-    "stage": "late",
-    "stageTitle": "后期最强候选",
-    "level": 9,
     "carry": "拉莫斯",
     "carryPrice": 3,
     "carryStar": 3,
     "carryId": "13165",
     "carryItems": [
-     "最后的轻语",
+     "锐利之刃",
      "鬼索的狂暴之刃",
      "卢安娜的飓风"
     ],
     "carryItemIds": [
-     "2037",
+     "2045",
      "2810",
      "2813"
     ],
@@ -12716,10 +12716,10 @@
       "price": 2
      }
     ],
-    "score": 1419,
-    "rawScore": 1424,
+    "score": 1460,
+    "rawScore": 1465,
     "tempoPenalty": 5,
-    "carryDps": 363,
+    "carryDps": 404,
     "frontEHP": 18873,
     "subDps": 312,
     "util": 3.5,
@@ -14621,6 +14621,22 @@
     "value": 372
    },
    {
+    "hero": "雷克顿",
+    "price": 1,
+    "star": 3,
+    "dps": 327,
+    "items": [
+     "水银",
+     "鬼索的狂暴之刃",
+     "卢安娜的飓风"
+    ],
+    "auto": 131,
+    "spell": 0,
+    "proc": 197,
+    "officialFlag": "官方主C",
+    "value": 327
+   },
+   {
     "hero": "普朗克",
     "price": 1,
     "star": 3,
@@ -14701,36 +14717,20 @@
     "value": 260
    },
    {
-    "hero": "雷克顿",
-    "price": 1,
-    "star": 3,
-    "dps": 222,
-    "items": [
-     "锐利之刃",
-     "鬼索的狂暴之刃",
-     "卢安娜的飓风"
-    ],
-    "auto": 148,
-    "spell": 0,
-    "proc": 74,
-    "officialFlag": "官方主C",
-    "value": 222
-   },
-   {
     "hero": "波比",
     "price": 1,
     "star": 3,
-    "dps": 203,
+    "dps": 213,
     "items": [
      "锐利之刃",
      "鬼索的狂暴之刃",
      "卢安娜的飓风"
     ],
     "auto": 135,
-    "spell": 0,
+    "spell": 11,
     "proc": 68,
     "officialFlag": "官方配角",
-    "value": 203
+    "value": 213
    },
    {
     "hero": "布里茨",
@@ -14749,20 +14749,20 @@
     "value": 199
    },
    {
-    "hero": "加里奥",
+    "hero": "塞拉斯",
     "price": 1,
     "star": 3,
-    "dps": 185,
+    "dps": 194,
     "items": [
      "最后的轻语",
      "鬼索的狂暴之刃",
      "卢安娜的飓风"
     ],
     "auto": 111,
-    "spell": 18,
+    "spell": 28,
     "proc": 55,
     "officialFlag": "官方配角",
-    "value": 185
+    "value": 194
    }
   ],
   "tank": [
@@ -14770,132 +14770,132 @@
     "hero": "努努和威朗普",
     "price": 5,
     "star": 2,
-    "ehp": 12100,
+    "ehp": 14753,
     "items": [
-     "狂徒铠甲",
-     "狂徒铠甲",
-     "圣盾使的誓约"
+     "振奋盔甲",
+     "振奋盔甲",
+     "振奋盔甲"
     ]
    },
    {
     "hero": "莫德凯撒",
     "price": 5,
     "star": 2,
-    "ehp": 11831,
+    "ehp": 14506,
     "items": [
-     "狂徒铠甲",
-     "狂徒铠甲",
-     "圣盾使的誓约"
+     "振奋盔甲",
+     "振奋盔甲",
+     "振奋盔甲"
     ]
    },
    {
     "hero": "费德提克",
     "price": 5,
     "star": 2,
-    "ehp": 11588,
+    "ehp": 14164,
     "items": [
-     "狂徒铠甲",
-     "狂徒铠甲",
-     "圣盾使的誓约"
-    ]
-   },
-   {
-    "hero": "瑟庄妮",
-    "price": 4,
-    "star": 2,
-    "ehp": 10659,
-    "items": [
-     "狂徒铠甲",
-     "狂徒铠甲",
-     "狂徒铠甲"
-    ]
-   },
-   {
-    "hero": "扎克",
-    "price": 4,
-    "star": 2,
-    "ehp": 10628,
-    "items": [
-     "狂徒铠甲",
-     "狂徒铠甲",
-     "狂徒铠甲"
+     "振奋盔甲",
+     "振奋盔甲",
+     "振奋盔甲"
     ]
    },
    {
     "hero": "亚托克斯",
     "price": 4,
     "star": 2,
-    "ehp": 10595,
+    "ehp": 12849,
     "items": [
-     "狂徒铠甲",
-     "狂徒铠甲",
-     "石像鬼石板甲"
+     "振奋盔甲",
+     "振奋盔甲",
+     "振奋盔甲"
+    ]
+   },
+   {
+    "hero": "扎克",
+    "price": 4,
+    "star": 2,
+    "ehp": 12837,
+    "items": [
+     "振奋盔甲",
+     "振奋盔甲",
+     "振奋盔甲"
+    ]
+   },
+   {
+    "hero": "瑟庄妮",
+    "price": 4,
+    "star": 2,
+    "ehp": 12799,
+    "items": [
+     "振奋盔甲",
+     "振奋盔甲",
+     "振奋盔甲"
     ]
    },
    {
     "hero": "瑟提",
     "price": 4,
     "star": 2,
-    "ehp": 10032,
+    "ehp": 12046,
     "items": [
-     "狂徒铠甲",
-     "狂徒铠甲",
-     "狂徒铠甲"
+     "振奋盔甲",
+     "振奋盔甲",
+     "振奋盔甲"
     ]
    },
    {
     "hero": "艾克",
     "price": 4,
     "star": 2,
-    "ehp": 10032,
+    "ehp": 12046,
     "items": [
-     "狂徒铠甲",
-     "狂徒铠甲",
-     "狂徒铠甲"
+     "振奋盔甲",
+     "振奋盔甲",
+     "振奋盔甲"
     ]
    },
    {
     "hero": "卑尔维斯",
     "price": 4,
     "star": 2,
-    "ehp": 9807,
+    "ehp": 11670,
     "items": [
-     "狂徒铠甲",
-     "狂徒铠甲",
-     "石像鬼石板甲"
+     "振奋盔甲",
+     "振奋盔甲",
+     "振奋盔甲"
     ]
    },
    {
     "hero": "科加斯",
     "price": 3,
     "star": 2,
-    "ehp": 9453,
+    "ehp": 11281,
     "items": [
-     "狂徒铠甲",
-     "狂徒铠甲",
-     "狂徒铠甲"
+     "振奋盔甲",
+     "振奋盔甲",
+     "振奋盔甲"
     ]
    },
    {
     "hero": "拉莫斯",
     "price": 3,
     "star": 2,
-    "ehp": 9453,
+    "ehp": 11281,
     "items": [
-     "狂徒铠甲",
-     "狂徒铠甲",
-     "狂徒铠甲"
+     "振奋盔甲",
+     "振奋盔甲",
+     "振奋盔甲"
     ]
    },
    {
-    "hero": "劫",
+    "hero": "佛耶戈",
     "price": 4,
     "star": 2,
-    "ehp": 9280,
+    "ehp": 10917,
     "items": [
-     "狂徒铠甲",
-     "狂徒铠甲",
-     "石像鬼石板甲"
+     "振奋盔甲",
+     "振奋盔甲",
+     "振奋盔甲"
     ]
    }
   ]

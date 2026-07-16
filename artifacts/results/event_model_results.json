@@ -1,0 +1,499 @@
+{
+  "generated": "2026-07-16T20:37:13.155Z",
+  "experiment": "event-model-v1",
+  "baselineTag": "pre-event-model",
+  "coverage": {
+    "catalog": 122,
+    "supported": 53,
+    "unsupported": 69,
+    "eventProfiles": 55,
+    "eventTypes": {
+      "stat": 56,
+      "max-mana": 3,
+      "spell-multiplier": 2,
+      "cast-control": 3,
+      "nth-attack": 1,
+      "spell-crit": 3,
+      "spell-echo": 2,
+      "cast-max-hp-damage": 1,
+      "nth-attack-stat": 1
+    },
+    "partialProfiles": 17,
+    "itemBasicStatGaps": 0,
+    "ignoredDamageHeroes": 3,
+    "zeroParsedDamageWithDamageText": 0
+  },
+  "baseline": {
+    "supported": 31,
+    "templates": 61,
+    "compiledPolicies": 10,
+    "certifiedPolicies": 8,
+    "virtualBattles": 21960,
+    "averageCoverage": 98.4
+  },
+  "current": {
+    "templates": 67,
+    "compiledPolicies": 16,
+    "certifiedPolicies": 10,
+    "virtualBattles": 26532,
+    "averageCoverage": 100,
+    "sideBias": -0.18,
+    "evidenceLevels": {
+      "L2.5 模型扰动稳健": 13,
+      "L2 模型候选": 11,
+      "L1.5 高敏感假设": 43
+    }
+  },
+  "newRoutes": [
+    {
+      "id": "meta-双重气泡-佐伊-1",
+      "name": "双重气泡佐伊机制路线",
+      "augment": "双重气泡",
+      "evidenceLevel": "L2 模型候选",
+      "policyCertified": true
+    },
+    {
+      "id": "meta-扩散射击-薇恩-3",
+      "name": "扩散射击薇恩机制路线",
+      "augment": "扩散射击",
+      "evidenceLevel": "L2 模型候选",
+      "policyCertified": true
+    },
+    {
+      "id": "meta-无双挑战-菲奥娜-4",
+      "name": "无双挑战菲奥娜机制路线",
+      "augment": "无双挑战",
+      "evidenceLevel": "L2.5 模型扰动稳健",
+      "policyCertified": true
+    },
+    {
+      "id": "meta-宗师训练-贾克斯-5",
+      "name": "宗师训练贾克斯机制路线",
+      "augment": "宗师训练",
+      "evidenceLevel": "L2 模型候选",
+      "policyCertified": true
+    },
+    {
+      "id": "meta-星界屏障-科加斯-9",
+      "name": "星界屏障科加斯机制路线",
+      "augment": "星界屏障",
+      "evidenceLevel": "L1.5 高敏感假设",
+      "policyCertified": false
+    },
+    {
+      "id": "meta-重甲龙龟-拉莫斯-11",
+      "name": "重甲龙龟拉莫斯机制路线",
+      "augment": "重甲龙龟",
+      "evidenceLevel": "L1.5 高敏感假设",
+      "policyCertified": false
+    },
+    {
+      "id": "meta-分享驭铁术-芮尔-13",
+      "name": "分享驭铁术芮尔机制路线",
+      "augment": "分享驭铁术",
+      "evidenceLevel": "L1.5 高敏感假设",
+      "policyCertified": false
+    },
+    {
+      "id": "meta-净化之金钟罩-李青-14",
+      "name": "净化之金钟罩李青机制路线",
+      "augment": "净化之金钟罩",
+      "evidenceLevel": "L1.5 高敏感假设",
+      "policyCertified": false
+    }
+  ],
+  "keySkills": [
+    {
+      "name": "波比",
+      "parsed": {
+        "physical": 0,
+        "magic": 0,
+        "trueDamage": 0,
+        "shield": 350,
+        "heal": 0,
+        "control": 0,
+        "targets": 1,
+        "armorScaleMagic": 2.4,
+        "mrScaleMagic": 0,
+        "maxHpScaleMagic": 0,
+        "onHitMaxHpPct": 0,
+        "hpBuff": 0,
+        "damageReduction": 0,
+        "passiveArmor": 0,
+        "passiveMr": 0,
+        "duration": 0,
+        "parsed": [
+          "armor-scale-damage",
+          "shield"
+        ],
+        "unsupported": []
+      }
+    },
+    {
+      "name": "塞拉斯",
+      "parsed": {
+        "physical": 0,
+        "magic": 0,
+        "trueDamage": 0,
+        "shield": 0,
+        "heal": 170,
+        "control": 0,
+        "targets": 3,
+        "armorScaleMagic": 0,
+        "mrScaleMagic": 0,
+        "maxHpScaleMagic": 0.12,
+        "onHitMaxHpPct": 0,
+        "hpBuff": 0,
+        "damageReduction": 0,
+        "passiveArmor": 0,
+        "passiveMr": 0,
+        "duration": 0,
+        "parsed": [
+          "max-hp-scale-damage",
+          "heal"
+        ],
+        "unsupported": []
+      }
+    },
+    {
+      "name": "雷克顿",
+      "parsed": {
+        "physical": 0,
+        "magic": 0,
+        "trueDamage": 0,
+        "shield": 0,
+        "heal": 0,
+        "control": 0,
+        "targets": 1,
+        "armorScaleMagic": 0,
+        "mrScaleMagic": 0,
+        "maxHpScaleMagic": 0,
+        "onHitMaxHpPct": 0.06,
+        "hpBuff": 250,
+        "damageReduction": 0,
+        "passiveArmor": 0,
+        "passiveMr": 0,
+        "duration": 8,
+        "parsed": [
+          "hp-buff",
+          "max-hp-scale-damage"
+        ],
+        "unsupported": []
+      }
+    },
+    {
+      "name": "布里茨",
+      "parsed": {
+        "physical": 0,
+        "magic": 0,
+        "trueDamage": 0,
+        "shield": 0,
+        "heal": 0,
+        "control": 0,
+        "targets": 1,
+        "armorScaleMagic": 0,
+        "mrScaleMagic": 0,
+        "maxHpScaleMagic": 0,
+        "onHitMaxHpPct": 0,
+        "hpBuff": 0,
+        "damageReduction": 0.52,
+        "passiveArmor": 0,
+        "passiveMr": 0,
+        "duration": 4,
+        "parsed": [
+          "damage-reduction"
+        ],
+        "unsupported": []
+      }
+    },
+    {
+      "name": "科加斯",
+      "parsed": {
+        "physical": 0,
+        "magic": 105,
+        "trueDamage": 0,
+        "shield": 0,
+        "heal": 0,
+        "control": 0,
+        "targets": 2,
+        "armorScaleMagic": 0,
+        "mrScaleMagic": 1.9,
+        "maxHpScaleMagic": 0,
+        "onHitMaxHpPct": 0,
+        "hpBuff": 0,
+        "damageReduction": 0,
+        "passiveArmor": 0,
+        "passiveMr": 100,
+        "duration": 0,
+        "parsed": [
+          "passive-mr",
+          "damage",
+          "mr-scale-damage"
+        ],
+        "unsupported": []
+      }
+    },
+    {
+      "name": "拉莫斯",
+      "parsed": {
+        "physical": 0,
+        "magic": 50,
+        "trueDamage": 0,
+        "shield": 0,
+        "heal": 0,
+        "control": 1,
+        "targets": 2,
+        "armorScaleMagic": 1.75,
+        "mrScaleMagic": 0,
+        "maxHpScaleMagic": 0,
+        "onHitMaxHpPct": 0,
+        "hpBuff": 0,
+        "damageReduction": 0,
+        "passiveArmor": 90,
+        "passiveMr": 0,
+        "duration": 1.5,
+        "parsed": [
+          "passive-armor",
+          "damage",
+          "armor-scale-damage"
+        ],
+        "unsupported": []
+      }
+    }
+  ],
+  "certifiedPolicies": [
+    {
+      "id": "德莱文联盟|德莱文",
+      "augment": "德莱文联盟",
+      "strategicCarry": "德莱文",
+      "stages": [
+        {
+          "key": "early",
+          "text": "德莱文1星转核通过：相对贾克斯 LCB 15.61"
+        },
+        {
+          "key": "mid",
+          "text": "德莱文1星转核通过：相对菲奥娜 LCB 3.33"
+        },
+        {
+          "key": "late",
+          "text": "德莱文3星转核通过：相对菲奥娜 LCB 8.34"
+        }
+      ]
+    },
+    {
+      "id": "姐妹|金克丝",
+      "augment": "姐妹",
+      "strategicCarry": "金克丝",
+      "stages": [
+        {
+          "key": "early",
+          "text": "金克丝1星转核通过：相对德莱文 LCB 0.64"
+        },
+        {
+          "key": "mid",
+          "text": "金克丝1星转核通过：相对凯尔 LCB 5.13"
+        },
+        {
+          "key": "late",
+          "text": "金克丝1星转核通过：相对凯尔 LCB 2.6"
+        }
+      ]
+    },
+    {
+      "id": "扩散射击|薇恩",
+      "augment": "扩散射击",
+      "strategicCarry": "薇恩",
+      "stages": [
+        {
+          "key": "mid",
+          "text": "薇恩3星转核通过：相对德莱文 LCB 1.3"
+        }
+      ]
+    },
+    {
+      "id": "评级与交火|莎弥拉",
+      "augment": "评级与交火",
+      "strategicCarry": "莎弥拉",
+      "stages": [
+        {
+          "key": "mid",
+          "text": "莎弥拉2星转核通过：相对希维尔 LCB 7.46"
+        },
+        {
+          "key": "late",
+          "text": "莎弥拉2星转核通过：相对厄斐琉斯 LCB 2.5"
+        }
+      ]
+    },
+    {
+      "id": "适应性防守|卡蜜尔",
+      "augment": "适应性防守",
+      "strategicCarry": "卡蜜尔",
+      "stages": [
+        {
+          "key": "early",
+          "text": "卡蜜尔3星转核通过：相对雷克顿 LCB 12.2"
+        }
+      ]
+    },
+    {
+      "id": "双重气泡|佐伊",
+      "augment": "双重气泡",
+      "strategicCarry": "佐伊",
+      "stages": [
+        {
+          "key": "early",
+          "text": "佐伊2星转核通过：相对璐璐 LCB 3.93"
+        },
+        {
+          "key": "mid",
+          "text": "佐伊1星转核通过：相对悠米 LCB 18.65"
+        },
+        {
+          "key": "late",
+          "text": "佐伊1星转核通过：相对悠米 LCB 2.3"
+        }
+      ]
+    },
+    {
+      "id": "旺盛精力|悠米",
+      "augment": "旺盛精力",
+      "strategicCarry": "悠米",
+      "stages": [
+        {
+          "key": "mid",
+          "text": "悠米3星转核通过：相对卡莎 LCB 0.79"
+        }
+      ]
+    },
+    {
+      "id": "无双挑战|菲奥娜",
+      "augment": "无双挑战",
+      "strategicCarry": "菲奥娜",
+      "stages": [
+        {
+          "key": "early",
+          "text": "菲奥娜2星转核通过：相对凯尔 LCB 1.92"
+        },
+        {
+          "key": "mid",
+          "text": "菲奥娜3星转核通过：相对德莱文 LCB 7.24"
+        }
+      ]
+    },
+    {
+      "id": "咒能高涨|伊泽瑞尔",
+      "augment": "咒能高涨",
+      "strategicCarry": "伊泽瑞尔",
+      "stages": [
+        {
+          "key": "early",
+          "text": "伊泽瑞尔3星转核通过：相对德莱文 LCB 3.14"
+        },
+        {
+          "key": "mid",
+          "text": "伊泽瑞尔1星转核通过：相对薇恩 LCB 5.5"
+        },
+        {
+          "key": "late",
+          "text": "伊泽瑞尔3星转核通过：相对薇恩 LCB 5.37"
+        }
+      ]
+    },
+    {
+      "id": "宗师训练|贾克斯",
+      "augment": "宗师训练",
+      "strategicCarry": "贾克斯",
+      "stages": [
+        {
+          "key": "mid",
+          "text": "贾克斯3星转核通过：相对璐璐 LCB 4.54"
+        }
+      ]
+    }
+  ],
+  "watchPolicies": [
+    {
+      "id": "分享驭铁术|芮尔",
+      "augment": "分享驭铁术"
+    },
+    {
+      "id": "净化之金钟罩|李青",
+      "augment": "净化之金钟罩"
+    },
+    {
+      "id": "完美的日炎耀斑|蕾欧娜",
+      "augment": "完美的日炎耀斑"
+    },
+    {
+      "id": "无情连打|贾克斯",
+      "augment": "无情连打"
+    },
+    {
+      "id": "星界屏障|科加斯",
+      "augment": "星界屏障"
+    },
+    {
+      "id": "重甲龙龟|拉莫斯",
+      "augment": "重甲龙龟"
+    }
+  ],
+  "virtualTop": [
+    {
+      "name": "星守灵能塔利娅5星之守护者4灵能使",
+      "robustScore": 90.6,
+      "coverage": 100
+    },
+    {
+      "name": "金钟罩李青4爱心使者3秘术卫士2AI程序",
+      "robustScore": 83.8,
+      "coverage": 100
+    },
+    {
+      "name": "超级机甲德莱文5战斗机甲3超级英雄2斗士",
+      "robustScore": 82.2,
+      "coverage": 100
+    },
+    {
+      "name": "福牛混沌九五4福牛守护者3混沌战士2吉祥物",
+      "robustScore": 75.4,
+      "coverage": 100
+    },
+    {
+      "name": "灵能娑娜4灵能使3秘术2福牛2斗士",
+      "robustScore": 73.8,
+      "coverage": 100
+    },
+    {
+      "name": "福牛泰隆6福牛守护者3混沌战士",
+      "robustScore": 73.7,
+      "coverage": 100
+    },
+    {
+      "name": "决斗剑姬6决斗大师2福牛守护者",
+      "robustScore": 72.7,
+      "coverage": 100
+    },
+    {
+      "name": "秘卫斗士贾克斯4斗士3秘术卫士3战斗机甲",
+      "robustScore": 72.5,
+      "coverage": 100
+    },
+    {
+      "name": "小天才九五5小天才2福牛守护者2吉祥物",
+      "robustScore": 71.3,
+      "coverage": 100
+    },
+    {
+      "name": "评级与交火莎弥拉机制路线",
+      "robustScore": 70.1,
+      "coverage": 100
+    }
+  ],
+  "interpretation": [
+    "事件覆盖表示当前候选棋盘中的已声明机制可执行，不等于全游戏机制已经100%建模。",
+    "新路线只有同时具备策略正LCB与L2.5证据时才可升级为稳健推荐；L1.5仅保留观察。",
+    "范围扩大、击杀归属和周期叠层缺少唯一时点时保守降级，不使用猜测值补齐。"
+  ]
+}

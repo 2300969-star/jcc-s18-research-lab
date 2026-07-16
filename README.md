@@ -7,12 +7,12 @@
 **金铲铲之战「怪兽入侵」阵容发现、数值实验与对局决策研究系统**
 
 [![version](https://img.shields.io/badge/version-17.17.7--S18-0969da?style=flat-square)](data/chess.js)
-[![routes](https://img.shields.io/badge/certified_routes-61-8250df?style=flat-square)](artifacts/results/route_certification_results.json)
-[![virtual battles](https://img.shields.io/badge/paired_virtual_battles-21%2C960-1f883d?style=flat-square)](docs/reports/虚拟实战数字孪生.md)
+[![routes](https://img.shields.io/badge/evaluated_routes-67-8250df?style=flat-square)](artifacts/results/route_certification_results.json)
+[![virtual battles](https://img.shields.io/badge/paired_virtual_battles-26%2C532-1f883d?style=flat-square)](docs/reports/虚拟实战数字孪生.md)
 [![CI](https://img.shields.io/github/actions/workflow/status/2300969-star/jcc-s18-research-lab/ci.yml?style=flat-square&label=tests)](https://github.com/2300969-star/jcc-s18-research-lab/actions)
 [![license](https://img.shields.io/badge/code_license-MIT-f1e05a?style=flat-square)](LICENSE)
 
-[Research Dashboard](public/index.html) · [Match Mode](public/match.html) · [Methodology](docs/reports/版本路线认证实验.md) · [中文文档](#快速开始)
+[Research Dashboard](public/index.html) · [Match Mode](public/match.html) · [Methodology](docs/reports/版本路线认证实验.md) · [Event Model](docs/reports/统一事件模型实验.md) · [中文文档](#快速开始)
 
 <img src="docs/images/frontend-dashboard.png" alt="JCC S18 Research Dashboard" width="920">
 
@@ -172,7 +172,7 @@ q_e = { L2.5: 1.00, L2: 0.65, L1.5: 0.35 }
 
 ### Digital-twin boundary
 
-The event engine currently evaluates all **61 routes in 1,830 pairings and 21,960 side-swapped battles**. Every pairing reuses the same random seed after swapping sides, then reports win rate, health margin, lower-tail CVaR, and mechanism coverage. Unsupported mechanics shrink the Match Mode prior toward zero instead of being silently treated as verified.
+The event engine currently evaluates all **67 routes in 2,211 pairings and 26,532 side-swapped battles**. Every pairing reuses the same random seed after swapping sides, then reports win rate, health margin, lower-tail CVaR, and mechanism coverage. Unsupported mechanics shrink the Match Mode prior toward zero instead of being silently treated as verified. The executable hero-augment catalog currently covers **53 of 122** entries; the remaining mechanics stay discounted instead of receiving guessed values.
 
 The result is a **model-internal dominance claim**, not an observed ladder win rate. Public guides may seed candidate generation, but they do not calibrate ranking weights. The fast Match Mode model receives at most a bounded `±12` point prior from the event simulator:
 
@@ -221,7 +221,8 @@ npm run build:model        # combat model, item search, full-team search
 npm run build:discovery    # lineup discovery, transitions, numeric lens
 npm run build:experiments  # Jinx sisters and Mecha experiments
 npm run build:matcher      # stage matcher and route certification
-npm run build:virtual      # 21,960 paired full-team event battles
+npm run build:virtual      # 26,532 paired full-team event battles
+npm run build:event-model  # coverage delta, operator audit, and route evidence
 npm run research:community # audit public guides/videos as evidence, not ground truth
 npm run audit              # data, skill, item, and outlier audits
 npm run figures            # regenerate README research figures

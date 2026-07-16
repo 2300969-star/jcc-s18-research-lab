@@ -78,8 +78,8 @@
      "primeDps": 407,
      "mainCarry": "德莱文",
      "mainCarryDps": 0,
-     "sideOutput": 49,
-     "teamOutput": 456,
+     "sideOutput": 50,
+     "teamOutput": 457,
      "note": "至尊与阶段装备主C同人"
     },
     {
@@ -90,8 +90,8 @@
      "primeDps": 86,
      "mainCarry": "德莱文",
      "mainCarryDps": 267,
-     "sideOutput": 30,
-     "teamOutput": 383,
+     "sideOutput": 32,
+     "teamOutput": 385,
      "note": "至尊给贾克斯，德莱文继续带阶段主C装备"
     },
     {
@@ -102,8 +102,8 @@
      "primeDps": 56,
      "mainCarry": "德莱文",
      "mainCarryDps": 267,
-     "sideOutput": 37,
-     "teamOutput": 360,
+     "sideOutput": 38,
+     "teamOutput": 361,
      "note": "至尊给孙悟空，德莱文继续带阶段主C装备"
     }
    ],
@@ -119,8 +119,8 @@
     "primeDps": 407,
     "mainCarry": "德莱文",
     "mainCarryDps": 0,
-    "sideOutput": 49,
-    "teamOutput": 456,
+    "sideOutput": 50,
+    "teamOutput": 457,
     "note": "至尊与阶段装备主C同人"
    },
    "frontControl": {
@@ -131,8 +131,8 @@
     "primeDps": 56,
     "mainCarry": "德莱文",
     "mainCarryDps": 267,
-    "sideOutput": 37,
-    "teamOutput": 360,
+    "sideOutput": 38,
+    "teamOutput": 361,
     "note": "至尊给孙悟空，德莱文继续带阶段主C装备"
    }
   },
@@ -177,8 +177,8 @@
      "primeDps": 513,
      "mainCarry": "贾克斯",
      "mainCarryDps": 0,
-     "sideOutput": 84,
-     "teamOutput": 597,
+     "sideOutput": 85,
+     "teamOutput": 598,
      "note": "至尊与阶段装备主C同人"
     },
     {
@@ -189,8 +189,8 @@
      "primeDps": 82,
      "mainCarry": "贾克斯",
      "mainCarryDps": 366,
-     "sideOutput": 66,
-     "teamOutput": 514,
+     "sideOutput": 67,
+     "teamOutput": 515,
      "note": "至尊给德莱文，贾克斯继续带阶段主C装备"
     },
     {
@@ -201,8 +201,8 @@
      "primeDps": 56,
      "mainCarry": "贾克斯",
      "mainCarryDps": 366,
-     "sideOutput": 72,
-     "teamOutput": 494,
+     "sideOutput": 73,
+     "teamOutput": 495,
      "note": "至尊给孙悟空，贾克斯继续带阶段主C装备"
     }
    ],
@@ -218,8 +218,8 @@
     "primeDps": 513,
     "mainCarry": "贾克斯",
     "mainCarryDps": 0,
-    "sideOutput": 84,
-    "teamOutput": 597,
+    "sideOutput": 85,
+    "teamOutput": 598,
     "note": "至尊与阶段装备主C同人"
    },
    "frontControl": {
@@ -230,8 +230,8 @@
     "primeDps": 56,
     "mainCarry": "贾克斯",
     "mainCarryDps": 366,
-    "sideOutput": 72,
-    "teamOutput": 494,
+    "sideOutput": 73,
+    "teamOutput": 495,
     "note": "至尊给孙悟空，贾克斯继续带阶段主C装备"
    }
   },
@@ -479,14 +479,14 @@
    {
     "stage": "前期",
     "holder": "德莱文",
-    "condition": "前期棋盘中德莱文至尊总输出456，为本档第一。",
-    "evidence": "德莱文2星 456 vs #2 贾克斯 383"
+    "condition": "前期棋盘中德莱文至尊总输出457，为本档第一。",
+    "evidence": "德莱文2星 457 vs #2 贾克斯 385"
    },
    {
     "stage": "中期",
     "holder": "贾克斯",
-    "condition": "中期棋盘中贾克斯至尊总输出597，优先承接。",
-    "evidence": "贾克斯2星 597 vs #2 德莱文 514"
+    "condition": "中期棋盘中贾克斯至尊总输出598，优先承接。",
+    "evidence": "贾克斯2星 598 vs #2 德莱文 515"
    },
    {
     "stage": "终局",
@@ -506,7 +506,7 @@
       "德莱文"
      ]
     },
-    "evidence": "德莱文2星 456 vs #2 贾克斯 383"
+    "evidence": "德莱文2星 457 vs #2 贾克斯 385"
    },
    {
     "id": "mid-carry-online",

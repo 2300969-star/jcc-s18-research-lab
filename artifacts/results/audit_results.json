@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-16T17:15:47.363Z",
+  "generated": "2026-07-16T20:37:13.279Z",
   "version": "17.17.7",
   "edition": "17.17.7",
   "data": {
@@ -1231,8 +1231,8 @@
     "summary": {
       "heroes": 62,
       "highRiskHeroes": 40,
-      "ignoredDamageHeroes": 9,
-      "zeroParsedDamageWithDamageText": 4,
+      "ignoredDamageHeroes": 3,
+      "zeroParsedDamageWithDamageText": 0,
       "utilityTagCounts": {
         "shield": 9,
         "heal": 8,
@@ -1357,398 +1357,6 @@
               "countOrChance"
             ],
             "reason": "non_damage"
-          }
-        ]
-      },
-      {
-        "id": "11153",
-        "name": "塞拉斯",
-        "price": 1,
-        "skillName": "战斗蝠冲击波",
-        "groupCount": 2,
-        "descCount": 2,
-        "mismatch": false,
-        "consumedDamageGroups": 0,
-        "ignoredDamageGroups": 1,
-        "utilityTags": [
-          "hpScaling",
-          "heal"
-        ],
-        "utilityLabels": [
-          "生命缩放",
-          "治疗/回复"
-        ],
-        "official": {
-          "used": false,
-          "sUsed": false,
-          "carry": false,
-          "sCarry": false
-        },
-        "riskScore": 8,
-        "groups": [
-          {
-            "index": 0,
-            "label": "伤害：70(【生命上限】) 10%/12%/15%",
-            "values": [
-              "10%",
-              "12%",
-              "15%"
-            ],
-            "consumed": false,
-            "ignoredDamage": true,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "hpScaling"
-            ],
-            "reason": "percent_value"
-          },
-          {
-            "index": 1,
-            "label": "治疗：150(【法术加成】) 150/170/190",
-            "values": [
-              "150",
-              "170",
-              "190"
-            ],
-            "consumed": false,
-            "ignoredDamage": false,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "heal"
-            ],
-            "reason": "non_damage"
-          }
-        ]
-      },
-      {
-        "id": "11165",
-        "name": "波比",
-        "price": 1,
-        "skillName": "圆盾投掷",
-        "groupCount": 2,
-        "descCount": 2,
-        "mismatch": false,
-        "consumedDamageGroups": 0,
-        "ignoredDamageGroups": 1,
-        "utilityTags": [
-          "resistScaling",
-          "shield"
-        ],
-        "utilityLabels": [
-          "抗性缩放",
-          "护盾"
-        ],
-        "official": {
-          "used": false,
-          "sUsed": false,
-          "carry": false,
-          "sCarry": false
-        },
-        "riskScore": 8,
-        "groups": [
-          {
-            "index": 0,
-            "label": "伤害：72(【护甲】) 160%/240%/320%",
-            "values": [
-              "160%",
-              "240%",
-              "320%"
-            ],
-            "consumed": false,
-            "ignoredDamage": true,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "resistScaling"
-            ],
-            "reason": "percent_value"
-          },
-          {
-            "index": 1,
-            "label": "护盾值：300(【法术加成】) 300/350/425",
-            "values": [
-              "300",
-              "350",
-              "425"
-            ],
-            "consumed": false,
-            "ignoredDamage": false,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "shield"
-            ],
-            "reason": "non_damage"
-          }
-        ]
-      },
-      {
-        "id": "13161",
-        "name": "科加斯",
-        "price": 3,
-        "skillName": "星界咆哮",
-        "groupCount": 4,
-        "descCount": 4,
-        "mismatch": false,
-        "consumedDamageGroups": 1,
-        "ignoredDamageGroups": 1,
-        "utilityTags": [
-          "resistScaling"
-        ],
-        "utilityLabels": [
-          "抗性缩放"
-        ],
-        "official": {
-          "used": false,
-          "sUsed": false,
-          "carry": false,
-          "sCarry": false
-        },
-        "riskScore": 6,
-        "groups": [
-          {
-            "index": 0,
-            "label": "被动魔抗： 75/100/150",
-            "values": [
-              "75",
-              "100",
-              "150"
-            ],
-            "consumed": false,
-            "ignoredDamage": false,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "resistScaling"
-            ],
-            "reason": "non_damage"
-          },
-          {
-            "index": 1,
-            "label": "伤害：70(【法术加成】) 70/105/165",
-            "values": [
-              "70",
-              "105",
-              "165"
-            ],
-            "consumed": true,
-            "ignoredDamage": false,
-            "damageType": "magic",
-            "hitOverride": 1,
-            "utilityTags": [],
-            "reason": "current_model_damage"
-          },
-          {
-            "index": 2,
-            "label": "伤害：153=150%(【魔法抗性】)+70(【法术加成】) 150%/190%/240%",
-            "values": [
-              "150%",
-              "190%",
-              "240%"
-            ],
-            "consumed": false,
-            "ignoredDamage": true,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "resistScaling"
-            ],
-            "reason": "excluded_keyword"
-          },
-          {
-            "index": 3,
-            "label": "破法效果： 35%/35%/50%",
-            "values": [
-              "35%",
-              "35%",
-              "50%"
-            ],
-            "consumed": false,
-            "ignoredDamage": false,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [],
-            "reason": "non_damage"
-          }
-        ]
-      },
-      {
-        "id": "13165",
-        "name": "拉莫斯",
-        "price": 3,
-        "skillName": "沙漠猛撞",
-        "groupCount": 3,
-        "descCount": 3,
-        "mismatch": false,
-        "consumedDamageGroups": 1,
-        "ignoredDamageGroups": 1,
-        "utilityTags": [
-          "resistScaling"
-        ],
-        "utilityLabels": [
-          "抗性缩放"
-        ],
-        "official": {
-          "used": false,
-          "sUsed": false,
-          "carry": false,
-          "sCarry": false
-        },
-        "riskScore": 6,
-        "groups": [
-          {
-            "index": 0,
-            "label": "被动护甲： 60/90/150",
-            "values": [
-              "60",
-              "90",
-              "150"
-            ],
-            "consumed": false,
-            "ignoredDamage": false,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "resistScaling"
-            ],
-            "reason": "non_damage"
-          },
-          {
-            "index": 1,
-            "label": "伤害：30(【法术加成】) 30/50/80",
-            "values": [
-              "30",
-              "50",
-              "80"
-            ],
-            "consumed": true,
-            "ignoredDamage": false,
-            "damageType": "magic",
-            "hitOverride": 1,
-            "utilityTags": [],
-            "reason": "current_model_damage"
-          },
-          {
-            "index": 2,
-            "label": "伤害：113=150%【护甲】+30(【法术加成】) 150%/175%/205%",
-            "values": [
-              "150%",
-              "175%",
-              "205%"
-            ],
-            "consumed": false,
-            "ignoredDamage": true,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "resistScaling"
-            ],
-            "reason": "percent_value"
-          }
-        ]
-      },
-      {
-        "id": "11158",
-        "name": "雷克顿",
-        "price": 1,
-        "skillName": "终极统治",
-        "groupCount": 2,
-        "descCount": 2,
-        "mismatch": false,
-        "consumedDamageGroups": 0,
-        "ignoredDamageGroups": 1,
-        "utilityTags": [
-          "hpScaling"
-        ],
-        "utilityLabels": [
-          "生命缩放"
-        ],
-        "official": {
-          "used": false,
-          "sUsed": false,
-          "carry": false,
-          "sCarry": false
-        },
-        "riskScore": 6,
-        "groups": [
-          {
-            "index": 0,
-            "label": "最大生命值：200(【法术加成】) 200/250/300",
-            "values": [
-              "200",
-              "250",
-              "300"
-            ],
-            "consumed": false,
-            "ignoredDamage": false,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "hpScaling"
-            ],
-            "reason": "non_damage"
-          },
-          {
-            "index": 1,
-            "label": "额外魔法伤害：39(【生命上限】) 6%/6%/6%",
-            "values": [
-              "6%",
-              "6%",
-              "6%"
-            ],
-            "consumed": false,
-            "ignoredDamage": true,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "hpScaling"
-            ],
-            "reason": "percent_value"
-          }
-        ]
-      },
-      {
-        "id": "11160",
-        "name": "布里茨",
-        "price": 1,
-        "skillName": "静态防御",
-        "groupCount": 1,
-        "descCount": 1,
-        "mismatch": false,
-        "consumedDamageGroups": 0,
-        "ignoredDamageGroups": 1,
-        "utilityTags": [
-          "damageReduction"
-        ],
-        "utilityLabels": [
-          "减伤"
-        ],
-        "official": {
-          "used": false,
-          "sUsed": false,
-          "carry": false,
-          "sCarry": false
-        },
-        "riskScore": 6,
-        "groups": [
-          {
-            "index": 0,
-            "label": "伤害减免：50%(【法术加成】) 50%/52%/55%",
-            "values": [
-              "50%",
-              "52%",
-              "55%"
-            ],
-            "consumed": false,
-            "ignoredDamage": true,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "damageReduction"
-            ],
-            "reason": "percent_value"
           }
         ]
       },
@@ -2295,6 +1903,130 @@
             "hitOverride": 1,
             "utilityTags": [],
             "reason": "current_model_damage"
+          }
+        ]
+      },
+      {
+        "id": "11153",
+        "name": "塞拉斯",
+        "price": 1,
+        "skillName": "战斗蝠冲击波",
+        "groupCount": 2,
+        "descCount": 2,
+        "mismatch": false,
+        "consumedDamageGroups": 1,
+        "ignoredDamageGroups": 0,
+        "utilityTags": [
+          "hpScaling",
+          "heal"
+        ],
+        "utilityLabels": [
+          "生命缩放",
+          "治疗/回复"
+        ],
+        "official": {
+          "used": false,
+          "sUsed": false,
+          "carry": false,
+          "sCarry": false
+        },
+        "riskScore": 4,
+        "groups": [
+          {
+            "index": 0,
+            "label": "伤害：70(【生命上限】) 10%/12%/15%",
+            "values": [
+              "10%",
+              "12%",
+              "15%"
+            ],
+            "consumed": true,
+            "ignoredDamage": false,
+            "damageType": "magic",
+            "hitOverride": 1,
+            "utilityTags": [
+              "hpScaling"
+            ],
+            "reason": "current_model_scaled_damage"
+          },
+          {
+            "index": 1,
+            "label": "治疗：150(【法术加成】) 150/170/190",
+            "values": [
+              "150",
+              "170",
+              "190"
+            ],
+            "consumed": false,
+            "ignoredDamage": false,
+            "damageType": null,
+            "hitOverride": 1,
+            "utilityTags": [
+              "heal"
+            ],
+            "reason": "non_damage"
+          }
+        ]
+      },
+      {
+        "id": "11165",
+        "name": "波比",
+        "price": 1,
+        "skillName": "圆盾投掷",
+        "groupCount": 2,
+        "descCount": 2,
+        "mismatch": false,
+        "consumedDamageGroups": 1,
+        "ignoredDamageGroups": 0,
+        "utilityTags": [
+          "resistScaling",
+          "shield"
+        ],
+        "utilityLabels": [
+          "抗性缩放",
+          "护盾"
+        ],
+        "official": {
+          "used": false,
+          "sUsed": false,
+          "carry": false,
+          "sCarry": false
+        },
+        "riskScore": 4,
+        "groups": [
+          {
+            "index": 0,
+            "label": "伤害：72(【护甲】) 160%/240%/320%",
+            "values": [
+              "160%",
+              "240%",
+              "320%"
+            ],
+            "consumed": true,
+            "ignoredDamage": false,
+            "damageType": "magic",
+            "hitOverride": 1,
+            "utilityTags": [
+              "resistScaling"
+            ],
+            "reason": "current_model_scaled_damage"
+          },
+          {
+            "index": 1,
+            "label": "护盾值：300(【法术加成】) 300/350/425",
+            "values": [
+              "300",
+              "350",
+              "425"
+            ],
+            "consumed": false,
+            "ignoredDamage": false,
+            "damageType": null,
+            "hitOverride": 1,
+            "utilityTags": [
+              "shield"
+            ],
+            "reason": "non_damage"
           }
         ]
       },
@@ -2982,6 +2714,96 @@
         ]
       },
       {
+        "id": "13161",
+        "name": "科加斯",
+        "price": 3,
+        "skillName": "星界咆哮",
+        "groupCount": 4,
+        "descCount": 4,
+        "mismatch": false,
+        "consumedDamageGroups": 2,
+        "ignoredDamageGroups": 0,
+        "utilityTags": [
+          "resistScaling"
+        ],
+        "utilityLabels": [
+          "抗性缩放"
+        ],
+        "official": {
+          "used": false,
+          "sUsed": false,
+          "carry": false,
+          "sCarry": false
+        },
+        "riskScore": 2,
+        "groups": [
+          {
+            "index": 0,
+            "label": "被动魔抗： 75/100/150",
+            "values": [
+              "75",
+              "100",
+              "150"
+            ],
+            "consumed": false,
+            "ignoredDamage": false,
+            "damageType": null,
+            "hitOverride": 1,
+            "utilityTags": [
+              "resistScaling"
+            ],
+            "reason": "non_damage"
+          },
+          {
+            "index": 1,
+            "label": "伤害：70(【法术加成】) 70/105/165",
+            "values": [
+              "70",
+              "105",
+              "165"
+            ],
+            "consumed": true,
+            "ignoredDamage": false,
+            "damageType": "magic",
+            "hitOverride": 1,
+            "utilityTags": [],
+            "reason": "current_model_damage"
+          },
+          {
+            "index": 2,
+            "label": "伤害：153=150%(【魔法抗性】)+70(【法术加成】) 150%/190%/240%",
+            "values": [
+              "150%",
+              "190%",
+              "240%"
+            ],
+            "consumed": true,
+            "ignoredDamage": false,
+            "damageType": "magic",
+            "hitOverride": 1,
+            "utilityTags": [
+              "resistScaling"
+            ],
+            "reason": "current_model_scaled_damage"
+          },
+          {
+            "index": 3,
+            "label": "破法效果： 35%/35%/50%",
+            "values": [
+              "35%",
+              "35%",
+              "50%"
+            ],
+            "consumed": false,
+            "ignoredDamage": false,
+            "damageType": null,
+            "hitOverride": 1,
+            "utilityTags": [],
+            "reason": "non_damage"
+          }
+        ]
+      },
+      {
         "id": "13162",
         "name": "娑娜",
         "price": 3,
@@ -3109,6 +2931,81 @@
               "control"
             ],
             "reason": "non_damage"
+          }
+        ]
+      },
+      {
+        "id": "13165",
+        "name": "拉莫斯",
+        "price": 3,
+        "skillName": "沙漠猛撞",
+        "groupCount": 3,
+        "descCount": 3,
+        "mismatch": false,
+        "consumedDamageGroups": 2,
+        "ignoredDamageGroups": 0,
+        "utilityTags": [
+          "resistScaling"
+        ],
+        "utilityLabels": [
+          "抗性缩放"
+        ],
+        "official": {
+          "used": false,
+          "sUsed": false,
+          "carry": false,
+          "sCarry": false
+        },
+        "riskScore": 2,
+        "groups": [
+          {
+            "index": 0,
+            "label": "被动护甲： 60/90/150",
+            "values": [
+              "60",
+              "90",
+              "150"
+            ],
+            "consumed": false,
+            "ignoredDamage": false,
+            "damageType": null,
+            "hitOverride": 1,
+            "utilityTags": [
+              "resistScaling"
+            ],
+            "reason": "non_damage"
+          },
+          {
+            "index": 1,
+            "label": "伤害：30(【法术加成】) 30/50/80",
+            "values": [
+              "30",
+              "50",
+              "80"
+            ],
+            "consumed": true,
+            "ignoredDamage": false,
+            "damageType": "magic",
+            "hitOverride": 1,
+            "utilityTags": [],
+            "reason": "current_model_damage"
+          },
+          {
+            "index": 2,
+            "label": "伤害：113=150%【护甲】+30(【法术加成】) 150%/175%/205%",
+            "values": [
+              "150%",
+              "175%",
+              "205%"
+            ],
+            "consumed": true,
+            "ignoredDamage": false,
+            "damageType": "magic",
+            "hitOverride": 1,
+            "utilityTags": [
+              "resistScaling"
+            ],
+            "reason": "current_model_scaled_damage"
           }
         ]
       },
@@ -3848,6 +3745,124 @@
             "reason": "non_damage"
           }
         ]
+      },
+      {
+        "id": "11155",
+        "name": "加里奥",
+        "price": 1,
+        "skillName": "别挡道！",
+        "groupCount": 2,
+        "descCount": 2,
+        "mismatch": false,
+        "consumedDamageGroups": 1,
+        "ignoredDamageGroups": 0,
+        "utilityTags": [
+          "shield"
+        ],
+        "utilityLabels": [
+          "护盾"
+        ],
+        "official": {
+          "used": false,
+          "sUsed": false,
+          "carry": false,
+          "sCarry": false
+        },
+        "riskScore": 2,
+        "groups": [
+          {
+            "index": 0,
+            "label": "伤害：150(【法术加成】) 150/225/335",
+            "values": [
+              "150",
+              "225",
+              "335"
+            ],
+            "consumed": true,
+            "ignoredDamage": false,
+            "damageType": "magic",
+            "hitOverride": 1,
+            "utilityTags": [],
+            "reason": "current_model_damage"
+          },
+          {
+            "index": 1,
+            "label": "护盾值：250(【法术加成】) 250/300/375",
+            "values": [
+              "250",
+              "300",
+              "375"
+            ],
+            "consumed": false,
+            "ignoredDamage": false,
+            "damageType": null,
+            "hitOverride": 1,
+            "utilityTags": [
+              "shield"
+            ],
+            "reason": "non_damage"
+          }
+        ]
+      },
+      {
+        "id": "11158",
+        "name": "雷克顿",
+        "price": 1,
+        "skillName": "终极统治",
+        "groupCount": 2,
+        "descCount": 2,
+        "mismatch": false,
+        "consumedDamageGroups": 1,
+        "ignoredDamageGroups": 0,
+        "utilityTags": [
+          "hpScaling"
+        ],
+        "utilityLabels": [
+          "生命缩放"
+        ],
+        "official": {
+          "used": false,
+          "sUsed": false,
+          "carry": false,
+          "sCarry": false
+        },
+        "riskScore": 2,
+        "groups": [
+          {
+            "index": 0,
+            "label": "最大生命值：200(【法术加成】) 200/250/300",
+            "values": [
+              "200",
+              "250",
+              "300"
+            ],
+            "consumed": false,
+            "ignoredDamage": false,
+            "damageType": null,
+            "hitOverride": 1,
+            "utilityTags": [
+              "hpScaling"
+            ],
+            "reason": "non_damage"
+          },
+          {
+            "index": 1,
+            "label": "额外魔法伤害：39(【生命上限】) 6%/6%/6%",
+            "values": [
+              "6%",
+              "6%",
+              "6%"
+            ],
+            "consumed": true,
+            "ignoredDamage": false,
+            "damageType": "magic",
+            "hitOverride": 1,
+            "utilityTags": [
+              "hpScaling"
+            ],
+            "reason": "current_model_scaled_damage"
+          }
+        ]
       }
     ],
     "ignoredDamageHeroes": [
@@ -3961,398 +3976,6 @@
               "countOrChance"
             ],
             "reason": "non_damage"
-          }
-        ]
-      },
-      {
-        "id": "11153",
-        "name": "塞拉斯",
-        "price": 1,
-        "skillName": "战斗蝠冲击波",
-        "groupCount": 2,
-        "descCount": 2,
-        "mismatch": false,
-        "consumedDamageGroups": 0,
-        "ignoredDamageGroups": 1,
-        "utilityTags": [
-          "hpScaling",
-          "heal"
-        ],
-        "utilityLabels": [
-          "生命缩放",
-          "治疗/回复"
-        ],
-        "official": {
-          "used": false,
-          "sUsed": false,
-          "carry": false,
-          "sCarry": false
-        },
-        "riskScore": 8,
-        "groups": [
-          {
-            "index": 0,
-            "label": "伤害：70(【生命上限】) 10%/12%/15%",
-            "values": [
-              "10%",
-              "12%",
-              "15%"
-            ],
-            "consumed": false,
-            "ignoredDamage": true,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "hpScaling"
-            ],
-            "reason": "percent_value"
-          },
-          {
-            "index": 1,
-            "label": "治疗：150(【法术加成】) 150/170/190",
-            "values": [
-              "150",
-              "170",
-              "190"
-            ],
-            "consumed": false,
-            "ignoredDamage": false,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "heal"
-            ],
-            "reason": "non_damage"
-          }
-        ]
-      },
-      {
-        "id": "11165",
-        "name": "波比",
-        "price": 1,
-        "skillName": "圆盾投掷",
-        "groupCount": 2,
-        "descCount": 2,
-        "mismatch": false,
-        "consumedDamageGroups": 0,
-        "ignoredDamageGroups": 1,
-        "utilityTags": [
-          "resistScaling",
-          "shield"
-        ],
-        "utilityLabels": [
-          "抗性缩放",
-          "护盾"
-        ],
-        "official": {
-          "used": false,
-          "sUsed": false,
-          "carry": false,
-          "sCarry": false
-        },
-        "riskScore": 8,
-        "groups": [
-          {
-            "index": 0,
-            "label": "伤害：72(【护甲】) 160%/240%/320%",
-            "values": [
-              "160%",
-              "240%",
-              "320%"
-            ],
-            "consumed": false,
-            "ignoredDamage": true,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "resistScaling"
-            ],
-            "reason": "percent_value"
-          },
-          {
-            "index": 1,
-            "label": "护盾值：300(【法术加成】) 300/350/425",
-            "values": [
-              "300",
-              "350",
-              "425"
-            ],
-            "consumed": false,
-            "ignoredDamage": false,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "shield"
-            ],
-            "reason": "non_damage"
-          }
-        ]
-      },
-      {
-        "id": "11158",
-        "name": "雷克顿",
-        "price": 1,
-        "skillName": "终极统治",
-        "groupCount": 2,
-        "descCount": 2,
-        "mismatch": false,
-        "consumedDamageGroups": 0,
-        "ignoredDamageGroups": 1,
-        "utilityTags": [
-          "hpScaling"
-        ],
-        "utilityLabels": [
-          "生命缩放"
-        ],
-        "official": {
-          "used": false,
-          "sUsed": false,
-          "carry": false,
-          "sCarry": false
-        },
-        "riskScore": 6,
-        "groups": [
-          {
-            "index": 0,
-            "label": "最大生命值：200(【法术加成】) 200/250/300",
-            "values": [
-              "200",
-              "250",
-              "300"
-            ],
-            "consumed": false,
-            "ignoredDamage": false,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "hpScaling"
-            ],
-            "reason": "non_damage"
-          },
-          {
-            "index": 1,
-            "label": "额外魔法伤害：39(【生命上限】) 6%/6%/6%",
-            "values": [
-              "6%",
-              "6%",
-              "6%"
-            ],
-            "consumed": false,
-            "ignoredDamage": true,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "hpScaling"
-            ],
-            "reason": "percent_value"
-          }
-        ]
-      },
-      {
-        "id": "11160",
-        "name": "布里茨",
-        "price": 1,
-        "skillName": "静态防御",
-        "groupCount": 1,
-        "descCount": 1,
-        "mismatch": false,
-        "consumedDamageGroups": 0,
-        "ignoredDamageGroups": 1,
-        "utilityTags": [
-          "damageReduction"
-        ],
-        "utilityLabels": [
-          "减伤"
-        ],
-        "official": {
-          "used": false,
-          "sUsed": false,
-          "carry": false,
-          "sCarry": false
-        },
-        "riskScore": 6,
-        "groups": [
-          {
-            "index": 0,
-            "label": "伤害减免：50%(【法术加成】) 50%/52%/55%",
-            "values": [
-              "50%",
-              "52%",
-              "55%"
-            ],
-            "consumed": false,
-            "ignoredDamage": true,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "damageReduction"
-            ],
-            "reason": "percent_value"
-          }
-        ]
-      },
-      {
-        "id": "13161",
-        "name": "科加斯",
-        "price": 3,
-        "skillName": "星界咆哮",
-        "groupCount": 4,
-        "descCount": 4,
-        "mismatch": false,
-        "consumedDamageGroups": 1,
-        "ignoredDamageGroups": 1,
-        "utilityTags": [
-          "resistScaling"
-        ],
-        "utilityLabels": [
-          "抗性缩放"
-        ],
-        "official": {
-          "used": false,
-          "sUsed": false,
-          "carry": false,
-          "sCarry": false
-        },
-        "riskScore": 6,
-        "groups": [
-          {
-            "index": 0,
-            "label": "被动魔抗： 75/100/150",
-            "values": [
-              "75",
-              "100",
-              "150"
-            ],
-            "consumed": false,
-            "ignoredDamage": false,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "resistScaling"
-            ],
-            "reason": "non_damage"
-          },
-          {
-            "index": 1,
-            "label": "伤害：70(【法术加成】) 70/105/165",
-            "values": [
-              "70",
-              "105",
-              "165"
-            ],
-            "consumed": true,
-            "ignoredDamage": false,
-            "damageType": "magic",
-            "hitOverride": 1,
-            "utilityTags": [],
-            "reason": "current_model_damage"
-          },
-          {
-            "index": 2,
-            "label": "伤害：153=150%(【魔法抗性】)+70(【法术加成】) 150%/190%/240%",
-            "values": [
-              "150%",
-              "190%",
-              "240%"
-            ],
-            "consumed": false,
-            "ignoredDamage": true,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "resistScaling"
-            ],
-            "reason": "excluded_keyword"
-          },
-          {
-            "index": 3,
-            "label": "破法效果： 35%/35%/50%",
-            "values": [
-              "35%",
-              "35%",
-              "50%"
-            ],
-            "consumed": false,
-            "ignoredDamage": false,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [],
-            "reason": "non_damage"
-          }
-        ]
-      },
-      {
-        "id": "13165",
-        "name": "拉莫斯",
-        "price": 3,
-        "skillName": "沙漠猛撞",
-        "groupCount": 3,
-        "descCount": 3,
-        "mismatch": false,
-        "consumedDamageGroups": 1,
-        "ignoredDamageGroups": 1,
-        "utilityTags": [
-          "resistScaling"
-        ],
-        "utilityLabels": [
-          "抗性缩放"
-        ],
-        "official": {
-          "used": false,
-          "sUsed": false,
-          "carry": false,
-          "sCarry": false
-        },
-        "riskScore": 6,
-        "groups": [
-          {
-            "index": 0,
-            "label": "被动护甲： 60/90/150",
-            "values": [
-              "60",
-              "90",
-              "150"
-            ],
-            "consumed": false,
-            "ignoredDamage": false,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "resistScaling"
-            ],
-            "reason": "non_damage"
-          },
-          {
-            "index": 1,
-            "label": "伤害：30(【法术加成】) 30/50/80",
-            "values": [
-              "30",
-              "50",
-              "80"
-            ],
-            "consumed": true,
-            "ignoredDamage": false,
-            "damageType": "magic",
-            "hitOverride": 1,
-            "utilityTags": [],
-            "reason": "current_model_damage"
-          },
-          {
-            "index": 2,
-            "label": "伤害：113=150%【护甲】+30(【法术加成】) 150%/175%/205%",
-            "values": [
-              "150%",
-              "175%",
-              "205%"
-            ],
-            "consumed": false,
-            "ignoredDamage": true,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "resistScaling"
-            ],
-            "reason": "percent_value"
           }
         ]
       },
@@ -4476,235 +4099,7 @@
         ]
       }
     ],
-    "zeroParsedDamageWithDamageText": [
-      {
-        "id": "11153",
-        "name": "塞拉斯",
-        "price": 1,
-        "skillName": "战斗蝠冲击波",
-        "groupCount": 2,
-        "descCount": 2,
-        "mismatch": false,
-        "consumedDamageGroups": 0,
-        "ignoredDamageGroups": 1,
-        "utilityTags": [
-          "hpScaling",
-          "heal"
-        ],
-        "utilityLabels": [
-          "生命缩放",
-          "治疗/回复"
-        ],
-        "official": {
-          "used": false,
-          "sUsed": false,
-          "carry": false,
-          "sCarry": false
-        },
-        "riskScore": 8,
-        "groups": [
-          {
-            "index": 0,
-            "label": "伤害：70(【生命上限】) 10%/12%/15%",
-            "values": [
-              "10%",
-              "12%",
-              "15%"
-            ],
-            "consumed": false,
-            "ignoredDamage": true,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "hpScaling"
-            ],
-            "reason": "percent_value"
-          },
-          {
-            "index": 1,
-            "label": "治疗：150(【法术加成】) 150/170/190",
-            "values": [
-              "150",
-              "170",
-              "190"
-            ],
-            "consumed": false,
-            "ignoredDamage": false,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "heal"
-            ],
-            "reason": "non_damage"
-          }
-        ]
-      },
-      {
-        "id": "11165",
-        "name": "波比",
-        "price": 1,
-        "skillName": "圆盾投掷",
-        "groupCount": 2,
-        "descCount": 2,
-        "mismatch": false,
-        "consumedDamageGroups": 0,
-        "ignoredDamageGroups": 1,
-        "utilityTags": [
-          "resistScaling",
-          "shield"
-        ],
-        "utilityLabels": [
-          "抗性缩放",
-          "护盾"
-        ],
-        "official": {
-          "used": false,
-          "sUsed": false,
-          "carry": false,
-          "sCarry": false
-        },
-        "riskScore": 8,
-        "groups": [
-          {
-            "index": 0,
-            "label": "伤害：72(【护甲】) 160%/240%/320%",
-            "values": [
-              "160%",
-              "240%",
-              "320%"
-            ],
-            "consumed": false,
-            "ignoredDamage": true,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "resistScaling"
-            ],
-            "reason": "percent_value"
-          },
-          {
-            "index": 1,
-            "label": "护盾值：300(【法术加成】) 300/350/425",
-            "values": [
-              "300",
-              "350",
-              "425"
-            ],
-            "consumed": false,
-            "ignoredDamage": false,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "shield"
-            ],
-            "reason": "non_damage"
-          }
-        ]
-      },
-      {
-        "id": "11158",
-        "name": "雷克顿",
-        "price": 1,
-        "skillName": "终极统治",
-        "groupCount": 2,
-        "descCount": 2,
-        "mismatch": false,
-        "consumedDamageGroups": 0,
-        "ignoredDamageGroups": 1,
-        "utilityTags": [
-          "hpScaling"
-        ],
-        "utilityLabels": [
-          "生命缩放"
-        ],
-        "official": {
-          "used": false,
-          "sUsed": false,
-          "carry": false,
-          "sCarry": false
-        },
-        "riskScore": 6,
-        "groups": [
-          {
-            "index": 0,
-            "label": "最大生命值：200(【法术加成】) 200/250/300",
-            "values": [
-              "200",
-              "250",
-              "300"
-            ],
-            "consumed": false,
-            "ignoredDamage": false,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "hpScaling"
-            ],
-            "reason": "non_damage"
-          },
-          {
-            "index": 1,
-            "label": "额外魔法伤害：39(【生命上限】) 6%/6%/6%",
-            "values": [
-              "6%",
-              "6%",
-              "6%"
-            ],
-            "consumed": false,
-            "ignoredDamage": true,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "hpScaling"
-            ],
-            "reason": "percent_value"
-          }
-        ]
-      },
-      {
-        "id": "11160",
-        "name": "布里茨",
-        "price": 1,
-        "skillName": "静态防御",
-        "groupCount": 1,
-        "descCount": 1,
-        "mismatch": false,
-        "consumedDamageGroups": 0,
-        "ignoredDamageGroups": 1,
-        "utilityTags": [
-          "damageReduction"
-        ],
-        "utilityLabels": [
-          "减伤"
-        ],
-        "official": {
-          "used": false,
-          "sUsed": false,
-          "carry": false,
-          "sCarry": false
-        },
-        "riskScore": 6,
-        "groups": [
-          {
-            "index": 0,
-            "label": "伤害减免：50%(【法术加成】) 50%/52%/55%",
-            "values": [
-              "50%",
-              "52%",
-              "55%"
-            ],
-            "consumed": false,
-            "ignoredDamage": true,
-            "damageType": null,
-            "hitOverride": 1,
-            "utilityTags": [
-              "damageReduction"
-            ],
-            "reason": "percent_value"
-          }
-        ]
-      }
-    ],
+    "zeroParsedDamageWithDamageText": [],
     "heroAudits": [
       {
         "id": "11152",
@@ -4766,8 +4161,8 @@
         "groupCount": 2,
         "descCount": 2,
         "mismatch": false,
-        "consumedDamageGroups": 0,
-        "ignoredDamageGroups": 1,
+        "consumedDamageGroups": 1,
+        "ignoredDamageGroups": 0,
         "utilityTags": [
           "hpScaling",
           "heal"
@@ -4782,7 +4177,7 @@
           "carry": false,
           "sCarry": false
         },
-        "riskScore": 8,
+        "riskScore": 4,
         "groups": [
           {
             "index": 0,
@@ -4792,14 +4187,14 @@
               "12%",
               "15%"
             ],
-            "consumed": false,
-            "ignoredDamage": true,
-            "damageType": null,
+            "consumed": true,
+            "ignoredDamage": false,
+            "damageType": "magic",
             "hitOverride": 1,
             "utilityTags": [
               "hpScaling"
             ],
-            "reason": "percent_value"
+            "reason": "current_model_scaled_damage"
           },
           {
             "index": 1,
@@ -5012,8 +4407,8 @@
         "groupCount": 2,
         "descCount": 2,
         "mismatch": false,
-        "consumedDamageGroups": 0,
-        "ignoredDamageGroups": 1,
+        "consumedDamageGroups": 1,
+        "ignoredDamageGroups": 0,
         "utilityTags": [
           "hpScaling"
         ],
@@ -5026,7 +4421,7 @@
           "carry": false,
           "sCarry": false
         },
-        "riskScore": 6,
+        "riskScore": 2,
         "groups": [
           {
             "index": 0,
@@ -5053,14 +4448,14 @@
               "6%",
               "6%"
             ],
-            "consumed": false,
-            "ignoredDamage": true,
-            "damageType": null,
+            "consumed": true,
+            "ignoredDamage": false,
+            "damageType": "magic",
             "hitOverride": 1,
             "utilityTags": [
               "hpScaling"
             ],
-            "reason": "percent_value"
+            "reason": "current_model_scaled_damage"
           }
         ]
       },
@@ -5131,7 +4526,7 @@
         "descCount": 1,
         "mismatch": false,
         "consumedDamageGroups": 0,
-        "ignoredDamageGroups": 1,
+        "ignoredDamageGroups": 0,
         "utilityTags": [
           "damageReduction"
         ],
@@ -5144,7 +4539,7 @@
           "carry": false,
           "sCarry": false
         },
-        "riskScore": 6,
+        "riskScore": 2,
         "groups": [
           {
             "index": 0,
@@ -5155,7 +4550,7 @@
               "55%"
             ],
             "consumed": false,
-            "ignoredDamage": true,
+            "ignoredDamage": false,
             "damageType": null,
             "hitOverride": 1,
             "utilityTags": [
@@ -5335,8 +4730,8 @@
         "groupCount": 2,
         "descCount": 2,
         "mismatch": false,
-        "consumedDamageGroups": 0,
-        "ignoredDamageGroups": 1,
+        "consumedDamageGroups": 1,
+        "ignoredDamageGroups": 0,
         "utilityTags": [
           "resistScaling",
           "shield"
@@ -5351,7 +4746,7 @@
           "carry": false,
           "sCarry": false
         },
-        "riskScore": 8,
+        "riskScore": 4,
         "groups": [
           {
             "index": 0,
@@ -5361,14 +4756,14 @@
               "240%",
               "320%"
             ],
-            "consumed": false,
-            "ignoredDamage": true,
-            "damageType": null,
+            "consumed": true,
+            "ignoredDamage": false,
+            "damageType": "magic",
             "hitOverride": 1,
             "utilityTags": [
               "resistScaling"
             ],
-            "reason": "percent_value"
+            "reason": "current_model_scaled_damage"
           },
           {
             "index": 1,
@@ -6309,8 +5704,8 @@
         "groupCount": 4,
         "descCount": 4,
         "mismatch": false,
-        "consumedDamageGroups": 1,
-        "ignoredDamageGroups": 1,
+        "consumedDamageGroups": 2,
+        "ignoredDamageGroups": 0,
         "utilityTags": [
           "resistScaling"
         ],
@@ -6323,7 +5718,7 @@
           "carry": false,
           "sCarry": false
         },
-        "riskScore": 6,
+        "riskScore": 2,
         "groups": [
           {
             "index": 0,
@@ -6365,14 +5760,14 @@
               "190%",
               "240%"
             ],
-            "consumed": false,
-            "ignoredDamage": true,
-            "damageType": null,
+            "consumed": true,
+            "ignoredDamage": false,
+            "damageType": "magic",
             "hitOverride": 1,
             "utilityTags": [
               "resistScaling"
             ],
-            "reason": "excluded_keyword"
+            "reason": "current_model_scaled_damage"
           },
           {
             "index": 3,
@@ -6582,8 +5977,8 @@
         "groupCount": 3,
         "descCount": 3,
         "mismatch": false,
-        "consumedDamageGroups": 1,
-        "ignoredDamageGroups": 1,
+        "consumedDamageGroups": 2,
+        "ignoredDamageGroups": 0,
         "utilityTags": [
           "resistScaling"
         ],
@@ -6596,7 +5991,7 @@
           "carry": false,
           "sCarry": false
         },
-        "riskScore": 6,
+        "riskScore": 2,
         "groups": [
           {
             "index": 0,
@@ -6638,14 +6033,14 @@
               "175%",
               "205%"
             ],
-            "consumed": false,
-            "ignoredDamage": true,
-            "damageType": null,
+            "consumed": true,
+            "ignoredDamage": false,
+            "damageType": "magic",
             "hitOverride": 1,
             "utilityTags": [
               "resistScaling"
             ],
-            "reason": "percent_value"
+            "reason": "current_model_scaled_damage"
           }
         ]
       },
@@ -8367,297 +7762,13 @@
   "items": {
     "summary": {
       "items": 149,
-      "basicStatGaps": 31,
-      "basicGapCounts": {
-        "法力回复": 21,
-        "全能吸血": 7,
-        "伤害减免": 3
-      },
+      "basicStatGaps": 0,
+      "basicGapCounts": {},
       "effectRows": 117,
       "modeledEffectItems": 20,
       "unmodeledImportantEffects": 19
     },
-    "basicStatGaps": [
-      {
-        "id": "1004",
-        "name": "女神之泪",
-        "type": "基础装备",
-        "raw": "+1法力回复",
-        "label": "法力回复",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "2003",
-        "name": "海克斯科技枪刃",
-        "type": "成型装备",
-        "raw": "+15%全能吸血",
-        "label": "全能吸血",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "2003",
-        "name": "海克斯科技枪刃",
-        "type": "成型装备",
-        "raw": "+1法力回复",
-        "label": "法力回复",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "2004",
-        "name": "朔极之矛",
-        "type": "成型装备",
-        "raw": "+1法力回复",
-        "label": "法力回复",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "2006",
-        "name": "汲取剑",
-        "type": "成型装备",
-        "raw": "+20%全能吸血",
-        "label": "全能吸血",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "2017",
-        "name": "大天使之杖",
-        "type": "成型装备",
-        "raw": "+1法力回复",
-        "label": "法力回复",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "2020",
-        "name": "莫雷洛秘典",
-        "type": "成型装备",
-        "raw": "+1法力回复",
-        "label": "法力回复",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "2023",
-        "name": "圣盾使的誓约",
-        "type": "成型装备",
-        "raw": "+1法力回复",
-        "label": "法力回复",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "2025",
-        "name": "振奋盔甲",
-        "type": "成型装备",
-        "raw": "+8%伤害减免",
-        "label": "伤害减免",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "2025",
-        "name": "振奋盔甲",
-        "type": "成型装备",
-        "raw": "+2法力回复",
-        "label": "法力回复",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "2039",
-        "name": "正义之手",
-        "type": "成型装备",
-        "raw": "+1法力回复",
-        "label": "法力回复",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "2060",
-        "name": "光明版海克斯科技枪刃",
-        "type": "光明武器",
-        "raw": "+30%全能吸血",
-        "label": "全能吸血",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "2060",
-        "name": "光明版海克斯科技枪刃",
-        "type": "光明武器",
-        "raw": "+2法力回复",
-        "label": "法力回复",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "2061",
-        "name": "光明版朔极之矛",
-        "type": "光明武器",
-        "raw": "+2法力回复",
-        "label": "法力回复",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "2063",
-        "name": "光明版汲取剑",
-        "type": "光明武器",
-        "raw": "+40%全能吸血",
-        "label": "全能吸血",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "2072",
-        "name": "光明版大天使之杖",
-        "type": "光明武器",
-        "raw": "+2法力回复",
-        "label": "法力回复",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "2075",
-        "name": "光明版莫雷洛秘典",
-        "type": "光明武器",
-        "raw": "+2法力回复",
-        "label": "法力回复",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "2077",
-        "name": "光明版圣盾使的誓约",
-        "type": "光明武器",
-        "raw": "+2法力回复",
-        "label": "法力回复",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "2079",
-        "name": "光明版振奋盔甲",
-        "type": "光明武器",
-        "raw": "+15%伤害减免",
-        "label": "伤害减免",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "2079",
-        "name": "光明版振奋盔甲",
-        "type": "光明武器",
-        "raw": "+4法力回复",
-        "label": "法力回复",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "2088",
-        "name": "光明版正义之手",
-        "type": "光明武器",
-        "raw": "+2法力回复",
-        "label": "法力回复",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "4804",
-        "name": "星之守护者纹章",
-        "type": "转职纹章",
-        "raw": "+1法力回复",
-        "label": "法力回复",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "4821",
-        "name": "爱心使者纹章",
-        "type": "转职纹章",
-        "raw": "+1法力回复",
-        "label": "法力回复",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "6054",
-        "name": "死亡之蔑",
-        "type": "神器装备",
-        "raw": "+25%全能吸血",
-        "label": "全能吸血",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "6063",
-        "name": "狙击手的专注",
-        "type": "神器装备",
-        "raw": "+3法力回复",
-        "label": "法力回复",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "6083",
-        "name": "枯萎珠宝",
-        "type": "神器装备",
-        "raw": "+2法力回复",
-        "label": "法力回复",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "6084",
-        "name": "探索者的护臂",
-        "type": "神器装备",
-        "raw": "+20%全能吸血",
-        "label": "全能吸血",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "6091",
-        "name": "黎明核心",
-        "type": "特殊装备",
-        "raw": "+2法力回复",
-        "label": "法力回复",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "6094",
-        "name": "虚空护手",
-        "type": "神器装备",
-        "raw": "+10%伤害减免",
-        "label": "伤害减免",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "6096",
-        "name": "恶火小斧",
-        "type": "神器装备",
-        "raw": "+20%全能吸血",
-        "label": "全能吸血",
-        "usedInS": 0,
-        "carryUses": 0
-      },
-      {
-        "id": "6098",
-        "name": "永恒契约",
-        "type": "神器装备",
-        "raw": "+1法力回复",
-        "label": "法力回复",
-        "usedInS": 0,
-        "carryUses": 0
-      }
-    ],
+    "basicStatGaps": [],
     "unmodeledImportantEffects": [
       {
         "id": "2003",
@@ -10249,6 +9360,42 @@
         "flag": "官方非C"
       },
       {
+        "hero": "科加斯",
+        "price": 3,
+        "star": 3,
+        "items": [
+          "最后的轻语",
+          "鬼索的狂暴之刃",
+          "卢安娜的飓风"
+        ],
+        "dps": 307,
+        "auto": 172,
+        "spell": 48,
+        "proc": 86,
+        "casts": 4,
+        "attacks": 48,
+        "duplicateItems": false,
+        "flag": "官方非C"
+      },
+      {
+        "hero": "拉莫斯",
+        "price": 3,
+        "star": 3,
+        "items": [
+          "锐利之刃",
+          "鬼索的狂暴之刃",
+          "卢安娜的飓风"
+        ],
+        "dps": 303,
+        "auto": 177,
+        "spell": 37,
+        "proc": 89,
+        "casts": 4,
+        "attacks": 42,
+        "duplicateItems": false,
+        "flag": "官方非C"
+      },
+      {
         "hero": "瑟提",
         "price": 4,
         "star": 2,
@@ -10317,42 +9464,6 @@
         "proc": 62,
         "casts": 7,
         "attacks": 51,
-        "duplicateItems": false,
-        "flag": "官方非C"
-      },
-      {
-        "hero": "科加斯",
-        "price": 3,
-        "star": 3,
-        "items": [
-          "锐利之刃",
-          "鬼索的狂暴之刃",
-          "卢安娜的飓风"
-        ],
-        "dps": 276,
-        "auto": 177,
-        "spell": 10,
-        "proc": 89,
-        "casts": 3,
-        "attacks": 42,
-        "duplicateItems": false,
-        "flag": "官方非C"
-      },
-      {
-        "hero": "拉莫斯",
-        "price": 3,
-        "star": 3,
-        "items": [
-          "锐利之刃",
-          "鬼索的狂暴之刃",
-          "卢安娜的飓风"
-        ],
-        "dps": 272,
-        "auto": 177,
-        "spell": 6,
-        "proc": 89,
-        "casts": 4,
-        "attacks": 42,
         "duplicateItems": false,
         "flag": "官方非C"
       },
@@ -10851,11 +9962,11 @@
         "price": 5,
         "star": 2,
         "items": [
-          "狂徒铠甲",
-          "狂徒铠甲",
-          "圣盾使的誓约"
+          "振奋盔甲",
+          "振奋盔甲",
+          "振奋盔甲"
         ],
-        "ehp": 12100,
+        "ehp": 14753,
         "duplicateItems": true
       },
       {
@@ -10863,11 +9974,11 @@
         "price": 5,
         "star": 2,
         "items": [
-          "狂徒铠甲",
-          "狂徒铠甲",
-          "圣盾使的誓约"
+          "振奋盔甲",
+          "振奋盔甲",
+          "振奋盔甲"
         ],
-        "ehp": 11831,
+        "ehp": 14506,
         "duplicateItems": true
       },
       {
@@ -10875,35 +9986,11 @@
         "price": 5,
         "star": 2,
         "items": [
-          "狂徒铠甲",
-          "狂徒铠甲",
-          "圣盾使的誓约"
+          "振奋盔甲",
+          "振奋盔甲",
+          "振奋盔甲"
         ],
-        "ehp": 11588,
-        "duplicateItems": true
-      },
-      {
-        "hero": "瑟庄妮",
-        "price": 4,
-        "star": 2,
-        "items": [
-          "狂徒铠甲",
-          "狂徒铠甲",
-          "狂徒铠甲"
-        ],
-        "ehp": 10659,
-        "duplicateItems": true
-      },
-      {
-        "hero": "扎克",
-        "price": 4,
-        "star": 2,
-        "items": [
-          "狂徒铠甲",
-          "狂徒铠甲",
-          "狂徒铠甲"
-        ],
-        "ehp": 10628,
+        "ehp": 14164,
         "duplicateItems": true
       },
       {
@@ -10911,11 +9998,35 @@
         "price": 4,
         "star": 2,
         "items": [
-          "狂徒铠甲",
-          "狂徒铠甲",
-          "石像鬼石板甲"
+          "振奋盔甲",
+          "振奋盔甲",
+          "振奋盔甲"
         ],
-        "ehp": 10595,
+        "ehp": 12849,
+        "duplicateItems": true
+      },
+      {
+        "hero": "扎克",
+        "price": 4,
+        "star": 2,
+        "items": [
+          "振奋盔甲",
+          "振奋盔甲",
+          "振奋盔甲"
+        ],
+        "ehp": 12837,
+        "duplicateItems": true
+      },
+      {
+        "hero": "瑟庄妮",
+        "price": 4,
+        "star": 2,
+        "items": [
+          "振奋盔甲",
+          "振奋盔甲",
+          "振奋盔甲"
+        ],
+        "ehp": 12799,
         "duplicateItems": true
       },
       {
@@ -10923,11 +10034,11 @@
         "price": 4,
         "star": 2,
         "items": [
-          "狂徒铠甲",
-          "狂徒铠甲",
-          "狂徒铠甲"
+          "振奋盔甲",
+          "振奋盔甲",
+          "振奋盔甲"
         ],
-        "ehp": 10032,
+        "ehp": 12046,
         "duplicateItems": true
       },
       {
@@ -10935,11 +10046,11 @@
         "price": 4,
         "star": 2,
         "items": [
-          "狂徒铠甲",
-          "狂徒铠甲",
-          "狂徒铠甲"
+          "振奋盔甲",
+          "振奋盔甲",
+          "振奋盔甲"
         ],
-        "ehp": 10032,
+        "ehp": 12046,
         "duplicateItems": true
       },
       {
@@ -10947,11 +10058,11 @@
         "price": 4,
         "star": 2,
         "items": [
-          "狂徒铠甲",
-          "狂徒铠甲",
-          "石像鬼石板甲"
+          "振奋盔甲",
+          "振奋盔甲",
+          "振奋盔甲"
         ],
-        "ehp": 9807,
+        "ehp": 11670,
         "duplicateItems": true
       },
       {
@@ -10959,11 +10070,11 @@
         "price": 3,
         "star": 2,
         "items": [
-          "狂徒铠甲",
-          "狂徒铠甲",
-          "狂徒铠甲"
+          "振奋盔甲",
+          "振奋盔甲",
+          "振奋盔甲"
         ],
-        "ehp": 9453,
+        "ehp": 11281,
         "duplicateItems": true
       },
       {
@@ -10971,11 +10082,59 @@
         "price": 3,
         "star": 2,
         "items": [
-          "狂徒铠甲",
-          "狂徒铠甲",
-          "狂徒铠甲"
+          "振奋盔甲",
+          "振奋盔甲",
+          "振奋盔甲"
         ],
-        "ehp": 9453,
+        "ehp": 11281,
+        "duplicateItems": true
+      },
+      {
+        "hero": "佛耶戈",
+        "price": 4,
+        "star": 2,
+        "items": [
+          "振奋盔甲",
+          "振奋盔甲",
+          "振奋盔甲"
+        ],
+        "ehp": 10917,
+        "duplicateItems": true
+      },
+      {
+        "hero": "劫",
+        "price": 4,
+        "star": 2,
+        "items": [
+          "振奋盔甲",
+          "振奋盔甲",
+          "振奋盔甲"
+        ],
+        "ehp": 10917,
+        "duplicateItems": true
+      },
+      {
+        "hero": "蕾欧娜",
+        "price": 5,
+        "star": 2,
+        "items": [
+          "振奋盔甲",
+          "振奋盔甲",
+          "振奋盔甲"
+        ],
+        "ehp": 10917,
+        "duplicateItems": true
+      },
+      {
+        "hero": "厄加特",
+        "price": 5,
+        "star": 2,
+        "items": [
+          "振奋盔甲",
+          "振奋盔甲",
+          "振奋盔甲"
+        ],
+        "ehp": 10540,
         "duplicateItems": true
       }
     ]

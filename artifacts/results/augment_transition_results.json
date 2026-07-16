@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-16T18:37:52.732Z",
+  "generated": "2026-07-16T20:36:56.037Z",
   "experiment": "augment-conditioned-transition-v1",
   "scenario": {
     "level": 4,
@@ -53,12 +53,12 @@
     "names": [
       "怪兽佐伊2黑客2淘气包怪兽",
       "情报特工怪兽卡莎4情报特工3怪兽",
-      "6斗拉面贾克斯6斗士3战斗机甲3护卫",
       "完美的日炎耀斑蕾欧娜机制路线",
+      "6斗拉面贾克斯6斗士3战斗机甲3护卫",
+      "双重气泡佐伊机制路线",
       "秘卫斗士贾克斯4斗士3秘术卫士3战斗机甲",
       "德莱文联盟德莱文机制路线",
-      "进入夜晚薇恩机制路线",
-      "咒能高涨伊泽瑞尔机制路线",
+      "扩散射击薇恩机制路线",
       "机甲德莱文 -> 贾克斯 -> 蕾欧娜",
       "吉祥物爱心 -> 猫咪/超英法系",
       "决斗连胜 -> 薇恩/剑姬/劫",
@@ -84,14 +84,36 @@
   "mechanismAblation": {
     "samples": 96,
     "battles": 384,
-    "plainMeanMargin": 0.394,
-    "augmentedMeanMargin": 0.43,
-    "meanDelta": 3.65,
-    "standardError": 0.374,
-    "lcb95": 3.03,
-    "probabilityPositive": 88.54
+    "plainMeanMargin": 0.328,
+    "augmentedMeanMargin": 0.433,
+    "meanDelta": 10.48,
+    "standardError": 1.728,
+    "lcb95": 7.64,
+    "probabilityPositive": 93.75
   },
   "rankings": [
+    {
+      "id": "keep-draven",
+      "label": "德莱文继续定线",
+      "strategicCarry": "德莱文",
+      "currentHolder": "德莱文",
+      "terminalCarry": "德莱文",
+      "samples": 240,
+      "battles": 1440,
+      "utility": 57.55,
+      "interval90": [
+        39.09,
+        89.86
+      ],
+      "cvar10": 36.4,
+      "winIndex": 58.89,
+      "meanMargin": 0.127,
+      "coverage": 100,
+      "jax2ByMidPct": 44.17,
+      "jax3TerminalPct": 0.42,
+      "draven3TerminalPct": 6.67,
+      "leona2TerminalPct": 4.58
+    },
     {
       "id": "immediate-jax",
       "label": "贾克斯1星立即接管",
@@ -100,14 +122,14 @@
       "terminalCarry": "贾克斯",
       "samples": 240,
       "battles": 1440,
-      "utility": 64.22,
+      "utility": 57.49,
       "interval90": [
-        23.94,
-        91.62
+        24.51,
+        91.43
       ],
-      "cvar10": 23.9,
-      "winIndex": 68,
-      "meanMargin": 0.202,
+      "cvar10": 24.44,
+      "winIndex": 58.78,
+      "meanMargin": 0.128,
       "coverage": 100,
       "jax2ByMidPct": 44.17,
       "jax3TerminalPct": 0.42,
@@ -122,14 +144,14 @@
       "terminalCarry": "蕾欧娜",
       "samples": 240,
       "battles": 1440,
-      "utility": 59.43,
+      "utility": 54.25,
       "interval90": [
-        24.17,
-        91.05
+        24.37,
+        91.27
       ],
-      "cvar10": 23.81,
-      "winIndex": 61.65,
-      "meanMargin": 0.143,
+      "cvar10": 24.38,
+      "winIndex": 54.83,
+      "meanMargin": 0.076,
       "coverage": 100,
       "jax2ByMidPct": 44.17,
       "jax3TerminalPct": 0.42,
@@ -144,36 +166,14 @@
       "terminalCarry": "贾克斯",
       "samples": 240,
       "battles": 1440,
-      "utility": 59.41,
+      "utility": 54.08,
       "interval90": [
-        24.17,
-        91.01
+        24.43,
+        91.18
       ],
-      "cvar10": 23.81,
-      "winIndex": 61.65,
-      "meanMargin": 0.142,
-      "coverage": 100,
-      "jax2ByMidPct": 44.17,
-      "jax3TerminalPct": 0.42,
-      "draven3TerminalPct": 6.67,
-      "leona2TerminalPct": 4.58
-    },
-    {
-      "id": "keep-draven",
-      "label": "德莱文继续定线",
-      "strategicCarry": "德莱文",
-      "currentHolder": "德莱文",
-      "terminalCarry": "德莱文",
-      "samples": 240,
-      "battles": 1440,
-      "utility": 56.71,
-      "interval90": [
-        26.64,
-        90.09
-      ],
-      "cvar10": 26.62,
-      "winIndex": 57.18,
-      "meanMargin": 0.135,
+      "cvar10": 24.44,
+      "winIndex": 54.61,
+      "meanMargin": 0.074,
       "coverage": 100,
       "jax2ByMidPct": 44.17,
       "jax3TerminalPct": 0.42,
@@ -183,106 +183,106 @@
   ],
   "comparisons": {
     "immediate-jax": {
-      "meanDelta": 7.51,
-      "standardError": 1.166,
-      "lcb95": 5.59,
-      "probabilityPositive": 65
+      "meanDelta": -0.06,
+      "standardError": 1.331,
+      "lcb95": -2.25,
+      "probabilityPositive": 52.08
     },
     "bridge-jax": {
-      "meanDelta": 2.7,
-      "standardError": 0.966,
-      "lcb95": 1.11,
-      "probabilityPositive": 44.17
+      "meanDelta": -3.47,
+      "standardError": 1.024,
+      "lcb95": -5.15,
+      "probabilityPositive": 35.42
     },
     "jax-leona": {
-      "meanDelta": 2.73,
-      "standardError": 0.962,
-      "lcb95": 1.14,
-      "probabilityPositive": 44.58
+      "meanDelta": -3.3,
+      "standardError": 1.021,
+      "lcb95": -4.98,
+      "probabilityPositive": 36.67
     }
   },
   "stateInference": {
     "jaxOneImmediate": {
       "sampleCount": 134,
-      "meanDelta": 5.4,
-      "standardError": 1.506,
-      "lcb95": 2.93,
-      "probabilityPositive": 61.94
+      "meanDelta": 0.37,
+      "standardError": 1.763,
+      "lcb95": -2.53,
+      "probabilityPositive": 53.73
     },
     "jaxTwoBridge": {
       "sampleCount": 106,
-      "meanDelta": 10.14,
-      "standardError": 1.795,
-      "lcb95": 7.18,
-      "probabilityPositive": 67.92
+      "meanDelta": -0.69,
+      "standardError": 2.032,
+      "lcb95": -4.03,
+      "probabilityPositive": 49.06
     },
     "jaxThreeTerminal": {
       "sampleCount": 1,
-      "meanDelta": -2.74,
+      "meanDelta": -2.88,
       "standardError": 0,
-      "lcb95": -2.74,
+      "lcb95": -2.88,
       "probabilityPositive": 0
     },
     "leonaVsJaxTerminal": {
-      "meanDelta": 0.02,
-      "standardError": 0.153,
-      "lcb95": -0.23,
-      "probabilityPositive": 3.33
+      "meanDelta": 0.17,
+      "standardError": 0.182,
+      "lcb95": -0.13,
+      "probabilityPositive": 3.75
     }
   },
   "decision": {
     "augment": "无情连打",
     "baselineCarry": "德莱文",
     "strategicCarry": "贾克斯",
-    "policyId": "immediate-jax",
-    "certified": true,
-    "currentSwitchCertified": true,
-    "handoffCertified": true,
-    "currentHolder": "贾克斯",
+    "policyId": "bridge-jax",
+    "certified": false,
+    "currentSwitchCertified": false,
+    "handoffCertified": false,
+    "currentHolder": "德莱文",
     "handoff": {
       "unit": "贾克斯",
       "starGte": 2
     },
-    "handoffText": "贾克斯达到2星后优势扩大，继续持有输出装与至尊机甲",
+    "handoffText": "贾克斯达到2星后接管输出装与至尊机甲",
     "terminalPolicyId": "bridge-jax",
-    "terminalText": "贾克斯保留终局；蕾欧娜转核未过稳健门槛（LCB -0.23）",
+    "terminalText": "贾克斯保留终局；蕾欧娜转核未过稳健门槛（LCB -0.13）",
     "inference": {
-      "sampleCount": 134,
-      "meanDelta": 5.4,
-      "standardError": 1.506,
-      "lcb95": 2.93,
-      "probabilityPositive": 61.94
+      "sampleCount": 106,
+      "meanDelta": -0.69,
+      "standardError": 2.032,
+      "lcb95": -4.03,
+      "probabilityPositive": 49.06
     },
     "stateInference": {
       "jaxOneImmediate": {
         "sampleCount": 134,
-        "meanDelta": 5.4,
-        "standardError": 1.506,
-        "lcb95": 2.93,
-        "probabilityPositive": 61.94
+        "meanDelta": 0.37,
+        "standardError": 1.763,
+        "lcb95": -2.53,
+        "probabilityPositive": 53.73
       },
       "jaxTwoBridge": {
         "sampleCount": 106,
-        "meanDelta": 10.14,
-        "standardError": 1.795,
-        "lcb95": 7.18,
-        "probabilityPositive": 67.92
+        "meanDelta": -0.69,
+        "standardError": 2.032,
+        "lcb95": -4.03,
+        "probabilityPositive": 49.06
       },
       "jaxThreeTerminal": {
         "sampleCount": 1,
-        "meanDelta": -2.74,
+        "meanDelta": -2.88,
         "standardError": 0,
-        "lcb95": -2.74,
+        "lcb95": -2.88,
         "probabilityPositive": 0
       },
       "leonaVsJaxTerminal": {
-        "meanDelta": 0.02,
-        "standardError": 0.153,
-        "lcb95": -0.23,
-        "probabilityPositive": 3.33
+        "meanDelta": 0.17,
+        "standardError": 0.182,
+        "lcb95": -0.13,
+        "probabilityPositive": 3.75
       }
     },
-    "sampleSupport": 61.94,
+    "sampleSupport": 49.06,
     "comparedPolicies": [
       "keep-draven",
       "immediate-jax",
