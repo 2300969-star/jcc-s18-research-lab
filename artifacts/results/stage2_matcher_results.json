@@ -1067,167 +1067,8082 @@
    {
     "name": "暴风之剑",
     "type": "component",
-    "priority": 86
+    "gameTypes": [
+     "基础装备"
+    ],
+    "priority": 86,
+    "ids": [
+     "1001"
+    ],
+    "basicDesc": "+10物理加成",
+    "desc": "",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/1001.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 10,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "not-applicable",
+    "variants": [
+     {
+      "id": "1001",
+      "gameType": "基础装备",
+      "basicDesc": "+10物理加成",
+      "desc": "",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/1001.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 10,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
    },
    {
     "name": "反曲之弓",
     "type": "component",
-    "priority": 86
+    "gameTypes": [
+     "基础装备"
+    ],
+    "priority": 86,
+    "ids": [
+     "1002"
+    ],
+    "basicDesc": "+10%攻击速度",
+    "desc": "",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/1002.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 10,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "not-applicable",
+    "variants": [
+     {
+      "id": "1002",
+      "gameType": "基础装备",
+      "basicDesc": "+10%攻击速度",
+      "desc": "",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/1002.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 10,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
    },
    {
     "name": "无用大棒",
     "type": "component",
-    "priority": 86
+    "gameTypes": [
+     "基础装备"
+    ],
+    "priority": 86,
+    "ids": [
+     "1003"
+    ],
+    "basicDesc": "+10法术加成",
+    "desc": "",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/1003.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 10,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "not-applicable",
+    "variants": [
+     {
+      "id": "1003",
+      "gameType": "基础装备",
+      "basicDesc": "+10法术加成",
+      "desc": "",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/1003.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 10,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
    },
    {
     "name": "负极斗篷",
     "type": "component",
-    "priority": 75
+    "gameTypes": [
+     "基础装备"
+    ],
+    "priority": 75,
+    "ids": [
+     "1006"
+    ],
+    "basicDesc": "+20魔法抗性",
+    "desc": "",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/1006.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 20,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "not-applicable",
+    "variants": [
+     {
+      "id": "1006",
+      "gameType": "基础装备",
+      "basicDesc": "+20魔法抗性",
+      "desc": "",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/1006.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 20,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
    },
    {
     "name": "拳套",
     "type": "component",
-    "priority": 62
+    "gameTypes": [
+     "基础装备"
+    ],
+    "priority": 62,
+    "ids": [
+     "1009"
+    ],
+    "basicDesc": "+20%暴击率",
+    "desc": "",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/1009.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 20,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "not-applicable",
+    "variants": [
+     {
+      "id": "1009",
+      "gameType": "基础装备",
+      "basicDesc": "+20%暴击率",
+      "desc": "",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/1009.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 20,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
    },
    {
     "name": "狂徒铠甲",
     "type": "completed",
-    "priority": 57
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 57,
+    "ids": [
+     "2834"
+    ],
+    "basicDesc": "+500生命上限",
+    "desc": "每秒回复 2% 最大生命。 [怪兽入侵专属]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2034.png",
+    "stats": {
+     "hp": 500,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "modeled",
+    "variants": [
+     {
+      "id": "2834",
+      "gameType": "成型装备",
+      "basicDesc": "+500生命上限",
+      "desc": "每秒回复 2% 最大生命。 [怪兽入侵专属]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2034.png",
+      "stats": {
+       "hp": 500,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": true
+     }
+    ]
    },
    {
     "name": "锁子甲",
     "type": "component",
-    "priority": 56
+    "gameTypes": [
+     "基础装备"
+    ],
+    "priority": 56,
+    "ids": [
+     "1005"
+    ],
+    "basicDesc": "+20护甲",
+    "desc": "",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/1005.png",
+    "stats": {
+     "hp": 0,
+     "armor": 20,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "not-applicable",
+    "variants": [
+     {
+      "id": "1005",
+      "gameType": "基础装备",
+      "basicDesc": "+20护甲",
+      "desc": "",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/1005.png",
+      "stats": {
+       "hp": 0,
+       "armor": 20,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
    },
    {
     "name": "鬼索的狂暴之刃",
     "type": "completed",
-    "priority": 54
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 54,
+    "ids": [
+     "2810"
+    ],
+    "basicDesc": "+10%攻击速度 +10法术加成",
+    "desc": "每次攻击提供5%额外攻击速度。这个效果可叠加！ [怪兽入侵专属]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2010.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 10,
+     "asPct": 10,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "modeled",
+    "variants": [
+     {
+      "id": "2810",
+      "gameType": "成型装备",
+      "basicDesc": "+10%攻击速度 +10法术加成",
+      "desc": "每次攻击提供5%额外攻击速度。这个效果可叠加！ [怪兽入侵专属]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2010.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 10,
+       "asPct": 10,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": true
+     }
+    ]
    },
    {
     "name": "卢安娜的飓风",
     "type": "completed",
-    "priority": 48
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 48,
+    "ids": [
+     "2813"
+    ],
+    "basicDesc": "+20%攻击速度 +20魔法抗性",
+    "desc": "携带者的攻击会对附近的另一名敌人发射一个弹体，造成携带者50%攻击力【攻击力】的物理伤害。 [怪兽入侵专属]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2033.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 20,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 20,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "modeled",
+    "variants": [
+     {
+      "id": "2813",
+      "gameType": "成型装备",
+      "basicDesc": "+20%攻击速度 +20魔法抗性",
+      "desc": "携带者的攻击会对附近的另一名敌人发射一个弹体，造成携带者50%攻击力【攻击力】的物理伤害。 [怪兽入侵专属]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2033.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 20,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 20,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": true
+     }
+    ]
    },
    {
     "name": "日炎斗篷",
     "type": "completed",
-    "priority": 46
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 46,
+    "ids": [
+     "2029"
+    ],
+    "basicDesc": "+150生命上限 +20护甲",
+    "desc": "获得8%最大生命值。 每过2秒，对2格内的一名敌人施加持续10秒的1%灼烧效果和33%重伤效果。 灼烧：每秒造成目标一部分最大生命值的真实伤害 重伤：降低受到的治疗效果",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2329.png",
+    "stats": {
+     "hp": 150,
+     "armor": 20,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "modeled",
+    "variants": [
+     {
+      "id": "2029",
+      "gameType": "成型装备",
+      "basicDesc": "+150生命上限 +20护甲",
+      "desc": "获得8%最大生命值。 每过2秒，对2格内的一名敌人施加持续10秒的1%灼烧效果和33%重伤效果。 灼烧：每秒造成目标一部分最大生命值的真实伤害 重伤：降低受到的治疗效果",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2329.png",
+      "stats": {
+       "hp": 150,
+       "armor": 20,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": true
+     }
+    ]
    },
    {
     "name": "女神之泪",
     "type": "component",
-    "priority": 43
+    "gameTypes": [
+     "基础装备"
+    ],
+    "priority": 43,
+    "ids": [
+     "1004"
+    ],
+    "basicDesc": "+1法力回复",
+    "desc": "",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/1004.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 1,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "not-applicable",
+    "variants": [
+     {
+      "id": "1004",
+      "gameType": "基础装备",
+      "basicDesc": "+1法力回复",
+      "desc": "",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/1004.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 1,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
    },
    {
     "name": "珠光护手",
     "type": "completed",
-    "priority": 42
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 42,
+    "ids": [
+     "2038"
+    ],
+    "basicDesc": "+35%暴击率 +35法术加成",
+    "desc": "获得【技能暴击】。 技能暴击：技能伤害可产生暴击。额外的【技能暴击】提供10%暴击伤害。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2038.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 35,
+     "asPct": 0,
+     "critPct": 35,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "modeled",
+    "variants": [
+     {
+      "id": "2038",
+      "gameType": "成型装备",
+      "basicDesc": "+35%暴击率 +35法术加成",
+      "desc": "获得【技能暴击】。 技能暴击：技能伤害可产生暴击。额外的【技能暴击】提供10%暴击伤害。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2038.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 35,
+       "asPct": 0,
+       "critPct": 35,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": true
+     }
+    ]
    },
    {
     "name": "最后的轻语",
     "type": "completed",
-    "priority": 40
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 40,
+    "ids": [
+     "2037"
+    ],
+    "basicDesc": "+15物理加成 +20%攻击速度 +20%暴击率",
+    "desc": "来自攻击和技能的伤害会对目标施加持续3秒的30%护甲击碎。这个效果不会叠加。 护甲击碎：降低护甲值",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2053.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 15,
+     "ap": 0,
+     "asPct": 20,
+     "critPct": 20,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "modeled",
+    "variants": [
+     {
+      "id": "2037",
+      "gameType": "成型装备",
+      "basicDesc": "+15物理加成 +20%攻击速度 +20%暴击率",
+      "desc": "来自攻击和技能的伤害会对目标施加持续3秒的30%护甲击碎。这个效果不会叠加。 护甲击碎：降低护甲值",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2053.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 15,
+       "ap": 0,
+       "asPct": 20,
+       "critPct": 20,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": true
+     }
+    ]
+   },
+   {
+    "name": "秘法手套",
+    "type": "completed",
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 37,
+    "ids": [
+     "2044"
+    ],
+    "basicDesc": "+150生命上限 +20%暴击率",
+    "desc": "每一回合：装备2件随机装备。 [需要用掉3个装备格。]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2044.png",
+    "stats": {
+     "hp": 150,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 20,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2044",
+      "gameType": "成型装备",
+      "basicDesc": "+150生命上限 +20%暴击率",
+      "desc": "每一回合：装备2件随机装备。 [需要用掉3个装备格。]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2044.png",
+      "stats": {
+       "hp": 150,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 20,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
    },
    {
     "name": "巨人捕手",
     "type": "completed",
-    "priority": 34
-   },
-   {
-    "name": "锐利之刃",
-    "type": "completed",
-    "priority": 33
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 34,
+    "ids": [
+     "2846"
+    ],
+    "basicDesc": "+20物理加成 +20法术加成",
+    "desc": "攻击和技能对最大生命值超过了1600的敌人们造成20%额外伤害。 [怪兽入侵专属]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2046.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 20,
+     "ap": 20,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "modeled",
+    "variants": [
+     {
+      "id": "2846",
+      "gameType": "成型装备",
+      "basicDesc": "+20物理加成 +20法术加成",
+      "desc": "攻击和技能对最大生命值超过了1600的敌人们造成20%额外伤害。 [怪兽入侵专属]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2046.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 20,
+       "ap": 20,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": true
+     }
+    ]
    },
    {
     "name": "离子火花",
     "type": "completed",
-    "priority": 33
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 33,
+    "ids": [
+     "2019"
+    ],
+    "basicDesc": "+250生命上限 +15法术加成 +35魔法抗性",
+    "desc": "对2格内的敌人们施加30%魔抗击碎。在敌人施放一次技能时，对该敌人造成相当于该敌人150%法力值消耗的魔法伤害。 魔抗击碎：降低魔抗值",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2019.png",
+    "stats": {
+     "hp": 250,
+     "armor": 0,
+     "mr": 35,
+     "adPct": 0,
+     "ap": 15,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "modeled",
+    "variants": [
+     {
+      "id": "2019",
+      "gameType": "成型装备",
+      "basicDesc": "+250生命上限 +15法术加成 +35魔法抗性",
+      "desc": "对2格内的敌人们施加30%魔抗击碎。在敌人施放一次技能时，对该敌人造成相当于该敌人150%法力值消耗的魔法伤害。 魔抗击碎：降低魔抗值",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2019.png",
+      "stats": {
+       "hp": 250,
+       "armor": 0,
+       "mr": 35,
+       "adPct": 0,
+       "ap": 15,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": true
+     }
+    ]
+   },
+   {
+    "name": "锐利之刃",
+    "type": "completed",
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 33,
+    "ids": [
+     "2045"
+    ],
+    "basicDesc": "+55物理加成 +10%伤害增幅",
+    "desc": "将完美的安宁和平静带给携带者——和所有面对它的人。 额外物理加成:0%",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2045.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 55,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 10,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2045",
+      "gameType": "成型装备",
+      "basicDesc": "+55物理加成 +10%伤害增幅",
+      "desc": "将完美的安宁和平静带给携带者——和所有面对它的人。 额外物理加成:0%",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2045.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 55,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 10,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
    },
    {
     "name": "泰坦的坚决",
     "type": "completed",
-    "priority": 33
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 33,
+    "ids": [
+     "2012"
+    ],
+    "basicDesc": "+20护甲 +10%攻击速度",
+    "desc": "在攻击或承受伤害时获得2%物理加成和2%法术加成，至多可叠加25次。 在叠满层数后，获得10%伤害增幅，并获得控制免疫。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2052.png",
+    "stats": {
+     "hp": 0,
+     "armor": 20,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 10,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "modeled",
+    "variants": [
+     {
+      "id": "2012",
+      "gameType": "成型装备",
+      "basicDesc": "+20护甲 +10%攻击速度",
+      "desc": "在攻击或承受伤害时获得2%物理加成和2%法术加成，至多可叠加25次。 在叠满层数后，获得10%伤害增幅，并获得控制免疫。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2052.png",
+      "stats": {
+       "hp": 0,
+       "armor": 20,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 10,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": true
+     }
+    ]
    },
    {
     "name": "蓝霸符",
     "type": "completed",
-    "priority": 26
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 26,
+    "ids": [
+     "2822"
+    ],
+    "basicDesc": "+10法力值 +10物理加成 +10法术加成",
+    "desc": "施放技能的法力值消耗降低10。如果携带者在施放技能后的3秒内至少参与了一次击败，就会获得10法力值。 [怪兽入侵专属] [唯一-每位英雄仅限1件]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2222.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 10,
+     "ap": 10,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 10,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "modeled",
+    "variants": [
+     {
+      "id": "2822",
+      "gameType": "成型装备",
+      "basicDesc": "+10法力值 +10物理加成 +10法术加成",
+      "desc": "施放技能的法力值消耗降低10。如果携带者在施放技能后的3秒内至少参与了一次击败，就会获得10法力值。 [怪兽入侵专属] [唯一-每位英雄仅限1件]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2222.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 10,
+       "ap": 10,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 10,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": true
+     }
+    ]
    },
    {
     "name": "疾射火炮",
     "type": "completed",
-    "priority": 25
+    "gameTypes": [
+     "成型装备",
+     "神器装备"
+    ],
+    "priority": 25,
+    "ids": [
+     "2809",
+     "6080"
+    ],
+    "basicDesc": "+50%攻击速度",
+    "desc": "攻击距离+1。 [怪兽入侵专属]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2009.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 50,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2809",
+      "gameType": "成型装备",
+      "basicDesc": "+50%攻击速度",
+      "desc": "攻击距离+1。 [怪兽入侵专属]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2009.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 50,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     },
+     {
+      "id": "6080",
+      "gameType": "神器装备",
+      "basicDesc": "+65%攻击速度 +5%伤害增幅",
+      "desc": "获得+1攻击距离，并且这个距离会在携带者每击败一个敌人时提升1。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/rapid_firecannon.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 65,
+       "critPct": 0,
+       "ampPct": 5,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
    },
    {
     "name": "巨人腰带",
     "type": "component",
-    "priority": 24
-   },
-   {
-    "name": "石像鬼石板甲",
-    "type": "completed",
-    "priority": 24
+    "gameTypes": [
+     "基础装备"
+    ],
+    "priority": 24,
+    "ids": [
+     "1007"
+    ],
+    "basicDesc": "+150生命上限",
+    "desc": "",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/1007.png",
+    "stats": {
+     "hp": 150,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "not-applicable",
+    "variants": [
+     {
+      "id": "1007",
+      "gameType": "基础装备",
+      "basicDesc": "+150生命上限",
+      "desc": "",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/1007.png",
+      "stats": {
+       "hp": 150,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
    },
    {
     "name": "圣盾使的誓约",
     "type": "completed",
-    "priority": 24
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 24,
+    "ids": [
+     "2023"
+    ],
+    "basicDesc": "+25护甲 +25魔法抗性 +1法力回复",
+    "desc": "战斗开始时：获得20法力值。 在40%生命值时，获得15法力值和相当于20%最大生命值的护盾值。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2023.png",
+    "stats": {
+     "hp": 0,
+     "armor": 25,
+     "mr": 25,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 1,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "modeled",
+    "variants": [
+     {
+      "id": "2023",
+      "gameType": "成型装备",
+      "basicDesc": "+25护甲 +25魔法抗性 +1法力回复",
+      "desc": "战斗开始时：获得20法力值。 在40%生命值时，获得15法力值和相当于20%最大生命值的护盾值。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2023.png",
+      "stats": {
+       "hp": 0,
+       "armor": 25,
+       "mr": 25,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 1,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": true
+     }
+    ]
    },
    {
-    "name": "巨龙之爪",
+    "name": "石像鬼石板甲",
     "type": "completed",
-    "priority": 22
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 24,
+    "ids": [
+     "2028"
+    ],
+    "basicDesc": "+100生命上限 +25护甲 +25魔法抗性",
+    "desc": "每有一个敌人正在以携带者为目标，携带者就会获得10护甲和10魔抗。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2248.png",
+    "stats": {
+     "hp": 100,
+     "armor": 25,
+     "mr": 25,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "modeled",
+    "variants": [
+     {
+      "id": "2028",
+      "gameType": "成型装备",
+      "basicDesc": "+100生命上限 +25护甲 +25魔法抗性",
+      "desc": "每有一个敌人正在以携带者为目标，携带者就会获得10护甲和10魔抗。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2248.png",
+      "stats": {
+       "hp": 100,
+       "armor": 25,
+       "mr": 25,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": true
+     }
+    ]
    },
    {
     "name": "汲取剑",
     "type": "completed",
-    "priority": 22
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 22,
+    "ids": [
+     "2006"
+    ],
+    "basicDesc": "+15物理加成 +15法术加成 +20魔法抗性 +20%全能吸血",
+    "desc": "每场战斗仅触发1次：在40%生命值时，获得一个护盾，护盾值相当于携带者25%的最大生命值，至多持续5秒。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2006.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 20,
+     "adPct": 15,
+     "ap": 15,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 20,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2006",
+      "gameType": "成型装备",
+      "basicDesc": "+15物理加成 +15法术加成 +20魔法抗性 +20%全能吸血",
+      "desc": "每场战斗仅触发1次：在40%生命值时，获得一个护盾，护盾值相当于携带者25%的最大生命值，至多持续5秒。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2006.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 20,
+       "adPct": 15,
+       "ap": 15,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 20,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "巨龙之爪",
+    "type": "completed",
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 22,
+    "ids": [
+     "2031"
+    ],
+    "basicDesc": "+60魔法抗性",
+    "desc": "获得6%最大生命值。 每2秒治疗2.5%最大生命值。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2031.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 60,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "modeled",
+    "variants": [
+     {
+      "id": "2031",
+      "gameType": "成型装备",
+      "basicDesc": "+60魔法抗性",
+      "desc": "获得6%最大生命值。 每2秒治疗2.5%最大生命值。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2031.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 60,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": true
+     }
+    ]
    },
    {
     "name": "班克斯的魔法帽",
     "type": "completed",
-    "priority": 19
-   },
-   {
-    "name": "朔极之矛",
-    "type": "completed",
-    "priority": 18
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 19,
+    "ids": [
+     "2016"
+    ],
+    "basicDesc": "+55法术加成 +15%伤害增幅",
+    "desc": "这顶不起眼的帽子可以帮助你创造，或毁灭，这个世界本身。 额外法术加成:0%",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2016.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 55,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 15,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2016",
+      "gameType": "成型装备",
+      "basicDesc": "+55法术加成 +15%伤害增幅",
+      "desc": "这顶不起眼的帽子可以帮助你创造，或毁灭，这个世界本身。 额外法术加成:0%",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2016.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 55,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 15,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
    },
    {
     "name": "棘刺背心",
     "type": "completed",
-    "priority": 18
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 18,
+    "ids": [
+     "2027"
+    ],
+    "basicDesc": "+50护甲",
+    "desc": "获得6%最大生命值。 使来自攻击的伤害降低5%。在被任一攻击命中时，对邻格所有敌人造成100魔法伤害。 冷却时间：2秒",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2054.png",
+    "stats": {
+     "hp": 0,
+     "armor": 50,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "modeled",
+    "variants": [
+     {
+      "id": "2027",
+      "gameType": "成型装备",
+      "basicDesc": "+50护甲",
+      "desc": "获得6%最大生命值。 使来自攻击的伤害降低5%。在被任一攻击命中时，对邻格所有敌人造成100魔法伤害。 冷却时间：2秒",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2054.png",
+      "stats": {
+       "hp": 0,
+       "armor": 50,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": true
+     }
+    ]
+   },
+   {
+    "name": "朔极之矛",
+    "type": "completed",
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 18,
+    "ids": [
+     "2004"
+    ],
+    "basicDesc": "+15物理加成 +15法术加成 +1法力回复",
+    "desc": "每次普攻提供5额外法力值。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2004.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 15,
+     "ap": 15,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 1,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "modeled",
+    "variants": [
+     {
+      "id": "2004",
+      "gameType": "成型装备",
+      "basicDesc": "+15物理加成 +15法术加成 +1法力回复",
+      "desc": "每次普攻提供5额外法力值。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2004.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 15,
+       "ap": 15,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 1,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": true
+     }
+    ]
    },
    {
     "name": "振奋盔甲",
     "type": "completed",
-    "priority": 17
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 17,
+    "ids": [
+     "2025"
+    ],
+    "basicDesc": "+300生命上限 +8%伤害减免 +2法力回复",
+    "desc": "每秒回复2%已损失生命值。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/spiritvisage.png",
+    "stats": {
+     "hp": 300,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 2,
+     "omnivamp": 0,
+     "damageReduction": 8
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "modeled",
+    "variants": [
+     {
+      "id": "2025",
+      "gameType": "成型装备",
+      "basicDesc": "+300生命上限 +8%伤害减免 +2法力回复",
+      "desc": "每秒回复2%已损失生命值。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/spiritvisage.png",
+      "stats": {
+       "hp": 300,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 2,
+       "omnivamp": 0,
+       "damageReduction": 8
+      },
+      "staticStatsComplete": true,
+      "effectModeled": true
+     }
+    ]
    },
    {
     "name": "水银",
     "type": "completed",
-    "priority": 16
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 16,
+    "ids": [
+     "2041"
+    ],
+    "basicDesc": "+20魔法抗性 +15%攻击速度 +20%暴击率",
+    "desc": "战斗开始时：获得持续18秒的控制免疫效果。 每秒获得3%可叠加的攻击速度。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2041.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 20,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 15,
+     "critPct": 20,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "modeled",
+    "variants": [
+     {
+      "id": "2041",
+      "gameType": "成型装备",
+      "basicDesc": "+20魔法抗性 +15%攻击速度 +20%暴击率",
+      "desc": "战斗开始时：获得持续18秒的控制免疫效果。 每秒获得3%可叠加的攻击速度。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2041.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 20,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 15,
+       "critPct": 20,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": true
+     }
+    ]
    },
    {
     "name": "斯塔缇克电刃",
     "type": "completed",
-    "priority": 14
+    "gameTypes": [
+     "成型装备",
+     "神器装备"
+    ],
+    "priority": 14,
+    "ids": [
+     "2811",
+     "6088"
+    ],
+    "basicDesc": "+20%攻击速度 +10法力值",
+    "desc": "每第3次攻击对4名敌人造成30魔法伤害和持续5秒的30%魔抗击碎。 [怪兽入侵专属] 魔抗击碎：降低魔抗值",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2011.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 20,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 10,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "partial",
+    "variants": [
+     {
+      "id": "2811",
+      "gameType": "成型装备",
+      "basicDesc": "+20%攻击速度 +10法力值",
+      "desc": "每第3次攻击对4名敌人造成30魔法伤害和持续5秒的30%魔抗击碎。 [怪兽入侵专属] 魔抗击碎：降低魔抗值",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2011.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 20,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 10,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": true
+     },
+     {
+      "id": "6088",
+      "gameType": "神器装备",
+      "basicDesc": "+15法术加成 +50%攻击速度",
+      "desc": "每第3次攻击对4名敌人造成30+40%携带者额外法术加成的额外魔法伤害。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/statikkshiv.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 15,
+       "asPct": 50,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "钢铁烈阳之匣",
+    "type": "completed",
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 12,
+    "ids": [
+     "2818"
+    ],
+    "basicDesc": "+20护甲 +20法术加成",
+    "desc": "战斗开始时：携带者和同一排2格内的友军们获得持续15秒的300/350/400护盾值（随携带者星级增加）。 [怪兽入侵专属]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2018.png",
+    "stats": {
+     "hp": 0,
+     "armor": 20,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 20,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "modeled",
+    "variants": [
+     {
+      "id": "2818",
+      "gameType": "成型装备",
+      "basicDesc": "+20护甲 +20法术加成",
+      "desc": "战斗开始时：携带者和同一排2格内的友军们获得持续15秒的300/350/400护盾值（随携带者星级增加）。 [怪兽入侵专属]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2018.png",
+      "stats": {
+       "hp": 0,
+       "armor": 20,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 20,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": true
+     }
+    ]
+   },
+   {
+    "name": "夜之锋刃",
+    "type": "completed",
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 10,
+    "ids": [
+     "2005"
+    ],
+    "basicDesc": "+10物理加成 +10法术加成 +20护甲 +15%攻击速度",
+    "desc": "救主灵刃：在60%生命值时，短暂变为不可被选取状态、摆脱负面效果、并治疗20%已损失生命值。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2005.png",
+    "stats": {
+     "hp": 0,
+     "armor": 20,
+     "mr": 0,
+     "adPct": 10,
+     "ap": 10,
+     "asPct": 15,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2005",
+      "gameType": "成型装备",
+      "basicDesc": "+10物理加成 +10法术加成 +20护甲 +15%攻击速度",
+      "desc": "救主灵刃：在60%生命值时，短暂变为不可被选取状态、摆脱负面效果、并治疗20%已损失生命值。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2005.png",
+      "stats": {
+       "hp": 0,
+       "armor": 20,
+       "mr": 0,
+       "adPct": 10,
+       "ap": 10,
+       "asPct": 15,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "莫雷洛秘典",
+    "type": "completed",
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 8,
+    "ids": [
+     "2020"
+    ],
+    "basicDesc": "+150生命上限 +20法术加成 +1法力回复",
+    "desc": "攻击和技能的伤害对敌人们造成持续10秒的1%灼烧效果和33%重伤效果。 灼烧：每秒造成目标一部分最大生命值的真实伤害 重伤：降低受到的治疗效果",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2020.png",
+    "stats": {
+     "hp": 150,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 20,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 1,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2020",
+      "gameType": "成型装备",
+      "basicDesc": "+150生命上限 +20法术加成 +1法力回复",
+      "desc": "攻击和技能的伤害对敌人们造成持续10秒的1%灼烧效果和33%重伤效果。 灼烧：每秒造成目标一部分最大生命值的真实伤害 重伤：降低受到的治疗效果",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2020.png",
+      "stats": {
+       "hp": 150,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 20,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 1,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
    },
    {
     "name": "海克斯科技枪刃",
     "type": "completed",
-    "priority": 7
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 7,
+    "ids": [
+     "2003"
+    ],
+    "basicDesc": "+20物理加成 +20法术加成 +15%全能吸血 +1法力回复",
+    "desc": "为生命值百分比最低的友军提供相当于20%造成伤害值的治疗。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2003.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 20,
+     "ap": 20,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 1,
+     "omnivamp": 15,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2003",
+      "gameType": "成型装备",
+      "basicDesc": "+20物理加成 +20法术加成 +15%全能吸血 +1法力回复",
+      "desc": "为生命值百分比最低的友军提供相当于20%造成伤害值的治疗。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2003.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 20,
+       "ap": 20,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 1,
+       "omnivamp": 15,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
    },
    {
     "name": "无尽之刃",
     "type": "completed",
-    "priority": 6
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 6,
+    "ids": [
+     "2001"
+    ],
+    "basicDesc": "+35物理加成 +35%暴击率",
+    "desc": "获得【技能暴击】。 技能暴击：技能伤害可产生暴击。额外的【技能暴击】提供10%暴击伤害。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2001.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 35,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 35,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "modeled",
+    "variants": [
+     {
+      "id": "2001",
+      "gameType": "成型装备",
+      "basicDesc": "+35物理加成 +35%暴击率",
+      "desc": "获得【技能暴击】。 技能暴击：技能伤害可产生暴击。额外的【技能暴击】提供10%暴击伤害。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2001.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 35,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 35,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": true
+     }
+    ]
+   },
+   {
+    "name": "大天使之杖",
+    "type": "completed",
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 4,
+    "ids": [
+     "2017"
+    ],
+    "basicDesc": "+30法术加成 +1法力回复",
+    "desc": "战斗开始时：在战斗期间，每5秒获得20%法术加成。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2017.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 30,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 1,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2017",
+      "gameType": "成型装备",
+      "basicDesc": "+30法术加成 +1法力回复",
+      "desc": "战斗开始时：在战斗期间，每5秒获得20%法术加成。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2017.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 30,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 1,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "基克的先驱",
+    "type": "completed",
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 3,
+    "ids": [
+     "2807"
+    ],
+    "basicDesc": "+150生命上限 +20物理加成",
+    "desc": "战斗开始时：提供【攻击速度】20%攻击速度给携带者和同一排1格内的友军们。 [怪兽入侵专属]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2007.png",
+    "stats": {
+     "hp": 150,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 20,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2807",
+      "gameType": "成型装备",
+      "basicDesc": "+150生命上限 +20物理加成",
+      "desc": "战斗开始时：提供【攻击速度】20%攻击速度给携带者和同一排1格内的友军们。 [怪兽入侵专属]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2007.png",
+      "stats": {
+       "hp": 150,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 20,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "能量圣杯",
+    "type": "completed",
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 3,
+    "ids": [
+     "2824"
+    ],
+    "basicDesc": "+20魔法抗性 +10法力值",
+    "desc": "战斗开始时：提供25%法术加成给携带者和同一排1格内的友军们。 [怪兽入侵专属]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2124.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 20,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 10,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2824",
+      "gameType": "成型装备",
+      "basicDesc": "+20魔法抗性 +10法力值",
+      "desc": "战斗开始时：提供25%法术加成给携带者和同一排1格内的友军们。 [怪兽入侵专属]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2124.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 20,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 10,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "正义之手",
+    "type": "completed",
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 3,
+    "ids": [
+     "2039"
+    ],
+    "basicDesc": "+20%暴击率 +1法力回复",
+    "desc": "获得2个效果： -15%物理加成和15%法术加成。 -12%全能汲取。 生命值高于50%时，物理加成和法术加成翻倍。生命值低于50%时，全能汲取效果翻倍。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2039.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 20,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 1,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2039",
+      "gameType": "成型装备",
+      "basicDesc": "+20%暴击率 +1法力回复",
+      "desc": "获得2个效果： -15%物理加成和15%法术加成。 -12%全能汲取。 生命值高于50%时，物理加成和法术加成翻倍。生命值低于50%时，全能汲取效果翻倍。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2039.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 20,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 1,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "静止法衣",
+    "type": "completed",
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 1,
+    "ids": [
+     "2840"
+    ],
+    "basicDesc": "+20护甲 +20%暴击率",
+    "desc": "战斗开始时：射出一道光束，对敌人们施加35%破法。 [怪兽入侵专属] 破法：最大法力值提升，持续到施放技能为止。 [唯一-每位英雄仅限1件]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2240.png",
+    "stats": {
+     "hp": 0,
+     "armor": 20,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 20,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2840",
+      "gameType": "成型装备",
+      "basicDesc": "+20护甲 +20%暴击率",
+      "desc": "战斗开始时：射出一道光束，对敌人们施加35%破法。 [怪兽入侵专属] 破法：最大法力值提升，持续到施放技能为止。 [唯一-每位英雄仅限1件]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2240.png",
+      "stats": {
+       "hp": 0,
+       "armor": 20,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 20,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "灵风",
+    "type": "completed",
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 1,
+    "ids": [
+     "2832"
+    ],
+    "basicDesc": "+150生命上限 +20魔法抗性",
+    "desc": "战斗开始时：在棋盘对面召唤一道飓风，来将与飓风相距最近的那个敌人移出战斗5秒。 [无视控制免疫效果。] [怪兽入侵专属] [唯一-每位英雄仅限1件]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2032.png",
+    "stats": {
+     "hp": 150,
+     "armor": 0,
+     "mr": 20,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2832",
+      "gameType": "成型装备",
+      "basicDesc": "+150生命上限 +20魔法抗性",
+      "desc": "战斗开始时：在棋盘对面召唤一道飓风，来将与飓风相距最近的那个敌人移出战斗5秒。 [无视控制免疫效果。] [怪兽入侵专属] [唯一-每位英雄仅限1件]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2032.png",
+      "stats": {
+       "hp": 150,
+       "armor": 0,
+       "mr": 20,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "强袭者的链枷",
+    "type": "completed",
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 1,
+    "ids": [
+     "2042"
+    ],
+    "basicDesc": "+150生命上限 +10%攻击速度 +20%暴击率 +10%伤害增幅",
+    "desc": "暴击提供持续5秒的5%伤害增幅，可叠加至多4次。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/strikersflail.png",
+    "stats": {
+     "hp": 150,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 10,
+     "critPct": 20,
+     "ampPct": 10,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2042",
+      "gameType": "成型装备",
+      "basicDesc": "+150生命上限 +10%攻击速度 +20%暴击率 +10%伤害增幅",
+      "desc": "暴击提供持续5秒的5%伤害增幅，可叠加至多4次。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/strikersflail.png",
+      "stats": {
+       "hp": 150,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 10,
+       "critPct": 20,
+       "ampPct": 10,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "兹若特传送门",
+    "type": "completed",
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 1,
+    "ids": [
+     "2814"
+    ],
+    "basicDesc": "+150生命上限 +20%攻击速度",
+    "desc": "召唤一个大型虚空生物。它的强度会在每个阶段提升。 [怪兽入侵专属] [唯一-每位英雄仅限1件]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2214.png",
+    "stats": {
+     "hp": 150,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 20,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2814",
+      "gameType": "成型装备",
+      "basicDesc": "+150生命上限 +20%攻击速度",
+      "desc": "召唤一个大型虚空生物。它的强度会在每个阶段提升。 [怪兽入侵专属] [唯一-每位英雄仅限1件]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2214.png",
+      "stats": {
+       "hp": 150,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 20,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "爱心使者纹章",
+    "type": "emblem",
+    "gameTypes": [
+     "转职纹章"
+    ],
+    "priority": 0,
+    "ids": [
+     "4821"
+    ],
+    "basicDesc": "+1法力回复",
+    "desc": "携带者获得【爱心使者】羁绊。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4821.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 1,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "4821",
+      "gameType": "转职纹章",
+      "basicDesc": "+1法力回复",
+      "desc": "携带者获得【爱心使者】羁绊。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4821.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 1,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "暗行者之爪",
+    "type": "artifact",
+    "gameTypes": [
+     "神器装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6073"
+    ],
+    "basicDesc": "+300生命上限 +35物理加成 +45%暴击率",
+    "desc": "在击败一个目标后，摆脱负面效果并冲刺到4格内相距最远的那个目标处。下两次暴击攻击造成50%额外暴击伤害。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/chonccsprowlersclaw.png",
+    "stats": {
+     "hp": 300,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 35,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 45,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6073",
+      "gameType": "神器装备",
+      "basicDesc": "+300生命上限 +35物理加成 +45%暴击率",
+      "desc": "在击败一个目标后，摆脱负面效果并冲刺到4格内相距最远的那个目标处。下两次暴击攻击造成50%额外暴击伤害。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/chonccsprowlersclaw.png",
+      "stats": {
+       "hp": 300,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 35,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 45,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "超频的日炎斗篷",
+    "type": "special",
+    "gameTypes": [
+     "特殊装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "5807"
+    ],
+    "basicDesc": "+20护甲 +300生命上限",
+    "desc": "每过1秒，对3格内的一名敌人施加持续10秒的10%灼烧效果和33%重伤效果。 会在1个与玩家的战斗回合后自毁。 灼烧：造成目标一部分最大生命值的真实伤害 重伤：使受到的治疗效果降低",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/5807.png",
+    "stats": {
+     "hp": 300,
+     "armor": 20,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "5807",
+      "gameType": "特殊装备",
+      "basicDesc": "+20护甲 +300生命上限",
+      "desc": "每过1秒，对3格内的一名敌人施加持续10秒的10%灼烧效果和33%重伤效果。 会在1个与玩家的战斗回合后自毁。 灼烧：造成目标一部分最大生命值的真实伤害 重伤：使受到的治疗效果降低",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/5807.png",
+      "stats": {
+       "hp": 300,
+       "armor": 20,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "磁化的离子火花",
+    "type": "special",
+    "gameTypes": [
+     "特殊装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "5808"
+    ],
+    "basicDesc": "+10法术加成 +20魔法抗性",
+    "desc": "对2格内的敌人们施加50%魔抗击碎。在敌人施放一次技能时，该敌人还会被震击并受到相当于该敌人250%最大法力值的魔法伤害。携带者每4秒进行一次嘲讽。 会在1个与玩家的战斗回合后自毁。 [直接伤害类装备] 魔抗击碎：使魔抗降低 嘲讽：能够攻击且已将嘲讽者纳入攻击距离的敌人都必须攻击嘲讽者",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/5808.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 20,
+     "adPct": 0,
+     "ap": 10,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "5808",
+      "gameType": "特殊装备",
+      "basicDesc": "+10法术加成 +20魔法抗性",
+      "desc": "对2格内的敌人们施加50%魔抗击碎。在敌人施放一次技能时，该敌人还会被震击并受到相当于该敌人250%最大法力值的魔法伤害。携带者每4秒进行一次嘲讽。 会在1个与玩家的战斗回合后自毁。 [直接伤害类装备] 魔抗击碎：使魔抗降低 嘲讽：能够攻击且已将嘲讽者纳入攻击距离的敌人都必须攻击嘲讽者",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/5808.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 20,
+       "adPct": 0,
+       "ap": 10,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "大亨之铠",
+    "type": "artifact",
+    "gameTypes": [
+     "神器装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6052"
+    ],
+    "basicDesc": "+300生命上限",
+    "desc": "在承受伤害时提供1护甲、1魔抗和5生命值，这个效果至多叠加35次。 在满层时，提供【金币】1金币并且每11秒继续提供【金币】1金币。 [唯一-每位英雄仅限1件]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/5004.png",
+    "stats": {
+     "hp": 300,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6052",
+      "gameType": "神器装备",
+      "basicDesc": "+300生命上限",
+      "desc": "在承受伤害时提供1护甲、1魔抗和5生命值，这个效果至多叠加35次。 在满层时，提供【金币】1金币并且每11秒继续提供【金币】1金币。 [唯一-每位英雄仅限1件]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/5004.png",
+      "stats": {
+       "hp": 300,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "弹簧式疾射火炮",
+    "type": "special",
+    "gameTypes": [
+     "特殊装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "5801"
+    ],
+    "basicDesc": "+60%攻击速度",
+    "desc": "提供3额外攻击距离并且你的攻击不再会未命中。 会在1个与玩家的战斗回合后自毁。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/5801.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 60,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "5801",
+      "gameType": "特殊装备",
+      "basicDesc": "+60%攻击速度",
+      "desc": "提供3额外攻击距离并且你的攻击不再会未命中。 会在1个与玩家的战斗回合后自毁。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/5801.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 60,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "地下魔盗团纹章",
+    "type": "emblem",
+    "gameTypes": [
+     "转职纹章"
+    ],
+    "priority": 0,
+    "ids": [
+     "4810"
+    ],
+    "basicDesc": "+20%暴击率",
+    "desc": "携带者获得【地下魔盗团】羁绊。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4810.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 20,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "4810",
+      "gameType": "转职纹章",
+      "basicDesc": "+20%暴击率",
+      "desc": "携带者获得【地下魔盗团】羁绊。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4810.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 20,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "斗士纹章",
+    "type": "emblem",
+    "gameTypes": [
+     "转职纹章"
+    ],
+    "priority": 0,
+    "ids": [
+     "4825"
+    ],
+    "basicDesc": "+150生命上限",
+    "desc": "携带者获得【斗士】羁绊。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4825.png",
+    "stats": {
+     "hp": 150,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "4825",
+      "gameType": "转职纹章",
+      "basicDesc": "+150生命上限",
+      "desc": "携带者获得【斗士】羁绊。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4825.png",
+      "stats": {
+       "hp": 150,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "恶火小斧",
+    "type": "artifact",
+    "gameTypes": [
+     "神器装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6096"
+    ],
+    "basicDesc": "+150生命上限 +20物理加成 +20%全能吸血",
+    "desc": "攻击造成相当于携带者3%最大生命值的额外物理伤害。每1%已损失生命值，获得1%攻击速度。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/hellfirehatchet.png",
+    "stats": {
+     "hp": 150,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 20,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 20,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6096",
+      "gameType": "神器装备",
+      "basicDesc": "+150生命上限 +20物理加成 +20%全能吸血",
+      "desc": "攻击造成相当于携带者3%最大生命值的额外物理伤害。每1%已损失生命值，获得1%攻击速度。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/hellfirehatchet.png",
+      "stats": {
+       "hp": 150,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 20,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 20,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "飞升护符",
+    "type": "artifact",
+    "gameTypes": [
+     "神器装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6067"
+    ],
+    "basicDesc": "+450生命上限 +20物理加成 +20法术加成",
+    "desc": "在22秒后，获得100%最大生命值和120%伤害增幅，持续到战斗环节结束。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/talisman_of_ascension.png",
+    "stats": {
+     "hp": 450,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 20,
+     "ap": 20,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6067",
+      "gameType": "神器装备",
+      "basicDesc": "+450生命上限 +20物理加成 +20法术加成",
+      "desc": "在22秒后，获得100%最大生命值和120%伤害增幅，持续到战斗环节结束。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/talisman_of_ascension.png",
+      "stats": {
+       "hp": 450,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 20,
+       "ap": 20,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "非确定正义之手",
+    "type": "special",
+    "gameTypes": [
+     "特殊装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "5806"
+    ],
+    "basicDesc": "+20%暴击率 +15法力值 +25物理加成 +25法术加成",
+    "desc": "提供2个效果： - 25%物理加成和25%法术加成。 - 20％全能汲取。 会在1个与玩家的战斗回合后自毁。 全能汲取：获得相当于一部分实际伤害值的治疗效果。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/5806.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 25,
+     "ap": 25,
+     "asPct": 0,
+     "critPct": 20,
+     "ampPct": 0,
+     "startMana": 15,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "5806",
+      "gameType": "特殊装备",
+      "basicDesc": "+20%暴击率 +15法力值 +25物理加成 +25法术加成",
+      "desc": "提供2个效果： - 25%物理加成和25%法术加成。 - 20％全能汲取。 会在1个与玩家的战斗回合后自毁。 全能汲取：获得相当于一部分实际伤害值的治疗效果。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/5806.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 25,
+       "ap": 25,
+       "asPct": 0,
+       "critPct": 20,
+       "ampPct": 0,
+       "startMana": 15,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "福牛守护者纹章",
+    "type": "emblem",
+    "gameTypes": [
+     "转职纹章"
+    ],
+    "priority": 0,
+    "ids": [
+     "4806"
+    ],
+    "basicDesc": "+20护甲",
+    "desc": "携带者获得【福牛守护者】羁绊。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4806.png",
+    "stats": {
+     "hp": 0,
+     "armor": 20,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "4806",
+      "gameType": "转职纹章",
+      "basicDesc": "+20护甲",
+      "desc": "携带者获得【福牛守护者】羁绊。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4806.png",
+      "stats": {
+       "hp": 0,
+       "armor": 20,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "感应式供电的狂徒铠甲",
+    "type": "special",
+    "gameTypes": [
+     "特殊装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "5805"
+    ],
+    "basicDesc": "+900生命上限",
+    "desc": "每秒回复0.5%最大生命值。 会在1个与玩家的战斗回合后自毁。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/5805.png",
+    "stats": {
+     "hp": 900,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "5805",
+      "gameType": "特殊装备",
+      "basicDesc": "+900生命上限",
+      "desc": "每秒回复0.5%最大生命值。 会在1个与玩家的战斗回合后自毁。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/5805.png",
+      "stats": {
+       "hp": 900,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "更加静止法衣",
+    "type": "special",
+    "gameTypes": [
+     "特殊装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "5803"
+    ],
+    "basicDesc": "+20%暴击率 +20护甲 +250生命上限",
+    "desc": "战斗环节开始时：射出一道光束，对敌人们施加35%破法、20%冰冷和持续3秒的20%移动速度减缓。 会在1个与玩家的战斗回合后自毁。 破法：最大法力值提升，持续到施放技能为止。 冰冷：使攻击速度减缓",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/5803.png",
+    "stats": {
+     "hp": 250,
+     "armor": 20,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 20,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "5803",
+      "gameType": "特殊装备",
+      "basicDesc": "+20%暴击率 +20护甲 +250生命上限",
+      "desc": "战斗环节开始时：射出一道光束，对敌人们施加35%破法、20%冰冷和持续3秒的20%移动速度减缓。 会在1个与玩家的战斗回合后自毁。 破法：最大法力值提升，持续到施放技能为止。 冰冷：使攻击速度减缓",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/5803.png",
+      "stats": {
+       "hp": 250,
+       "armor": 20,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 20,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光盾徽章",
+    "type": "artifact",
+    "gameTypes": [
+     "神器装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6085"
+    ],
+    "basicDesc": "+55护甲 +55魔法抗性",
+    "desc": "每3秒，为生命值百分比最低的那个友军提供护盾，护盾值相当于携带者70%的护甲与魔抗总和，持续5秒。 在倒下时，将这个护盾效果提供给所有友军。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/lightshield_crest.png",
+    "stats": {
+     "hp": 0,
+     "armor": 55,
+     "mr": 55,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6085",
+      "gameType": "神器装备",
+      "basicDesc": "+55护甲 +55魔法抗性",
+      "desc": "每3秒，为生命值百分比最低的那个友军提供护盾，护盾值相当于携带者70%的护甲与魔抗总和，持续5秒。 在倒下时，将这个护盾效果提供给所有友军。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/lightshield_crest.png",
+      "stats": {
+       "hp": 0,
+       "armor": 55,
+       "mr": 55,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版班克斯的魔法帽",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2071"
+    ],
+    "basicDesc": "+100法术加成 +30%伤害增幅",
+    "desc": "它见证过——并释放过——奇迹和灾难。 额外法术加成:0%",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2560.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 100,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 30,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2071",
+      "gameType": "光明武器",
+      "basicDesc": "+100法术加成 +30%伤害增幅",
+      "desc": "它见证过——并释放过——奇迹和灾难。 额外法术加成:0%",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2560.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 100,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 30,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版大天使之杖",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2072"
+    ],
+    "basicDesc": "+60法术加成 +2法力回复",
+    "desc": "战斗开始时：在战斗期间，每5秒获得40%法术加成。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2561.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 60,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 2,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2072",
+      "gameType": "光明武器",
+      "basicDesc": "+60法术加成 +2法力回复",
+      "desc": "战斗开始时：在战斗期间，每5秒获得40%法术加成。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2561.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 60,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 2,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版钢铁烈阳之匣",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2873"
+    ],
+    "basicDesc": "+40护甲 +40法术加成",
+    "desc": "战斗开始时：携带者和同一排2格内的友军们获得持续20秒的500/650/800护盾值(随携带者的等级成长)。 [怪兽入侵专属]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2562.png",
+    "stats": {
+     "hp": 0,
+     "armor": 40,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 40,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2873",
+      "gameType": "光明武器",
+      "basicDesc": "+40护甲 +40法术加成",
+      "desc": "战斗开始时：携带者和同一排2格内的友军们获得持续20秒的500/650/800护盾值(随携带者的等级成长)。 [怪兽入侵专属]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2562.png",
+      "stats": {
+       "hp": 0,
+       "armor": 40,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 40,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版鬼索的狂暴之刃",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2866"
+    ],
+    "basicDesc": "+20%攻击速度 +20法术加成",
+    "desc": "攻击提供10%可叠加的攻击速度。 [怪兽入侵专属]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2555.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 20,
+     "asPct": 20,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2866",
+      "gameType": "光明武器",
+      "basicDesc": "+20%攻击速度 +20法术加成",
+      "desc": "攻击提供10%可叠加的攻击速度。 [怪兽入侵专属]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2555.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 20,
+       "asPct": 20,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版海克斯科技枪刃",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2060"
+    ],
+    "basicDesc": "+40物理加成 +40法术加成 +30%全能吸血 +2法力回复",
+    "desc": "为生命值百分比最低的友军提供相当于40%造成伤害值的治疗。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2549.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 40,
+     "ap": 40,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 2,
+     "omnivamp": 30,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2060",
+      "gameType": "光明武器",
+      "basicDesc": "+40物理加成 +40法术加成 +30%全能吸血 +2法力回复",
+      "desc": "为生命值百分比最低的友军提供相当于40%造成伤害值的治疗。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2549.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 40,
+       "ap": 40,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 2,
+       "omnivamp": 30,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版基克的先驱",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2864"
+    ],
+    "basicDesc": "+300生命上限 +40物理加成",
+    "desc": "战斗开始时：提供【攻击速度】40%攻击速度给携带者和同一排1格内的友军们。 [怪兽入侵专属]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2553.png",
+    "stats": {
+     "hp": 300,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 40,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2864",
+      "gameType": "光明武器",
+      "basicDesc": "+300生命上限 +40物理加成",
+      "desc": "战斗开始时：提供【攻击速度】40%攻击速度给携带者和同一排1格内的友军们。 [怪兽入侵专属]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2553.png",
+      "stats": {
+       "hp": 300,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 40,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版汲取剑",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2063"
+    ],
+    "basicDesc": "+30物理加成 +30法术加成 +40魔法抗性 +40%全能吸血",
+    "desc": "每场战斗一次：在40%生命值时，获得一个护盾，护盾值相当于携带者50%的最大生命值，至多持续5秒。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2552.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 40,
+     "adPct": 30,
+     "ap": 30,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 40,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2063",
+      "gameType": "光明武器",
+      "basicDesc": "+30物理加成 +30法术加成 +40魔法抗性 +40%全能吸血",
+      "desc": "每场战斗一次：在40%生命值时，获得一个护盾，护盾值相当于携带者50%的最大生命值，至多持续5秒。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2552.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 40,
+       "adPct": 30,
+       "ap": 30,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 40,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版疾射火炮",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2865"
+    ],
+    "basicDesc": "+100%攻击速度",
+    "desc": "攻击距离+2。 [怪兽入侵专属]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2554.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 100,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2865",
+      "gameType": "光明武器",
+      "basicDesc": "+100%攻击速度",
+      "desc": "攻击距离+2。 [怪兽入侵专属]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2554.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 100,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版棘刺背心",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2080"
+    ],
+    "basicDesc": "+100护甲",
+    "desc": "获得12%最大生命值。 使来自攻击的伤害降低10%。在被任一攻击命中时，对邻格所有敌人造成200魔法伤害。 冷却时间：2秒",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2569.png",
+    "stats": {
+     "hp": 0,
+     "armor": 100,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2080",
+      "gameType": "光明武器",
+      "basicDesc": "+100护甲",
+      "desc": "获得12%最大生命值。 使来自攻击的伤害降低10%。在被任一攻击命中时，对邻格所有敌人造成200魔法伤害。 冷却时间：2秒",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2569.png",
+      "stats": {
+       "hp": 0,
+       "armor": 100,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版静止法衣",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2889"
+    ],
+    "basicDesc": "+40护甲 +40%暴击率",
+    "desc": "战斗开始时：射出一道光束，对敌人们施加60%破法。 [怪兽入侵专属] 破法：最大法力值提升，持续到施放技能为止。 [唯一-每位英雄仅限1件]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2578.png",
+    "stats": {
+     "hp": 0,
+     "armor": 40,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 40,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2889",
+      "gameType": "光明武器",
+      "basicDesc": "+40护甲 +40%暴击率",
+      "desc": "战斗开始时：射出一道光束，对敌人们施加60%破法。 [怪兽入侵专属] 破法：最大法力值提升，持续到施放技能为止。 [唯一-每位英雄仅限1件]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2578.png",
+      "stats": {
+       "hp": 0,
+       "armor": 40,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 40,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版巨龙之爪",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2083"
+    ],
+    "basicDesc": "+120魔法抗性",
+    "desc": "获得28%最大生命值。 每2秒治疗5%最大生命值。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2572.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 120,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2083",
+      "gameType": "光明武器",
+      "basicDesc": "+120魔法抗性",
+      "desc": "获得28%最大生命值。 每2秒治疗5%最大生命值。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2572.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 120,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版巨人捕手",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2894"
+    ],
+    "basicDesc": "+40物理加成 +40法术加成",
+    "desc": "攻击和技能对最大生命值超过了1600的敌人们造成50%额外伤害。 [怪兽入侵专属]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2583.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 40,
+     "ap": 40,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2894",
+      "gameType": "光明武器",
+      "basicDesc": "+40物理加成 +40法术加成",
+      "desc": "攻击和技能对最大生命值超过了1600的敌人们造成50%额外伤害。 [怪兽入侵专属]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2583.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 40,
+       "ap": 40,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版狂徒铠甲",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2885"
+    ],
+    "basicDesc": "+1000生命上限",
+    "desc": "每秒回复 4% 最大生命。 [怪兽入侵专属]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2574.png",
+    "stats": {
+     "hp": 1000,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2885",
+      "gameType": "光明武器",
+      "basicDesc": "+1000生命上限",
+      "desc": "每秒回复 4% 最大生命。 [怪兽入侵专属]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2574.png",
+      "stats": {
+       "hp": 1000,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版蓝霸符",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2876"
+    ],
+    "basicDesc": "+15法力值 +20物理加成 +20法术加成",
+    "desc": "施放技能的法力值消耗降低10。如果携带者在施放技能后的3秒内至少参与了一次击败，就会获得15法力值。 [怪兽入侵专属] [唯一-每位英雄仅限1件]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2565.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 20,
+     "ap": 20,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 15,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2876",
+      "gameType": "光明武器",
+      "basicDesc": "+15法力值 +20物理加成 +20法术加成",
+      "desc": "施放技能的法力值消耗降低10。如果携带者在施放技能后的3秒内至少参与了一次击败，就会获得15法力值。 [怪兽入侵专属] [唯一-每位英雄仅限1件]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2565.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 20,
+       "ap": 20,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 15,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版离子火花",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2074"
+    ],
+    "basicDesc": "+500生命上限 +30法术加成 +70魔法抗性",
+    "desc": "对2格内的敌人们施加30%魔抗击碎。在敌人施放一次技能时，对该敌人造成相当于该敌人300%法力值消耗的魔法伤害。 [直接伤害类装备] 魔抗击碎：降低魔抗值",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2563.png",
+    "stats": {
+     "hp": 500,
+     "armor": 0,
+     "mr": 70,
+     "adPct": 0,
+     "ap": 30,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2074",
+      "gameType": "光明武器",
+      "basicDesc": "+500生命上限 +30法术加成 +70魔法抗性",
+      "desc": "对2格内的敌人们施加30%魔抗击碎。在敌人施放一次技能时，对该敌人造成相当于该敌人300%法力值消耗的魔法伤害。 [直接伤害类装备] 魔抗击碎：降低魔抗值",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2563.png",
+      "stats": {
+       "hp": 500,
+       "armor": 0,
+       "mr": 70,
+       "adPct": 0,
+       "ap": 30,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版灵风",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2884"
+    ],
+    "basicDesc": "+300生命上限 +40魔法抗性",
+    "desc": "战斗开始时：在棋盘对面召唤一道飓风，来将与飓风相距最近的那个敌人移出战斗8秒。 [无视控制免疫效果。] [怪兽入侵专属] [唯一-每位英雄仅限1件]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2573.png",
+    "stats": {
+     "hp": 300,
+     "armor": 0,
+     "mr": 40,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2884",
+      "gameType": "光明武器",
+      "basicDesc": "+300生命上限 +40魔法抗性",
+      "desc": "战斗开始时：在棋盘对面召唤一道飓风，来将与飓风相距最近的那个敌人移出战斗8秒。 [无视控制免疫效果。] [怪兽入侵专属] [唯一-每位英雄仅限1件]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2573.png",
+      "stats": {
+       "hp": 300,
+       "armor": 0,
+       "mr": 40,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版卢安娜的飓风",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2869"
+    ],
+    "basicDesc": "+40%攻击速度 +40魔法抗性",
+    "desc": "携带者的攻击会对附近的另一名敌人发射一个弹体，造成携带者100%攻击力【攻击力】的物理伤害。 [怪兽入侵专属]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2558.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 40,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 40,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2869",
+      "gameType": "光明武器",
+      "basicDesc": "+40%攻击速度 +40魔法抗性",
+      "desc": "携带者的攻击会对附近的另一名敌人发射一个弹体，造成携带者100%攻击力【攻击力】的物理伤害。 [怪兽入侵专属]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2558.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 40,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 40,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版秘法手套",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2092"
+    ],
+    "basicDesc": "+150生命上限 +20%暴击率",
+    "desc": "每一回合：装备2件随机光明武器。 [需要用掉3个装备格。]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2581.png",
+    "stats": {
+     "hp": 150,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 20,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2092",
+      "gameType": "光明武器",
+      "basicDesc": "+150生命上限 +20%暴击率",
+      "desc": "每一回合：装备2件随机光明武器。 [需要用掉3个装备格。]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2581.png",
+      "stats": {
+       "hp": 150,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 20,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版莫雷洛秘典",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2075"
+    ],
+    "basicDesc": "+300生命上限 +35法术加成 +2法力回复",
+    "desc": "攻击和技能的伤害对敌人们造成持续10秒的2%灼烧效果和33%重伤效果。 灼烧：每秒造成目标一部分最大生命值的真实伤害 重伤：降低受到的治疗效果",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2564.png",
+    "stats": {
+     "hp": 300,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 35,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 2,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2075",
+      "gameType": "光明武器",
+      "basicDesc": "+300生命上限 +35法术加成 +2法力回复",
+      "desc": "攻击和技能的伤害对敌人们造成持续10秒的2%灼烧效果和33%重伤效果。 灼烧：每秒造成目标一部分最大生命值的真实伤害 重伤：降低受到的治疗效果",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2564.png",
+      "stats": {
+       "hp": 300,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 35,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 2,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版能量圣杯",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2878"
+    ],
+    "basicDesc": "+40魔法抗性 +20法力值",
+    "desc": "战斗开始时：提供50%法术加成给携带者和同一排1格内的友军们。 [怪兽入侵专属]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2567.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 40,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 20,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2878",
+      "gameType": "光明武器",
+      "basicDesc": "+40魔法抗性 +20法力值",
+      "desc": "战斗开始时：提供50%法术加成给携带者和同一排1格内的友军们。 [怪兽入侵专属]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2567.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 40,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 20,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版强袭者的链枷",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2091"
+    ],
+    "basicDesc": "+300生命上限 +20%攻击速度 +40%暴击率 +20%伤害增幅",
+    "desc": "暴击提供持续5秒的10%伤害增幅，可叠加至多4次。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/chainstriker.png",
+    "stats": {
+     "hp": 300,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 20,
+     "critPct": 40,
+     "ampPct": 20,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2091",
+      "gameType": "光明武器",
+      "basicDesc": "+300生命上限 +20%攻击速度 +40%暴击率 +20%伤害增幅",
+      "desc": "暴击提供持续5秒的10%伤害增幅，可叠加至多4次。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/chainstriker.png",
+      "stats": {
+       "hp": 300,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 20,
+       "critPct": 40,
+       "ampPct": 20,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版日炎斗篷",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2082"
+    ],
+    "basicDesc": "+300生命上限 +40护甲",
+    "desc": "获得16%最大生命值。 每2秒，对2格内的一名敌人施加持续10秒的2%灼烧效果和33%重伤效果。 灼烧：每秒造成目标一部分最大生命值的真实伤害 重伤：降低受到的治疗效果",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2571.png",
+    "stats": {
+     "hp": 300,
+     "armor": 40,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2082",
+      "gameType": "光明武器",
+      "basicDesc": "+300生命上限 +40护甲",
+      "desc": "获得16%最大生命值。 每2秒，对2格内的一名敌人施加持续10秒的2%灼烧效果和33%重伤效果。 灼烧：每秒造成目标一部分最大生命值的真实伤害 重伤：降低受到的治疗效果",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2571.png",
+      "stats": {
+       "hp": 300,
+       "armor": 40,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版锐利之刃",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2093"
+    ],
+    "basicDesc": "+100物理加成 +20%伤害增幅",
+    "desc": "它在敌人面前发光。或在朋友面前。或在任何活着的东西面前，真的。 额外物理加成:0%",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2582.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 100,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 20,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2093",
+      "gameType": "光明武器",
+      "basicDesc": "+100物理加成 +20%伤害增幅",
+      "desc": "它在敌人面前发光。或在朋友面前。或在任何活着的东西面前，真的。 额外物理加成:0%",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2582.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 100,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 20,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版圣盾使的誓约",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2077"
+    ],
+    "basicDesc": "+50护甲 +50魔法抗性 +2法力回复",
+    "desc": "战斗开始时：获得40法力值。 在40%生命值时，获得30法力值和相当于50%最大生命值的护盾值。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2566.png",
+    "stats": {
+     "hp": 0,
+     "armor": 50,
+     "mr": 50,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 2,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2077",
+      "gameType": "光明武器",
+      "basicDesc": "+50护甲 +50魔法抗性 +2法力回复",
+      "desc": "战斗开始时：获得40法力值。 在40%生命值时，获得30法力值和相当于50%最大生命值的护盾值。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2566.png",
+      "stats": {
+       "hp": 0,
+       "armor": 50,
+       "mr": 50,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 2,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版石像鬼石板甲",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2081"
+    ],
+    "basicDesc": "+300生命上限 +50护甲 +50魔法抗性",
+    "desc": "每有一个敌人正在以携带者为目标，携带者就会获得20护甲和20魔抗。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2570.png",
+    "stats": {
+     "hp": 300,
+     "armor": 50,
+     "mr": 50,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2081",
+      "gameType": "光明武器",
+      "basicDesc": "+300生命上限 +50护甲 +50魔法抗性",
+      "desc": "每有一个敌人正在以携带者为目标，携带者就会获得20护甲和20魔抗。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2570.png",
+      "stats": {
+       "hp": 300,
+       "armor": 50,
+       "mr": 50,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版水银",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2090"
+    ],
+    "basicDesc": "+40魔法抗性 +40%攻击速度 +40%暴击率",
+    "desc": "战斗开始时：获得持续45秒的控制免疫效果。 每秒获得6%可叠加的攻击速度。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2579.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 40,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 40,
+     "critPct": 40,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2090",
+      "gameType": "光明武器",
+      "basicDesc": "+40魔法抗性 +40%攻击速度 +40%暴击率",
+      "desc": "战斗开始时：获得持续45秒的控制免疫效果。 每秒获得6%可叠加的攻击速度。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2579.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 40,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 40,
+       "critPct": 40,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版朔极之矛",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2061"
+    ],
+    "basicDesc": "+30物理加成 +30法术加成 +2法力回复",
+    "desc": "每次普攻提供10额外法力值。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2550.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 30,
+     "ap": 30,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 2,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2061",
+      "gameType": "光明武器",
+      "basicDesc": "+30物理加成 +30法术加成 +2法力回复",
+      "desc": "每次普攻提供10额外法力值。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2550.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 30,
+       "ap": 30,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 2,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版斯塔缇克狂热",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2867"
+    ],
+    "basicDesc": "+40%攻击速度 +10法力值",
+    "desc": "每第3次攻击对8名敌人造成60魔法伤害和持续5秒的30%魔抗击碎。 [怪兽入侵专属] 魔抗击碎：降低魔抗值",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2556.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 40,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 10,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2867",
+      "gameType": "光明武器",
+      "basicDesc": "+40%攻击速度 +10法力值",
+      "desc": "每第3次攻击对8名敌人造成60魔法伤害和持续5秒的30%魔抗击碎。 [怪兽入侵专属] 魔抗击碎：降低魔抗值",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2556.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 40,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 10,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版泰坦的坚决",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2068"
+    ],
+    "basicDesc": "+40护甲 +20%攻击速度",
+    "desc": "在攻击或承受伤害时获得4%物理加成和4%法术加成，至多可叠加25次。 在叠满层数后，获得20%伤害增幅，并获得控制免疫。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2557.png",
+    "stats": {
+     "hp": 0,
+     "armor": 40,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 20,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2068",
+      "gameType": "光明武器",
+      "basicDesc": "+40护甲 +20%攻击速度",
+      "desc": "在攻击或承受伤害时获得4%物理加成和4%法术加成，至多可叠加25次。 在叠满层数后，获得20%伤害增幅，并获得控制免疫。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2557.png",
+      "stats": {
+       "hp": 0,
+       "armor": 40,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 20,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版无尽之刃",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2059"
+    ],
+    "basicDesc": "+75物理加成 +75%暴击率",
+    "desc": "获得【技能暴击】。 技能暴击：技能伤害可产生暴击。额外的【技能暴击】提供10%暴击伤害。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2548.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 75,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 75,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2059",
+      "gameType": "光明武器",
+      "basicDesc": "+75物理加成 +75%暴击率",
+      "desc": "获得【技能暴击】。 技能暴击：技能伤害可产生暴击。额外的【技能暴击】提供10%暴击伤害。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2548.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 75,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 75,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版夜之锋刃",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2062"
+    ],
+    "basicDesc": "+30物理加成 +30法术加成 +40护甲 +30%攻击速度",
+    "desc": "救主灵刃：在60%生命值时，短暂变为不可被选取状态并摆脱负面效果、并治疗所有已损失生命值。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2551.png",
+    "stats": {
+     "hp": 0,
+     "armor": 40,
+     "mr": 0,
+     "adPct": 30,
+     "ap": 30,
+     "asPct": 30,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2062",
+      "gameType": "光明武器",
+      "basicDesc": "+30物理加成 +30法术加成 +40护甲 +30%攻击速度",
+      "desc": "救主灵刃：在60%生命值时，短暂变为不可被选取状态并摆脱负面效果、并治疗所有已损失生命值。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2551.png",
+      "stats": {
+       "hp": 0,
+       "armor": 40,
+       "mr": 0,
+       "adPct": 30,
+       "ap": 30,
+       "asPct": 30,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版振奋盔甲",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2079"
+    ],
+    "basicDesc": "+700生命上限 +15%伤害减免 +4法力回复",
+    "desc": "每秒回复4%已损失生命值。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/morespiritedvisage.png",
+    "stats": {
+     "hp": 700,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 4,
+     "omnivamp": 0,
+     "damageReduction": 15
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2079",
+      "gameType": "光明武器",
+      "basicDesc": "+700生命上限 +15%伤害减免 +4法力回复",
+      "desc": "每秒回复4%已损失生命值。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/morespiritedvisage.png",
+      "stats": {
+       "hp": 700,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 4,
+       "omnivamp": 0,
+       "damageReduction": 15
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版正义之手",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2088"
+    ],
+    "basicDesc": "+40%暴击率 +2法力回复",
+    "desc": "获得2个效果： -30%物理加成和30%法术加成。 -24%全能汲取。 生命值高于50%时，物理加成和法术加成翻倍。生命值低于50%时，全能汲取效果翻倍。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2577.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 40,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 2,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2088",
+      "gameType": "光明武器",
+      "basicDesc": "+40%暴击率 +2法力回复",
+      "desc": "获得2个效果： -30%物理加成和30%法术加成。 -24%全能汲取。 生命值高于50%时，物理加成和法术加成翻倍。生命值低于50%时，全能汲取效果翻倍。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2577.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 40,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 2,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版珠光护手",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2087"
+    ],
+    "basicDesc": "+75法术加成 +75%暴击率",
+    "desc": "获得【技能暴击】。 技能暴击：技能伤害可产生暴击。额外的【技能暴击】提供10%暴击伤害。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2576.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 75,
+     "asPct": 0,
+     "critPct": 75,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2087",
+      "gameType": "光明武器",
+      "basicDesc": "+75法术加成 +75%暴击率",
+      "desc": "获得【技能暴击】。 技能暴击：技能伤害可产生暴击。额外的【技能暴击】提供10%暴击伤害。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2576.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 75,
+       "asPct": 0,
+       "critPct": 75,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版兹若特传送门",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2870"
+    ],
+    "basicDesc": "+300生命上限 +40%攻击速度",
+    "desc": "召唤一个大型虚空生物。它的强度会在每个阶段提升。 [怪兽入侵专属] [唯一-每位英雄仅限1件]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2559.png",
+    "stats": {
+     "hp": 300,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 40,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2870",
+      "gameType": "光明武器",
+      "basicDesc": "+300生命上限 +40%攻击速度",
+      "desc": "召唤一个大型虚空生物。它的强度会在每个阶段提升。 [怪兽入侵专属] [唯一-每位英雄仅限1件]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2559.png",
+      "stats": {
+       "hp": 300,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 40,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "光明版最后的轻语",
+    "type": "radiant",
+    "gameTypes": [
+     "光明武器"
+    ],
+    "priority": 0,
+    "ids": [
+     "2086"
+    ],
+    "basicDesc": "+45物理加成 +40%攻击速度 +40%暴击率",
+    "desc": "来自攻击和技能的伤害会对目标施加持续到战斗环节结束的30%护甲击碎。这个效果不会叠加。 护甲击碎：降低护甲值",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2575.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 45,
+     "ap": 0,
+     "asPct": 40,
+     "critPct": 40,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2086",
+      "gameType": "光明武器",
+      "basicDesc": "+45物理加成 +40%攻击速度 +40%暴击率",
+      "desc": "来自攻击和技能的伤害会对目标施加持续到战斗环节结束的30%护甲击碎。这个效果不会叠加。 护甲击碎：降低护甲值",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2575.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 45,
+       "ap": 0,
+       "asPct": 40,
+       "critPct": 40,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "黑客纹章",
+    "type": "emblem",
+    "gameTypes": [
+     "转职纹章"
+    ],
+    "priority": 0,
+    "ids": [
+     "4814"
+    ],
+    "basicDesc": "+150生命上限",
+    "desc": "携带者获得【黑客】羁绊。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4814.png",
+    "stats": {
+     "hp": 150,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "4814",
+      "gameType": "转职纹章",
+      "basicDesc": "+150生命上限",
+      "desc": "携带者获得【黑客】羁绊。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4814.png",
+      "stats": {
+       "hp": 150,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "护卫纹章",
+    "type": "emblem",
+    "gameTypes": [
+     "转职纹章"
+    ],
+    "priority": 0,
+    "ids": [
+     "4819"
+    ],
+    "basicDesc": "+150生命上限",
+    "desc": "携带者获得【护卫】羁绊。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4819.png",
+    "stats": {
+     "hp": 150,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "4819",
+      "gameType": "转职纹章",
+      "basicDesc": "+150生命上限",
+      "desc": "携带者获得【护卫】羁绊。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4819.png",
+      "stats": {
+       "hp": 150,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "幻灵战队纹章",
+    "type": "emblem",
+    "gameTypes": [
+     "转职纹章"
+    ],
+    "priority": 0,
+    "ids": [
+     "4801"
+    ],
+    "basicDesc": "+10法术加成",
+    "desc": "携带者获得【幻灵战队】羁绊。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4801.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 10,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "4801",
+      "gameType": "转职纹章",
+      "basicDesc": "+10法术加成",
+      "desc": "携带者获得【幻灵战队】羁绊。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4801.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 10,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "黄昏圣盾",
+    "type": "artifact",
+    "gameTypes": [
+     "神器装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6093"
+    ],
+    "basicDesc": "+400生命上限 +70魔法抗性",
+    "desc": "每2.5秒，从1格内的敌人们处偷取3魔抗，并造成相当于携带者15%魔抗值的魔法伤害。 如果还携带了【黎明圣盾】，则转而每1.25秒触发这件装备的效果。 伤害基于阶段提升。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/aegisofdusk.png",
+    "stats": {
+     "hp": 400,
+     "armor": 0,
+     "mr": 70,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6093",
+      "gameType": "神器装备",
+      "basicDesc": "+400生命上限 +70魔法抗性",
+      "desc": "每2.5秒，从1格内的敌人们处偷取3魔抗，并造成相当于携带者15%魔抗值的魔法伤害。 如果还携带了【黎明圣盾】，则转而每1.25秒触发这件装备的效果。 伤害基于阶段提升。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/aegisofdusk.png",
+      "stats": {
+       "hp": 400,
+       "armor": 0,
+       "mr": 70,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "混沌战士纹章",
+    "type": "emblem",
+    "gameTypes": [
+     "转职纹章"
+    ],
+    "priority": 0,
+    "ids": [
+     "4813"
+    ],
+    "basicDesc": "+10物理加成",
+    "desc": "携带者获得【混沌战士】羁绊。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4813.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 10,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "4813",
+      "gameType": "转职纹章",
+      "basicDesc": "+10物理加成",
+      "desc": "携带者获得【混沌战士】羁绊。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4813.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 10,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "吉祥物纹章",
+    "type": "emblem",
+    "gameTypes": [
+     "转职纹章"
+    ],
+    "priority": 0,
+    "ids": [
+     "4820"
+    ],
+    "basicDesc": "+20护甲",
+    "desc": "携带者获得【吉祥物】羁绊。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4820.png",
+    "stats": {
+     "hp": 0,
+     "armor": 20,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "4820",
+      "gameType": "转职纹章",
+      "basicDesc": "+20护甲",
+      "desc": "携带者获得【吉祥物】羁绊。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4820.png",
+      "stats": {
+       "hp": 0,
+       "armor": 20,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "金币收集者",
+    "type": "artifact",
+    "gameTypes": [
+     "神器装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6059"
+    ],
+    "basicDesc": "+35物理加成 +20%暴击率",
+    "desc": "携带者的攻击和技能会处决低于12%最大生命值的目标。处决有33%几率掉落【金币】1金币。 [唯一-每个弈子仅可装备1件]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/3603.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 35,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 20,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6059",
+      "gameType": "神器装备",
+      "basicDesc": "+35物理加成 +20%暴击率",
+      "desc": "携带者的攻击和技能会处决低于12%最大生命值的目标。处决有33%几率掉落【金币】1金币。 [唯一-每个弈子仅可装备1件]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/3603.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 35,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 20,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
    },
    {
     "name": "金铲铲",
     "type": "component",
-    "priority": 0
+    "gameTypes": [
+     "基础装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "1008"
+    ],
+    "basicDesc": "",
+    "desc": "它必须做点什么…",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/1008.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "1008",
+      "gameType": "基础装备",
+      "basicDesc": "",
+      "desc": "它必须做点什么…",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/1008.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "金铲铲冠冕",
+    "type": "completed",
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "2036"
+    ],
+    "basicDesc": "",
+    "desc": "你的队伍获得+1最大队伍规模。 在你赢下战斗时，有10%几率掉落1金币。 “……某位英雄的心……”",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2036.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2036",
+      "gameType": "成型装备",
+      "basicDesc": "",
+      "desc": "你的队伍获得+1最大队伍规模。 在你赢下战斗时，有10%几率掉落1金币。 “……某位英雄的心……”",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2036.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "金锅铲冠冕",
+    "type": "completed",
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "2048"
+    ],
+    "basicDesc": "",
+    "desc": "你的队伍获得+1最大队伍规模。 在战斗10秒后，有10%几率掉落1金币。 “……以及一点运气。”",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/tactician_s_cape.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2048",
+      "gameType": "成型装备",
+      "basicDesc": "",
+      "desc": "你的队伍获得+1最大队伍规模。 在战斗10秒后，有10%几率掉落1金币。 “……以及一点运气。”",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/tactician_s_cape.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "金锅锅",
+    "type": "component",
+    "gameTypes": [
+     "基础装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "1010"
+    ],
+    "basicDesc": "",
+    "desc": ".……不然它怎么会在这里？",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/frying_pan.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "1010",
+      "gameType": "基础装备",
+      "basicDesc": "",
+      "desc": ".……不然它怎么会在这里？",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/frying_pan.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "金锅锅冠冕",
+    "type": "completed",
+    "gameTypes": [
+     "成型装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "2047"
+    ],
+    "basicDesc": "",
+    "desc": "你的队伍获得+1最大队伍规模。 在携带者倒下时，有10%几率掉落1金币。 “充满了某位哲学家的智慧……”",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/tactician_s_shield.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "2047",
+      "gameType": "成型装备",
+      "basicDesc": "",
+      "desc": "你的队伍获得+1最大队伍规模。 在携带者倒下时，有10%几率掉落1金币。 “充满了某位哲学家的智慧……”",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/tactician_s_shield.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "精英战士纹章",
+    "type": "emblem",
+    "gameTypes": [
+     "转职纹章"
+    ],
+    "priority": 0,
+    "ids": [
+     "4828"
+    ],
+    "basicDesc": "+20%暴击率",
+    "desc": "携带者获得【精英战士】羁绊。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4828.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 20,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "4828",
+      "gameType": "转职纹章",
+      "basicDesc": "+20%暴击率",
+      "desc": "携带者获得【精英战士】羁绊。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4828.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 20,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "狙击手的专注",
+    "type": "artifact",
+    "gameTypes": [
+     "神器装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6063"
+    ],
+    "basicDesc": "+20物理加成 +20法术加成 +20%攻击速度 +3法力回复",
+    "desc": "在对抗相距4格或更远的目标们时获得40%伤害增幅。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2097.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 20,
+     "ap": 20,
+     "asPct": 20,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 3,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6063",
+      "gameType": "神器装备",
+      "basicDesc": "+20物理加成 +20法术加成 +20%攻击速度 +3法力回复",
+      "desc": "在对抗相距4格或更远的目标们时获得40%伤害增幅。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2097.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 20,
+       "ap": 20,
+       "asPct": 20,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 3,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "巨型九头蛇",
+    "type": "artifact",
+    "gameTypes": [
+     "神器装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6090"
+    ],
+    "basicDesc": "+300生命上限 +20物理加成 +20%攻击速度",
+    "desc": "攻击对目标和邻格敌人造成相当于携带者4%最大生命值外加6%物理加成的额外物理伤害。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/titanichydra.png",
+    "stats": {
+     "hp": 300,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 20,
+     "ap": 0,
+     "asPct": 20,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6090",
+      "gameType": "神器装备",
+      "basicDesc": "+300生命上限 +20物理加成 +20%攻击速度",
+      "desc": "攻击对目标和邻格敌人造成相当于携带者4%最大生命值外加6%物理加成的额外物理伤害。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/titanichydra.png",
+      "stats": {
+       "hp": 300,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 20,
+       "ap": 0,
+       "asPct": 20,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "决斗大师纹章",
+    "type": "emblem",
+    "gameTypes": [
+     "转职纹章"
+    ],
+    "priority": 0,
+    "ids": [
+     "4817"
+    ],
+    "basicDesc": "+10%攻击速度",
+    "desc": "携带者获得【决斗大师】羁绊。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4817.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 10,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "4817",
+      "gameType": "转职纹章",
+      "basicDesc": "+10%攻击速度",
+      "desc": "携带者获得【决斗大师】羁绊。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4817.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 10,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "枯萎珠宝",
+    "type": "artifact",
+    "gameTypes": [
+     "神器装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6083"
+    ],
+    "basicDesc": "+60法术加成 +2法力回复",
+    "desc": "造成魔法伤害时会将目标的魔抗削减6。如果目标的魔抗是0，则转而会为携带者提供2法力值。 技能伤害每0.5秒仅能在每个敌人身上触发一次此效果。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/blighting_jewel.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 60,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 2,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6083",
+      "gameType": "神器装备",
+      "basicDesc": "+60法术加成 +2法力回复",
+      "desc": "造成魔法伤害时会将目标的魔抗削减6。如果目标的魔抗是0，则转而会为携带者提供2法力值。 技能伤害每0.5秒仅能在每个敌人身上触发一次此效果。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/blighting_jewel.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 60,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 2,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "黎明核心",
+    "type": "special",
+    "gameTypes": [
+     "特殊装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6091"
+    ],
+    "basicDesc": "+15物理加成 +15法术加成 +2法力回复",
+    "desc": "携带者的最大法力值缩减10。后续的技能施放会使最大法力值缩减10%，直至最小值10。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/dawncore.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 15,
+     "ap": 15,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 2,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6091",
+      "gameType": "特殊装备",
+      "basicDesc": "+15物理加成 +15法术加成 +2法力回复",
+      "desc": "携带者的最大法力值缩减10。后续的技能施放会使最大法力值缩减10%，直至最小值10。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/dawncore.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 15,
+       "ap": 15,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 2,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "黎明圣盾",
+    "type": "artifact",
+    "gameTypes": [
+     "神器装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6092"
+    ],
+    "basicDesc": "+400生命上限 +50护甲",
+    "desc": "每2.5秒，从1格内的敌人们处偷取3护甲，并治疗相当于携带者15%护甲值的生命值。 如果还携带了【黄昏圣盾】，则转而每1.25秒触发这件装备的效果。 治疗效果基于阶段提升。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/aegisofdawn.png",
+    "stats": {
+     "hp": 400,
+     "armor": 50,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6092",
+      "gameType": "神器装备",
+      "basicDesc": "+400生命上限 +50护甲",
+      "desc": "每2.5秒，从1格内的敌人们处偷取3护甲，并治疗相当于携带者15%护甲值的生命值。 如果还携带了【黄昏圣盾】，则转而每1.25秒触发这件装备的效果。 治疗效果基于阶段提升。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/aegisofdawn.png",
+      "stats": {
+       "hp": 400,
+       "armor": 50,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "连指手套",
+    "type": "artifact",
+    "gameTypes": [
+     "神器装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6070"
+    ],
+    "basicDesc": "+65%攻击速度 +15%伤害增幅",
+    "desc": "将携带者缩小，为其提供移动速度提升并免疫减速、灼烧、以及重伤。 减速：降低攻击速度 灼烧：每秒造成目标一部分最大生命值的真实伤害 重伤：降低受到的治疗效果",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/mittens.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 65,
+     "critPct": 0,
+     "ampPct": 15,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6070",
+      "gameType": "神器装备",
+      "basicDesc": "+65%攻击速度 +15%伤害增幅",
+      "desc": "将携带者缩小，为其提供移动速度提升并免疫减速、灼烧、以及重伤。 减速：降低攻击速度 灼烧：每秒造成目标一部分最大生命值的真实伤害 重伤：降低受到的治疗效果",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/mittens.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 65,
+       "critPct": 0,
+       "ampPct": 15,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "链锯汲取剑",
+    "type": "special",
+    "gameTypes": [
+     "特殊装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "5809"
+    ],
+    "basicDesc": "+10物理加成 +20魔法抗性",
+    "desc": "提供25%全能汲取。 每场战斗一次：在40%生命值时，提供一个护盾，护盾值相当于携带者25%的最大生命值，至多持续8秒。在护盾处于激活状态时，携带者获得50%攻击力。 会在1个与玩家的战斗回合后自毁。 全能汲取：获得相当于一部分实际伤害值的治疗效果。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/5809.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 20,
+     "adPct": 10,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "5809",
+      "gameType": "特殊装备",
+      "basicDesc": "+10物理加成 +20魔法抗性",
+      "desc": "提供25%全能汲取。 每场战斗一次：在40%生命值时，提供一个护盾，护盾值相当于携带者25%的最大生命值，至多持续8秒。在护盾处于激活状态时，携带者获得50%攻击力。 会在1个与玩家的战斗回合后自毁。 全能汲取：获得相当于一部分实际伤害值的治疗效果。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/5809.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 20,
+       "adPct": 10,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "灵能使纹章",
+    "type": "emblem",
+    "gameTypes": [
+     "转职纹章"
+    ],
+    "priority": 0,
+    "ids": [
+     "4816"
+    ],
+    "basicDesc": "+10法术加成",
+    "desc": "携带者获得【灵能使】羁绊。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4816.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 10,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "4816",
+      "gameType": "转职纹章",
+      "basicDesc": "+10法术加成",
+      "desc": "携带者获得【灵能使】羁绊。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4816.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 10,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "卢登的激荡",
+    "type": "artifact",
+    "gameTypes": [
+     "神器装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6071"
+    ],
+    "basicDesc": "+60物理加成 +60法术加成",
+    "desc": "在击败目标时，会对与目标相距最近的2个敌人造成魔法伤害，伤害值为100%的过量伤害外加100。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/luden_s_tempest.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 60,
+     "ap": 60,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6071",
+      "gameType": "神器装备",
+      "basicDesc": "+60物理加成 +60法术加成",
+      "desc": "在击败目标时，会对与目标相距最近的2个敌人造成魔法伤害，伤害值为100%的过量伤害外加100。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/luden_s_tempest.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 60,
+       "ap": 60,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "帽子饮品",
+    "type": "artifact",
+    "gameTypes": [
+     "神器装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6095"
+    ],
+    "basicDesc": "+25物理加成 +25法术加成 +25%攻击速度",
+    "desc": "携带者在每次参与击败后带上一顶帽子。携带者从每顶帽子中获得1%物理加成和法术加成。倒下时，失去20%总帽子数。(帽子数：0)",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/cappajuice.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 25,
+     "ap": 25,
+     "asPct": 25,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6095",
+      "gameType": "神器装备",
+      "basicDesc": "+25物理加成 +25法术加成 +25%攻击速度",
+      "desc": "携带者在每次参与击败后带上一顶帽子。携带者从每顶帽子中获得1%物理加成和法术加成。倒下时，失去20%总帽子数。(帽子数：0)",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/cappajuice.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 25,
+       "ap": 25,
+       "asPct": 25,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "秘术卫士纹章",
+    "type": "emblem",
+    "gameTypes": [
+     "转职纹章"
+    ],
+    "priority": 0,
+    "ids": [
+     "4827"
+    ],
+    "basicDesc": "+150生命上限",
+    "desc": "携带者获得【秘术卫士】羁绊。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4827.png",
+    "stats": {
+     "hp": 150,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "4827",
+      "gameType": "转职纹章",
+      "basicDesc": "+150生命上限",
+      "desc": "携带者获得【秘术卫士】羁绊。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4827.png",
+      "stats": {
+       "hp": 150,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "密银黎明",
+    "type": "artifact",
+    "gameTypes": [
+     "神器装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6072"
+    ],
+    "basicDesc": "+140物理加成 +80护甲 +80魔法抗性",
+    "desc": "为携带者提供免疫晕眩的效果，并且携带者的攻击可以使目标晕眩0.8秒。 携带者的攻击速度锁定为0.5。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/silvermere_dawn.png",
+    "stats": {
+     "hp": 0,
+     "armor": 80,
+     "mr": 80,
+     "adPct": 140,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6072",
+      "gameType": "神器装备",
+      "basicDesc": "+140物理加成 +80护甲 +80魔法抗性",
+      "desc": "为携带者提供免疫晕眩的效果，并且携带者的攻击可以使目标晕眩0.8秒。 携带者的攻击速度锁定为0.5。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/silvermere_dawn.png",
+      "stats": {
+       "hp": 0,
+       "armor": 80,
+       "mr": 80,
+       "adPct": 140,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "平民英雄纹章",
+    "type": "emblem",
+    "gameTypes": [
+     "转职纹章"
+    ],
+    "priority": 0,
+    "ids": [
+     "4802"
+    ],
+    "basicDesc": "+10%攻击速度",
+    "desc": "携带者获得【平民英雄】羁绊。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4802.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 10,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "4802",
+      "gameType": "转职纹章",
+      "basicDesc": "+10%攻击速度",
+      "desc": "携带者获得【平民英雄】羁绊。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4802.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 10,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "强袭枪手纹章",
+    "type": "emblem",
+    "gameTypes": [
+     "转职纹章"
+    ],
+    "priority": 0,
+    "ids": [
+     "4818"
+    ],
+    "basicDesc": "+20%暴击率",
+    "desc": "携带者获得【强袭枪手】羁绊。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4818.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 20,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "4818",
+      "gameType": "转职纹章",
+      "basicDesc": "+20%暴击率",
+      "desc": "携带者获得【强袭枪手】羁绊。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4818.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 20,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "情报特工纹章",
+    "type": "emblem",
+    "gameTypes": [
+     "转职纹章"
+    ],
+    "priority": 0,
+    "ids": [
+     "4826"
+    ],
+    "basicDesc": "+20魔法抗性",
+    "desc": "携带者获得【情报特工】羁绊。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4826.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 20,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "4826",
+      "gameType": "转职纹章",
+      "basicDesc": "+20魔法抗性",
+      "desc": "携带者获得【情报特工】羁绊。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4826.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 20,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "三相之力",
+    "type": "artifact",
+    "gameTypes": [
+     "神器装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6057"
+    ],
+    "basicDesc": "",
+    "desc": "成吨的一切！",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/3607.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6057",
+      "gameType": "神器装备",
+      "basicDesc": "",
+      "desc": "成吨的一切！",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/3607.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "少年泰坦的坚决",
+    "type": "special",
+    "gameTypes": [
+     "特殊装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "5810"
+    ],
+    "basicDesc": "+10%攻击速度 +20护甲",
+    "desc": "在攻击或承受伤害时提供[1]2%物理加成、[0]2法术加成以及[2]2%攻击速度，至多可叠加30次。 在叠满层数后，提供[3]30护甲和[5]30魔法抗性。 会在1个与玩家的战斗回合后自毁。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/5810.png",
+    "stats": {
+     "hp": 0,
+     "armor": 20,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 10,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "5810",
+      "gameType": "特殊装备",
+      "basicDesc": "+10%攻击速度 +20护甲",
+      "desc": "在攻击或承受伤害时提供[1]2%物理加成、[0]2法术加成以及[2]2%攻击速度，至多可叠加30次。 在叠满层数后，提供[3]30护甲和[5]30魔法抗性。 会在1个与玩家的战斗回合后自毁。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/5810.png",
+      "stats": {
+       "hp": 0,
+       "armor": 20,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 10,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "烁刃",
+    "type": "artifact",
+    "gameTypes": [
+     "神器装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6087"
+    ],
+    "basicDesc": "+10法术加成 +20%攻击速度",
+    "desc": "攻击提供5%可叠加的攻击速度。每3次攻击还会提供2%物理加成和2%法术加成。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/flickerblade.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 10,
+     "asPct": 20,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6087",
+      "gameType": "神器装备",
+      "basicDesc": "+10法术加成 +20%攻击速度",
+      "desc": "攻击提供5%可叠加的攻击速度。每3次攻击还会提供2%物理加成和2%法术加成。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/flickerblade.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 10,
+       "asPct": 20,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "死亡之蔑",
+    "type": "artifact",
+    "gameTypes": [
+     "神器装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6054"
+    ],
+    "basicDesc": "+25物理加成 +15%攻击速度 +40护甲 +25%全能吸血",
+    "desc": "携带者受到的50%伤害会转而在4秒里作为非关键伤害来持续扣除。 [唯一-每位英雄仅限1件]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/3609.png",
+    "stats": {
+     "hp": 0,
+     "armor": 40,
+     "mr": 0,
+     "adPct": 25,
+     "ap": 0,
+     "asPct": 15,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 25,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6054",
+      "gameType": "神器装备",
+      "basicDesc": "+25物理加成 +15%攻击速度 +40护甲 +25%全能吸血",
+      "desc": "携带者受到的50%伤害会转而在4秒里作为非关键伤害来持续扣除。 [唯一-每位英雄仅限1件]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/3609.png",
+      "stats": {
+       "hp": 0,
+       "armor": 40,
+       "mr": 0,
+       "adPct": 25,
+       "ap": 0,
+       "asPct": 15,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 25,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "碎舰者",
+    "type": "artifact",
+    "gameTypes": [
+     "神器装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6061"
+    ],
+    "basicDesc": "+60护甲 +60魔法抗性",
+    "desc": "战斗开始时：如果邻格内没有己方弈子，获得400生命值、10%物理加成和10%法术加成。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2098.png",
+    "stats": {
+     "hp": 0,
+     "armor": 60,
+     "mr": 60,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6061",
+      "gameType": "神器装备",
+      "basicDesc": "+60护甲 +60魔法抗性",
+      "desc": "战斗开始时：如果邻格内没有己方弈子，获得400生命值、10%物理加成和10%法术加成。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/2098.png",
+      "stats": {
+       "hp": 0,
+       "armor": 60,
+       "mr": 60,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "探索者的护臂",
+    "type": "artifact",
+    "gameTypes": [
+     "神器装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6084"
+    ],
+    "basicDesc": "+25法术加成 +10护甲 +10魔法抗性 +20%全能吸血",
+    "desc": "参与击败后会使携带者的护甲、魔抗和法术加成提升20。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/seeker_s_armguard.png",
+    "stats": {
+     "hp": 0,
+     "armor": 10,
+     "mr": 10,
+     "adPct": 0,
+     "ap": 25,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 20,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6084",
+      "gameType": "神器装备",
+      "basicDesc": "+25法术加成 +10护甲 +10魔法抗性 +20%全能吸血",
+      "desc": "参与击败后会使携带者的护甲、魔抗和法术加成提升20。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/seeker_s_armguard.png",
+      "stats": {
+       "hp": 0,
+       "armor": 10,
+       "mr": 10,
+       "adPct": 0,
+       "ap": 25,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 20,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "淘气包纹章",
+    "type": "emblem",
+    "gameTypes": [
+     "转职纹章"
+    ],
+    "priority": 0,
+    "ids": [
+     "4815"
+    ],
+    "basicDesc": "+150生命上限",
+    "desc": "携带者获得【淘气包】羁绊。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4815.png",
+    "stats": {
+     "hp": 150,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "4815",
+      "gameType": "转职纹章",
+      "basicDesc": "+150生命上限",
+      "desc": "携带者获得【淘气包】羁绊。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4815.png",
+      "stats": {
+       "hp": 150,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "跳线启动的朔极之矛",
+    "type": "special",
+    "gameTypes": [
+     "特殊装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "5804"
+    ],
+    "basicDesc": "+10物理加成 +45法力值 +20法术加成",
+    "desc": "每第3次攻击回复[8]20额外法力值。 会在1个与玩家的战斗回合后自毁。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/5804.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 10,
+     "ap": 20,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 45,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "5804",
+      "gameType": "特殊装备",
+      "basicDesc": "+10物理加成 +45法力值 +20法术加成",
+      "desc": "每第3次攻击回复[8]20额外法力值。 会在1个与玩家的战斗回合后自毁。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/5804.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 10,
+       "ap": 20,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 45,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "投机者之刃",
+    "type": "artifact",
+    "gameTypes": [
+     "神器装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6065"
+    ],
+    "basicDesc": "+55%攻击速度",
+    "desc": "获得【攻击速度】1%x你的【金币】金币存款的攻击速度(在【金币】30金币时达到最大值)。 每次攻击有6%几率掉落【金币】1金币。 [唯一-每位英雄仅限1件]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/5008.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 55,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6065",
+      "gameType": "神器装备",
+      "basicDesc": "+55%攻击速度",
+      "desc": "获得【攻击速度】1%x你的【金币】金币存款的攻击速度(在【金币】30金币时达到最大值)。 每次攻击有6%几率掉落【金币】1金币。 [唯一-每位英雄仅限1件]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/5008.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 55,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "顽强不屈",
+    "type": "artifact",
+    "gameTypes": [
+     "神器装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6089"
+    ],
+    "basicDesc": "+500生命上限 +20护甲 +20魔法抗性",
+    "desc": "携带者的移动速度大幅降低。 获得15%最大生命值、晕眩免疫，并将当前目标拉到近战距离。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/theindomitable.png",
+    "stats": {
+     "hp": 500,
+     "armor": 20,
+     "mr": 20,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6089",
+      "gameType": "神器装备",
+      "basicDesc": "+500生命上限 +20护甲 +20魔法抗性",
+      "desc": "携带者的移动速度大幅降低。 获得15%最大生命值、晕眩免疫，并将当前目标拉到近战距离。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/theindomitable.png",
+      "stats": {
+       "hp": 500,
+       "armor": 20,
+       "mr": 20,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "巫妖之祸",
+    "type": "artifact",
+    "gameTypes": [
+     "神器装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6086"
+    ],
+    "basicDesc": "+55法术加成 +10%攻击速度",
+    "desc": "携带者在每次技能施放后的第一次攻击造成250额外魔法伤害。 这个伤害基于阶段而提升。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/lich_bane.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 55,
+     "asPct": 10,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6086",
+      "gameType": "神器装备",
+      "basicDesc": "+55法术加成 +10%攻击速度",
+      "desc": "携带者在每次技能施放后的第一次攻击造成250额外魔法伤害。 这个伤害基于阶段而提升。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/lich_bane.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 55,
+       "asPct": 10,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "小天才纹章",
+    "type": "emblem",
+    "gameTypes": [
+     "转职纹章"
+    ],
+    "priority": 0,
+    "ids": [
+     "4803"
+    ],
+    "basicDesc": "+10%攻击速度",
+    "desc": "携带者获得【小天才】羁绊。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4803.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 10,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "4803",
+      "gameType": "转职纹章",
+      "basicDesc": "+10%攻击速度",
+      "desc": "携带者获得【小天才】羁绊。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4803.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 10,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "星之守护者纹章",
+    "type": "emblem",
+    "gameTypes": [
+     "转职纹章"
+    ],
+    "priority": 0,
+    "ids": [
+     "4804"
+    ],
+    "basicDesc": "+1法力回复",
+    "desc": "携带者获得【星之守护者】羁绊。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4804.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 1,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "4804",
+      "gameType": "转职纹章",
+      "basicDesc": "+1法力回复",
+      "desc": "携带者获得【星之守护者】羁绊。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4804.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 1,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "虚空护手",
+    "type": "artifact",
+    "gameTypes": [
+     "神器装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6094"
+    ],
+    "basicDesc": "+300生命上限 +10%伤害减免",
+    "desc": "战斗开始时：储存30%最大生命值并且每秒储存额外的2.5%。在倒下时，释放相当于生命值储量的魔法伤害，分摊给4格内的敌人们。 唯一：一个弈子仅限一件",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/voidgauntlet.png",
+    "stats": {
+     "hp": 300,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 10
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6094",
+      "gameType": "神器装备",
+      "basicDesc": "+300生命上限 +10%伤害减免",
+      "desc": "战斗开始时：储存30%最大生命值并且每秒储存额外的2.5%。在倒下时，释放相当于生命值储量的魔法伤害，分摊给4格内的敌人们。 唯一：一个弈子仅限一件",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/voidgauntlet.png",
+      "stats": {
+       "hp": 300,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 10
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "溢出错误//巨人捕手",
+    "type": "special",
+    "gameTypes": [
+     "特殊装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "5802"
+    ],
+    "basicDesc": "+30物理加成 +10%攻击速度 +20法术加成",
+    "desc": "如果目标超过了1最大生命值，则技能和攻击对其造成30%额外伤害。 会在1个与玩家的战斗回合后自毁。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/5802.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 30,
+     "ap": 20,
+     "asPct": 10,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "5802",
+      "gameType": "特殊装备",
+      "basicDesc": "+30物理加成 +10%攻击速度 +20法术加成",
+      "desc": "如果目标超过了1最大生命值，则技能和攻击对其造成30%额外伤害。 会在1个与玩家的战斗回合后自毁。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/5802.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 30,
+       "ap": 20,
+       "asPct": 10,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "永恒契约",
+    "type": "artifact",
+    "gameTypes": [
+     "神器装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6098"
+    ],
+    "basicDesc": "+40法术加成 +1法力回复",
+    "desc": "战斗开始时：与生命值最高的那个友军形成一个契约，如果其倒下，则获得10法力回复和40%法术加成。 当该友军使用其技能时，获得15法力值。每6秒，为该友军提供护盾值，数额相当于携带者的200%法术加成。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/eternalpact.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 40,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 1,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6098",
+      "gameType": "神器装备",
+      "basicDesc": "+40法术加成 +1法力回复",
+      "desc": "战斗开始时：与生命值最高的那个友军形成一个契约，如果其倒下，则获得10法力回复和40%法术加成。 当该友军使用其技能时，获得15法力值。每6秒，为该友军提供护盾值，数额相当于携带者的200%法术加成。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/eternalpact.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 40,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 1,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "鱼骨头",
+    "type": "artifact",
+    "gameTypes": [
+     "神器装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6069"
+    ],
+    "basicDesc": "+50物理加成 +50%攻击速度",
+    "desc": "携带者的攻击会瞄准随机的敌人。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/fishbones.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 50,
+     "ap": 0,
+     "asPct": 50,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6069",
+      "gameType": "神器装备",
+      "basicDesc": "+50物理加成 +50%攻击速度",
+      "desc": "携带者的攻击会瞄准随机的敌人。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/fishbones.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 50,
+       "ap": 0,
+       "asPct": 50,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "源计划：激光特工纹章",
+    "type": "emblem",
+    "gameTypes": [
+     "转职纹章"
+    ],
+    "priority": 0,
+    "ids": [
+     "4812"
+    ],
+    "basicDesc": "+10物理加成",
+    "desc": "携带者获得【源计划：激光特工】羁绊。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4812.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 10,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "4812",
+      "gameType": "转职纹章",
+      "basicDesc": "+10物理加成",
+      "desc": "携带者获得【源计划：激光特工】羁绊。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4812.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 10,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "战斗机甲纹章",
+    "type": "emblem",
+    "gameTypes": [
+     "转职纹章"
+    ],
+    "priority": 0,
+    "ids": [
+     "4807"
+    ],
+    "basicDesc": "+150生命上限",
+    "desc": "携带者获得【战斗机甲】羁绊。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4807.png",
+    "stats": {
+     "hp": 150,
+     "armor": 0,
+     "mr": 0,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "4807",
+      "gameType": "转职纹章",
+      "basicDesc": "+150生命上限",
+      "desc": "携带者获得【战斗机甲】羁绊。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4807.png",
+      "stats": {
+       "hp": 150,
+       "armor": 0,
+       "mr": 0,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "智慧末刃",
+    "type": "artifact",
+    "gameTypes": [
+     "神器装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6075"
+    ],
+    "basicDesc": "+400生命上限 +20护甲 +20魔法抗性 +25%攻击速度",
+    "desc": "攻击造成30额外魔法伤害。 治疗携带者，数额为30%的所有已造成魔法伤害。 这个伤害基于阶段而提升。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/wit_s_end.png",
+    "stats": {
+     "hp": 400,
+     "armor": 20,
+     "mr": 20,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 25,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6075",
+      "gameType": "神器装备",
+      "basicDesc": "+400生命上限 +20护甲 +20魔法抗性 +25%攻击速度",
+      "desc": "攻击造成30额外魔法伤害。 治疗携带者，数额为30%的所有已造成魔法伤害。 这个伤害基于阶段而提升。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/wit_s_end.png",
+      "stats": {
+       "hp": 400,
+       "armor": 20,
+       "mr": 20,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 25,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "中娅悖论",
+    "type": "artifact",
+    "gameTypes": [
+     "神器装备"
+    ],
+    "priority": 0,
+    "ids": [
+     "6060"
+    ],
+    "basicDesc": "+25法术加成 +25护甲 +25魔法抗性",
+    "desc": "每场战斗一次：在40%生命值时，携带者进入持续3秒的免疫伤害和无法被选取状态。 [唯一-每位英雄仅限1件]",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/3610.png",
+    "stats": {
+     "hp": 0,
+     "armor": 25,
+     "mr": 25,
+     "adPct": 0,
+     "ap": 25,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "6060",
+      "gameType": "神器装备",
+      "basicDesc": "+25法术加成 +25护甲 +25魔法抗性",
+      "desc": "每场战斗一次：在40%生命值时，携带者进入持续3秒的免疫伤害和无法被选取状态。 [唯一-每位英雄仅限1件]",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/3610.png",
+      "stats": {
+       "hp": 0,
+       "armor": 25,
+       "mr": 25,
+       "adPct": 0,
+       "ap": 25,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
+   },
+   {
+    "name": "AI程序纹章",
+    "type": "emblem",
+    "gameTypes": [
+     "转职纹章"
+    ],
+    "priority": 0,
+    "ids": [
+     "4811"
+    ],
+    "basicDesc": "+20魔法抗性",
+    "desc": "携带者获得【AI程序】羁绊。",
+    "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4811.png",
+    "stats": {
+     "hp": 0,
+     "armor": 0,
+     "mr": 20,
+     "adPct": 0,
+     "ap": 0,
+     "asPct": 0,
+     "critPct": 0,
+     "ampPct": 0,
+     "startMana": 0,
+     "manaRegen": 0,
+     "omnivamp": 0,
+     "damageReduction": 0
+    },
+    "staticStatsComplete": true,
+    "effectCoverage": "unmodeled",
+    "variants": [
+     {
+      "id": "4811",
+      "gameType": "转职纹章",
+      "basicDesc": "+20魔法抗性",
+      "desc": "携带者获得【AI程序】羁绊。",
+      "picture": "https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/4811.png",
+      "stats": {
+       "hp": 0,
+       "armor": 0,
+       "mr": 20,
+       "adPct": 0,
+       "ap": 0,
+       "asPct": 0,
+       "critPct": 0,
+       "ampPct": 0,
+       "startMana": 0,
+       "manaRegen": 0,
+       "omnivamp": 0,
+       "damageReduction": 0
+      },
+      "staticStatsComplete": true,
+      "effectModeled": false
+     }
+    ]
    }
   ],
   "augments": [
@@ -52362,6 +60277,11 @@
    "count": 122,
    "mapped": true,
    "effects": true
+  },
+  "itemCatalog": {
+   "records": 148,
+   "names": 146,
+   "mittens": true
   }
  },
  "assumptions": [
@@ -55285,7 +63205,7 @@
   }
  },
  "virtualBattle": {
-  "generated": "2026-07-16T20:37:12.958Z",
+  "generated": "2026-07-16T20:56:58.864Z",
   "totalBattles": 26532,
   "averageCoverage": 100,
   "engine": {

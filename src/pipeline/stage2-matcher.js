@@ -2,6 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 const { ROOT, resultPath, reportPath, publicPath, ensureOutputDirs } = require('../lib/project-paths');
+const { buildItemCatalog, searchableItemRecords } = require('../core/item-catalog');
 
 const sourcePath = file => file.startsWith('data/') ? path.join(ROOT, file) : resultPath(file);
 const read = file => JSON.parse(fs.readFileSync(sourcePath(file), 'utf8'));
@@ -956,9 +957,10 @@ function buildOptions(templates) {
         unitMetaByName[h.name] = { price: Number(h.price) || null };
       }
     });
-  const itemNames = uniq([...COMPONENTS, ...ATTACK_ITEMS, ...AP_ITEMS, ...TANK_ITEMS, ...JAX_ITEMS]);
   const itemCount = optionCounts(templates, 'completedPrefs');
   const componentCount = optionCounts(templates, 'componentPrefs');
+  const itemPriority = Object.fromEntries(uniq([...Object.keys(itemCount), ...Object.keys(componentCount)])
+    .map(name => [name, (itemCount[name] || 0) + (componentCount[name] || 0)]));
   const augmentCount = optionCounts(templates, 'augmentPrefs');
   const hexByName = Object.fromEntries(Object.values(data.hex).filter(h => h.name).map(h => [h.name, h]));
   const allAugNames = uniq([
@@ -976,11 +978,7 @@ function buildOptions(templates) {
         aliases: unitAliasesFor(name),
       }))
       .sort((a, b) => b.priority - a.priority || (a.price || 9) - (b.price || 9) || a.name.localeCompare(b.name, 'zh-Hans-CN')),
-    items: itemNames.map(name => ({
-      name,
-      type: COMPONENTS.includes(name) ? 'component' : 'completed',
-      priority: (itemCount[name] || 0) + (componentCount[name] || 0),
-    })).sort((a, b) => b.priority - a.priority),
+    items: buildItemCatalog(data.equip, itemPriority),
     augments: Object.entries(augmentCount).sort((a, b) => b[1] - a[1]).slice(0, 36).map(([name, priority]) => ({
       name,
       priority,
@@ -1191,6 +1189,16 @@ if (strategyPolicyResults) {
   if (badCertifiedRule) throw new Error('认证的换核规则必须携带正LCB证据');
 }
 const options = buildOptions(templates);
+const searchableItems = searchableItemRecords(data.equip);
+const searchableItemNames = new Set(searchableItems.map(item => item.name));
+if (options.items.length !== searchableItemNames.size) {
+  throw new Error(`装备目录不完整：官方可搜索标准名${searchableItemNames.size}个，构建结果${options.items.length}个`);
+}
+const mittens = options.items.find(item => item.name === '连指手套');
+if (!mittens || mittens.type !== 'artifact' || mittens.effectCoverage !== 'unmodeled'
+  || Number(mittens.stats.asPct) !== 65 || Number(mittens.stats.ampPct) !== 15) {
+  throw new Error('连指手套必须进入装备目录，并如实标记静态属性已解析、主动特效未建模');
+}
 const weights = computeModelWeights();
 const examples = [
   { name: '安妮 + 波比', selected: { units: ['安妮', '波比'], items: [], augments: [], augmentCats: [] } },
@@ -1215,7 +1223,11 @@ const out = {
   templates,
   weights,
   examples,
-  assertions: { coreData: coreAssertions, heroAugments: { count: heroAugmentCatalog.length, mapped: true, effects: true } },
+  assertions: {
+    coreData: coreAssertions,
+    heroAugments: { count: heroAugmentCatalog.length, mapped: true, effects: true },
+    itemCatalog: { records: searchableItems.length, names: searchableItemNames.size, mittens: true },
+  },
   assumptions: [
     '二阶段匹配器只根据你点击的信号重排路线，不读取游戏画面。',
     '路线模板来自官方早期阵容/散件优先级/符文推荐，并补充研究型过渡模板。',

@@ -104,6 +104,7 @@
     水银: ["水银"],
     无尽之刃: ["无尽"],
     振奋盔甲: ["振奋"],
+    连指手套: ["连指", "手套神器"],
     钢铁烈阳之匣: ["钢铁匣", "钢铁烈阳", "鸟盾"],
     暴风之剑: ["大剑", "bf"],
     反曲之弓: ["反曲弓", "攻速", "弓"],
@@ -791,6 +792,10 @@
     const i = parse("轮子妈轻语", []);
     assertIncludes(i.add, "units", "希维尔");
     assertIncludes(i.add, "items", "最后的轻语");
+
+    const artifact = parse("连指手套", []);
+    assertIncludes(artifact.add, "items", "连指手套");
+    if (artifact.pending.length || artifact.unheard.length) throw new Error("神器标准名不应进入待确认或没听懂：" + JSON.stringify(artifact));
 
     const j = parse("然后的话那个嗯", [{ kind: "units", value: "凯尔" }]);
     if (j.add.length || j.pending.length || j.unheard.length) throw new Error("纯填充词应静默：" + JSON.stringify(j));
