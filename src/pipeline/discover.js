@@ -49,7 +49,10 @@ const TFX = {
 
 const seenUnit = new Set();
 const units = Object.values(chess)
-  .filter(u => u.showHeroTag === '1' && Number(u.price) >= 1 && Number(u.price) <= 5 && !seenUnit.has(u.name) && seenUnit.add(u.name))
+  .filter(u => u.showHeroTag === '1'
+    && Number(u.price) >= 1 && Number(u.price) <= 5
+    && !(String(u.species) === '-1' && String(u.class) === '-1')
+    && !seenUnit.has(u.name) && seenUnit.add(u.name))
   .map(u => ({
     id: u.id,
     name: u.name,
@@ -463,6 +466,8 @@ function numericMonsters() {
   };
 }
 
+// 17.7 当前客户端/公告证据：规则集 mechanics.shopOdds。
+// 1、2、7 级规则集仍标记为未验证，暂沿用旧表先验；10级仅用于高端购物虚拟概率。
 const SHOP_ODDS = {
   1: [100, 0, 0, 0, 0],
   2: [100, 0, 0, 0, 0],
@@ -471,8 +476,8 @@ const SHOP_ODDS = {
   5: [45, 33, 20, 2, 0],
   6: [25, 40, 30, 5, 0],
   7: [19, 30, 35, 15, 1],
-  8: [18, 25, 32, 22, 3],
-  9: [10, 20, 25, 35, 10],
+  8: [16, 20, 35, 25, 4],
+  9: [9, 15, 30, 30, 16],
   10: [5, 10, 20, 40, 25],
 };
 
@@ -522,7 +527,18 @@ function shopModel(stageComps) {
     const p = hitProb({ level, cost: u.price, copies, gold });
     return { hero: name, price: u.price, target: copies === 9 ? '三星' : '二星', ...p, pct: Math.round(p.probability * 1000) / 10 };
   });
-  return { odds: SHOP_ODDS, unitCounts, generic, targetHits };
+  return {
+    odds: SHOP_ODDS,
+    unitCounts,
+    generic,
+    targetHits,
+    evidence: {
+      source: 'data/ruleset/monster-invasion-17.7.json',
+      confirmedLevels: [3, 4, 5, 6, 8, 9],
+      priorLevels: [1, 2, 7],
+      virtualLevels: [10],
+    },
+  };
 }
 
 function scoreAug(h) {
@@ -633,6 +649,22 @@ const out = {
     '输出模拟仍是30秒单体木桩，会低估AOE、控制、斩杀、站位和技能打断收益。',
   ],
 };
+
+const confirmedShopOdds = {
+  3: [75, 25, 0, 0, 0],
+  4: [55, 30, 15, 0, 0],
+  5: [45, 33, 20, 2, 0],
+  6: [25, 40, 30, 5, 0],
+  8: [16, 20, 35, 25, 4],
+  9: [9, 15, 30, 30, 16],
+};
+for (const [level, expected] of Object.entries(confirmedShopOdds)) {
+  if (JSON.stringify(out.shopModel.odds[level]) !== JSON.stringify(expected)) {
+    throw new Error(`17.7商店概率漂移：等级${level}`);
+  }
+}
+if (out.shopModel.unitCounts[5] !== 8) throw new Error('17.7五费英雄种数应为8');
+if (units.some(unit => /训练假人/.test(unit.name))) throw new Error('非商店训练假人混入抽卡模型');
 
 fs.writeFileSync(resultPath('discovery_results.json'), JSON.stringify(out, null, 1));
 fs.writeFileSync(publicPath('discovery-data.js'), 'window.DISCOVERY=' + JSON.stringify(out) + ';');

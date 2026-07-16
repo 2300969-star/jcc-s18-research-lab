@@ -37,7 +37,18 @@ const mechaPrimeResults = readOptional('mecha_prime_results.json') || null;
 const metaDiscoveryResults = readOptional('meta_discovery_results.json') || null;
 const augmentTransitionResults = readOptional('augment_transition_results.json') || null;
 const strategyPolicyResults = readOptional('strategy_policy_results.json') || null;
+const previousMatcherResults = readOptional('stage2_matcher_results.json') || null;
 const mechaPrimeNames = new Set(((mechaPrimeResults && mechaPrimeResults.mechaMembers) || []).map(x => x.name));
+const officialStageSources = new Map();
+
+function isValidShopHero(hero) {
+  const price = Number(hero && hero.price);
+  return !!(hero && hero.name
+    && String(hero.setid) === '8'
+    && String(hero.showHeroTag) === '1'
+    && price >= 1 && price <= 5
+    && !(String(hero.species) === '-1' && String(hero.class) === '-1'));
+}
 
 const COMPONENTS = [
   '暴风之剑', '反曲之弓', '无用大棒', '女神之泪', '锁子甲',
@@ -126,7 +137,7 @@ const UNIT_ALIASES = {
 
 function unitAliasesFor(name) {
   const paintAliases = Object.values(data.chess)
-    .filter(h => h.name === name && h.heroPaint)
+    .filter(h => isValidShopHero(h) && h.name === name && h.heroPaint)
     .flatMap(h => {
       const raw = String(h.heroPaint).replace(/^s\d+_/, '').replace(/_/g, ' ');
       return [raw, raw.replace(/\s+/g, '')];
@@ -210,7 +221,7 @@ const ITEM_RECIPES = itemRecipeMap();
 
 function heroByName(name) {
   return Object.values(data.chess)
-    .filter(h => h.name === name && String(h.setid) === '8' && String(h.showHeroTag) === '1')
+    .filter(h => isValidShopHero(h) && h.name === name)
     .sort((a, b) => Number(a.price) - Number(b.price) || Number(a.id) - Number(b.id))[0] || null;
 }
 
@@ -240,7 +251,7 @@ function heroFromAugment(hex) {
   const providedName = provided && (standardNames[provided[1]] || provided[1]);
   if (providedName && heroByName(providedName)) return providedName;
   return Object.values(data.chess)
-    .filter(h => h.name && String(h.setid) === '8' && String(h.showHeroTag) === '1' && text.includes(h.name))
+    .filter(h => isValidShopHero(h) && text.includes(h.name))
     .sort((a, b) => String(b.name).length - String(a.name).length || Number(a.price) - Number(b.price))[0]?.name || '';
 }
 
@@ -318,16 +329,6 @@ function activeTraitsFromTemplate(template, modelComp) {
   return [...best.values()];
 }
 
-function roleFromModelHero(hero, carryName) {
-  if (!hero) return 'utility';
-  if (hero.name === carryName || hero.carry) return 'mainCarry';
-  const items = (hero.items || []).map(canonicalItem).filter(Boolean);
-  const tankItems = items.filter(x => TANK_ITEM_SET.has(x)).length;
-  if (items.length && tankItems < items.length) return 'subCarry';
-  if (hero.row <= 2 || tankItems || Number(hero.price) >= 4) return 'frontline';
-  return 'utility';
-}
-
 function roleFromBoardUnit(unit, carryName) {
   if (!unit) return 'utility';
   if (unit.name === carryName || unit.carry || /主C/.test(unit.role || '')) return 'mainCarry';
@@ -338,76 +339,208 @@ function roleFromBoardUnit(unit, carryName) {
   return 'utility';
 }
 
-function profileItems(items, holder, role) {
-  return uniq((items || []).map(canonicalItem).filter(x => x && ITEM_RECIPES[x]))
-    .map(name => ({ name, holder, role, components: ITEM_RECIPES[name] || [] }));
+const STAGE_WINDOWS = [
+  { key: '1-5', label: '前期', levelMin: 1, levelMax: 5 },
+  { key: '6-7', label: '中期', levelMin: 6, levelMax: 7 },
+  { key: '8-9', label: '后期', levelMin: 8, levelMax: 9 },
+];
+const EQUIP_BY_NAME = new Map(Object.values(data.equip).filter(item => item && item.name).map(item => [item.name, item]));
+
+function exactAssignmentItem(raw) {
+  if (!raw || String(raw).includes('/')) return '';
+  const name = canonicalItem(raw);
+  return name && EQUIP_BY_NAME.has(name) && !COMPONENTS.includes(name) ? name : '';
 }
 
-function profileFromModel(template, modelComp) {
-  const heroes = modelComp && modelComp.detail && Array.isArray(modelComp.detail.heroes) ? modelComp.detail.heroes : [];
-  const carryHero = heroes.find(h => h.carry) || heroes.find(h => h.name === (modelComp.carry && modelComp.carry.hero)) || heroes[0] || {};
-  const carryName = carryHero.name || (modelComp.carry && modelComp.carry.hero) || (template.carryUnits || [])[0] || (template.coreUnits || [])[0];
-  const mainItems = profileItems((carryHero.items && carryHero.items.length ? carryHero.items : modelComp.carryItems || template.completedPrefs || []).slice(0, 3), carryName, 'mainCarry');
-  const units = heroes.map(h => {
-    const role = roleFromModelHero(h, carryName);
+function itemPreferences(template) {
+  return uniq((template.completedPrefs || [])
+    .map(canonicalItem)
+    .filter(name => name && EQUIP_BY_NAME.has(name) && !COMPONENTS.includes(name)));
+}
+
+function semanticRolesFor(name, roles) {
+  const out = [];
+  if (name === roles.anchor) out.push('anchor');
+  if (name === roles.strategicCarry) out.push('strategicCarry');
+  if (name === roles.executionCarry) out.push('executionCarry');
+  if (name === roles.itemHolder) out.push('itemHolder');
+  if (name === roles.terminalCarry) out.push('terminalCarry');
+  if (name === roles.frontlineAnchor) out.push('frontlineAnchor');
+  return out;
+}
+
+function profileItems(items, holder, stageRoles) {
+  return (items || []).map((raw, index) => {
+    const name = exactAssignmentItem(raw);
+    if (!name) return null;
+    const roles = uniq(['itemHolder', ...semanticRolesFor(holder, stageRoles)]);
+    const role = holder === stageRoles.frontlineAnchor ? 'frontlineAnchor'
+      : holder === stageRoles.executionCarry ? 'executionCarry'
+      : holder === stageRoles.terminalCarry ? 'terminalCarry'
+      : holder === stageRoles.strategicCarry ? 'strategicCarry'
+      : 'itemHolder';
+    return { name, holder, role, roles, slot: index + 1, components: ITEM_RECIPES[name] || [] };
+  }).filter(Boolean);
+}
+
+function inferredBoard(names, carryName) {
+  const frontSlots = [[1, 4], [1, 3], [1, 5], [1, 2], [1, 6], [2, 4], [2, 3], [2, 5], [1, 1], [1, 7]];
+  const backSlots = [[4, 4], [4, 3], [4, 5], [4, 2], [4, 6], [3, 4], [3, 3], [3, 5], [4, 1], [4, 7]];
+  let frontIndex = 0;
+  let backIndex = 0;
+  return uniq(names).map(name => {
+    const hero = heroByName(name) || {};
+    const front = Number(hero.attackRange || 1) <= 2;
+    const slot = front ? frontSlots[frontIndex++] : backSlots[backIndex++];
     return {
-      name: h.name,
-      price: Number(h.price) || priceOf(h.name),
-      role,
-      starTarget: role === 'mainCarry' ? starTargetFor(h.name) : (Number(h.price) >= 4 ? 2 : 1),
-      items: profileItems(h.items || [], h.name, role).map(x => x.name),
-      traits: traitsForHero(h.name),
+      name,
+      row: slot[0],
+      col: slot[1],
+      carry: name === carryName,
+      role: name === carryName ? '主C' : front ? '前排' : '后排',
+      items: [],
     };
   });
-  return {
-    source: 'model_results',
-    mainCarry: { name: carryName, starTarget: starTargetFor(carryName), items: mainItems.map(x => x.name) },
-    units,
-    activeTraits: activeTraitsFromTemplate(template, modelComp),
-    items: uniq([
-      ...mainItems,
-      ...heroes.flatMap(h => profileItems(h.items || [], h.name, roleFromModelHero(h, carryName))),
-      ...profileItems(template.completedPrefs || [], carryName, 'route'),
-    ].map(x => JSON.stringify(x))).map(x => JSON.parse(x)),
+}
+
+function normalizeBoard(rows, fallbackNames, carryName) {
+  const source = rows && rows.length ? rows : inferredBoard(fallbackNames, carryName);
+  const fallbackByName = new Map(inferredBoard(source.map(row => row.name), carryName).map(row => [row.name, row]));
+  return source.filter(row => row && row.name && heroByName(row.name)).map(row => {
+    const fallback = fallbackByName.get(row.name);
+    const boardRole = row.role || roleFromBoardUnit(row, carryName);
+    return {
+      name: row.name,
+      price: Number(row.price) || priceOf(row.name),
+      row: Number(row.row) >= 1 && Number(row.row) <= 4 ? Number(row.row) : fallback.row,
+      col: Number(row.col) >= 1 && Number(row.col) <= 7 ? Number(row.col) : fallback.col,
+      role: boardRole,
+      carry: !!row.carry || row.name === carryName,
+      items: (row.items || []).map(exactAssignmentItem).filter(Boolean),
+    };
+  });
+}
+
+function buildStage(window, rows, fallbackNames, strategicCarry, carryHint) {
+  const board = normalizeBoard(rows, fallbackNames, carryHint || strategicCarry);
+  const names = board.map(unit => unit.name);
+  const explicitCarry = board.find(unit => unit.carry) || board.find(unit => /主C|过渡C/.test(unit.role || ''));
+  const executionCarry = carryHint || (explicitCarry && explicitCarry.name) || (names.includes(strategicCarry) ? strategicCarry : null);
+  const equippedExecution = board.find(unit => unit.name === executionCarry && unit.items.length);
+  const equippedCarry = board.find(unit => unit.carry && unit.items.length);
+  const itemHolder = (equippedExecution || equippedCarry || {}).name || null;
+  const frontlineAnchor = (board.find(unit => /主坦/.test(unit.role || ''))
+    || board.filter(unit => unit.row <= 2).sort((a, b) => {
+      const aTank = a.items.filter(name => TANK_ITEM_SET.has(name)).length;
+      const bTank = b.items.filter(name => TANK_ITEM_SET.has(name)).length;
+      return bTank - aTank || a.col - b.col;
+    })[0] || {}).name || null;
+  const roles = {
+    anchor: names.includes(strategicCarry) ? strategicCarry : executionCarry || frontlineAnchor || names[0] || null,
+    strategicCarry: strategicCarry || null,
+    executionCarry,
+    itemHolder,
+    terminalCarry: strategicCarry || null,
+    frontlineAnchor,
   };
+  const canonicalBoard = board.map(unit => ({ ...unit, roles: semanticRolesFor(unit.name, roles) }));
+  const itemAssignments = canonicalBoard.flatMap(unit => profileItems(unit.items, unit.name, roles));
+  return {
+    ...window,
+    level: window.levelMax,
+    carry: {
+      strategic: roles.strategicCarry,
+      execution: roles.executionCarry,
+      itemHolder: roles.itemHolder,
+    },
+    carryName: roles.itemHolder || roles.executionCarry,
+    roles,
+    team: names,
+    units: canonicalBoard.map(unit => {
+      const role = roleFromBoardUnit(unit, executionCarry);
+      return {
+        name: unit.name,
+        price: unit.price,
+        role,
+        roles: unit.roles,
+        starTarget: role === 'mainCarry' ? starTargetFor(unit.name) : (unit.price >= 4 ? 2 : 1),
+        traits: traitsForHero(unit.name),
+      };
+    }),
+    board: canonicalBoard,
+    itemAssignments,
+  };
+}
+
+function finalizeRouteProfile(template, source, stages, modelComp, canonicalStageSource) {
+  const canonicalStage = stages.find(stage => stage.key === '8-9') || stages[stages.length - 1];
+  const roles = canonicalStage.roles;
+  const itemAssignments = canonicalStage.itemAssignments || [];
+  const strategicCarry = roles.strategicCarry || roles.terminalCarry;
+  const mainItems = itemAssignments.filter(item => item.holder === strategicCarry).map(item => item.name);
+  return {
+    schemaVersion: 2,
+    source,
+    canonicalStage: '8-9',
+    canonicalStageSource,
+    roles,
+    mainCarry: { name: strategicCarry, starTarget: starTargetFor(strategicCarry), items: mainItems },
+    units: canonicalStage.units,
+    activeTraits: activeTraitsFromTemplate(template, modelComp),
+    itemPreferences: itemPreferences(template),
+    itemAssignments,
+    items: itemAssignments.map(item => ({ ...item, roles: item.roles.slice(), components: item.components.slice() })),
+    stages,
+  };
+}
+
+function profileFromOfficial(template, modelComp) {
+  const source = officialStageSources.get(template.id);
+  const carryName = modelComp && modelComp.carry && modelComp.carry.hero
+    || (source && source.late.find(unit => unit.carry) || {}).name
+    || (template.carryUnits || [])[0]
+    || (template.coreUnits || [])[0];
+  const stages = STAGE_WINDOWS.map((window, index) => {
+    const rows = index === 0 ? source.early : index === 1 ? source.mid : source.late;
+    const fallback = index === 0 ? template.earlyUnits : index === 1 ? template.midUnits : template.coreUnits;
+    return buildStage(window, rows, fallback, carryName, index === 2 ? carryName : null);
+  });
+  return finalizeRouteProfile(template, 'official', stages, modelComp, modelComp ? 'model_results.detail.heroes' : 'official.hero_location');
+}
+
+function metaRowForTemplate(template) {
+  const augment = template.mechanic && template.mechanic.requiredAugment;
+  return ((metaDiscoveryResults && metaDiscoveryResults.conditional) || [])
+    .find(row => row.augment === augment && template.name.includes(row.carry)) || null;
+}
+
+function profileFromMeta(template) {
+  const row = metaRowForTemplate(template);
+  const stages = template.stages || row && row.presentation && row.presentation.stages || [];
+  return finalizeRouteProfile(template, 'meta-solver.buildPresentation', stages, null, 'presentation.stages');
 }
 
 function profileFromTemplate(template) {
   const board = Array.isArray(template.board) ? template.board : [];
-  const carryUnit = board.find(x => x.carry) || board.find(x => /主C/.test(x.role || '')) || null;
-  const carryName = (carryUnit && carryUnit.name) || (template.carryUnits || [])[0] || (template.coreUnits || [])[0];
-  const carryItems = (carryUnit && carryUnit.items && carryUnit.items.length ? carryUnit.items : template.completedPrefs || []).slice(0, 3);
-  const unitNames = uniq(board.length ? board.map(x => x.name) : (template.coreUnits || []));
-  const units = unitNames.map(name => {
-    const row = board.find(x => x.name === name);
-    const role = roleFromBoardUnit(row || { name, row: 4, role: '' }, carryName);
-    return {
-      name,
-      price: priceOf(name),
-      role,
-      starTarget: role === 'mainCarry' ? starTargetFor(name) : ((priceOf(name) || 1) >= 4 ? 2 : 1),
-      items: profileItems(row && row.items || [], name, role).map(x => x.name),
-      traits: traitsForHero(name),
-    };
-  });
-  const items = uniq([
-    ...profileItems(carryItems, carryName, 'mainCarry'),
-    ...board.flatMap(u => profileItems(u.items || [], u.name, roleFromBoardUnit(u, carryName))),
-    ...profileItems(template.completedPrefs || [], carryName, 'route'),
-  ].map(x => JSON.stringify(x))).map(x => JSON.parse(x));
-  return {
-    source: 'template',
-    mainCarry: { name: carryName, starTarget: starTargetFor(carryName), items: profileItems(carryItems, carryName, 'mainCarry').map(x => x.name) },
-    units,
-    activeTraits: activeTraitsFromTemplate(template, null),
-    items,
-  };
+  const carryUnit = board.find(unit => unit.carry) || board.find(unit => /主C/.test(unit.role || '')) || null;
+  const carryName = carryUnit && carryUnit.name || (template.carryUnits || [])[0] || (template.coreUnits || [])[0];
+  const stages = [
+    buildStage(STAGE_WINDOWS[0], null, template.earlyUnits || [], carryName, null),
+    buildStage(STAGE_WINDOWS[1], null, template.midUnits || [], carryName, null),
+    buildStage(STAGE_WINDOWS[2], board, template.coreUnits || [], carryName, carryName),
+  ];
+  return finalizeRouteProfile(template, 'template', stages, null, board.length ? 'explicit-board' : 'coreUnits');
 }
 
 function attachRouteProfiles(templatesIn) {
-  return templatesIn.map(t => {
-    const comp = modelCompForLine(t.name);
-    return { ...t, routeProfile: comp ? profileFromModel(t, comp) : profileFromTemplate(t) };
+  return templatesIn.map(template => {
+    const modelComp = modelCompForLine(template.name);
+    const routeProfile = template.source === 'meta-solver'
+      ? profileFromMeta(template)
+      : template.source === 'official'
+        ? profileFromOfficial(template, modelComp)
+        : profileFromTemplate(template);
+    return { ...template, routeProfile };
   });
 }
 
@@ -529,6 +662,21 @@ function attachPrimePlans(templatesIn) {
     : t);
 }
 
+function officialBoardRows(rows) {
+  return (rows || []).map(unit => {
+    const [row, col] = String(unit.location || '').split(',').map(Number);
+    return {
+      name: unit.name || nameOf.hero(unit.hero_id),
+      price: Number(unit.price) || priceOf(unit.name || nameOf.hero(unit.hero_id)),
+      row: Number(unit.row) || row,
+      col: Number(unit.col) || col,
+      carry: !!unit.carry || !!unit.is_carry_hero,
+      role: unit.role || '',
+      items: unit.items || csv(unit.equipment_id).map(nameOf.item),
+    };
+  });
+}
+
 function officialTemplates() {
   return data.lineups.map(lineup => {
     const detail = JSON.parse(lineup.detail || '{}');
@@ -549,8 +697,14 @@ function officialTemplates() {
     const earlyTraits = uniq((detail.y21_early_heros_contact || []).map(t => `${t.num}${nameOf.trait(t)}`));
     const family = familyOf(lineName, detail);
     const modelComp = modelCompForLine(lineName);
+    const templateId = `official-${lineup.id}`;
+    officialStageSources.set(templateId, {
+      early: officialBoardRows(detail.y21_early_heros),
+      mid: officialBoardRows(detail.y21_metaphase_heros),
+      late: officialBoardRows(modelComp && modelComp.detail && modelComp.detail.heroes || detail.hero_location),
+    });
     const template = {
-      id: `official-${lineup.id}`,
+      id: templateId,
       source: 'official',
       quality: lineup.quality,
       name: lineName.replace(/[【】]/g, ''),
@@ -946,12 +1100,12 @@ function buildOptions(templates) {
     ...Object.keys(midUnitCount),
     ...Object.keys(coreUnitCount),
     ...Object.values(data.chess)
-      .filter(h => h.name && String(h.setid) === '8' && String(h.showHeroTag) === '1')
+      .filter(isValidShopHero)
       .map(h => h.name),
-  ]);
+  ]).filter(name => heroByName(name));
   const unitMetaByName = {};
   Object.values(data.chess)
-    .filter(h => h.name && String(h.setid) === '8' && String(h.showHeroTag) === '1')
+    .filter(isValidShopHero)
     .forEach(h => {
       if (!unitMetaByName[h.name] || Number(h.price) < Number(unitMetaByName[h.name].price || 99)) {
         unitMetaByName[h.name] = { price: Number(h.price) || null };
@@ -1107,13 +1261,23 @@ function rank(templates, selected, weights) {
     .slice(0, 6);
 }
 
-const templates = attachAugmentTransitionPlans(attachHeroAugmentPlans(attachPrimePlans(attachRouteProfiles(inheritMechanicGates([...manualTemplates, ...officialTemplates()])))));
-
 function sameSet(a, b) {
   const aa = uniq(a).sort();
   const bb = uniq(b).sort();
   return aa.length === bb.length && aa.every((x, i) => x === bb[i]);
 }
+
+function preservePriorCertifications(templatesIn) {
+  const priorById = new Map(((previousMatcherResults && previousMatcherResults.templates) || []).map(template => [template.id, template]));
+  return templatesIn.map(template => {
+    const prior = priorById.get(template.id);
+    return prior && prior.certification && sameSet(prior.coreUnits || [], template.coreUnits || [])
+      ? { ...template, certification: prior.certification }
+      : template;
+  });
+}
+
+const templates = preservePriorCertifications(attachAugmentTransitionPlans(attachHeroAugmentPlans(attachPrimePlans(attachRouteProfiles(inheritMechanicGates([...manualTemplates, ...officialTemplates()]))))));
 
 function seededOfficialSample(rows, n) {
   return rows
@@ -1140,6 +1304,14 @@ function assertCoreData(templatesIn) {
     const boardNames = new Set((t.board || []).map(x => x.name));
     const outOfBoard = (t.coreUnits || []).filter(x => !boardNames.has(x));
     if (outOfBoard.length) throw new Error(`研究模板core不在成型站位：${t.name} ${outOfBoard.join('、')}`);
+    const terminal = t.routeProfile.stages.find(stage => stage.key === '8-9');
+    if (!sameSet(terminal.units.map(unit => unit.name), [...boardNames])) {
+      throw new Error(`研究模板canonical stage未使用显式成型棋盘：${t.name}`);
+    }
+    if (!sameSet(t.coreUnits || [], [...boardNames])
+      && (t.routeProfile.canonicalStage !== '8-9' || t.routeProfile.canonicalStageSource !== 'explicit-board')) {
+      throw new Error(`研究模板core与成型棋盘不一致时必须声明8-9显式棋盘为canonical：${t.name}`);
+    }
   });
   const mf = templatesIn.find(t => t.name.includes('幻灵厄运小姐'));
   if (mf && mf.coreUnits.includes('贾克斯')) throw new Error('幻灵厄运小姐 core 不应包含过渡贾克斯');
@@ -1153,7 +1325,95 @@ function assertCoreData(templatesIn) {
   };
 }
 
+function assignmentKey(item) {
+  return `${item.holder}|${item.slot}|${item.name}`;
+}
+
+function counted(values) {
+  return values.reduce((map, value) => {
+    map[value] = (map[value] || 0) + 1;
+    return map;
+  }, {});
+}
+
+function assertRouteProfiles(templatesIn) {
+  const expectedKeys = STAGE_WINDOWS.map(stage => stage.key);
+  let checkedStages = 0;
+  let checkedAssignments = 0;
+  let duplicateGroups = 0;
+  let metaStagesChecked = 0;
+  for (const template of templatesIn) {
+    const profile = template.routeProfile;
+    if (!profile || profile.schemaVersion !== 2 || profile.stages.length !== 3) {
+      throw new Error(`canonical routeProfile缺失：${template.name}`);
+    }
+    if (profile.stages.map(stage => stage.key).join(',') !== expectedKeys.join(',')) {
+      throw new Error(`canonical阶段窗口错误：${template.name}`);
+    }
+    const requiredRoles = ['anchor', 'strategicCarry', 'executionCarry', 'itemHolder', 'terminalCarry', 'frontlineAnchor'];
+    if (requiredRoles.some(role => !Object.prototype.hasOwnProperty.call(profile.roles, role))) {
+      throw new Error(`routeProfile角色字段不完整：${template.name}`);
+    }
+    for (const stage of profile.stages) {
+      checkedStages++;
+      const unitNames = stage.units.map(unit => unit.name);
+      const boardNames = stage.board.map(unit => unit.name);
+      if (!sameSet(unitNames, boardNames)) throw new Error(`${template.name} ${stage.key} units与board不一致`);
+      if (unitNames.some(name => !heroByName(name))) throw new Error(`${template.name} ${stage.key}含非商店实体`);
+      if (!(stage.levelMin <= stage.levelMax)) throw new Error(`${template.name} ${stage.key}等级范围无效`);
+      const expectedAssignments = stage.board.flatMap(unit => (unit.items || []).map((name, index) => ({
+        name,
+        holder: unit.name,
+        slot: index + 1,
+      })));
+      const expectedCounts = counted(expectedAssignments.map(assignmentKey));
+      const actualCounts = counted((stage.itemAssignments || []).map(assignmentKey));
+      if (JSON.stringify(expectedCounts) !== JSON.stringify(actualCounts)) {
+        throw new Error(`${template.name} ${stage.key}装备归属或重复数量不一致`);
+      }
+      const nameCounts = counted(expectedAssignments.map(item => item.name));
+      duplicateGroups += Object.values(nameCounts).filter(count => count > 1).length;
+      for (const assignment of stage.itemAssignments || []) {
+        checkedAssignments++;
+        if (!unitNames.includes(assignment.holder) || !boardNames.includes(assignment.holder)) {
+          throw new Error(`${template.name} ${stage.key}装备持有者不在阶段棋盘：${assignment.holder}`);
+        }
+      }
+    }
+    const terminal = profile.stages.find(stage => stage.key === profile.canonicalStage);
+    const terminalNames = terminal.units.map(unit => unit.name);
+    if ((profile.itemAssignments || []).some(item => !terminalNames.includes(item.holder))) {
+      throw new Error(`${template.name}成型装备持有者不在canonical stage`);
+    }
+    if (JSON.stringify(profile.items) !== JSON.stringify(profile.itemAssignments)) {
+      throw new Error(`${template.name} legacy items必须仅等价镜像itemAssignments`);
+    }
+    if ((profile.itemPreferences || []).some(item => item && typeof item === 'object' && item.holder)) {
+      throw new Error(`${template.name} itemPreferences不得绑定持有者`);
+    }
+    if (template.source === 'meta-solver') {
+      const row = metaRowForTemplate(template);
+      const presentationStages = row && row.presentation && row.presentation.stages;
+      if (!presentationStages
+        || JSON.stringify(template.stages) !== JSON.stringify(presentationStages)
+        || JSON.stringify(profile.stages) !== JSON.stringify(presentationStages)) {
+        throw new Error(`meta generated route未直接复用presentation stages：${template.name}`);
+      }
+      metaStagesChecked++;
+    }
+  }
+  if (!duplicateGroups) throw new Error('未发现可验证的重复成装样本');
+  return {
+    templates: templatesIn.length,
+    stages: checkedStages,
+    assignments: checkedAssignments,
+    duplicateGroupsPreserved: duplicateGroups,
+    metaStagesChecked,
+  };
+}
+
 const coreAssertions = assertCoreData(templates);
+const routeProfileAssertions = assertRouteProfiles(templates);
 if (heroAugmentCatalog.length !== 122) throw new Error(`英雄强化目录应为122条，实际${heroAugmentCatalog.length}`);
 if (heroAugmentCatalog.some(row => !row.hero || !row.cost)) throw new Error('英雄强化目录存在未映射英雄或费用');
 if (heroAugmentCatalog.some(row => !row.effect)) {
@@ -1189,6 +1449,17 @@ if (strategyPolicyResults) {
   if (badCertifiedRule) throw new Error('认证的换核规则必须携带正LCB证据');
 }
 const options = buildOptions(templates);
+const invalidShopUnit = options.unitSearch.find(unit => {
+  const hero = heroByName(unit.name);
+  return !hero || !isValidShopHero(hero);
+});
+if (invalidShopUnit || options.unitSearch.some(unit => unit.name === '训练假人？')) {
+  throw new Error(`unitSearch含非商店实体：${invalidShopUnit ? invalidShopUnit.name : '训练假人？'}`);
+}
+const fiveCostUnitNames = options.unitSearch.filter(unit => unit.price === 5).map(unit => unit.name);
+if (fiveCostUnitNames.length !== 8) {
+  throw new Error(`有效5费英雄应为8个，实际${fiveCostUnitNames.length}个：${fiveCostUnitNames.join('、')}`);
+}
 const searchableItems = searchableItemRecords(data.equip);
 const searchableItemNames = new Set(searchableItems.map(item => item.name));
 if (options.items.length !== searchableItemNames.size) {
@@ -1225,8 +1496,10 @@ const out = {
   examples,
   assertions: {
     coreData: coreAssertions,
+    routeProfiles: routeProfileAssertions,
     heroAugments: { count: heroAugmentCatalog.length, mapped: true, effects: true },
     itemCatalog: { records: searchableItems.length, names: searchableItemNames.size, mittens: true },
+    unitSearch: { validShopEntitiesOnly: true, trainingDummyExcluded: true, fiveCostHeroes: fiveCostUnitNames.length },
   },
   assumptions: [
     '二阶段匹配器只根据你点击的信号重排路线，不读取游戏画面。',
@@ -1254,8 +1527,10 @@ function writeReport(dataOut) {
 ensureOutputDirs();
 fs.writeFileSync(resultPath('stage2_matcher_results.json'), JSON.stringify(out, null, 1));
 fs.writeFileSync(publicPath('stage2-matcher-data.js'), 'window.STAGE2_MATCHER=' + JSON.stringify(out) + ';');
-writeReport(out);
+if (process.env.STAGE2_WRITE_REPORT !== '0') writeReport(out);
 
 console.log('二阶段匹配器数据生成完成');
 out.examples.forEach(ex => console.log(`${ex.name}: ${ex.result.map(r => r.template + '(' + r.score + ')').join(' / ')}`));
-console.log('输出: artifacts/results/stage2_matcher_results.json, public/stage2-matcher-data.js, docs/reports/二阶段交互匹配器.md');
+console.log(process.env.STAGE2_WRITE_REPORT === '0'
+  ? '输出: artifacts/results/stage2_matcher_results.json, public/stage2-matcher-data.js'
+  : '输出: artifacts/results/stage2_matcher_results.json, public/stage2-matcher-data.js, docs/reports/二阶段交互匹配器.md');

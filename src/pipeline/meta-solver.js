@@ -11,6 +11,13 @@ const version = currentVersion(ROOT);
 const read = file => JSON.parse(fs.readFileSync(resultPath(file), 'utf8'));
 const discovery = read('discovery_results.json');
 const model = read('model_results.json');
+const previousMeta = (() => {
+  try {
+    return read('meta_discovery_results.json');
+  } catch (_) {
+    return null;
+  }
+})();
 const equip = JSON.parse(fs.readFileSync(dataPath('equip.js'), 'utf8')).data;
 const equipByName = {};
 Object.values(equip).forEach(item => {
@@ -251,19 +258,62 @@ function positionBoard(names, carry, items, tankDetail) {
   });
 }
 
-function stageView(key, label, level, row, carry, names, targetItems, method) {
+function itemAssignmentsFromBoard(board, stageRoles) {
+  return board.flatMap(unit => (unit.items || []).map((name, index) => {
+    const roles = ['itemHolder'];
+    if (unit.name === stageRoles.strategicCarry) roles.push('strategicCarry');
+    if (unit.name === stageRoles.executionCarry) roles.push('executionCarry');
+    if (unit.name === stageRoles.terminalCarry) roles.push('terminalCarry');
+    if (unit.name === stageRoles.frontlineAnchor) roles.push('frontlineAnchor');
+    return {
+      name,
+      holder: unit.name,
+      role: roles.find(role => role !== 'itemHolder') || 'itemHolder',
+      roles,
+      slot: index + 1,
+      components: componentsFor([name]),
+    };
+  }));
+}
+
+function stageView(key, label, levelMin, levelMax, level, row, carry, names, targetItems, method, routeRoles) {
   const holder = carry || bestItemHolder(names, targetItems, row && row.carry).name;
   const tanks = row && row.tankDetail || [];
+  const board = positionBoard(names, holder, targetItems, tanks);
+  const executionCarry = row && row.carry || holder;
+  const frontlineAnchor = (board.find(unit => unit.role === '主坦') || board.find(unit => unit.row <= 2) || {}).name || null;
+  const stageRoles = {
+    anchor: names.includes(routeRoles.anchor) ? routeRoles.anchor : executionCarry,
+    strategicCarry: routeRoles.strategicCarry,
+    executionCarry,
+    itemHolder: holder,
+    terminalCarry: routeRoles.terminalCarry,
+    frontlineAnchor,
+  };
   return {
     key,
     label,
+    levelMin,
+    levelMax,
     level,
-    carry: holder,
+    carry: {
+      strategic: stageRoles.strategicCarry,
+      execution: stageRoles.executionCarry,
+      itemHolder: stageRoles.itemHolder,
+    },
+    carryName: holder,
+    roles: stageRoles,
     score: row && row.score || 0,
     method,
     team: names,
+    units: board.map(unit => ({
+      name: unit.name,
+      price: unit.price,
+      role: unit.role,
+    })),
     traits: activeTraitLabels(names),
-    board: positionBoard(names, holder, targetItems, tanks),
+    board,
+    itemAssignments: itemAssignmentsFromBoard(board, stageRoles),
   };
 }
 
@@ -281,15 +331,16 @@ function operationPlan(stages, finalRow) {
   const expectedGold = slotProbability > 0 ? Math.round(targetCopies / (slotProbability * 5) * 2) : 0;
   const dPlan = `${rollLevel}级${price}费槽${Math.round(costOdds * 100)}%，单次商店见${finalRow.carry}约${pct(shopProbability * 100)}%，从0张到${targetCopies}张理论期望约${expectedGold}金`;
   const [early, mid, late] = stages;
+  const holderOf = stage => stage.carry.itemHolder;
   const handoff = (from, to, targetTeam, phase) => {
     if (from === to) return `${phase}继续由${to}持装`;
     if (targetTeam.includes(from)) return `${phase}先留一只无装${from}，再卖持装${from}把三件套转给${to}`;
     return `${phase}卖掉持装${from}，把三件套转给${to}`;
   };
-  const change1 = handoff(early.carry, mid.carry, mid.team, '中期');
-  const change2 = handoff(mid.carry, late.carry, late.team, '成型后');
+  const change1 = handoff(holderOf(early), holderOf(mid), mid.team, '中期');
+  const change2 = handoff(holderOf(mid), holderOf(late), late.team, '成型后');
   return [
-    `2阶段：优先拿${components.join('、') || '目标装散件'}，${early.level}人口由${early.carry}带目标装打工。`,
+    `2阶段：优先拿${components.join('、') || '目标装散件'}，${early.level}人口由${holderOf(early)}带目标装打工。`,
     `3/4阶段：${change1}；只保留终局重合牌，按模型承接到${mid.team.join('、')}。`,
     `成型：${change2}，终局围绕${finalRow.carry}；${dPlan}（独立抽样近似，未扣同行与牌库）。`,
     `止损：目标三件差两件以上或关键主C两轮搜不到，沿当前装备承载者切换到同方向次优路线。`,
@@ -307,15 +358,22 @@ function buildPresentation(row) {
   const earlyNames = teamNames(earlyBridge.row);
   const midNames = teamNames(midBridge.row);
   const lateNames = expandLateTeam(row);
-  const early = stageView('early', '前期', 5, earlyBridge.row, earlyBridge.holder.name, earlyNames, targetItems,
-    `阶段战力${earlyBridge.row.score}，转型相容度${Math.round(earlyBridge.transitionScore)}`);
-  const mid = stageView('mid', '中期', 7, midBridge.row, midBridge.holder.name, midNames, targetItems,
-    `阶段战力${midBridge.row.score}，转型相容度${Math.round(midBridge.transitionScore)}`);
-  const late = stageView('late', '后期', Math.max(8, lateNames.length), row, row.carry, lateNames, targetItems,
-    `终局模型总分${row.score}，主C模拟${row.carryDps || 0}/秒`);
+  const routeRoles = {
+    anchor: (row.requiredUnits || []).find(name => lateNames.includes(name)) || row.carry,
+    strategicCarry: row.carry,
+    terminalCarry: row.carry,
+  };
+  const early = stageView('1-5', '前期', 1, 5, 5, earlyBridge.row, earlyBridge.holder.name, earlyNames, targetItems,
+    `阶段战力${earlyBridge.row.score}，转型相容度${Math.round(earlyBridge.transitionScore)}`, routeRoles);
+  const mid = stageView('6-7', '中期', 6, 7, 7, midBridge.row, midBridge.holder.name, midNames, targetItems,
+    `阶段战力${midBridge.row.score}，转型相容度${Math.round(midBridge.transitionScore)}`, routeRoles);
+  const late = stageView('8-9', '后期', 8, 9, Math.max(8, lateNames.length), row, row.carry, lateNames, targetItems,
+    `终局模型总分${row.score}，主C模拟${row.carryDps || 0}/秒`, routeRoles);
   const stages = [early, mid, late];
   return {
     stages,
+    roles: late.roles,
+    itemPreferences: targetItems,
     items: targetItems,
     operations: operationPlan(stages, row),
     positioningBasis: '行1靠敌方；主坦按EHP居中承伤，控制分散前置，远程主C按攻击距离沉底并与副输出错侧。',
@@ -325,13 +383,11 @@ function buildPresentation(row) {
 
 function generatedRoutes(rows) {
   return rows
-    .filter(row => row.upliftPct >= 5 && row.stageRatio >= 0.7 && row.confidence >= 0.6)
+    .filter(row => row.upliftPct >= 5 && row.stageRatio >= 0.7 && row.confidence >= 0.6 && row.presentation)
     .slice(0, 24)
     .map((row, index) => {
+      const [earlyStage, midStage] = row.presentation.stages;
       const names = row.team.map(x => x.name);
-      const byPrice = row.team.slice().sort((a, b) => a.price - b.price || a.name.localeCompare(b.name, 'zh-Hans-CN'));
-      const earlyUnits = byPrice.filter(x => x.price <= 2).slice(0, 4).map(x => x.name);
-      const midUnits = byPrice.filter(x => x.price <= 3).slice(0, Math.min(row.level, 7)).map(x => x.name);
       return {
         id: `meta-${row.augment}-${row.carry}-${index}`,
         source: 'meta-solver',
@@ -339,8 +395,9 @@ function generatedRoutes(rows) {
         name: `${row.augment}${row.carry}机制路线`,
         family: `${row.augment}·${row.carry}`,
         goal: `反事实模拟净提升${row.upliftPct}%` ,
-        earlyUnits: [...new Set([...row.requiredUnits, ...earlyUnits])].slice(0, 5),
-        midUnits: [...new Set([...row.requiredUnits, ...midUnits])].slice(0, 7),
+        stages: row.presentation.stages,
+        earlyUnits: earlyStage.units.map(x => x.name),
+        midUnits: midStage.units.map(x => x.name),
         coreUnits: names,
         earlyTraits: row.traits.slice(0, 4),
         componentPrefs: componentsFor(row.carryItems),
@@ -415,6 +472,18 @@ function groupConditional(rows) {
 
 const stable = stableCandidates();
 const conditional = conditionalCandidates();
+const previousStableByKey = new Map(((previousMeta && previousMeta.stable) || [])
+  .map(row => [`${row.displayName}|${row.carry}`, row]));
+const previousConditionalByKey = new Map(((previousMeta && previousMeta.conditional) || [])
+  .map(row => [`${row.augment}|${row.carry}`, row]));
+stable.forEach(row => {
+  const previous = previousStableByKey.get(`${row.displayName}|${row.carry}`);
+  if (previous && previous.certification) row.certification = previous.certification;
+});
+conditional.forEach(row => {
+  const previous = previousConditionalByKey.get(`${row.augment}|${row.carry}`);
+  if (previous && previous.certification) row.certification = previous.certification;
+});
 stable.forEach(row => { row.presentation = buildPresentation(row); });
 conditional.forEach(row => { row.presentation = buildPresentation(row); });
 const itemCatalog = [...new Set([...stable, ...conditional]
@@ -452,8 +521,11 @@ model.metaDiscovery = result;
 model.verdicts = verdicts;
 ensureOutputDirs();
 fs.writeFileSync(resultPath('meta_discovery_results.json'), JSON.stringify(result, null, 1));
-fs.writeFileSync(resultPath('model_results.json'), JSON.stringify(model, null, 1));
-fs.writeFileSync(publicPath('data.js'), `window.MODEL=${JSON.stringify(model)};`);
+const resultOnly = process.env.META_SOLVER_WRITE === 'result-only';
+if (!resultOnly) {
+  fs.writeFileSync(resultPath('model_results.json'), JSON.stringify(model, null, 1));
+  fs.writeFileSync(publicPath('data.js'), `window.MODEL=${JSON.stringify(model)};`);
+}
 
 const report = [
   '# 元阵容自动求解报告', '',
@@ -470,7 +542,7 @@ const report = [
   '## 尚未量化', '',
   ...unsupported.map(row => `- ${row.augment}：${row.basis}`),
 ];
-fs.writeFileSync(reportPath('元阵容自动求解.md'), report.join('\n'));
+if (!resultOnly) fs.writeFileSync(reportPath('元阵容自动求解.md'), report.join('\n'));
 
 if (!stable.length || !verdicts.length) throw new Error('元阵容求解结果为空');
 for (let i = 1; i < stable.length; i++) {
@@ -481,14 +553,33 @@ if (!sisters || !sisters.team.some(x => x.name === '蔚')) throw new Error('姐�
 const sistersRoute = routes.find(x => x.name.includes('姐妹金克丝'));
 if (!sistersRoute || sistersRoute.coreUnits.join(',') !== sisters.team.map(x => x.name).join(',')) throw new Error('比赛路线必须来自元求解阵容');
 const presented = [...stable, ...conditional].filter(row => row.presentation);
+let duplicateAssignmentGroups = 0;
 for (const row of presented) {
   if (row.presentation.stages.length !== 3 || row.presentation.operations.length < 3) throw new Error('算法阵容缺少阶段棋盘或运营计划');
   for (const stage of row.presentation.stages) {
     const cells = stage.board.map(unit => `${unit.row}-${unit.col}`);
     if (new Set(cells).size !== cells.length) throw new Error(`${row.displayName || row.augment}的${stage.label}站位重叠`);
     if (stage.board.some(unit => unit.row < 1 || unit.row > 4 || unit.col < 1 || unit.col > 7)) throw new Error('算法站位越界');
+    const names = new Set(stage.units.map(unit => unit.name));
+    if (stage.itemAssignments.some(item => !names.has(item.holder))) throw new Error('算法阶段装备持有者不在棋盘');
+    const expected = stage.board.flatMap(unit => (unit.items || []).map((name, index) => `${unit.name}|${index + 1}|${name}`));
+    const actual = stage.itemAssignments.map(item => `${item.holder}|${item.slot}|${item.name}`);
+    if (JSON.stringify(expected) !== JSON.stringify(actual)) throw new Error('算法阶段装备重复数量或槽位丢失');
+    const counts = expected.reduce((map, key) => {
+      const name = key.split('|').slice(2).join('|');
+      map[name] = (map[name] || 0) + 1;
+      return map;
+    }, {});
+    duplicateAssignmentGroups += Object.values(counts).filter(count => count > 1).length;
   }
 }
+for (const route of routes) {
+  const row = conditional.find(candidate => route.name.includes(candidate.augment) && route.name.includes(candidate.carry));
+  if (!row || route.stages !== row.presentation.stages || JSON.stringify(route.stages) !== JSON.stringify(row.presentation.stages)) {
+    throw new Error(`比赛路线未直接复用presentation stages：${route.name}`);
+  }
+}
+if (!duplicateAssignmentGroups) throw new Error('算法展示未保留重复成装样本');
 for (const item of itemCatalog) {
   if (!item.picture || !fs.existsSync(publicPath(item.picture))) throw new Error(`缺少本地装备图：${item.name}`);
 }
@@ -497,4 +588,6 @@ console.log(`强化覆盖: ${result.coverage.simulated}/${result.coverage.heroAu
 console.log(`算法展示: ${presented.length}条候选完成三阶段站位/装备/运营推导`);
 console.log(`姐妹金克丝: ${sisters.baselineScore} -> ${sisters.score} (+${sisters.upliftPct}%)`);
 console.log(`自动阵容: ${sisters.team.map(x => x.name).join('、')}`);
-console.log('输出: artifacts/results/meta_discovery_results.json, docs/reports/元阵容自动求解.md, artifacts/results/model_results.json');
+console.log(resultOnly
+  ? '输出: artifacts/results/meta_discovery_results.json（result-only）'
+  : '输出: artifacts/results/meta_discovery_results.json, docs/reports/元阵容自动求解.md, artifacts/results/model_results.json');

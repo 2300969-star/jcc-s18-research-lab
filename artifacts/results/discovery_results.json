@@ -2,7 +2,7 @@
  "version": "17.17.7-S18",
  "generated": "2026-07-17",
  "searchSpace": {
-  "heroes": 62,
+  "heroes": 61,
   "offenseCombos": 2002,
   "defenseCombos": 364,
   "stageStates": 11376
@@ -13115,121 +13115,6 @@
     "stage": "late",
     "stageTitle": "后期最强候选",
     "level": 9,
-    "carry": "训练假人？",
-    "carryPrice": 5,
-    "carryStar": 2,
-    "carryId": "35126",
-    "carryItems": [
-     "最后的轻语",
-     "鬼索的狂暴之刃",
-     "卢安娜的飓风"
-    ],
-    "carryItemIds": [
-     "2037",
-     "2810",
-     "2813"
-    ],
-    "carryTraitBonus": {
-     "adPct": 5,
-     "ap": 29,
-     "asPct": 0,
-     "ampPct": 31,
-     "critPct": 0,
-     "armor": 10,
-     "mr": 30,
-     "hpPct": 0,
-     "manaMult": 1.04,
-     "onHitMagic": 0,
-     "ehpMult": 1
-    },
-    "officialFlag": "野路子",
-    "team": [
-     {
-      "name": "训练假人？",
-      "price": 5
-     },
-     {
-      "name": "莎弥拉",
-      "price": 4
-     },
-     {
-      "name": "迦娜",
-      "price": 5
-     },
-     {
-      "name": "娑娜",
-      "price": 3
-     },
-     {
-      "name": "厄斐琉斯",
-      "price": 5
-     },
-     {
-      "name": "蔚",
-      "price": 2
-     },
-     {
-      "name": "佛耶戈",
-      "price": 4
-     },
-     {
-      "name": "蕾欧娜",
-      "price": 5
-     },
-     {
-      "name": "卡蜜尔",
-      "price": 2
-     }
-    ],
-    "score": 1377,
-    "rawScore": 1383,
-    "tempoPenalty": 6,
-    "carryDps": 329,
-    "frontEHP": 18873,
-    "subDps": 312,
-    "util": 3.5,
-    "teamCost": 35,
-    "traits": [
-     "3混沌战士",
-     "3地下魔盗团",
-     "2灵能使",
-     "2强袭枪手",
-     "2爱心使者",
-     "2秘术卫士",
-     "2福牛守护者",
-     "1气象主播",
-     "1枪神",
-     "1精英战士",
-     "1平民英雄"
-    ],
-    "tankDetail": [
-     {
-      "hero": "佛耶戈",
-      "star": 2,
-      "ehp": 10120,
-      "items": [
-       "狂徒铠甲",
-       "狂徒铠甲",
-       "圣盾使的誓约"
-      ]
-     },
-     {
-      "hero": "蕾欧娜",
-      "star": 2,
-      "ehp": 8753,
-      "items": [
-       "石像鬼石板甲",
-       "日炎斗篷",
-       "狂徒铠甲"
-      ]
-     }
-    ],
-    "reason": "高费主C上限高，但依赖经济与搜卡节奏；前排羁绊能把输出时间拉长；输出羁绊直接喂主C或全队"
-   },
-   {
-    "stage": "late",
-    "stageTitle": "后期最强候选",
-    "level": 9,
     "carry": "索拉卡",
     "carryPrice": 4,
     "carryStar": 2,
@@ -14952,18 +14837,18 @@
     1
    ],
    "8": [
-    18,
+    16,
+    20,
+    35,
     25,
-    32,
-    22,
-    3
+    4
    ],
    "9": [
-    10,
-    20,
-    25,
-    35,
-    10
+    9,
+    15,
+    30,
+    30,
+    16
    ],
    "10": [
     5,
@@ -14978,7 +14863,7 @@
    "2": 13,
    "3": 14,
    "4": 13,
-   "5": 9
+   "5": 8
   },
   "generic": [
    {
@@ -15037,9 +14922,9 @@
     "shops": 20,
     "slots": 100,
     "unitCount": 13,
-    "pSlot": 0.016923076923076923,
-    "probability": 0.2400448316772481,
-    "pct": 24
+    "pSlot": 0.019230769230769232,
+    "probability": 0.30230156333966085,
+    "pct": 30.2
    },
    {
     "name": "5费二星九五",
@@ -15051,10 +14936,10 @@
     "owned": 0,
     "shops": 30,
     "slots": 150,
-    "unitCount": 9,
-    "pSlot": 0.011111111111111112,
-    "probability": 0.23351134453183175,
-    "pct": 23.4
+    "unitCount": 8,
+    "pSlot": 0.02,
+    "probability": 0.5790743271381829,
+    "pct": 57.9
    }
   ],
   "targetHits": [
@@ -15133,10 +15018,10 @@
     "gold": 60,
     "shops": 30,
     "slots": 150,
-    "unitCount": 9,
-    "pSlot": 0.011111111111111112,
-    "probability": 0.23351134453183175,
-    "pct": 23.4
+    "unitCount": 8,
+    "pSlot": 0.02,
+    "probability": 0.5790743271381829,
+    "pct": 57.9
    },
    {
     "hero": "佛耶戈",
@@ -15150,11 +15035,30 @@
     "shops": 20,
     "slots": 100,
     "unitCount": 13,
-    "pSlot": 0.016923076923076923,
-    "probability": 0.2400448316772481,
-    "pct": 24
+    "pSlot": 0.019230769230769232,
+    "probability": 0.30230156333966085,
+    "pct": 30.2
    }
-  ]
+  ],
+  "evidence": {
+   "source": "data/ruleset/monster-invasion-17.7.json",
+   "confirmedLevels": [
+    3,
+    4,
+    5,
+    6,
+    8,
+    9
+   ],
+   "priorLevels": [
+    1,
+    2,
+    7
+   ],
+   "virtualLevels": [
+    10
+   ]
+  }
  },
  "augmentLeads": {
   "combat": [
