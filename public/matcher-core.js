@@ -91,6 +91,9 @@
   const HERO_AUGMENT_CONTROL_PER_SECOND = 4;
   const HERO_AUGMENT_AREA_MULTIPLIER = 1.35;
   const HERO_AUGMENT_CONTROL_CAP = 12;
+  // 已选专属强化会改变主C的技能/成长机制，按“基础符文价值 + 1件主C装等价值”建立角色契约。
+  // 契约只授予模板明确把该强化英雄定义为主C的路线；仅把该英雄当挂件的路线不享受。
+  const HERO_AUGMENT_CARRY_ITEM_EQUIVALENT = 1;
   const MIN_LEVEL = 1;
   const MAX_LEVEL = 9;
   const DEFAULT_LEVEL = 6;
@@ -340,10 +343,27 @@
     return HERO_AUGMENT_ROUND_COSTS[raw] ? raw : "unknown";
   }
 
+  function heroAugmentRoleContract(t, selected) {
+    const state = selected && selected.heroAugment || {};
+    const chosen = state.status === "resolved" && state.selected;
+    if (!chosen || !chosen.name || !chosen.hero) return null;
+    const mainCarry = routeMainCarry(t);
+    if (!mainCarry || mainCarry !== chosen.hero) return null;
+    const options = (t && t.heroAugmentPlan && t.heroAugmentPlan.options || [])
+      .filter(row => row && row.name && row.hero);
+    const option = options.find(row => row.name === chosen.name && row.hero === mainCarry);
+    if (!option) return null;
+    return { chosen, option, mainCarry };
+  }
+
+  function heroAugmentRoleContractValue(weights) {
+    return Math.round((Number(weights.augment) || 0)
+      + (Number(weights.mainCarryItem) || 0) * HERO_AUGMENT_CARRY_ITEM_EQUIVALENT);
+  }
+
   function heroAugmentDecision(t, selected) {
     const round = normalizeHeroAugmentRound(selected && selected.heroAugmentRound);
-    if (round === "unknown") return null;
-    const costs = HERO_AUGMENT_ROUND_COSTS[round];
+    const costs = HERO_AUGMENT_ROUND_COSTS[round] || [];
     const plan = t && t.heroAugmentPlan || {};
     const options = (plan.options || []).filter(row => row && row.name && row.hero && Number(row.cost));
     const requiredNames = new Set(plan.requiredNames || []);
@@ -354,8 +374,8 @@
     const globalHeroAugment = selected && selected.heroAugment || {};
     const selectedHit = options.find(row => selectedAugments.has(row.name));
     const candidates = required.length ? required : (mainOptions.length ? mainOptions : options);
-    const eligible = candidates.filter(row => costs.includes(Number(row.cost)));
-    const excludedCosts = [1, 2, 3, 4, 5].filter(cost => !costs.includes(cost));
+    const eligible = round === "unknown" ? [] : candidates.filter(row => costs.includes(Number(row.cost)));
+    const excludedCosts = round === "unknown" ? [] : [1, 2, 3, 4, 5].filter(cost => !costs.includes(cost));
     const traits = uniq(eligible.flatMap(row => row.traits || [])).slice(0, 3);
     const heroes = uniq(eligible.map(row => row.hero));
     const optionNames = uniq(candidates.map(row => row.name));
@@ -382,6 +402,7 @@
     if (selectedHit) {
       return { ...base, status: "locked", text: `已命中${selectedHit.name}：${selectedHit.hero}${selectedHit.cost}费专属` };
     }
+    if (round === "unknown") return null;
     if (!options.length) {
       return { ...base, status: "lock", text: `现在可锁：不依赖英雄强化（${round}费用池${costs.join("/")}费）` };
     }
@@ -1070,6 +1091,17 @@
       }
     });
 
+    const heroRoleContract = heroAugmentRoleContract(t, selected);
+    if (heroRoleContract) {
+      const alreadyCounted = (t.augmentPrefs || []).includes(heroRoleContract.chosen.name) ? w.augment : 0;
+      const contractValue = heroAugmentRoleContractValue(w);
+      const bonus = Math.max(0, contractValue - alreadyCounted);
+      score += bonus;
+      heldValue += bonus;
+      breakdown.augment += bonus;
+      evidence.unshift(`英雄强化定核：${heroRoleContract.chosen.name}→主C${heroRoleContract.mainCarry}（角色契约${contractValue}分）`);
+    }
+
     if (heroMechanic) {
       score += heroMechanic.bonus;
       heldValue += heroMechanic.bonus;
@@ -1547,12 +1579,15 @@
       evidence.push(`${item.holder}已装备${item.name}+${value}`);
     });
     const chosen = selected.heroAugment && selected.heroAugment.selected;
-    const chosenFits = chosen && ((template.augmentPrefs || []).includes(chosen.name)
+    const heroRoleContract = heroAugmentRoleContract(template, selected);
+    const chosenFits = chosen && (heroRoleContract
+      || (template.augmentPrefs || []).includes(chosen.name)
       || (template.mechanic && template.mechanic.requiredAugment === chosen.name)
       || (template.augmentTransitionPlan && template.augmentTransitionPlan.augment === chosen.name));
     if (chosenFits) {
-      points += w.augment;
-      evidence.push(`英雄强化${chosen.name}已落地+${w.augment}`);
+      const value = heroRoleContract ? heroAugmentRoleContractValue(w) : w.augment;
+      points += value;
+      evidence.push(`英雄强化${chosen.name}已落地${heroRoleContract ? `并确定主C${heroRoleContract.mainCarry}` : ""}+${value}`);
     }
     if (row.strategyDecision && row.strategyDecision.switchCertified && chosenFits) {
       points += w.augment;
@@ -2054,6 +2089,7 @@
     const heroCatalog = [
       { name: "嗜火", hero: "安妮", cost: 2, traits: ["小天才", "福牛守护者", "灵能使"], effect: { grantedHero: "安妮", grantedCopies: 1, areaExpanded: true, stunSeconds: 2 } },
       { name: "无情连打", hero: "贾克斯", cost: 3, traits: ["战斗机甲", "斗士"], effect: { grantedHero: "贾克斯", grantedCopies: 1, areaExpanded: false, stunSeconds: 0 } },
+      { name: "双重气泡", hero: "佐伊", cost: 3, traits: ["小天才", "淘气包", "黑客"], effect: { grantedHero: "佐伊", grantedCopies: 1, areaExpanded: false, stunSeconds: 0 } },
     ];
     const fireRaw = selectedFromSignals([{ kind: "units", value: "贾克斯" }, { kind: "augments", value: "嗜火" }]);
     fireRaw.level = 5;
@@ -2076,6 +2112,41 @@
     const fireOff = scoreTemplate(fireTemplate, { units: [], items: [], augments: [], augmentCats: [], level: 5, heroAugmentRound: "3-2" }, fallbackWeights, { heroAugments: heroCatalog });
     const fireOn = scoreTemplate(fireTemplate, fireState, fallbackWeights, { heroAugments: heroCatalog });
     assert(fireOn.stageStrength > fireOff.stageStrength && fireOn.evidence.some(x => x.includes("嗜火机制")), "嗜火应通过赠送资产和保守群控算子抬升安妮路线");
+    const bubbleRaw = selectedFromSignals([
+      { kind: "levels", level: 4 },
+      { kind: "units", value: "璐璐", star: 2 },
+      { kind: "augments", value: "双重气泡" },
+    ]);
+    bubbleRaw.heroAugmentRound = "unknown";
+    const bubbleState = resolveGameState(bubbleRaw, heroCatalog);
+    const zoeCarryTemplate = {
+      ...heroRoundTemplate("佐伊主核线", 3),
+      augmentPrefs: [],
+      routeProfile: {
+        mainCarry: { name: "佐伊", starTarget: 3, items: [] },
+        units: [{ name: "佐伊", role: "mainCarry", starTarget: 3, traits: ["小天才"] }, { name: "璐璐", role: "utility", starTarget: 1, traits: ["小天才"] }],
+        items: [],
+        activeTraits: [{ name: "小天才", count: 3 }],
+      },
+      heroAugmentPlan: { mainCarry: "佐伊", options: [heroCatalog[2]], requiredNames: [] },
+    };
+    const luluCarryTemplate = {
+      ...heroRoundTemplate("璐璐主核线", 1),
+      augmentPrefs: [],
+      routeProfile: {
+        mainCarry: { name: "璐璐", starTarget: 3, items: [] },
+        units: [{ name: "璐璐", role: "mainCarry", starTarget: 3, traits: ["小天才"] }, { name: "佐伊", role: "utility", starTarget: 1, traits: ["小天才"] }],
+        items: [],
+        activeTraits: [{ name: "小天才", count: 3 }],
+      },
+      heroAugmentPlan: { mainCarry: "璐璐", options: [], requiredNames: [] },
+    };
+    const zoeCarryScore = scoreTemplate(zoeCarryTemplate, bubbleState, fallbackWeights, { heroAugments: heroCatalog });
+    const luluCarryScore = scoreTemplate(luluCarryTemplate, bubbleState, fallbackWeights, { heroAugments: heroCatalog });
+    assert(zoeCarryScore.heroAugment.status === "locked", "已选英雄强化在回合未知时也必须完成路线结算");
+    assert(zoeCarryScore.evidence.some(x => x.includes("英雄强化定核") && x.includes("主C佐伊")), "专属强化必须生成数据驱动的主C角色契约");
+    assert(!luluCarryScore.evidence.some(x => x.includes("英雄强化定核")), "仅把赠送英雄当挂件的路线不得领取主C角色契约");
+    assert(zoeCarryScore.stageStrength > luluCarryScore.stageStrength, "专属强化角色契约必须压过同阵容内的普通二星主C惯性");
     const fullCore = [{
       id: "full",
       name: "全集core",
@@ -2300,6 +2371,32 @@
       const fixtureRows = require(path.join(rootDir, "tests", "fixtures", "hands.json"));
       const fixtureUnitPrices = Object.fromEntries((matcherData.options.unitSearch || []).map(x => [x.name, x.price]));
       const fixtureUnitTraits = Object.fromEntries((matcherData.options.unitSearch || []).map(x => [x.name, x.traits || []]));
+      const bubbleSignals = [
+        { kind: "levels", level: 1 },
+        { kind: "units", value: "安妮", star: 2 },
+        { kind: "units", value: "璐璐", star: 2 },
+        { kind: "units", value: "波比" },
+        { kind: "augments", value: "利滚利" },
+        { kind: "augments", value: "双重气泡" },
+        { kind: "units", value: "悠米", star: 2 },
+        { kind: "units", value: "泰隆", star: 2 },
+      ];
+      const bubbleOpts = {
+        oddsData: globalThis.JCC_ODDS,
+        unitPrices: fixtureUnitPrices,
+        unitTraits: fixtureUnitTraits,
+        heroAugments: matcherData.options.heroAugments,
+        antiFragile: true,
+        operationalCommitment: true,
+      };
+      const bubbleRows = rank(matcherData.templates, selectedFromSignals(bubbleSignals), matcherData.weights, 10, bubbleOpts);
+      assert(routeMainCarry(bubbleRows[0].template) === "佐伊", `双重气泡实战手牌的战略#1必须转为佐伊主C，实际${bubbleRows[0].template.name}`);
+      assert(bubbleRows.decision.status === "observing", "1级仍须保持观察，不因英雄强化提前硬定终局");
+      const bubbleRowsReversed = rank(matcherData.templates, selectedFromSignals([...bubbleSignals].reverse()), matcherData.weights, 10, bubbleOpts);
+      assert(JSON.stringify(bubbleRows.slice(0, 5).map(row => [rowId(row), row.finalScore])) === JSON.stringify(bubbleRowsReversed.slice(0, 5).map(row => [rowId(row), row.finalScore])), "双重气泡最终状态不得受输入顺序影响");
+      const bubbleLevelFour = rank(matcherData.templates, selectedFromSignals(bubbleSignals.map(signal => signal.kind === "levels" ? { ...signal, level: 4 } : signal)), matcherData.weights, 10, bubbleOpts);
+      const bubbleCommitted = matcherData.templates.find(template => template.id === bubbleLevelFour.decision.committedId);
+      assert(bubbleLevelFour.decision.status === "committed" && routeMainCarry(bubbleCommitted) === "佐伊", "4级后已选双重气泡必须把不可逆承诺结算到佐伊主C路线");
       assert(matcherData.templates.some(t => (t.augmentOperators || []).length), "构建数据应包含条件符文算子");
       assert(!matcherData.templates.some(t => (t.augmentOperators || []).some(x => !(t.augmentPrefs || []).includes(x.name))), "算子必须属于该路线推荐符文");
       fixtureRows.forEach(fx => {

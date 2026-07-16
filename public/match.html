@@ -242,7 +242,7 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
 <script src="data.js?v=meta-20260712a"></script>
 <script src="stage2-matcher-data.js?v=hero-round-20260712a"></script>
 <script src="odds-data.js?v=match-20260706e"></script>
-<script src="matcher-core.js?v=hero-round-20260712a"></script>
+<script src="matcher-core.js?v=hero-role-contract-20260717a"></script>
 <script src="signal-parser.js?v=match-20260706e"></script>
 <script src="augment-advisor.js?v=match-20260715a"></script>
 <script src="llm-lane.js?v=match-20260712b"></script>
@@ -1030,6 +1030,7 @@ function renderRoute() {
   const lockDisabled = currentLevel <= 3;
   const lockLabel = manualLockId ? "解除手动锁定" : (lockDisabled ? "4级后可手动锁定" : "手动锁定战略#1");
   const strategicText = [leader, second, third].filter(Boolean).map((row, index) => `#${index + 1} ${row.template.name} ${rowScore(row)}分`).join(" ｜ ");
+  const strategicCarry = leader.template.routeProfile?.mainCarry?.name || leader.template.carryUnits?.[0] || "待定";
   const currentUnitsText = (decision.currentBoardUnits || []).join("、") || "还未录入可上场棋子";
   const actionTitle = committed
     ? committed.template.name
@@ -1045,7 +1046,7 @@ function renderRoute() {
         <div class="decisionCard">
           <div class="decisionLabel">战略候选</div>
           <div class="decisionValue">${esc(leader.template.name)}</div>
-          <div class="decisionNote">${esc(strategicText)}</div>
+          <div class="decisionNote">战略主C：${esc(strategicCarry)}<br>${esc(strategicText)}</div>
         </div>
         <div class="decisionCard commit">
           <div class="decisionLabel">定线状态</div>
