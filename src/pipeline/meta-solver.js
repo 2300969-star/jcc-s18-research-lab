@@ -371,6 +371,7 @@ function generatedRoutes(rows) {
           matchBonus: Math.max(12, Math.min(40, Math.round(row.upliftPct))),
           missingPenalty: 80,
           text: `${row.basis}；反事实+${row.upliftPct}%`,
+          events: (profiles.find(profile => profile.augment === row.augment) || {}).events || [],
         },
       };
     });

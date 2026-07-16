@@ -256,6 +256,10 @@ function scoreTeam(stage, carry, carryItems, team, scenario = {}) {
   tanks.forEach((u, i) => {
     const star = stage.star(u, 'front');
     const bonus = bonusFor(u, acts);
+    for (const [key, value] of Object.entries(scenario.teamBonus || {})) {
+      if (key === 'manaMult' || key === 'ehpMult') bonus[key] = (bonus[key] || 1) * Number(value || 1);
+      else bonus[key] = Number(bonus[key] || 0) + Number(value || 0);
+    }
     const ids = i === 0
       ? [byName['狂徒铠甲'], byName['狂徒铠甲'], byName['圣盾使的誓约']].filter(Boolean)
       : [byName['石像鬼石板甲'], byName['日炎斗篷'], byName['狂徒铠甲']].filter(Boolean);

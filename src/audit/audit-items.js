@@ -15,6 +15,9 @@ const MODEL_STAT_LABELS = new Set([
   '暴击率',
   '伤害增幅',
   '法力值',
+  '法力回复',
+  '全能吸血',
+  '伤害减免',
 ]);
 
 const MODEL_SPECIAL_IDS = new Set([

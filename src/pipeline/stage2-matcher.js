@@ -464,49 +464,45 @@ function attachHeroAugmentPlans(templatesIn) {
 
 function attachAugmentTransitionPlans(templatesIn) {
   const compiledPlans = (strategyPolicyResults && strategyPolicyResults.plans) || [];
-  if (compiledPlans.length) {
-    return templatesIn.map(template => {
-      const heroPlan = template.heroAugmentPlan || {};
-      const mainCarry = template.routeProfile && template.routeProfile.mainCarry && template.routeProfile.mainCarry.name || '';
-      const mechanicRequired = template.mechanic && template.mechanic.requiredAugment;
-      const requiredNames = new Set([...(heroPlan.requiredNames || []), mechanicRequired].filter(Boolean));
-      const plan = compiledPlans.find(row => row.strategicCarry === mainCarry && requiredNames.has(row.augment));
-      return plan ? { ...template, augmentTransitionPlan: plan } : template;
-    });
-  }
   const decision = augmentTransitionResults && augmentTransitionResults.decision;
-  if (!decision || !decision.augment || !decision.strategicCarry) return templatesIn;
   return templatesIn.map(template => {
     const heroPlan = template.heroAugmentPlan || {};
     const mainCarry = template.routeProfile && template.routeProfile.mainCarry && template.routeProfile.mainCarry.name || '';
-    if (mainCarry !== decision.strategicCarry || !(heroPlan.requiredNames || []).includes(decision.augment)) return template;
-    const oneStar = decision.stateInference && decision.stateInference.jaxOneImmediate || {};
-    const handoff = decision.stateInference && decision.stateInference.jaxTwoBridge || {};
-    return {
-      ...template,
-      augmentTransitionPlan: {
-        source: 'augment_transition_results.json',
-        experiment: augmentTransitionResults.experiment,
-        augment: decision.augment,
-        baselineCarry: decision.baselineCarry,
-        strategicCarry: decision.strategicCarry,
-        currentHolder: decision.currentHolder,
-        currentSwitchCertified: !!decision.currentSwitchCertified,
-        currentInference: oneStar,
-        handoffCertified: !!decision.handoffCertified,
-        handoff: decision.handoff,
-        handoffText: decision.handoffText,
-        terminalText: decision.terminalText,
-        totalBattles: Number(augmentTransitionResults.battles) || 0,
-        sampleSupport: Number(decision.sampleSupport) || 0,
-        handoffInference: handoff,
-        holderRules: [
-          { when: { unit: decision.handoff && decision.handoff.unit, starGte: decision.handoff && decision.handoff.starGte }, holder: decision.strategicCarry, certified: !!decision.handoffCertified, inference: 'handoff' },
-          { when: { hasUnit: decision.currentHolder }, holder: decision.currentHolder, certified: !!decision.currentSwitchCertified, inference: 'current' },
-          { holder: decision.currentHolder, certified: !!decision.currentSwitchCertified, inference: 'current' },
-        ],
-      },
-    };
+    const mechanicRequired = template.mechanic && template.mechanic.requiredAugment;
+    const requiredNames = new Set([...(heroPlan.requiredNames || []), mechanicRequired].filter(Boolean));
+    const specific = decision && decision.augment && decision.strategicCarry
+      && mainCarry === decision.strategicCarry && requiredNames.has(decision.augment);
+    if (specific) {
+      const oneStar = decision.stateInference && decision.stateInference.jaxOneImmediate || {};
+      const handoff = decision.stateInference && decision.stateInference.jaxTwoBridge || {};
+      return {
+        ...template,
+        augmentTransitionPlan: {
+          source: 'augment_transition_results.json',
+          experiment: augmentTransitionResults.experiment,
+          augment: decision.augment,
+          baselineCarry: decision.baselineCarry,
+          strategicCarry: decision.strategicCarry,
+          currentHolder: decision.currentHolder,
+          currentSwitchCertified: !!decision.currentSwitchCertified,
+          currentInference: oneStar,
+          handoffCertified: !!decision.handoffCertified,
+          handoff: decision.handoff,
+          handoffText: decision.handoffText,
+          terminalText: decision.terminalText,
+          totalBattles: Number(augmentTransitionResults.battles) || 0,
+          sampleSupport: Number(decision.sampleSupport) || 0,
+          handoffInference: handoff,
+          holderRules: [
+            { when: { unit: decision.handoff && decision.handoff.unit, starGte: decision.handoff && decision.handoff.starGte }, holder: decision.strategicCarry, certified: !!decision.handoffCertified, inference: handoff },
+            { when: { hasUnit: decision.currentHolder }, holder: decision.currentHolder, certified: !!decision.currentSwitchCertified, inference: oneStar },
+            { holder: decision.currentHolder, certified: !!decision.currentSwitchCertified, inference: oneStar },
+          ],
+        },
+      };
+    }
+    const compiled = compiledPlans.find(row => row.strategicCarry === mainCarry && requiredNames.has(row.augment));
+    return compiled ? { ...template, augmentTransitionPlan: compiled } : template;
   });
 }
 
@@ -1175,8 +1171,14 @@ if (!fireAugment || !fireAugment.effect.areaExpanded || fireAugment.effect.stunS
 }
 if (augmentTransitionResults) {
   const transitionTemplate = templates.find(t => t.augmentTransitionPlan && t.augmentTransitionPlan.augment === '无情连打');
-  if (!transitionTemplate || transitionTemplate.augmentTransitionPlan.handoff.starGte !== 2
-    || !(transitionTemplate.augmentTransitionPlan.handoffInference.lcb95 > 0)) {
+  const expectedDecision = augmentTransitionResults.decision || {};
+  const plan = transitionTemplate && transitionTemplate.augmentTransitionPlan;
+  const sameCertification = plan && plan.handoffCertified === !!expectedDecision.handoffCertified;
+  const inferenceConsistent = plan && (plan.handoffCertified
+    ? Number(plan.handoffInference && plan.handoffInference.lcb95) > 0
+    : Number(plan.handoffInference && plan.handoffInference.lcb95) <= 0);
+  if (!plan || plan.source !== 'augment_transition_results.json' || plan.handoff.starGte !== 2
+    || !sameCertification || !inferenceConsistent) {
     throw new Error('无情连打的条件化转型实验未正确蒸馏进路线模板');
   }
 }

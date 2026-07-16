@@ -3,6 +3,7 @@
 // Event-driven team combat simulator. Official unit/item data are the only inputs;
 // unsupported mechanics are surfaced through coverage instead of hidden in a score.
 const { chess, equip, itemStats } = require("../core/model.js");
+const { SUPPORTED_EVENT_TYPES, bonusFromEvents } = require("../core/event-model.js");
 
 const STEP = 0.1;
 const MAX_SECONDS = 35;
@@ -63,15 +64,32 @@ function parseAbility(hero, star) {
   const groups = String(hero.skillBriefValue || "").split("|");
   const labels = String(hero.skillValueDesc || "").split("|");
   const desc = String(hero.skillDesc || "");
-  const ability = { physical: 0, magic: 0, trueDamage: 0, shield: 0, heal: 0, control: 0, targets: 1, parsed: [], unsupported: [] };
+  const ability = {
+    physical: 0, magic: 0, trueDamage: 0, shield: 0, heal: 0, control: 0, targets: 1,
+    armorScaleMagic: 0, mrScaleMagic: 0, maxHpScaleMagic: 0, onHitMaxHpPct: 0, hpBuff: 0,
+    damageReduction: 0, passiveArmor: 0, passiveMr: 0, duration: numberFromDesc(desc, /(\d+(?:\.\d+)?)秒/) || 0,
+    parsed: [], unsupported: [],
+  };
   groups.forEach((group, index) => {
     const label = labels[index] || "";
     const value = numericAt(group, star);
     if (!value) return;
+    if (/被动护甲/.test(label)) { ability.passiveArmor += value; ability.parsed.push("passive-armor"); return; }
+    if (/被动魔抗/.test(label)) { ability.passiveMr += value; ability.parsed.push("passive-mr"); return; }
+    if (/伤害减免/.test(label)) { ability.damageReduction = Math.max(ability.damageReduction, value / 100); ability.parsed.push("damage-reduction"); return; }
+    if (/最大生命值/.test(label) && !/伤害/.test(label) && !/%/.test(group)) { ability.hpBuff += value; ability.parsed.push("hp-buff"); return; }
     if (/护盾/.test(label)) { ability.shield += value; ability.parsed.push("shield"); return; }
     if (/治疗/.test(label)) { ability.heal += value; ability.parsed.push("heal"); return; }
     if (/晕眩|恐惧|击飞|控制/.test(label)) { ability.control = Math.max(ability.control, value); ability.parsed.push("control"); return; }
+    if (/伤害/.test(label) && /【魔法抗性】/.test(label)) { ability.mrScaleMagic += value / 100; ability.parsed.push("mr-scale-damage"); return; }
     if (!/伤害/.test(label) || /时长|几率|次数|抗性|减少|衰减/.test(label)) return;
+    if (/【护甲】/.test(label)) { ability.armorScaleMagic += value / 100; ability.parsed.push("armor-scale-damage"); return; }
+    if (/【生命上限】/.test(label)) {
+      if (/攻击造成/.test(desc) && /额外魔法伤害/.test(label)) ability.onHitMaxHpPct += value / 100;
+      else ability.maxHpScaleMagic += value / 100;
+      ability.parsed.push("max-hp-scale-damage");
+      return;
+    }
     if (/真实伤害/.test(desc)) ability.trueDamage += value;
     else if (/物理伤害|物理加成/.test(label + desc) && !/魔法伤害/.test(desc)) ability.physical += value;
     else ability.magic += value;
@@ -83,6 +101,11 @@ function parseAbility(hero, star) {
   if (/晕眩|恐惧|击飞|嘲讽/.test(desc) && ability.control === 0) ability.control = 1;
   if (!ability.parsed.length && Number(hero.maxMP) > 0) ability.unsupported.push(hero.skillName || "unknown-skill");
   return ability;
+}
+
+function numberFromDesc(text, pattern) {
+  const match = String(text || "").match(pattern);
+  return match ? Number(match[1]) : 0;
 }
 
 function tierIndex(count, tiers) {
@@ -127,14 +150,14 @@ function defaultPosition(unit, index, side) {
   return { row, col: order[index % order.length] };
 }
 
-function buildUnit(spec, index, side, activeTraits) {
+function buildUnit(spec, index, side, activeTraits, teamEvents = []) {
   const hero = heroByName[spec.name];
   if (!hero) return null;
   const star = clamp(Number(spec.star || spec.starTarget || (Number(hero.price) >= 4 ? 2 : 2)), 1, 3);
   const itemNames = (spec.items || []).slice(0, 3);
   const itemIds = itemNames.map(name => itemByName[name] && itemByName[name].id).filter(Boolean);
   const stats = itemIds.map(itemStats);
-  const bonus = { adPct: 0, ap: 0, asPct: 0, ampPct: 0, critPct: 0, armor: 0, mr: 0, hpPct: 0, manaMult: 1, onHitMagic: 0, ehpMult: 1 };
+  const bonus = { adPct: 0, ap: 0, asPct: 0, ampPct: 0, critPct: 0, armor: 0, mr: 0, hpPct: 0, hpFlat: 0, damageReduction: 0, maxManaDelta: 0, manaMult: 1, onHitMagic: 0, ehpMult: 1 };
   activeTraits.forEach(active => {
     mergeBonus(bonus, active.def.team, active.index);
     if ((spec.traits || []).includes(active.name)) mergeBonus(bonus, active.def.member, active.index);
@@ -142,9 +165,14 @@ function buildUnit(spec, index, side, activeTraits) {
   // Generic policy experiments inject only numeric bonuses recovered from the
   // official augment text. Unsupported control/targeting mechanics stay out.
   mergeBonus(bonus, spec.bonus, 0);
+  mergeBonus(bonus, bonusFromEvents(teamEvents, ["team"]), 0);
+  const mechanicEvents = spec.mechanic && spec.mechanic.events || [];
+  mergeBonus(bonus, bonusFromEvents(mechanicEvents, ["target"]), 0);
+  const eventMechanicSupported = mechanicEvents.length > 0 && mechanicEvents.every(event => SUPPORTED_EVENT_TYPES.has(event.type));
   const mechanicSupported = !!(spec.mechanic && (
     (spec.mechanic.requiredAugment === "姐妹" && hero.name === "金克丝")
     || (spec.mechanic.requiredAugment === "无情连打" && hero.name === "贾克斯")
+    || eventMechanicSupported
     || (spec.mechanic.genericNumeric === true && Object.keys(spec.bonus || {}).length > 0)
   ));
   if (spec.mechanic && spec.mechanic.requiredAugment === "姐妹" && hero.name === "金克丝") {
@@ -152,9 +180,10 @@ function buildUnit(spec, index, side, activeTraits) {
   }
   const hpBase = Number(hero.initHP) * STAR_HP[star - 1];
   const hpFlat = stats.reduce((sum, row) => sum + row.hp, 0);
-  const hp = (hpBase * (1 + bonus.hpPct / 100) + hpFlat) * bonus.ehpMult;
+  const hp = (hpBase * (1 + bonus.hpPct / 100) + hpFlat + bonus.hpFlat) * bonus.ehpMult;
   const position = spec.position || defaultPosition(spec, index, side);
   const ability = parseAbility(hero, star);
+  const attackSpeed = Number(hero.attackSpeed) * (1 + (stats.reduce((s, x) => s + x.asPct, 0) + bonus.asPct) / 100);
   return {
     id: `${side}:${index}:${hero.id}`,
     heroId: hero.id,
@@ -173,18 +202,21 @@ function buildUnit(spec, index, side, activeTraits) {
     shield: 0,
     ad: Number(hero.initAttackDamage) * STAR_AD[star - 1] * (1 + (stats.reduce((s, x) => s + x.adPct, 0) + bonus.adPct) / 100),
     apMult: 1 + (stats.reduce((s, x) => s + x.ap, 0) + bonus.ap) / 100,
-    attackSpeed: Number(hero.attackSpeed) * (1 + (stats.reduce((s, x) => s + x.asPct, 0) + bonus.asPct) / 100),
+    attackSpeed,
+    baseAttackSpeed: attackSpeed,
     critChance: clamp((Number(hero.criticalStrikeChance || 25) + stats.reduce((s, x) => s + x.critPct, 0) + bonus.critPct) / 100, 0, 1),
     amp: 1 + (stats.reduce((s, x) => s + x.ampPct, 0) + bonus.ampPct) / 100,
-    armor: Number(hero.armor) + stats.reduce((s, x) => s + x.armor, 0) + bonus.armor,
-    mr: Number(hero.magicResist) + stats.reduce((s, x) => s + x.mr, 0) + bonus.mr,
+    armor: Number(hero.armor) + ability.passiveArmor + stats.reduce((s, x) => s + x.armor, 0) + bonus.armor,
+    mr: Number(hero.magicResist) + ability.passiveMr + stats.reduce((s, x) => s + x.mr, 0) + bonus.mr,
     range: Math.max(1, Number(hero.attackRange || 1) + (itemNames.includes("疾射火炮") ? 1 : 0)),
     mana: Number(hero.initMP) + stats.reduce((s, x) => s + x.startMana, 0),
-    maxMana: Number(hero.maxMP),
+    maxMana: Math.max(0, Number(hero.maxMP) + bonus.maxManaDelta),
     manaMult: bonus.manaMult,
     onHitMagic: bonus.onHitMagic,
     mechanic: spec.mechanic || null,
     mechanicSupported,
+    mechanicEvents,
+    eventStatBonus: { asPct: 0 },
     ability,
     attackTimer: 0,
     moveTimer: 0,
@@ -200,13 +232,21 @@ function buildUnit(spec, index, side, activeTraits) {
     adBuffAmount: 0,
     damage: 0,
     healing: 0,
+    omnivamp: stats.reduce((sum, row) => sum + row.omnivamp, 0) / 100,
+    baseDamageReduction: (stats.reduce((sum, row) => sum + row.damageReduction, 0) + bonus.damageReduction) / 100,
+    abilityDamageReduction: 0,
+    damageReductionUntil: 0,
+    temporaryMaxHp: 0,
+    maxHpBuffUntil: 0,
+    onHitMaxHpUntil: 0,
     alive: true,
   };
 }
 
 function buildTeam(specs, side) {
   const active = traitBonuses(specs);
-  return specs.map((spec, index) => buildUnit(spec, index, side, active)).filter(Boolean);
+  const teamEvents = specs.flatMap(spec => spec.mechanic && spec.mechanic.events || []).filter(event => event.scope === "team");
+  return specs.map((spec, index) => buildUnit(spec, index, side, active, teamEvents)).filter(Boolean);
 }
 
 function distance(a, b) {
@@ -221,12 +261,18 @@ function deal(source, target, raw, type, rng, log, time) {
   if (!target || !target.alive || raw <= 0) return 0;
   const variance = 0.95 + rng() * 0.1;
   const reduced = type === "true" ? raw : raw * mitigation(type === "physical" ? target.armor : target.mr);
-  let amount = Math.max(0, reduced * source.amp * variance);
+  const activeReduction = target.baseDamageReduction + (target.damageReductionUntil > time ? target.abilityDamageReduction : 0);
+  let amount = Math.max(0, reduced * source.amp * variance * (1 - clamp(activeReduction, 0, 0.9)));
   const shieldHit = Math.min(target.shield, amount);
   target.shield -= shieldHit;
   amount -= shieldHit;
   target.hp -= amount;
   source.damage += shieldHit + amount;
+  if (source.omnivamp > 0 && source.alive) {
+    const healed = Math.min(source.maxHp - source.hp, (shieldHit + amount) * source.omnivamp);
+    source.hp += healed;
+    source.healing += healed;
+  }
   target.mana = Math.min(target.maxMana, target.mana + (shieldHit + amount) / Math.max(1, target.maxHp) * 25);
   log.push({ time, type: "damage", source: source.name, target: target.name, amount: shieldHit + amount });
   if (target.hp <= 0) {
@@ -251,6 +297,23 @@ function attack(source, target, rng, log, time) {
   const crit = rng() < source.critChance;
   const raw = (source.ad + (source.adBuffUntil > time ? source.adBuffAmount : 0)) * (crit ? CRIT_DAMAGE : 1);
   deal(source, target, raw, "physical", rng, log, time);
+  if (source.ability.onHitMaxHpPct > 0 && source.onHitMaxHpUntil > time) {
+    deal(source, target, source.maxHp * source.ability.onHitMaxHpPct, "magic", rng, log, time);
+  }
+  source.mechanicEvents.filter(event => event.type === "nth-attack" && source.attacks % Math.max(1, event.every) === 0).forEach(event => {
+    deal(source, target, source.maxHp * event.damageMaxHpPct, event.damageType || "magic", rng, log, time);
+    const healed = Math.min(source.maxHp - source.hp, source.maxHp * Number(event.healMaxHpPct || 0));
+    source.hp += healed;
+    source.healing += healed;
+    log.push({ time, type: "augment-proc", source: source.name, augment: source.mechanic.requiredAugment, event: "nth-attack" });
+  });
+  source.mechanicEvents.filter(event => event.type === "nth-attack-stat" && source.attacks % Math.max(1, event.every) === 0).forEach(event => {
+    if (event.stat === "asPct") {
+      source.eventStatBonus.asPct += Number(event.value || 0);
+      source.attackSpeed = source.baseAttackSpeed * (1 + source.eventStatBonus.asPct / 100);
+    }
+    log.push({ time, type: "augment-proc", source: source.name, augment: source.mechanic.requiredAugment, event: "nth-attack-stat" });
+  });
   if (source.onHitMagic) deal(source, target, source.onHitMagic, "magic", rng, log, time);
   if (source.items.includes("鬼索的狂暴之刃")) source.rage += 0.05;
   if (source.items.includes("泰坦的坚决")) source.titan = Math.min(25, source.titan + 1);
@@ -291,17 +354,53 @@ function cast(source, enemies, allies, rng, log, time) {
     return;
   }
   const targets = enemies.filter(x => x.alive).sort((a, b) => distance(primary, a) - distance(primary, b) || a.id.localeCompare(b.id)).slice(0, ability.targets);
+  const spellMultiplier = source.mechanicEvents.filter(event => event.type === "spell-multiplier")
+    .reduce((factor, event) => factor * Number(event.multiplier || 1), 1);
+  const spellCanCrit = source.items.includes("珠光护手") || source.items.includes("无尽之刃")
+    || source.mechanicEvents.some(event => event.type === "spell-crit");
+  const hitWithSpell = (target, ratio = 1) => {
+    const spellCrit = spellCanCrit && rng() < source.critChance ? CRIT_DAMAGE : 1;
+    if (ability.physical) deal(source, target, ability.physical * (source.ad / Math.max(1, Number((heroByName[source.name] || {}).initAttackDamage))) * spellMultiplier * ratio * spellCrit, "physical", rng, log, time);
+    if (ability.magic) deal(source, target, ability.magic * source.apMult * spellMultiplier * ratio * spellCrit, "magic", rng, log, time);
+    if (ability.trueDamage) deal(source, target, ability.trueDamage * source.apMult * spellMultiplier * ratio * spellCrit, "true", rng, log, time);
+    if (ability.armorScaleMagic) deal(source, target, source.armor * ability.armorScaleMagic * spellMultiplier * ratio * spellCrit, "magic", rng, log, time);
+    if (ability.mrScaleMagic) deal(source, target, source.mr * ability.mrScaleMagic * spellMultiplier * ratio * spellCrit, "magic", rng, log, time);
+    if (ability.maxHpScaleMagic) deal(source, target, source.maxHp * ability.maxHpScaleMagic * spellMultiplier * ratio * spellCrit, "magic", rng, log, time);
+  };
   targets.forEach(target => {
-    if (ability.physical) deal(source, target, ability.physical * (source.ad / Math.max(1, Number((heroByName[source.name] || {}).initAttackDamage))), "physical", rng, log, time);
-    if (ability.magic) deal(source, target, ability.magic * source.apMult, "magic", rng, log, time);
-    if (ability.trueDamage) deal(source, target, ability.trueDamage * source.apMult, "true", rng, log, time);
+    hitWithSpell(target);
     if (ability.control > 0 && target.alive) target.stunnedUntil = Math.max(target.stunnedUntil, time + Math.min(8, ability.control));
+  });
+  source.mechanicEvents.filter(event => event.type === "spell-echo").forEach(event => {
+    const pool = enemies.filter(enemy => enemy.alive && !targets.includes(enemy));
+    const fallback = enemies.filter(enemy => enemy.alive);
+    const echoTargets = (pool.length ? pool : fallback).slice(0, Math.max(1, Number(event.count || 1)));
+    echoTargets.forEach(target => hitWithSpell(target, Number(event.ratio || 0)));
+  });
+  source.mechanicEvents.filter(event => event.type === "cast-control").forEach(event => {
+    targets.forEach(target => { if (target.alive) target.stunnedUntil = Math.max(target.stunnedUntil, time + Number(event.seconds || 0)); });
+  });
+  source.mechanicEvents.filter(event => event.type === "cast-max-hp-damage").forEach(event => {
+    if (primary.alive) deal(source, primary, source.maxHp * Number(event.ratio || 0), event.damageType || "magic", rng, log, time);
   });
   if (source.mechanicSupported && source.mechanic.requiredAugment === "姐妹") {
     const extra = enemies.filter(x => x.alive && !targets.includes(x)).sort((a, b) => distance(primary, a) - distance(primary, b))[0];
     if (extra && ability.magic) deal(source, extra, ability.magic * source.apMult * 0.7, "magic", rng, log, time);
   }
   if (ability.shield > 0) source.shield += ability.shield * source.apMult;
+  if (ability.damageReduction > 0) {
+    source.abilityDamageReduction = Math.max(source.abilityDamageReduction, ability.damageReduction);
+    source.damageReductionUntil = Math.max(source.damageReductionUntil, time + Math.max(0.1, ability.duration));
+  }
+  if (ability.onHitMaxHpPct > 0) source.onHitMaxHpUntil = time + Math.max(0.1, ability.duration);
+  if (ability.hpBuff > 0) {
+    const next = ability.hpBuff * source.apMult;
+    const delta = next - source.temporaryMaxHp;
+    source.temporaryMaxHp = next;
+    source.maxHp += delta;
+    source.hp += delta;
+    source.maxHpBuffUntil = time + Math.max(0.1, ability.duration);
+  }
   if (ability.heal > 0) {
     const amount = Math.min(source.maxHp - source.hp, ability.heal * source.apMult);
     source.hp += amount;
@@ -317,6 +416,11 @@ function cast(source, enemies, allies, rng, log, time) {
 
 function stepUnit(unit, allies, enemies, rng, log, time) {
   if (!unit.alive || unit.stunnedUntil > time) return;
+  if (unit.temporaryMaxHp > 0 && unit.maxHpBuffUntil <= time) {
+    unit.maxHp -= unit.temporaryMaxHp;
+    unit.hp = Math.min(unit.hp, unit.maxHp);
+    unit.temporaryMaxHp = 0;
+  }
   const target = nearest(unit, enemies);
   if (!target) return;
   if (unit.maxMana > 0 && unit.mana >= unit.maxMana) {
@@ -442,6 +546,26 @@ function runAssertions() {
   ], durableTarget, { seed: 29, maxSeconds: 14 });
   assert(genericBoosted.left.damage > genericPlain.left.damage, "generic numeric augment must apply its declared bonus");
   assert(genericBoosted.leftCoverage === 1 && !genericBoosted.leftUnsupported.includes("机制:德莱文联盟"), "generic numeric augment must report covered mechanics");
+  const poppyAbility = parseAbility(heroByName["波比"], 2);
+  const sylasAbility = parseAbility(heroByName["塞拉斯"], 2);
+  const blitzAbility = parseAbility(heroByName["布里茨"], 2);
+  assert(poppyAbility.armorScaleMagic === 2.4, "Poppy shield damage must scale from armor");
+  assert(sylasAbility.maxHpScaleMagic === 0.12, "Sylas damage must scale from max HP");
+  assert(blitzAbility.damageReduction === 0.52 && blitzAbility.duration === 4, "Blitz spell must apply timed damage reduction");
+  const zoePlain = simulateBattle([
+    { name: "佐伊", role: "mainCarry", star: 2, traits: ["小天才", "黑客"], items: ["蓝霸符", "珠光护手"] },
+  ], durableTarget, { seed: 47, maxSeconds: 14 });
+  const zoeBubble = simulateBattle([
+    { name: "佐伊", role: "mainCarry", star: 2, traits: ["小天才", "黑客"], items: ["蓝霸符", "珠光护手"], mechanic: { requiredAugment: "双重气泡", events: [{ type: "spell-echo", scope: "target", count: 1, ratio: 0.65 }] } },
+  ], durableTarget, { seed: 47, maxSeconds: 14 });
+  assert(zoeBubble.left.damage > zoePlain.left.damage && zoeBubble.leftCoverage === 1, "spell echo events must increase the declared carry damage");
+  const jaxPlain = simulateBattle([
+    { name: "贾克斯", role: "mainCarry", star: 2, traits: ["战斗机甲", "斗士"], items: ["鬼索的狂暴之刃"] },
+  ], durableTarget, { seed: 53, maxSeconds: 14 });
+  const jaxAugmented = simulateBattle([
+    { name: "贾克斯", role: "mainCarry", star: 2, traits: ["战斗机甲", "斗士"], items: ["鬼索的狂暴之刃"], mechanic: { requiredAugment: "无情连打", events: [{ type: "nth-attack-stat", scope: "target", every: 3, stat: "asPct", value: 12, stacking: true }] } },
+  ], durableTarget, { seed: 53, maxSeconds: 14 });
+  assert(jaxAugmented.left.damage > jaxPlain.left.damage && jaxAugmented.leftCoverage === 1, "attack cadence events must stack attack speed during combat");
   console.log("combat-engine assertions passed");
 }
 

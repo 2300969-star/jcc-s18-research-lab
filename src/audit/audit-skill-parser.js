@@ -38,8 +38,9 @@ const TAG_LABEL = {
 
 function currentConsumesDamage(label, firstValue) {
   if (!/伤害/.test(label)) return false;
+  if (/伤害减免/.test(label)) return false;
+  if (/%/.test(firstValue || '')) return /【护甲】|【魔法抗性】|【生命上限】/.test(label);
   if (CURRENT_EXCLUDE.test(label)) return false;
-  if (/%/.test(firstValue || '')) return false;
   return true;
 }
 
@@ -77,7 +78,7 @@ function auditHeroSkill(hero, useSets) {
     const text = `${label} ${first}`;
     const consumed = currentConsumesDamage(label, first);
     const utilityTags = tagsFor(text);
-    const ignoredDamage = /伤害/.test(label) && !consumed;
+    const ignoredDamage = /伤害/.test(label) && !/伤害减免/.test(label) && !consumed;
     const damageType = consumed ? (/物理加成/.test(label) ? 'physical' : 'magic') : null;
     const hitOverride = (HIT_OVERRIDE[hero.name] || {})[i] || 1;
     return {
@@ -90,7 +91,7 @@ function auditHeroSkill(hero, useSets) {
       hitOverride,
       utilityTags,
       reason: consumed
-        ? 'current_model_damage'
+        ? (/%/.test(first) ? 'current_model_scaled_damage' : 'current_model_damage')
         : !/伤害/.test(label)
           ? 'non_damage'
           : CURRENT_EXCLUDE.test(label)
@@ -156,7 +157,7 @@ function runSkillParserAudit() {
     .sort((a, b) => b.ignoredDamageGroups - a.ignoredDamageGroups || b.riskScore - a.riskScore);
 
   const zeroParsedDamageWithDamageText = heroAudits
-    .filter(h => h.consumedDamageGroups === 0 && h.groups.some(g => /伤害/.test(g.label)))
+    .filter(h => h.consumedDamageGroups === 0 && h.groups.some(g => /伤害/.test(g.label) && !/伤害减免/.test(g.label)))
     .sort((a, b) => b.riskScore - a.riskScore);
 
   return {

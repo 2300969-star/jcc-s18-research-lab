@@ -120,7 +120,7 @@ function pairedMargin(leftBoard, rightBoard, seed) {
 
 function profileMechanic(profile) {
   if (profile.augment === "姐妹") return { requiredAugment: "姐妹" };
-  return { requiredAugment: profile.augment, genericNumeric: true };
+  return { requiredAugment: profile.augment, genericNumeric: true, events: profile.events || [] };
 }
 
 function policyBoard(stage, target, holder, targetStar, targetItems, profile, unitTraits) {
@@ -135,7 +135,7 @@ function policyBoard(stage, target, holder, targetStar, targetItems, profile, un
       items: isHolder ? targetItems.slice(0, 3) : (preserveTankItems ? (row.items || []).slice(0, 3) : []),
       traits: unitTraits[row.name] || [],
       mechanic: isTarget ? profileMechanic(profile) : null,
-      bonus: isTarget && profile.augment !== "姐妹" ? profile.carryBonus || {} : {},
+      bonus: isTarget && profile.augment !== "姐妹" && !(profile.events || []).length ? profile.carryBonus || {} : {},
     };
   });
 }

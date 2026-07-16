@@ -1,6 +1,7 @@
 // 英雄强化机制层：负责把官方强化文本转换为可模拟场景，不保存任何阵容答案。
 const fs = require('fs');
 const { dataPath } = require('../lib/project-paths');
+const { compileAugmentEvents, bonusFromEvents, transformSimulation } = require('./event-model');
 
 const read = file => JSON.parse(fs.readFileSync(dataPath(file), 'utf8')).data;
 const chess = read('chess.js');
@@ -48,18 +49,24 @@ function genericProfile(augment) {
   const heroes = bracketHeroes(desc);
   const granted = (desc.match(/提供1个【([^】]+)】/) || [])[1];
   const targets = granted && heroNames.has(granted) ? [granted] : heroes.slice(0, 1);
-  const inferred = inferStaticBonus(desc);
+  const compiled = compileAugmentEvents(desc);
+  const carryBonus = bonusFromEvents(compiled.events, ['target', 'team']);
   return {
     id: `augment-${augment.id}`,
     augment: augment.name,
     augmentId: augment.id,
     targets,
     requiredUnits: targets,
-    carryBonus: inferred.bonus,
-    supported: targets.length > 0 && inferred.supported,
-    confidence: inferred.supported ? (inferred.stackFactor > 1 ? 0.65 : 0.8) : 0,
-    basis: inferred.supported ? `官方文本数值；叠层折算${inferred.stackFactor}层` : '官方文本没有可直接恢复的战斗数值',
+    carryBonus,
+    teamBonus: bonusFromEvents(compiled.events, ['team']),
+    events: compiled.events,
+    supported: targets.length > 0 && compiled.supported,
+    confidence: compiled.supported ? compiled.confidence : 0,
+    basis: compiled.supported
+      ? `官方文本事件算子：${compiled.events.map(event => event.type).join('、')}${compiled.notes.length ? `；部分覆盖：${compiled.notes.join('、')}` : ''}`
+      : '官方文本没有可直接恢复的战斗事件',
     desc,
+    transformCarry: compiled.events.length ? (sim, context) => transformSimulation(sim, compiled.events, context) : undefined,
   };
 }
 

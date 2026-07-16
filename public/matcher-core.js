@@ -1467,7 +1467,8 @@
     const chosen = selected && selected.heroAugment && selected.heroAugment.selected;
     if (!plan || !chosen || chosen.name !== plan.augment) return null;
     const rule = (plan.holderRules || []).find(row => strategyConditionMet(row.when, selected)) || null;
-    const holder = rule && rule.holder || plan.currentHolder || plan.strategicCarry;
+    const proposedHolder = rule && rule.holder || plan.currentHolder || plan.strategicCarry;
+    const holder = rule && rule.certified ? proposedHolder : (plan.currentHolder || plan.baselineCarry || proposedHolder);
     const switchCertified = Boolean(rule && rule.certified && holder === plan.strategicCarry);
     const handoffState = Boolean(rule && (rule.inference === "handoff" || rule.stageKey === "handoff"));
     const embeddedInference = rule && rule.inference && typeof rule.inference === "object" ? rule.inference : null;
@@ -2475,10 +2476,12 @@
         ...transitionOpts,
       });
       const jaxOneOperational = operationalRow(jaxOneRows);
-      assert(routeMainCarry(jaxOneOperational.template) === "贾克斯", "选下无情连打并获得贾克斯后，实验认证应立即转贾克斯战略主C");
-      assert(jaxOneOperational.strategyDecision && jaxOneOperational.strategyDecision.switchCertified
-        && !jaxOneOperational.strategyDecision.handoffState
-        && jaxOneOperational.strategyDecision.text.includes("立即转贾克斯"), "贾克斯1星状态应使用当前状态置信结论");
+      const transitionPlan = jaxOneOperational.template.augmentTransitionPlan;
+      assert(routeMainCarry(jaxOneOperational.template) === "贾克斯", "选下无情连打并获得贾克斯后，战略路线主C应为贾克斯");
+      assert(jaxOneOperational.strategyDecision
+        && jaxOneOperational.strategyDecision.currentHolder === transitionPlan.currentHolder
+        && jaxOneOperational.strategyDecision.switchCertified === Boolean(transitionPlan.currentSwitchCertified)
+        && jaxOneOperational.strategyDecision.lcb95 === Number(transitionPlan.currentInference.lcb95), "贾克斯1星执行结论必须逐值服从最新条件化实验");
       const selectedJaxTwo = selectedFromSignals([...screenshotSignals, { kind: "units", value: "贾克斯", star: 2 }]);
       selectedJaxTwo.heroAugmentRound = "3-2";
       const jaxTwoRows = rank(matcherData.templates, selectedJaxTwo, matcherData.weights, 8, {
@@ -2486,9 +2489,11 @@
       });
       const jaxTwoOperational = operationalRow(jaxTwoRows);
       assert(routeMainCarry(jaxTwoOperational.template) === "贾克斯"
-        && jaxTwoOperational.strategyDecision && jaxTwoOperational.strategyDecision.handoffState
-        && jaxTwoOperational.strategyDecision.lcb95 > jaxOneOperational.strategyDecision.lcb95,
-      "贾克斯2星应继续执行贾克斯线，并切换到2星优势扩大推断");
+        && jaxTwoOperational.strategyDecision
+        && jaxTwoOperational.strategyDecision.currentHolder === (transitionPlan.handoffCertified ? transitionPlan.strategicCarry : transitionPlan.currentHolder)
+        && jaxTwoOperational.strategyDecision.switchCertified === Boolean(transitionPlan.handoffCertified)
+        && jaxTwoOperational.strategyDecision.lcb95 === Number(transitionPlan.handoffInference.lcb95),
+      "贾克斯2星执行结论必须逐值服从最新交接实验，不得沿用过期门槛");
       const genericTemplate = matcherData.templates.find(t => t.augmentTransitionPlan
         && t.augmentTransitionPlan.source === "generic-policy-compiler"
         && (t.augmentTransitionPlan.holderRules || []).some(rule => rule.certified));

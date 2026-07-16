@@ -14,12 +14,12 @@ const monsterD = D('monster.js').data;
 const { lineup_list } = D('lineup_detail_total.json');
 
 // ---------- 装备基础属性解析（直接从官方 basicDesc 文本取数） ----------
-const STAT_MAP = { 生命上限: 'hp', 护甲: 'armor', 魔法抗性: 'mr', 物理加成: 'adPct', 法术加成: 'ap', 攻击速度: 'asPct', 暴击率: 'critPct', 伤害增幅: 'ampPct', 法力值: 'startMana' };
+const STAT_MAP = { 生命上限: 'hp', 护甲: 'armor', 魔法抗性: 'mr', 物理加成: 'adPct', 法术加成: 'ap', 攻击速度: 'asPct', 暴击率: 'critPct', 伤害增幅: 'ampPct', 法力值: 'startMana', 法力回复: 'manaRegen', 全能吸血: 'omnivamp', 伤害减免: 'damageReduction' };
 function itemStats(id) {
   const e = equip[id];
-  const s = { hp: 0, armor: 0, mr: 0, adPct: 0, ap: 0, asPct: 0, critPct: 0, ampPct: 0, startMana: 0, name: e ? e.name : id };
+  const s = { hp: 0, armor: 0, mr: 0, adPct: 0, ap: 0, asPct: 0, critPct: 0, ampPct: 0, startMana: 0, manaRegen: 0, omnivamp: 0, damageReduction: 0, name: e ? e.name : id };
   if (!e) return s;
-  for (const m of (e.basicDesc || '').matchAll(/\+(\d+)%?(生命上限|护甲|魔法抗性|物理加成|法术加成|攻击速度|暴击率|伤害增幅|法力值)/g)) s[STAT_MAP[m[2]]] += Number(m[1]);
+  for (const m of (e.basicDesc || '').matchAll(/\+(\d+(?:\.\d+)?)%?(生命上限|护甲|魔法抗性|物理加成|法术加成|攻击速度|暴击率|伤害增幅|法力值|法力回复|全能吸血|伤害减免)/g)) s[STAT_MAP[m[2]]] += Number(m[1]);
   return s;
 }
 // 特效装备（数值取自官方 desc 原文）
@@ -41,16 +41,27 @@ const HIT_OVERRIDE = { 厄运小姐: { 1: 7 }, 乐芙兰: { 0: 6 }, 德莱文: {
 function parseSpell(h, star) {
   const groups = (h.skillBriefValue || '').split('|').map(g => g.split('/'));
   const descs = (h.skillValueDesc || '').split('|');
-  let ad = 0, ap = 0; // 每次施放的AD倍率伤害 / AP倍率伤害
+  let ad = 0, ap = 0, armorPct = 0, mrPct = 0, maxHpPct = 0, onHitMaxHpPct = 0, hpBuff = 0, passiveArmor = 0, passiveMr = 0;
   groups.forEach((g, i) => {
     const label = descs[i] || '';
-    if (!/伤害/.test(label) || /时长|几率|次数|抗性|双抗|减少|衰减/.test(label)) return;
     const v = parseFloat(g[Math.min(star, g.length) - 1]);
-    if (isNaN(v) || /%/.test(g[0])) return;
+    if (isNaN(v)) return;
+    if (/被动护甲/.test(label)) { passiveArmor += v; return; }
+    if (/被动魔抗/.test(label)) { passiveMr += v; return; }
+    if (/最大生命值/.test(label) && !/伤害/.test(label) && !/%/.test(g[0])) { hpBuff += v; return; }
+    if (/伤害/.test(label) && /%/.test(g[0])) {
+      if (/【护甲】/.test(label)) armorPct += v / 100;
+      else if (/【魔法抗性】/.test(label)) mrPct += v / 100;
+      else if (/【生命上限】/.test(label) && /攻击造成/.test(h.skillDesc || '') && /额外魔法伤害/.test(label)) onHitMaxHpPct += v / 100;
+      else if (/【生命上限】/.test(label)) maxHpPct += v / 100;
+      return;
+    }
+    if (!/伤害/.test(label) || /时长|几率|次数|抗性|双抗|减少|衰减/.test(label)) return;
     const hits = (HIT_OVERRIDE[h.name] || {})[i] || 1;
     if (/物理加成/.test(label)) ad += v * hits; else ap += v * hits;
   });
-  return { ad, ap };
+  const duration = Number(((h.skillDesc || '').match(/(\d+(?:\.\d+)?)秒/) || [])[1] || 0);
+  return { ad, ap, armorPct, mrPct, maxHpPct, onHitMaxHpPct, hpBuff, passiveArmor, passiveMr, duration };
 }
 
 // ---------- 主C 30秒战斗模拟 ----------
@@ -68,14 +79,17 @@ function simulate(heroId, itemIds, star, seconds = 30, bonus = {}) {
   const asPct = items.reduce((s, i) => s + i.asPct, 0) + (bonus.asPct || 0);
   const crit = Math.min(100, 25 + items.reduce((s, i) => s + i.critPct, 0)) / 100;
   const amp = 1 + (items.reduce((s, i) => s + i.ampPct, 0) + (sp.giantAmp || 0) + (bonus.ampPct || 0)) / 100;
-  const maxMP = Math.max(0, Number(h.maxMP) - (sp.manaCostReduce || 0));
+  const maxMP = Math.max(0, Number(h.maxMP) - (sp.manaCostReduce || 0) + Number(bonus.maxManaDelta || 0));
+  const maxHp = Number(h.initHP) * Math.pow(1.8, star - 1) * (1 + Number(bonus.hpPct || 0) / 100) + Number(bonus.hpFlat || 0);
   const spell = parseSpell(h, star);
+  const armorSelf = Number(h.armor) + spell.passiveArmor + items.reduce((sum, item) => sum + item.armor, 0) + Number(bonus.armor || 0);
+  const mrSelf = Number(h.magicResist) + spell.passiveMr + items.reduce((sum, item) => sum + item.mr, 0) + Number(bonus.mr || 0);
   const spellIsTrue = /真实伤害/.test(h.skillDesc || '');
 
   let t = 0, atk = 0, rage = 0, titan = 0, mana = Number(h.initMP) + items.reduce((s, i) => s + i.startMana, 0);
   let dAuto = 0, dSpell = 0, dProc = 0, casts = 0;
   let armorEff = DUMMY.armor * (sp.armorShred ? 1 - sp.armorShred : 1), mrEff = DUMMY.mr;
-  let jaxStack = 0, kaisaAS = 0, kayleHits = 0;
+  let jaxStack = 0, kaisaAS = 0, kayleHits = 0, hpBuffUntil = 0;
   const mitP = () => 100 / (100 + armorEff), mitM = () => 100 / (100 + mrEff);
   const critF = 1 + crit * 0.4;
 
@@ -92,6 +106,7 @@ function simulate(heroId, itemIds, star, seconds = 30, bonus = {}) {
     if (h.name === '凯尔' && kayleHits > 0) { dSpell += (spell.ad * adMult * critF * mitP() + spell.ap * apMult * mitM()) * ampNow; kayleHits--; }
     if (h.name === '厄加特') hit = 5 / asNow * (baseAD * 26 / 65 * adMult + 20 * asNow) * critF; // 被动:每秒5次爪击
     dAuto += hit * mitP() * ampNow;
+    if (spell.onHitMaxHpPct > 0 && hpBuffUntil > t) dProc += (maxHp + spell.hpBuff * apMult) * spell.onHitMaxHpPct * mitM() * ampNow;
     if (sp.boltADPct) dProc += baseAD * adMult * (sp.boltADPct / 100) * critF * mitP() * ampNow;
     if (sp.ragebladeAS) rage += sp.ragebladeAS;
     if (sp.statikk && atk % sp.statikk.every === 0) { dProc += sp.statikk.dmg * mitM() * ampNow; mrEff = DUMMY.mr * (1 - sp.statikk.mrShred); }
@@ -108,14 +123,17 @@ function simulate(heroId, itemIds, star, seconds = 30, bonus = {}) {
     if (maxMP > 0 && mana >= maxMP && h.name !== '卡莎') {
       casts++; mana = 0;
       const sc = sp.spellCrit ? critF : 1;
-      let dmg = spell.ad * adMult * sc * (spellIsTrue ? 1 : mitP()) + spell.ap * apMult * sc * (spellIsTrue ? 1 : mitM());
+      const activeMaxHp = maxHp + (hpBuffUntil > t ? spell.hpBuff * apMult : 0);
+      let dmg = spell.ad * adMult * sc * (spellIsTrue ? 1 : mitP()) + spell.ap * apMult * sc * (spellIsTrue ? 1 : mitM())
+        + armorSelf * spell.armorPct * mitM() + mrSelf * spell.mrPct * mitM() + activeMaxHp * spell.maxHpPct * mitM();
       if (h.name === '凯尔') { kayleHits = 3; dmg = 0; }
       dSpell += dmg * ampNow;
+      if (spell.hpBuff > 0 || spell.onHitMaxHpPct > 0) hpBuffUntil = t + Math.max(0.1, spell.duration);
     }
     if (h.name === '卡莎' && maxMP > 0 && mana >= maxMP) { casts++; mana = 0; kaisaAS += 100; } // 主动:+100%攻速可叠加
   }
   const total = dAuto + dSpell + dProc;
-  return { hero: h.name, price: Number(h.price), star, dps: total / seconds, auto: dAuto / seconds, spell: dSpell / seconds, proc: dProc / seconds, casts, attacks: atk };
+  return { hero: h.name, price: Number(h.price), star, dps: total / seconds, auto: dAuto / seconds, spell: dSpell / seconds, proc: dProc / seconds, casts, attacks: atk, maxHp, seconds };
 }
 
 // ---------- 前排 EHP 模型 ----------
@@ -127,7 +145,8 @@ function tankEHP(heroId, itemIds, star, bonusDef = {}) {
   let hp = (Number(h.initHP) * Math.pow(1.8, star - 1)) * (1 + (bonusDef.hpPct || 0) / 100) + items.reduce((s, i) => s + i.hp, 0);
   let armor = Number(h.armor) + (bonusDef.armor || 0) + items.reduce((s, i) => s + i.armor, 0);
   let mr = Number(h.magicResist) + (bonusDef.mr || 0) + items.reduce((s, i) => s + i.mr, 0);
-  let hpPct = 0, regenPctPerSec = 0, shieldPct = 0, shieldFlat = 0, dr = 0;
+  let hpPct = 0, regenPctPerSec = 0, shieldPct = 0, shieldFlat = 0;
+  let dr = items.reduce((sum, item) => sum + item.damageReduction, 0);
   for (const id of itemIds) {
     if (id === '2029') hpPct += 8;                       // 日炎
     if (id === '2027') hpPct += 6;                       // 棘刺
