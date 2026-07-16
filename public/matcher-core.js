@@ -1476,6 +1476,7 @@
     const lcb = Number(inference && inference.lcb95);
     const unit = plan.handoff && plan.handoff.unit || plan.strategicCarry;
     const star = plan.handoff && plan.handoff.starGte || 2;
+    const unresolvedText = `${plan.strategicCarry}交接未过稳健门槛（LCB ${Number.isFinite(lcb) ? lcb : 0}），${holder}继续持装`;
     return {
       augment: plan.augment,
       source: plan.source,
@@ -1487,7 +1488,7 @@
       handoffState,
       handoffCertified: Boolean(plan.handoffCertified || plan.certified),
       handoff: plan.handoff,
-      handoffText: plan.handoffText,
+      handoffText: switchCertified ? plan.handoffText : unresolvedText,
       terminalText: plan.terminalText,
       totalBattles: Number(plan.totalBattles || plan.evidenceCount) || 0,
       evidenceCount: Number(plan.evidenceCount || plan.totalBattles) || 0,
@@ -1498,12 +1499,12 @@
       lcb95: Number.isFinite(lcb) ? lcb : 0,
       meanDelta: Number(inference && inference.meanDelta) || 0,
       text: rule && rule.text
-        ? `${switchCertified ? `模型认证转${plan.strategicCarry}` : `模型维持${holder}`}：${rule.text}`
+        ? (switchCertified ? `模型认证转${plan.strategicCarry}：${rule.text}` : `模型维持${holder}：${unresolvedText}`)
         : switchCertified && handoffState
         ? `模型认证转${plan.strategicCarry}：${unit}${star}星优势扩大（LCB ${Number.isFinite(lcb) ? lcb : 0}）`
         : switchCertified
         ? `模型认证立即转${plan.strategicCarry}：${plan.augment}已达换核门槛（LCB ${Number.isFinite(lcb) ? lcb : 0}）`
-        : `模型等交接：当前${holder}代持；${unit}${star}星后转${plan.strategicCarry}（认证LCB ${Number(plan.handoffInference && plan.handoffInference.lcb95) || 0}）`,
+        : `模型未认证转核：${unresolvedText}`,
     };
   }
 
@@ -2481,7 +2482,8 @@
       assert(jaxOneOperational.strategyDecision
         && jaxOneOperational.strategyDecision.currentHolder === transitionPlan.currentHolder
         && jaxOneOperational.strategyDecision.switchCertified === Boolean(transitionPlan.currentSwitchCertified)
-        && jaxOneOperational.strategyDecision.lcb95 === Number(transitionPlan.currentInference.lcb95), "贾克斯1星执行结论必须逐值服从最新条件化实验");
+        && jaxOneOperational.strategyDecision.lcb95 === Number(transitionPlan.currentInference.lcb95)
+        && jaxOneOperational.strategyDecision.handoffText.includes("未过稳健门槛"), "贾克斯1星执行结论必须逐值服从最新条件化实验");
       const selectedJaxTwo = selectedFromSignals([...screenshotSignals, { kind: "units", value: "贾克斯", star: 2 }]);
       selectedJaxTwo.heroAugmentRound = "3-2";
       const jaxTwoRows = rank(matcherData.templates, selectedJaxTwo, matcherData.weights, 8, {
@@ -2492,7 +2494,8 @@
         && jaxTwoOperational.strategyDecision
         && jaxTwoOperational.strategyDecision.currentHolder === (transitionPlan.handoffCertified ? transitionPlan.strategicCarry : transitionPlan.currentHolder)
         && jaxTwoOperational.strategyDecision.switchCertified === Boolean(transitionPlan.handoffCertified)
-        && jaxTwoOperational.strategyDecision.lcb95 === Number(transitionPlan.handoffInference.lcb95),
+        && jaxTwoOperational.strategyDecision.lcb95 === Number(transitionPlan.handoffInference.lcb95)
+        && !jaxTwoOperational.strategyDecision.handoffText.includes("2星后转"),
       "贾克斯2星执行结论必须逐值服从最新交接实验，不得沿用过期门槛");
       const genericTemplate = matcherData.templates.find(t => t.augmentTransitionPlan
         && t.augmentTransitionPlan.source === "generic-policy-compiler"
