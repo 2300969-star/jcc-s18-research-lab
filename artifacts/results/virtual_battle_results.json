@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-16T17:15:47.222Z",
+  "generated": "2026-07-16T17:48:38.528Z",
   "engine": {
     "name": "JCC event twin v1",
     "seed": 20260713,
@@ -12,7 +12,7 @@
   "templateCount": 61,
   "matchupCount": 1830,
   "totalBattles": 21960,
-  "sideBias": -0.17,
+  "sideBias": -0.38,
   "averageCoverage": 98.4,
   "rankings": [
     {
@@ -100,13 +100,13 @@
       ],
       "battles": 720,
       "winRate": 99.9,
-      "meanMargin": 0.823,
+      "meanMargin": 0.817,
       "interval90": [
-        0.529,
+        0.525,
         1
       ],
-      "cvar10": 0.458,
-      "robustScore": 92.3,
+      "cvar10": 0.452,
+      "robustScore": 92.2,
       "coverage": 100,
       "unsupported": []
     },
@@ -193,7 +193,7 @@
       ],
       "battles": 720,
       "winRate": 98.5,
-      "meanMargin": 0.555,
+      "meanMargin": 0.549,
       "interval90": [
         0.187,
         0.767
@@ -279,14 +279,14 @@
         }
       ],
       "battles": 720,
-      "winRate": 90.6,
-      "meanMargin": 0.469,
+      "winRate": 89.8,
+      "meanMargin": 0.455,
       "interval90": [
-        -0.149,
+        -0.153,
         0.879
       ],
-      "cvar10": -0.216,
-      "robustScore": 76,
+      "cvar10": -0.238,
+      "robustScore": 75.2,
       "coverage": 100,
       "unsupported": []
     },
@@ -368,16 +368,95 @@
         }
       ],
       "battles": 720,
-      "winRate": 87.7,
-      "meanMargin": 0.457,
+      "winRate": 86.7,
+      "meanMargin": 0.471,
       "interval90": [
-        -0.236,
-        0.82
+        -0.213,
+        0.864
       ],
-      "cvar10": -0.325,
-      "robustScore": 73.2,
+      "cvar10": -0.295,
+      "robustScore": 73.1,
       "coverage": 100,
       "unsupported": []
+    },
+    {
+      "templateId": "meta-评级与交火-莎弥拉-1",
+      "name": "评级与交火莎弥拉机制路线",
+      "source": "meta-solver",
+      "carry": "莎弥拉",
+      "board": [
+        {
+          "name": "莎弥拉",
+          "star": 2,
+          "items": [
+            "最后的轻语",
+            "鬼索的狂暴之刃",
+            "卢安娜的飓风"
+          ],
+          "role": "mainCarry"
+        },
+        {
+          "name": "迦娜",
+          "star": 2,
+          "items": [],
+          "role": "utility"
+        },
+        {
+          "name": "娑娜",
+          "star": 1,
+          "items": [],
+          "role": "utility"
+        },
+        {
+          "name": "厄斐琉斯",
+          "star": 2,
+          "items": [],
+          "role": "utility"
+        },
+        {
+          "name": "蔚",
+          "star": 1,
+          "items": [],
+          "role": "utility"
+        },
+        {
+          "name": "佛耶戈",
+          "star": 2,
+          "items": [],
+          "role": "utility"
+        },
+        {
+          "name": "蕾欧娜",
+          "star": 2,
+          "items": [],
+          "role": "utility"
+        },
+        {
+          "name": "泰隆",
+          "star": 1,
+          "items": [],
+          "role": "utility"
+        },
+        {
+          "name": "阿利斯塔",
+          "star": 1,
+          "items": [],
+          "role": "utility"
+        }
+      ],
+      "battles": 720,
+      "winRate": 87.6,
+      "meanMargin": 0.352,
+      "interval90": [
+        -0.318,
+        0.792
+      ],
+      "cvar10": -0.37,
+      "robustScore": 71.4,
+      "coverage": 90,
+      "unsupported": [
+        "机制:评级与交火"
+      ]
     },
     {
       "templateId": "official-1355",
@@ -458,14 +537,14 @@
         }
       ],
       "battles": 720,
-      "winRate": 87.8,
-      "meanMargin": 0.444,
+      "winRate": 86.5,
+      "meanMargin": 0.429,
       "interval90": [
-        -0.277,
+        -0.364,
         0.867
       ],
-      "cvar10": -0.369,
-      "robustScore": 72.6,
+      "cvar10": -0.403,
+      "robustScore": 71.4,
       "coverage": 100,
       "unsupported": []
     },
@@ -549,184 +628,14 @@
         }
       ],
       "battles": 720,
-      "winRate": 86.5,
-      "meanMargin": 0.431,
+      "winRate": 84.6,
+      "meanMargin": 0.419,
       "interval90": [
-        -0.282,
+        -0.283,
         0.832
       ],
-      "cvar10": -0.291,
-      "robustScore": 72.5,
-      "coverage": 100,
-      "unsupported": []
-    },
-    {
-      "templateId": "meta-评级与交火-莎弥拉-1",
-      "name": "评级与交火莎弥拉机制路线",
-      "source": "meta-solver",
-      "carry": "莎弥拉",
-      "board": [
-        {
-          "name": "莎弥拉",
-          "star": 2,
-          "items": [
-            "最后的轻语",
-            "鬼索的狂暴之刃",
-            "卢安娜的飓风"
-          ],
-          "role": "mainCarry"
-        },
-        {
-          "name": "迦娜",
-          "star": 2,
-          "items": [],
-          "role": "utility"
-        },
-        {
-          "name": "娑娜",
-          "star": 1,
-          "items": [],
-          "role": "utility"
-        },
-        {
-          "name": "厄斐琉斯",
-          "star": 2,
-          "items": [],
-          "role": "utility"
-        },
-        {
-          "name": "蔚",
-          "star": 1,
-          "items": [],
-          "role": "utility"
-        },
-        {
-          "name": "佛耶戈",
-          "star": 2,
-          "items": [],
-          "role": "utility"
-        },
-        {
-          "name": "蕾欧娜",
-          "star": 2,
-          "items": [],
-          "role": "utility"
-        },
-        {
-          "name": "泰隆",
-          "star": 1,
-          "items": [],
-          "role": "utility"
-        },
-        {
-          "name": "阿利斯塔",
-          "star": 1,
-          "items": [],
-          "role": "utility"
-        }
-      ],
-      "battles": 720,
-      "winRate": 87.8,
-      "meanMargin": 0.359,
-      "interval90": [
-        -0.431,
-        0.792
-      ],
-      "cvar10": -0.375,
-      "robustScore": 71.6,
-      "coverage": 90,
-      "unsupported": [
-        "机制:评级与交火"
-      ]
-    },
-    {
-      "templateId": "official-1570",
-      "name": "小天才九五5小天才2福牛守护者2吉祥物",
-      "source": "official",
-      "carry": "佐伊",
-      "board": [
-        {
-          "name": "费德提克",
-          "star": 2,
-          "items": [
-            "秘法手套"
-          ],
-          "role": "subCarry"
-        },
-        {
-          "name": "安妮",
-          "star": 1,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "阿利斯塔",
-          "star": 1,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "蕾欧娜",
-          "star": 2,
-          "items": [
-            "汲取剑",
-            "离子火花",
-            "圣盾使的誓约"
-          ],
-          "role": "subCarry"
-        },
-        {
-          "name": "波比",
-          "star": 1,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "佐伊",
-          "star": 3,
-          "items": [
-            "蓝霸符",
-            "珠光护手",
-            "班克斯的魔法帽"
-          ],
-          "role": "mainCarry"
-        },
-        {
-          "name": "厄加特",
-          "star": 2,
-          "items": [
-            "最后的轻语",
-            "疾射火炮",
-            "卢安娜的飓风"
-          ],
-          "role": "subCarry"
-        },
-        {
-          "name": "努努和威朗普",
-          "star": 2,
-          "items": [
-            "狂徒铠甲",
-            "棘刺背心",
-            "巨龙之爪"
-          ],
-          "role": "frontline"
-        },
-        {
-          "name": "璐璐",
-          "star": 1,
-          "items": [],
-          "role": "utility"
-        }
-      ],
-      "battles": 720,
-      "winRate": 88.1,
-      "meanMargin": 0.382,
-      "interval90": [
-        -0.489,
-        0.781
-      ],
-      "cvar10": -0.442,
-      "robustScore": 71.3,
+      "cvar10": -0.31,
+      "robustScore": 71.2,
       "coverage": 100,
       "unsupported": []
     },
@@ -812,14 +721,105 @@
         }
       ],
       "battles": 720,
-      "winRate": 85.3,
-      "meanMargin": 0.415,
+      "winRate": 84.8,
+      "meanMargin": 0.404,
       "interval90": [
-        -0.31,
+        -0.329,
         0.791
       ],
-      "cvar10": -0.331,
-      "robustScore": 71.3,
+      "cvar10": -0.367,
+      "robustScore": 70.5,
+      "coverage": 100,
+      "unsupported": []
+    },
+    {
+      "templateId": "official-1570",
+      "name": "小天才九五5小天才2福牛守护者2吉祥物",
+      "source": "official",
+      "carry": "佐伊",
+      "board": [
+        {
+          "name": "费德提克",
+          "star": 2,
+          "items": [
+            "秘法手套"
+          ],
+          "role": "subCarry"
+        },
+        {
+          "name": "安妮",
+          "star": 1,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "阿利斯塔",
+          "star": 1,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "蕾欧娜",
+          "star": 2,
+          "items": [
+            "汲取剑",
+            "离子火花",
+            "圣盾使的誓约"
+          ],
+          "role": "subCarry"
+        },
+        {
+          "name": "波比",
+          "star": 1,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "佐伊",
+          "star": 3,
+          "items": [
+            "蓝霸符",
+            "珠光护手",
+            "班克斯的魔法帽"
+          ],
+          "role": "mainCarry"
+        },
+        {
+          "name": "厄加特",
+          "star": 2,
+          "items": [
+            "最后的轻语",
+            "疾射火炮",
+            "卢安娜的飓风"
+          ],
+          "role": "subCarry"
+        },
+        {
+          "name": "努努和威朗普",
+          "star": 2,
+          "items": [
+            "狂徒铠甲",
+            "棘刺背心",
+            "巨龙之爪"
+          ],
+          "role": "frontline"
+        },
+        {
+          "name": "璐璐",
+          "star": 1,
+          "items": [],
+          "role": "utility"
+        }
+      ],
+      "battles": 720,
+      "winRate": 85.7,
+      "meanMargin": 0.373,
+      "interval90": [
+        -0.488,
+        0.783
+      ],
+      "cvar10": -0.452,
+      "robustScore": 69.8,
       "coverage": 100,
       "unsupported": []
     },
@@ -900,14 +900,14 @@
         }
       ],
       "battles": 720,
-      "winRate": 82.6,
-      "meanMargin": 0.366,
+      "winRate": 81.5,
+      "meanMargin": 0.355,
       "interval90": [
         -0.203,
         0.825
       ],
-      "cvar10": -0.257,
-      "robustScore": 70,
+      "cvar10": -0.258,
+      "robustScore": 69.2,
       "coverage": 100,
       "unsupported": []
     },
@@ -977,43 +977,25 @@
         }
       ],
       "battles": 720,
-      "winRate": 83.4,
-      "meanMargin": 0.337,
+      "winRate": 83,
+      "meanMargin": 0.336,
       "interval90": [
-        -0.302,
+        -0.329,
         0.733
       ],
-      "cvar10": -0.338,
-      "robustScore": 69.2,
+      "cvar10": -0.343,
+      "robustScore": 68.9,
       "coverage": 88.9,
       "unsupported": [
         "机制:完美的日炎耀斑"
       ]
     },
     {
-      "templateId": "official-1269",
-      "name": "九五平民枪手3平民英雄2枪手2吉祥物",
+      "templateId": "official-4524",
+      "name": "无情连打贾克斯5战队机甲4斗士2护卫",
       "source": "official",
-      "carry": "厄斐琉斯",
+      "carry": "贾克斯",
       "board": [
-        {
-          "name": "阿利斯塔",
-          "star": 1,
-          "items": [
-            "狂徒铠甲",
-            "石像鬼石板甲",
-            "日炎斗篷"
-          ],
-          "role": "frontline"
-        },
-        {
-          "name": "费德提克",
-          "star": 2,
-          "items": [
-            "秘法手套"
-          ],
-          "role": "subCarry"
-        },
         {
           "name": "蕾欧娜",
           "star": 2,
@@ -1023,13 +1005,29 @@
           "role": "subCarry"
         },
         {
-          "name": "加里奥",
+          "name": "锐雯",
           "star": 1,
           "items": [],
           "role": "frontline"
         },
         {
-          "name": "迦娜",
+          "name": "瑟庄妮",
+          "star": 2,
+          "items": [
+            "离子火花",
+            "日炎斗篷",
+            "圣盾使的誓约"
+          ],
+          "role": "frontline"
+        },
+        {
+          "name": "李青",
+          "star": 1,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "瑟提",
           "star": 2,
           "items": [
             "秘法手套"
@@ -1037,135 +1035,45 @@
           "role": "subCarry"
         },
         {
-          "name": "厄加特",
+          "name": "费德提克",
           "star": 2,
           "items": [
-            "最后的轻语",
-            "巨人捕手",
-            "海克斯科技枪刃"
+            "秘法手套"
           ],
           "role": "subCarry"
         },
         {
-          "name": "厄斐琉斯",
-          "star": 2,
+          "name": "贾克斯",
+          "star": 3,
           "items": [
-            "卢安娜的飓风",
-            "锐利之刃",
+            "泰坦的坚决",
+            "疾射火炮",
             "鬼索的狂暴之刃"
           ],
           "role": "mainCarry"
         },
         {
-          "name": "希维尔",
-          "star": 1,
-          "items": [
-            "基克的先驱"
-          ],
-          "role": "subCarry"
-        },
-        {
-          "name": "莎弥拉",
-          "star": 2,
-          "items": [
-            "秘法手套"
-          ],
-          "role": "subCarry"
-        }
-      ],
-      "battles": 720,
-      "winRate": 79.7,
-      "meanMargin": 0.322,
-      "interval90": [
-        -0.306,
-        0.759
-      ],
-      "cvar10": -0.374,
-      "robustScore": 66.6,
-      "coverage": 100,
-      "unsupported": []
-    },
-    {
-      "templateId": "official-4526",
-      "name": "决斗薇恩6决斗大师3源计划激光特工",
-      "source": "official",
-      "carry": "薇恩",
-      "board": [
-        {
-          "name": "劫",
-          "star": 2,
-          "items": [
-            "夜之锋刃",
-            "汲取剑",
-            "卢安娜的飓风"
-          ],
-          "role": "subCarry"
-        },
-        {
-          "name": "瑟庄妮",
-          "star": 2,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "尼菈",
-          "star": 1,
-          "items": [
-            "钢铁烈阳之匣",
-            "日炎斗篷"
-          ],
-          "role": "subCarry"
-        },
-        {
-          "name": "亚索",
-          "star": 1,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "菲奥娜",
-          "star": 1,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "费德提克",
-          "star": 2,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "薇恩",
-          "star": 3,
-          "items": [
-            "卢安娜的飓风",
-            "巨人捕手",
-            "锐利之刃"
-          ],
-          "role": "mainCarry"
-        },
-        {
-          "name": "卡莎",
+          "name": "孙悟空",
           "star": 1,
           "items": [],
           "role": "utility"
         },
         {
-          "name": "凯尔",
+          "name": "德莱文",
           "star": 1,
           "items": [],
           "role": "utility"
         }
       ],
       "battles": 720,
-      "winRate": 79,
-      "meanMargin": 0.309,
+      "winRate": 83.5,
+      "meanMargin": 0.328,
       "interval90": [
-        -0.359,
-        0.768
+        -0.417,
+        0.797
       ],
-      "cvar10": -0.427,
-      "robustScore": 65.6,
+      "cvar10": -0.478,
+      "robustScore": 67.7,
       "coverage": 100,
       "unsupported": []
     },
@@ -1251,44 +1159,30 @@
         }
       ],
       "battles": 720,
-      "winRate": 78.6,
-      "meanMargin": 0.362,
+      "winRate": 81.7,
+      "meanMargin": 0.378,
       "interval90": [
-        -0.475,
-        0.812
+        -0.47,
+        0.822
       ],
-      "cvar10": -0.521,
-      "robustScore": 65.1,
+      "cvar10": -0.519,
+      "robustScore": 66.9,
       "coverage": 100,
       "unsupported": []
     },
     {
-      "templateId": "official-4524",
-      "name": "无情连打贾克斯5战队机甲4斗士2护卫",
+      "templateId": "official-1328",
+      "name": "超英希维尔4枪手3超级英雄2吉祥物",
       "source": "official",
-      "carry": "贾克斯",
+      "carry": "希维尔",
       "board": [
         {
-          "name": "蕾欧娜",
-          "star": 2,
-          "items": [
-            "秘法手套"
-          ],
-          "role": "subCarry"
-        },
-        {
-          "name": "锐雯",
+          "name": "墨菲特",
           "star": 1,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "瑟庄妮",
-          "star": 2,
           "items": [
-            "离子火花",
-            "日炎斗篷",
-            "圣盾使的誓约"
+            "狂徒铠甲",
+            "石像鬼石板甲",
+            "振奋盔甲"
           ],
           "role": "frontline"
         },
@@ -1299,12 +1193,83 @@
           "role": "frontline"
         },
         {
-          "name": "瑟提",
+          "name": "普朗克",
+          "star": 1,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "加里奥",
+          "star": 1,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "希维尔",
+          "star": 3,
+          "items": [
+            "鬼索的狂暴之刃",
+            "锐利之刃",
+            "巨人捕手"
+          ],
+          "role": "mainCarry"
+        },
+        {
+          "name": "迦娜",
+          "star": 2,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "厄斐琉斯",
           "star": 2,
           "items": [
-            "秘法手套"
+            "鬼索的狂暴之刃",
+            "疾射火炮",
+            "最后的轻语"
           ],
           "role": "subCarry"
+        },
+        {
+          "name": "莎弥拉",
+          "star": 2,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "赛娜",
+          "star": 1,
+          "items": [],
+          "role": "utility"
+        }
+      ],
+      "battles": 720,
+      "winRate": 82.7,
+      "meanMargin": 0.266,
+      "interval90": [
+        -0.368,
+        0.688
+      ],
+      "cvar10": -0.45,
+      "robustScore": 66.8,
+      "coverage": 100,
+      "unsupported": []
+    },
+    {
+      "templateId": "official-1269",
+      "name": "九五平民枪手3平民英雄2枪手2吉祥物",
+      "source": "official",
+      "carry": "厄斐琉斯",
+      "board": [
+        {
+          "name": "阿利斯塔",
+          "star": 1,
+          "items": [
+            "狂徒铠甲",
+            "石像鬼石板甲",
+            "日炎斗篷"
+          ],
+          "role": "frontline"
         },
         {
           "name": "费德提克",
@@ -1315,12 +1280,217 @@
           "role": "subCarry"
         },
         {
+          "name": "蕾欧娜",
+          "star": 2,
+          "items": [
+            "秘法手套"
+          ],
+          "role": "subCarry"
+        },
+        {
+          "name": "加里奥",
+          "star": 1,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "迦娜",
+          "star": 2,
+          "items": [
+            "秘法手套"
+          ],
+          "role": "subCarry"
+        },
+        {
+          "name": "厄加特",
+          "star": 2,
+          "items": [
+            "最后的轻语",
+            "巨人捕手",
+            "海克斯科技枪刃"
+          ],
+          "role": "subCarry"
+        },
+        {
+          "name": "厄斐琉斯",
+          "star": 2,
+          "items": [
+            "卢安娜的飓风",
+            "锐利之刃",
+            "鬼索的狂暴之刃"
+          ],
+          "role": "mainCarry"
+        },
+        {
+          "name": "希维尔",
+          "star": 1,
+          "items": [
+            "基克的先驱"
+          ],
+          "role": "subCarry"
+        },
+        {
+          "name": "莎弥拉",
+          "star": 2,
+          "items": [
+            "秘法手套"
+          ],
+          "role": "subCarry"
+        }
+      ],
+      "battles": 720,
+      "winRate": 79.3,
+      "meanMargin": 0.306,
+      "interval90": [
+        -0.363,
+        0.759
+      ],
+      "cvar10": -0.405,
+      "robustScore": 65.9,
+      "coverage": 100,
+      "unsupported": []
+    },
+    {
+      "templateId": "official-4526",
+      "name": "决斗薇恩6决斗大师3源计划激光特工",
+      "source": "official",
+      "carry": "薇恩",
+      "board": [
+        {
+          "name": "劫",
+          "star": 2,
+          "items": [
+            "夜之锋刃",
+            "汲取剑",
+            "卢安娜的飓风"
+          ],
+          "role": "subCarry"
+        },
+        {
+          "name": "瑟庄妮",
+          "star": 2,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "尼菈",
+          "star": 1,
+          "items": [
+            "钢铁烈阳之匣",
+            "日炎斗篷"
+          ],
+          "role": "subCarry"
+        },
+        {
+          "name": "亚索",
+          "star": 1,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "菲奥娜",
+          "star": 1,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "费德提克",
+          "star": 2,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "薇恩",
+          "star": 3,
+          "items": [
+            "卢安娜的飓风",
+            "巨人捕手",
+            "锐利之刃"
+          ],
+          "role": "mainCarry"
+        },
+        {
+          "name": "卡莎",
+          "star": 1,
+          "items": [],
+          "role": "utility"
+        },
+        {
+          "name": "凯尔",
+          "star": 1,
+          "items": [],
+          "role": "utility"
+        }
+      ],
+      "battles": 720,
+      "winRate": 76.1,
+      "meanMargin": 0.289,
+      "interval90": [
+        -0.372,
+        0.768
+      ],
+      "cvar10": -0.436,
+      "robustScore": 63.6,
+      "coverage": 100,
+      "unsupported": []
+    },
+    {
+      "templateId": "official-4534",
+      "name": "6斗拉面贾克斯6斗士3战斗机甲3护卫",
+      "source": "official",
+      "carry": "贾克斯",
+      "board": [
+        {
+          "name": "锐雯",
+          "star": 1,
+          "items": [
+            "狂徒铠甲",
+            "棘刺背心",
+            "巨龙之爪"
+          ],
+          "role": "frontline"
+        },
+        {
+          "name": "李青",
+          "star": 1,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "瑟庄妮",
+          "star": 2,
+          "items": [
+            "圣盾使的誓约",
+            "日炎斗篷",
+            "离子火花"
+          ],
+          "role": "frontline"
+        },
+        {
+          "name": "布里茨",
+          "star": 1,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "蔚",
+          "star": 1,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "艾克",
+          "star": 2,
+          "items": [],
+          "role": "frontline"
+        },
+        {
           "name": "贾克斯",
           "star": 3,
           "items": [
-            "泰坦的坚决",
             "疾射火炮",
-            "鬼索的狂暴之刃"
+            "鬼索的狂暴之刃",
+            "泰坦的坚决"
           ],
           "role": "mainCarry"
         },
@@ -1331,21 +1501,21 @@
           "role": "utility"
         },
         {
-          "name": "德莱文",
-          "star": 1,
+          "name": "瑟提",
+          "star": 2,
           "items": [],
-          "role": "utility"
+          "role": "frontline"
         }
       ],
       "battles": 720,
-      "winRate": 80,
-      "meanMargin": 0.302,
+      "winRate": 77.8,
+      "meanMargin": 0.261,
       "interval90": [
-        -0.443,
-        0.767
+        -0.509,
+        0.814
       ],
-      "cvar10": -0.548,
-      "robustScore": 64.8,
+      "cvar10": -0.56,
+      "robustScore": 62.9,
       "coverage": 100,
       "unsupported": []
     },
@@ -1425,99 +1595,14 @@
         }
       ],
       "battles": 720,
-      "winRate": 74.7,
-      "meanMargin": 0.289,
+      "winRate": 73.1,
+      "meanMargin": 0.278,
       "interval90": [
-        -0.242,
+        -0.244,
         0.729
       ],
-      "cvar10": -0.336,
-      "robustScore": 63.8,
-      "coverage": 100,
-      "unsupported": []
-    },
-    {
-      "templateId": "official-1328",
-      "name": "超英希维尔4枪手3超级英雄2吉祥物",
-      "source": "official",
-      "carry": "希维尔",
-      "board": [
-        {
-          "name": "墨菲特",
-          "star": 1,
-          "items": [
-            "狂徒铠甲",
-            "石像鬼石板甲",
-            "振奋盔甲"
-          ],
-          "role": "frontline"
-        },
-        {
-          "name": "李青",
-          "star": 1,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "普朗克",
-          "star": 1,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "加里奥",
-          "star": 1,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "希维尔",
-          "star": 3,
-          "items": [
-            "鬼索的狂暴之刃",
-            "锐利之刃",
-            "巨人捕手"
-          ],
-          "role": "mainCarry"
-        },
-        {
-          "name": "迦娜",
-          "star": 2,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "厄斐琉斯",
-          "star": 2,
-          "items": [
-            "鬼索的狂暴之刃",
-            "疾射火炮",
-            "最后的轻语"
-          ],
-          "role": "subCarry"
-        },
-        {
-          "name": "莎弥拉",
-          "star": 2,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "赛娜",
-          "star": 1,
-          "items": [],
-          "role": "utility"
-        }
-      ],
-      "battles": 720,
-      "winRate": 78.3,
-      "meanMargin": 0.225,
-      "interval90": [
-        -0.463,
-        0.705
-      ],
-      "cvar10": -0.48,
-      "robustScore": 63.6,
+      "cvar10": -0.341,
+      "robustScore": 62.8,
       "coverage": 100,
       "unsupported": []
     },
@@ -1597,14 +1682,14 @@
         }
       ],
       "battles": 720,
-      "winRate": 73,
-      "meanMargin": 0.28,
+      "winRate": 72.8,
+      "meanMargin": 0.281,
       "interval90": [
-        -0.47,
+        -0.491,
         0.822
       ],
-      "cvar10": -0.502,
-      "robustScore": 61.1,
+      "cvar10": -0.504,
+      "robustScore": 61,
       "coverage": 100,
       "unsupported": []
     },
@@ -1692,103 +1777,18 @@
         }
       ],
       "battles": 720,
-      "winRate": 70.5,
-      "meanMargin": 0.255,
+      "winRate": 68.9,
+      "meanMargin": 0.239,
       "interval90": [
         -0.419,
         0.741
       ],
-      "cvar10": -0.489,
-      "robustScore": 59.6,
+      "cvar10": -0.493,
+      "robustScore": 58.5,
       "coverage": 100,
       "unsupported": [
         "艾希:射手的专注"
       ]
-    },
-    {
-      "templateId": "official-4534",
-      "name": "6斗拉面贾克斯6斗士3战斗机甲3护卫",
-      "source": "official",
-      "carry": "贾克斯",
-      "board": [
-        {
-          "name": "锐雯",
-          "star": 1,
-          "items": [
-            "狂徒铠甲",
-            "棘刺背心",
-            "巨龙之爪"
-          ],
-          "role": "frontline"
-        },
-        {
-          "name": "李青",
-          "star": 1,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "瑟庄妮",
-          "star": 2,
-          "items": [
-            "圣盾使的誓约",
-            "日炎斗篷",
-            "离子火花"
-          ],
-          "role": "frontline"
-        },
-        {
-          "name": "布里茨",
-          "star": 1,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "蔚",
-          "star": 1,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "艾克",
-          "star": 2,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "贾克斯",
-          "star": 3,
-          "items": [
-            "疾射火炮",
-            "鬼索的狂暴之刃",
-            "泰坦的坚决"
-          ],
-          "role": "mainCarry"
-        },
-        {
-          "name": "孙悟空",
-          "star": 1,
-          "items": [],
-          "role": "utility"
-        },
-        {
-          "name": "瑟提",
-          "star": 2,
-          "items": [],
-          "role": "frontline"
-        }
-      ],
-      "battles": 720,
-      "winRate": 70.1,
-      "meanMargin": 0.186,
-      "interval90": [
-        -0.643,
-        0.779
-      ],
-      "cvar10": -0.684,
-      "robustScore": 56.6,
-      "coverage": 100,
-      "unsupported": []
     },
     {
       "templateId": "official-4533",
@@ -1859,14 +1859,14 @@
         }
       ],
       "battles": 720,
-      "winRate": 65.8,
-      "meanMargin": 0.159,
+      "winRate": 61.7,
+      "meanMargin": 0.141,
       "interval90": [
-        -0.444,
+        -0.464,
         0.74
       ],
-      "cvar10": -0.465,
-      "robustScore": 56,
+      "cvar10": -0.479,
+      "robustScore": 53.4,
       "coverage": 100,
       "unsupported": []
     },
@@ -1952,14 +1952,14 @@
         }
       ],
       "battles": 720,
-      "winRate": 63.5,
-      "meanMargin": 0.169,
+      "winRate": 62.9,
+      "meanMargin": 0.165,
       "interval90": [
-        -0.552,
+        -0.544,
         0.733
       ],
-      "cvar10": -0.595,
-      "robustScore": 53.6,
+      "cvar10": -0.592,
+      "robustScore": 53.2,
       "coverage": 100,
       "unsupported": []
     },
@@ -2039,14 +2039,14 @@
         }
       ],
       "battles": 720,
-      "winRate": 64.2,
-      "meanMargin": 0.193,
+      "winRate": 63.4,
+      "meanMargin": 0.179,
       "interval90": [
-        -0.617,
+        -0.622,
         0.769
       ],
-      "cvar10": -0.685,
-      "robustScore": 53.4,
+      "cvar10": -0.688,
+      "robustScore": 52.7,
       "coverage": 100,
       "unsupported": []
     },
@@ -2130,14 +2130,79 @@
         }
       ],
       "battles": 720,
-      "winRate": 62.2,
-      "meanMargin": 0.163,
+      "winRate": 59.3,
+      "meanMargin": 0.143,
       "interval90": [
-        -0.482,
-        0.715
+        -0.53,
+        0.714
       ],
-      "cvar10": -0.537,
-      "robustScore": 53.4,
+      "cvar10": -0.544,
+      "robustScore": 51.5,
+      "coverage": 100,
+      "unsupported": []
+    },
+    {
+      "templateId": "manual-mecha-draven-jax-leona",
+      "name": "机甲德莱文 -> 贾克斯 -> 蕾欧娜",
+      "source": "research",
+      "carry": "贾克斯",
+      "board": [
+        {
+          "name": "贾克斯",
+          "star": 3,
+          "items": [
+            "鬼索的狂暴之刃",
+            "疾射火炮",
+            "泰坦的坚决"
+          ],
+          "role": "mainCarry"
+        },
+        {
+          "name": "德莱文",
+          "star": 1,
+          "items": [],
+          "role": "utility"
+        },
+        {
+          "name": "孙悟空",
+          "star": 1,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "瑟提",
+          "star": 2,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "蕾欧娜",
+          "star": 2,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "费德提克",
+          "star": 2,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "布里茨",
+          "star": 1,
+          "items": [],
+          "role": "frontline"
+        }
+      ],
+      "battles": 720,
+      "winRate": 59.9,
+      "meanMargin": 0.078,
+      "interval90": [
+        -0.603,
+        0.648
+      ],
+      "cvar10": -0.66,
+      "robustScore": 49.8,
       "coverage": 100,
       "unsupported": []
     },
@@ -2219,14 +2284,14 @@
         }
       ],
       "battles": 720,
-      "winRate": 55.7,
-      "meanMargin": 0.084,
+      "winRate": 54.3,
+      "meanMargin": 0.072,
       "interval90": [
         -0.561,
         0.644
       ],
-      "cvar10": -0.617,
-      "robustScore": 48,
+      "cvar10": -0.619,
+      "robustScore": 47.1,
       "coverage": 100,
       "unsupported": []
     },
@@ -2299,14 +2364,88 @@
         }
       ],
       "battles": 720,
-      "winRate": 54.2,
-      "meanMargin": 0.1,
+      "winRate": 52.2,
+      "meanMargin": 0.08,
       "interval90": [
-        -0.539,
+        -0.549,
         0.722
       ],
-      "cvar10": -0.551,
-      "robustScore": 48,
+      "cvar10": -0.561,
+      "robustScore": 46.6,
+      "coverage": 100,
+      "unsupported": []
+    },
+    {
+      "templateId": "manual-gadget-ap",
+      "name": "小天才法系 -> 佐伊/九五",
+      "source": "research",
+      "carry": "佐伊",
+      "board": [
+        {
+          "name": "佐伊",
+          "star": 3,
+          "items": [
+            "蓝霸符",
+            "珠光护手",
+            "班克斯的魔法帽"
+          ],
+          "role": "mainCarry"
+        },
+        {
+          "name": "安妮",
+          "star": 1,
+          "items": [
+            "狂徒铠甲",
+            "离子火花"
+          ],
+          "role": "frontline"
+        },
+        {
+          "name": "努努和威朗普",
+          "star": 2,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "费德提克",
+          "star": 2,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "厄加特",
+          "star": 2,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "蕾欧娜",
+          "star": 2,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "悠米",
+          "star": 1,
+          "items": [],
+          "role": "utility"
+        },
+        {
+          "name": "璐璐",
+          "star": 1,
+          "items": [],
+          "role": "utility"
+        }
+      ],
+      "battles": 720,
+      "winRate": 53.8,
+      "meanMargin": 0.043,
+      "interval90": [
+        -0.566,
+        0.647
+      ],
+      "cvar10": -0.618,
+      "robustScore": 46.5,
       "coverage": 100,
       "unsupported": []
     },
@@ -2376,94 +2515,20 @@
         }
       ],
       "battles": 720,
-      "winRate": 54,
-      "meanMargin": 0.074,
+      "winRate": 52.3,
+      "meanMargin": 0.066,
       "interval90": [
-        -0.524,
+        -0.523,
         0.667
       ],
-      "cvar10": -0.57,
-      "robustScore": 47.4,
+      "cvar10": -0.571,
+      "robustScore": 46.4,
       "coverage": 100,
       "unsupported": []
     },
     {
-      "templateId": "manual-gadget-ap",
-      "name": "小天才法系 -> 佐伊/九五",
-      "source": "research",
-      "carry": "佐伊",
-      "board": [
-        {
-          "name": "佐伊",
-          "star": 3,
-          "items": [
-            "蓝霸符",
-            "珠光护手",
-            "班克斯的魔法帽"
-          ],
-          "role": "mainCarry"
-        },
-        {
-          "name": "安妮",
-          "star": 1,
-          "items": [
-            "狂徒铠甲",
-            "离子火花"
-          ],
-          "role": "frontline"
-        },
-        {
-          "name": "努努和威朗普",
-          "star": 2,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "费德提克",
-          "star": 2,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "厄加特",
-          "star": 2,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "蕾欧娜",
-          "star": 2,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "悠米",
-          "star": 1,
-          "items": [],
-          "role": "utility"
-        },
-        {
-          "name": "璐璐",
-          "star": 1,
-          "items": [],
-          "role": "utility"
-        }
-      ],
-      "battles": 720,
-      "winRate": 53.7,
-      "meanMargin": 0.049,
-      "interval90": [
-        -0.566,
-        0.647
-      ],
-      "cvar10": -0.616,
-      "robustScore": 46.5,
-      "coverage": 100,
-      "unsupported": []
-    },
-    {
-      "templateId": "manual-mecha-draven-jax-leona",
-      "name": "机甲德莱文 -> 贾克斯 -> 蕾欧娜",
+      "templateId": "manual-gadget-jax",
+      "name": "小天才过渡 -> 贾克斯机甲",
       "source": "research",
       "carry": "贾克斯",
       "board": [
@@ -2481,7 +2546,7 @@
           "name": "德莱文",
           "star": 1,
           "items": [],
-          "role": "utility"
+          "role": "frontline"
         },
         {
           "name": "孙悟空",
@@ -2502,27 +2567,112 @@
           "role": "frontline"
         },
         {
+          "name": "安妮",
+          "star": 1,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "波比",
+          "star": 1,
+          "items": [],
+          "role": "utility"
+        },
+        {
+          "name": "璐璐",
+          "star": 1,
+          "items": [],
+          "role": "utility"
+        }
+      ],
+      "battles": 720,
+      "winRate": 55.6,
+      "meanMargin": -0.008,
+      "interval90": [
+        -0.672,
+        0.641
+      ],
+      "cvar10": -0.708,
+      "robustScore": 45.9,
+      "coverage": 100,
+      "unsupported": []
+    },
+    {
+      "templateId": "official-1567",
+      "name": "黑客贾克斯3战斗机甲2黑客2斗士",
+      "source": "official",
+      "carry": "贾克斯",
+      "board": [
+        {
+          "name": "贾克斯",
+          "star": 3,
+          "items": [
+            "泰坦的坚决",
+            "疾射火炮",
+            "鬼索的狂暴之刃"
+          ],
+          "role": "mainCarry"
+        },
+        {
+          "name": "孙悟空",
+          "star": 1,
+          "items": [],
+          "role": "utility"
+        },
+        {
           "name": "费德提克",
+          "star": 2,
+          "items": [
+            "秘法手套"
+          ],
+          "role": "subCarry"
+        },
+        {
+          "name": "瑟提",
           "star": 2,
           "items": [],
           "role": "frontline"
         },
         {
-          "name": "布里茨",
+          "name": "乐芙兰",
           "star": 1,
           "items": [],
+          "role": "utility"
+        },
+        {
+          "name": "瑟庄妮",
+          "star": 2,
+          "items": [
+            "圣盾使的誓约",
+            "日炎斗篷",
+            "狂徒铠甲"
+          ],
           "role": "frontline"
+        },
+        {
+          "name": "扎克",
+          "star": 2,
+          "items": [
+            "秘法手套"
+          ],
+          "role": "subCarry"
+        },
+        {
+          "name": "佐伊",
+          "star": 1,
+          "items": [],
+          "role": "utility"
         }
       ],
       "battles": 720,
-      "winRate": 51.7,
-      "meanMargin": 0.006,
+      "winRate": 53.8,
+      "meanMargin": -0.001,
       "interval90": [
-        -0.643,
-        0.639
+        -0.706,
+        0.681
       ],
-      "cvar10": -0.689,
-      "robustScore": 44.1,
+      "cvar10": -0.756,
+      "robustScore": 44.5,
       "coverage": 100,
       "unsupported": []
     },
@@ -2586,102 +2736,14 @@
         }
       ],
       "battles": 720,
-      "winRate": 49.4,
-      "meanMargin": -0.01,
+      "winRate": 48.8,
+      "meanMargin": -0.016,
       "interval90": [
-        -0.647,
+        -0.628,
         0.626
       ],
-      "cvar10": -0.675,
-      "robustScore": 42.8,
-      "coverage": 100,
-      "unsupported": []
-    },
-    {
-      "templateId": "official-4541",
-      "name": "AI妖姬乐芙兰4AI程序3黑客2淘气包",
-      "source": "official",
-      "carry": "乐芙兰",
-      "board": [
-        {
-          "name": "艾克",
-          "star": 2,
-          "items": [
-            "狂徒铠甲",
-            "棘刺背心",
-            "巨龙之爪"
-          ],
-          "role": "frontline"
-        },
-        {
-          "name": "乐芙兰",
-          "star": 3,
-          "items": [
-            "蓝霸符",
-            "珠光护手",
-            "巨人捕手"
-          ],
-          "role": "mainCarry"
-        },
-        {
-          "name": "蔚",
-          "star": 1,
-          "items": [],
-          "role": "utility"
-        },
-        {
-          "name": "迦娜",
-          "star": 2,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "索拉卡",
-          "star": 2,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "布里茨",
-          "star": 1,
-          "items": [],
-          "role": "utility"
-        },
-        {
-          "name": "劫",
-          "star": 2,
-          "items": [
-            "夜之锋刃",
-            "巨人捕手",
-            "鬼索的狂暴之刃"
-          ],
-          "role": "subCarry"
-        },
-        {
-          "name": "佐伊",
-          "star": 1,
-          "items": [
-            "莫雷洛秘典",
-            "斯塔缇克电刃"
-          ],
-          "role": "subCarry"
-        },
-        {
-          "name": "卡蜜尔",
-          "star": 1,
-          "items": [],
-          "role": "utility"
-        }
-      ],
-      "battles": 720,
-      "winRate": 47.6,
-      "meanMargin": -0.02,
-      "interval90": [
-        -0.615,
-        0.677
-      ],
-      "cvar10": -0.657,
-      "robustScore": 41.9,
+      "cvar10": -0.666,
+      "robustScore": 42.5,
       "coverage": 100,
       "unsupported": []
     },
@@ -2767,85 +2829,102 @@
         }
       ],
       "battles": 720,
-      "winRate": 48.8,
-      "meanMargin": -0.012,
+      "winRate": 48.6,
+      "meanMargin": 0.013,
       "interval90": [
-        -0.74,
-        0.683
+        -0.746,
+        0.704
       ],
-      "cvar10": -0.766,
-      "robustScore": 41.5,
+      "cvar10": -0.765,
+      "robustScore": 41.8,
       "coverage": 100,
       "unsupported": []
     },
     {
-      "templateId": "manual-gadget-jax",
-      "name": "小天才过渡 -> 贾克斯机甲",
-      "source": "research",
-      "carry": "贾克斯",
+      "templateId": "official-4541",
+      "name": "AI妖姬乐芙兰4AI程序3黑客2淘气包",
+      "source": "official",
+      "carry": "乐芙兰",
       "board": [
         {
-          "name": "贾克斯",
+          "name": "艾克",
+          "star": 2,
+          "items": [
+            "狂徒铠甲",
+            "棘刺背心",
+            "巨龙之爪"
+          ],
+          "role": "frontline"
+        },
+        {
+          "name": "乐芙兰",
           "star": 3,
           "items": [
-            "鬼索的狂暴之刃",
-            "疾射火炮",
-            "泰坦的坚决"
+            "蓝霸符",
+            "珠光护手",
+            "巨人捕手"
           ],
           "role": "mainCarry"
         },
         {
-          "name": "德莱文",
-          "star": 1,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "孙悟空",
-          "star": 1,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "瑟提",
-          "star": 2,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "蕾欧娜",
-          "star": 2,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "安妮",
-          "star": 1,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "波比",
+          "name": "蔚",
           "star": 1,
           "items": [],
           "role": "utility"
         },
         {
-          "name": "璐璐",
+          "name": "迦娜",
+          "star": 2,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "索拉卡",
+          "star": 2,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "布里茨",
+          "star": 1,
+          "items": [],
+          "role": "utility"
+        },
+        {
+          "name": "劫",
+          "star": 2,
+          "items": [
+            "夜之锋刃",
+            "巨人捕手",
+            "鬼索的狂暴之刃"
+          ],
+          "role": "subCarry"
+        },
+        {
+          "name": "佐伊",
+          "star": 1,
+          "items": [
+            "莫雷洛秘典",
+            "斯塔缇克电刃"
+          ],
+          "role": "subCarry"
+        },
+        {
+          "name": "卡蜜尔",
           "star": 1,
           "items": [],
           "role": "utility"
         }
       ],
       "battles": 720,
-      "winRate": 49.7,
-      "meanMargin": -0.072,
+      "winRate": 46.7,
+      "meanMargin": -0.029,
       "interval90": [
-        -0.724,
-        0.634
+        -0.613,
+        0.677
       ],
-      "cvar10": -0.757,
-      "robustScore": 41.4,
+      "cvar10": -0.661,
+      "robustScore": 41.2,
       "coverage": 100,
       "unsupported": []
     },
@@ -2921,324 +3000,16 @@
         }
       ],
       "battles": 720,
-      "winRate": 45.3,
-      "meanMargin": 0.017,
+      "winRate": 44.4,
+      "meanMargin": 0.01,
       "interval90": [
         -0.541,
         0.641
       ],
-      "cvar10": -0.625,
-      "robustScore": 41.4,
+      "cvar10": -0.627,
+      "robustScore": 40.8,
       "coverage": 100,
       "unsupported": []
-    },
-    {
-      "templateId": "official-1567",
-      "name": "黑客贾克斯3战斗机甲2黑客2斗士",
-      "source": "official",
-      "carry": "贾克斯",
-      "board": [
-        {
-          "name": "贾克斯",
-          "star": 3,
-          "items": [
-            "泰坦的坚决",
-            "疾射火炮",
-            "鬼索的狂暴之刃"
-          ],
-          "role": "mainCarry"
-        },
-        {
-          "name": "孙悟空",
-          "star": 1,
-          "items": [],
-          "role": "utility"
-        },
-        {
-          "name": "费德提克",
-          "star": 2,
-          "items": [
-            "秘法手套"
-          ],
-          "role": "subCarry"
-        },
-        {
-          "name": "瑟提",
-          "star": 2,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "乐芙兰",
-          "star": 1,
-          "items": [],
-          "role": "utility"
-        },
-        {
-          "name": "瑟庄妮",
-          "star": 2,
-          "items": [
-            "圣盾使的誓约",
-            "日炎斗篷",
-            "狂徒铠甲"
-          ],
-          "role": "frontline"
-        },
-        {
-          "name": "扎克",
-          "star": 2,
-          "items": [
-            "秘法手套"
-          ],
-          "role": "subCarry"
-        },
-        {
-          "name": "佐伊",
-          "star": 1,
-          "items": [],
-          "role": "utility"
-        }
-      ],
-      "battles": 720,
-      "winRate": 48,
-      "meanMargin": -0.053,
-      "interval90": [
-        -0.721,
-        0.64
-      ],
-      "cvar10": -0.768,
-      "robustScore": 40.6,
-      "coverage": 100,
-      "unsupported": []
-    },
-    {
-      "templateId": "official-4529",
-      "name": "小天才佐伊5小天才2福牛守护者",
-      "source": "official",
-      "carry": "佐伊",
-      "board": [
-        {
-          "name": "波比",
-          "star": 1,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "艾克",
-          "star": 2,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "安妮",
-          "star": 1,
-          "items": [
-            "离子火花",
-            "石像鬼石板甲",
-            "巨龙之爪"
-          ],
-          "role": "frontline"
-        },
-        {
-          "name": "努努和威朗普",
-          "star": 2,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "阿利斯塔",
-          "star": 1,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "佐伊",
-          "star": 3,
-          "items": [
-            "蓝霸符",
-            "海克斯科技枪刃",
-            "莫雷洛秘典"
-          ],
-          "role": "mainCarry"
-        },
-        {
-          "name": "璐璐",
-          "star": 1,
-          "items": [],
-          "role": "utility"
-        },
-        {
-          "name": "乐芙兰",
-          "star": 1,
-          "items": [
-            "珠光护手",
-            "班克斯的魔法帽",
-            "蓝霸符"
-          ],
-          "role": "subCarry"
-        }
-      ],
-      "battles": 720,
-      "winRate": 46.3,
-      "meanMargin": -0.065,
-      "interval90": [
-        -0.734,
-        0.633
-      ],
-      "cvar10": -0.736,
-      "robustScore": 39.8,
-      "coverage": 100,
-      "unsupported": []
-    },
-    {
-      "templateId": "official-1327",
-      "name": "怪兽佐伊2黑客2淘气包怪兽",
-      "source": "official",
-      "carry": "佐伊",
-      "board": [
-        {
-          "name": "拉莫斯",
-          "star": 1,
-          "items": [
-            "棘刺背心",
-            "石像鬼石板甲",
-            "日炎斗篷"
-          ],
-          "role": "frontline"
-        },
-        {
-          "name": "扎克",
-          "star": 2,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "艾克",
-          "star": 2,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "科加斯",
-          "star": 1,
-          "items": [
-            "巨龙之爪",
-            "振奋盔甲",
-            "狂徒铠甲"
-          ],
-          "role": "frontline"
-        },
-        {
-          "name": "佐伊",
-          "star": 3,
-          "items": [
-            "蓝霸符",
-            "珠光护手",
-            "班克斯的魔法帽"
-          ],
-          "role": "mainCarry"
-        },
-        {
-          "name": "厄加特",
-          "star": 2,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "乐芙兰",
-          "star": 1,
-          "items": [],
-          "role": "utility"
-        },
-        {
-          "name": "维克兹",
-          "star": 1,
-          "items": [
-            "斯塔缇克电刃",
-            "珠光护手",
-            "班克斯的魔法帽"
-          ],
-          "role": "subCarry"
-        }
-      ],
-      "battles": 720,
-      "winRate": 43.8,
-      "meanMargin": -0.045,
-      "interval90": [
-        -0.665,
-        0.652
-      ],
-      "cvar10": -0.695,
-      "robustScore": 39,
-      "coverage": 100,
-      "unsupported": []
-    },
-    {
-      "templateId": "meta-德莱文联盟-德莱文-2",
-      "name": "德莱文联盟德莱文机制路线",
-      "source": "meta-solver",
-      "carry": "德莱文",
-      "board": [
-        {
-          "name": "德莱文",
-          "star": 3,
-          "items": [
-            "最后的轻语",
-            "鬼索的狂暴之刃",
-            "卢安娜的飓风"
-          ],
-          "role": "mainCarry"
-        },
-        {
-          "name": "孙悟空",
-          "star": 1,
-          "items": [],
-          "role": "utility"
-        },
-        {
-          "name": "瑟提",
-          "star": 2,
-          "items": [],
-          "role": "utility"
-        },
-        {
-          "name": "安妮",
-          "star": 1,
-          "items": [],
-          "role": "utility"
-        },
-        {
-          "name": "拉克丝",
-          "star": 1,
-          "items": [],
-          "role": "utility"
-        },
-        {
-          "name": "加里奥",
-          "star": 1,
-          "items": [],
-          "role": "utility"
-        },
-        {
-          "name": "菲奥娜",
-          "star": 1,
-          "items": [],
-          "role": "utility"
-        }
-      ],
-      "battles": 720,
-      "winRate": 39,
-      "meanMargin": -0.026,
-      "interval90": [
-        -0.487,
-        0.642
-      ],
-      "cvar10": -0.505,
-      "robustScore": 38.6,
-      "coverage": 87.5,
-      "unsupported": [
-        "机制:德莱文联盟"
-      ]
     },
     {
       "templateId": "official-4545",
@@ -3316,13 +3087,242 @@
         }
       ],
       "battles": 720,
-      "winRate": 41.9,
-      "meanMargin": -0.041,
+      "winRate": 43.8,
+      "meanMargin": -0.032,
       "interval90": [
-        -0.673,
-        0.621
+        -0.658,
+        0.646
       ],
-      "cvar10": -0.704,
+      "cvar10": -0.692,
+      "robustScore": 39.2,
+      "coverage": 100,
+      "unsupported": []
+    },
+    {
+      "templateId": "official-1327",
+      "name": "怪兽佐伊2黑客2淘气包怪兽",
+      "source": "official",
+      "carry": "佐伊",
+      "board": [
+        {
+          "name": "拉莫斯",
+          "star": 1,
+          "items": [
+            "棘刺背心",
+            "石像鬼石板甲",
+            "日炎斗篷"
+          ],
+          "role": "frontline"
+        },
+        {
+          "name": "扎克",
+          "star": 2,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "艾克",
+          "star": 2,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "科加斯",
+          "star": 1,
+          "items": [
+            "巨龙之爪",
+            "振奋盔甲",
+            "狂徒铠甲"
+          ],
+          "role": "frontline"
+        },
+        {
+          "name": "佐伊",
+          "star": 3,
+          "items": [
+            "蓝霸符",
+            "珠光护手",
+            "班克斯的魔法帽"
+          ],
+          "role": "mainCarry"
+        },
+        {
+          "name": "厄加特",
+          "star": 2,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "乐芙兰",
+          "star": 1,
+          "items": [],
+          "role": "utility"
+        },
+        {
+          "name": "维克兹",
+          "star": 1,
+          "items": [
+            "斯塔缇克电刃",
+            "珠光护手",
+            "班克斯的魔法帽"
+          ],
+          "role": "subCarry"
+        }
+      ],
+      "battles": 720,
+      "winRate": 42.7,
+      "meanMargin": -0.05,
+      "interval90": [
+        -0.664,
+        0.652
+      ],
+      "cvar10": -0.688,
+      "robustScore": 38.5,
+      "coverage": 100,
+      "unsupported": []
+    },
+    {
+      "templateId": "meta-德莱文联盟-德莱文-2",
+      "name": "德莱文联盟德莱文机制路线",
+      "source": "meta-solver",
+      "carry": "德莱文",
+      "board": [
+        {
+          "name": "德莱文",
+          "star": 3,
+          "items": [
+            "最后的轻语",
+            "鬼索的狂暴之刃",
+            "卢安娜的飓风"
+          ],
+          "role": "mainCarry"
+        },
+        {
+          "name": "孙悟空",
+          "star": 1,
+          "items": [],
+          "role": "utility"
+        },
+        {
+          "name": "瑟提",
+          "star": 2,
+          "items": [],
+          "role": "utility"
+        },
+        {
+          "name": "安妮",
+          "star": 1,
+          "items": [],
+          "role": "utility"
+        },
+        {
+          "name": "拉克丝",
+          "star": 1,
+          "items": [],
+          "role": "utility"
+        },
+        {
+          "name": "加里奥",
+          "star": 1,
+          "items": [],
+          "role": "utility"
+        },
+        {
+          "name": "菲奥娜",
+          "star": 1,
+          "items": [],
+          "role": "utility"
+        }
+      ],
+      "battles": 720,
+      "winRate": 38.5,
+      "meanMargin": -0.028,
+      "interval90": [
+        -0.491,
+        0.642
+      ],
+      "cvar10": -0.509,
+      "robustScore": 38.2,
+      "coverage": 87.5,
+      "unsupported": [
+        "机制:德莱文联盟"
+      ]
+    },
+    {
+      "templateId": "official-4529",
+      "name": "小天才佐伊5小天才2福牛守护者",
+      "source": "official",
+      "carry": "佐伊",
+      "board": [
+        {
+          "name": "波比",
+          "star": 1,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "艾克",
+          "star": 2,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "安妮",
+          "star": 1,
+          "items": [
+            "离子火花",
+            "石像鬼石板甲",
+            "巨龙之爪"
+          ],
+          "role": "frontline"
+        },
+        {
+          "name": "努努和威朗普",
+          "star": 2,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "阿利斯塔",
+          "star": 1,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "佐伊",
+          "star": 3,
+          "items": [
+            "蓝霸符",
+            "海克斯科技枪刃",
+            "莫雷洛秘典"
+          ],
+          "role": "mainCarry"
+        },
+        {
+          "name": "璐璐",
+          "star": 1,
+          "items": [],
+          "role": "utility"
+        },
+        {
+          "name": "乐芙兰",
+          "star": 1,
+          "items": [
+            "珠光护手",
+            "班克斯的魔法帽",
+            "蓝霸符"
+          ],
+          "role": "subCarry"
+        }
+      ],
+      "battles": 720,
+      "winRate": 43.3,
+      "meanMargin": -0.075,
+      "interval90": [
+        -0.735,
+        0.633
+      ],
+      "cvar10": -0.742,
       "robustScore": 38,
       "coverage": 100,
       "unsupported": []
@@ -3381,79 +3381,14 @@
         }
       ],
       "battles": 720,
-      "winRate": 34.1,
-      "meanMargin": -0.102,
+      "winRate": 34.7,
+      "meanMargin": -0.098,
       "interval90": [
-        -0.606,
+        -0.623,
         0.598
       ],
-      "cvar10": -0.623,
-      "robustScore": 33.7,
-      "coverage": 100,
-      "unsupported": []
-    },
-    {
-      "templateId": "manual-duelist",
-      "name": "决斗连胜 -> 薇恩/剑姬/劫",
-      "source": "research",
-      "carry": "薇恩",
-      "board": [
-        {
-          "name": "薇恩",
-          "star": 3,
-          "items": [
-            "鬼索的狂暴之刃",
-            "最后的轻语",
-            "卢安娜的飓风"
-          ],
-          "role": "mainCarry"
-        },
-        {
-          "name": "尼菈",
-          "star": 1,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "劫",
-          "star": 2,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "菲奥娜",
-          "star": 1,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "凯尔",
-          "star": 1,
-          "items": [],
-          "role": "utility"
-        },
-        {
-          "name": "亚索",
-          "star": 1,
-          "items": [],
-          "role": "frontline"
-        },
-        {
-          "name": "普朗克",
-          "star": 1,
-          "items": [],
-          "role": "utility"
-        }
-      ],
-      "battles": 720,
-      "winRate": 32.6,
-      "meanMargin": -0.154,
-      "interval90": [
-        -0.648,
-        0.5
-      ],
-      "cvar10": -0.654,
-      "robustScore": 32,
+      "cvar10": -0.635,
+      "robustScore": 34,
       "coverage": 100,
       "unsupported": []
     },
@@ -3526,17 +3461,82 @@
       ],
       "battles": 720,
       "winRate": 33.1,
-      "meanMargin": -0.17,
+      "meanMargin": -0.172,
       "interval90": [
         -0.694,
         0.523
       ],
-      "cvar10": -0.737,
+      "cvar10": -0.739,
       "robustScore": 31.2,
       "coverage": 100,
       "unsupported": [
         "艾希:射手的专注"
       ]
+    },
+    {
+      "templateId": "manual-duelist",
+      "name": "决斗连胜 -> 薇恩/剑姬/劫",
+      "source": "research",
+      "carry": "薇恩",
+      "board": [
+        {
+          "name": "薇恩",
+          "star": 3,
+          "items": [
+            "鬼索的狂暴之刃",
+            "最后的轻语",
+            "卢安娜的飓风"
+          ],
+          "role": "mainCarry"
+        },
+        {
+          "name": "尼菈",
+          "star": 1,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "劫",
+          "star": 2,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "菲奥娜",
+          "star": 1,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "凯尔",
+          "star": 1,
+          "items": [],
+          "role": "utility"
+        },
+        {
+          "name": "亚索",
+          "star": 1,
+          "items": [],
+          "role": "frontline"
+        },
+        {
+          "name": "普朗克",
+          "star": 1,
+          "items": [],
+          "role": "utility"
+        }
+      ],
+      "battles": 720,
+      "winRate": 31.3,
+      "meanMargin": -0.164,
+      "interval90": [
+        -0.652,
+        0.5
+      ],
+      "cvar10": -0.658,
+      "robustScore": 31.1,
+      "coverage": 100,
+      "unsupported": []
     },
     {
       "templateId": "official-1294",
@@ -3612,14 +3612,14 @@
         }
       ],
       "battles": 720,
-      "winRate": 30.9,
-      "meanMargin": -0.164,
+      "winRate": 30.4,
+      "meanMargin": -0.172,
       "interval90": [
-        -0.672,
+        -0.677,
         0.595
       ],
-      "cvar10": -0.712,
-      "robustScore": 30.3,
+      "cvar10": -0.719,
+      "robustScore": 29.9,
       "coverage": 100,
       "unsupported": []
     },
@@ -3683,14 +3683,14 @@
         }
       ],
       "battles": 720,
-      "winRate": 31.9,
-      "meanMargin": -0.234,
+      "winRate": 30.6,
+      "meanMargin": -0.25,
       "interval90": [
-        -0.724,
+        -0.729,
         0.583
       ],
-      "cvar10": -0.742,
-      "robustScore": 29.7,
+      "cvar10": -0.745,
+      "robustScore": 28.7,
       "coverage": 100,
       "unsupported": []
     },
@@ -3765,10 +3765,10 @@
       "winRate": 30.3,
       "meanMargin": -0.249,
       "interval90": [
-        -0.752,
+        -0.76,
         0.468
       ],
-      "cvar10": -0.786,
+      "cvar10": -0.788,
       "robustScore": 28.2,
       "coverage": 100,
       "unsupported": []
@@ -3841,14 +3841,14 @@
         }
       ],
       "battles": 720,
-      "winRate": 26.9,
-      "meanMargin": -0.259,
+      "winRate": 26,
+      "meanMargin": -0.251,
       "interval90": [
-        -0.713,
-        0.537
+        -0.707,
+        0.523
       ],
-      "cvar10": -0.742,
-      "robustScore": 26.6,
+      "cvar10": -0.741,
+      "robustScore": 26.3,
       "coverage": 100,
       "unsupported": []
     },
@@ -3927,7 +3927,7 @@
       ],
       "battles": 720,
       "winRate": 25.3,
-      "meanMargin": -0.331,
+      "meanMargin": -0.333,
       "interval90": [
         -0.803,
         0.566
@@ -4020,13 +4020,13 @@
       ],
       "battles": 720,
       "winRate": 22.2,
-      "meanMargin": -0.336,
+      "meanMargin": -0.341,
       "interval90": [
-        -0.772,
+        -0.775,
         0.452
       ],
-      "cvar10": -0.803,
-      "robustScore": 22.5,
+      "cvar10": -0.809,
+      "robustScore": 22.3,
       "coverage": 100,
       "unsupported": []
     },
@@ -4085,13 +4085,13 @@
       ],
       "battles": 720,
       "winRate": 16.3,
-      "meanMargin": -0.297,
+      "meanMargin": -0.305,
       "interval90": [
-        -0.656,
+        -0.662,
         0.398
       ],
-      "cvar10": -0.669,
-      "robustScore": 21,
+      "cvar10": -0.681,
+      "robustScore": 20.8,
       "coverage": 87.5,
       "unsupported": [
         "机制:旺盛精力"
@@ -4152,13 +4152,13 @@
       ],
       "battles": 720,
       "winRate": 15.6,
-      "meanMargin": -0.342,
+      "meanMargin": -0.347,
       "interval90": [
         -0.789,
         0.321
       ],
-      "cvar10": -0.797,
-      "robustScore": 18.8,
+      "cvar10": -0.799,
+      "robustScore": 18.7,
       "coverage": 87.5,
       "unsupported": [
         "艾希:射手的专注",
@@ -4220,12 +4220,12 @@
       ],
       "battles": 720,
       "winRate": 15.8,
-      "meanMargin": -0.403,
+      "meanMargin": -0.407,
       "interval90": [
-        -0.768,
+        -0.772,
         0.255
       ],
-      "cvar10": -0.804,
+      "cvar10": -0.806,
       "robustScore": 18.1,
       "coverage": 87.5,
       "unsupported": [
@@ -4299,13 +4299,13 @@
       ],
       "battles": 720,
       "winRate": 15.6,
-      "meanMargin": -0.478,
+      "meanMargin": -0.481,
       "interval90": [
         -0.88,
         0.468
       ],
-      "cvar10": -0.89,
-      "robustScore": 16.2,
+      "cvar10": -0.893,
+      "robustScore": 16.1,
       "coverage": 100,
       "unsupported": []
     },
@@ -4380,13 +4380,13 @@
       ],
       "battles": 720,
       "winRate": 12.7,
-      "meanMargin": -0.418,
+      "meanMargin": -0.423,
       "interval90": [
-        -0.779,
+        -0.799,
         0.459
       ],
-      "cvar10": -0.808,
-      "robustScore": 16.2,
+      "cvar10": -0.814,
+      "robustScore": 16.1,
       "coverage": 100,
       "unsupported": []
     },
@@ -4461,9 +4461,9 @@
       ],
       "battles": 720,
       "winRate": 13.2,
-      "meanMargin": -0.486,
+      "meanMargin": -0.489,
       "interval90": [
-        -0.808,
+        -0.797,
         0.249
       ],
       "cvar10": -0.836,
@@ -4540,13 +4540,13 @@
       ],
       "battles": 720,
       "winRate": 12.2,
-      "meanMargin": -0.428,
+      "meanMargin": -0.436,
       "interval90": [
-        -0.826,
+        -0.84,
         0.351
       ],
-      "cvar10": -0.854,
-      "robustScore": 15.3,
+      "cvar10": -0.862,
+      "robustScore": 15.2,
       "coverage": 100,
       "unsupported": []
     },
@@ -4605,13 +4605,13 @@
       ],
       "battles": 720,
       "winRate": 11.1,
-      "meanMargin": -0.479,
+      "meanMargin": -0.485,
       "interval90": [
         -0.772,
         0.22
       ],
-      "cvar10": -0.785,
-      "robustScore": 14.8,
+      "cvar10": -0.788,
+      "robustScore": 14.7,
       "coverage": 87.5,
       "unsupported": [
         "机制:进入夜晚"
@@ -4688,13 +4688,13 @@
       ],
       "battles": 720,
       "winRate": 11.2,
-      "meanMargin": -0.49,
+      "meanMargin": -0.494,
       "interval90": [
         -0.851,
         0.291
       ],
-      "cvar10": -0.867,
-      "robustScore": 13.9,
+      "cvar10": -0.871,
+      "robustScore": 13.8,
       "coverage": 100,
       "unsupported": []
     },
@@ -4767,12 +4767,12 @@
       ],
       "battles": 720,
       "winRate": 7.3,
-      "meanMargin": -0.478,
+      "meanMargin": -0.48,
       "interval90": [
-        -0.76,
+        -0.766,
         0.167
       ],
-      "cvar10": -0.783,
+      "cvar10": -0.784,
       "robustScore": 12.7,
       "coverage": 100,
       "unsupported": [
@@ -4834,13 +4834,13 @@
       ],
       "battles": 720,
       "winRate": 2.6,
-      "meanMargin": -0.568,
+      "meanMargin": -0.578,
       "interval90": [
         -0.806,
         -0.106
       ],
-      "cvar10": -0.831,
-      "robustScore": 8.5,
+      "cvar10": -0.844,
+      "robustScore": 8.3,
       "coverage": 87.5,
       "unsupported": [
         "艾希:射手的专注",
@@ -4908,13 +4908,13 @@
       ],
       "battles": 720,
       "winRate": 1.9,
-      "meanMargin": -0.658,
+      "meanMargin": -0.663,
       "interval90": [
-        -0.834,
+        -0.847,
         -0.327
       ],
-      "cvar10": -0.862,
-      "robustScore": 6.7,
+      "cvar10": -0.869,
+      "robustScore": 6.6,
       "coverage": 100,
       "unsupported": []
     },
@@ -4989,12 +4989,12 @@
       ],
       "battles": 720,
       "winRate": 0.4,
-      "meanMargin": -0.716,
+      "meanMargin": -0.717,
       "interval90": [
         -0.913,
         -0.371
       ],
-      "cvar10": -0.927,
+      "cvar10": -0.928,
       "robustScore": 4.5,
       "coverage": 100,
       "unsupported": []
@@ -5006,14 +5006,14 @@
       "超级机甲德莱文5战斗机甲3超级英雄2斗士",
       "决斗剑姬6决斗大师2福牛守护者",
       "秘卫斗士贾克斯4斗士3秘术卫士3战斗机甲",
+      "评级与交火莎弥拉机制路线",
       "灵能娑娜4灵能使3秘术2福牛2斗士",
       "福牛泰隆6福牛守护者3混沌战士",
-      "评级与交火莎弥拉机制路线",
-      "小天才九五5小天才2福牛守护者2吉祥物",
       "福牛混沌九五4福牛守护者3混沌战士2吉祥物",
+      "小天才九五5小天才2福牛守护者2吉祥物",
       "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
       "完美的日炎耀斑蕾欧娜机制路线",
-      "九五平民枪手3平民英雄2枪手2吉祥物"
+      "无情连打贾克斯5战队机甲4斗士2护卫"
     ],
     "rows": [
       {
@@ -5059,15 +5059,15 @@
           0,
           0,
           null,
-          50,
+          0,
+          0,
           0,
           91.7,
-          0,
           100,
           100,
           100,
           91.7,
-          54.2
+          100
         ]
       },
       {
@@ -5076,52 +5076,16 @@
         "cells": [
           0,
           0,
-          50,
+          100,
           null,
-          16.7,
-          79.2,
-          100,
-          0,
-          100,
           91.7,
-          100,
-          100
-        ]
-      },
-      {
-        "id": "official-1355",
-        "name": "灵能娑娜4灵能使3秘术2福牛2斗士",
-        "cells": [
-          0,
+          50,
           0,
           100,
-          83.3,
-          null,
-          25,
-          75,
-          0,
-          100,
-          100,
-          100,
-          25
-        ]
-      },
-      {
-        "id": "official-1415",
-        "name": "福牛泰隆6福牛守护者3混沌战士",
-        "cells": [
-          0,
-          0,
           8.3,
-          20.8,
-          75,
-          null,
           100,
-          0,
-          0,
           100,
-          0,
-          100
+          0
         ]
       },
       {
@@ -5131,33 +5095,51 @@
           0,
           0,
           100,
-          0,
+          8.3,
+          null,
           25,
           0,
-          null,
-          100,
           95.8,
           100,
+          100,
           75,
-          66.7
+          87.5
         ]
       },
       {
-        "id": "official-1570",
-        "name": "小天才九五5小天才2福牛守护者2吉祥物",
+        "id": "official-1355",
+        "name": "灵能娑娜4灵能使3秘术2福牛2斗士",
         "cells": [
           0,
           0,
-          0,
           100,
-          100,
-          100,
-          0,
+          50,
+          75,
           null,
-          83.3,
-          41.7,
-          91.7,
+          25,
+          100,
+          0,
+          100,
+          100,
           100
+        ]
+      },
+      {
+        "id": "official-1415",
+        "name": "福牛泰隆6福牛守护者3混沌战士",
+        "cells": [
+          0,
+          0,
+          8.3,
+          100,
+          100,
+          75,
+          null,
+          0,
+          0,
+          100,
+          0,
+          0
         ]
       },
       {
@@ -5168,14 +5150,32 @@
           0,
           0,
           0,
+          4.2,
           0,
           100,
-          4.2,
-          16.7,
           null,
+          25,
           83.3,
           66.7,
-          41.7
+          66.7
+        ]
+      },
+      {
+        "id": "official-1570",
+        "name": "小天才九五5小天才2福牛守护者2吉祥物",
+        "cells": [
+          0,
+          0,
+          0,
+          91.7,
+          0,
+          100,
+          100,
+          75,
+          null,
+          4.2,
+          66.7,
+          0
         ]
       },
       {
@@ -5185,15 +5185,15 @@
           0,
           0,
           0,
-          8.3,
           0,
           0,
           0,
-          58.3,
+          0,
           16.7,
+          95.8,
           null,
           100,
-          100
+          91.7
         ]
       },
       {
@@ -5204,10 +5204,10 @@
           0,
           8.3,
           0,
+          25,
           0,
           100,
-          25,
-          8.3,
+          33.3,
           33.3,
           0,
           null,
@@ -5215,19 +5215,19 @@
         ]
       },
       {
-        "id": "official-1269",
-        "name": "九五平民枪手3平民英雄2枪手2吉祥物",
+        "id": "official-4524",
+        "name": "无情连打贾克斯5战队机甲4斗士2护卫",
         "cells": [
           0,
           0,
-          45.8,
           0,
-          75,
+          100,
+          12.5,
           0,
+          100,
           33.3,
-          0,
-          58.3,
-          0,
+          100,
+          8.3,
           0,
           null
         ]

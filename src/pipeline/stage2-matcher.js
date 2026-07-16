@@ -34,6 +34,7 @@ const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
 const modelResults = readOptional('model_results.json') || {};
 const mechaPrimeResults = readOptional('mecha_prime_results.json') || null;
 const metaDiscoveryResults = readOptional('meta_discovery_results.json') || null;
+const augmentTransitionResults = readOptional('augment_transition_results.json') || null;
 const mechaPrimeNames = new Set(((mechaPrimeResults && mechaPrimeResults.mechaMembers) || []).map(x => x.name));
 
 const COMPONENTS = [
@@ -455,6 +456,43 @@ function attachHeroAugmentPlans(templatesIn) {
         options,
         requiredNames: uniq(requiredNames),
         mainCarry,
+      },
+    };
+  });
+}
+
+function attachAugmentTransitionPlans(templatesIn) {
+  const decision = augmentTransitionResults && augmentTransitionResults.decision;
+  if (!decision || !decision.augment || !decision.strategicCarry) return templatesIn;
+  return templatesIn.map(template => {
+    const heroPlan = template.heroAugmentPlan || {};
+    const mainCarry = template.routeProfile && template.routeProfile.mainCarry && template.routeProfile.mainCarry.name || '';
+    if (mainCarry !== decision.strategicCarry || !(heroPlan.requiredNames || []).includes(decision.augment)) return template;
+    const oneStar = decision.stateInference && decision.stateInference.jaxOneImmediate || {};
+    const handoff = decision.stateInference && decision.stateInference.jaxTwoBridge || {};
+    return {
+      ...template,
+      augmentTransitionPlan: {
+        source: 'augment_transition_results.json',
+        experiment: augmentTransitionResults.experiment,
+        augment: decision.augment,
+        baselineCarry: decision.baselineCarry,
+        strategicCarry: decision.strategicCarry,
+        currentHolder: decision.currentHolder,
+        currentSwitchCertified: !!decision.currentSwitchCertified,
+        currentInference: oneStar,
+        handoffCertified: !!decision.handoffCertified,
+        handoff: decision.handoff,
+        handoffText: decision.handoffText,
+        terminalText: decision.terminalText,
+        totalBattles: Number(augmentTransitionResults.battles) || 0,
+        sampleSupport: Number(decision.sampleSupport) || 0,
+        handoffInference: handoff,
+        holderRules: [
+          { when: { unit: decision.handoff && decision.handoff.unit, starGte: decision.handoff && decision.handoff.starGte }, holder: decision.strategicCarry, certified: !!decision.handoffCertified, inference: 'handoff' },
+          { when: { hasUnit: decision.currentHolder }, holder: decision.currentHolder, certified: !!decision.currentSwitchCertified, inference: 'current' },
+          { holder: decision.currentHolder, certified: !!decision.currentSwitchCertified, inference: 'current' },
+        ],
       },
     };
   });
@@ -1063,7 +1101,7 @@ function rank(templates, selected, weights) {
     .slice(0, 6);
 }
 
-const templates = attachHeroAugmentPlans(attachPrimePlans(attachRouteProfiles(inheritMechanicGates([...manualTemplates, ...officialTemplates()]))));
+const templates = attachAugmentTransitionPlans(attachHeroAugmentPlans(attachPrimePlans(attachRouteProfiles(inheritMechanicGates([...manualTemplates, ...officialTemplates()])))));
 
 function sameSet(a, b) {
   const aa = uniq(a).sort();
@@ -1122,6 +1160,13 @@ if (grantsInText.some(row => row.effect.grantedCopies !== 1 || row.effect.grante
 const fireAugment = heroAugmentByName.get('嗜火');
 if (!fireAugment || !fireAugment.effect.areaExpanded || fireAugment.effect.stunSeconds !== 2) {
   throw new Error('嗜火范围群控效果解析失败');
+}
+if (augmentTransitionResults) {
+  const transitionTemplate = templates.find(t => t.augmentTransitionPlan && t.augmentTransitionPlan.augment === '无情连打');
+  if (!transitionTemplate || transitionTemplate.augmentTransitionPlan.handoff.starGte !== 2
+    || !(transitionTemplate.augmentTransitionPlan.handoffInference.lcb95 > 0)) {
+    throw new Error('无情连打的条件化转型实验未正确蒸馏进路线模板');
+  }
 }
 const options = buildOptions(templates);
 const weights = computeModelWeights();

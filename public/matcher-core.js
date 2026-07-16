@@ -1376,6 +1376,54 @@
     ]);
   }
 
+  function strategyConditionMet(when, selected) {
+    if (!when) return true;
+    const units = selectedUnitMap(selected || {});
+    if (when.hasUnit && !units.has(when.hasUnit)) return false;
+    if (when.unit) {
+      const star = units.has(when.unit) ? (units.get(when.unit) || 1) : 0;
+      if (!star || (Number(when.starGte) && star < Number(when.starGte))) return false;
+    }
+    return true;
+  }
+
+  function strategyDecisionForTemplate(template, selected) {
+    const plan = template && template.augmentTransitionPlan;
+    const chosen = selected && selected.heroAugment && selected.heroAugment.selected;
+    if (!plan || !chosen || chosen.name !== plan.augment) return null;
+    const rule = (plan.holderRules || []).find(row => strategyConditionMet(row.when, selected)) || null;
+    const holder = rule && rule.holder || plan.currentHolder || plan.strategicCarry;
+    const switchCertified = Boolean(rule && rule.certified && holder === plan.strategicCarry);
+    const handoffState = Boolean(rule && rule.inference === "handoff");
+    const inference = handoffState ? plan.handoffInference : plan.currentInference;
+    const lcb = Number(inference && inference.lcb95);
+    const unit = plan.handoff && plan.handoff.unit || plan.strategicCarry;
+    const star = plan.handoff && plan.handoff.starGte || 2;
+    return {
+      augment: plan.augment,
+      source: plan.source,
+      experiment: plan.experiment,
+      baselineCarry: plan.baselineCarry,
+      strategicCarry: plan.strategicCarry,
+      currentHolder: holder,
+      switchCertified,
+      handoffState,
+      handoffCertified: Boolean(plan.handoffCertified),
+      handoff: plan.handoff,
+      handoffText: plan.handoffText,
+      terminalText: plan.terminalText,
+      totalBattles: Number(plan.totalBattles) || 0,
+      sampleCount: Number(inference && inference.sampleCount) || 0,
+      lcb95: Number.isFinite(lcb) ? lcb : 0,
+      meanDelta: Number(inference && inference.meanDelta) || 0,
+      text: switchCertified && handoffState
+        ? `模型认证转${plan.strategicCarry}：${unit}${star}星优势扩大（LCB ${Number.isFinite(lcb) ? lcb : 0}）`
+        : switchCertified
+        ? `模型认证立即转${plan.strategicCarry}：${plan.augment}已达换核门槛（LCB ${Number.isFinite(lcb) ? lcb : 0}）`
+        : `模型等交接：当前${holder}代持；${unit}${star}星后转${plan.strategicCarry}（认证LCB ${Number(plan.handoffInference && plan.handoffInference.lcb95) || 0}）`,
+    };
+  }
+
   function transitionProfile(current, challenger, selected) {
     const level = clamp(Number(selected && selected.level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
     const currentUnits = new Set(routeUnitNames(current && current.template));
@@ -1395,6 +1443,10 @@
     if (carryChanged && level <= 5) ready = packageHits.length >= 1;
     else if (carryChanged && level === 6) ready = carryHeld || packageHits.length >= 3;
     else if (carryChanged) ready = carryHeld && packageHits.length >= Math.min(minPackageHits, challengerUnits.size);
+    const strategyDecision = challenger && challenger.strategyDecision;
+    const certifiedPivot = Boolean(strategyDecision && strategyDecision.switchCertified
+      && strategyDecision.baselineCarry === currentCarry
+      && strategyDecision.strategicCarry === challengerCarry);
     const anti = challenger && challenger.antiFragile;
     const antiBlocked = Boolean(anti && (anti.blocked || anti.status === "red"));
     if (antiBlocked) ready = false;
@@ -1402,8 +1454,14 @@
     const carryCost = carryChanged ? OPERATIONAL_CARRY_SWITCH_COST[stage] : 0;
     const continuityCost = Math.max(0, Math.round((0.45 - continuity) * 20));
     const readinessCost = anti && anti.status === "yellow" ? 4 : 0;
-    const cost = stageCost + carryCost + continuityCost + readinessCost;
-    const reason = !ready
+    let cost = stageCost + carryCost + continuityCost + readinessCost;
+    if (certifiedPivot) {
+      ready = true;
+      cost = 0;
+    }
+    const reason = certifiedPivot
+      ? strategyDecision.text
+      : !ready
       ? (antiBlocked
         ? `${level}级转型被瓶颈阻断：${anti.bottleneckText || "核心组件未满足"}`
         : `${level}级转型未成包：${carryChanged && !carryHeld ? `新主C${challengerCarry || "未到"}未到；` : ""}新路线仅命中${packageHits.length}张关键牌`)
@@ -1419,6 +1477,8 @@
       packageHits,
       sharedUnits: shared,
       continuityPct: Math.round(continuity * 100),
+      strategyDecision,
+      certifiedPivot,
       reason,
     };
   }
@@ -1441,6 +1501,30 @@
     const current = rows[currentIndex];
     const transition = opts.operationalCommitment ? transitionProfile(current, challenger, opts.selected || {}) : null;
     if (transition) challenger.transition = transition;
+    const strategyDecision = challenger.strategyDecision;
+    const strategyApplies = Boolean(strategyDecision && strategyDecision.baselineCarry === routeMainCarry(current.template));
+    if (transition && transition.certifiedPivot) {
+      challenger.following = true;
+      challenger.sticky = {
+        state: "model-switched",
+        previous: current.template.name,
+        transition,
+        text: strategyDecision.text,
+      };
+      return rows;
+    }
+    if (strategyApplies && !strategyDecision.switchCertified) {
+      current.following = true;
+      current.strategyDecision = strategyDecision;
+      challenger.followAdvice = strategyDecision.text;
+      current.sticky = {
+        state: "model-wait",
+        challenger: challenger.template.name,
+        transition,
+        text: strategyDecision.text,
+      };
+      return rows;
+    }
     if (currentIndex > 2) {
       if (transition && !transition.ready) {
         current.following = true;
@@ -1498,6 +1582,7 @@
     const rows = (templates || []).map(t => {
       const stageResult = scoreTemplate(t, selected, weights, opts);
       const base = { template: t, ...stageResult };
+      base.strategyDecision = strategyDecisionForTemplate(t, selected);
       base.finalScore = base.stageStrength;
       const reachability = reachabilityForTemplate(t, selected, operatorOddsOpts(opts, stageResult.augmentOperator));
       if (reachability) {
@@ -1750,7 +1835,16 @@
     if (selected.derivedAssets && selected.derivedAssets.length) {
       lines.push(`已落袋：${selected.derivedAssets.map(x => x.label || `${x.value}+${x.copies}`).join("、")}`);
     }
-    if (top && top.sticky && top.sticky.state === "pivot-wait") {
+    if (top && top.strategyDecision) {
+      lines.push(top.strategyDecision.switchCertified
+        ? `战略转线：${top.strategyDecision.strategicCarry}接管；${top.strategyDecision.terminalText}`
+        : `交接观察：${top.strategyDecision.currentHolder}暂时代持，${top.strategyDecision.handoffText}`);
+    }
+    if (top && top.sticky && top.sticky.state === "model-wait") {
+      lines.push(`模型不硬转：${top.sticky.text}`);
+    } else if (top && top.sticky && top.sticky.state === "model-switched") {
+      lines.push(`模型允许转型：${top.sticky.text}`);
+    } else if (top && top.sticky && top.sticky.state === "pivot-wait") {
       lines.push(`经营不转：继续当前线；${top.sticky.transition ? top.sticky.transition.reason : top.sticky.text}`);
     } else if (top && top.sticky && top.sticky.state === "held") {
       lines.push(`经营不转：${top.sticky.text}`);
@@ -2066,6 +2160,48 @@
         }
         (fx.expect.evidenceIncludes || []).forEach(part => assert(topEvidence.includes(part), `${fx.label} 证据应包含 ${part}，实际 ${topEvidence}`));
       });
+      const screenshotUnits = ["凯尔", "娑娜", "德莱文", "李青", "赛娜", "芮尔", "孙悟空", "锐雯"];
+      const screenshotSignals = [
+        ...screenshotUnits.map(name => ({ kind: "units", value: name, star: name === "孙悟空" ? 2 : undefined })),
+        { kind: "items", value: "锁子甲" },
+        { kind: "augments", value: "无情连打" },
+        { kind: "levels", level: 4 },
+      ];
+      const transitionOpts = {
+        oddsData: globalThis.JCC_ODDS,
+        unitPrices: fixtureUnitPrices,
+        unitTraits: fixtureUnitTraits,
+        heroAugments: matcherData.options.heroAugments,
+        antiFragile: true,
+        operationalCommitment: true,
+      };
+      const dravenTemplate = matcherData.templates.find(t => (t.name || "").includes("超级机甲德莱文"));
+      assert(dravenTemplate, "无情连打回归需要德莱文基线路线");
+      const selectedJaxOne = selectedFromSignals(screenshotSignals);
+      selectedJaxOne.heroAugmentRound = "3-2";
+      const jaxOneRows = rank(matcherData.templates, selectedJaxOne, matcherData.weights, 8, {
+        ...transitionOpts,
+        stickyTopId: dravenTemplate.id,
+        previousOrder: [dravenTemplate.id],
+      });
+      const jaxOneOperational = operationalRow(jaxOneRows);
+      assert(routeMainCarry(jaxOneOperational.template) === "贾克斯", "选下无情连打并获得贾克斯后，实验认证应立即转贾克斯战略主C");
+      assert(jaxOneOperational.strategyDecision && jaxOneOperational.strategyDecision.switchCertified
+        && !jaxOneOperational.strategyDecision.handoffState
+        && jaxOneOperational.strategyDecision.text.includes("立即转贾克斯"), "贾克斯1星状态应使用当前状态置信结论");
+      const selectedJaxTwo = selectedFromSignals([...screenshotSignals, { kind: "units", value: "贾克斯", star: 2 }]);
+      selectedJaxTwo.heroAugmentRound = "3-2";
+      const jaxTwoRows = rank(matcherData.templates, selectedJaxTwo, matcherData.weights, 8, {
+        ...transitionOpts,
+        stickyTopId: dravenTemplate.id,
+        previousOrder: jaxOneRows.map(row => rowId(row)),
+      });
+      const jaxTwoOperational = operationalRow(jaxTwoRows);
+      assert(routeMainCarry(jaxTwoOperational.template) === "贾克斯"
+        && jaxTwoOperational.strategyDecision && jaxTwoOperational.strategyDecision.handoffState
+        && jaxTwoOperational.strategyDecision.lcb95 > jaxOneOperational.strategyDecision.lcb95,
+      "贾克斯2星应继续执行贾克斯线，并切换到2星优势扩大推断");
+      console.log(`无情连打转型回归: 1星=${jaxOneOperational.strategyDecision.lcb95}, 2星=${jaxTwoOperational.strategyDecision.lcb95}`);
       console.log(`fixture assertions passed (${fixtureRows.length})`);
     }
     console.log("matcher-core assertions passed");

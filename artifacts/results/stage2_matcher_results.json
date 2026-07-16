@@ -8931,14 +8931,14 @@
    "virtualBattle": {
     "templateId": "manual-gadget-jax",
     "battles": 720,
-    "winRate": 49.7,
-    "meanMargin": -0.072,
+    "winRate": 55.6,
+    "meanMargin": -0.008,
     "interval90": [
-     -0.724,
-     0.634
+     -0.672,
+     0.641
     ],
-    "cvar10": -0.757,
-    "robustScore": 41.4,
+    "cvar10": -0.708,
+    "robustScore": 45.9,
     "coverage": 100,
     "unsupported": []
    }
@@ -9460,13 +9460,13 @@
    "virtualBattle": {
     "templateId": "manual-gadget-ap",
     "battles": 720,
-    "winRate": 53.7,
-    "meanMargin": 0.049,
+    "winRate": 53.8,
+    "meanMargin": 0.043,
     "interval90": [
      -0.566,
      0.647
     ],
-    "cvar10": -0.616,
+    "cvar10": -0.618,
     "robustScore": 46.5,
     "coverage": 100,
     "unsupported": []
@@ -10013,14 +10013,14 @@
    "virtualBattle": {
     "templateId": "manual-mecha-draven-jax-leona",
     "battles": 720,
-    "winRate": 51.7,
-    "meanMargin": 0.006,
+    "winRate": 59.9,
+    "meanMargin": 0.078,
     "interval90": [
-     -0.643,
-     0.639
+     -0.603,
+     0.648
     ],
-    "cvar10": -0.689,
-    "robustScore": 44.1,
+    "cvar10": -0.66,
+    "robustScore": 49.8,
     "coverage": 100,
     "unsupported": []
    }
@@ -10529,14 +10529,14 @@
    "virtualBattle": {
     "templateId": "manual-laser-duelist",
     "battles": 720,
-    "winRate": 31.9,
-    "meanMargin": -0.234,
+    "winRate": 30.6,
+    "meanMargin": -0.25,
     "interval90": [
-     -0.724,
+     -0.729,
      0.583
     ],
-    "cvar10": -0.742,
-    "robustScore": 29.7,
+    "cvar10": -0.745,
+    "robustScore": 28.7,
     "coverage": 100,
     "unsupported": []
    }
@@ -10991,14 +10991,14 @@
    "virtualBattle": {
     "templateId": "manual-duelist",
     "battles": 720,
-    "winRate": 32.6,
-    "meanMargin": -0.154,
+    "winRate": 31.3,
+    "meanMargin": -0.164,
     "interval90": [
-     -0.648,
+     -0.652,
      0.5
     ],
-    "cvar10": -0.654,
-    "robustScore": 32,
+    "cvar10": -0.658,
+    "robustScore": 31.1,
     "coverage": 100,
     "unsupported": []
    }
@@ -11485,13 +11485,13 @@
     "templateId": "manual-mascot-heart",
     "battles": 720,
     "winRate": 1.9,
-    "meanMargin": -0.658,
+    "meanMargin": -0.663,
     "interval90": [
-     -0.834,
+     -0.847,
      -0.327
     ],
-    "cvar10": -0.862,
-    "robustScore": 6.7,
+    "cvar10": -0.869,
+    "robustScore": 6.6,
     "coverage": 100,
     "unsupported": []
    }
@@ -12001,14 +12001,14 @@
    "virtualBattle": {
     "templateId": "manual-civilian-gunner",
     "battles": 720,
-    "winRate": 49.4,
-    "meanMargin": -0.01,
+    "winRate": 48.8,
+    "meanMargin": -0.016,
     "interval90": [
-     -0.647,
+     -0.628,
      0.626
     ],
-    "cvar10": -0.675,
-    "robustScore": 42.8,
+    "cvar10": -0.666,
+    "robustScore": 42.5,
     "coverage": 100,
     "unsupported": []
    }
@@ -12461,14 +12461,14 @@
    "virtualBattle": {
     "templateId": "meta-完美的日炎耀斑-蕾欧娜-0",
     "battles": 720,
-    "winRate": 83.4,
-    "meanMargin": 0.337,
+    "winRate": 83,
+    "meanMargin": 0.336,
     "interval90": [
-     -0.302,
+     -0.329,
      0.733
     ],
-    "cvar10": -0.338,
-    "robustScore": 69.2,
+    "cvar10": -0.343,
+    "robustScore": 68.9,
     "coverage": 88.9,
     "unsupported": [
      "机制:完美的日炎耀斑"
@@ -12856,14 +12856,14 @@
    "virtualBattle": {
     "templateId": "meta-评级与交火-莎弥拉-1",
     "battles": 720,
-    "winRate": 87.8,
-    "meanMargin": 0.359,
+    "winRate": 87.6,
+    "meanMargin": 0.352,
     "interval90": [
-     -0.431,
+     -0.318,
      0.792
     ],
-    "cvar10": -0.375,
-    "robustScore": 71.6,
+    "cvar10": -0.37,
+    "robustScore": 71.4,
     "coverage": 90,
     "unsupported": [
      "机制:评级与交火"
@@ -13287,14 +13287,14 @@
    "virtualBattle": {
     "templateId": "meta-德莱文联盟-德莱文-2",
     "battles": 720,
-    "winRate": 39,
-    "meanMargin": -0.026,
+    "winRate": 38.5,
+    "meanMargin": -0.028,
     "interval90": [
-     -0.487,
+     -0.491,
      0.642
     ],
-    "cvar10": -0.505,
-    "robustScore": 38.6,
+    "cvar10": -0.509,
+    "robustScore": 38.2,
     "coverage": 87.5,
     "unsupported": [
      "机制:德莱文联盟"
@@ -13654,13 +13654,13 @@
     "templateId": "meta-进入夜晚-薇恩-3",
     "battles": 720,
     "winRate": 11.1,
-    "meanMargin": -0.479,
+    "meanMargin": -0.485,
     "interval90": [
      -0.772,
      0.22
     ],
-    "cvar10": -0.785,
-    "robustScore": 14.8,
+    "cvar10": -0.788,
+    "robustScore": 14.7,
     "coverage": 87.5,
     "unsupported": [
      "机制:进入夜晚"
@@ -14018,12 +14018,12 @@
     "templateId": "meta-适应性防守-卡蜜尔-4",
     "battles": 720,
     "winRate": 15.8,
-    "meanMargin": -0.403,
+    "meanMargin": -0.407,
     "interval90": [
-     -0.768,
+     -0.772,
      0.255
     ],
-    "cvar10": -0.804,
+    "cvar10": -0.806,
     "robustScore": 18.1,
     "coverage": 87.5,
     "unsupported": [
@@ -14382,13 +14382,13 @@
     "templateId": "meta-浪客精神-亚索-5",
     "battles": 720,
     "winRate": 15.6,
-    "meanMargin": -0.342,
+    "meanMargin": -0.347,
     "interval90": [
      -0.789,
      0.321
     ],
-    "cvar10": -0.797,
-    "robustScore": 18.8,
+    "cvar10": -0.799,
+    "robustScore": 18.7,
     "coverage": 87.5,
     "unsupported": [
      "艾希:射手的专注",
@@ -14748,13 +14748,13 @@
     "templateId": "meta-旺盛精力-悠米-6",
     "battles": 720,
     "winRate": 16.3,
-    "meanMargin": -0.297,
+    "meanMargin": -0.305,
     "interval90": [
-     -0.656,
+     -0.662,
      0.398
     ],
-    "cvar10": -0.669,
-    "robustScore": 21,
+    "cvar10": -0.681,
+    "robustScore": 20.8,
     "coverage": 87.5,
     "unsupported": [
      "机制:旺盛精力"
@@ -15106,14 +15106,14 @@
    "virtualBattle": {
     "templateId": "meta-姐妹-金克丝-7",
     "battles": 720,
-    "winRate": 34.1,
-    "meanMargin": -0.102,
+    "winRate": 34.7,
+    "meanMargin": -0.098,
     "interval90": [
-     -0.606,
+     -0.623,
      0.598
     ],
-    "cvar10": -0.623,
-    "robustScore": 33.7,
+    "cvar10": -0.635,
+    "robustScore": 34,
     "coverage": 100,
     "unsupported": []
    }
@@ -15469,13 +15469,13 @@
     "templateId": "meta-咒能高涨-伊泽瑞尔-8",
     "battles": 720,
     "winRate": 2.6,
-    "meanMargin": -0.568,
+    "meanMargin": -0.578,
     "interval90": [
      -0.806,
      -0.106
     ],
-    "cvar10": -0.831,
-    "robustScore": 8.5,
+    "cvar10": -0.844,
+    "robustScore": 8.3,
     "coverage": 87.5,
     "unsupported": [
      "艾希:射手的专注",
@@ -16064,12 +16064,12 @@
     "templateId": "official-1256",
     "battles": 720,
     "winRate": 7.3,
-    "meanMargin": -0.478,
+    "meanMargin": -0.48,
     "interval90": [
-     -0.76,
+     -0.766,
      0.167
     ],
-    "cvar10": -0.783,
+    "cvar10": -0.784,
     "robustScore": 12.7,
     "coverage": 100,
     "unsupported": [
@@ -16711,14 +16711,14 @@
    "virtualBattle": {
     "templateId": "official-1567",
     "battles": 720,
-    "winRate": 48,
-    "meanMargin": -0.053,
+    "winRate": 53.8,
+    "meanMargin": -0.001,
     "interval90": [
-     -0.721,
-     0.64
+     -0.706,
+     0.681
     ],
-    "cvar10": -0.768,
-    "robustScore": 40.6,
+    "cvar10": -0.756,
+    "robustScore": 44.5,
     "coverage": 100,
     "unsupported": []
    }
@@ -17425,14 +17425,14 @@
    "virtualBattle": {
     "templateId": "official-1570",
     "battles": 720,
-    "winRate": 88.1,
-    "meanMargin": 0.382,
+    "winRate": 85.7,
+    "meanMargin": 0.373,
     "interval90": [
-     -0.489,
-     0.781
+     -0.488,
+     0.783
     ],
-    "cvar10": -0.442,
-    "robustScore": 71.3,
+    "cvar10": -0.452,
+    "robustScore": 69.8,
     "coverage": 100,
     "unsupported": []
    }
@@ -18068,14 +18068,14 @@
    "virtualBattle": {
     "templateId": "official-1374",
     "battles": 720,
-    "winRate": 45.3,
-    "meanMargin": 0.017,
+    "winRate": 44.4,
+    "meanMargin": 0.01,
     "interval90": [
      -0.541,
      0.641
     ],
-    "cvar10": -0.625,
-    "robustScore": 41.4,
+    "cvar10": -0.627,
+    "robustScore": 40.8,
     "coverage": 100,
     "unsupported": []
    }
@@ -18680,14 +18680,14 @@
    "virtualBattle": {
     "templateId": "official-1328",
     "battles": 720,
-    "winRate": 78.3,
-    "meanMargin": 0.225,
+    "winRate": 82.7,
+    "meanMargin": 0.266,
     "interval90": [
-     -0.463,
-     0.705
+     -0.368,
+     0.688
     ],
-    "cvar10": -0.48,
-    "robustScore": 63.6,
+    "cvar10": -0.45,
+    "robustScore": 66.8,
     "coverage": 100,
     "unsupported": []
    }
@@ -19211,6 +19211,62 @@
     ],
     "mainCarry": "贾克斯"
    },
+   "augmentTransitionPlan": {
+    "source": "augment_transition_results.json",
+    "experiment": "augment-conditioned-transition-v1",
+    "augment": "无情连打",
+    "baselineCarry": "德莱文",
+    "strategicCarry": "贾克斯",
+    "currentHolder": "贾克斯",
+    "currentSwitchCertified": true,
+    "currentInference": {
+     "sampleCount": 134,
+     "meanDelta": 6.2,
+     "standardError": 1.54,
+     "lcb95": 3.66,
+     "probabilityPositive": 65.67
+    },
+    "handoffCertified": true,
+    "handoff": {
+     "unit": "贾克斯",
+     "starGte": 2
+    },
+    "handoffText": "贾克斯达到2星后优势扩大，继续持有输出装与至尊机甲",
+    "terminalText": "贾克斯保留终局；蕾欧娜转核未过稳健门槛（LCB -0.17）",
+    "totalBattles": 5760,
+    "sampleSupport": 65.67,
+    "handoffInference": {
+     "sampleCount": 106,
+     "meanDelta": 9.15,
+     "standardError": 1.719,
+     "lcb95": 6.33,
+     "probabilityPositive": 66.98
+    },
+    "holderRules": [
+     {
+      "when": {
+       "unit": "贾克斯",
+       "starGte": 2
+      },
+      "holder": "贾克斯",
+      "certified": true,
+      "inference": "handoff"
+     },
+     {
+      "when": {
+       "hasUnit": "贾克斯"
+      },
+      "holder": "贾克斯",
+      "certified": true,
+      "inference": "current"
+     },
+     {
+      "holder": "贾克斯",
+      "certified": true,
+      "inference": "current"
+     }
+    ]
+   },
    "certification": {
     "templateId": "official-4524",
     "templateName": "无情连打贾克斯5战队机甲4斗士2护卫",
@@ -19339,14 +19395,14 @@
    "virtualBattle": {
     "templateId": "official-4524",
     "battles": 720,
-    "winRate": 80,
-    "meanMargin": 0.302,
+    "winRate": 83.5,
+    "meanMargin": 0.328,
     "interval90": [
-     -0.443,
-     0.767
+     -0.417,
+     0.797
     ],
-    "cvar10": -0.548,
-    "robustScore": 64.8,
+    "cvar10": -0.478,
+    "robustScore": 67.7,
     "coverage": 100,
     "unsupported": []
    }
@@ -19958,6 +20014,62 @@
     ],
     "mainCarry": "贾克斯"
    },
+   "augmentTransitionPlan": {
+    "source": "augment_transition_results.json",
+    "experiment": "augment-conditioned-transition-v1",
+    "augment": "无情连打",
+    "baselineCarry": "德莱文",
+    "strategicCarry": "贾克斯",
+    "currentHolder": "贾克斯",
+    "currentSwitchCertified": true,
+    "currentInference": {
+     "sampleCount": 134,
+     "meanDelta": 6.2,
+     "standardError": 1.54,
+     "lcb95": 3.66,
+     "probabilityPositive": 65.67
+    },
+    "handoffCertified": true,
+    "handoff": {
+     "unit": "贾克斯",
+     "starGte": 2
+    },
+    "handoffText": "贾克斯达到2星后优势扩大，继续持有输出装与至尊机甲",
+    "terminalText": "贾克斯保留终局；蕾欧娜转核未过稳健门槛（LCB -0.17）",
+    "totalBattles": 5760,
+    "sampleSupport": 65.67,
+    "handoffInference": {
+     "sampleCount": 106,
+     "meanDelta": 9.15,
+     "standardError": 1.719,
+     "lcb95": 6.33,
+     "probabilityPositive": 66.98
+    },
+    "holderRules": [
+     {
+      "when": {
+       "unit": "贾克斯",
+       "starGte": 2
+      },
+      "holder": "贾克斯",
+      "certified": true,
+      "inference": "handoff"
+     },
+     {
+      "when": {
+       "hasUnit": "贾克斯"
+      },
+      "holder": "贾克斯",
+      "certified": true,
+      "inference": "current"
+     },
+     {
+      "holder": "贾克斯",
+      "certified": true,
+      "inference": "current"
+     }
+    ]
+   },
    "certification": {
     "templateId": "official-1566",
     "templateName": "秘卫斗士贾克斯4斗士3秘术卫士3战斗机甲",
@@ -20072,14 +20184,14 @@
    "virtualBattle": {
     "templateId": "official-1566",
     "battles": 720,
-    "winRate": 87.7,
-    "meanMargin": 0.457,
+    "winRate": 86.7,
+    "meanMargin": 0.471,
     "interval90": [
-     -0.236,
-     0.82
+     -0.213,
+     0.864
     ],
-    "cvar10": -0.325,
-    "robustScore": 73.2,
+    "cvar10": -0.295,
+    "robustScore": 73.1,
     "coverage": 100,
     "unsupported": []
    }
@@ -20745,9 +20857,9 @@
     "templateId": "official-1406",
     "battles": 720,
     "winRate": 13.2,
-    "meanMargin": -0.486,
+    "meanMargin": -0.489,
     "interval90": [
-     -0.808,
+     -0.797,
      0.249
     ],
     "cvar10": -0.836,
@@ -21495,14 +21607,14 @@
    "virtualBattle": {
     "templateId": "official-1571",
     "battles": 720,
-    "winRate": 64.2,
-    "meanMargin": 0.193,
+    "winRate": 63.4,
+    "meanMargin": 0.179,
     "interval90": [
-     -0.617,
+     -0.622,
      0.769
     ],
-    "cvar10": -0.685,
-    "robustScore": 53.4,
+    "cvar10": -0.688,
+    "robustScore": 52.7,
     "coverage": 100,
     "unsupported": []
    }
@@ -22105,13 +22217,13 @@
     "templateId": "official-1412",
     "battles": 720,
     "winRate": 12.7,
-    "meanMargin": -0.418,
+    "meanMargin": -0.423,
     "interval90": [
-     -0.779,
+     -0.799,
      0.459
     ],
-    "cvar10": -0.808,
-    "robustScore": 16.2,
+    "cvar10": -0.814,
+    "robustScore": 16.1,
     "coverage": 100,
     "unsupported": []
    }
@@ -22872,14 +22984,14 @@
    "virtualBattle": {
     "templateId": "official-1576",
     "battles": 720,
-    "winRate": 63.5,
-    "meanMargin": 0.169,
+    "winRate": 62.9,
+    "meanMargin": 0.165,
     "interval90": [
-     -0.552,
+     -0.544,
      0.733
     ],
-    "cvar10": -0.595,
-    "robustScore": 53.6,
+    "cvar10": -0.592,
+    "robustScore": 53.2,
     "coverage": 100,
     "unsupported": []
    }
@@ -23512,10 +23624,10 @@
     "winRate": 30.3,
     "meanMargin": -0.249,
     "interval90": [
-     -0.752,
+     -0.76,
      0.468
     ],
-    "cvar10": -0.786,
+    "cvar10": -0.788,
     "robustScore": 28.2,
     "coverage": 100,
     "unsupported": []
@@ -24068,14 +24180,14 @@
    "virtualBattle": {
     "templateId": "official-4526",
     "battles": 720,
-    "winRate": 79,
-    "meanMargin": 0.309,
+    "winRate": 76.1,
+    "meanMargin": 0.289,
     "interval90": [
-     -0.359,
+     -0.372,
      0.768
     ],
-    "cvar10": -0.427,
-    "robustScore": 65.6,
+    "cvar10": -0.436,
+    "robustScore": 63.6,
     "coverage": 100,
     "unsupported": []
    }
@@ -24731,14 +24843,14 @@
    "virtualBattle": {
     "templateId": "official-1415",
     "battles": 720,
-    "winRate": 86.5,
-    "meanMargin": 0.431,
+    "winRate": 84.6,
+    "meanMargin": 0.419,
     "interval90": [
-     -0.282,
+     -0.283,
      0.832
     ],
-    "cvar10": -0.291,
-    "robustScore": 72.5,
+    "cvar10": -0.31,
+    "robustScore": 71.2,
     "coverage": 100,
     "unsupported": []
    }
@@ -25367,14 +25479,14 @@
    "virtualBattle": {
     "templateId": "official-4536",
     "battles": 720,
-    "winRate": 70.5,
-    "meanMargin": 0.255,
+    "winRate": 68.9,
+    "meanMargin": 0.239,
     "interval90": [
      -0.419,
      0.741
     ],
-    "cvar10": -0.489,
-    "robustScore": 59.6,
+    "cvar10": -0.493,
+    "robustScore": 58.5,
     "coverage": 100,
     "unsupported": [
      "艾希:射手的专注"
@@ -25970,13 +26082,13 @@
     "templateId": "official-1565",
     "battles": 720,
     "winRate": 15.6,
-    "meanMargin": -0.478,
+    "meanMargin": -0.481,
     "interval90": [
      -0.88,
      0.468
     ],
-    "cvar10": -0.89,
-    "robustScore": 16.2,
+    "cvar10": -0.893,
+    "robustScore": 16.1,
     "coverage": 100,
     "unsupported": []
    }
@@ -26617,14 +26729,14 @@
    "virtualBattle": {
     "templateId": "official-4541",
     "battles": 720,
-    "winRate": 47.6,
-    "meanMargin": -0.02,
+    "winRate": 46.7,
+    "meanMargin": -0.029,
     "interval90": [
-     -0.615,
+     -0.613,
      0.677
     ],
-    "cvar10": -0.657,
-    "robustScore": 41.9,
+    "cvar10": -0.661,
+    "robustScore": 41.2,
     "coverage": 100,
     "unsupported": []
    }
@@ -27273,14 +27385,14 @@
    "virtualBattle": {
     "templateId": "official-1394",
     "battles": 720,
-    "winRate": 62.2,
-    "meanMargin": 0.163,
+    "winRate": 59.3,
+    "meanMargin": 0.143,
     "interval90": [
-     -0.482,
-     0.715
+     -0.53,
+     0.714
     ],
-    "cvar10": -0.537,
-    "robustScore": 53.4,
+    "cvar10": -0.544,
+    "robustScore": 51.5,
     "coverage": 100,
     "unsupported": []
    }
@@ -27963,14 +28075,14 @@
    "virtualBattle": {
     "templateId": "official-1379",
     "battles": 720,
-    "winRate": 48.8,
-    "meanMargin": -0.012,
+    "winRate": 48.6,
+    "meanMargin": 0.013,
     "interval90": [
-     -0.74,
-     0.683
+     -0.746,
+     0.704
     ],
-    "cvar10": -0.766,
-    "robustScore": 41.5,
+    "cvar10": -0.765,
+    "robustScore": 41.8,
     "coverage": 100,
     "unsupported": []
    }
@@ -28703,14 +28815,14 @@
    "virtualBattle": {
     "templateId": "official-1378",
     "battles": 720,
-    "winRate": 78.6,
-    "meanMargin": 0.362,
+    "winRate": 81.7,
+    "meanMargin": 0.378,
     "interval90": [
-     -0.475,
-     0.812
+     -0.47,
+     0.822
     ],
-    "cvar10": -0.521,
-    "robustScore": 65.1,
+    "cvar10": -0.519,
+    "robustScore": 66.9,
     "coverage": 100,
     "unsupported": []
    }
@@ -29274,12 +29386,12 @@
     "templateId": "official-1257",
     "battles": 720,
     "winRate": 33.1,
-    "meanMargin": -0.17,
+    "meanMargin": -0.172,
     "interval90": [
      -0.694,
      0.523
     ],
-    "cvar10": -0.737,
+    "cvar10": -0.739,
     "robustScore": 31.2,
     "coverage": 100,
     "unsupported": [
@@ -29990,14 +30102,14 @@
    "virtualBattle": {
     "templateId": "official-1269",
     "battles": 720,
-    "winRate": 79.7,
-    "meanMargin": 0.322,
+    "winRate": 79.3,
+    "meanMargin": 0.306,
     "interval90": [
-     -0.306,
+     -0.363,
      0.759
     ],
-    "cvar10": -0.374,
-    "robustScore": 66.6,
+    "cvar10": -0.405,
+    "robustScore": 65.9,
     "coverage": 100,
     "unsupported": []
    }
@@ -30737,7 +30849,7 @@
     "templateId": "official-1288",
     "battles": 720,
     "winRate": 98.5,
-    "meanMargin": 0.555,
+    "meanMargin": 0.549,
     "interval90": [
      0.187,
      0.767
@@ -31446,13 +31558,13 @@
     "templateId": "official-1290",
     "battles": 720,
     "winRate": 99.9,
-    "meanMargin": 0.823,
+    "meanMargin": 0.817,
     "interval90": [
-     0.529,
+     0.525,
      1
     ],
-    "cvar10": 0.458,
-    "robustScore": 92.3,
+    "cvar10": 0.452,
+    "robustScore": 92.2,
     "coverage": 100,
     "unsupported": []
    }
@@ -31997,14 +32109,14 @@
    "virtualBattle": {
     "templateId": "official-1294",
     "battles": 720,
-    "winRate": 30.9,
-    "meanMargin": -0.164,
+    "winRate": 30.4,
+    "meanMargin": -0.172,
     "interval90": [
-     -0.672,
+     -0.677,
      0.595
     ],
-    "cvar10": -0.712,
-    "robustScore": 30.3,
+    "cvar10": -0.719,
+    "robustScore": 29.9,
     "coverage": 100,
     "unsupported": []
    }
@@ -32661,14 +32773,14 @@
    "virtualBattle": {
     "templateId": "official-1312",
     "battles": 720,
-    "winRate": 73,
-    "meanMargin": 0.28,
+    "winRate": 72.8,
+    "meanMargin": 0.281,
     "interval90": [
-     -0.47,
+     -0.491,
      0.822
     ],
-    "cvar10": -0.502,
-    "robustScore": 61.1,
+    "cvar10": -0.504,
+    "robustScore": 61,
     "coverage": 100,
     "unsupported": []
    }
@@ -33244,14 +33356,14 @@
    "virtualBattle": {
     "templateId": "official-1321",
     "battles": 720,
-    "winRate": 26.9,
-    "meanMargin": -0.259,
+    "winRate": 26,
+    "meanMargin": -0.251,
     "interval90": [
-     -0.713,
-     0.537
+     -0.707,
+     0.523
     ],
-    "cvar10": -0.742,
-    "robustScore": 26.6,
+    "cvar10": -0.741,
+    "robustScore": 26.3,
     "coverage": 100,
     "unsupported": []
    }
@@ -33890,14 +34002,14 @@
    "virtualBattle": {
     "templateId": "official-1327",
     "battles": 720,
-    "winRate": 43.8,
-    "meanMargin": -0.045,
+    "winRate": 42.7,
+    "meanMargin": -0.05,
     "interval90": [
-     -0.665,
+     -0.664,
      0.652
     ],
-    "cvar10": -0.695,
-    "robustScore": 39,
+    "cvar10": -0.688,
+    "robustScore": 38.5,
     "coverage": 100,
     "unsupported": []
    }
@@ -34635,14 +34747,14 @@
    "virtualBattle": {
     "templateId": "official-1338",
     "battles": 720,
-    "winRate": 85.3,
-    "meanMargin": 0.415,
+    "winRate": 84.8,
+    "meanMargin": 0.404,
     "interval90": [
-     -0.31,
+     -0.329,
      0.791
     ],
-    "cvar10": -0.331,
-    "robustScore": 71.3,
+    "cvar10": -0.367,
+    "robustScore": 70.5,
     "coverage": 100,
     "unsupported": []
    }
@@ -35248,7 +35360,7 @@
     "templateId": "official-1347",
     "battles": 720,
     "winRate": 25.3,
-    "meanMargin": -0.331,
+    "meanMargin": -0.333,
     "interval90": [
      -0.803,
      0.566
@@ -35955,14 +36067,14 @@
    "virtualBattle": {
     "templateId": "official-1355",
     "battles": 720,
-    "winRate": 87.8,
-    "meanMargin": 0.444,
+    "winRate": 86.5,
+    "meanMargin": 0.429,
     "interval90": [
-     -0.277,
+     -0.364,
      0.867
     ],
-    "cvar10": -0.369,
-    "robustScore": 72.6,
+    "cvar10": -0.403,
+    "robustScore": 71.4,
     "coverage": 100,
     "unsupported": []
    }
@@ -36636,13 +36748,13 @@
     "templateId": "official-1376",
     "battles": 720,
     "winRate": 22.2,
-    "meanMargin": -0.336,
+    "meanMargin": -0.341,
     "interval90": [
-     -0.772,
+     -0.775,
      0.452
     ],
-    "cvar10": -0.803,
-    "robustScore": 22.5,
+    "cvar10": -0.809,
+    "robustScore": 22.3,
     "coverage": 100,
     "unsupported": []
    }
@@ -37291,14 +37403,14 @@
    "virtualBattle": {
     "templateId": "official-1271",
     "battles": 720,
-    "winRate": 54,
-    "meanMargin": 0.074,
+    "winRate": 52.3,
+    "meanMargin": 0.066,
     "interval90": [
-     -0.524,
+     -0.523,
      0.667
     ],
-    "cvar10": -0.57,
-    "robustScore": 47.4,
+    "cvar10": -0.571,
+    "robustScore": 46.4,
     "coverage": 100,
     "unsupported": []
    }
@@ -37918,12 +38030,12 @@
     "templateId": "official-1323",
     "battles": 720,
     "winRate": 0.4,
-    "meanMargin": -0.716,
+    "meanMargin": -0.717,
     "interval90": [
      -0.913,
      -0.371
     ],
-    "cvar10": -0.927,
+    "cvar10": -0.928,
     "robustScore": 4.5,
     "coverage": 100,
     "unsupported": []
@@ -38502,14 +38614,14 @@
    "virtualBattle": {
     "templateId": "official-1402",
     "battles": 720,
-    "winRate": 54.2,
-    "meanMargin": 0.1,
+    "winRate": 52.2,
+    "meanMargin": 0.08,
     "interval90": [
-     -0.539,
+     -0.549,
      0.722
     ],
-    "cvar10": -0.551,
-    "robustScore": 48,
+    "cvar10": -0.561,
+    "robustScore": 46.6,
     "coverage": 100,
     "unsupported": []
    }
@@ -39086,14 +39198,14 @@
    "virtualBattle": {
     "templateId": "official-4529",
     "battles": 720,
-    "winRate": 46.3,
-    "meanMargin": -0.065,
+    "winRate": 43.3,
+    "meanMargin": -0.075,
     "interval90": [
-     -0.734,
+     -0.735,
      0.633
     ],
-    "cvar10": -0.736,
-    "robustScore": 39.8,
+    "cvar10": -0.742,
+    "robustScore": 38,
     "coverage": 100,
     "unsupported": []
    }
@@ -39668,13 +39780,13 @@
     "templateId": "official-4532",
     "battles": 720,
     "winRate": 11.2,
-    "meanMargin": -0.49,
+    "meanMargin": -0.494,
     "interval90": [
      -0.851,
      0.291
     ],
-    "cvar10": -0.867,
-    "robustScore": 13.9,
+    "cvar10": -0.871,
+    "robustScore": 13.8,
     "coverage": 100,
     "unsupported": []
    }
@@ -40244,14 +40356,14 @@
    "virtualBattle": {
     "templateId": "official-4533",
     "battles": 720,
-    "winRate": 65.8,
-    "meanMargin": 0.159,
+    "winRate": 61.7,
+    "meanMargin": 0.141,
     "interval90": [
-     -0.444,
+     -0.464,
      0.74
     ],
-    "cvar10": -0.465,
-    "robustScore": 56,
+    "cvar10": -0.479,
+    "robustScore": 53.4,
     "coverage": 100,
     "unsupported": []
    }
@@ -40915,14 +41027,14 @@
    "virtualBattle": {
     "templateId": "official-4534",
     "battles": 720,
-    "winRate": 70.1,
-    "meanMargin": 0.186,
+    "winRate": 77.8,
+    "meanMargin": 0.261,
     "interval90": [
-     -0.643,
-     0.779
+     -0.509,
+     0.814
     ],
-    "cvar10": -0.684,
-    "robustScore": 56.6,
+    "cvar10": -0.56,
+    "robustScore": 62.9,
     "coverage": 100,
     "unsupported": []
    }
@@ -41439,13 +41551,13 @@
     "templateId": "official-4540",
     "battles": 720,
     "winRate": 12.2,
-    "meanMargin": -0.428,
+    "meanMargin": -0.436,
     "interval90": [
-     -0.826,
+     -0.84,
      0.351
     ],
-    "cvar10": -0.854,
-    "robustScore": 15.3,
+    "cvar10": -0.862,
+    "robustScore": 15.2,
     "coverage": 100,
     "unsupported": []
    }
@@ -42148,14 +42260,14 @@
    "virtualBattle": {
     "templateId": "official-4544",
     "battles": 720,
-    "winRate": 55.7,
-    "meanMargin": 0.084,
+    "winRate": 54.3,
+    "meanMargin": 0.072,
     "interval90": [
      -0.561,
      0.644
     ],
-    "cvar10": -0.617,
-    "robustScore": 48,
+    "cvar10": -0.619,
+    "robustScore": 47.1,
     "coverage": 100,
     "unsupported": []
    }
@@ -42770,14 +42882,14 @@
    "virtualBattle": {
     "templateId": "official-4545",
     "battles": 720,
-    "winRate": 41.9,
-    "meanMargin": -0.041,
+    "winRate": 43.8,
+    "meanMargin": -0.032,
     "interval90": [
-     -0.673,
-     0.621
+     -0.658,
+     0.646
     ],
-    "cvar10": -0.704,
-    "robustScore": 38,
+    "cvar10": -0.692,
+    "robustScore": 39.2,
     "coverage": 100,
     "unsupported": []
    }
@@ -43382,14 +43494,14 @@
    "virtualBattle": {
     "templateId": "official-4546",
     "battles": 720,
-    "winRate": 74.7,
-    "meanMargin": 0.289,
+    "winRate": 73.1,
+    "meanMargin": 0.278,
     "interval90": [
-     -0.242,
+     -0.244,
      0.729
     ],
-    "cvar10": -0.336,
-    "robustScore": 63.8,
+    "cvar10": -0.341,
+    "robustScore": 62.8,
     "coverage": 100,
     "unsupported": []
    }
@@ -43973,14 +44085,14 @@
    "virtualBattle": {
     "templateId": "official-4548",
     "battles": 720,
-    "winRate": 90.6,
-    "meanMargin": 0.469,
+    "winRate": 89.8,
+    "meanMargin": 0.455,
     "interval90": [
-     -0.149,
+     -0.153,
      0.879
     ],
-    "cvar10": -0.216,
-    "robustScore": 76,
+    "cvar10": -0.238,
+    "robustScore": 75.2,
     "coverage": 100,
     "unsupported": []
    }
@@ -44607,14 +44719,14 @@
    "virtualBattle": {
     "templateId": "official-4576",
     "battles": 720,
-    "winRate": 82.6,
-    "meanMargin": 0.366,
+    "winRate": 81.5,
+    "meanMargin": 0.355,
     "interval90": [
      -0.203,
      0.825
     ],
-    "cvar10": -0.257,
-    "robustScore": 70,
+    "cvar10": -0.258,
+    "robustScore": 69.2,
     "coverage": 100,
     "unsupported": []
    }
@@ -47733,7 +47845,7 @@
   }
  },
  "virtualBattle": {
-  "generated": "2026-07-16T17:15:47.222Z",
+  "generated": "2026-07-16T17:48:38.528Z",
   "totalBattles": 21960,
   "averageCoverage": 98.4,
   "engine": {
