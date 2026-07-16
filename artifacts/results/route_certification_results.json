@@ -1,6 +1,6 @@
 {
- "version": "17.17.6b-S18",
- "generated": "2026-07-12",
+ "version": "17.17.7-S18",
+ "generated": "2026-07-17",
  "sampleSize": 5000,
  "seed": 20260712,
  "methodology": {
@@ -24,7 +24,7 @@
      "category": "英雄专属",
      "templateId": "meta-完美的日炎耀斑-蕾欧娜-0",
      "templateName": "完美的日炎耀斑蕾欧娜机制路线",
-     "conditionScore": 96.7,
+     "conditionScore": 95.9,
      "fitGain": 0,
      "evidenceLevel": "L2.5 模型扰动稳健",
      "metrics": {
@@ -34,11 +34,11 @@
        138.8
       ],
       "cvar10": 117.6,
-      "top1Rate": 77,
-      "top5Rate": 98.8,
-      "topQuartileRate": 95.9,
+      "top1Rate": 76.3,
+      "top5Rate": 98.2,
+      "topQuartileRate": 94.2,
       "failureRate": 0,
-      "robustness": 96.7
+      "robustness": 95.9
      },
      "gates": [
       {
@@ -58,7 +58,7 @@
      "category": "英雄专属",
      "templateId": "meta-咒能高涨-伊泽瑞尔-8",
      "templateName": "咒能高涨伊泽瑞尔机制路线",
-     "conditionScore": 66.7,
+     "conditionScore": 63.4,
      "fitGain": 0,
      "evidenceLevel": "L2 模型候选",
      "metrics": {
@@ -69,10 +69,10 @@
       ],
       "cvar10": 110.9,
       "top1Rate": 2.1,
-      "top5Rate": 84.2,
-      "topQuartileRate": 38.3,
+      "top5Rate": 74,
+      "topQuartileRate": 35.2,
       "failureRate": 0.1,
-      "robustness": 66.7
+      "robustness": 63.4
      },
      "gates": [
       {
@@ -92,7 +92,7 @@
      "category": "英雄专属",
      "templateId": "meta-姐妹-金克丝-7",
      "templateName": "姐妹金克丝机制路线",
-     "conditionScore": 63.9,
+     "conditionScore": 59.5,
      "fitGain": 0,
      "evidenceLevel": "L2 模型候选",
      "metrics": {
@@ -102,11 +102,11 @@
        130.6
       ],
       "cvar10": 110,
-      "top1Rate": 9.2,
-      "top5Rate": 58,
-      "topQuartileRate": 45.9,
+      "top1Rate": 8.8,
+      "top5Rate": 54.6,
+      "topQuartileRate": 36.5,
       "failureRate": 0.3,
-      "robustness": 63.9
+      "robustness": 59.5
      },
      "gates": [
       {
@@ -126,7 +126,7 @@
      "category": "英雄专属",
      "templateId": "meta-德莱文联盟-德莱文-2",
      "templateName": "德莱文联盟德莱文机制路线",
-     "conditionScore": 61,
+     "conditionScore": 58.5,
      "fitGain": 0,
      "evidenceLevel": "L2 模型候选",
      "metrics": {
@@ -136,11 +136,11 @@
        130
       ],
       "cvar10": 109.4,
-      "top1Rate": 8.4,
-      "top5Rate": 55.1,
-      "topQuartileRate": 41.1,
+      "top1Rate": 7.3,
+      "top5Rate": 52.1,
+      "topQuartileRate": 36.4,
       "failureRate": 0.5,
-      "robustness": 61
+      "robustness": 58.5
      },
      "gates": [
       {
@@ -160,7 +160,7 @@
      "category": "英雄专属",
      "templateId": "meta-进入夜晚-薇恩-3",
      "templateName": "进入夜晚薇恩机制路线",
-     "conditionScore": 60.9,
+     "conditionScore": 57.5,
      "fitGain": 0,
      "evidenceLevel": "L2 模型候选",
      "metrics": {
@@ -171,10 +171,10 @@
       ],
       "cvar10": 109.2,
       "top1Rate": 1.4,
-      "top5Rate": 64.6,
-      "topQuartileRate": 36.4,
+      "top5Rate": 54.3,
+      "topQuartileRate": 32.9,
       "failureRate": 0.4,
-      "robustness": 60.9
+      "robustness": 57.5
      },
      "gates": [
       {
@@ -192,9 +192,43 @@
     },
     {
      "category": "英雄专属",
+     "templateId": "meta-旺盛精力-悠米-6",
+     "templateName": "旺盛精力悠米机制路线",
+     "conditionScore": 49,
+     "fitGain": 0,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "metrics": {
+      "meanUtility": 117.4,
+      "interval95": [
+       107,
+       127.9
+      ],
+      "cvar10": 108,
+      "top1Rate": 2,
+      "top5Rate": 41.3,
+      "topQuartileRate": 20.4,
+      "failureRate": 1,
+      "robustness": 49
+     },
+     "gates": [
+      {
+       "kind": "符文",
+       "value": "旺盛精力"
+      },
+      {
+       "kind": "棋子",
+       "value": "悠米"
+      }
+     ],
+     "reasons": [
+      "专属机制按有/无强化反事实差分生成"
+     ]
+    },
+    {
+     "category": "英雄专属",
      "templateId": "meta-适应性防守-卡蜜尔-4",
      "templateName": "适应性防守卡蜜尔机制路线",
-     "conditionScore": 51.5,
+     "conditionScore": 47.4,
      "fitGain": 0,
      "evidenceLevel": "L1.5 高敏感假设",
      "metrics": {
@@ -205,10 +239,10 @@
       ],
       "cvar10": 108.4,
       "top1Rate": 1.2,
-      "top5Rate": 59.7,
-      "topQuartileRate": 16.7,
+      "top5Rate": 44.2,
+      "topQuartileRate": 14.3,
       "failureRate": 0.8,
-      "robustness": 51.5
+      "robustness": 47.4
      },
      "gates": [
       {
@@ -228,7 +262,7 @@
      "category": "英雄专属",
      "templateId": "meta-浪客精神-亚索-5",
      "templateName": "浪客精神亚索机制路线",
-     "conditionScore": 46.5,
+     "conditionScore": 43.2,
      "fitGain": 0,
      "evidenceLevel": "L1.5 高敏感假设",
      "metrics": {
@@ -239,10 +273,10 @@
       ],
       "cvar10": 108,
       "top1Rate": 0.7,
-      "top5Rate": 46.2,
-      "topQuartileRate": 11.9,
+      "top5Rate": 32.9,
+      "topQuartileRate": 10.2,
       "failureRate": 1,
-      "robustness": 46.5
+      "robustness": 43.2
      },
      "gates": [
       {
@@ -262,7 +296,7 @@
      "category": "英雄专属",
      "templateId": "meta-评级与交火-莎弥拉-1",
      "templateName": "评级与交火莎弥拉机制路线",
-     "conditionScore": 42.1,
+     "conditionScore": 40.3,
      "fitGain": 0,
      "evidenceLevel": "L1.5 高敏感假设",
      "metrics": {
@@ -273,10 +307,10 @@
       ],
       "cvar10": 105.1,
       "top1Rate": 0.2,
-      "top5Rate": 33.2,
-      "topQuartileRate": 13.7,
+      "top5Rate": 27.7,
+      "topQuartileRate": 12,
       "failureRate": 4.3,
-      "robustness": 42.1
+      "robustness": 40.3
      },
      "gates": [
       {
@@ -294,32 +328,32 @@
     },
     {
      "category": "英雄专属",
-     "templateId": "meta-旺盛精力-悠米-6",
-     "templateName": "旺盛精力悠米机制路线",
-     "conditionScore": 18.9,
+     "templateId": "official-4576",
+     "templateName": "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
+     "conditionScore": 38.4,
      "fitGain": 0,
      "evidenceLevel": "L1.5 高敏感假设",
      "metrics": {
-      "meanUtility": 107.5,
+      "meanUtility": 115.8,
       "interval95": [
-       97.1,
-       118
+       105.1,
+       126.8
       ],
-      "cvar10": 98.2,
-      "top1Rate": 0,
-      "top5Rate": 0.3,
-      "topQuartileRate": 0,
-      "failureRate": 32.5,
-      "robustness": 18.9
+      "cvar10": 106.2,
+      "top1Rate": 0.1,
+      "top5Rate": 20.7,
+      "topQuartileRate": 7.9,
+      "failureRate": 2.5,
+      "robustness": 38.4
      },
      "gates": [
       {
        "kind": "符文",
-       "value": "旺盛精力"
+       "value": "姐妹"
       },
       {
        "kind": "棋子",
-       "value": "悠米"
+       "value": "金克丝+蔚"
       }
      ],
      "reasons": [
@@ -330,24 +364,24 @@
    "战力": [
     {
      "category": "战力",
-     "templateId": "official-1406",
-     "templateName": "情报特工怪兽卡莎4情报特工3怪兽",
-     "conditionScore": 94,
-     "conditionLift": 7.5,
+     "templateId": "official-1378",
+     "templateName": "95秘卫枪手3秘书卫士2福牛守护者",
+     "conditionScore": 94.2,
+     "conditionLift": 7.3,
      "fitGain": 18.8,
      "evidenceLevel": "L2.5 模型扰动稳健",
      "metrics": {
-      "meanUtility": 123.8,
+      "meanUtility": 124.1,
       "interval95": [
-       113.2,
-       134.4
+       112.5,
+       135.4
       ],
-      "cvar10": 114.3,
-      "top1Rate": 18.6,
-      "top5Rate": 62.3,
-      "topQuartileRate": 93.6,
+      "cvar10": 113.6,
+      "top1Rate": 14.4,
+      "top5Rate": 67.5,
+      "topQuartileRate": 93,
       "failureRate": 0,
-      "robustness": 86.5
+      "robustness": 86.9
      },
      "gates": [
       {
@@ -362,24 +396,24 @@
     },
     {
      "category": "战力",
-     "templateId": "official-1378",
-     "templateName": "95秘卫枪手3秘书卫士2福牛守护者",
-     "conditionScore": 94,
-     "conditionLift": 7.4,
+     "templateId": "official-1406",
+     "templateName": "情报特工怪兽卡莎4情报特工3怪兽",
+     "conditionScore": 93.9,
+     "conditionLift": 7.6,
      "fitGain": 18.8,
      "evidenceLevel": "L2.5 模型扰动稳健",
      "metrics": {
-      "meanUtility": 124,
+      "meanUtility": 123.8,
       "interval95": [
-       112.4,
-       135.3
+       113.2,
+       134.4
       ],
-      "cvar10": 113.5,
-      "top1Rate": 13.9,
-      "top5Rate": 67.1,
-      "topQuartileRate": 92.9,
+      "cvar10": 114.3,
+      "top1Rate": 18.3,
+      "top5Rate": 61.8,
+      "topQuartileRate": 93.5,
       "failureRate": 0,
-      "robustness": 86.6
+      "robustness": 86.3
      },
      "gates": [
       {
@@ -396,8 +430,8 @@
      "category": "战力",
      "templateId": "official-1338",
      "templateName": "福牛混沌九五4福牛守护者3混沌战士2吉祥物",
-     "conditionScore": 93,
-     "conditionLift": 8.8,
+     "conditionScore": 92.9,
+     "conditionLift": 8.9,
      "fitGain": 18.8,
      "evidenceLevel": "L2.5 模型扰动稳健",
      "metrics": {
@@ -407,11 +441,11 @@
        134
       ],
       "cvar10": 113,
-      "top1Rate": 14,
-      "top5Rate": 59.3,
-      "topQuartileRate": 91.3,
+      "top1Rate": 13.7,
+      "top5Rate": 58.7,
+      "topQuartileRate": 91.1,
       "failureRate": 0.1,
-      "robustness": 84.2
+      "robustness": 84
      },
      "gates": [
       {
@@ -428,22 +462,22 @@
      "category": "战力",
      "templateId": "official-1269",
      "templateName": "九五平民枪手3平民英雄2枪手2吉祥物",
-     "conditionScore": 85,
-     "conditionLift": 18.7,
+     "conditionScore": 85.2,
+     "conditionLift": 18.6,
      "fitGain": 18.8,
      "evidenceLevel": "L2.5 模型扰动稳健",
      "metrics": {
-      "meanUtility": 119.4,
+      "meanUtility": 119.5,
       "interval95": [
-       108.3,
-       130.7
+       108.4,
+       130.8
       ],
-      "cvar10": 109.3,
-      "top1Rate": 2.5,
-      "top5Rate": 22.9,
-      "topQuartileRate": 70.8,
+      "cvar10": 109.4,
+      "top1Rate": 2.6,
+      "top5Rate": 23.1,
+      "topQuartileRate": 71.2,
       "failureRate": 0.5,
-      "robustness": 66.3
+      "robustness": 66.6
      },
      "gates": [
       {
@@ -460,22 +494,22 @@
      "category": "战力",
      "templateId": "official-1402",
      "templateName": "登神决斗天使6决斗大师3源计划",
-     "conditionScore": 84.2,
-     "conditionLift": 14.2,
+     "conditionScore": 84.3,
+     "conditionLift": 14,
      "fitGain": 16,
      "evidenceLevel": "L2.5 模型扰动稳健",
      "metrics": {
-      "meanUtility": 120.1,
+      "meanUtility": 120.2,
       "interval95": [
-       108.1,
-       132.2
+       108.2,
+       132.3
       ],
-      "cvar10": 109.3,
-      "top1Rate": 5.1,
-      "top5Rate": 30.9,
-      "topQuartileRate": 76,
+      "cvar10": 109.4,
+      "top1Rate": 5.2,
+      "top5Rate": 31.3,
+      "topQuartileRate": 76.4,
       "failureRate": 0.5,
-      "robustness": 70
+      "robustness": 70.3
      },
      "gates": [
       {
@@ -492,22 +526,22 @@
      "category": "战力",
      "templateId": "official-1376",
      "templateName": "超英露露3超级英雄5吉祥物2爱心使者",
-     "conditionScore": 79.2,
-     "conditionLift": 25.9,
+     "conditionScore": 79.4,
+     "conditionLift": 25.7,
      "fitGain": 18.8,
      "evidenceLevel": "L2 模型候选",
      "metrics": {
-      "meanUtility": 116.7,
+      "meanUtility": 116.8,
       "interval95": [
-       105.9,
-       128.4
+       106,
+       128.5
       ],
-      "cvar10": 106.8,
+      "cvar10": 106.9,
       "top1Rate": 1.4,
-      "top5Rate": 12.9,
-      "topQuartileRate": 47.7,
-      "failureRate": 1.8,
-      "robustness": 53.3
+      "top5Rate": 13.1,
+      "topQuartileRate": 48.3,
+      "failureRate": 1.6,
+      "robustness": 53.7
      },
      "gates": [
       {
@@ -525,7 +559,7 @@
      "templateId": "official-1256",
      "templateName": "超英伊泽瑞尔4情报特工3超级英雄2斗士",
      "conditionScore": 78.1,
-     "conditionLift": 26,
+     "conditionLift": 26.1,
      "fitGain": 18.4,
      "evidenceLevel": "L2 模型候选",
      "metrics": {
@@ -535,11 +569,11 @@
        127.3
       ],
       "cvar10": 106.9,
-      "top1Rate": 2.1,
-      "top5Rate": 11.3,
-      "topQuartileRate": 45.5,
+      "top1Rate": 1.9,
+      "top5Rate": 11.1,
+      "topQuartileRate": 45.2,
       "failureRate": 1.8,
-      "robustness": 52.1
+      "robustness": 52
      },
      "gates": [
       {
@@ -557,7 +591,7 @@
      "templateId": "official-1374",
      "templateName": "平民怪兽枪3平民英雄2枪手",
      "conditionScore": 76.3,
-     "conditionLift": 38.7,
+     "conditionLift": 38.8,
      "fitGain": 21,
      "evidenceLevel": "L1.5 高敏感假设",
      "metrics": {
@@ -569,9 +603,9 @@
       "cvar10": 102.8,
       "top1Rate": 0.1,
       "top5Rate": 1.4,
-      "topQuartileRate": 24.2,
+      "topQuartileRate": 23.9,
       "failureRate": 8.1,
-      "robustness": 37.6
+      "robustness": 37.5
      },
      "gates": [
       {
@@ -589,7 +623,7 @@
      "templateId": "official-1290",
      "templateName": "星守灵能塔利娅5星之守护者4灵能使",
      "conditionScore": 75.9,
-     "conditionLift": 28.6,
+     "conditionLift": 28.7,
      "fitGain": 18.4,
      "evidenceLevel": "L2 模型候选",
      "metrics": {
@@ -600,10 +634,10 @@
       ],
       "cvar10": 104.9,
       "top1Rate": 0.3,
-      "top5Rate": 7.1,
-      "topQuartileRate": 40.1,
+      "top5Rate": 6.9,
+      "topQuartileRate": 39.9,
       "failureRate": 4.2,
-      "robustness": 47.3
+      "robustness": 47.2
      },
      "gates": [
       {
@@ -620,7 +654,7 @@
      "category": "战力",
      "templateId": "official-1379",
      "templateName": "怪兽厄运小姐8怪兽1精英战士",
-     "conditionScore": 75.8,
+     "conditionScore": 75.6,
      "conditionLift": 6.1,
      "fitGain": 6.8,
      "evidenceLevel": "L2.5 模型扰动稳健",
@@ -631,11 +665,11 @@
        130.5
       ],
       "cvar10": 109.4,
-      "top1Rate": 3.6,
-      "top5Rate": 25,
-      "topQuartileRate": 77.9,
+      "top1Rate": 3.3,
+      "top5Rate": 24.5,
+      "topQuartileRate": 77.6,
       "failureRate": 0.4,
-      "robustness": 69.7
+      "robustness": 69.5
      },
      "gates": [
       {
@@ -652,7 +686,7 @@
      "templateId": "official-1412",
      "templateName": "超英猫咪3超级英雄3星之守护者2爱心使者",
      "conditionScore": 74.7,
-     "conditionLift": 30.1,
+     "conditionLift": 30.2,
      "fitGain": 18.4,
      "evidenceLevel": "L2 模型候选",
      "metrics": {
@@ -663,10 +697,10 @@
       ],
       "cvar10": 104.7,
       "top1Rate": 0.3,
-      "top5Rate": 5.3,
-      "topQuartileRate": 34.6,
+      "top5Rate": 5.1,
+      "topQuartileRate": 34.5,
       "failureRate": 4.5,
-      "robustness": 44.6
+      "robustness": 44.5
      },
      "gates": [
       {
@@ -683,8 +717,8 @@
      "category": "战力",
      "templateId": "official-4548",
      "templateName": "决斗剑姬6决斗大师2福牛守护者",
-     "conditionScore": 73.5,
-     "conditionLift": 23.7,
+     "conditionScore": 73.4,
+     "conditionLift": 23.8,
      "fitGain": 16,
      "evidenceLevel": "L2 模型候选",
      "metrics": {
@@ -695,10 +729,10 @@
       ],
       "cvar10": 106.5,
       "top1Rate": 0.8,
-      "top5Rate": 7.7,
-      "topQuartileRate": 42.2,
+      "top5Rate": 7.5,
+      "topQuartileRate": 41.8,
       "failureRate": 2.1,
-      "robustness": 49.8
+      "robustness": 49.6
      },
      "gates": [
       {
@@ -713,9 +747,41 @@
     },
     {
      "category": "战力",
+     "templateId": "official-4576",
+     "templateName": "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
+     "conditionScore": 71.9,
+     "conditionLift": 33.5,
+     "fitGain": 18.4,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "metrics": {
+      "meanUtility": 115.8,
+      "interval95": [
+       105.1,
+       126.8
+      ],
+      "cvar10": 106.2,
+      "top1Rate": 0.1,
+      "top5Rate": 20.7,
+      "topQuartileRate": 7.9,
+      "failureRate": 2.5,
+      "robustness": 38.4
+     },
+     "gates": [
+      {
+       "kind": "符文",
+       "value": "公理圆弧II"
+      }
+     ],
+     "reasons": [
+      "回蓝命中法系施法轴",
+      "文本数值折算+8.4适配"
+     ]
+    },
+    {
+     "category": "战力",
      "templateId": "official-1576",
      "templateName": "84机甲怪兽双子星3战斗机甲2护卫怪兽",
-     "conditionScore": 70.7,
+     "conditionScore": 70.6,
      "conditionLift": 36.7,
      "fitGain": 18.8,
      "evidenceLevel": "L1.5 高敏感假设",
@@ -728,9 +794,9 @@
       "cvar10": 102.1,
       "top1Rate": 0.1,
       "top5Rate": 1.1,
-      "topQuartileRate": 17.3,
+      "topQuartileRate": 17,
       "failureRate": 9.7,
-      "robustness": 34
+      "robustness": 33.9
      },
      "gates": [
       {
@@ -760,7 +826,7 @@
       "cvar10": 98.1,
       "top1Rate": 0,
       "top5Rate": 0.1,
-      "topQuartileRate": 2.6,
+      "topQuartileRate": 2.5,
       "failureRate": 33.3,
       "robustness": 19.6
      },
@@ -780,7 +846,7 @@
      "templateId": "official-4534",
      "templateName": "6斗拉面贾克斯6斗士3战斗机甲3护卫",
      "conditionScore": 69.1,
-     "conditionLift": 38.6,
+     "conditionLift": 38.7,
      "fitGain": 18.8,
      "evidenceLevel": "L1.5 高敏感假设",
      "metrics": {
@@ -792,9 +858,9 @@
       "cvar10": 102.2,
       "top1Rate": 0,
       "top5Rate": 0.1,
-      "topQuartileRate": 9.8,
+      "topQuartileRate": 9.7,
       "failureRate": 11.3,
-      "robustness": 30.5
+      "robustness": 30.4
      },
      "gates": [
       {
@@ -812,7 +878,7 @@
      "templateId": "manual-mascot-heart",
      "templateName": "吉祥物爱心 -> 猫咪/超英法系",
      "conditionScore": 69.1,
-     "conditionLift": 36.7,
+     "conditionLift": 36.8,
      "fitGain": 18.4,
      "evidenceLevel": "L1.5 高敏感假设",
      "metrics": {
@@ -824,9 +890,9 @@
       "cvar10": 101.7,
       "top1Rate": 0.2,
       "top5Rate": 1.7,
-      "topQuartileRate": 15.6,
+      "topQuartileRate": 15.4,
       "failureRate": 12.9,
-      "robustness": 32.4
+      "robustness": 32.3
      },
      "gates": [
       {
@@ -843,22 +909,22 @@
      "category": "战力",
      "templateId": "official-4524",
      "templateName": "无情连打贾克斯5战队机甲4斗士2护卫",
-     "conditionScore": 68.9,
-     "conditionLift": 27.8,
+     "conditionScore": 69,
+     "conditionLift": 27.7,
      "fitGain": 16,
      "evidenceLevel": "L1.5 高敏感假设",
      "metrics": {
-      "meanUtility": 114.4,
+      "meanUtility": 114.5,
       "interval95": [
-       104.7,
-       124.5
+       104.8,
+       124.6
       ],
-      "cvar10": 105.6,
+      "cvar10": 105.7,
       "top1Rate": 0,
       "top5Rate": 2.4,
-      "topQuartileRate": 25,
-      "failureRate": 2.8,
-      "robustness": 41.1
+      "topQuartileRate": 25.3,
+      "failureRate": 2.7,
+      "robustness": 41.3
      },
      "gates": [
       {
@@ -875,22 +941,22 @@
      "category": "战力",
      "templateId": "official-4533",
      "templateName": "超英赛娜3平民英雄3超级英雄2斗士",
-     "conditionScore": 67.4,
-     "conditionLift": 53.3,
+     "conditionScore": 67.6,
+     "conditionLift": 53,
      "fitGain": 21,
      "evidenceLevel": "L1.5 高敏感假设",
      "metrics": {
-      "meanUtility": 105.6,
+      "meanUtility": 105.8,
       "interval95": [
-       94.9,
-       116.4
+       95.1,
+       116.6
       ],
-      "cvar10": 95.8,
+      "cvar10": 96,
       "top1Rate": 0,
       "top5Rate": 0,
       "topQuartileRate": 0.1,
-      "failureRate": 45.9,
-      "robustness": 14.1
+      "failureRate": 44.3,
+      "robustness": 14.6
      },
      "gates": [
       {
@@ -907,22 +973,22 @@
      "category": "战力",
      "templateId": "official-1567",
      "templateName": "黑客贾克斯3战斗机甲2黑客2斗士",
-     "conditionScore": 66.1,
-     "conditionLift": 25.7,
+     "conditionScore": 66.3,
+     "conditionLift": 25.6,
      "fitGain": 14.6,
      "evidenceLevel": "L1.5 高敏感假设",
      "metrics": {
-      "meanUtility": 114.4,
+      "meanUtility": 114.5,
       "interval95": [
-       104.7,
-       124.4
+       104.8,
+       124.5
       ],
-      "cvar10": 105.7,
+      "cvar10": 105.8,
       "top1Rate": 0.1,
       "top5Rate": 2.5,
-      "topQuartileRate": 23.1,
-      "failureRate": 2.9,
-      "robustness": 40.4
+      "topQuartileRate": 23.6,
+      "failureRate": 2.8,
+      "robustness": 40.7
      },
      "gates": [
       {
@@ -1048,41 +1114,9 @@
       "cvar10": 101.1,
       "top1Rate": 0,
       "top5Rate": 0.3,
-      "topQuartileRate": 8.5,
+      "topQuartileRate": 8.3,
       "failureRate": 15.6,
       "robustness": 28.2
-     },
-     "gates": [
-      {
-       "kind": "符文",
-       "value": "药剂师 II"
-      }
-     ],
-     "reasons": [
-      "前排支持持续战触发",
-      "文本数值折算+7适配"
-     ]
-    },
-    {
-     "category": "战力",
-     "templateId": "official-4526",
-     "templateName": "决斗薇恩6决斗大师3源计划激光特工",
-     "conditionScore": 62,
-     "conditionLift": 34.1,
-     "fitGain": 16,
-     "evidenceLevel": "L1.5 高敏感假设",
-     "metrics": {
-      "meanUtility": 111.2,
-      "interval95": [
-       100.3,
-       122
-      ],
-      "cvar10": 101.6,
-      "top1Rate": 0,
-      "top5Rate": 0.2,
-      "topQuartileRate": 5.9,
-      "failureRate": 13.9,
-      "robustness": 27.9
      },
      "gates": [
       {
@@ -1101,22 +1135,22 @@
      "category": "经济",
      "templateId": "official-1378",
      "templateName": "95秘卫枪手3秘书卫士2福牛守护者",
-     "conditionScore": 95.3,
-     "conditionLift": 8.7,
+     "conditionScore": 95.4,
+     "conditionLift": 8.5,
      "fitGain": 22,
      "evidenceLevel": "L2.5 模型扰动稳健",
      "metrics": {
-      "meanUtility": 124,
+      "meanUtility": 124.1,
       "interval95": [
-       112.4,
-       135.3
+       112.5,
+       135.4
       ],
-      "cvar10": 113.5,
-      "top1Rate": 13.9,
-      "top5Rate": 67.1,
-      "topQuartileRate": 92.9,
+      "cvar10": 113.6,
+      "top1Rate": 14.4,
+      "top5Rate": 67.5,
+      "topQuartileRate": 93,
       "failureRate": 0,
-      "robustness": 86.6
+      "robustness": 86.9
      },
      "gates": [
       {
@@ -1135,21 +1169,21 @@
      "templateId": "official-1571",
      "templateName": "机甲秘术枪手3战斗机甲2枪手2吉祥物",
      "conditionScore": 95,
-     "conditionLift": 9.3,
+     "conditionLift": 9.2,
      "fitGain": 22,
      "evidenceLevel": "L2.5 模型扰动稳健",
      "metrics": {
-      "meanUtility": 123.7,
+      "meanUtility": 123.8,
       "interval95": [
-       112.2,
-       135.5
+       112.3,
+       135.6
       ],
-      "cvar10": 113.2,
-      "top1Rate": 23.8,
-      "top5Rate": 60.5,
-      "topQuartileRate": 94.1,
+      "cvar10": 113.3,
+      "top1Rate": 24.1,
+      "top5Rate": 60.7,
+      "topQuartileRate": 94.2,
       "failureRate": 0,
-      "robustness": 85.7
+      "robustness": 85.8
      },
      "gates": [
       {
@@ -1167,8 +1201,8 @@
      "category": "经济",
      "templateId": "official-1338",
      "templateName": "福牛混沌九五4福牛守护者3混沌战士2吉祥物",
-     "conditionScore": 94.5,
-     "conditionLift": 10.3,
+     "conditionScore": 94.4,
+     "conditionLift": 10.4,
      "fitGain": 22,
      "evidenceLevel": "L2.5 模型扰动稳健",
      "metrics": {
@@ -1178,11 +1212,11 @@
        134
       ],
       "cvar10": 113,
-      "top1Rate": 14,
-      "top5Rate": 59.3,
-      "topQuartileRate": 91.3,
+      "top1Rate": 13.7,
+      "top5Rate": 58.7,
+      "topQuartileRate": 91.1,
       "failureRate": 0.1,
-      "robustness": 84.2
+      "robustness": 84
      },
      "gates": [
       {
@@ -1200,8 +1234,8 @@
      "category": "经济",
      "templateId": "official-1406",
      "templateName": "情报特工怪兽卡莎4情报特工3怪兽",
-     "conditionScore": 93,
-     "conditionLift": 6.5,
+     "conditionScore": 92.9,
+     "conditionLift": 6.6,
      "fitGain": 16.4,
      "evidenceLevel": "L2.5 模型扰动稳健",
      "metrics": {
@@ -1211,11 +1245,11 @@
        134.4
       ],
       "cvar10": 114.3,
-      "top1Rate": 18.6,
-      "top5Rate": 62.3,
-      "topQuartileRate": 93.6,
+      "top1Rate": 18.3,
+      "top5Rate": 61.8,
+      "topQuartileRate": 93.5,
       "failureRate": 0,
-      "robustness": 86.5
+      "robustness": 86.3
      },
      "gates": [
       {
@@ -1232,22 +1266,22 @@
      "category": "经济",
      "templateId": "official-1402",
      "templateName": "登神决斗天使6决斗大师3源计划",
-     "conditionScore": 89.5,
-     "conditionLift": 19.5,
+     "conditionScore": 89.6,
+     "conditionLift": 19.3,
      "fitGain": 22,
      "evidenceLevel": "L2.5 模型扰动稳健",
      "metrics": {
-      "meanUtility": 120.1,
+      "meanUtility": 120.2,
       "interval95": [
-       108.1,
-       132.2
+       108.2,
+       132.3
       ],
-      "cvar10": 109.3,
-      "top1Rate": 5.1,
-      "top5Rate": 30.9,
-      "topQuartileRate": 76,
+      "cvar10": 109.4,
+      "top1Rate": 5.2,
+      "top5Rate": 31.3,
+      "topQuartileRate": 76.4,
       "failureRate": 0.5,
-      "robustness": 70
+      "robustness": 70.3
      },
      "gates": [
       {
@@ -1265,8 +1299,8 @@
      "category": "经济",
      "templateId": "official-1379",
      "templateName": "怪兽厄运小姐8怪兽1精英战士",
-     "conditionScore": 89.4,
-     "conditionLift": 19.7,
+     "conditionScore": 89.3,
+     "conditionLift": 19.8,
      "fitGain": 22,
      "evidenceLevel": "L2.5 模型扰动稳健",
      "metrics": {
@@ -1276,11 +1310,11 @@
        130.5
       ],
       "cvar10": 109.4,
-      "top1Rate": 3.6,
-      "top5Rate": 25,
-      "topQuartileRate": 77.9,
+      "top1Rate": 3.3,
+      "top5Rate": 24.5,
+      "topQuartileRate": 77.6,
       "failureRate": 0.4,
-      "robustness": 69.7
+      "robustness": 69.5
      },
      "gates": [
       {
@@ -1298,22 +1332,22 @@
      "category": "经济",
      "templateId": "official-1570",
      "templateName": "小天才九五5小天才2福牛守护者2吉祥物",
-     "conditionScore": 88.8,
-     "conditionLift": 10.8,
+     "conditionScore": 88.9,
+     "conditionLift": 10.6,
      "fitGain": 16.6,
      "evidenceLevel": "L2.5 模型扰动稳健",
      "metrics": {
-      "meanUtility": 121,
+      "meanUtility": 121.1,
       "interval95": [
-       111.6,
-       130.8
+       111.7,
+       130.9
       ],
-      "cvar10": 112.4,
-      "top1Rate": 6.7,
-      "top5Rate": 36.8,
-      "topQuartileRate": 88,
+      "cvar10": 112.5,
+      "top1Rate": 7,
+      "top5Rate": 37.3,
+      "topQuartileRate": 88.3,
       "failureRate": 0,
-      "robustness": 78
+      "robustness": 78.3
      },
      "gates": [
       {
@@ -1330,22 +1364,22 @@
      "category": "经济",
      "templateId": "official-1269",
      "templateName": "九五平民枪手3平民英雄2枪手2吉祥物",
-     "conditionScore": 88.2,
-     "conditionLift": 21.9,
+     "conditionScore": 88.3,
+     "conditionLift": 21.7,
      "fitGain": 22,
      "evidenceLevel": "L2.5 模型扰动稳健",
      "metrics": {
-      "meanUtility": 119.4,
+      "meanUtility": 119.5,
       "interval95": [
-       108.3,
-       130.7
+       108.4,
+       130.8
       ],
-      "cvar10": 109.3,
-      "top1Rate": 2.5,
-      "top5Rate": 22.9,
-      "topQuartileRate": 70.8,
+      "cvar10": 109.4,
+      "top1Rate": 2.6,
+      "top5Rate": 23.1,
+      "topQuartileRate": 71.2,
       "failureRate": 0.5,
-      "robustness": 66.3
+      "robustness": 66.6
      },
      "gates": [
       {
@@ -1363,8 +1397,8 @@
      "category": "经济",
      "templateId": "manual-civilian-gunner",
      "templateName": "平民枪手 -> 莎弥拉/九五枪手",
-     "conditionScore": 84.1,
-     "conditionLift": 29.6,
+     "conditionScore": 84,
+     "conditionLift": 29.7,
      "fitGain": 22,
      "evidenceLevel": "L2 模型候选",
      "metrics": {
@@ -1375,10 +1409,10 @@
       ],
       "cvar10": 106.4,
       "top1Rate": 0.2,
-      "top5Rate": 11.8,
-      "topQuartileRate": 52,
+      "top5Rate": 11.6,
+      "topQuartileRate": 51.7,
       "failureRate": 2.2,
-      "robustness": 54.5
+      "robustness": 54.3
      },
      "gates": [
       {
@@ -1396,22 +1430,22 @@
      "category": "经济",
      "templateId": "official-1294",
      "templateName": "鸟盾劫6决斗大师3源计划特工3黑客",
-     "conditionScore": 83.8,
+     "conditionScore": 83.9,
      "conditionLift": 3.5,
      "fitGain": 6,
      "evidenceLevel": "L2.5 模型扰动稳健",
      "metrics": {
-      "meanUtility": 122.5,
+      "meanUtility": 122.6,
       "interval95": [
-       110.8,
-       133.3
+       110.9,
+       133.4
       ],
-      "cvar10": 112,
-      "top1Rate": 5.5,
-      "top5Rate": 51.1,
-      "topQuartileRate": 87.2,
+      "cvar10": 112.1,
+      "top1Rate": 5.6,
+      "top5Rate": 51.3,
+      "topQuartileRate": 87.3,
       "failureRate": 0.1,
-      "robustness": 80.3
+      "robustness": 80.4
      },
      "gates": [
       {
@@ -1428,7 +1462,7 @@
      "templateId": "official-1290",
      "templateName": "星守灵能塔利娅5星之守护者4灵能使",
      "conditionScore": 80.6,
-     "conditionLift": 33.3,
+     "conditionLift": 33.4,
      "fitGain": 21.4,
      "evidenceLevel": "L2 模型候选",
      "metrics": {
@@ -1439,10 +1473,10 @@
       ],
       "cvar10": 104.9,
       "top1Rate": 0.3,
-      "top5Rate": 7.1,
-      "topQuartileRate": 40.1,
+      "top5Rate": 6.9,
+      "topQuartileRate": 39.9,
       "failureRate": 4.2,
-      "robustness": 47.3
+      "robustness": 47.2
      },
      "gates": [
       {
@@ -1459,22 +1493,22 @@
      "category": "经济",
      "templateId": "official-1566",
      "templateName": "秘卫斗士贾克斯4斗士3秘术卫士3战斗机甲",
-     "conditionScore": 79.4,
-     "conditionLift": 19.8,
+     "conditionScore": 79.8,
+     "conditionLift": 19.4,
      "fitGain": 16.6,
      "evidenceLevel": "L2.5 模型扰动稳健",
      "metrics": {
-      "meanUtility": 117.9,
+      "meanUtility": 118.1,
       "interval95": [
-       108.3,
-       128.1
+       108.5,
+       128.3
       ],
-      "cvar10": 109.3,
+      "cvar10": 109.5,
       "top1Rate": 0.2,
-      "top5Rate": 13.1,
-      "topQuartileRate": 58.9,
+      "top5Rate": 13.8,
+      "topQuartileRate": 60,
       "failureRate": 0.4,
-      "robustness": 59.6
+      "robustness": 60.4
      },
      "gates": [
       {
@@ -1491,22 +1525,22 @@
      "category": "经济",
      "templateId": "official-4524",
      "templateName": "无情连打贾克斯5战队机甲4斗士2护卫",
-     "conditionScore": 79.4,
-     "conditionLift": 38.3,
+     "conditionScore": 79.5,
+     "conditionLift": 38.2,
      "fitGain": 22,
      "evidenceLevel": "L1.5 高敏感假设",
      "metrics": {
-      "meanUtility": 114.4,
+      "meanUtility": 114.5,
       "interval95": [
-       104.7,
-       124.5
+       104.8,
+       124.6
       ],
-      "cvar10": 105.6,
+      "cvar10": 105.7,
       "top1Rate": 0,
       "top5Rate": 2.4,
-      "topQuartileRate": 25,
-      "failureRate": 2.8,
-      "robustness": 41.1
+      "topQuartileRate": 25.3,
+      "failureRate": 2.7,
+      "robustness": 41.3
      },
      "gates": [
       {
@@ -1525,7 +1559,7 @@
      "templateId": "manual-laser-duelist",
      "templateName": "源计划斗士/决斗 -> 卡莎/枪手/九五",
      "conditionScore": 78,
-     "conditionLift": 40.9,
+     "conditionLift": 41,
      "fitGain": 22,
      "evidenceLevel": "L1.5 高敏感假设",
      "metrics": {
@@ -1537,9 +1571,9 @@
       "cvar10": 102.6,
       "top1Rate": 0,
       "top5Rate": 0.6,
-      "topQuartileRate": 24,
+      "topQuartileRate": 23.7,
       "failureRate": 8.8,
-      "robustness": 37.1
+      "robustness": 37
      },
      "gates": [
       {
@@ -1558,7 +1592,7 @@
      "templateId": "official-1576",
      "templateName": "84机甲怪兽双子星3战斗机甲2护卫怪兽",
      "conditionScore": 76.9,
-     "conditionLift": 42.9,
+     "conditionLift": 43,
      "fitGain": 22,
      "evidenceLevel": "L1.5 高敏感假设",
      "metrics": {
@@ -1570,9 +1604,9 @@
       "cvar10": 102.1,
       "top1Rate": 0.1,
       "top5Rate": 1.1,
-      "topQuartileRate": 17.3,
+      "topQuartileRate": 17,
       "failureRate": 9.7,
-      "robustness": 34
+      "robustness": 33.9
      },
      "gates": [
       {
@@ -1590,22 +1624,22 @@
      "category": "经济",
      "templateId": "official-1376",
      "templateName": "超英露露3超级英雄5吉祥物2爱心使者",
-     "conditionScore": 75.9,
-     "conditionLift": 22.6,
+     "conditionScore": 76.1,
+     "conditionLift": 22.4,
      "fitGain": 16.4,
      "evidenceLevel": "L2 模型候选",
      "metrics": {
-      "meanUtility": 116.7,
+      "meanUtility": 116.8,
       "interval95": [
-       105.9,
-       128.4
+       106,
+       128.5
       ],
-      "cvar10": 106.8,
+      "cvar10": 106.9,
       "top1Rate": 1.4,
-      "top5Rate": 12.9,
-      "topQuartileRate": 47.7,
-      "failureRate": 1.8,
-      "robustness": 53.3
+      "top5Rate": 13.1,
+      "topQuartileRate": 48.3,
+      "failureRate": 1.6,
+      "robustness": 53.7
      },
      "gates": [
       {
@@ -1623,7 +1657,7 @@
      "templateId": "official-4540",
      "templateName": "幻灵厄运小姐5幻灵战队2淘气包2吉祥物",
      "conditionScore": 75.6,
-     "conditionLift": 45.2,
+     "conditionLift": 45.3,
      "fitGain": 22,
      "evidenceLevel": "L1.5 高敏感假设",
      "metrics": {
@@ -1634,10 +1668,10 @@
       ],
       "cvar10": 102,
       "top1Rate": 0,
-      "top5Rate": 0.6,
-      "topQuartileRate": 9.8,
+      "top5Rate": 0.5,
+      "topQuartileRate": 9.6,
       "failureRate": 11.6,
-      "robustness": 30.4
+      "robustness": 30.3
      },
      "gates": [
       {
@@ -1656,7 +1690,7 @@
      "templateId": "official-1256",
      "templateName": "超英伊泽瑞尔4情报特工3超级英雄2斗士",
      "conditionScore": 75.3,
-     "conditionLift": 23.2,
+     "conditionLift": 23.3,
      "fitGain": 16.4,
      "evidenceLevel": "L2 模型候选",
      "metrics": {
@@ -1666,11 +1700,11 @@
        127.3
       ],
       "cvar10": 106.9,
-      "top1Rate": 2.1,
-      "top5Rate": 11.3,
-      "topQuartileRate": 45.5,
+      "top1Rate": 1.9,
+      "top5Rate": 11.1,
+      "topQuartileRate": 45.2,
       "failureRate": 1.8,
-      "robustness": 52.1
+      "robustness": 52
      },
      "gates": [
       {
@@ -1687,8 +1721,8 @@
      "category": "经济",
      "templateId": "official-4548",
      "templateName": "决斗剑姬6决斗大师2福牛守护者",
-     "conditionScore": 74.1,
-     "conditionLift": 24.3,
+     "conditionScore": 74,
+     "conditionLift": 24.4,
      "fitGain": 16.4,
      "evidenceLevel": "L2 模型候选",
      "metrics": {
@@ -1699,10 +1733,10 @@
       ],
       "cvar10": 106.5,
       "top1Rate": 0.8,
-      "top5Rate": 7.7,
-      "topQuartileRate": 42.2,
+      "top5Rate": 7.5,
+      "topQuartileRate": 41.8,
       "failureRate": 2.1,
-      "robustness": 49.8
+      "robustness": 49.6
      },
      "gates": [
       {
@@ -1732,7 +1766,7 @@
       "cvar10": 98.5,
       "top1Rate": 0,
       "top5Rate": 0,
-      "topQuartileRate": 1,
+      "topQuartileRate": 0.9,
       "failureRate": 27.4,
       "robustness": 20.6
      },
@@ -1753,7 +1787,7 @@
      "templateId": "official-1412",
      "templateName": "超英猫咪3超级英雄3星之守护者2爱心使者",
      "conditionScore": 71.4,
-     "conditionLift": 26.8,
+     "conditionLift": 26.9,
      "fitGain": 16.4,
      "evidenceLevel": "L2 模型候选",
      "metrics": {
@@ -1764,10 +1798,10 @@
       ],
       "cvar10": 104.7,
       "top1Rate": 0.3,
-      "top5Rate": 5.3,
-      "topQuartileRate": 34.6,
+      "top5Rate": 5.1,
+      "topQuartileRate": 34.5,
       "failureRate": 4.5,
-      "robustness": 44.6
+      "robustness": 44.5
      },
      "gates": [
       {
@@ -1784,22 +1818,22 @@
      "category": "经济",
      "templateId": "official-1567",
      "templateName": "黑客贾克斯3战斗机甲2黑客2斗士",
-     "conditionScore": 69.3,
-     "conditionLift": 28.9,
+     "conditionScore": 69.4,
+     "conditionLift": 28.7,
      "fitGain": 16.4,
      "evidenceLevel": "L1.5 高敏感假设",
      "metrics": {
-      "meanUtility": 114.4,
+      "meanUtility": 114.5,
       "interval95": [
-       104.7,
-       124.4
+       104.8,
+       124.5
       ],
-      "cvar10": 105.7,
+      "cvar10": 105.8,
       "top1Rate": 0.1,
       "top5Rate": 2.5,
-      "topQuartileRate": 23.1,
-      "failureRate": 2.9,
-      "robustness": 40.4
+      "topQuartileRate": 23.6,
+      "failureRate": 2.8,
+      "robustness": 40.7
      },
      "gates": [
       {
@@ -1814,24 +1848,56 @@
     },
     {
      "category": "经济",
+     "templateId": "official-4576",
+     "templateName": "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
+     "conditionScore": 68.6,
+     "conditionLift": 30.2,
+     "fitGain": 16.6,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "metrics": {
+      "meanUtility": 115.8,
+      "interval95": [
+       105.1,
+       126.8
+      ],
+      "cvar10": 106.2,
+      "top1Rate": 0.1,
+      "top5Rate": 20.7,
+      "topQuartileRate": 7.9,
+      "failureRate": 2.5,
+      "robustness": 38.4
+     },
+     "gates": [
+      {
+       "kind": "符文",
+       "value": "快速思考"
+      }
+     ],
+     "reasons": [
+      "刷新经济适配金克丝3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "category": "经济",
      "templateId": "official-1271",
      "templateName": "地下魔盗团转952吉祥物2秘术卫士",
-     "conditionScore": 67.4,
-     "conditionLift": 60.5,
+     "conditionScore": 67.5,
+     "conditionLift": 60.4,
      "fitGain": 22,
      "evidenceLevel": "L1.5 高敏感假设",
      "metrics": {
-      "meanUtility": 101.4,
+      "meanUtility": 101.5,
       "interval95": [
-       90.3,
-       112.6
+       90.4,
+       112.7
       ],
-      "cvar10": 91.4,
+      "cvar10": 91.5,
       "top1Rate": 0,
       "top5Rate": 0,
       "topQuartileRate": 0,
-      "failureRate": 72.4,
-      "robustness": 6.9
+      "failureRate": 71.7,
+      "robustness": 7.1
      },
      "gates": [
       {
@@ -1844,38 +1910,6 @@
       "高费主C厄加特受益于等级概率",
       "金币折算提升成型可达性"
      ]
-    },
-    {
-     "category": "经济",
-     "templateId": "official-1327",
-     "templateName": "怪兽佐伊2黑客2淘气包怪兽",
-     "conditionScore": 65.8,
-     "conditionLift": 32.9,
-     "fitGain": 16.6,
-     "evidenceLevel": "L1.5 高敏感假设",
-     "metrics": {
-      "meanUtility": 111.8,
-      "interval95": [
-       101.3,
-       122
-      ],
-      "cvar10": 102.4,
-      "top1Rate": 0.1,
-      "top5Rate": 1.7,
-      "topQuartileRate": 14.4,
-      "failureRate": 10.7,
-      "robustness": 32.9
-     },
-     "gates": [
-      {
-       "kind": "符文",
-       "value": "快速思考"
-      }
-     ],
-     "reasons": [
-      "刷新经济适配佐伊3星",
-      "金币折算提升成型可达性"
-     ]
     }
    ],
    "装备": [
@@ -1883,8 +1917,8 @@
      "category": "装备",
      "templateId": "official-1338",
      "templateName": "福牛混沌九五4福牛守护者3混沌战士2吉祥物",
-     "conditionScore": 91.9,
-     "conditionLift": 7.7,
+     "conditionScore": 91.8,
+     "conditionLift": 7.8,
      "fitGain": 16.4,
      "evidenceLevel": "L2.5 模型扰动稳健",
      "metrics": {
@@ -1894,11 +1928,11 @@
        134
       ],
       "cvar10": 113,
-      "top1Rate": 14,
-      "top5Rate": 59.3,
-      "topQuartileRate": 91.3,
+      "top1Rate": 13.7,
+      "top5Rate": 58.7,
+      "topQuartileRate": 91.1,
       "failureRate": 0.1,
-      "robustness": 84.2
+      "robustness": 84
      },
      "gates": [
       {
@@ -1915,8 +1949,8 @@
      "category": "装备",
      "templateId": "official-1406",
      "templateName": "情报特工怪兽卡莎4情报特工3怪兽",
-     "conditionScore": 91.4,
-     "conditionLift": 4.9,
+     "conditionScore": 91.3,
+     "conditionLift": 5,
      "fitGain": 12.4,
      "evidenceLevel": "L2.5 模型扰动稳健",
      "metrics": {
@@ -1926,11 +1960,11 @@
        134.4
       ],
       "cvar10": 114.3,
-      "top1Rate": 18.6,
-      "top5Rate": 62.3,
-      "topQuartileRate": 93.6,
+      "top1Rate": 18.3,
+      "top5Rate": 61.8,
+      "topQuartileRate": 93.5,
       "failureRate": 0,
-      "robustness": 86.5
+      "robustness": 86.3
      },
      "gates": [
       {
@@ -1946,22 +1980,22 @@
      "category": "装备",
      "templateId": "official-1571",
      "templateName": "机甲秘术枪手3战斗机甲2枪手2吉祥物",
-     "conditionScore": 90.9,
+     "conditionScore": 91,
      "conditionLift": 5.2,
      "fitGain": 12.4,
      "evidenceLevel": "L2.5 模型扰动稳健",
      "metrics": {
-      "meanUtility": 123.7,
+      "meanUtility": 123.8,
       "interval95": [
-       112.2,
-       135.5
+       112.3,
+       135.6
       ],
-      "cvar10": 113.2,
-      "top1Rate": 23.8,
-      "top5Rate": 60.5,
-      "topQuartileRate": 94.1,
+      "cvar10": 113.3,
+      "top1Rate": 24.1,
+      "top5Rate": 60.7,
+      "topQuartileRate": 94.2,
       "failureRate": 0,
-      "robustness": 85.7
+      "robustness": 85.8
      },
      "gates": [
       {
@@ -1977,22 +2011,22 @@
      "category": "装备",
      "templateId": "official-1570",
      "templateName": "小天才九五5小天才2福牛守护者2吉祥物",
-     "conditionScore": 89.6,
-     "conditionLift": 11.6,
+     "conditionScore": 89.7,
+     "conditionLift": 11.4,
      "fitGain": 17.8,
      "evidenceLevel": "L2.5 模型扰动稳健",
      "metrics": {
-      "meanUtility": 121,
+      "meanUtility": 121.1,
       "interval95": [
-       111.6,
-       130.8
+       111.7,
+       130.9
       ],
-      "cvar10": 112.4,
-      "top1Rate": 6.7,
-      "top5Rate": 36.8,
-      "topQuartileRate": 88,
+      "cvar10": 112.5,
+      "top1Rate": 7,
+      "top5Rate": 37.3,
+      "topQuartileRate": 88.3,
       "failureRate": 0,
-      "robustness": 78
+      "robustness": 78.3
      },
      "gates": [
       {
@@ -2009,22 +2043,22 @@
      "category": "装备",
      "templateId": "official-1294",
      "templateName": "鸟盾劫6决斗大师3源计划特工3黑客",
-     "conditionScore": 89,
+     "conditionScore": 89.1,
      "conditionLift": 8.7,
      "fitGain": 15,
      "evidenceLevel": "L2.5 模型扰动稳健",
      "metrics": {
-      "meanUtility": 122.5,
+      "meanUtility": 122.6,
       "interval95": [
-       110.8,
-       133.3
+       110.9,
+       133.4
       ],
-      "cvar10": 112,
-      "top1Rate": 5.5,
-      "top5Rate": 51.1,
-      "topQuartileRate": 87.2,
+      "cvar10": 112.1,
+      "top1Rate": 5.6,
+      "top5Rate": 51.3,
+      "topQuartileRate": 87.3,
       "failureRate": 0.1,
-      "robustness": 80.3
+      "robustness": 80.4
      },
      "gates": [
       {
@@ -2041,22 +2075,22 @@
      "category": "装备",
      "templateId": "official-1402",
      "templateName": "登神决斗天使6决斗大师3源计划",
-     "conditionScore": 84.5,
-     "conditionLift": 14.5,
+     "conditionScore": 84.7,
+     "conditionLift": 14.4,
      "fitGain": 16.4,
      "evidenceLevel": "L2.5 模型扰动稳健",
      "metrics": {
-      "meanUtility": 120.1,
+      "meanUtility": 120.2,
       "interval95": [
-       108.1,
-       132.2
+       108.2,
+       132.3
       ],
-      "cvar10": 109.3,
-      "top1Rate": 5.1,
-      "top5Rate": 30.9,
-      "topQuartileRate": 76,
+      "cvar10": 109.4,
+      "top1Rate": 5.2,
+      "top5Rate": 31.3,
+      "topQuartileRate": 76.4,
       "failureRate": 0.5,
-      "robustness": 70
+      "robustness": 70.3
      },
      "gates": [
       {
@@ -2073,22 +2107,22 @@
      "category": "装备",
      "templateId": "official-1566",
      "templateName": "秘卫斗士贾克斯4斗士3秘术卫士3战斗机甲",
-     "conditionScore": 82.5,
-     "conditionLift": 22.9,
+     "conditionScore": 82.9,
+     "conditionLift": 22.5,
      "fitGain": 19.2,
      "evidenceLevel": "L2.5 模型扰动稳健",
      "metrics": {
-      "meanUtility": 117.9,
+      "meanUtility": 118.1,
       "interval95": [
-       108.3,
-       128.1
+       108.5,
+       128.3
       ],
-      "cvar10": 109.3,
+      "cvar10": 109.5,
       "top1Rate": 0.2,
-      "top5Rate": 13.1,
-      "topQuartileRate": 58.9,
+      "top5Rate": 13.8,
+      "topQuartileRate": 60,
       "failureRate": 0.4,
-      "robustness": 59.6
+      "robustness": 60.4
      },
      "gates": [
       {
@@ -2105,22 +2139,22 @@
      "category": "装备",
      "templateId": "official-4524",
      "templateName": "无情连打贾克斯5战队机甲4斗士2护卫",
-     "conditionScore": 74.5,
-     "conditionLift": 33.4,
+     "conditionScore": 74.6,
+     "conditionLift": 33.3,
      "fitGain": 19.2,
      "evidenceLevel": "L1.5 高敏感假设",
      "metrics": {
-      "meanUtility": 114.4,
+      "meanUtility": 114.5,
       "interval95": [
-       104.7,
-       124.5
+       104.8,
+       124.6
       ],
-      "cvar10": 105.6,
+      "cvar10": 105.7,
       "top1Rate": 0,
       "top5Rate": 2.4,
-      "topQuartileRate": 25,
-      "failureRate": 2.8,
-      "robustness": 41.1
+      "topQuartileRate": 25.3,
+      "failureRate": 2.7,
+      "robustness": 41.3
      },
      "gates": [
       {
@@ -2137,22 +2171,22 @@
      "category": "装备",
      "templateId": "official-1567",
      "templateName": "黑客贾克斯3战斗机甲2黑客2斗士",
-     "conditionScore": 74.2,
-     "conditionLift": 33.8,
+     "conditionScore": 74.3,
+     "conditionLift": 33.6,
      "fitGain": 19.2,
      "evidenceLevel": "L1.5 高敏感假设",
      "metrics": {
-      "meanUtility": 114.4,
+      "meanUtility": 114.5,
       "interval95": [
-       104.7,
-       124.4
+       104.8,
+       124.5
       ],
-      "cvar10": 105.7,
+      "cvar10": 105.8,
       "top1Rate": 0.1,
       "top5Rate": 2.5,
-      "topQuartileRate": 23.1,
-      "failureRate": 2.9,
-      "robustness": 40.4
+      "topQuartileRate": 23.6,
+      "failureRate": 2.8,
+      "robustness": 40.7
      },
      "gates": [
       {
@@ -2169,8 +2203,8 @@
      "category": "装备",
      "templateId": "official-4548",
      "templateName": "决斗剑姬6决斗大师2福牛守护者",
-     "conditionScore": 74.1,
-     "conditionLift": 24.3,
+     "conditionScore": 74,
+     "conditionLift": 24.4,
      "fitGain": 16.4,
      "evidenceLevel": "L2 模型候选",
      "metrics": {
@@ -2181,10 +2215,10 @@
       ],
       "cvar10": 106.5,
       "top1Rate": 0.8,
-      "top5Rate": 7.7,
-      "topQuartileRate": 42.2,
+      "top5Rate": 7.5,
+      "topQuartileRate": 41.8,
       "failureRate": 2.1,
-      "robustness": 49.8
+      "robustness": 49.6
      },
      "gates": [
       {
@@ -2201,7 +2235,7 @@
      "category": "装备",
      "templateId": "official-1290",
      "templateName": "星守灵能塔利娅5星之守护者4灵能使",
-     "conditionScore": 68.8,
+     "conditionScore": 68.7,
      "conditionLift": 21.5,
      "fitGain": 13.8,
      "evidenceLevel": "L2 模型候选",
@@ -2213,10 +2247,10 @@
       ],
       "cvar10": 104.9,
       "top1Rate": 0.3,
-      "top5Rate": 7.1,
-      "topQuartileRate": 40.1,
+      "top5Rate": 6.9,
+      "topQuartileRate": 39.9,
       "failureRate": 4.2,
-      "robustness": 47.3
+      "robustness": 47.2
      },
      "gates": [
       {
@@ -2230,10 +2264,42 @@
     },
     {
      "category": "装备",
+     "templateId": "official-4576",
+     "templateName": "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
+     "conditionScore": 68.2,
+     "conditionLift": 29.8,
+     "fitGain": 16.4,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "metrics": {
+      "meanUtility": 115.8,
+      "interval95": [
+       105.1,
+       126.8
+      ],
+      "cvar10": 106.2,
+      "top1Rate": 0.1,
+      "top5Rate": 20.7,
+      "topQuartileRate": 7.9,
+      "failureRate": 2.5,
+      "robustness": 38.4
+     },
+     "gates": [
+      {
+       "kind": "符文",
+       "value": "整活锻炉"
+      }
+     ],
+     "reasons": [
+      "装备弹性86%，缓解瓶颈+1.4",
+      "高上限装备提供额外主C/前排期权"
+     ]
+    },
+    {
+     "category": "装备",
      "templateId": "official-1374",
      "templateName": "平民怪兽枪3平民英雄2枪手",
      "conditionScore": 67.8,
-     "conditionLift": 30.2,
+     "conditionLift": 30.3,
      "fitGain": 16.4,
      "evidenceLevel": "L1.5 高敏感假设",
      "metrics": {
@@ -2245,9 +2311,9 @@
       "cvar10": 102.8,
       "top1Rate": 0.1,
       "top5Rate": 1.4,
-      "topQuartileRate": 24.2,
+      "topQuartileRate": 23.9,
       "failureRate": 8.1,
-      "robustness": 37.6
+      "robustness": 37.5
      },
      "gates": [
       {
@@ -2264,7 +2330,7 @@
      "category": "装备",
      "templateId": "official-1576",
      "templateName": "84机甲怪兽双子星3战斗机甲2护卫怪兽",
-     "conditionScore": 66,
+     "conditionScore": 65.9,
      "conditionLift": 32,
      "fitGain": 16.4,
      "evidenceLevel": "L1.5 高敏感假设",
@@ -2277,9 +2343,9 @@
       "cvar10": 102.1,
       "top1Rate": 0.1,
       "top5Rate": 1.1,
-      "topQuartileRate": 17.3,
+      "topQuartileRate": 17,
       "failureRate": 9.7,
-      "robustness": 34
+      "robustness": 33.9
      },
      "gates": [
       {
@@ -2297,7 +2363,7 @@
      "templateId": "official-4526",
      "templateName": "决斗薇恩6决斗大师3源计划激光特工",
      "conditionScore": 65.8,
-     "conditionLift": 37.9,
+     "conditionLift": 38,
      "fitGain": 17.8,
      "evidenceLevel": "L1.5 高敏感假设",
      "metrics": {
@@ -2308,10 +2374,10 @@
       ],
       "cvar10": 101.6,
       "top1Rate": 0,
-      "top5Rate": 0.2,
-      "topQuartileRate": 5.9,
+      "top5Rate": 0.1,
+      "topQuartileRate": 5.8,
       "failureRate": 13.9,
-      "robustness": 27.9
+      "robustness": 27.8
      },
      "gates": [
       {
@@ -2373,7 +2439,7 @@
       "cvar10": 99,
       "top1Rate": 0,
       "top5Rate": 0.1,
-      "topQuartileRate": 2.2,
+      "topQuartileRate": 2.1,
       "failureRate": 25.8,
       "robustness": 21.8
      },
@@ -2405,7 +2471,7 @@
       "cvar10": 98.1,
       "top1Rate": 0,
       "top5Rate": 0.1,
-      "topQuartileRate": 2.6,
+      "topQuartileRate": 2.5,
       "failureRate": 33.3,
       "robustness": 19.6
      },
@@ -2437,7 +2503,7 @@
       "cvar10": 101.1,
       "top1Rate": 0,
       "top5Rate": 0.3,
-      "topQuartileRate": 8.5,
+      "topQuartileRate": 8.3,
       "failureRate": 15.6,
       "robustness": 28.2
      },
@@ -2501,7 +2567,7 @@
       "cvar10": 98,
       "top1Rate": 0,
       "top5Rate": 0,
-      "topQuartileRate": 1.5,
+      "topQuartileRate": 1.4,
       "failureRate": 32,
       "robustness": 19.4
      },
@@ -2582,56 +2648,24 @@
     },
     {
      "category": "装备",
-     "templateId": "official-1589",
-     "templateName": "金钟罩李青4爱心使者3秘术卫士2AI程序",
-     "conditionScore": 56.7,
-     "conditionLift": 48,
-     "fitGain": 17.8,
-     "evidenceLevel": "L1.5 高敏感假设",
-     "metrics": {
-      "meanUtility": 103.1,
-      "interval95": [
-       93.2,
-       113
-      ],
-      "cvar10": 94.1,
-      "top1Rate": 0,
-      "top5Rate": 0,
-      "topQuartileRate": 0,
-      "failureRate": 65.3,
-      "robustness": 8.7
-     },
-     "gates": [
-      {
-       "kind": "符文",
-       "value": "便携锻炉"
-      }
-     ],
-     "reasons": [
-      "装备弹性72%，缓解瓶颈+2.8",
-      "高上限装备提供额外主C/前排期权"
-     ]
-    },
-    {
-     "category": "装备",
      "templateId": "official-4532",
      "templateName": "小天才璐璐5小天才4吉祥物",
-     "conditionScore": 56.5,
-     "conditionLift": 25.1,
+     "conditionScore": 56.7,
+     "conditionLift": 25,
      "fitGain": 12.4,
      "evidenceLevel": "L1.5 高敏感假设",
      "metrics": {
-      "meanUtility": 111.6,
+      "meanUtility": 111.7,
       "interval95": [
-       100.8,
-       123.1
+       100.9,
+       123.2
       ],
-      "cvar10": 101.6,
+      "cvar10": 101.7,
       "top1Rate": 0.3,
       "top5Rate": 1.9,
-      "topQuartileRate": 13.5,
-      "failureRate": 13.3,
-      "robustness": 31.4
+      "topQuartileRate": 13.8,
+      "failureRate": 12.9,
+      "robustness": 31.7
      },
      "gates": [
       {
@@ -2662,11 +2696,11 @@
      138.8
     ],
     "cvar10": 117.6,
-    "top1Rate": 77,
-    "top5Rate": 98.8,
-    "topQuartileRate": 95.9,
+    "top1Rate": 76.3,
+    "top5Rate": 98.2,
+    "topQuartileRate": 94.2,
     "failureRate": 0,
-    "robustness": 96.7
+    "robustness": 95.9
    },
    "drivers": [
     "转型重合67%",
@@ -2690,17 +2724,17 @@
    "evidenceLevel": "L2.5 模型扰动稳健",
    "priorPoints": 4,
    "metrics": {
-    "meanUtility": 124,
+    "meanUtility": 124.1,
     "interval95": [
-     112.4,
-     135.3
+     112.5,
+     135.4
     ],
-    "cvar10": 113.5,
-    "top1Rate": 13.9,
-    "top5Rate": 67.1,
-    "topQuartileRate": 92.9,
+    "cvar10": 113.6,
+    "top1Rate": 14.4,
+    "top5Rate": 67.5,
+    "topQuartileRate": 93,
     "failureRate": 0,
-    "robustness": 86.6
+    "robustness": 86.9
    },
    "drivers": [
     "转型重合12%",
@@ -2728,11 +2762,11 @@
      134.4
     ],
     "cvar10": 114.3,
-    "top1Rate": 18.6,
-    "top5Rate": 62.3,
-    "topQuartileRate": 93.6,
+    "top1Rate": 18.3,
+    "top5Rate": 61.8,
+    "topQuartileRate": 93.5,
     "failureRate": 0,
-    "robustness": 86.5
+    "robustness": 86.3
    },
    "drivers": [
     "转型重合55%",
@@ -2754,17 +2788,17 @@
    "evidenceLevel": "L2.5 模型扰动稳健",
    "priorPoints": 4,
    "metrics": {
-    "meanUtility": 123.7,
+    "meanUtility": 123.8,
     "interval95": [
-     112.2,
-     135.5
+     112.3,
+     135.6
     ],
-    "cvar10": 113.2,
-    "top1Rate": 23.8,
-    "top5Rate": 60.5,
-    "topQuartileRate": 94.1,
+    "cvar10": 113.3,
+    "top1Rate": 24.1,
+    "top5Rate": 60.7,
+    "topQuartileRate": 94.2,
     "failureRate": 0,
-    "robustness": 85.7
+    "robustness": 85.8
    },
    "drivers": [
     "转型重合17%",
@@ -2792,11 +2826,11 @@
      134
     ],
     "cvar10": 113,
-    "top1Rate": 14,
-    "top5Rate": 59.3,
-    "topQuartileRate": 91.3,
+    "top1Rate": 13.7,
+    "top5Rate": 58.7,
+    "topQuartileRate": 91.1,
     "failureRate": 0.1,
-    "robustness": 84.2
+    "robustness": 84
    },
    "drivers": [
     "转型重合17%",
@@ -2818,17 +2852,17 @@
    "evidenceLevel": "L2.5 模型扰动稳健",
    "priorPoints": 3,
    "metrics": {
-    "meanUtility": 122.5,
+    "meanUtility": 122.6,
     "interval95": [
-     110.8,
-     133.3
+     110.9,
+     133.4
     ],
-    "cvar10": 112,
-    "top1Rate": 5.5,
-    "top5Rate": 51.1,
-    "topQuartileRate": 87.2,
+    "cvar10": 112.1,
+    "top1Rate": 5.6,
+    "top5Rate": 51.3,
+    "topQuartileRate": 87.3,
     "failureRate": 0.1,
-    "robustness": 80.3
+    "robustness": 80.4
    },
    "drivers": [
     "转型重合44%",
@@ -2850,17 +2884,17 @@
    "evidenceLevel": "L2.5 模型扰动稳健",
    "priorPoints": 3,
    "metrics": {
-    "meanUtility": 121,
+    "meanUtility": 121.1,
     "interval95": [
-     111.6,
-     130.8
+     111.7,
+     130.9
     ],
-    "cvar10": 112.4,
-    "top1Rate": 6.7,
-    "top5Rate": 36.8,
-    "topQuartileRate": 88,
+    "cvar10": 112.5,
+    "top1Rate": 7,
+    "top5Rate": 37.3,
+    "topQuartileRate": 88.3,
     "failureRate": 0,
-    "robustness": 78
+    "robustness": 78.3
    },
    "drivers": [
     "转型重合33%",
@@ -2882,17 +2916,17 @@
    "evidenceLevel": "L2.5 模型扰动稳健",
    "priorPoints": 2,
    "metrics": {
-    "meanUtility": 120.1,
+    "meanUtility": 120.2,
     "interval95": [
-     108.1,
-     132.2
+     108.2,
+     132.3
     ],
-    "cvar10": 109.3,
-    "top1Rate": 5.1,
-    "top5Rate": 30.9,
-    "topQuartileRate": 76,
+    "cvar10": 109.4,
+    "top1Rate": 5.2,
+    "top5Rate": 31.3,
+    "topQuartileRate": 76.4,
     "failureRate": 0.5,
-    "robustness": 70
+    "robustness": 70.3
    },
    "drivers": [
     "转型重合43%",
@@ -2920,11 +2954,11 @@
      130.5
     ],
     "cvar10": 109.4,
-    "top1Rate": 3.6,
-    "top5Rate": 25,
-    "topQuartileRate": 77.9,
+    "top1Rate": 3.3,
+    "top5Rate": 24.5,
+    "topQuartileRate": 77.6,
     "failureRate": 0.4,
-    "robustness": 69.7
+    "robustness": 69.5
    },
    "drivers": [
     "转型重合28%",
@@ -2938,13 +2972,45 @@
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
   {
+   "templateId": "official-1269",
+   "templateName": "九五平民枪手3平民英雄2枪手2吉祥物",
+   "peerGroup": "常规路线",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L2.5 模型扰动稳健",
+   "priorPoints": 2,
+   "metrics": {
+    "meanUtility": 119.5,
+    "interval95": [
+     108.4,
+     130.8
+    ],
+    "cvar10": 109.4,
+    "top1Rate": 2.6,
+    "top5Rate": 23.1,
+    "topQuartileRate": 71.2,
+    "failureRate": 0.5,
+    "robustness": 66.6
+   },
+   "drivers": [
+    "转型重合27%",
+    "装备弹性86%",
+    "9级追厄斐琉斯2星"
+   ],
+   "dependencies": [
+    "厄斐琉斯2星",
+    "三件套:卢安娜的飓风+锐利之刃+鬼索的狂暴之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
    "templateId": "meta-咒能高涨-伊泽瑞尔-8",
    "templateName": "咒能高涨伊泽瑞尔机制路线",
    "peerGroup": "条件路线（已满足专属门槛）",
    "sampleSize": 5000,
    "seed": 20260712,
    "evidenceLevel": "L2 模型候选",
-   "priorPoints": 2,
+   "priorPoints": 1,
    "metrics": {
     "meanUtility": 120.5,
     "interval95": [
@@ -2953,10 +3019,10 @@
     ],
     "cvar10": 110.9,
     "top1Rate": 2.1,
-    "top5Rate": 84.2,
-    "topQuartileRate": 38.3,
+    "top5Rate": 74,
+    "topQuartileRate": 35.2,
     "failureRate": 0.1,
-    "robustness": 66.7
+    "robustness": 63.4
    },
    "drivers": [
     "转型重合79%",
@@ -2972,34 +3038,34 @@
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
   {
-   "templateId": "official-1269",
-   "templateName": "九五平民枪手3平民英雄2枪手2吉祥物",
+   "templateId": "official-1566",
+   "templateName": "秘卫斗士贾克斯4斗士3秘术卫士3战斗机甲",
    "peerGroup": "常规路线",
    "sampleSize": 5000,
    "seed": 20260712,
    "evidenceLevel": "L2.5 模型扰动稳健",
-   "priorPoints": 2,
+   "priorPoints": 1,
    "metrics": {
-    "meanUtility": 119.4,
+    "meanUtility": 118.1,
     "interval95": [
-     108.3,
-     130.7
+     108.5,
+     128.3
     ],
-    "cvar10": 109.3,
-    "top1Rate": 2.5,
-    "top5Rate": 22.9,
-    "topQuartileRate": 70.8,
-    "failureRate": 0.5,
-    "robustness": 66.3
+    "cvar10": 109.5,
+    "top1Rate": 0.2,
+    "top5Rate": 13.8,
+    "topQuartileRate": 60,
+    "failureRate": 0.4,
+    "robustness": 60.4
    },
    "drivers": [
-    "转型重合27%",
-    "装备弹性86%",
-    "9级追厄斐琉斯2星"
+    "转型重合25%",
+    "装备弹性58%",
+    "7级追贾克斯3星"
    ],
    "dependencies": [
-    "厄斐琉斯2星",
-    "三件套:卢安娜的飓风+锐利之刃+鬼索的狂暴之刃"
+    "贾克斯3星",
+    "三件套:泰坦的坚决+疾射火炮+鬼索的狂暴之刃"
    ],
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
@@ -3018,11 +3084,11 @@
      130.6
     ],
     "cvar10": 110,
-    "top1Rate": 9.2,
-    "top5Rate": 58,
-    "topQuartileRate": 45.9,
+    "top1Rate": 8.8,
+    "top5Rate": 54.6,
+    "topQuartileRate": 36.5,
     "failureRate": 0.3,
-    "robustness": 63.9
+    "robustness": 59.5
    },
    "drivers": [
     "转型重合76%",
@@ -3052,11 +3118,11 @@
      130
     ],
     "cvar10": 109.4,
-    "top1Rate": 8.4,
-    "top5Rate": 55.1,
-    "topQuartileRate": 41.1,
+    "top1Rate": 7.3,
+    "top5Rate": 52.1,
+    "topQuartileRate": 36.4,
     "failureRate": 0.5,
-    "robustness": 61
+    "robustness": 58.5
    },
    "drivers": [
     "转型重合85%",
@@ -3087,10 +3153,10 @@
     ],
     "cvar10": 109.2,
     "top1Rate": 1.4,
-    "top5Rate": 64.6,
-    "topQuartileRate": 36.4,
+    "top5Rate": 54.3,
+    "topQuartileRate": 32.9,
     "failureRate": 0.4,
-    "robustness": 60.9
+    "robustness": 57.5
    },
    "drivers": [
     "转型重合86%",
@@ -3102,38 +3168,6 @@
     "机制棋子:薇恩",
     "薇恩3星",
     "三件套:泰坦的坚决+锐利之刃+鬼索的狂暴之刃"
-   ],
-   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-  },
-  {
-   "templateId": "official-1566",
-   "templateName": "秘卫斗士贾克斯4斗士3秘术卫士3战斗机甲",
-   "peerGroup": "常规路线",
-   "sampleSize": 5000,
-   "seed": 20260712,
-   "evidenceLevel": "L2.5 模型扰动稳健",
-   "priorPoints": 1,
-   "metrics": {
-    "meanUtility": 117.9,
-    "interval95": [
-     108.3,
-     128.1
-    ],
-    "cvar10": 109.3,
-    "top1Rate": 0.2,
-    "top5Rate": 13.1,
-    "topQuartileRate": 58.9,
-    "failureRate": 0.4,
-    "robustness": 59.6
-   },
-   "drivers": [
-    "转型重合25%",
-    "装备弹性58%",
-    "7级追贾克斯3星"
-   ],
-   "dependencies": [
-    "贾克斯3星",
-    "三件套:泰坦的坚决+疾射火炮+鬼索的狂暴之刃"
    ],
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
@@ -3153,10 +3187,10 @@
     ],
     "cvar10": 106.4,
     "top1Rate": 0.2,
-    "top5Rate": 11.8,
-    "topQuartileRate": 52,
+    "top5Rate": 11.6,
+    "topQuartileRate": 51.7,
     "failureRate": 2.2,
-    "robustness": 54.5
+    "robustness": 54.3
    },
    "drivers": [
     "转型重合14%",
@@ -3178,17 +3212,17 @@
    "evidenceLevel": "L2 模型候选",
    "priorPoints": 0,
    "metrics": {
-    "meanUtility": 116.7,
+    "meanUtility": 116.8,
     "interval95": [
-     105.9,
-     128.4
+     106,
+     128.5
     ],
-    "cvar10": 106.8,
+    "cvar10": 106.9,
     "top1Rate": 1.4,
-    "top5Rate": 12.9,
-    "topQuartileRate": 47.7,
-    "failureRate": 1.8,
-    "robustness": 53.3
+    "top5Rate": 13.1,
+    "topQuartileRate": 48.3,
+    "failureRate": 1.6,
+    "robustness": 53.7
    },
    "drivers": [
     "转型重合75%",
@@ -3216,11 +3250,11 @@
      127.3
     ],
     "cvar10": 106.9,
-    "top1Rate": 2.1,
-    "top5Rate": 11.3,
-    "topQuartileRate": 45.5,
+    "top1Rate": 1.9,
+    "top5Rate": 11.1,
+    "topQuartileRate": 45.2,
     "failureRate": 1.8,
-    "robustness": 52.1
+    "robustness": 52
    },
    "drivers": [
     "转型重合66%",
@@ -3230,40 +3264,6 @@
    "dependencies": [
     "伊泽瑞尔3星",
     "三件套:珠光护手+蓝霸符+巨人捕手"
-   ],
-   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-  },
-  {
-   "templateId": "meta-适应性防守-卡蜜尔-4",
-   "templateName": "适应性防守卡蜜尔机制路线",
-   "peerGroup": "条件路线（已满足专属门槛）",
-   "sampleSize": 5000,
-   "seed": 20260712,
-   "evidenceLevel": "L1.5 高敏感假设",
-   "priorPoints": 0,
-   "metrics": {
-    "meanUtility": 118.1,
-    "interval95": [
-     107.5,
-     129.3
-    ],
-    "cvar10": 108.4,
-    "top1Rate": 1.2,
-    "top5Rate": 59.7,
-    "topQuartileRate": 16.7,
-    "failureRate": 0.8,
-    "robustness": 51.5
-   },
-   "drivers": [
-    "转型重合85%",
-    "装备弹性72%",
-    "6级追卡蜜尔3星"
-   ],
-   "dependencies": [
-    "符文:适应性防守",
-    "机制棋子:卡蜜尔",
-    "卡蜜尔3星",
-    "三件套:最后的轻语+鬼索的狂暴之刃+卢安娜的飓风"
    ],
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
@@ -3283,10 +3283,10 @@
     ],
     "cvar10": 106.5,
     "top1Rate": 0.8,
-    "top5Rate": 7.7,
-    "topQuartileRate": 42.2,
+    "top5Rate": 7.5,
+    "topQuartileRate": 41.8,
     "failureRate": 2.1,
-    "robustness": 49.8
+    "robustness": 49.6
    },
    "drivers": [
     "转型重合41%",
@@ -3296,6 +3296,74 @@
    "dependencies": [
     "菲奥娜3星",
     "三件套:泰坦的坚决+汲取剑+鬼索的狂暴之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "meta-旺盛精力-悠米-6",
+   "templateName": "旺盛精力悠米机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": 0,
+   "metrics": {
+    "meanUtility": 117.4,
+    "interval95": [
+     107,
+     127.9
+    ],
+    "cvar10": 108,
+    "top1Rate": 2,
+    "top5Rate": 41.3,
+    "topQuartileRate": 20.4,
+    "failureRate": 1,
+    "robustness": 49
+   },
+   "drivers": [
+    "转型重合85%",
+    "装备弹性72%",
+    "6级追悠米3星"
+   ],
+   "dependencies": [
+    "符文:旺盛精力",
+    "机制棋子:悠米",
+    "悠米3星",
+    "三件套:朔极之矛+班克斯的魔法帽+鬼索的狂暴之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "meta-适应性防守-卡蜜尔-4",
+   "templateName": "适应性防守卡蜜尔机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": 0,
+   "metrics": {
+    "meanUtility": 118.1,
+    "interval95": [
+     107.5,
+     129.3
+    ],
+    "cvar10": 108.4,
+    "top1Rate": 1.2,
+    "top5Rate": 44.2,
+    "topQuartileRate": 14.3,
+    "failureRate": 0.8,
+    "robustness": 47.4
+   },
+   "drivers": [
+    "转型重合85%",
+    "装备弹性72%",
+    "6级追卡蜜尔3星"
+   ],
+   "dependencies": [
+    "符文:适应性防守",
+    "机制棋子:卡蜜尔",
+    "卡蜜尔3星",
+    "三件套:最后的轻语+鬼索的狂暴之刃+卢安娜的飓风"
    ],
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
@@ -3315,10 +3383,10 @@
     ],
     "cvar10": 104.9,
     "top1Rate": 0.3,
-    "top5Rate": 7.1,
-    "topQuartileRate": 40.1,
+    "top5Rate": 6.9,
+    "topQuartileRate": 39.9,
     "failureRate": 4.2,
-    "robustness": 47.3
+    "robustness": 47.2
    },
    "drivers": [
     "转型重合47%",
@@ -3328,40 +3396,6 @@
    "dependencies": [
     "塔莉垭2星",
     "三件套:朔极之矛+珠光护手+班克斯的魔法帽"
-   ],
-   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-  },
-  {
-   "templateId": "meta-浪客精神-亚索-5",
-   "templateName": "浪客精神亚索机制路线",
-   "peerGroup": "条件路线（已满足专属门槛）",
-   "sampleSize": 5000,
-   "seed": 20260712,
-   "evidenceLevel": "L1.5 高敏感假设",
-   "priorPoints": 0,
-   "metrics": {
-    "meanUtility": 117.5,
-    "interval95": [
-     106.8,
-     128
-    ],
-    "cvar10": 108,
-    "top1Rate": 0.7,
-    "top5Rate": 46.2,
-    "topQuartileRate": 11.9,
-    "failureRate": 1,
-    "robustness": 46.5
-   },
-   "drivers": [
-    "转型重合86%",
-    "装备弹性72%",
-    "6级追亚索3星"
-   ],
-   "dependencies": [
-    "符文:浪客精神",
-    "机制棋子:亚索",
-    "亚索3星",
-    "三件套:泰坦的坚决+鬼索的狂暴之刃+卢安娜的飓风"
    ],
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
@@ -3381,10 +3415,10 @@
     ],
     "cvar10": 104.7,
     "top1Rate": 0.3,
-    "top5Rate": 5.3,
-    "topQuartileRate": 34.6,
+    "top5Rate": 5.1,
+    "topQuartileRate": 34.5,
     "failureRate": 4.5,
-    "robustness": 44.6
+    "robustness": 44.5
    },
    "drivers": [
     "转型重合43%",
@@ -3398,36 +3432,36 @@
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
   {
-   "templateId": "meta-评级与交火-莎弥拉-1",
-   "templateName": "评级与交火莎弥拉机制路线",
+   "templateId": "meta-浪客精神-亚索-5",
+   "templateName": "浪客精神亚索机制路线",
    "peerGroup": "条件路线（已满足专属门槛）",
    "sampleSize": 5000,
    "seed": 20260712,
    "evidenceLevel": "L1.5 高敏感假设",
    "priorPoints": -1,
    "metrics": {
-    "meanUtility": 115.6,
+    "meanUtility": 117.5,
     "interval95": [
-     103.7,
-     126.8
+     106.8,
+     128
     ],
-    "cvar10": 105.1,
-    "top1Rate": 0.2,
-    "top5Rate": 33.2,
-    "topQuartileRate": 13.7,
-    "failureRate": 4.3,
-    "robustness": 42.1
+    "cvar10": 108,
+    "top1Rate": 0.7,
+    "top5Rate": 32.9,
+    "topQuartileRate": 10.2,
+    "failureRate": 1,
+    "robustness": 43.2
    },
    "drivers": [
-    "转型重合58%",
+    "转型重合86%",
     "装备弹性72%",
-    "8级追莎弥拉2星"
+    "6级追亚索3星"
    ],
    "dependencies": [
-    "符文:评级与交火",
-    "机制棋子:莎弥拉",
-    "莎弥拉2星",
-    "三件套:最后的轻语+鬼索的狂暴之刃+卢安娜的飓风"
+    "符文:浪客精神",
+    "机制棋子:亚索",
+    "亚索3星",
+    "三件套:泰坦的坚决+鬼索的狂暴之刃+卢安娜的飓风"
    ],
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
@@ -3440,17 +3474,17 @@
    "evidenceLevel": "L1.5 高敏感假设",
    "priorPoints": -1,
    "metrics": {
-    "meanUtility": 114.4,
+    "meanUtility": 114.5,
     "interval95": [
-     104.7,
-     124.5
+     104.8,
+     124.6
     ],
-    "cvar10": 105.6,
+    "cvar10": 105.7,
     "top1Rate": 0,
     "top5Rate": 2.4,
-    "topQuartileRate": 25,
-    "failureRate": 2.8,
-    "robustness": 41.1
+    "topQuartileRate": 25.3,
+    "failureRate": 2.7,
+    "robustness": 41.3
    },
    "drivers": [
     "转型重合41%",
@@ -3472,17 +3506,17 @@
    "evidenceLevel": "L1.5 高敏感假设",
    "priorPoints": -1,
    "metrics": {
-    "meanUtility": 114.4,
+    "meanUtility": 114.5,
     "interval95": [
-     104.7,
-     124.4
+     104.8,
+     124.5
     ],
-    "cvar10": 105.7,
+    "cvar10": 105.8,
     "top1Rate": 0.1,
     "top5Rate": 2.5,
-    "topQuartileRate": 23.1,
-    "failureRate": 2.9,
-    "robustness": 40.4
+    "topQuartileRate": 23.6,
+    "failureRate": 2.8,
+    "robustness": 40.7
    },
    "drivers": [
     "转型重合25%",
@@ -3492,6 +3526,74 @@
    "dependencies": [
     "贾克斯3星",
     "三件套:泰坦的坚决+疾射火炮+鬼索的狂暴之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "meta-评级与交火-莎弥拉-1",
+   "templateName": "评级与交火莎弥拉机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -1,
+   "metrics": {
+    "meanUtility": 115.6,
+    "interval95": [
+     103.7,
+     126.8
+    ],
+    "cvar10": 105.1,
+    "top1Rate": 0.2,
+    "top5Rate": 27.7,
+    "topQuartileRate": 12,
+    "failureRate": 4.3,
+    "robustness": 40.3
+   },
+   "drivers": [
+    "转型重合58%",
+    "装备弹性72%",
+    "8级追莎弥拉2星"
+   ],
+   "dependencies": [
+    "符文:评级与交火",
+    "机制棋子:莎弥拉",
+    "莎弥拉2星",
+    "三件套:最后的轻语+鬼索的狂暴之刃+卢安娜的飓风"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-4576",
+   "templateName": "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -1,
+   "metrics": {
+    "meanUtility": 115.8,
+    "interval95": [
+     105.1,
+     126.8
+    ],
+    "cvar10": 106.2,
+    "top1Rate": 0.1,
+    "top5Rate": 20.7,
+    "topQuartileRate": 7.9,
+    "failureRate": 2.5,
+    "robustness": 38.4
+   },
+   "drivers": [
+    "转型重合82%",
+    "装备弹性86%",
+    "6级追金克丝3星"
+   ],
+   "dependencies": [
+    "符文:姐妹",
+    "机制棋子:金克丝+蔚",
+    "金克丝3星",
+    "三件套:朔极之矛+珠光护手+巨人捕手"
    ],
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
@@ -3512,9 +3614,9 @@
     "cvar10": 102.8,
     "top1Rate": 0.1,
     "top5Rate": 1.4,
-    "topQuartileRate": 24.2,
+    "topQuartileRate": 23.9,
     "failureRate": 8.1,
-    "robustness": 37.6
+    "robustness": 37.5
    },
    "drivers": [
     "转型重合43%",
@@ -3544,9 +3646,9 @@
     "cvar10": 102.6,
     "top1Rate": 0,
     "top5Rate": 0.6,
-    "topQuartileRate": 24,
+    "topQuartileRate": 23.7,
     "failureRate": 8.8,
-    "robustness": 37.1
+    "robustness": 37
    },
    "drivers": [
     "转型重合0%",
@@ -3576,9 +3678,9 @@
     "cvar10": 102.1,
     "top1Rate": 0.1,
     "top5Rate": 1.1,
-    "topQuartileRate": 17.3,
+    "topQuartileRate": 17,
     "failureRate": 9.7,
-    "robustness": 34
+    "robustness": 33.9
    },
    "drivers": [
     "转型重合23%",
@@ -3606,11 +3708,11 @@
      122
     ],
     "cvar10": 102.4,
-    "top1Rate": 0.1,
-    "top5Rate": 1.7,
-    "topQuartileRate": 14.4,
+    "top1Rate": 0,
+    "top5Rate": 1.6,
+    "topQuartileRate": 14,
     "failureRate": 10.7,
-    "robustness": 32.9
+    "robustness": 32.7
    },
    "drivers": [
     "转型重合28%",
@@ -3640,9 +3742,9 @@
     "cvar10": 101.7,
     "top1Rate": 0.2,
     "top5Rate": 1.7,
-    "topQuartileRate": 15.6,
+    "topQuartileRate": 15.4,
     "failureRate": 12.9,
-    "robustness": 32.4
+    "robustness": 32.3
    },
    "drivers": [
     "转型重合46%",
@@ -3664,17 +3766,17 @@
    "evidenceLevel": "L1.5 高敏感假设",
    "priorPoints": -2,
    "metrics": {
-    "meanUtility": 111.6,
+    "meanUtility": 111.7,
     "interval95": [
-     100.8,
-     123.1
+     100.9,
+     123.2
     ],
-    "cvar10": 101.6,
+    "cvar10": 101.7,
     "top1Rate": 0.3,
     "top5Rate": 1.9,
-    "topQuartileRate": 13.5,
-    "failureRate": 13.3,
-    "robustness": 31.4
+    "topQuartileRate": 13.8,
+    "failureRate": 12.9,
+    "robustness": 31.7
    },
    "drivers": [
     "转型重合71%",
@@ -3704,9 +3806,9 @@
     "cvar10": 102.2,
     "top1Rate": 0,
     "top5Rate": 0.1,
-    "topQuartileRate": 9.8,
+    "topQuartileRate": 9.7,
     "failureRate": 11.3,
-    "robustness": 30.5
+    "robustness": 30.4
    },
    "drivers": [
     "转型重合31%",
@@ -3735,10 +3837,10 @@
     ],
     "cvar10": 102,
     "top1Rate": 0,
-    "top5Rate": 0.6,
-    "topQuartileRate": 9.8,
+    "top5Rate": 0.5,
+    "topQuartileRate": 9.6,
     "failureRate": 11.6,
-    "robustness": 30.4
+    "robustness": 30.3
    },
    "drivers": [
     "转型重合50%",
@@ -3768,7 +3870,7 @@
     "cvar10": 101.1,
     "top1Rate": 0,
     "top5Rate": 0.3,
-    "topQuartileRate": 8.5,
+    "topQuartileRate": 8.3,
     "failureRate": 15.6,
     "robustness": 28.2
    },
@@ -3799,10 +3901,10 @@
     ],
     "cvar10": 101.6,
     "top1Rate": 0,
-    "top5Rate": 0.2,
-    "topQuartileRate": 5.9,
+    "top5Rate": 0.1,
+    "topQuartileRate": 5.8,
     "failureRate": 13.9,
-    "robustness": 27.9
+    "robustness": 27.8
    },
    "drivers": [
     "转型重合49%",
@@ -3832,7 +3934,7 @@
     "cvar10": 99,
     "top1Rate": 0,
     "top5Rate": 0.1,
-    "topQuartileRate": 2.2,
+    "topQuartileRate": 2.1,
     "failureRate": 25.8,
     "robustness": 21.8
    },
@@ -3864,7 +3966,7 @@
     "cvar10": 98.5,
     "top1Rate": 0,
     "top5Rate": 0,
-    "topQuartileRate": 1,
+    "topQuartileRate": 0.9,
     "failureRate": 27.4,
     "robustness": 20.6
    },
@@ -3896,7 +3998,7 @@
     "cvar10": 98.1,
     "top1Rate": 0,
     "top5Rate": 0.1,
-    "topQuartileRate": 2.6,
+    "topQuartileRate": 2.5,
     "failureRate": 33.3,
     "robustness": 19.6
    },
@@ -3928,7 +4030,7 @@
     "cvar10": 98,
     "top1Rate": 0,
     "top5Rate": 0,
-    "topQuartileRate": 1.5,
+    "topQuartileRate": 1.4,
     "failureRate": 32,
     "robustness": 19.4
    },
@@ -3940,40 +4042,6 @@
    "dependencies": [
     "泰隆3星",
     "三件套:珠光护手+疾射火炮+正义之手"
-   ],
-   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-  },
-  {
-   "templateId": "meta-旺盛精力-悠米-6",
-   "templateName": "旺盛精力悠米机制路线",
-   "peerGroup": "条件路线（已满足专属门槛）",
-   "sampleSize": 5000,
-   "seed": 20260712,
-   "evidenceLevel": "L1.5 高敏感假设",
-   "priorPoints": -3,
-   "metrics": {
-    "meanUtility": 107.5,
-    "interval95": [
-     97.1,
-     118
-    ],
-    "cvar10": 98.2,
-    "top1Rate": 0,
-    "top5Rate": 0.3,
-    "topQuartileRate": 0,
-    "failureRate": 32.5,
-    "robustness": 18.9
-   },
-   "drivers": [
-    "转型重合85%",
-    "装备弹性72%",
-    "6级追悠米3星"
-   ],
-   "dependencies": [
-    "符文:旺盛精力",
-    "机制棋子:悠米",
-    "悠米3星",
-    "三件套:朔极之矛+班克斯的魔法帽+鬼索的狂暴之刃"
    ],
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
@@ -4242,17 +4310,17 @@
    "evidenceLevel": "L1.5 高敏感假设",
    "priorPoints": -4,
    "metrics": {
-    "meanUtility": 105.6,
+    "meanUtility": 105.8,
     "interval95": [
-     94.9,
-     116.4
+     95.1,
+     116.6
     ],
-    "cvar10": 95.8,
+    "cvar10": 96,
     "top1Rate": 0,
     "top5Rate": 0,
     "topQuartileRate": 0.1,
-    "failureRate": 45.9,
-    "robustness": 14.1
+    "failureRate": 44.3,
+    "robustness": 14.6
    },
    "drivers": [
     "转型重合79%",
@@ -4274,17 +4342,17 @@
    "evidenceLevel": "L1.5 高敏感假设",
    "priorPoints": -4,
    "metrics": {
-    "meanUtility": 105.2,
+    "meanUtility": 105.3,
     "interval95": [
-     94.6,
-     115.9
+     94.7,
+     116
     ],
-    "cvar10": 95.7,
+    "cvar10": 95.8,
     "top1Rate": 0,
     "top5Rate": 0,
     "topQuartileRate": 0.1,
-    "failureRate": 48.1,
-    "robustness": 13.4
+    "failureRate": 47.6,
+    "robustness": 13.6
    },
    "drivers": [
     "转型重合66%",
@@ -4314,7 +4382,7 @@
     "cvar10": 95.1,
     "top1Rate": 0,
     "top5Rate": 0,
-    "topQuartileRate": 0.9,
+    "topQuartileRate": 0.8,
     "failureRate": 52.9,
     "robustness": 12.2
    },
@@ -4530,17 +4598,17 @@
    "evidenceLevel": "L1.5 高敏感假设",
    "priorPoints": -4,
    "metrics": {
-    "meanUtility": 101.4,
+    "meanUtility": 101.5,
     "interval95": [
-     90.3,
-     112.6
+     90.4,
+     112.7
     ],
-    "cvar10": 91.4,
+    "cvar10": 91.5,
     "top1Rate": 0,
     "top5Rate": 0,
     "topQuartileRate": 0,
-    "failureRate": 72.4,
-    "robustness": 6.9
+    "failureRate": 71.7,
+    "robustness": 7.1
    },
    "drivers": [
     "转型重合22%",
@@ -4592,7 +4660,7 @@
     "category": "英雄专属",
     "templateId": "meta-完美的日炎耀斑-蕾欧娜-0",
     "templateName": "完美的日炎耀斑蕾欧娜机制路线",
-    "conditionScore": 96.7,
+    "conditionScore": 95.9,
     "fitGain": 0,
     "evidenceLevel": "L2.5 模型扰动稳健",
     "metrics": {
@@ -4602,11 +4670,11 @@
       138.8
      ],
      "cvar10": 117.6,
-     "top1Rate": 77,
-     "top5Rate": 98.8,
-     "topQuartileRate": 95.9,
+     "top1Rate": 76.3,
+     "top5Rate": 98.2,
+     "topQuartileRate": 94.2,
      "failureRate": 0,
-     "robustness": 96.7
+     "robustness": 95.9
     },
     "gates": [
      {
@@ -4626,7 +4694,7 @@
     "category": "英雄专属",
     "templateId": "meta-咒能高涨-伊泽瑞尔-8",
     "templateName": "咒能高涨伊泽瑞尔机制路线",
-    "conditionScore": 66.7,
+    "conditionScore": 63.4,
     "fitGain": 0,
     "evidenceLevel": "L2 模型候选",
     "metrics": {
@@ -4637,10 +4705,10 @@
      ],
      "cvar10": 110.9,
      "top1Rate": 2.1,
-     "top5Rate": 84.2,
-     "topQuartileRate": 38.3,
+     "top5Rate": 74,
+     "topQuartileRate": 35.2,
      "failureRate": 0.1,
-     "robustness": 66.7
+     "robustness": 63.4
     },
     "gates": [
      {
@@ -4660,7 +4728,7 @@
     "category": "英雄专属",
     "templateId": "meta-姐妹-金克丝-7",
     "templateName": "姐妹金克丝机制路线",
-    "conditionScore": 63.9,
+    "conditionScore": 59.5,
     "fitGain": 0,
     "evidenceLevel": "L2 模型候选",
     "metrics": {
@@ -4670,11 +4738,11 @@
       130.6
      ],
      "cvar10": 110,
-     "top1Rate": 9.2,
-     "top5Rate": 58,
-     "topQuartileRate": 45.9,
+     "top1Rate": 8.8,
+     "top5Rate": 54.6,
+     "topQuartileRate": 36.5,
      "failureRate": 0.3,
-     "robustness": 63.9
+     "robustness": 59.5
     },
     "gates": [
      {
@@ -4694,7 +4762,7 @@
     "category": "英雄专属",
     "templateId": "meta-德莱文联盟-德莱文-2",
     "templateName": "德莱文联盟德莱文机制路线",
-    "conditionScore": 61,
+    "conditionScore": 58.5,
     "fitGain": 0,
     "evidenceLevel": "L2 模型候选",
     "metrics": {
@@ -4704,11 +4772,11 @@
       130
      ],
      "cvar10": 109.4,
-     "top1Rate": 8.4,
-     "top5Rate": 55.1,
-     "topQuartileRate": 41.1,
+     "top1Rate": 7.3,
+     "top5Rate": 52.1,
+     "topQuartileRate": 36.4,
      "failureRate": 0.5,
-     "robustness": 61
+     "robustness": 58.5
     },
     "gates": [
      {
@@ -4728,7 +4796,7 @@
     "category": "英雄专属",
     "templateId": "meta-进入夜晚-薇恩-3",
     "templateName": "进入夜晚薇恩机制路线",
-    "conditionScore": 60.9,
+    "conditionScore": 57.5,
     "fitGain": 0,
     "evidenceLevel": "L2 模型候选",
     "metrics": {
@@ -4739,10 +4807,10 @@
      ],
      "cvar10": 109.2,
      "top1Rate": 1.4,
-     "top5Rate": 64.6,
-     "topQuartileRate": 36.4,
+     "top5Rate": 54.3,
+     "topQuartileRate": 32.9,
      "failureRate": 0.4,
-     "robustness": 60.9
+     "robustness": 57.5
     },
     "gates": [
      {
@@ -4760,9 +4828,43 @@
    },
    {
     "category": "英雄专属",
+    "templateId": "meta-旺盛精力-悠米-6",
+    "templateName": "旺盛精力悠米机制路线",
+    "conditionScore": 49,
+    "fitGain": 0,
+    "evidenceLevel": "L1.5 高敏感假设",
+    "metrics": {
+     "meanUtility": 117.4,
+     "interval95": [
+      107,
+      127.9
+     ],
+     "cvar10": 108,
+     "top1Rate": 2,
+     "top5Rate": 41.3,
+     "topQuartileRate": 20.4,
+     "failureRate": 1,
+     "robustness": 49
+    },
+    "gates": [
+     {
+      "kind": "符文",
+      "value": "旺盛精力"
+     },
+     {
+      "kind": "棋子",
+      "value": "悠米"
+     }
+    ],
+    "reasons": [
+     "专属机制按有/无强化反事实差分生成"
+    ]
+   },
+   {
+    "category": "英雄专属",
     "templateId": "meta-适应性防守-卡蜜尔-4",
     "templateName": "适应性防守卡蜜尔机制路线",
-    "conditionScore": 51.5,
+    "conditionScore": 47.4,
     "fitGain": 0,
     "evidenceLevel": "L1.5 高敏感假设",
     "metrics": {
@@ -4773,10 +4875,10 @@
      ],
      "cvar10": 108.4,
      "top1Rate": 1.2,
-     "top5Rate": 59.7,
-     "topQuartileRate": 16.7,
+     "top5Rate": 44.2,
+     "topQuartileRate": 14.3,
      "failureRate": 0.8,
-     "robustness": 51.5
+     "robustness": 47.4
     },
     "gates": [
      {
@@ -4796,7 +4898,7 @@
     "category": "英雄专属",
     "templateId": "meta-浪客精神-亚索-5",
     "templateName": "浪客精神亚索机制路线",
-    "conditionScore": 46.5,
+    "conditionScore": 43.2,
     "fitGain": 0,
     "evidenceLevel": "L1.5 高敏感假设",
     "metrics": {
@@ -4807,10 +4909,10 @@
      ],
      "cvar10": 108,
      "top1Rate": 0.7,
-     "top5Rate": 46.2,
-     "topQuartileRate": 11.9,
+     "top5Rate": 32.9,
+     "topQuartileRate": 10.2,
      "failureRate": 1,
-     "robustness": 46.5
+     "robustness": 43.2
     },
     "gates": [
      {
@@ -4830,7 +4932,7 @@
     "category": "英雄专属",
     "templateId": "meta-评级与交火-莎弥拉-1",
     "templateName": "评级与交火莎弥拉机制路线",
-    "conditionScore": 42.1,
+    "conditionScore": 40.3,
     "fitGain": 0,
     "evidenceLevel": "L1.5 高敏感假设",
     "metrics": {
@@ -4841,10 +4943,10 @@
      ],
      "cvar10": 105.1,
      "top1Rate": 0.2,
-     "top5Rate": 33.2,
-     "topQuartileRate": 13.7,
+     "top5Rate": 27.7,
+     "topQuartileRate": 12,
      "failureRate": 4.3,
-     "robustness": 42.1
+     "robustness": 40.3
     },
     "gates": [
      {
@@ -4862,32 +4964,32 @@
    },
    {
     "category": "英雄专属",
-    "templateId": "meta-旺盛精力-悠米-6",
-    "templateName": "旺盛精力悠米机制路线",
-    "conditionScore": 18.9,
+    "templateId": "official-4576",
+    "templateName": "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
+    "conditionScore": 38.4,
     "fitGain": 0,
     "evidenceLevel": "L1.5 高敏感假设",
     "metrics": {
-     "meanUtility": 107.5,
+     "meanUtility": 115.8,
      "interval95": [
-      97.1,
-      118
+      105.1,
+      126.8
      ],
-     "cvar10": 98.2,
-     "top1Rate": 0,
-     "top5Rate": 0.3,
-     "topQuartileRate": 0,
-     "failureRate": 32.5,
-     "robustness": 18.9
+     "cvar10": 106.2,
+     "top1Rate": 0.1,
+     "top5Rate": 20.7,
+     "topQuartileRate": 7.9,
+     "failureRate": 2.5,
+     "robustness": 38.4
     },
     "gates": [
      {
       "kind": "符文",
-      "value": "旺盛精力"
+      "value": "姐妹"
      },
      {
       "kind": "棋子",
-      "value": "悠米"
+      "value": "金克丝+蔚"
      }
     ],
     "reasons": [
@@ -4898,24 +5000,24 @@
   "战力": [
    {
     "category": "战力",
-    "templateId": "official-1406",
-    "templateName": "情报特工怪兽卡莎4情报特工3怪兽",
-    "conditionScore": 94,
-    "conditionLift": 7.5,
+    "templateId": "official-1378",
+    "templateName": "95秘卫枪手3秘书卫士2福牛守护者",
+    "conditionScore": 94.2,
+    "conditionLift": 7.3,
     "fitGain": 18.8,
     "evidenceLevel": "L2.5 模型扰动稳健",
     "metrics": {
-     "meanUtility": 123.8,
+     "meanUtility": 124.1,
      "interval95": [
-      113.2,
-      134.4
+      112.5,
+      135.4
      ],
-     "cvar10": 114.3,
-     "top1Rate": 18.6,
-     "top5Rate": 62.3,
-     "topQuartileRate": 93.6,
+     "cvar10": 113.6,
+     "top1Rate": 14.4,
+     "top5Rate": 67.5,
+     "topQuartileRate": 93,
      "failureRate": 0,
-     "robustness": 86.5
+     "robustness": 86.9
     },
     "gates": [
      {
@@ -4930,24 +5032,24 @@
    },
    {
     "category": "战力",
-    "templateId": "official-1378",
-    "templateName": "95秘卫枪手3秘书卫士2福牛守护者",
-    "conditionScore": 94,
-    "conditionLift": 7.4,
+    "templateId": "official-1406",
+    "templateName": "情报特工怪兽卡莎4情报特工3怪兽",
+    "conditionScore": 93.9,
+    "conditionLift": 7.6,
     "fitGain": 18.8,
     "evidenceLevel": "L2.5 模型扰动稳健",
     "metrics": {
-     "meanUtility": 124,
+     "meanUtility": 123.8,
      "interval95": [
-      112.4,
-      135.3
+      113.2,
+      134.4
      ],
-     "cvar10": 113.5,
-     "top1Rate": 13.9,
-     "top5Rate": 67.1,
-     "topQuartileRate": 92.9,
+     "cvar10": 114.3,
+     "top1Rate": 18.3,
+     "top5Rate": 61.8,
+     "topQuartileRate": 93.5,
      "failureRate": 0,
-     "robustness": 86.6
+     "robustness": 86.3
     },
     "gates": [
      {
@@ -4964,8 +5066,8 @@
     "category": "战力",
     "templateId": "official-1338",
     "templateName": "福牛混沌九五4福牛守护者3混沌战士2吉祥物",
-    "conditionScore": 93,
-    "conditionLift": 8.8,
+    "conditionScore": 92.9,
+    "conditionLift": 8.9,
     "fitGain": 18.8,
     "evidenceLevel": "L2.5 模型扰动稳健",
     "metrics": {
@@ -4975,11 +5077,11 @@
       134
      ],
      "cvar10": 113,
-     "top1Rate": 14,
-     "top5Rate": 59.3,
-     "topQuartileRate": 91.3,
+     "top1Rate": 13.7,
+     "top5Rate": 58.7,
+     "topQuartileRate": 91.1,
      "failureRate": 0.1,
-     "robustness": 84.2
+     "robustness": 84
     },
     "gates": [
      {
@@ -4996,22 +5098,22 @@
     "category": "战力",
     "templateId": "official-1269",
     "templateName": "九五平民枪手3平民英雄2枪手2吉祥物",
-    "conditionScore": 85,
-    "conditionLift": 18.7,
+    "conditionScore": 85.2,
+    "conditionLift": 18.6,
     "fitGain": 18.8,
     "evidenceLevel": "L2.5 模型扰动稳健",
     "metrics": {
-     "meanUtility": 119.4,
+     "meanUtility": 119.5,
      "interval95": [
-      108.3,
-      130.7
+      108.4,
+      130.8
      ],
-     "cvar10": 109.3,
-     "top1Rate": 2.5,
-     "top5Rate": 22.9,
-     "topQuartileRate": 70.8,
+     "cvar10": 109.4,
+     "top1Rate": 2.6,
+     "top5Rate": 23.1,
+     "topQuartileRate": 71.2,
      "failureRate": 0.5,
-     "robustness": 66.3
+     "robustness": 66.6
     },
     "gates": [
      {
@@ -5028,22 +5130,22 @@
     "category": "战力",
     "templateId": "official-1402",
     "templateName": "登神决斗天使6决斗大师3源计划",
-    "conditionScore": 84.2,
-    "conditionLift": 14.2,
+    "conditionScore": 84.3,
+    "conditionLift": 14,
     "fitGain": 16,
     "evidenceLevel": "L2.5 模型扰动稳健",
     "metrics": {
-     "meanUtility": 120.1,
+     "meanUtility": 120.2,
      "interval95": [
-      108.1,
-      132.2
+      108.2,
+      132.3
      ],
-     "cvar10": 109.3,
-     "top1Rate": 5.1,
-     "top5Rate": 30.9,
-     "topQuartileRate": 76,
+     "cvar10": 109.4,
+     "top1Rate": 5.2,
+     "top5Rate": 31.3,
+     "topQuartileRate": 76.4,
      "failureRate": 0.5,
-     "robustness": 70
+     "robustness": 70.3
     },
     "gates": [
      {
@@ -5060,22 +5162,22 @@
     "category": "战力",
     "templateId": "official-1376",
     "templateName": "超英露露3超级英雄5吉祥物2爱心使者",
-    "conditionScore": 79.2,
-    "conditionLift": 25.9,
+    "conditionScore": 79.4,
+    "conditionLift": 25.7,
     "fitGain": 18.8,
     "evidenceLevel": "L2 模型候选",
     "metrics": {
-     "meanUtility": 116.7,
+     "meanUtility": 116.8,
      "interval95": [
-      105.9,
-      128.4
+      106,
+      128.5
      ],
-     "cvar10": 106.8,
+     "cvar10": 106.9,
      "top1Rate": 1.4,
-     "top5Rate": 12.9,
-     "topQuartileRate": 47.7,
-     "failureRate": 1.8,
-     "robustness": 53.3
+     "top5Rate": 13.1,
+     "topQuartileRate": 48.3,
+     "failureRate": 1.6,
+     "robustness": 53.7
     },
     "gates": [
      {
@@ -5093,7 +5195,7 @@
     "templateId": "official-1256",
     "templateName": "超英伊泽瑞尔4情报特工3超级英雄2斗士",
     "conditionScore": 78.1,
-    "conditionLift": 26,
+    "conditionLift": 26.1,
     "fitGain": 18.4,
     "evidenceLevel": "L2 模型候选",
     "metrics": {
@@ -5103,11 +5205,11 @@
       127.3
      ],
      "cvar10": 106.9,
-     "top1Rate": 2.1,
-     "top5Rate": 11.3,
-     "topQuartileRate": 45.5,
+     "top1Rate": 1.9,
+     "top5Rate": 11.1,
+     "topQuartileRate": 45.2,
      "failureRate": 1.8,
-     "robustness": 52.1
+     "robustness": 52
     },
     "gates": [
      {
@@ -5125,7 +5227,7 @@
     "templateId": "official-1374",
     "templateName": "平民怪兽枪3平民英雄2枪手",
     "conditionScore": 76.3,
-    "conditionLift": 38.7,
+    "conditionLift": 38.8,
     "fitGain": 21,
     "evidenceLevel": "L1.5 高敏感假设",
     "metrics": {
@@ -5137,9 +5239,9 @@
      "cvar10": 102.8,
      "top1Rate": 0.1,
      "top5Rate": 1.4,
-     "topQuartileRate": 24.2,
+     "topQuartileRate": 23.9,
      "failureRate": 8.1,
-     "robustness": 37.6
+     "robustness": 37.5
     },
     "gates": [
      {
@@ -5157,7 +5259,7 @@
     "templateId": "official-1290",
     "templateName": "星守灵能塔利娅5星之守护者4灵能使",
     "conditionScore": 75.9,
-    "conditionLift": 28.6,
+    "conditionLift": 28.7,
     "fitGain": 18.4,
     "evidenceLevel": "L2 模型候选",
     "metrics": {
@@ -5168,10 +5270,10 @@
      ],
      "cvar10": 104.9,
      "top1Rate": 0.3,
-     "top5Rate": 7.1,
-     "topQuartileRate": 40.1,
+     "top5Rate": 6.9,
+     "topQuartileRate": 39.9,
      "failureRate": 4.2,
-     "robustness": 47.3
+     "robustness": 47.2
     },
     "gates": [
      {
@@ -5188,7 +5290,7 @@
     "category": "战力",
     "templateId": "official-1379",
     "templateName": "怪兽厄运小姐8怪兽1精英战士",
-    "conditionScore": 75.8,
+    "conditionScore": 75.6,
     "conditionLift": 6.1,
     "fitGain": 6.8,
     "evidenceLevel": "L2.5 模型扰动稳健",
@@ -5199,11 +5301,11 @@
       130.5
      ],
      "cvar10": 109.4,
-     "top1Rate": 3.6,
-     "top5Rate": 25,
-     "topQuartileRate": 77.9,
+     "top1Rate": 3.3,
+     "top5Rate": 24.5,
+     "topQuartileRate": 77.6,
      "failureRate": 0.4,
-     "robustness": 69.7
+     "robustness": 69.5
     },
     "gates": [
      {
@@ -5220,7 +5322,7 @@
     "templateId": "official-1412",
     "templateName": "超英猫咪3超级英雄3星之守护者2爱心使者",
     "conditionScore": 74.7,
-    "conditionLift": 30.1,
+    "conditionLift": 30.2,
     "fitGain": 18.4,
     "evidenceLevel": "L2 模型候选",
     "metrics": {
@@ -5231,10 +5333,10 @@
      ],
      "cvar10": 104.7,
      "top1Rate": 0.3,
-     "top5Rate": 5.3,
-     "topQuartileRate": 34.6,
+     "top5Rate": 5.1,
+     "topQuartileRate": 34.5,
      "failureRate": 4.5,
-     "robustness": 44.6
+     "robustness": 44.5
     },
     "gates": [
      {
@@ -5251,8 +5353,8 @@
     "category": "战力",
     "templateId": "official-4548",
     "templateName": "决斗剑姬6决斗大师2福牛守护者",
-    "conditionScore": 73.5,
-    "conditionLift": 23.7,
+    "conditionScore": 73.4,
+    "conditionLift": 23.8,
     "fitGain": 16,
     "evidenceLevel": "L2 模型候选",
     "metrics": {
@@ -5263,10 +5365,10 @@
      ],
      "cvar10": 106.5,
      "top1Rate": 0.8,
-     "top5Rate": 7.7,
-     "topQuartileRate": 42.2,
+     "top5Rate": 7.5,
+     "topQuartileRate": 41.8,
      "failureRate": 2.1,
-     "robustness": 49.8
+     "robustness": 49.6
     },
     "gates": [
      {
@@ -5281,9 +5383,41 @@
    },
    {
     "category": "战力",
+    "templateId": "official-4576",
+    "templateName": "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
+    "conditionScore": 71.9,
+    "conditionLift": 33.5,
+    "fitGain": 18.4,
+    "evidenceLevel": "L1.5 高敏感假设",
+    "metrics": {
+     "meanUtility": 115.8,
+     "interval95": [
+      105.1,
+      126.8
+     ],
+     "cvar10": 106.2,
+     "top1Rate": 0.1,
+     "top5Rate": 20.7,
+     "topQuartileRate": 7.9,
+     "failureRate": 2.5,
+     "robustness": 38.4
+    },
+    "gates": [
+     {
+      "kind": "符文",
+      "value": "公理圆弧II"
+     }
+    ],
+    "reasons": [
+     "回蓝命中法系施法轴",
+     "文本数值折算+8.4适配"
+    ]
+   },
+   {
+    "category": "战力",
     "templateId": "official-1576",
     "templateName": "84机甲怪兽双子星3战斗机甲2护卫怪兽",
-    "conditionScore": 70.7,
+    "conditionScore": 70.6,
     "conditionLift": 36.7,
     "fitGain": 18.8,
     "evidenceLevel": "L1.5 高敏感假设",
@@ -5296,9 +5430,9 @@
      "cvar10": 102.1,
      "top1Rate": 0.1,
      "top5Rate": 1.1,
-     "topQuartileRate": 17.3,
+     "topQuartileRate": 17,
      "failureRate": 9.7,
-     "robustness": 34
+     "robustness": 33.9
     },
     "gates": [
      {
@@ -5328,7 +5462,7 @@
      "cvar10": 98.1,
      "top1Rate": 0,
      "top5Rate": 0.1,
-     "topQuartileRate": 2.6,
+     "topQuartileRate": 2.5,
      "failureRate": 33.3,
      "robustness": 19.6
     },
@@ -5348,7 +5482,7 @@
     "templateId": "official-4534",
     "templateName": "6斗拉面贾克斯6斗士3战斗机甲3护卫",
     "conditionScore": 69.1,
-    "conditionLift": 38.6,
+    "conditionLift": 38.7,
     "fitGain": 18.8,
     "evidenceLevel": "L1.5 高敏感假设",
     "metrics": {
@@ -5360,9 +5494,9 @@
      "cvar10": 102.2,
      "top1Rate": 0,
      "top5Rate": 0.1,
-     "topQuartileRate": 9.8,
+     "topQuartileRate": 9.7,
      "failureRate": 11.3,
-     "robustness": 30.5
+     "robustness": 30.4
     },
     "gates": [
      {
@@ -5380,7 +5514,7 @@
     "templateId": "manual-mascot-heart",
     "templateName": "吉祥物爱心 -> 猫咪/超英法系",
     "conditionScore": 69.1,
-    "conditionLift": 36.7,
+    "conditionLift": 36.8,
     "fitGain": 18.4,
     "evidenceLevel": "L1.5 高敏感假设",
     "metrics": {
@@ -5392,9 +5526,9 @@
      "cvar10": 101.7,
      "top1Rate": 0.2,
      "top5Rate": 1.7,
-     "topQuartileRate": 15.6,
+     "topQuartileRate": 15.4,
      "failureRate": 12.9,
-     "robustness": 32.4
+     "robustness": 32.3
     },
     "gates": [
      {
@@ -5411,22 +5545,22 @@
     "category": "战力",
     "templateId": "official-4524",
     "templateName": "无情连打贾克斯5战队机甲4斗士2护卫",
-    "conditionScore": 68.9,
-    "conditionLift": 27.8,
+    "conditionScore": 69,
+    "conditionLift": 27.7,
     "fitGain": 16,
     "evidenceLevel": "L1.5 高敏感假设",
     "metrics": {
-     "meanUtility": 114.4,
+     "meanUtility": 114.5,
      "interval95": [
-      104.7,
-      124.5
+      104.8,
+      124.6
      ],
-     "cvar10": 105.6,
+     "cvar10": 105.7,
      "top1Rate": 0,
      "top5Rate": 2.4,
-     "topQuartileRate": 25,
-     "failureRate": 2.8,
-     "robustness": 41.1
+     "topQuartileRate": 25.3,
+     "failureRate": 2.7,
+     "robustness": 41.3
     },
     "gates": [
      {
@@ -5443,22 +5577,22 @@
     "category": "战力",
     "templateId": "official-4533",
     "templateName": "超英赛娜3平民英雄3超级英雄2斗士",
-    "conditionScore": 67.4,
-    "conditionLift": 53.3,
+    "conditionScore": 67.6,
+    "conditionLift": 53,
     "fitGain": 21,
     "evidenceLevel": "L1.5 高敏感假设",
     "metrics": {
-     "meanUtility": 105.6,
+     "meanUtility": 105.8,
      "interval95": [
-      94.9,
-      116.4
+      95.1,
+      116.6
      ],
-     "cvar10": 95.8,
+     "cvar10": 96,
      "top1Rate": 0,
      "top5Rate": 0,
      "topQuartileRate": 0.1,
-     "failureRate": 45.9,
-     "robustness": 14.1
+     "failureRate": 44.3,
+     "robustness": 14.6
     },
     "gates": [
      {
@@ -5475,22 +5609,22 @@
     "category": "战力",
     "templateId": "official-1567",
     "templateName": "黑客贾克斯3战斗机甲2黑客2斗士",
-    "conditionScore": 66.1,
-    "conditionLift": 25.7,
+    "conditionScore": 66.3,
+    "conditionLift": 25.6,
     "fitGain": 14.6,
     "evidenceLevel": "L1.5 高敏感假设",
     "metrics": {
-     "meanUtility": 114.4,
+     "meanUtility": 114.5,
      "interval95": [
-      104.7,
-      124.4
+      104.8,
+      124.5
      ],
-     "cvar10": 105.7,
+     "cvar10": 105.8,
      "top1Rate": 0.1,
      "top5Rate": 2.5,
-     "topQuartileRate": 23.1,
-     "failureRate": 2.9,
-     "robustness": 40.4
+     "topQuartileRate": 23.6,
+     "failureRate": 2.8,
+     "robustness": 40.7
     },
     "gates": [
      {
@@ -5616,41 +5750,9 @@
      "cvar10": 101.1,
      "top1Rate": 0,
      "top5Rate": 0.3,
-     "topQuartileRate": 8.5,
+     "topQuartileRate": 8.3,
      "failureRate": 15.6,
      "robustness": 28.2
-    },
-    "gates": [
-     {
-      "kind": "符文",
-      "value": "药剂师 II"
-     }
-    ],
-    "reasons": [
-     "前排支持持续战触发",
-     "文本数值折算+7适配"
-    ]
-   },
-   {
-    "category": "战力",
-    "templateId": "official-4526",
-    "templateName": "决斗薇恩6决斗大师3源计划激光特工",
-    "conditionScore": 62,
-    "conditionLift": 34.1,
-    "fitGain": 16,
-    "evidenceLevel": "L1.5 高敏感假设",
-    "metrics": {
-     "meanUtility": 111.2,
-     "interval95": [
-      100.3,
-      122
-     ],
-     "cvar10": 101.6,
-     "top1Rate": 0,
-     "top5Rate": 0.2,
-     "topQuartileRate": 5.9,
-     "failureRate": 13.9,
-     "robustness": 27.9
     },
     "gates": [
      {
@@ -5669,22 +5771,22 @@
     "category": "经济",
     "templateId": "official-1378",
     "templateName": "95秘卫枪手3秘书卫士2福牛守护者",
-    "conditionScore": 95.3,
-    "conditionLift": 8.7,
+    "conditionScore": 95.4,
+    "conditionLift": 8.5,
     "fitGain": 22,
     "evidenceLevel": "L2.5 模型扰动稳健",
     "metrics": {
-     "meanUtility": 124,
+     "meanUtility": 124.1,
      "interval95": [
-      112.4,
-      135.3
+      112.5,
+      135.4
      ],
-     "cvar10": 113.5,
-     "top1Rate": 13.9,
-     "top5Rate": 67.1,
-     "topQuartileRate": 92.9,
+     "cvar10": 113.6,
+     "top1Rate": 14.4,
+     "top5Rate": 67.5,
+     "topQuartileRate": 93,
      "failureRate": 0,
-     "robustness": 86.6
+     "robustness": 86.9
     },
     "gates": [
      {
@@ -5703,21 +5805,21 @@
     "templateId": "official-1571",
     "templateName": "机甲秘术枪手3战斗机甲2枪手2吉祥物",
     "conditionScore": 95,
-    "conditionLift": 9.3,
+    "conditionLift": 9.2,
     "fitGain": 22,
     "evidenceLevel": "L2.5 模型扰动稳健",
     "metrics": {
-     "meanUtility": 123.7,
+     "meanUtility": 123.8,
      "interval95": [
-      112.2,
-      135.5
+      112.3,
+      135.6
      ],
-     "cvar10": 113.2,
-     "top1Rate": 23.8,
-     "top5Rate": 60.5,
-     "topQuartileRate": 94.1,
+     "cvar10": 113.3,
+     "top1Rate": 24.1,
+     "top5Rate": 60.7,
+     "topQuartileRate": 94.2,
      "failureRate": 0,
-     "robustness": 85.7
+     "robustness": 85.8
     },
     "gates": [
      {
@@ -5735,8 +5837,8 @@
     "category": "经济",
     "templateId": "official-1338",
     "templateName": "福牛混沌九五4福牛守护者3混沌战士2吉祥物",
-    "conditionScore": 94.5,
-    "conditionLift": 10.3,
+    "conditionScore": 94.4,
+    "conditionLift": 10.4,
     "fitGain": 22,
     "evidenceLevel": "L2.5 模型扰动稳健",
     "metrics": {
@@ -5746,11 +5848,11 @@
       134
      ],
      "cvar10": 113,
-     "top1Rate": 14,
-     "top5Rate": 59.3,
-     "topQuartileRate": 91.3,
+     "top1Rate": 13.7,
+     "top5Rate": 58.7,
+     "topQuartileRate": 91.1,
      "failureRate": 0.1,
-     "robustness": 84.2
+     "robustness": 84
     },
     "gates": [
      {
@@ -5768,8 +5870,8 @@
     "category": "经济",
     "templateId": "official-1406",
     "templateName": "情报特工怪兽卡莎4情报特工3怪兽",
-    "conditionScore": 93,
-    "conditionLift": 6.5,
+    "conditionScore": 92.9,
+    "conditionLift": 6.6,
     "fitGain": 16.4,
     "evidenceLevel": "L2.5 模型扰动稳健",
     "metrics": {
@@ -5779,11 +5881,11 @@
       134.4
      ],
      "cvar10": 114.3,
-     "top1Rate": 18.6,
-     "top5Rate": 62.3,
-     "topQuartileRate": 93.6,
+     "top1Rate": 18.3,
+     "top5Rate": 61.8,
+     "topQuartileRate": 93.5,
      "failureRate": 0,
-     "robustness": 86.5
+     "robustness": 86.3
     },
     "gates": [
      {
@@ -5800,22 +5902,22 @@
     "category": "经济",
     "templateId": "official-1402",
     "templateName": "登神决斗天使6决斗大师3源计划",
-    "conditionScore": 89.5,
-    "conditionLift": 19.5,
+    "conditionScore": 89.6,
+    "conditionLift": 19.3,
     "fitGain": 22,
     "evidenceLevel": "L2.5 模型扰动稳健",
     "metrics": {
-     "meanUtility": 120.1,
+     "meanUtility": 120.2,
      "interval95": [
-      108.1,
-      132.2
+      108.2,
+      132.3
      ],
-     "cvar10": 109.3,
-     "top1Rate": 5.1,
-     "top5Rate": 30.9,
-     "topQuartileRate": 76,
+     "cvar10": 109.4,
+     "top1Rate": 5.2,
+     "top5Rate": 31.3,
+     "topQuartileRate": 76.4,
      "failureRate": 0.5,
-     "robustness": 70
+     "robustness": 70.3
     },
     "gates": [
      {
@@ -5833,8 +5935,8 @@
     "category": "经济",
     "templateId": "official-1379",
     "templateName": "怪兽厄运小姐8怪兽1精英战士",
-    "conditionScore": 89.4,
-    "conditionLift": 19.7,
+    "conditionScore": 89.3,
+    "conditionLift": 19.8,
     "fitGain": 22,
     "evidenceLevel": "L2.5 模型扰动稳健",
     "metrics": {
@@ -5844,11 +5946,11 @@
       130.5
      ],
      "cvar10": 109.4,
-     "top1Rate": 3.6,
-     "top5Rate": 25,
-     "topQuartileRate": 77.9,
+     "top1Rate": 3.3,
+     "top5Rate": 24.5,
+     "topQuartileRate": 77.6,
      "failureRate": 0.4,
-     "robustness": 69.7
+     "robustness": 69.5
     },
     "gates": [
      {
@@ -5866,22 +5968,22 @@
     "category": "经济",
     "templateId": "official-1570",
     "templateName": "小天才九五5小天才2福牛守护者2吉祥物",
-    "conditionScore": 88.8,
-    "conditionLift": 10.8,
+    "conditionScore": 88.9,
+    "conditionLift": 10.6,
     "fitGain": 16.6,
     "evidenceLevel": "L2.5 模型扰动稳健",
     "metrics": {
-     "meanUtility": 121,
+     "meanUtility": 121.1,
      "interval95": [
-      111.6,
-      130.8
+      111.7,
+      130.9
      ],
-     "cvar10": 112.4,
-     "top1Rate": 6.7,
-     "top5Rate": 36.8,
-     "topQuartileRate": 88,
+     "cvar10": 112.5,
+     "top1Rate": 7,
+     "top5Rate": 37.3,
+     "topQuartileRate": 88.3,
      "failureRate": 0,
-     "robustness": 78
+     "robustness": 78.3
     },
     "gates": [
      {
@@ -5898,22 +6000,22 @@
     "category": "经济",
     "templateId": "official-1269",
     "templateName": "九五平民枪手3平民英雄2枪手2吉祥物",
-    "conditionScore": 88.2,
-    "conditionLift": 21.9,
+    "conditionScore": 88.3,
+    "conditionLift": 21.7,
     "fitGain": 22,
     "evidenceLevel": "L2.5 模型扰动稳健",
     "metrics": {
-     "meanUtility": 119.4,
+     "meanUtility": 119.5,
      "interval95": [
-      108.3,
-      130.7
+      108.4,
+      130.8
      ],
-     "cvar10": 109.3,
-     "top1Rate": 2.5,
-     "top5Rate": 22.9,
-     "topQuartileRate": 70.8,
+     "cvar10": 109.4,
+     "top1Rate": 2.6,
+     "top5Rate": 23.1,
+     "topQuartileRate": 71.2,
      "failureRate": 0.5,
-     "robustness": 66.3
+     "robustness": 66.6
     },
     "gates": [
      {
@@ -5931,8 +6033,8 @@
     "category": "经济",
     "templateId": "manual-civilian-gunner",
     "templateName": "平民枪手 -> 莎弥拉/九五枪手",
-    "conditionScore": 84.1,
-    "conditionLift": 29.6,
+    "conditionScore": 84,
+    "conditionLift": 29.7,
     "fitGain": 22,
     "evidenceLevel": "L2 模型候选",
     "metrics": {
@@ -5943,10 +6045,10 @@
      ],
      "cvar10": 106.4,
      "top1Rate": 0.2,
-     "top5Rate": 11.8,
-     "topQuartileRate": 52,
+     "top5Rate": 11.6,
+     "topQuartileRate": 51.7,
      "failureRate": 2.2,
-     "robustness": 54.5
+     "robustness": 54.3
     },
     "gates": [
      {
@@ -5964,22 +6066,22 @@
     "category": "经济",
     "templateId": "official-1294",
     "templateName": "鸟盾劫6决斗大师3源计划特工3黑客",
-    "conditionScore": 83.8,
+    "conditionScore": 83.9,
     "conditionLift": 3.5,
     "fitGain": 6,
     "evidenceLevel": "L2.5 模型扰动稳健",
     "metrics": {
-     "meanUtility": 122.5,
+     "meanUtility": 122.6,
      "interval95": [
-      110.8,
-      133.3
+      110.9,
+      133.4
      ],
-     "cvar10": 112,
-     "top1Rate": 5.5,
-     "top5Rate": 51.1,
-     "topQuartileRate": 87.2,
+     "cvar10": 112.1,
+     "top1Rate": 5.6,
+     "top5Rate": 51.3,
+     "topQuartileRate": 87.3,
      "failureRate": 0.1,
-     "robustness": 80.3
+     "robustness": 80.4
     },
     "gates": [
      {
@@ -5996,7 +6098,7 @@
     "templateId": "official-1290",
     "templateName": "星守灵能塔利娅5星之守护者4灵能使",
     "conditionScore": 80.6,
-    "conditionLift": 33.3,
+    "conditionLift": 33.4,
     "fitGain": 21.4,
     "evidenceLevel": "L2 模型候选",
     "metrics": {
@@ -6007,10 +6109,10 @@
      ],
      "cvar10": 104.9,
      "top1Rate": 0.3,
-     "top5Rate": 7.1,
-     "topQuartileRate": 40.1,
+     "top5Rate": 6.9,
+     "topQuartileRate": 39.9,
      "failureRate": 4.2,
-     "robustness": 47.3
+     "robustness": 47.2
     },
     "gates": [
      {
@@ -6027,22 +6129,22 @@
     "category": "经济",
     "templateId": "official-1566",
     "templateName": "秘卫斗士贾克斯4斗士3秘术卫士3战斗机甲",
-    "conditionScore": 79.4,
-    "conditionLift": 19.8,
+    "conditionScore": 79.8,
+    "conditionLift": 19.4,
     "fitGain": 16.6,
     "evidenceLevel": "L2.5 模型扰动稳健",
     "metrics": {
-     "meanUtility": 117.9,
+     "meanUtility": 118.1,
      "interval95": [
-      108.3,
-      128.1
+      108.5,
+      128.3
      ],
-     "cvar10": 109.3,
+     "cvar10": 109.5,
      "top1Rate": 0.2,
-     "top5Rate": 13.1,
-     "topQuartileRate": 58.9,
+     "top5Rate": 13.8,
+     "topQuartileRate": 60,
      "failureRate": 0.4,
-     "robustness": 59.6
+     "robustness": 60.4
     },
     "gates": [
      {
@@ -6059,22 +6161,22 @@
     "category": "经济",
     "templateId": "official-4524",
     "templateName": "无情连打贾克斯5战队机甲4斗士2护卫",
-    "conditionScore": 79.4,
-    "conditionLift": 38.3,
+    "conditionScore": 79.5,
+    "conditionLift": 38.2,
     "fitGain": 22,
     "evidenceLevel": "L1.5 高敏感假设",
     "metrics": {
-     "meanUtility": 114.4,
+     "meanUtility": 114.5,
      "interval95": [
-      104.7,
-      124.5
+      104.8,
+      124.6
      ],
-     "cvar10": 105.6,
+     "cvar10": 105.7,
      "top1Rate": 0,
      "top5Rate": 2.4,
-     "topQuartileRate": 25,
-     "failureRate": 2.8,
-     "robustness": 41.1
+     "topQuartileRate": 25.3,
+     "failureRate": 2.7,
+     "robustness": 41.3
     },
     "gates": [
      {
@@ -6093,7 +6195,7 @@
     "templateId": "manual-laser-duelist",
     "templateName": "源计划斗士/决斗 -> 卡莎/枪手/九五",
     "conditionScore": 78,
-    "conditionLift": 40.9,
+    "conditionLift": 41,
     "fitGain": 22,
     "evidenceLevel": "L1.5 高敏感假设",
     "metrics": {
@@ -6105,9 +6207,9 @@
      "cvar10": 102.6,
      "top1Rate": 0,
      "top5Rate": 0.6,
-     "topQuartileRate": 24,
+     "topQuartileRate": 23.7,
      "failureRate": 8.8,
-     "robustness": 37.1
+     "robustness": 37
     },
     "gates": [
      {
@@ -6126,7 +6228,7 @@
     "templateId": "official-1576",
     "templateName": "84机甲怪兽双子星3战斗机甲2护卫怪兽",
     "conditionScore": 76.9,
-    "conditionLift": 42.9,
+    "conditionLift": 43,
     "fitGain": 22,
     "evidenceLevel": "L1.5 高敏感假设",
     "metrics": {
@@ -6138,9 +6240,9 @@
      "cvar10": 102.1,
      "top1Rate": 0.1,
      "top5Rate": 1.1,
-     "topQuartileRate": 17.3,
+     "topQuartileRate": 17,
      "failureRate": 9.7,
-     "robustness": 34
+     "robustness": 33.9
     },
     "gates": [
      {
@@ -6158,22 +6260,22 @@
     "category": "经济",
     "templateId": "official-1376",
     "templateName": "超英露露3超级英雄5吉祥物2爱心使者",
-    "conditionScore": 75.9,
-    "conditionLift": 22.6,
+    "conditionScore": 76.1,
+    "conditionLift": 22.4,
     "fitGain": 16.4,
     "evidenceLevel": "L2 模型候选",
     "metrics": {
-     "meanUtility": 116.7,
+     "meanUtility": 116.8,
      "interval95": [
-      105.9,
-      128.4
+      106,
+      128.5
      ],
-     "cvar10": 106.8,
+     "cvar10": 106.9,
      "top1Rate": 1.4,
-     "top5Rate": 12.9,
-     "topQuartileRate": 47.7,
-     "failureRate": 1.8,
-     "robustness": 53.3
+     "top5Rate": 13.1,
+     "topQuartileRate": 48.3,
+     "failureRate": 1.6,
+     "robustness": 53.7
     },
     "gates": [
      {
@@ -6191,7 +6293,7 @@
     "templateId": "official-4540",
     "templateName": "幻灵厄运小姐5幻灵战队2淘气包2吉祥物",
     "conditionScore": 75.6,
-    "conditionLift": 45.2,
+    "conditionLift": 45.3,
     "fitGain": 22,
     "evidenceLevel": "L1.5 高敏感假设",
     "metrics": {
@@ -6202,10 +6304,10 @@
      ],
      "cvar10": 102,
      "top1Rate": 0,
-     "top5Rate": 0.6,
-     "topQuartileRate": 9.8,
+     "top5Rate": 0.5,
+     "topQuartileRate": 9.6,
      "failureRate": 11.6,
-     "robustness": 30.4
+     "robustness": 30.3
     },
     "gates": [
      {
@@ -6224,7 +6326,7 @@
     "templateId": "official-1256",
     "templateName": "超英伊泽瑞尔4情报特工3超级英雄2斗士",
     "conditionScore": 75.3,
-    "conditionLift": 23.2,
+    "conditionLift": 23.3,
     "fitGain": 16.4,
     "evidenceLevel": "L2 模型候选",
     "metrics": {
@@ -6234,11 +6336,11 @@
       127.3
      ],
      "cvar10": 106.9,
-     "top1Rate": 2.1,
-     "top5Rate": 11.3,
-     "topQuartileRate": 45.5,
+     "top1Rate": 1.9,
+     "top5Rate": 11.1,
+     "topQuartileRate": 45.2,
      "failureRate": 1.8,
-     "robustness": 52.1
+     "robustness": 52
     },
     "gates": [
      {
@@ -6255,8 +6357,8 @@
     "category": "经济",
     "templateId": "official-4548",
     "templateName": "决斗剑姬6决斗大师2福牛守护者",
-    "conditionScore": 74.1,
-    "conditionLift": 24.3,
+    "conditionScore": 74,
+    "conditionLift": 24.4,
     "fitGain": 16.4,
     "evidenceLevel": "L2 模型候选",
     "metrics": {
@@ -6267,10 +6369,10 @@
      ],
      "cvar10": 106.5,
      "top1Rate": 0.8,
-     "top5Rate": 7.7,
-     "topQuartileRate": 42.2,
+     "top5Rate": 7.5,
+     "topQuartileRate": 41.8,
      "failureRate": 2.1,
-     "robustness": 49.8
+     "robustness": 49.6
     },
     "gates": [
      {
@@ -6300,7 +6402,7 @@
      "cvar10": 98.5,
      "top1Rate": 0,
      "top5Rate": 0,
-     "topQuartileRate": 1,
+     "topQuartileRate": 0.9,
      "failureRate": 27.4,
      "robustness": 20.6
     },
@@ -6321,7 +6423,7 @@
     "templateId": "official-1412",
     "templateName": "超英猫咪3超级英雄3星之守护者2爱心使者",
     "conditionScore": 71.4,
-    "conditionLift": 26.8,
+    "conditionLift": 26.9,
     "fitGain": 16.4,
     "evidenceLevel": "L2 模型候选",
     "metrics": {
@@ -6332,10 +6434,10 @@
      ],
      "cvar10": 104.7,
      "top1Rate": 0.3,
-     "top5Rate": 5.3,
-     "topQuartileRate": 34.6,
+     "top5Rate": 5.1,
+     "topQuartileRate": 34.5,
      "failureRate": 4.5,
-     "robustness": 44.6
+     "robustness": 44.5
     },
     "gates": [
      {
@@ -6352,22 +6454,22 @@
     "category": "经济",
     "templateId": "official-1567",
     "templateName": "黑客贾克斯3战斗机甲2黑客2斗士",
-    "conditionScore": 69.3,
-    "conditionLift": 28.9,
+    "conditionScore": 69.4,
+    "conditionLift": 28.7,
     "fitGain": 16.4,
     "evidenceLevel": "L1.5 高敏感假设",
     "metrics": {
-     "meanUtility": 114.4,
+     "meanUtility": 114.5,
      "interval95": [
-      104.7,
-      124.4
+      104.8,
+      124.5
      ],
-     "cvar10": 105.7,
+     "cvar10": 105.8,
      "top1Rate": 0.1,
      "top5Rate": 2.5,
-     "topQuartileRate": 23.1,
-     "failureRate": 2.9,
-     "robustness": 40.4
+     "topQuartileRate": 23.6,
+     "failureRate": 2.8,
+     "robustness": 40.7
     },
     "gates": [
      {
@@ -6382,24 +6484,56 @@
    },
    {
     "category": "经济",
+    "templateId": "official-4576",
+    "templateName": "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
+    "conditionScore": 68.6,
+    "conditionLift": 30.2,
+    "fitGain": 16.6,
+    "evidenceLevel": "L1.5 高敏感假设",
+    "metrics": {
+     "meanUtility": 115.8,
+     "interval95": [
+      105.1,
+      126.8
+     ],
+     "cvar10": 106.2,
+     "top1Rate": 0.1,
+     "top5Rate": 20.7,
+     "topQuartileRate": 7.9,
+     "failureRate": 2.5,
+     "robustness": 38.4
+    },
+    "gates": [
+     {
+      "kind": "符文",
+      "value": "快速思考"
+     }
+    ],
+    "reasons": [
+     "刷新经济适配金克丝3星",
+     "金币折算提升成型可达性"
+    ]
+   },
+   {
+    "category": "经济",
     "templateId": "official-1271",
     "templateName": "地下魔盗团转952吉祥物2秘术卫士",
-    "conditionScore": 67.4,
-    "conditionLift": 60.5,
+    "conditionScore": 67.5,
+    "conditionLift": 60.4,
     "fitGain": 22,
     "evidenceLevel": "L1.5 高敏感假设",
     "metrics": {
-     "meanUtility": 101.4,
+     "meanUtility": 101.5,
      "interval95": [
-      90.3,
-      112.6
+      90.4,
+      112.7
      ],
-     "cvar10": 91.4,
+     "cvar10": 91.5,
      "top1Rate": 0,
      "top5Rate": 0,
      "topQuartileRate": 0,
-     "failureRate": 72.4,
-     "robustness": 6.9
+     "failureRate": 71.7,
+     "robustness": 7.1
     },
     "gates": [
      {
@@ -6412,38 +6546,6 @@
      "高费主C厄加特受益于等级概率",
      "金币折算提升成型可达性"
     ]
-   },
-   {
-    "category": "经济",
-    "templateId": "official-1327",
-    "templateName": "怪兽佐伊2黑客2淘气包怪兽",
-    "conditionScore": 65.8,
-    "conditionLift": 32.9,
-    "fitGain": 16.6,
-    "evidenceLevel": "L1.5 高敏感假设",
-    "metrics": {
-     "meanUtility": 111.8,
-     "interval95": [
-      101.3,
-      122
-     ],
-     "cvar10": 102.4,
-     "top1Rate": 0.1,
-     "top5Rate": 1.7,
-     "topQuartileRate": 14.4,
-     "failureRate": 10.7,
-     "robustness": 32.9
-    },
-    "gates": [
-     {
-      "kind": "符文",
-      "value": "快速思考"
-     }
-    ],
-    "reasons": [
-     "刷新经济适配佐伊3星",
-     "金币折算提升成型可达性"
-    ]
    }
   ],
   "装备": [
@@ -6451,8 +6553,8 @@
     "category": "装备",
     "templateId": "official-1338",
     "templateName": "福牛混沌九五4福牛守护者3混沌战士2吉祥物",
-    "conditionScore": 91.9,
-    "conditionLift": 7.7,
+    "conditionScore": 91.8,
+    "conditionLift": 7.8,
     "fitGain": 16.4,
     "evidenceLevel": "L2.5 模型扰动稳健",
     "metrics": {
@@ -6462,11 +6564,11 @@
       134
      ],
      "cvar10": 113,
-     "top1Rate": 14,
-     "top5Rate": 59.3,
-     "topQuartileRate": 91.3,
+     "top1Rate": 13.7,
+     "top5Rate": 58.7,
+     "topQuartileRate": 91.1,
      "failureRate": 0.1,
-     "robustness": 84.2
+     "robustness": 84
     },
     "gates": [
      {
@@ -6483,8 +6585,8 @@
     "category": "装备",
     "templateId": "official-1406",
     "templateName": "情报特工怪兽卡莎4情报特工3怪兽",
-    "conditionScore": 91.4,
-    "conditionLift": 4.9,
+    "conditionScore": 91.3,
+    "conditionLift": 5,
     "fitGain": 12.4,
     "evidenceLevel": "L2.5 模型扰动稳健",
     "metrics": {
@@ -6494,11 +6596,11 @@
       134.4
      ],
      "cvar10": 114.3,
-     "top1Rate": 18.6,
-     "top5Rate": 62.3,
-     "topQuartileRate": 93.6,
+     "top1Rate": 18.3,
+     "top5Rate": 61.8,
+     "topQuartileRate": 93.5,
      "failureRate": 0,
-     "robustness": 86.5
+     "robustness": 86.3
     },
     "gates": [
      {
@@ -6514,22 +6616,22 @@
     "category": "装备",
     "templateId": "official-1571",
     "templateName": "机甲秘术枪手3战斗机甲2枪手2吉祥物",
-    "conditionScore": 90.9,
+    "conditionScore": 91,
     "conditionLift": 5.2,
     "fitGain": 12.4,
     "evidenceLevel": "L2.5 模型扰动稳健",
     "metrics": {
-     "meanUtility": 123.7,
+     "meanUtility": 123.8,
      "interval95": [
-      112.2,
-      135.5
+      112.3,
+      135.6
      ],
-     "cvar10": 113.2,
-     "top1Rate": 23.8,
-     "top5Rate": 60.5,
-     "topQuartileRate": 94.1,
+     "cvar10": 113.3,
+     "top1Rate": 24.1,
+     "top5Rate": 60.7,
+     "topQuartileRate": 94.2,
      "failureRate": 0,
-     "robustness": 85.7
+     "robustness": 85.8
     },
     "gates": [
      {
@@ -6545,22 +6647,22 @@
     "category": "装备",
     "templateId": "official-1570",
     "templateName": "小天才九五5小天才2福牛守护者2吉祥物",
-    "conditionScore": 89.6,
-    "conditionLift": 11.6,
+    "conditionScore": 89.7,
+    "conditionLift": 11.4,
     "fitGain": 17.8,
     "evidenceLevel": "L2.5 模型扰动稳健",
     "metrics": {
-     "meanUtility": 121,
+     "meanUtility": 121.1,
      "interval95": [
-      111.6,
-      130.8
+      111.7,
+      130.9
      ],
-     "cvar10": 112.4,
-     "top1Rate": 6.7,
-     "top5Rate": 36.8,
-     "topQuartileRate": 88,
+     "cvar10": 112.5,
+     "top1Rate": 7,
+     "top5Rate": 37.3,
+     "topQuartileRate": 88.3,
      "failureRate": 0,
-     "robustness": 78
+     "robustness": 78.3
     },
     "gates": [
      {
@@ -6577,22 +6679,22 @@
     "category": "装备",
     "templateId": "official-1294",
     "templateName": "鸟盾劫6决斗大师3源计划特工3黑客",
-    "conditionScore": 89,
+    "conditionScore": 89.1,
     "conditionLift": 8.7,
     "fitGain": 15,
     "evidenceLevel": "L2.5 模型扰动稳健",
     "metrics": {
-     "meanUtility": 122.5,
+     "meanUtility": 122.6,
      "interval95": [
-      110.8,
-      133.3
+      110.9,
+      133.4
      ],
-     "cvar10": 112,
-     "top1Rate": 5.5,
-     "top5Rate": 51.1,
-     "topQuartileRate": 87.2,
+     "cvar10": 112.1,
+     "top1Rate": 5.6,
+     "top5Rate": 51.3,
+     "topQuartileRate": 87.3,
      "failureRate": 0.1,
-     "robustness": 80.3
+     "robustness": 80.4
     },
     "gates": [
      {
@@ -6609,22 +6711,22 @@
     "category": "装备",
     "templateId": "official-1402",
     "templateName": "登神决斗天使6决斗大师3源计划",
-    "conditionScore": 84.5,
-    "conditionLift": 14.5,
+    "conditionScore": 84.7,
+    "conditionLift": 14.4,
     "fitGain": 16.4,
     "evidenceLevel": "L2.5 模型扰动稳健",
     "metrics": {
-     "meanUtility": 120.1,
+     "meanUtility": 120.2,
      "interval95": [
-      108.1,
-      132.2
+      108.2,
+      132.3
      ],
-     "cvar10": 109.3,
-     "top1Rate": 5.1,
-     "top5Rate": 30.9,
-     "topQuartileRate": 76,
+     "cvar10": 109.4,
+     "top1Rate": 5.2,
+     "top5Rate": 31.3,
+     "topQuartileRate": 76.4,
      "failureRate": 0.5,
-     "robustness": 70
+     "robustness": 70.3
     },
     "gates": [
      {
@@ -6641,22 +6743,22 @@
     "category": "装备",
     "templateId": "official-1566",
     "templateName": "秘卫斗士贾克斯4斗士3秘术卫士3战斗机甲",
-    "conditionScore": 82.5,
-    "conditionLift": 22.9,
+    "conditionScore": 82.9,
+    "conditionLift": 22.5,
     "fitGain": 19.2,
     "evidenceLevel": "L2.5 模型扰动稳健",
     "metrics": {
-     "meanUtility": 117.9,
+     "meanUtility": 118.1,
      "interval95": [
-      108.3,
-      128.1
+      108.5,
+      128.3
      ],
-     "cvar10": 109.3,
+     "cvar10": 109.5,
      "top1Rate": 0.2,
-     "top5Rate": 13.1,
-     "topQuartileRate": 58.9,
+     "top5Rate": 13.8,
+     "topQuartileRate": 60,
      "failureRate": 0.4,
-     "robustness": 59.6
+     "robustness": 60.4
     },
     "gates": [
      {
@@ -6673,22 +6775,22 @@
     "category": "装备",
     "templateId": "official-4524",
     "templateName": "无情连打贾克斯5战队机甲4斗士2护卫",
-    "conditionScore": 74.5,
-    "conditionLift": 33.4,
+    "conditionScore": 74.6,
+    "conditionLift": 33.3,
     "fitGain": 19.2,
     "evidenceLevel": "L1.5 高敏感假设",
     "metrics": {
-     "meanUtility": 114.4,
+     "meanUtility": 114.5,
      "interval95": [
-      104.7,
-      124.5
+      104.8,
+      124.6
      ],
-     "cvar10": 105.6,
+     "cvar10": 105.7,
      "top1Rate": 0,
      "top5Rate": 2.4,
-     "topQuartileRate": 25,
-     "failureRate": 2.8,
-     "robustness": 41.1
+     "topQuartileRate": 25.3,
+     "failureRate": 2.7,
+     "robustness": 41.3
     },
     "gates": [
      {
@@ -6705,22 +6807,22 @@
     "category": "装备",
     "templateId": "official-1567",
     "templateName": "黑客贾克斯3战斗机甲2黑客2斗士",
-    "conditionScore": 74.2,
-    "conditionLift": 33.8,
+    "conditionScore": 74.3,
+    "conditionLift": 33.6,
     "fitGain": 19.2,
     "evidenceLevel": "L1.5 高敏感假设",
     "metrics": {
-     "meanUtility": 114.4,
+     "meanUtility": 114.5,
      "interval95": [
-      104.7,
-      124.4
+      104.8,
+      124.5
      ],
-     "cvar10": 105.7,
+     "cvar10": 105.8,
      "top1Rate": 0.1,
      "top5Rate": 2.5,
-     "topQuartileRate": 23.1,
-     "failureRate": 2.9,
-     "robustness": 40.4
+     "topQuartileRate": 23.6,
+     "failureRate": 2.8,
+     "robustness": 40.7
     },
     "gates": [
      {
@@ -6737,8 +6839,8 @@
     "category": "装备",
     "templateId": "official-4548",
     "templateName": "决斗剑姬6决斗大师2福牛守护者",
-    "conditionScore": 74.1,
-    "conditionLift": 24.3,
+    "conditionScore": 74,
+    "conditionLift": 24.4,
     "fitGain": 16.4,
     "evidenceLevel": "L2 模型候选",
     "metrics": {
@@ -6749,10 +6851,10 @@
      ],
      "cvar10": 106.5,
      "top1Rate": 0.8,
-     "top5Rate": 7.7,
-     "topQuartileRate": 42.2,
+     "top5Rate": 7.5,
+     "topQuartileRate": 41.8,
      "failureRate": 2.1,
-     "robustness": 49.8
+     "robustness": 49.6
     },
     "gates": [
      {
@@ -6769,7 +6871,7 @@
     "category": "装备",
     "templateId": "official-1290",
     "templateName": "星守灵能塔利娅5星之守护者4灵能使",
-    "conditionScore": 68.8,
+    "conditionScore": 68.7,
     "conditionLift": 21.5,
     "fitGain": 13.8,
     "evidenceLevel": "L2 模型候选",
@@ -6781,10 +6883,10 @@
      ],
      "cvar10": 104.9,
      "top1Rate": 0.3,
-     "top5Rate": 7.1,
-     "topQuartileRate": 40.1,
+     "top5Rate": 6.9,
+     "topQuartileRate": 39.9,
      "failureRate": 4.2,
-     "robustness": 47.3
+     "robustness": 47.2
     },
     "gates": [
      {
@@ -6798,10 +6900,42 @@
    },
    {
     "category": "装备",
+    "templateId": "official-4576",
+    "templateName": "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
+    "conditionScore": 68.2,
+    "conditionLift": 29.8,
+    "fitGain": 16.4,
+    "evidenceLevel": "L1.5 高敏感假设",
+    "metrics": {
+     "meanUtility": 115.8,
+     "interval95": [
+      105.1,
+      126.8
+     ],
+     "cvar10": 106.2,
+     "top1Rate": 0.1,
+     "top5Rate": 20.7,
+     "topQuartileRate": 7.9,
+     "failureRate": 2.5,
+     "robustness": 38.4
+    },
+    "gates": [
+     {
+      "kind": "符文",
+      "value": "整活锻炉"
+     }
+    ],
+    "reasons": [
+     "装备弹性86%，缓解瓶颈+1.4",
+     "高上限装备提供额外主C/前排期权"
+    ]
+   },
+   {
+    "category": "装备",
     "templateId": "official-1374",
     "templateName": "平民怪兽枪3平民英雄2枪手",
     "conditionScore": 67.8,
-    "conditionLift": 30.2,
+    "conditionLift": 30.3,
     "fitGain": 16.4,
     "evidenceLevel": "L1.5 高敏感假设",
     "metrics": {
@@ -6813,9 +6947,9 @@
      "cvar10": 102.8,
      "top1Rate": 0.1,
      "top5Rate": 1.4,
-     "topQuartileRate": 24.2,
+     "topQuartileRate": 23.9,
      "failureRate": 8.1,
-     "robustness": 37.6
+     "robustness": 37.5
     },
     "gates": [
      {
@@ -6832,7 +6966,7 @@
     "category": "装备",
     "templateId": "official-1576",
     "templateName": "84机甲怪兽双子星3战斗机甲2护卫怪兽",
-    "conditionScore": 66,
+    "conditionScore": 65.9,
     "conditionLift": 32,
     "fitGain": 16.4,
     "evidenceLevel": "L1.5 高敏感假设",
@@ -6845,9 +6979,9 @@
      "cvar10": 102.1,
      "top1Rate": 0.1,
      "top5Rate": 1.1,
-     "topQuartileRate": 17.3,
+     "topQuartileRate": 17,
      "failureRate": 9.7,
-     "robustness": 34
+     "robustness": 33.9
     },
     "gates": [
      {
@@ -6865,7 +6999,7 @@
     "templateId": "official-4526",
     "templateName": "决斗薇恩6决斗大师3源计划激光特工",
     "conditionScore": 65.8,
-    "conditionLift": 37.9,
+    "conditionLift": 38,
     "fitGain": 17.8,
     "evidenceLevel": "L1.5 高敏感假设",
     "metrics": {
@@ -6876,10 +7010,10 @@
      ],
      "cvar10": 101.6,
      "top1Rate": 0,
-     "top5Rate": 0.2,
-     "topQuartileRate": 5.9,
+     "top5Rate": 0.1,
+     "topQuartileRate": 5.8,
      "failureRate": 13.9,
-     "robustness": 27.9
+     "robustness": 27.8
     },
     "gates": [
      {
@@ -6941,7 +7075,7 @@
      "cvar10": 99,
      "top1Rate": 0,
      "top5Rate": 0.1,
-     "topQuartileRate": 2.2,
+     "topQuartileRate": 2.1,
      "failureRate": 25.8,
      "robustness": 21.8
     },
@@ -6973,7 +7107,7 @@
      "cvar10": 98.1,
      "top1Rate": 0,
      "top5Rate": 0.1,
-     "topQuartileRate": 2.6,
+     "topQuartileRate": 2.5,
      "failureRate": 33.3,
      "robustness": 19.6
     },
@@ -7005,7 +7139,7 @@
      "cvar10": 101.1,
      "top1Rate": 0,
      "top5Rate": 0.3,
-     "topQuartileRate": 8.5,
+     "topQuartileRate": 8.3,
      "failureRate": 15.6,
      "robustness": 28.2
     },
@@ -7069,7 +7203,7 @@
      "cvar10": 98,
      "top1Rate": 0,
      "top5Rate": 0,
-     "topQuartileRate": 1.5,
+     "topQuartileRate": 1.4,
      "failureRate": 32,
      "robustness": 19.4
     },
@@ -7150,56 +7284,24 @@
    },
    {
     "category": "装备",
-    "templateId": "official-1589",
-    "templateName": "金钟罩李青4爱心使者3秘术卫士2AI程序",
-    "conditionScore": 56.7,
-    "conditionLift": 48,
-    "fitGain": 17.8,
-    "evidenceLevel": "L1.5 高敏感假设",
-    "metrics": {
-     "meanUtility": 103.1,
-     "interval95": [
-      93.2,
-      113
-     ],
-     "cvar10": 94.1,
-     "top1Rate": 0,
-     "top5Rate": 0,
-     "topQuartileRate": 0,
-     "failureRate": 65.3,
-     "robustness": 8.7
-    },
-    "gates": [
-     {
-      "kind": "符文",
-      "value": "便携锻炉"
-     }
-    ],
-    "reasons": [
-     "装备弹性72%，缓解瓶颈+2.8",
-     "高上限装备提供额外主C/前排期权"
-    ]
-   },
-   {
-    "category": "装备",
     "templateId": "official-4532",
     "templateName": "小天才璐璐5小天才4吉祥物",
-    "conditionScore": 56.5,
-    "conditionLift": 25.1,
+    "conditionScore": 56.7,
+    "conditionLift": 25,
     "fitGain": 12.4,
     "evidenceLevel": "L1.5 高敏感假设",
     "metrics": {
-     "meanUtility": 111.6,
+     "meanUtility": 111.7,
      "interval95": [
-      100.8,
-      123.1
+      100.9,
+      123.2
      ],
-     "cvar10": 101.6,
+     "cvar10": 101.7,
      "top1Rate": 0.3,
      "top5Rate": 1.9,
-     "topQuartileRate": 13.5,
-     "failureRate": 13.3,
-     "robustness": 31.4
+     "topQuartileRate": 13.8,
+     "failureRate": 12.9,
+     "robustness": 31.7
     },
     "gates": [
      {

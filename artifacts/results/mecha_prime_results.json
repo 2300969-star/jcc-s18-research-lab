@@ -1,6 +1,6 @@
 {
- "version": "17.17.6b-S18",
- "generated": "2026-07-12",
+ "version": "17.17.7-S18",
+ "generated": "2026-07-17",
  "source": {
   "route": "战斗机甲：德莱文 -> 贾克斯 -> 蕾欧娜",
   "stages": "transition_results.json.routes[].stages（由机甲分叉/过渡脚本产出）",

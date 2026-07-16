@@ -6,9 +6,9 @@
 
 **金铲铲之战「怪兽入侵」阵容发现、数值实验与对局决策研究系统**
 
-[![version](https://img.shields.io/badge/version-17.17.6b--S18-0969da?style=flat-square)](data/chess.js)
-[![routes](https://img.shields.io/badge/certified_routes-60-8250df?style=flat-square)](artifacts/results/route_certification_results.json)
-[![virtual battles](https://img.shields.io/badge/paired_virtual_battles-21%2C240-1f883d?style=flat-square)](docs/reports/虚拟实战数字孪生.md)
+[![version](https://img.shields.io/badge/version-17.17.7--S18-0969da?style=flat-square)](data/chess.js)
+[![routes](https://img.shields.io/badge/certified_routes-61-8250df?style=flat-square)](artifacts/results/route_certification_results.json)
+[![virtual battles](https://img.shields.io/badge/paired_virtual_battles-21%2C960-1f883d?style=flat-square)](docs/reports/虚拟实战数字孪生.md)
 [![CI](https://img.shields.io/github/actions/workflow/status/2300969-star/jcc-s18-research-lab/ci.yml?style=flat-square&label=tests)](https://github.com/2300969-star/jcc-s18-research-lab/actions)
 [![license](https://img.shields.io/badge/code_license-MIT-f1e05a?style=flat-square)](LICENSE)
 
@@ -87,7 +87,7 @@ The LLM is deliberately outside the ranking loop. It may translate unrecognized 
 - 将“命中多少条路线偏好”标为覆盖统计，不参与排序；
 - 信息不足或证据未经验证时不默认标绿第一张，也不强行给出首推。
 
-机制取值、来源等级、已确认项和未知项见 [怪兽入侵机制知识审计](docs/reports/怪兽入侵机制知识审计.md)。规则集快照位于 [`data/ruleset/monster-invasion-17.6b.json`](data/ruleset/monster-invasion-17.6b.json)。
+机制取值、来源等级、已确认项和未知项见 [怪兽入侵机制知识审计](docs/reports/怪兽入侵机制知识审计.md)。规则集快照位于 [`data/ruleset/monster-invasion-17.7.json`](data/ruleset/monster-invasion-17.7.json)，本次更新的数值差分与重算结论见 [17.7 版本更新重算](docs/reports/17.7版本更新重算.md)。
 
 ## Research Figures / 研究图谱
 
@@ -137,7 +137,7 @@ The certification chart summarizes the current top ten under shared uncertainty 
   <img src="docs/images/research/validation-tier-correlation.svg" alt="Official tier and model score correlation" width="78%">
 </p>
 
-The validation boundary is intentionally visible: the current official-tier correlation is only `Spearman ρ = 0.244` across 44 lineups. The system therefore reports model evidence, not a claim that its ranking is already ground truth.
+The validation boundary is intentionally visible: the current official-tier correlation is only `Spearman ρ = 0.234` across 45 lineups. The system therefore reports model evidence, not a claim that its ranking is already ground truth.
 
 ## Model Highlights
 
@@ -172,7 +172,7 @@ q_e = { L2.5: 1.00, L2: 0.65, L1.5: 0.35 }
 
 ### Digital-twin boundary
 
-The event engine currently evaluates all **60 routes in 1,770 pairings and 21,240 side-swapped battles**. Every pairing reuses the same random seed after swapping sides, then reports win rate, health margin, lower-tail CVaR, and mechanism coverage. Unsupported mechanics shrink the Match Mode prior toward zero instead of being silently treated as verified.
+The event engine currently evaluates all **61 routes in 1,830 pairings and 21,960 side-swapped battles**. Every pairing reuses the same random seed after swapping sides, then reports win rate, health margin, lower-tail CVaR, and mechanism coverage. Unsupported mechanics shrink the Match Mode prior toward zero instead of being silently treated as verified.
 
 The result is a **model-internal dominance claim**, not an observed ladder win rate. Public guides may seed candidate generation, but they do not calibrate ranking weights. The fast Match Mode model receives at most a bounded `±12` point prior from the event simulator:
 
@@ -221,7 +221,7 @@ npm run build:model        # combat model, item search, full-team search
 npm run build:discovery    # lineup discovery, transitions, numeric lens
 npm run build:experiments  # Jinx sisters and Mecha experiments
 npm run build:matcher      # stage matcher and route certification
-npm run build:virtual      # 21,240 paired full-team event battles
+npm run build:virtual      # 21,960 paired full-team event battles
 npm run research:community # audit public guides/videos as evidence, not ground truth
 npm run audit              # data, skill, item, and outlier audits
 npm run figures            # regenerate README research figures
@@ -273,6 +273,7 @@ npm run update:data
 - [机甲分叉实验](docs/reports/机甲分叉实验.md)
 - [至尊机甲实验](docs/reports/至尊机甲实验.md)
 - [数值与 Bug 审计](docs/reports/数值与Bug审计.md)
+- [17.7 版本更新重算](docs/reports/17.7版本更新重算.md)
 
 ## Regression Philosophy
 

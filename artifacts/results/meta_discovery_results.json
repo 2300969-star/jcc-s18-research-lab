@@ -1,6 +1,6 @@
 {
- "version": "17.17.6b-S18",
- "generated": "2026-07-12",
+ "version": "17.17.7-S18",
+ "generated": "2026-07-17",
  "methodology": {
   "stable": "官方S级与全英雄束搜索阵容统一按全队战力公式排序。",
   "conditional": "英雄强化文本转机制场景，固定硬门槛后重新搜索棋盘和装备，与无强化基线做反事实差分。",
@@ -55,8 +55,8 @@
      "price": 5
     }
    ],
-   "score": 2119,
-   "carryDps": 1227,
+   "score": 2141,
+   "carryDps": 1249,
    "frontEHP": 16107,
    "subDps": 229,
    "util": 3,
@@ -279,8 +279,8 @@
       "label": "后期",
       "level": 8,
       "carry": "蕾欧娜",
-      "score": 2119,
-      "method": "终局模型总分2119，主C模拟1227/秒",
+      "score": 2141,
+      "method": "终局模型总分2141，主C模拟1249/秒",
       "team": [
        "蕾欧娜",
        "德莱文",
@@ -419,11 +419,11 @@
       138.8
      ],
      "cvar10": 117.6,
-     "top1Rate": 77,
-     "top5Rate": 98.8,
-     "topQuartileRate": 95.9,
+     "top1Rate": 76.3,
+     "top5Rate": 98.2,
+     "topQuartileRate": 94.2,
      "failureRate": 0,
-     "robustness": 96.7
+     "robustness": 95.9
     },
     "drivers": [
      "转型重合67%",
@@ -484,8 +484,8 @@
      "price": 5
     }
    ],
-   "score": 1974,
-   "carryDps": 1147,
+   "score": 1989,
+   "carryDps": 1162,
    "frontEHP": 14682,
    "subDps": 229,
    "util": 3,
@@ -710,8 +710,8 @@
       "label": "后期",
       "level": 8,
       "carry": "贾克斯",
-      "score": 1974,
-      "method": "终局模型总分1974，主C模拟1147/秒",
+      "score": 1989,
+      "method": "终局模型总分1989，主C模拟1162/秒",
       "team": [
        "贾克斯",
        "德莱文",
@@ -918,17 +918,17 @@
     "evidenceLevel": "L2.5 模型扰动稳健",
     "priorPoints": 1,
     "metrics": {
-     "meanUtility": 117.9,
+     "meanUtility": 118.1,
      "interval95": [
-      108.3,
-      128.1
+      108.5,
+      128.3
      ],
-     "cvar10": 109.3,
+     "cvar10": 109.5,
      "top1Rate": 0.2,
-     "top5Rate": 13.1,
-     "topQuartileRate": 58.9,
+     "top5Rate": 13.8,
+     "topQuartileRate": 60,
      "failureRate": 0.4,
-     "robustness": 59.6
+     "robustness": 60.4
     },
     "drivers": [
      "转型重合25%",
@@ -983,24 +983,24 @@
      "price": 5
     },
     {
-     "name": "卡蜜尔",
-     "price": 2
+     "name": "艾克",
+     "price": 4
     }
    ],
-   "score": 1765,
-   "carryDps": 897,
-   "frontEHP": 15738,
-   "subDps": 170,
-   "util": 4.5,
+   "score": 1812,
+   "carryDps": 918,
+   "frontEHP": 16276,
+   "subDps": 188,
+   "util": 4,
    "acts": [
     "3黑客",
+    "2淘气包",
     "2灵能使",
     "2强袭枪手",
     "1气象主播",
     "1枪神",
     "1精英战士",
     "1平民英雄",
-    "2AI程序",
     "3源计划：激光特工"
    ],
    "tankDetail": [
@@ -1014,8 +1014,8 @@
      ]
     },
     {
-     "hero": "劫",
-     "ehp": 7501,
+     "hero": "艾克",
+     "ehp": 8040,
      "items": [
       "石像鬼石板甲",
       "日炎斗篷",
@@ -1024,7 +1024,7 @@
     }
    ],
    "source": "solver",
-   "displayName": "模型·佐伊·3黑客2灵能使",
+   "displayName": "模型·佐伊·3黑客2淘气包",
    "presentation": {
     "stages": [
      {
@@ -1212,8 +1212,8 @@
       "label": "后期",
       "level": 8,
       "carry": "佐伊",
-      "score": 1765,
-      "method": "终局模型总分1765，主C模拟897/秒",
+      "score": 1812,
+      "method": "终局模型总分1812，主C模拟918/秒",
       "team": [
        "佐伊",
        "迦娜",
@@ -1222,14 +1222,14 @@
        "劫",
        "赛娜",
        "厄斐琉斯",
-       "卡蜜尔"
+       "艾克"
       ],
       "traits": [
        "3黑客",
        "3源计划：激光特工",
+       "2淘气包",
        "2灵能使",
        "2强袭枪手",
-       "2AI程序",
        "1气象主播",
        "1枪神",
        "1精英战士",
@@ -1250,7 +1250,7 @@
         ]
        },
        {
-        "name": "劫",
+        "name": "艾克",
         "price": 4,
         "row": 1,
         "col": 2,
@@ -1261,15 +1261,6 @@
          "日炎斗篷",
          "狂徒铠甲"
         ]
-       },
-       {
-        "name": "卡蜜尔",
-        "price": 2,
-        "row": 1,
-        "col": 3,
-        "role": "控制",
-        "carry": false,
-        "items": []
        },
        {
         "name": "佐伊",
@@ -1283,6 +1274,15 @@
          "鬼索的狂暴之刃",
          "蓝霸符"
         ]
+       },
+       {
+        "name": "劫",
+        "price": 4,
+        "row": 2,
+        "col": 4,
+        "role": "战士",
+        "carry": false,
+        "items": []
        },
        {
         "name": "迦娜",
@@ -1369,7 +1369,7 @@
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。",
     "matchedRoute": "灵能佐伊4灵能使3小天才2AI程序",
-    "matchScore": 37.9
+    "matchScore": 43.5
    }
   },
   {
@@ -1415,8 +1415,8 @@
      "price": 4
     }
    ],
-   "score": 1752,
-   "carryDps": 928,
+   "score": 1755,
+   "carryDps": 930,
    "frontEHP": 16276,
    "subDps": 154,
    "util": 0.5,
@@ -1638,8 +1638,8 @@
       "label": "后期",
       "level": 8,
       "carry": "凯尔",
-      "score": 1752,
-      "method": "终局模型总分1752，主C模拟928/秒",
+      "score": 1755,
+      "method": "终局模型总分1755，主C模拟930/秒",
       "team": [
        "凯尔",
        "劫",
@@ -1770,17 +1770,17 @@
     "evidenceLevel": "L2.5 模型扰动稳健",
     "priorPoints": 2,
     "metrics": {
-     "meanUtility": 120.1,
+     "meanUtility": 120.2,
      "interval95": [
-      108.1,
-      132.2
+      108.2,
+      132.3
      ],
-     "cvar10": 109.3,
-     "top1Rate": 5.1,
-     "top5Rate": 30.9,
-     "topQuartileRate": 76,
+     "cvar10": 109.4,
+     "top1Rate": 5.2,
+     "top5Rate": 31.3,
+     "topQuartileRate": 76.4,
      "failureRate": 0.5,
-     "robustness": 70
+     "robustness": 70.3
     },
     "drivers": [
      "转型重合43%",
@@ -1839,8 +1839,8 @@
      "price": 4
     }
    ],
-   "score": 1721,
-   "carryDps": 898,
+   "score": 1724,
+   "carryDps": 901,
    "frontEHP": 16276,
    "subDps": 151,
    "util": 0.5,
@@ -2065,8 +2065,8 @@
       "label": "后期",
       "level": 8,
       "carry": "薇恩",
-      "score": 1721,
-      "method": "终局模型总分1721，主C模拟898/秒",
+      "score": 1724,
+      "method": "终局模型总分1724，主C模拟901/秒",
       "team": [
        "薇恩",
        "劫",
@@ -2205,10 +2205,10 @@
      ],
      "cvar10": 101.6,
      "top1Rate": 0,
-     "top5Rate": 0.2,
-     "topQuartileRate": 5.9,
+     "top5Rate": 0.1,
+     "topQuartileRate": 5.8,
      "failureRate": 13.9,
-     "robustness": 27.9
+     "robustness": 27.8
     },
     "drivers": [
      "转型重合49%",
@@ -2271,17 +2271,17 @@
     "evidenceLevel": "L1.5 高敏感假设",
     "priorPoints": -1,
     "metrics": {
-     "meanUtility": 114.4,
+     "meanUtility": 114.5,
      "interval95": [
-      104.7,
-      124.4
+      104.8,
+      124.5
      ],
-     "cvar10": 105.7,
+     "cvar10": 105.8,
      "top1Rate": 0.1,
      "top5Rate": 2.5,
-     "topQuartileRate": 23.1,
-     "failureRate": 2.9,
-     "robustness": 40.4
+     "topQuartileRate": 23.6,
+     "failureRate": 2.8,
+     "robustness": 40.7
     },
     "drivers": [
      "转型重合25%",
@@ -2294,225 +2294,6 @@
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。",
     "matchedRoute": "黑客贾克斯3战斗机甲2黑客2斗士",
-    "matchScore": 75
-   }
-  },
-  {
-   "name": "小天才九五",
-   "carry": "佐伊",
-   "score": 1595,
-   "carryDps": 627,
-   "frontEHP": 18570,
-   "subDps": 157,
-   "util": 3,
-   "acts": [
-    "2吉祥物",
-    "2秘术卫士",
-    "5小天才",
-    "2福牛守护者",
-    "1怪兽",
-    "1堕落使者"
-   ],
-   "tankDetail": [
-    {
-     "hero": "努努和威朗普",
-     "ehp": 10618,
-     "items": [
-      "狂徒铠甲",
-      "狂徒铠甲",
-      "圣盾使的誓约"
-     ]
-    },
-    {
-     "hero": "费德提克",
-     "ehp": 7951,
-     "items": [
-      "石像鬼石板甲",
-      "日炎斗篷",
-      "狂徒铠甲"
-     ]
-    }
-   ],
-   "source": "official",
-   "displayName": "小天才九五",
-   "presentation": null,
-   "certification": {
-    "templateId": "official-1570",
-    "templateName": "小天才九五5小天才2福牛守护者2吉祥物",
-    "peerGroup": "常规路线",
-    "sampleSize": 5000,
-    "seed": 20260712,
-    "evidenceLevel": "L2.5 模型扰动稳健",
-    "priorPoints": 3,
-    "metrics": {
-     "meanUtility": 121,
-     "interval95": [
-      111.6,
-      130.8
-     ],
-     "cvar10": 112.4,
-     "top1Rate": 6.7,
-     "top5Rate": 36.8,
-     "topQuartileRate": 88,
-     "failureRate": 0,
-     "robustness": 78
-    },
-    "drivers": [
-     "转型重合33%",
-     "装备弹性72%",
-     "7级追佐伊3星"
-    ],
-    "dependencies": [
-     "佐伊3星",
-     "三件套:蓝霸符+珠光护手+班克斯的魔法帽"
-    ],
-    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。",
-    "matchedRoute": "小天才九五5小天才2福牛守护者2吉祥物",
-    "matchScore": 75
-   }
-  },
-  {
-   "name": "决斗薇恩",
-   "carry": "薇恩",
-   "score": 1548,
-   "carryDps": 682,
-   "frontEHP": 16466,
-   "subDps": 175,
-   "util": 2,
-   "acts": [
-    "6决斗大师",
-    "2情报特工",
-    "1怪兽",
-    "3源计划：激光特工",
-    "1堕落使者"
-   ],
-   "tankDetail": [
-    {
-     "hero": "费德提克",
-     "ehp": 8068,
-     "items": [
-      "狂徒铠甲",
-      "狂徒铠甲",
-      "圣盾使的誓约"
-     ]
-    },
-    {
-     "hero": "瑟庄妮",
-     "ehp": 8398,
-     "items": [
-      "石像鬼石板甲",
-      "日炎斗篷",
-      "狂徒铠甲"
-     ]
-    }
-   ],
-   "source": "official",
-   "displayName": "决斗薇恩",
-   "presentation": null,
-   "certification": {
-    "templateId": "official-4526",
-    "templateName": "决斗薇恩6决斗大师3源计划激光特工",
-    "peerGroup": "常规路线",
-    "sampleSize": 5000,
-    "seed": 20260712,
-    "evidenceLevel": "L1.5 高敏感假设",
-    "priorPoints": -2,
-    "metrics": {
-     "meanUtility": 111.2,
-     "interval95": [
-      100.3,
-      122
-     ],
-     "cvar10": 101.6,
-     "top1Rate": 0,
-     "top5Rate": 0.2,
-     "topQuartileRate": 5.9,
-     "failureRate": 13.9,
-     "robustness": 27.9
-    },
-    "drivers": [
-     "转型重合49%",
-     "装备弹性72%",
-     "7级追薇恩3星"
-    ],
-    "dependencies": [
-     "薇恩3星",
-     "三件套:卢安娜的飓风+巨人捕手+锐利之刃"
-    ],
-    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。",
-    "matchedRoute": "决斗薇恩6决斗大师3源计划激光特工",
-    "matchScore": 75
-   }
-  },
-  {
-   "name": "登神决斗天使",
-   "carry": "凯尔",
-   "score": 1540,
-   "carryDps": 677,
-   "frontEHP": 16466,
-   "subDps": 169,
-   "util": 2,
-   "acts": [
-    "6决斗大师",
-    "1怪兽",
-    "3源计划：激光特工",
-    "1堕落使者"
-   ],
-   "tankDetail": [
-    {
-     "hero": "费德提克",
-     "ehp": 8068,
-     "items": [
-      "狂徒铠甲",
-      "狂徒铠甲",
-      "圣盾使的誓约"
-     ]
-    },
-    {
-     "hero": "瑟庄妮",
-     "ehp": 8398,
-     "items": [
-      "石像鬼石板甲",
-      "日炎斗篷",
-      "狂徒铠甲"
-     ]
-    }
-   ],
-   "source": "official",
-   "displayName": "登神决斗天使",
-   "presentation": null,
-   "certification": {
-    "templateId": "official-1402",
-    "templateName": "登神决斗天使6决斗大师3源计划",
-    "peerGroup": "常规路线",
-    "sampleSize": 5000,
-    "seed": 20260712,
-    "evidenceLevel": "L2.5 模型扰动稳健",
-    "priorPoints": 2,
-    "metrics": {
-     "meanUtility": 120.1,
-     "interval95": [
-      108.1,
-      132.2
-     ],
-     "cvar10": 109.3,
-     "top1Rate": 5.1,
-     "top5Rate": 30.9,
-     "topQuartileRate": 76,
-     "failureRate": 0.5,
-     "robustness": 70
-    },
-    "drivers": [
-     "转型重合43%",
-     "装备弹性86%",
-     "5级追凯尔3星"
-    ],
-    "dependencies": [
-     "凯尔3星",
-     "三件套:卢安娜的飓风+无尽之刃+最后的轻语"
-    ],
-    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。",
-    "matchedRoute": "登神决斗天使6决斗大师3源计划",
     "matchScore": 75
    }
   },
@@ -2559,8 +2340,8 @@
      "price": 3
     }
    ],
-   "score": 1526,
-   "carryDps": 893,
+   "score": 1626,
+   "carryDps": 993,
    "frontEHP": 11364,
    "subDps": 158,
    "util": 2.5,
@@ -2602,8 +2383,8 @@
       "label": "前期",
       "level": 5,
       "carry": "卡莎",
-      "score": 1168,
-      "method": "阶段战力1168，转型相容度74",
+      "score": 1192,
+      "method": "阶段战力1192，转型相容度75",
       "team": [
        "卡莎",
        "拉克丝",
@@ -2681,8 +2462,8 @@
       "label": "中期",
       "level": 7,
       "carry": "卡莎",
-      "score": 1261,
-      "method": "阶段战力1261，转型相容度69",
+      "score": 1297,
+      "method": "阶段战力1297，转型相容度71",
       "team": [
        "卡莎",
        "悠米",
@@ -2782,8 +2563,8 @@
       "label": "后期",
       "level": 8,
       "carry": "卡莎",
-      "score": 1526,
-      "method": "终局模型总分1526，主C模拟893/秒",
+      "score": 1626,
+      "method": "终局模型总分1626，主C模拟993/秒",
       "team": [
        "卡莎",
        "迦娜",
@@ -2920,11 +2701,11 @@
       134.4
      ],
      "cvar10": 114.3,
-     "top1Rate": 18.6,
-     "top5Rate": 62.3,
-     "topQuartileRate": 93.6,
+     "top1Rate": 18.3,
+     "top5Rate": 61.8,
+     "topQuartileRate": 93.5,
      "failureRate": 0,
-     "robustness": 86.5
+     "robustness": 86.3
     },
     "drivers": [
      "转型重合55%",
@@ -2938,6 +2719,225 @@
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。",
     "matchedRoute": "情报特工怪兽卡莎4情报特工3怪兽",
     "matchScore": 40
+   }
+  },
+  {
+   "name": "小天才九五",
+   "carry": "佐伊",
+   "score": 1595,
+   "carryDps": 627,
+   "frontEHP": 18570,
+   "subDps": 157,
+   "util": 3,
+   "acts": [
+    "2吉祥物",
+    "2秘术卫士",
+    "5小天才",
+    "2福牛守护者",
+    "1怪兽",
+    "1堕落使者"
+   ],
+   "tankDetail": [
+    {
+     "hero": "努努和威朗普",
+     "ehp": 10618,
+     "items": [
+      "狂徒铠甲",
+      "狂徒铠甲",
+      "圣盾使的誓约"
+     ]
+    },
+    {
+     "hero": "费德提克",
+     "ehp": 7951,
+     "items": [
+      "石像鬼石板甲",
+      "日炎斗篷",
+      "狂徒铠甲"
+     ]
+    }
+   ],
+   "source": "official",
+   "displayName": "小天才九五",
+   "presentation": null,
+   "certification": {
+    "templateId": "official-1570",
+    "templateName": "小天才九五5小天才2福牛守护者2吉祥物",
+    "peerGroup": "常规路线",
+    "sampleSize": 5000,
+    "seed": 20260712,
+    "evidenceLevel": "L2.5 模型扰动稳健",
+    "priorPoints": 3,
+    "metrics": {
+     "meanUtility": 121.1,
+     "interval95": [
+      111.7,
+      130.9
+     ],
+     "cvar10": 112.5,
+     "top1Rate": 7,
+     "top5Rate": 37.3,
+     "topQuartileRate": 88.3,
+     "failureRate": 0,
+     "robustness": 78.3
+    },
+    "drivers": [
+     "转型重合33%",
+     "装备弹性72%",
+     "7级追佐伊3星"
+    ],
+    "dependencies": [
+     "佐伊3星",
+     "三件套:蓝霸符+珠光护手+班克斯的魔法帽"
+    ],
+    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。",
+    "matchedRoute": "小天才九五5小天才2福牛守护者2吉祥物",
+    "matchScore": 75
+   }
+  },
+  {
+   "name": "决斗薇恩",
+   "carry": "薇恩",
+   "score": 1548,
+   "carryDps": 682,
+   "frontEHP": 16466,
+   "subDps": 175,
+   "util": 2,
+   "acts": [
+    "6决斗大师",
+    "2情报特工",
+    "1怪兽",
+    "3源计划：激光特工",
+    "1堕落使者"
+   ],
+   "tankDetail": [
+    {
+     "hero": "费德提克",
+     "ehp": 8068,
+     "items": [
+      "狂徒铠甲",
+      "狂徒铠甲",
+      "圣盾使的誓约"
+     ]
+    },
+    {
+     "hero": "瑟庄妮",
+     "ehp": 8398,
+     "items": [
+      "石像鬼石板甲",
+      "日炎斗篷",
+      "狂徒铠甲"
+     ]
+    }
+   ],
+   "source": "official",
+   "displayName": "决斗薇恩",
+   "presentation": null,
+   "certification": {
+    "templateId": "official-4526",
+    "templateName": "决斗薇恩6决斗大师3源计划激光特工",
+    "peerGroup": "常规路线",
+    "sampleSize": 5000,
+    "seed": 20260712,
+    "evidenceLevel": "L1.5 高敏感假设",
+    "priorPoints": -2,
+    "metrics": {
+     "meanUtility": 111.2,
+     "interval95": [
+      100.3,
+      122
+     ],
+     "cvar10": 101.6,
+     "top1Rate": 0,
+     "top5Rate": 0.1,
+     "topQuartileRate": 5.8,
+     "failureRate": 13.9,
+     "robustness": 27.8
+    },
+    "drivers": [
+     "转型重合49%",
+     "装备弹性72%",
+     "7级追薇恩3星"
+    ],
+    "dependencies": [
+     "薇恩3星",
+     "三件套:卢安娜的飓风+巨人捕手+锐利之刃"
+    ],
+    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。",
+    "matchedRoute": "决斗薇恩6决斗大师3源计划激光特工",
+    "matchScore": 75
+   }
+  },
+  {
+   "name": "登神决斗天使",
+   "carry": "凯尔",
+   "score": 1540,
+   "carryDps": 677,
+   "frontEHP": 16466,
+   "subDps": 169,
+   "util": 2,
+   "acts": [
+    "6决斗大师",
+    "1怪兽",
+    "3源计划：激光特工",
+    "1堕落使者"
+   ],
+   "tankDetail": [
+    {
+     "hero": "费德提克",
+     "ehp": 8068,
+     "items": [
+      "狂徒铠甲",
+      "狂徒铠甲",
+      "圣盾使的誓约"
+     ]
+    },
+    {
+     "hero": "瑟庄妮",
+     "ehp": 8398,
+     "items": [
+      "石像鬼石板甲",
+      "日炎斗篷",
+      "狂徒铠甲"
+     ]
+    }
+   ],
+   "source": "official",
+   "displayName": "登神决斗天使",
+   "presentation": null,
+   "certification": {
+    "templateId": "official-1402",
+    "templateName": "登神决斗天使6决斗大师3源计划",
+    "peerGroup": "常规路线",
+    "sampleSize": 5000,
+    "seed": 20260712,
+    "evidenceLevel": "L2.5 模型扰动稳健",
+    "priorPoints": 2,
+    "metrics": {
+     "meanUtility": 120.2,
+     "interval95": [
+      108.2,
+      132.3
+     ],
+     "cvar10": 109.4,
+     "top1Rate": 5.2,
+     "top5Rate": 31.3,
+     "topQuartileRate": 76.4,
+     "failureRate": 0.5,
+     "robustness": 70.3
+    },
+    "drivers": [
+     "转型重合43%",
+     "装备弹性86%",
+     "5级追凯尔3星"
+    ],
+    "dependencies": [
+     "凯尔3星",
+     "三件套:卢安娜的飓风+无尽之刃+最后的轻语"
+    ],
+    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。",
+    "matchedRoute": "登神决斗天使6决斗大师3源计划",
+    "matchScore": 75
    }
   },
   {
@@ -2983,10 +2983,10 @@
      "price": 2
     }
    ],
-   "score": 1500,
-   "carryDps": 753,
+   "score": 1517,
+   "carryDps": 768,
    "frontEHP": 12898,
-   "subDps": 217,
+   "subDps": 219,
    "util": 3.5,
    "acts": [
     "3混沌战士",
@@ -3213,8 +3213,8 @@
       "label": "后期",
       "level": 8,
       "carry": "佛耶戈",
-      "score": 1500,
-      "method": "终局模型总分1500，主C模拟753/秒",
+      "score": 1517,
+      "method": "终局模型总分1517，主C模拟768/秒",
       "team": [
        "佛耶戈",
        "迦娜",
@@ -3355,11 +3355,11 @@
       134
      ],
      "cvar10": 113,
-     "top1Rate": 14,
-     "top5Rate": 59.3,
-     "topQuartileRate": 91.3,
+     "top1Rate": 13.7,
+     "top5Rate": 58.7,
+     "topQuartileRate": 91.1,
      "failureRate": 0.1,
-     "robustness": 84.2
+     "robustness": 84
     },
     "drivers": [
      "转型重合17%",
@@ -3378,10 +3378,10 @@
   {
    "name": "机甲秘术枪手",
    "carry": "厄加特",
-   "score": 1429,
+   "score": 1430,
    "carryDps": 477,
    "frontEHP": 17210,
-   "subDps": 280,
+   "subDps": 282,
    "util": 2,
    "acts": [
     "2强袭枪手",
@@ -3427,17 +3427,17 @@
     "evidenceLevel": "L2.5 模型扰动稳健",
     "priorPoints": 4,
     "metrics": {
-     "meanUtility": 123.7,
+     "meanUtility": 123.8,
      "interval95": [
-      112.2,
-      135.5
+      112.3,
+      135.6
      ],
-     "cvar10": 113.2,
-     "top1Rate": 23.8,
-     "top5Rate": 60.5,
-     "topQuartileRate": 94.1,
+     "cvar10": 113.3,
+     "top1Rate": 24.1,
+     "top5Rate": 60.7,
+     "topQuartileRate": 94.2,
      "failureRate": 0,
-     "robustness": 85.7
+     "robustness": 85.8
     },
     "drivers": [
      "转型重合17%",
@@ -3496,10 +3496,10 @@
      "price": 4
     }
    ],
-   "score": 1410,
-   "carryDps": 608,
+   "score": 1426,
+   "carryDps": 622,
    "frontEHP": 14404,
-   "subDps": 191,
+   "subDps": 195,
    "util": 3.5,
    "acts": [
     "2灵能使",
@@ -3724,8 +3724,8 @@
       "label": "后期",
       "level": 8,
       "carry": "娑娜",
-      "score": 1410,
-      "method": "终局模型总分1410，主C模拟608/秒",
+      "score": 1426,
+      "method": "终局模型总分1426，主C模拟622/秒",
       "team": [
        "娑娜",
        "迦娜",
@@ -3885,6 +3885,84 @@
    }
   },
   {
+   "name": "九五平民枪手",
+   "carry": "厄斐琉斯",
+   "score": 1375,
+   "carryDps": 546,
+   "frontEHP": 15166,
+   "subDps": 205,
+   "util": 2.5,
+   "acts": [
+    "3强袭枪手",
+    "2吉祥物",
+    "1气象主播",
+    "1枪神",
+    "2秘术卫士",
+    "1精英战士",
+    "3平民英雄",
+    "2福牛守护者",
+    "1怪兽",
+    "1堕落使者"
+   ],
+   "tankDetail": [
+    {
+     "hero": "费德提克",
+     "ehp": 9026,
+     "items": [
+      "狂徒铠甲",
+      "狂徒铠甲",
+      "圣盾使的誓约"
+     ]
+    },
+    {
+     "hero": "蕾欧娜",
+     "ehp": 6140,
+     "items": [
+      "石像鬼石板甲",
+      "日炎斗篷",
+      "狂徒铠甲"
+     ]
+    }
+   ],
+   "source": "official",
+   "displayName": "九五平民枪手",
+   "presentation": null,
+   "certification": {
+    "templateId": "official-1269",
+    "templateName": "九五平民枪手3平民英雄2枪手2吉祥物",
+    "peerGroup": "常规路线",
+    "sampleSize": 5000,
+    "seed": 20260712,
+    "evidenceLevel": "L2.5 模型扰动稳健",
+    "priorPoints": 2,
+    "metrics": {
+     "meanUtility": 119.5,
+     "interval95": [
+      108.4,
+      130.8
+     ],
+     "cvar10": 109.4,
+     "top1Rate": 2.6,
+     "top5Rate": 23.1,
+     "topQuartileRate": 71.2,
+     "failureRate": 0.5,
+     "robustness": 66.6
+    },
+    "drivers": [
+     "转型重合27%",
+     "装备弹性86%",
+     "9级追厄斐琉斯2星"
+    ],
+    "dependencies": [
+     "厄斐琉斯2星",
+     "三件套:卢安娜的飓风+锐利之刃+鬼索的狂暴之刃"
+    ],
+    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。",
+    "matchedRoute": "九五平民枪手3平民英雄2枪手2吉祥物",
+    "matchScore": 75
+   }
+  },
+  {
    "name": "决斗剑姬",
    "carry": "菲奥娜",
    "score": 1367,
@@ -3938,10 +4016,10 @@
      ],
      "cvar10": 106.5,
      "top1Rate": 0.8,
-     "top5Rate": 7.7,
-     "topQuartileRate": 42.2,
+     "top5Rate": 7.5,
+     "topQuartileRate": 41.8,
      "failureRate": 2.1,
-     "robustness": 49.8
+     "robustness": 49.6
     },
     "drivers": [
      "转型重合41%",
@@ -3958,88 +4036,10 @@
    }
   },
   {
-   "name": "九五平民枪手",
-   "carry": "厄斐琉斯",
-   "score": 1366,
-   "carryDps": 539,
-   "frontEHP": 15166,
-   "subDps": 201,
-   "util": 2.5,
-   "acts": [
-    "3强袭枪手",
-    "2吉祥物",
-    "1气象主播",
-    "1枪神",
-    "2秘术卫士",
-    "1精英战士",
-    "3平民英雄",
-    "2福牛守护者",
-    "1怪兽",
-    "1堕落使者"
-   ],
-   "tankDetail": [
-    {
-     "hero": "费德提克",
-     "ehp": 9026,
-     "items": [
-      "狂徒铠甲",
-      "狂徒铠甲",
-      "圣盾使的誓约"
-     ]
-    },
-    {
-     "hero": "蕾欧娜",
-     "ehp": 6140,
-     "items": [
-      "石像鬼石板甲",
-      "日炎斗篷",
-      "狂徒铠甲"
-     ]
-    }
-   ],
-   "source": "official",
-   "displayName": "九五平民枪手",
-   "presentation": null,
-   "certification": {
-    "templateId": "official-1269",
-    "templateName": "九五平民枪手3平民英雄2枪手2吉祥物",
-    "peerGroup": "常规路线",
-    "sampleSize": 5000,
-    "seed": 20260712,
-    "evidenceLevel": "L2.5 模型扰动稳健",
-    "priorPoints": 2,
-    "metrics": {
-     "meanUtility": 119.4,
-     "interval95": [
-      108.3,
-      130.7
-     ],
-     "cvar10": 109.3,
-     "top1Rate": 2.5,
-     "top5Rate": 22.9,
-     "topQuartileRate": 70.8,
-     "failureRate": 0.5,
-     "robustness": 66.3
-    },
-    "drivers": [
-     "转型重合27%",
-     "装备弹性86%",
-     "9级追厄斐琉斯2星"
-    ],
-    "dependencies": [
-     "厄斐琉斯2星",
-     "三件套:卢安娜的飓风+锐利之刃+鬼索的狂暴之刃"
-    ],
-    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。",
-    "matchedRoute": "九五平民枪手3平民英雄2枪手2吉祥物",
-    "matchScore": 75
-   }
-  },
-  {
    "name": "情报特工怪兽卡莎",
    "carry": "卡莎",
-   "score": 1336,
-   "carryDps": 427,
+   "score": 1365,
+   "carryDps": 456,
    "frontEHP": 18125,
    "subDps": 126,
    "util": 1.5,
@@ -4085,11 +4085,11 @@
       134.4
      ],
      "cvar10": 114.3,
-     "top1Rate": 18.6,
-     "top5Rate": 62.3,
-     "topQuartileRate": 93.6,
+     "top1Rate": 18.3,
+     "top5Rate": 61.8,
+     "topQuartileRate": 93.5,
      "failureRate": 0,
-     "robustness": 86.5
+     "robustness": 86.3
     },
     "drivers": [
      "转型重合55%",
@@ -4108,10 +4108,10 @@
   {
    "name": "福牛混沌九五",
    "carry": "佛耶戈",
-   "score": 1204,
-   "carryDps": 191,
+   "score": 1206,
+   "carryDps": 192,
    "frontEHP": 18859,
-   "subDps": 253,
+   "subDps": 255,
    "util": 2,
    "acts": [
     "3混沌战士",
@@ -4162,11 +4162,11 @@
       134
      ],
      "cvar10": 113,
-     "top1Rate": 14,
-     "top5Rate": 59.3,
-     "topQuartileRate": 91.3,
+     "top1Rate": 13.7,
+     "top5Rate": 58.7,
+     "topQuartileRate": 91.1,
      "failureRate": 0.1,
-     "robustness": 84.2
+     "robustness": 84
     },
     "drivers": [
      "转型重合17%",
@@ -4183,29 +4183,28 @@
    }
   },
   {
-   "name": "95秘卫枪手",
-   "carry": "莎弥拉",
-   "score": 1186,
-   "carryDps": 288,
-   "frontEHP": 16949,
-   "subDps": 181,
+   "name": "超英姐妹金克丝",
+   "carry": "金克丝",
+   "score": 1201,
+   "carryDps": 214,
+   "frontEHP": 19003,
+   "subDps": 172,
    "util": 2.5,
    "acts": [
-    "2强袭枪手",
+    "2淘气包",
     "2吉祥物",
     "1气象主播",
-    "1枪神",
+    "2斗士",
     "3秘术卫士",
-    "1精英战士",
     "1平民英雄",
-    "2福牛守护者",
+    "3超级英雄",
     "1怪兽",
     "1堕落使者"
    ],
    "tankDetail": [
     {
-     "hero": "努努和威朗普",
-     "ehp": 9707,
+     "hero": "费德提克",
+     "ehp": 8965,
      "items": [
       "狂徒铠甲",
       "狂徒铠甲",
@@ -4213,8 +4212,8 @@
      ]
     },
     {
-     "hero": "费德提克",
-     "ehp": 7242,
+     "hero": "艾克",
+     "ehp": 10038,
      "items": [
       "石像鬼石板甲",
       "日炎斗篷",
@@ -4223,50 +4222,52 @@
     }
    ],
    "source": "official",
-   "displayName": "95秘卫枪手",
+   "displayName": "超英姐妹金克丝",
    "presentation": null,
    "certification": {
-    "templateId": "official-1378",
-    "templateName": "95秘卫枪手3秘书卫士2福牛守护者",
-    "peerGroup": "常规路线",
+    "templateId": "official-4576",
+    "templateName": "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
+    "peerGroup": "条件路线（已满足专属门槛）",
     "sampleSize": 5000,
     "seed": 20260712,
-    "evidenceLevel": "L2.5 模型扰动稳健",
-    "priorPoints": 4,
+    "evidenceLevel": "L1.5 高敏感假设",
+    "priorPoints": -1,
     "metrics": {
-     "meanUtility": 124,
+     "meanUtility": 115.8,
      "interval95": [
-      112.4,
-      135.3
+      105.1,
+      126.8
      ],
-     "cvar10": 113.5,
-     "top1Rate": 13.9,
-     "top5Rate": 67.1,
-     "topQuartileRate": 92.9,
-     "failureRate": 0,
-     "robustness": 86.6
+     "cvar10": 106.2,
+     "top1Rate": 0.1,
+     "top5Rate": 20.7,
+     "topQuartileRate": 7.9,
+     "failureRate": 2.5,
+     "robustness": 38.4
     },
     "drivers": [
-     "转型重合12%",
-     "装备弹性72%",
-     "8级追莎弥拉2星"
+     "转型重合82%",
+     "装备弹性86%",
+     "6级追金克丝3星"
     ],
     "dependencies": [
-     "莎弥拉2星",
-     "三件套:巨人捕手+卢安娜的飓风+锐利之刃"
+     "符文:姐妹",
+     "机制棋子:金克丝+蔚",
+     "金克丝3星",
+     "三件套:朔极之矛+珠光护手+巨人捕手"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。",
-    "matchedRoute": "95秘卫枪手3秘书卫士2福牛守护者",
+    "matchedRoute": "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
     "matchScore": 75
    }
   },
   {
    "name": "超英猫咪",
    "carry": "悠米",
-   "score": 1168,
-   "carryDps": 263,
+   "score": 1190,
+   "carryDps": 285,
    "frontEHP": 17916,
-   "subDps": 150,
+   "subDps": 151,
    "util": 1,
    "acts": [
     "2决斗大师",
@@ -4317,10 +4318,10 @@
      ],
      "cvar10": 104.7,
      "top1Rate": 0.3,
-     "top5Rate": 5.3,
-     "topQuartileRate": 34.6,
+     "top5Rate": 5.1,
+     "topQuartileRate": 34.5,
      "failureRate": 4.5,
-     "robustness": 44.6
+     "robustness": 44.5
     },
     "drivers": [
      "转型重合43%",
@@ -4337,12 +4338,90 @@
    }
   },
   {
+   "name": "95秘卫枪手",
+   "carry": "莎弥拉",
+   "score": 1188,
+   "carryDps": 289,
+   "frontEHP": 16949,
+   "subDps": 182,
+   "util": 2.5,
+   "acts": [
+    "2强袭枪手",
+    "2吉祥物",
+    "1气象主播",
+    "1枪神",
+    "3秘术卫士",
+    "1精英战士",
+    "1平民英雄",
+    "2福牛守护者",
+    "1怪兽",
+    "1堕落使者"
+   ],
+   "tankDetail": [
+    {
+     "hero": "努努和威朗普",
+     "ehp": 9707,
+     "items": [
+      "狂徒铠甲",
+      "狂徒铠甲",
+      "圣盾使的誓约"
+     ]
+    },
+    {
+     "hero": "费德提克",
+     "ehp": 7242,
+     "items": [
+      "石像鬼石板甲",
+      "日炎斗篷",
+      "狂徒铠甲"
+     ]
+    }
+   ],
+   "source": "official",
+   "displayName": "95秘卫枪手",
+   "presentation": null,
+   "certification": {
+    "templateId": "official-1378",
+    "templateName": "95秘卫枪手3秘书卫士2福牛守护者",
+    "peerGroup": "常规路线",
+    "sampleSize": 5000,
+    "seed": 20260712,
+    "evidenceLevel": "L2.5 模型扰动稳健",
+    "priorPoints": 4,
+    "metrics": {
+     "meanUtility": 124.1,
+     "interval95": [
+      112.5,
+      135.4
+     ],
+     "cvar10": 113.6,
+     "top1Rate": 14.4,
+     "top5Rate": 67.5,
+     "topQuartileRate": 93,
+     "failureRate": 0,
+     "robustness": 86.9
+    },
+    "drivers": [
+     "转型重合12%",
+     "装备弹性72%",
+     "8级追莎弥拉2星"
+    ],
+    "dependencies": [
+     "莎弥拉2星",
+     "三件套:巨人捕手+卢安娜的飓风+锐利之刃"
+    ],
+    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。",
+    "matchedRoute": "95秘卫枪手3秘书卫士2福牛守护者",
+    "matchScore": 75
+   }
+  },
+  {
    "name": "超英伊泽瑞尔",
    "carry": "伊泽瑞尔",
-   "score": 984,
-   "carryDps": 210,
+   "score": 986,
+   "carryDps": 211,
    "frontEHP": 14777,
-   "subDps": 159,
+   "subDps": 160,
    "util": 1.5,
    "acts": [
     "2决斗大师",
@@ -4388,11 +4467,11 @@
       127.3
      ],
      "cvar10": 106.9,
-     "top1Rate": 2.1,
-     "top5Rate": 11.3,
-     "topQuartileRate": 45.5,
+     "top1Rate": 1.9,
+     "top5Rate": 11.1,
+     "topQuartileRate": 45.2,
      "failureRate": 1.8,
-     "robustness": 52.1
+     "robustness": 52
     },
     "drivers": [
      "转型重合66%",
@@ -4411,8 +4490,8 @@
   {
    "name": "怪兽厄运小姐",
    "carry": "厄运小姐",
-   "score": 946,
-   "carryDps": 82,
+   "score": 960,
+   "carryDps": 96,
    "frontEHP": 16675,
    "subDps": 182,
    "util": 1,
@@ -4459,11 +4538,11 @@
       130.5
      ],
      "cvar10": 109.4,
-     "top1Rate": 3.6,
-     "top5Rate": 25,
-     "topQuartileRate": 77.9,
+     "top1Rate": 3.3,
+     "top5Rate": 24.5,
+     "topQuartileRate": 77.6,
      "failureRate": 0.4,
-     "robustness": 69.7
+     "robustness": 69.5
     },
     "drivers": [
      "转型重合28%",
@@ -4913,11 +4992,11 @@
       138.8
      ],
      "cvar10": 117.6,
-     "top1Rate": 77,
-     "top5Rate": 98.8,
-     "topQuartileRate": 95.9,
+     "top1Rate": 76.3,
+     "top5Rate": 98.2,
+     "topQuartileRate": 94.2,
      "failureRate": 0,
-     "robustness": 96.7
+     "robustness": 95.9
     },
     "drivers": [
      "转型重合67%",
@@ -5373,10 +5452,10 @@
      ],
      "cvar10": 105.1,
      "top1Rate": 0.2,
-     "top5Rate": 33.2,
-     "topQuartileRate": 13.7,
+     "top5Rate": 27.7,
+     "topQuartileRate": 12,
      "failureRate": 4.3,
-     "robustness": 42.1
+     "robustness": 40.3
     },
     "drivers": [
      "转型重合58%",
@@ -5832,10 +5911,10 @@
      ],
      "cvar10": 105.1,
      "top1Rate": 0.2,
-     "top5Rate": 33.2,
-     "topQuartileRate": 13.7,
+     "top5Rate": 27.7,
+     "topQuartileRate": 12,
      "failureRate": 4.3,
-     "robustness": 42.1
+     "robustness": 40.3
     },
     "drivers": [
      "转型重合58%",
@@ -6291,10 +6370,10 @@
      ],
      "cvar10": 105.1,
      "top1Rate": 0.2,
-     "top5Rate": 33.2,
-     "topQuartileRate": 13.7,
+     "top5Rate": 27.7,
+     "topQuartileRate": 12,
      "failureRate": 4.3,
-     "robustness": 42.1
+     "robustness": 40.3
     },
     "drivers": [
      "转型重合58%",
@@ -6750,10 +6829,10 @@
      ],
      "cvar10": 105.1,
      "top1Rate": 0.2,
-     "top5Rate": 33.2,
-     "topQuartileRate": 13.7,
+     "top5Rate": 27.7,
+     "topQuartileRate": 12,
      "failureRate": 4.3,
-     "robustness": 42.1
+     "robustness": 40.3
     },
     "drivers": [
      "转型重合58%",
@@ -7180,11 +7259,11 @@
       130
      ],
      "cvar10": 109.4,
-     "top1Rate": 8.4,
-     "top5Rate": 55.1,
-     "topQuartileRate": 41.1,
+     "top1Rate": 7.3,
+     "top5Rate": 52.1,
+     "topQuartileRate": 36.4,
      "failureRate": 0.5,
-     "robustness": 61
+     "robustness": 58.5
     },
     "drivers": [
      "转型重合85%",
@@ -7612,10 +7691,10 @@
      ],
      "cvar10": 109.2,
      "top1Rate": 1.4,
-     "top5Rate": 64.6,
-     "topQuartileRate": 36.4,
+     "top5Rate": 54.3,
+     "topQuartileRate": 32.9,
      "failureRate": 0.4,
-     "robustness": 60.9
+     "robustness": 57.5
     },
     "drivers": [
      "转型重合86%",
@@ -8045,10 +8124,10 @@
      ],
      "cvar10": 108.4,
      "top1Rate": 1.2,
-     "top5Rate": 59.7,
-     "topQuartileRate": 16.7,
+     "top5Rate": 44.2,
+     "topQuartileRate": 14.3,
      "failureRate": 0.8,
-     "robustness": 51.5
+     "robustness": 47.4
     },
     "drivers": [
      "转型重合85%",
@@ -8464,7 +8543,7 @@
     "sampleSize": 5000,
     "seed": 20260712,
     "evidenceLevel": "L1.5 高敏感假设",
-    "priorPoints": 0,
+    "priorPoints": -1,
     "metrics": {
      "meanUtility": 117.5,
      "interval95": [
@@ -8473,10 +8552,10 @@
      ],
      "cvar10": 108,
      "top1Rate": 0.7,
-     "top5Rate": 46.2,
-     "topQuartileRate": 11.9,
+     "top5Rate": 32.9,
+     "topQuartileRate": 10.2,
      "failureRate": 1,
-     "robustness": 46.5
+     "robustness": 43.2
     },
     "drivers": [
      "转型重合86%",
@@ -8495,80 +8574,69 @@
    }
   },
   {
-   "augment": "岩雀",
-   "carry": "塔莉垭",
-   "stage": "late",
-   "level": 9,
+   "augment": "旺盛精力",
+   "carry": "悠米",
+   "stage": "mid",
+   "level": 7,
    "score": 1442,
-   "baselineScore": 1341,
-   "uplift": 101,
-   "upliftPct": 7.5,
-   "stageRatio": 0.5,
+   "baselineScore": 1351,
+   "uplift": 91,
+   "upliftPct": 6.7,
+   "stageRatio": 0.9,
    "confidence": 0.8,
    "basis": "官方文本数值；叠层折算1层",
    "requiredUnits": [
-    "塔莉垭"
+    "悠米"
    ],
    "team": [
     {
-     "name": "塔莉垭",
-     "price": 4
+     "name": "悠米",
+     "price": 2
+    },
+    {
+     "name": "加里奥",
+     "price": 1
     },
     {
      "name": "拉克丝",
      "price": 1
     },
     {
-     "name": "悠米",
-     "price": 2
-    },
-    {
-     "name": "莎弥拉",
+     "name": "塔莉垭",
      "price": 4
     },
     {
-     "name": "迦娜",
-     "price": 5
-    },
-    {
-     "name": "娑娜",
-     "price": 3
-    },
-    {
-     "name": "蔚",
+     "name": "德莱文",
      "price": 2
-    },
-    {
-     "name": "艾克",
-     "price": 4
     },
     {
      "name": "芮尔",
      "price": 2
+    },
+    {
+     "name": "卡莎",
+     "price": 3
     }
    ],
    "traits": [
     "5星之守护者",
-    "4灵能使",
-    "3地下魔盗团",
-    "2爱心使者",
-    "2秘术卫士",
-    "1气象主播",
+    "2灵能使",
+    "2吉祥物",
     "1精英战士",
     "1平民英雄"
    ],
    "carryItems": [
-    "泰坦的坚决",
-    "水银",
+    "朔极之矛",
+    "班克斯的魔法帽",
     "鬼索的狂暴之刃"
    ],
-   "carryDps": 520,
-   "frontEHP": 18252,
+   "carryDps": 669,
+   "frontEHP": 14054,
    "tankDetail": [
     {
-     "hero": "艾克",
+     "hero": "芮尔",
      "star": 2,
-     "ehp": 11333,
+     "ehp": 8321,
      "items": [
       "狂徒铠甲",
       "狂徒铠甲",
@@ -8576,9 +8644,9 @@
      ]
     },
     {
-     "hero": "芮尔",
+     "hero": "加里奥",
      "star": 2,
-     "ehp": 6918,
+     "ehp": 5733,
      "items": [
       "石像鬼石板甲",
       "日炎斗篷",
@@ -8592,21 +8660,21 @@
       "key": "early",
       "label": "前期",
       "level": 5,
-      "carry": "娑娜",
-      "score": 1177,
-      "method": "阶段战力1177，转型相容度79",
+      "carry": "悠米",
+      "score": 1127,
+      "method": "阶段战力1127，转型相容度82",
       "team": [
-       "娑娜",
-       "拉克丝",
        "悠米",
+       "拉克丝",
        "芮尔",
-       "波比"
+       "加里奥",
+       "孙悟空"
       ],
       "traits": [
        "3星之守护者",
-       "2灵能使",
        "2护卫",
-       "2爱心使者"
+       "2吉祥物",
+       "1平民英雄"
       ],
       "board": [
        {
@@ -8623,7 +8691,7 @@
         ]
        },
        {
-        "name": "波比",
+        "name": "加里奥",
         "price": 1,
         "row": 1,
         "col": 2,
@@ -8636,32 +8704,32 @@
         ]
        },
        {
-        "name": "娑娜",
-        "price": 3,
+        "name": "悠米",
+        "price": 2,
         "row": 4,
         "col": 4,
         "role": "主C",
         "carry": true,
         "items": [
-         "泰坦的坚决",
-         "水银",
+         "朔极之矛",
+         "班克斯的魔法帽",
          "鬼索的狂暴之刃"
         ]
+       },
+       {
+        "name": "孙悟空",
+        "price": 1,
+        "row": 2,
+        "col": 4,
+        "role": "战士",
+        "carry": false,
+        "items": []
        },
        {
         "name": "拉克丝",
         "price": 1,
         "row": 4,
         "col": 2,
-        "role": "后排输出",
-        "carry": false,
-        "items": []
-       },
-       {
-        "name": "悠米",
-        "price": 2,
-        "row": 4,
-        "col": 6,
         "role": "后排输出",
         "carry": false,
         "items": []
@@ -8672,24 +8740,24 @@
       "key": "mid",
       "label": "中期",
       "level": 7,
-      "carry": "佐伊",
-      "score": 1648,
-      "method": "阶段战力1648，转型相容度76",
+      "carry": "卡莎",
+      "score": 1442,
+      "method": "阶段战力1442，转型相容度100",
       "team": [
-       "佐伊",
-       "德莱文",
-       "安妮",
+       "悠米",
+       "加里奥",
        "拉克丝",
-       "波比",
+       "塔莉垭",
+       "德莱文",
        "芮尔",
-       "悠米"
+       "卡莎"
       ],
       "traits": [
-       "3小天才",
-       "3星之守护者",
+       "5星之守护者",
        "2灵能使",
-       "2护卫",
-       "1精英战士"
+       "2吉祥物",
+       "1精英战士",
+       "1平民英雄"
       ],
       "board": [
        {
@@ -8706,8 +8774,8 @@
         ]
        },
        {
-        "name": "安妮",
-        "price": 2,
+        "name": "加里奥",
+        "price": 1,
         "row": 1,
         "col": 2,
         "role": "副坦",
@@ -8719,29 +8787,20 @@
         ]
        },
        {
-        "name": "佐伊",
+        "name": "卡莎",
         "price": 3,
         "row": 4,
         "col": 4,
         "role": "主C",
         "carry": true,
         "items": [
-         "泰坦的坚决",
-         "水银",
+         "朔极之矛",
+         "班克斯的魔法帽",
          "鬼索的狂暴之刃"
         ]
        },
        {
-        "name": "波比",
-        "price": 1,
-        "row": 2,
-        "col": 4,
-        "role": "战士",
-        "carry": false,
-        "items": []
-       },
-       {
-        "name": "德莱文",
+        "name": "悠米",
         "price": 2,
         "row": 4,
         "col": 2,
@@ -8759,10 +8818,19 @@
         "items": []
        },
        {
-        "name": "悠米",
-        "price": 2,
+        "name": "塔莉垭",
+        "price": 4,
         "row": 4,
         "col": 3,
+        "role": "后排输出",
+        "carry": false,
+        "items": []
+       },
+       {
+        "name": "德莱文",
+        "price": 2,
+        "row": 4,
+        "col": 5,
         "role": "后排输出",
         "carry": false,
         "items": []
@@ -8772,35 +8840,33 @@
      {
       "key": "late",
       "label": "后期",
-      "level": 9,
-      "carry": "塔莉垭",
+      "level": 8,
+      "carry": "悠米",
       "score": 1442,
-      "method": "终局模型总分1442，主C模拟520/秒",
+      "method": "终局模型总分1442，主C模拟669/秒",
       "team": [
-       "塔莉垭",
-       "拉克丝",
        "悠米",
-       "莎弥拉",
-       "迦娜",
-       "娑娜",
-       "蔚",
-       "艾克",
-       "芮尔"
+       "加里奥",
+       "拉克丝",
+       "塔莉垭",
+       "德莱文",
+       "芮尔",
+       "卡莎",
+       "费德提克"
       ],
       "traits": [
        "5星之守护者",
-       "4灵能使",
-       "3地下魔盗团",
-       "2爱心使者",
-       "2秘术卫士",
-       "1气象主播",
+       "2灵能使",
+       "2吉祥物",
        "1精英战士",
-       "1平民英雄"
+       "1平民英雄",
+       "1怪兽",
+       "1堕落使者"
       ],
       "board": [
        {
-        "name": "艾克",
-        "price": 4,
+        "name": "芮尔",
+        "price": 2,
         "row": 1,
         "col": 4,
         "role": "主坦",
@@ -8812,8 +8878,8 @@
         ]
        },
        {
-        "name": "芮尔",
-        "price": 2,
+        "name": "加里奥",
+        "price": 1,
         "row": 1,
         "col": 2,
         "role": "副坦",
@@ -8825,26 +8891,26 @@
         ]
        },
        {
-        "name": "塔莉垭",
-        "price": 4,
+        "name": "费德提克",
+        "price": 5,
+        "row": 1,
+        "col": 3,
+        "role": "控制",
+        "carry": false,
+        "items": []
+       },
+       {
+        "name": "悠米",
+        "price": 2,
         "row": 4,
         "col": 4,
         "role": "主C",
         "carry": true,
         "items": [
-         "泰坦的坚决",
-         "水银",
+         "朔极之矛",
+         "班克斯的魔法帽",
          "鬼索的狂暴之刃"
         ]
-       },
-       {
-        "name": "蔚",
-        "price": 2,
-        "row": 2,
-        "col": 4,
-        "role": "战士",
-        "carry": false,
-        "items": []
        },
        {
         "name": "拉克丝",
@@ -8856,8 +8922,8 @@
         "items": []
        },
        {
-        "name": "悠米",
-        "price": 2,
+        "name": "塔莉垭",
+        "price": 4,
         "row": 4,
         "col": 6,
         "role": "后排输出",
@@ -8865,8 +8931,8 @@
         "items": []
        },
        {
-        "name": "莎弥拉",
-        "price": 4,
+        "name": "德莱文",
+        "price": 2,
         "row": 4,
         "col": 3,
         "role": "后排输出",
@@ -8874,19 +8940,10 @@
         "items": []
        },
        {
-        "name": "迦娜",
-        "price": 5,
+        "name": "卡莎",
+        "price": 3,
         "row": 4,
         "col": 5,
-        "role": "后排输出",
-        "carry": false,
-        "items": []
-       },
-       {
-        "name": "娑娜",
-        "price": 3,
-        "row": 3,
-        "col": 2,
         "role": "后排输出",
         "carry": false,
         "items": []
@@ -8895,52 +8952,54 @@
      }
     ],
     "items": [
-     "泰坦的坚决",
-     "水银",
+     "朔极之矛",
+     "班克斯的魔法帽",
      "鬼索的狂暴之刃"
     ],
     "operations": [
-     "2阶段：优先拿反曲之弓、锁子甲、负极斗篷、拳套、无用大棒，5人口由娑娜带目标装打工。",
-     "3/4阶段：中期卖掉持装娑娜，把三件套转给佐伊；只保留终局重合牌，按模型承接到佐伊、德莱文、安妮、拉克丝、波比、芮尔、悠米。",
-     "成型：成型后卖掉持装佐伊，把三件套转给塔莉垭，终局围绕塔莉垭；8级4费槽22%，单次商店见塔莉垭约8.2%，从0张到3张理论期望约71金（独立抽样近似，未扣同行与牌库）。",
+     "2阶段：优先拿暴风之剑、女神之泪、无用大棒、反曲之弓，5人口由悠米带目标装打工。",
+     "3/4阶段：中期先留一只无装悠米，再卖持装悠米把三件套转给卡莎；只保留终局重合牌，按模型承接到悠米、加里奥、拉克丝、塔莉垭、德莱文、芮尔、卡莎。",
+     "成型：成型后先留一只无装卡莎，再卖持装卡莎把三件套转给悠米，终局围绕悠米；6级2费槽40%，单次商店见悠米约14.5%，从0张到9张理论期望约117金（独立抽样近似，未扣同行与牌库）。",
      "止损：目标三件差两件以上或关键主C两轮搜不到，沿当前装备承载者切换到同方向次优路线。"
     ],
     "positioningBasis": "行1靠敌方；主坦按EHP居中承伤，控制分散前置，远程主C按攻击距离沉底并与副输出错侧。",
     "derivation": "阶段承载者由目标三件套在当期棋盘逐人重跑输出模型后选出；过渡阵容按阶段战力、终局重合率与持装效率联合排序。"
    },
    "certification": {
-    "templateId": "official-1290",
-    "templateName": "星守灵能塔利娅5星之守护者4灵能使",
-    "peerGroup": "常规路线",
+    "templateId": "meta-旺盛精力-悠米-6",
+    "templateName": "旺盛精力悠米机制路线",
+    "peerGroup": "条件路线（已满足专属门槛）",
     "sampleSize": 5000,
     "seed": 20260712,
-    "evidenceLevel": "L2 模型候选",
+    "evidenceLevel": "L1.5 高敏感假设",
     "priorPoints": 0,
     "metrics": {
-     "meanUtility": 115.2,
+     "meanUtility": 117.4,
      "interval95": [
-      103.6,
-      126.4
+      107,
+      127.9
      ],
-     "cvar10": 104.9,
-     "top1Rate": 0.3,
-     "top5Rate": 7.1,
-     "topQuartileRate": 40.1,
-     "failureRate": 4.2,
-     "robustness": 47.3
+     "cvar10": 108,
+     "top1Rate": 2,
+     "top5Rate": 41.3,
+     "topQuartileRate": 20.4,
+     "failureRate": 1,
+     "robustness": 49
     },
     "drivers": [
-     "转型重合47%",
+     "转型重合85%",
      "装备弹性72%",
-     "8级追塔莉垭2星"
+     "6级追悠米3星"
     ],
     "dependencies": [
-     "塔莉垭2星",
-     "三件套:朔极之矛+珠光护手+班克斯的魔法帽"
+     "符文:旺盛精力",
+     "机制棋子:悠米",
+     "悠米3星",
+     "三件套:朔极之矛+班克斯的魔法帽+鬼索的狂暴之刃"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。",
-    "matchedRoute": "星守灵能塔利娅5星之守护者4灵能使",
-    "matchScore": 92.1
+    "matchedRoute": "旺盛精力悠米机制路线",
+    "matchScore": 170
    }
   },
   {
@@ -9376,69 +9435,80 @@
    }
   },
   {
-   "augment": "旺盛精力",
-   "carry": "悠米",
-   "stage": "mid",
-   "level": 7,
-   "score": 1389,
-   "baselineScore": 1309,
-   "uplift": 80,
-   "upliftPct": 6.1,
-   "stageRatio": 0.8,
+   "augment": "岩雀",
+   "carry": "塔莉垭",
+   "stage": "late",
+   "level": 9,
+   "score": 1424,
+   "baselineScore": 1327,
+   "uplift": 97,
+   "upliftPct": 7.3,
+   "stageRatio": 0.5,
    "confidence": 0.8,
    "basis": "官方文本数值；叠层折算1层",
    "requiredUnits": [
-    "悠米"
+    "塔莉垭"
    ],
    "team": [
     {
-     "name": "悠米",
-     "price": 2
-    },
-    {
-     "name": "加里奥",
-     "price": 1
+     "name": "塔莉垭",
+     "price": 4
     },
     {
      "name": "拉克丝",
      "price": 1
     },
     {
-     "name": "塔莉垭",
+     "name": "悠米",
+     "price": 2
+    },
+    {
+     "name": "莎弥拉",
      "price": 4
     },
     {
-     "name": "德莱文",
+     "name": "迦娜",
+     "price": 5
+    },
+    {
+     "name": "娑娜",
+     "price": 3
+    },
+    {
+     "name": "蔚",
      "price": 2
+    },
+    {
+     "name": "艾克",
+     "price": 4
     },
     {
      "name": "芮尔",
      "price": 2
-    },
-    {
-     "name": "卡莎",
-     "price": 3
     }
    ],
    "traits": [
     "5星之守护者",
-    "2灵能使",
-    "2吉祥物",
+    "4灵能使",
+    "3地下魔盗团",
+    "2爱心使者",
+    "2秘术卫士",
+    "1气象主播",
     "1精英战士",
     "1平民英雄"
    ],
    "carryItems": [
-    "朔极之矛",
-    "班克斯的魔法帽",
+    "泰坦的坚决",
+    "水银",
     "鬼索的狂暴之刃"
    ],
-   "carryDps": 617,
-   "frontEHP": 14054,
+   "carryDps": 502,
+   "frontEHP": 18252,
    "tankDetail": [
     {
-     "hero": "芮尔",
+     "hero": "艾克",
      "star": 2,
-     "ehp": 8321,
+     "ehp": 11333,
      "items": [
       "狂徒铠甲",
       "狂徒铠甲",
@@ -9446,9 +9516,9 @@
      ]
     },
     {
-     "hero": "加里奥",
+     "hero": "芮尔",
      "star": 2,
-     "ehp": 5733,
+     "ehp": 6918,
      "items": [
       "石像鬼石板甲",
       "日炎斗篷",
@@ -9463,20 +9533,20 @@
       "label": "前期",
       "level": 5,
       "carry": "悠米",
-      "score": 1113,
-      "method": "阶段战力1113，转型相容度81",
+      "score": 1177,
+      "method": "阶段战力1177，转型相容度80",
       "team": [
-       "悠米",
+       "娑娜",
        "拉克丝",
+       "悠米",
        "芮尔",
-       "加里奥",
-       "孙悟空"
+       "波比"
       ],
       "traits": [
        "3星之守护者",
+       "2灵能使",
        "2护卫",
-       "2吉祥物",
-       "1平民英雄"
+       "2爱心使者"
       ],
       "board": [
        {
@@ -9493,7 +9563,7 @@
         ]
        },
        {
-        "name": "加里奥",
+        "name": "波比",
         "price": 1,
         "row": 1,
         "col": 2,
@@ -9513,14 +9583,203 @@
         "role": "主C",
         "carry": true,
         "items": [
-         "朔极之矛",
-         "班克斯的魔法帽",
+         "泰坦的坚决",
+         "水银",
          "鬼索的狂暴之刃"
         ]
        },
        {
-        "name": "孙悟空",
+        "name": "娑娜",
+        "price": 3,
+        "row": 4,
+        "col": 2,
+        "role": "后排输出",
+        "carry": false,
+        "items": []
+       },
+       {
+        "name": "拉克丝",
         "price": 1,
+        "row": 4,
+        "col": 6,
+        "role": "后排输出",
+        "carry": false,
+        "items": []
+       }
+      ]
+     },
+     {
+      "key": "mid",
+      "label": "中期",
+      "level": 7,
+      "carry": "佐伊",
+      "score": 1648,
+      "method": "阶段战力1648，转型相容度76",
+      "team": [
+       "佐伊",
+       "德莱文",
+       "安妮",
+       "拉克丝",
+       "波比",
+       "芮尔",
+       "悠米"
+      ],
+      "traits": [
+       "3小天才",
+       "3星之守护者",
+       "2灵能使",
+       "2护卫",
+       "1精英战士"
+      ],
+      "board": [
+       {
+        "name": "芮尔",
+        "price": 2,
+        "row": 1,
+        "col": 4,
+        "role": "主坦",
+        "carry": false,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ]
+       },
+       {
+        "name": "安妮",
+        "price": 2,
+        "row": 1,
+        "col": 2,
+        "role": "副坦",
+        "carry": false,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ]
+       },
+       {
+        "name": "佐伊",
+        "price": 3,
+        "row": 4,
+        "col": 4,
+        "role": "主C",
+        "carry": true,
+        "items": [
+         "泰坦的坚决",
+         "水银",
+         "鬼索的狂暴之刃"
+        ]
+       },
+       {
+        "name": "波比",
+        "price": 1,
+        "row": 2,
+        "col": 4,
+        "role": "战士",
+        "carry": false,
+        "items": []
+       },
+       {
+        "name": "德莱文",
+        "price": 2,
+        "row": 4,
+        "col": 2,
+        "role": "后排输出",
+        "carry": false,
+        "items": []
+       },
+       {
+        "name": "拉克丝",
+        "price": 1,
+        "row": 4,
+        "col": 6,
+        "role": "后排输出",
+        "carry": false,
+        "items": []
+       },
+       {
+        "name": "悠米",
+        "price": 2,
+        "row": 4,
+        "col": 3,
+        "role": "后排输出",
+        "carry": false,
+        "items": []
+       }
+      ]
+     },
+     {
+      "key": "late",
+      "label": "后期",
+      "level": 9,
+      "carry": "塔莉垭",
+      "score": 1424,
+      "method": "终局模型总分1424，主C模拟502/秒",
+      "team": [
+       "塔莉垭",
+       "拉克丝",
+       "悠米",
+       "莎弥拉",
+       "迦娜",
+       "娑娜",
+       "蔚",
+       "艾克",
+       "芮尔"
+      ],
+      "traits": [
+       "5星之守护者",
+       "4灵能使",
+       "3地下魔盗团",
+       "2爱心使者",
+       "2秘术卫士",
+       "1气象主播",
+       "1精英战士",
+       "1平民英雄"
+      ],
+      "board": [
+       {
+        "name": "艾克",
+        "price": 4,
+        "row": 1,
+        "col": 4,
+        "role": "主坦",
+        "carry": false,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ]
+       },
+       {
+        "name": "芮尔",
+        "price": 2,
+        "row": 1,
+        "col": 2,
+        "role": "副坦",
+        "carry": false,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ]
+       },
+       {
+        "name": "塔莉垭",
+        "price": 4,
+        "row": 4,
+        "col": 4,
+        "role": "主C",
+        "carry": true,
+        "items": [
+         "泰坦的坚决",
+         "水银",
+         "鬼索的狂暴之刃"
+        ]
+       },
+       {
+        "name": "蔚",
+        "price": 2,
         "row": 2,
         "col": 4,
         "role": "战士",
@@ -9535,84 +9794,10 @@
         "role": "后排输出",
         "carry": false,
         "items": []
-       }
-      ]
-     },
-     {
-      "key": "mid",
-      "label": "中期",
-      "level": 7,
-      "carry": "卡莎",
-      "score": 1389,
-      "method": "阶段战力1389，转型相容度100",
-      "team": [
-       "悠米",
-       "加里奥",
-       "拉克丝",
-       "塔莉垭",
-       "德莱文",
-       "芮尔",
-       "卡莎"
-      ],
-      "traits": [
-       "5星之守护者",
-       "2灵能使",
-       "2吉祥物",
-       "1精英战士",
-       "1平民英雄"
-      ],
-      "board": [
-       {
-        "name": "芮尔",
-        "price": 2,
-        "row": 1,
-        "col": 4,
-        "role": "主坦",
-        "carry": false,
-        "items": [
-         "狂徒铠甲",
-         "狂徒铠甲",
-         "圣盾使的誓约"
-        ]
-       },
-       {
-        "name": "加里奥",
-        "price": 1,
-        "row": 1,
-        "col": 2,
-        "role": "副坦",
-        "carry": false,
-        "items": [
-         "石像鬼石板甲",
-         "日炎斗篷",
-         "狂徒铠甲"
-        ]
-       },
-       {
-        "name": "卡莎",
-        "price": 3,
-        "row": 4,
-        "col": 4,
-        "role": "主C",
-        "carry": true,
-        "items": [
-         "朔极之矛",
-         "班克斯的魔法帽",
-         "鬼索的狂暴之刃"
-        ]
        },
        {
         "name": "悠米",
         "price": 2,
-        "row": 4,
-        "col": 2,
-        "role": "后排输出",
-        "carry": false,
-        "items": []
-       },
-       {
-        "name": "拉克丝",
-        "price": 1,
         "row": 4,
         "col": 6,
         "role": "后排输出",
@@ -9620,7 +9805,7 @@
         "items": []
        },
        {
-        "name": "塔莉垭",
+        "name": "莎弥拉",
         "price": 4,
         "row": 4,
         "col": 3,
@@ -9629,123 +9814,19 @@
         "items": []
        },
        {
-        "name": "德莱文",
-        "price": 2,
-        "row": 4,
-        "col": 5,
-        "role": "后排输出",
-        "carry": false,
-        "items": []
-       }
-      ]
-     },
-     {
-      "key": "late",
-      "label": "后期",
-      "level": 8,
-      "carry": "悠米",
-      "score": 1389,
-      "method": "终局模型总分1389，主C模拟617/秒",
-      "team": [
-       "悠米",
-       "加里奥",
-       "拉克丝",
-       "塔莉垭",
-       "德莱文",
-       "芮尔",
-       "卡莎",
-       "费德提克"
-      ],
-      "traits": [
-       "5星之守护者",
-       "2灵能使",
-       "2吉祥物",
-       "1精英战士",
-       "1平民英雄",
-       "1怪兽",
-       "1堕落使者"
-      ],
-      "board": [
-       {
-        "name": "芮尔",
-        "price": 2,
-        "row": 1,
-        "col": 4,
-        "role": "主坦",
-        "carry": false,
-        "items": [
-         "狂徒铠甲",
-         "狂徒铠甲",
-         "圣盾使的誓约"
-        ]
-       },
-       {
-        "name": "加里奥",
-        "price": 1,
-        "row": 1,
-        "col": 2,
-        "role": "副坦",
-        "carry": false,
-        "items": [
-         "石像鬼石板甲",
-         "日炎斗篷",
-         "狂徒铠甲"
-        ]
-       },
-       {
-        "name": "费德提克",
+        "name": "迦娜",
         "price": 5,
-        "row": 1,
-        "col": 3,
-        "role": "控制",
-        "carry": false,
-        "items": []
-       },
-       {
-        "name": "悠米",
-        "price": 2,
-        "row": 4,
-        "col": 4,
-        "role": "主C",
-        "carry": true,
-        "items": [
-         "朔极之矛",
-         "班克斯的魔法帽",
-         "鬼索的狂暴之刃"
-        ]
-       },
-       {
-        "name": "拉克丝",
-        "price": 1,
-        "row": 4,
-        "col": 2,
-        "role": "后排输出",
-        "carry": false,
-        "items": []
-       },
-       {
-        "name": "塔莉垭",
-        "price": 4,
-        "row": 4,
-        "col": 6,
-        "role": "后排输出",
-        "carry": false,
-        "items": []
-       },
-       {
-        "name": "德莱文",
-        "price": 2,
-        "row": 4,
-        "col": 3,
-        "role": "后排输出",
-        "carry": false,
-        "items": []
-       },
-       {
-        "name": "卡莎",
-        "price": 3,
         "row": 4,
         "col": 5,
+        "role": "后排输出",
+        "carry": false,
+        "items": []
+       },
+       {
+        "name": "娑娜",
+        "price": 3,
+        "row": 3,
+        "col": 2,
         "role": "后排输出",
         "carry": false,
         "items": []
@@ -9754,54 +9835,52 @@
      }
     ],
     "items": [
-     "朔极之矛",
-     "班克斯的魔法帽",
+     "泰坦的坚决",
+     "水银",
      "鬼索的狂暴之刃"
     ],
     "operations": [
-     "2阶段：优先拿暴风之剑、女神之泪、无用大棒、反曲之弓，5人口由悠米带目标装打工。",
-     "3/4阶段：中期先留一只无装悠米，再卖持装悠米把三件套转给卡莎；只保留终局重合牌，按模型承接到悠米、加里奥、拉克丝、塔莉垭、德莱文、芮尔、卡莎。",
-     "成型：成型后先留一只无装卡莎，再卖持装卡莎把三件套转给悠米，终局围绕悠米；6级2费槽40%，单次商店见悠米约14.5%，从0张到9张理论期望约117金（独立抽样近似，未扣同行与牌库）。",
+     "2阶段：优先拿反曲之弓、锁子甲、负极斗篷、拳套、无用大棒，5人口由悠米带目标装打工。",
+     "3/4阶段：中期先留一只无装悠米，再卖持装悠米把三件套转给佐伊；只保留终局重合牌，按模型承接到佐伊、德莱文、安妮、拉克丝、波比、芮尔、悠米。",
+     "成型：成型后卖掉持装佐伊，把三件套转给塔莉垭，终局围绕塔莉垭；8级4费槽22%，单次商店见塔莉垭约8.2%，从0张到3张理论期望约71金（独立抽样近似，未扣同行与牌库）。",
      "止损：目标三件差两件以上或关键主C两轮搜不到，沿当前装备承载者切换到同方向次优路线。"
     ],
     "positioningBasis": "行1靠敌方；主坦按EHP居中承伤，控制分散前置，远程主C按攻击距离沉底并与副输出错侧。",
     "derivation": "阶段承载者由目标三件套在当期棋盘逐人重跑输出模型后选出；过渡阵容按阶段战力、终局重合率与持装效率联合排序。"
    },
    "certification": {
-    "templateId": "meta-旺盛精力-悠米-6",
-    "templateName": "旺盛精力悠米机制路线",
-    "peerGroup": "条件路线（已满足专属门槛）",
+    "templateId": "official-1290",
+    "templateName": "星守灵能塔利娅5星之守护者4灵能使",
+    "peerGroup": "常规路线",
     "sampleSize": 5000,
     "seed": 20260712,
-    "evidenceLevel": "L1.5 高敏感假设",
-    "priorPoints": -3,
+    "evidenceLevel": "L2 模型候选",
+    "priorPoints": 0,
     "metrics": {
-     "meanUtility": 107.5,
+     "meanUtility": 115.2,
      "interval95": [
-      97.1,
-      118
+      103.6,
+      126.4
      ],
-     "cvar10": 98.2,
-     "top1Rate": 0,
-     "top5Rate": 0.3,
-     "topQuartileRate": 0,
-     "failureRate": 32.5,
-     "robustness": 18.9
+     "cvar10": 104.9,
+     "top1Rate": 0.3,
+     "top5Rate": 6.9,
+     "topQuartileRate": 39.9,
+     "failureRate": 4.2,
+     "robustness": 47.2
     },
     "drivers": [
-     "转型重合85%",
+     "转型重合47%",
      "装备弹性72%",
-     "6级追悠米3星"
+     "8级追塔莉垭2星"
     ],
     "dependencies": [
-     "符文:旺盛精力",
-     "机制棋子:悠米",
-     "悠米3星",
-     "三件套:朔极之矛+班克斯的魔法帽+鬼索的狂暴之刃"
+     "塔莉垭2星",
+     "三件套:朔极之矛+珠光护手+班克斯的魔法帽"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。",
-    "matchedRoute": "旺盛精力悠米机制路线",
-    "matchScore": 170
+    "matchedRoute": "星守灵能塔利娅5星之守护者4灵能使",
+    "matchScore": 92.1
    }
   },
   {
@@ -9809,10 +9888,10 @@
    "carry": "莫德凯撒",
    "stage": "late",
    "level": 9,
-   "score": 1358,
-   "baselineScore": 1346,
-   "uplift": 12,
-   "upliftPct": 0.9,
+   "score": 1382,
+   "baselineScore": 1367,
+   "uplift": 15,
+   "upliftPct": 1.1,
    "stageRatio": 0.5,
    "confidence": 0.8,
    "basis": "官方文本数值；叠层折算1层",
@@ -9874,7 +9953,7 @@
     "水银",
     "鬼索的狂暴之刃"
    ],
-   "carryDps": 365,
+   "carryDps": 389,
    "frontEHP": 18946,
    "tankDetail": [
     {
@@ -9905,8 +9984,8 @@
       "label": "前期",
       "level": 5,
       "carry": "希维尔",
-      "score": 1126,
-      "method": "阶段战力1126，转型相容度73",
+      "score": 1128,
+      "method": "阶段战力1128，转型相容度73",
       "team": [
        "赛娜",
        "希维尔",
@@ -10087,8 +10166,8 @@
       "label": "后期",
       "level": 9,
       "carry": "莫德凯撒",
-      "score": 1358,
-      "method": "终局模型总分1358，主C模拟365/秒",
+      "score": 1382,
+      "method": "终局模型总分1382，主C模拟389/秒",
       "team": [
        "莫德凯撒",
        "迦娜",
@@ -10240,7 +10319,7 @@
      "cvar10": 99,
      "top1Rate": 0,
      "top5Rate": 0.1,
-     "topQuartileRate": 2.2,
+     "topQuartileRate": 2.1,
      "failureRate": 25.8,
      "robustness": 21.8
     },
@@ -10256,6 +10335,435 @@
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。",
     "matchedRoute": "超英希维尔4枪手3超级英雄2吉祥物",
     "matchScore": 73.1
+   }
+  },
+  {
+   "augment": "猫之精准",
+   "carry": "悠米",
+   "stage": "mid",
+   "level": 7,
+   "score": 1366,
+   "baselineScore": 1351,
+   "uplift": 15,
+   "upliftPct": 1.1,
+   "stageRatio": 0.8,
+   "confidence": 0.8,
+   "basis": "官方文本数值；叠层折算1层",
+   "requiredUnits": [
+    "悠米"
+   ],
+   "team": [
+    {
+     "name": "悠米",
+     "price": 2
+    },
+    {
+     "name": "加里奥",
+     "price": 1
+    },
+    {
+     "name": "拉克丝",
+     "price": 1
+    },
+    {
+     "name": "塔莉垭",
+     "price": 4
+    },
+    {
+     "name": "德莱文",
+     "price": 2
+    },
+    {
+     "name": "芮尔",
+     "price": 2
+    },
+    {
+     "name": "卡莎",
+     "price": 3
+    }
+   ],
+   "traits": [
+    "5星之守护者",
+    "2灵能使",
+    "2吉祥物",
+    "1精英战士",
+    "1平民英雄"
+   ],
+   "carryItems": [
+    "朔极之矛",
+    "水银",
+    "鬼索的狂暴之刃"
+   ],
+   "carryDps": 594,
+   "frontEHP": 14054,
+   "tankDetail": [
+    {
+     "hero": "芮尔",
+     "star": 2,
+     "ehp": 8321,
+     "items": [
+      "狂徒铠甲",
+      "狂徒铠甲",
+      "圣盾使的誓约"
+     ]
+    },
+    {
+     "hero": "加里奥",
+     "star": 2,
+     "ehp": 5733,
+     "items": [
+      "石像鬼石板甲",
+      "日炎斗篷",
+      "狂徒铠甲"
+     ]
+    }
+   ],
+   "presentation": {
+    "stages": [
+     {
+      "key": "early",
+      "label": "前期",
+      "level": 5,
+      "carry": "悠米",
+      "score": 1127,
+      "method": "阶段战力1127，转型相容度82",
+      "team": [
+       "悠米",
+       "拉克丝",
+       "芮尔",
+       "加里奥",
+       "孙悟空"
+      ],
+      "traits": [
+       "3星之守护者",
+       "2护卫",
+       "2吉祥物",
+       "1平民英雄"
+      ],
+      "board": [
+       {
+        "name": "芮尔",
+        "price": 2,
+        "row": 1,
+        "col": 4,
+        "role": "主坦",
+        "carry": false,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ]
+       },
+       {
+        "name": "加里奥",
+        "price": 1,
+        "row": 1,
+        "col": 2,
+        "role": "副坦",
+        "carry": false,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ]
+       },
+       {
+        "name": "悠米",
+        "price": 2,
+        "row": 4,
+        "col": 4,
+        "role": "主C",
+        "carry": true,
+        "items": [
+         "朔极之矛",
+         "水银",
+         "鬼索的狂暴之刃"
+        ]
+       },
+       {
+        "name": "孙悟空",
+        "price": 1,
+        "row": 2,
+        "col": 4,
+        "role": "战士",
+        "carry": false,
+        "items": []
+       },
+       {
+        "name": "拉克丝",
+        "price": 1,
+        "row": 4,
+        "col": 2,
+        "role": "后排输出",
+        "carry": false,
+        "items": []
+       }
+      ]
+     },
+     {
+      "key": "mid",
+      "label": "中期",
+      "level": 7,
+      "carry": "悠米",
+      "score": 1366,
+      "method": "阶段战力1366，转型相容度100",
+      "team": [
+       "悠米",
+       "加里奥",
+       "拉克丝",
+       "塔莉垭",
+       "德莱文",
+       "芮尔",
+       "卡莎"
+      ],
+      "traits": [
+       "5星之守护者",
+       "2灵能使",
+       "2吉祥物",
+       "1精英战士",
+       "1平民英雄"
+      ],
+      "board": [
+       {
+        "name": "芮尔",
+        "price": 2,
+        "row": 1,
+        "col": 4,
+        "role": "主坦",
+        "carry": false,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ]
+       },
+       {
+        "name": "加里奥",
+        "price": 1,
+        "row": 1,
+        "col": 2,
+        "role": "副坦",
+        "carry": false,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ]
+       },
+       {
+        "name": "悠米",
+        "price": 2,
+        "row": 4,
+        "col": 4,
+        "role": "主C",
+        "carry": true,
+        "items": [
+         "朔极之矛",
+         "水银",
+         "鬼索的狂暴之刃"
+        ]
+       },
+       {
+        "name": "拉克丝",
+        "price": 1,
+        "row": 4,
+        "col": 2,
+        "role": "后排输出",
+        "carry": false,
+        "items": []
+       },
+       {
+        "name": "塔莉垭",
+        "price": 4,
+        "row": 4,
+        "col": 6,
+        "role": "后排输出",
+        "carry": false,
+        "items": []
+       },
+       {
+        "name": "德莱文",
+        "price": 2,
+        "row": 4,
+        "col": 3,
+        "role": "后排输出",
+        "carry": false,
+        "items": []
+       },
+       {
+        "name": "卡莎",
+        "price": 3,
+        "row": 4,
+        "col": 5,
+        "role": "后排输出",
+        "carry": false,
+        "items": []
+       }
+      ]
+     },
+     {
+      "key": "late",
+      "label": "后期",
+      "level": 8,
+      "carry": "悠米",
+      "score": 1366,
+      "method": "终局模型总分1366，主C模拟594/秒",
+      "team": [
+       "悠米",
+       "加里奥",
+       "拉克丝",
+       "塔莉垭",
+       "德莱文",
+       "芮尔",
+       "卡莎",
+       "费德提克"
+      ],
+      "traits": [
+       "5星之守护者",
+       "2灵能使",
+       "2吉祥物",
+       "1精英战士",
+       "1平民英雄",
+       "1怪兽",
+       "1堕落使者"
+      ],
+      "board": [
+       {
+        "name": "芮尔",
+        "price": 2,
+        "row": 1,
+        "col": 4,
+        "role": "主坦",
+        "carry": false,
+        "items": [
+         "狂徒铠甲",
+         "狂徒铠甲",
+         "圣盾使的誓约"
+        ]
+       },
+       {
+        "name": "加里奥",
+        "price": 1,
+        "row": 1,
+        "col": 2,
+        "role": "副坦",
+        "carry": false,
+        "items": [
+         "石像鬼石板甲",
+         "日炎斗篷",
+         "狂徒铠甲"
+        ]
+       },
+       {
+        "name": "费德提克",
+        "price": 5,
+        "row": 1,
+        "col": 3,
+        "role": "控制",
+        "carry": false,
+        "items": []
+       },
+       {
+        "name": "悠米",
+        "price": 2,
+        "row": 4,
+        "col": 4,
+        "role": "主C",
+        "carry": true,
+        "items": [
+         "朔极之矛",
+         "水银",
+         "鬼索的狂暴之刃"
+        ]
+       },
+       {
+        "name": "拉克丝",
+        "price": 1,
+        "row": 4,
+        "col": 2,
+        "role": "后排输出",
+        "carry": false,
+        "items": []
+       },
+       {
+        "name": "塔莉垭",
+        "price": 4,
+        "row": 4,
+        "col": 6,
+        "role": "后排输出",
+        "carry": false,
+        "items": []
+       },
+       {
+        "name": "德莱文",
+        "price": 2,
+        "row": 4,
+        "col": 3,
+        "role": "后排输出",
+        "carry": false,
+        "items": []
+       },
+       {
+        "name": "卡莎",
+        "price": 3,
+        "row": 4,
+        "col": 5,
+        "role": "后排输出",
+        "carry": false,
+        "items": []
+       }
+      ]
+     }
+    ],
+    "items": [
+     "朔极之矛",
+     "水银",
+     "鬼索的狂暴之刃"
+    ],
+    "operations": [
+     "2阶段：优先拿暴风之剑、女神之泪、负极斗篷、拳套、反曲之弓、无用大棒，5人口由悠米带目标装打工。",
+     "3/4阶段：中期继续由悠米持装；只保留终局重合牌，按模型承接到悠米、加里奥、拉克丝、塔莉垭、德莱文、芮尔、卡莎。",
+     "成型：成型后继续由悠米持装，终局围绕悠米；6级2费槽40%，单次商店见悠米约14.5%，从0张到9张理论期望约117金（独立抽样近似，未扣同行与牌库）。",
+     "止损：目标三件差两件以上或关键主C两轮搜不到，沿当前装备承载者切换到同方向次优路线。"
+    ],
+    "positioningBasis": "行1靠敌方；主坦按EHP居中承伤，控制分散前置，远程主C按攻击距离沉底并与副输出错侧。",
+    "derivation": "阶段承载者由目标三件套在当期棋盘逐人重跑输出模型后选出；过渡阵容按阶段战力、终局重合率与持装效率联合排序。"
+   },
+   "certification": {
+    "templateId": "meta-旺盛精力-悠米-6",
+    "templateName": "旺盛精力悠米机制路线",
+    "peerGroup": "条件路线（已满足专属门槛）",
+    "sampleSize": 5000,
+    "seed": 20260712,
+    "evidenceLevel": "L1.5 高敏感假设",
+    "priorPoints": 0,
+    "metrics": {
+     "meanUtility": 117.4,
+     "interval95": [
+      107,
+      127.9
+     ],
+     "cvar10": 108,
+     "top1Rate": 2,
+     "top5Rate": 41.3,
+     "topQuartileRate": 20.4,
+     "failureRate": 1,
+     "robustness": 49
+    },
+    "drivers": [
+     "转型重合85%",
+     "装备弹性72%",
+     "6级追悠米3星"
+    ],
+    "dependencies": [
+     "符文:旺盛精力",
+     "机制棋子:悠米",
+     "悠米3星",
+     "三件套:朔极之矛+班克斯的魔法帽+鬼索的狂暴之刃"
+    ],
+    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。",
+    "matchedRoute": "旺盛精力悠米机制路线",
+    "matchScore": 135
    }
   },
   {
@@ -10359,26 +10867,25 @@
       "key": "early",
       "label": "前期",
       "level": 5,
-      "carry": "娑娜",
-      "score": 1177,
-      "method": "阶段战力1177，转型相容度69",
+      "carry": "卡莎",
+      "score": 1192,
+      "method": "阶段战力1192，转型相容度69",
       "team": [
-       "娑娜",
+       "卡莎",
        "拉克丝",
        "悠米",
-       "芮尔",
-       "波比"
+       "加里奥",
+       "内瑟斯"
       ],
       "traits": [
        "3星之守护者",
-       "2灵能使",
-       "2护卫",
-       "2爱心使者"
+       "2吉祥物",
+       "1平民英雄"
       ],
       "board": [
        {
-        "name": "芮尔",
-        "price": 2,
+        "name": "内瑟斯",
+        "price": 1,
         "row": 1,
         "col": 4,
         "role": "主坦",
@@ -10390,7 +10897,7 @@
         ]
        },
        {
-        "name": "波比",
+        "name": "加里奥",
         "price": 1,
         "row": 1,
         "col": 2,
@@ -10403,7 +10910,7 @@
         ]
        },
        {
-        "name": "娑娜",
+        "name": "卡莎",
         "price": 3,
         "row": 4,
         "col": 4,
@@ -10670,8 +11177,8 @@
      "鬼索的狂暴之刃"
     ],
     "operations": [
-     "2阶段：优先拿反曲之弓、锁子甲、负极斗篷、拳套、无用大棒，5人口由娑娜带目标装打工。",
-     "3/4阶段：中期卖掉持装娑娜，把三件套转给佐伊；只保留终局重合牌，按模型承接到佐伊、德莱文、安妮、拉克丝、波比、芮尔、悠米。",
+     "2阶段：优先拿反曲之弓、锁子甲、负极斗篷、拳套、无用大棒，5人口由卡莎带目标装打工。",
+     "3/4阶段：中期卖掉持装卡莎，把三件套转给佐伊；只保留终局重合牌，按模型承接到佐伊、德莱文、安妮、拉克丝、波比、芮尔、悠米。",
      "成型：成型后卖掉持装佐伊，把三件套转给辛德拉，终局围绕辛德拉；9级5费槽10%，单次商店见辛德拉约5.4%，从0张到3张理论期望约108金（独立抽样近似，未扣同行与牌库）。",
      "止损：目标三件差两件以上或关键主C两轮搜不到，沿当前装备承载者切换到同方向次优路线。"
     ],
@@ -10694,10 +11201,10 @@
      ],
      "cvar10": 104.9,
      "top1Rate": 0.3,
-     "top5Rate": 7.1,
-     "topQuartileRate": 40.1,
+     "top5Rate": 6.9,
+     "topQuartileRate": 39.9,
      "failureRate": 4.2,
-     "robustness": 47.3
+     "robustness": 47.2
     },
     "drivers": [
      "转型重合47%",
@@ -11118,11 +11625,11 @@
       130.6
      ],
      "cvar10": 110,
-     "top1Rate": 9.2,
-     "top5Rate": 58,
-     "topQuartileRate": 45.9,
+     "top1Rate": 8.8,
+     "top5Rate": 54.6,
+     "topQuartileRate": 36.5,
      "failureRate": 0.3,
-     "robustness": 63.9
+     "robustness": 59.5
     },
     "drivers": [
      "转型重合76%",
@@ -11141,69 +11648,69 @@
    }
   },
   {
-   "augment": "猫之精准",
-   "carry": "悠米",
+   "augment": "多重射击",
+   "carry": "卡莎",
    "stage": "mid",
    "level": 7,
-   "score": 1323,
-   "baselineScore": 1309,
-   "uplift": 14,
-   "upliftPct": 1.1,
+   "score": 1315,
+   "baselineScore": 1297,
+   "uplift": 18,
+   "upliftPct": 1.4,
    "stageRatio": 0.8,
    "confidence": 0.8,
    "basis": "官方文本数值；叠层折算1层",
    "requiredUnits": [
-    "悠米"
+    "卡莎"
    ],
    "team": [
     {
-     "name": "悠米",
-     "price": 2
+     "name": "卡莎",
+     "price": 3
     },
     {
-     "name": "加里奥",
-     "price": 1
+     "name": "悠米",
+     "price": 2
     },
     {
      "name": "拉克丝",
      "price": 1
     },
     {
-     "name": "塔莉垭",
-     "price": 4
-    },
-    {
-     "name": "德莱文",
+     "name": "安妮",
      "price": 2
     },
     {
-     "name": "芮尔",
+     "name": "艾希",
+     "price": 1
+    },
+    {
+     "name": "伊泽瑞尔",
      "price": 2
     },
     {
-     "name": "卡莎",
-     "price": 3
+     "name": "加里奥",
+     "price": 1
     }
    ],
    "traits": [
-    "5星之守护者",
+    "3情报特工",
+    "3星之守护者",
     "2灵能使",
     "2吉祥物",
-    "1精英战士",
     "1平民英雄"
    ],
    "carryItems": [
-    "朔极之矛",
-    "水银",
-    "鬼索的狂暴之刃"
+    "泰坦的坚决",
+    "班克斯的魔法帽",
+    "斯塔缇克电刃"
    ],
-   "carryDps": 550,
-   "frontEHP": 14054,
+   "carryDps": 571,
+   "frontEHP": 13289,
    "tankDetail": [
     {
-     "hero": "芮尔",
+     "hero": "安妮",
      "star": 2,
-     "ehp": 8321,
+     "ehp": 7556,
      "items": [
       "狂徒铠甲",
       "狂徒铠甲",
@@ -11227,26 +11734,25 @@
       "key": "early",
       "label": "前期",
       "level": 5,
-      "carry": "悠米",
-      "score": 1113,
-      "method": "阶段战力1113，转型相容度82",
+      "carry": "卡莎",
+      "score": 1192,
+      "method": "阶段战力1192，转型相容度86",
       "team": [
-       "悠米",
+       "卡莎",
        "拉克丝",
-       "芮尔",
+       "悠米",
        "加里奥",
-       "孙悟空"
+       "内瑟斯"
       ],
       "traits": [
        "3星之守护者",
-       "2护卫",
        "2吉祥物",
        "1平民英雄"
       ],
       "board": [
        {
-        "name": "芮尔",
-        "price": 2,
+        "name": "内瑟斯",
+        "price": 1,
         "row": 1,
         "col": 4,
         "role": "主坦",
@@ -11271,32 +11777,32 @@
         ]
        },
        {
-        "name": "悠米",
-        "price": 2,
+        "name": "卡莎",
+        "price": 3,
         "row": 4,
         "col": 4,
         "role": "主C",
         "carry": true,
         "items": [
-         "朔极之矛",
-         "水银",
-         "鬼索的狂暴之刃"
+         "泰坦的坚决",
+         "班克斯的魔法帽",
+         "斯塔缇克电刃"
         ]
-       },
-       {
-        "name": "孙悟空",
-        "price": 1,
-        "row": 2,
-        "col": 4,
-        "role": "战士",
-        "carry": false,
-        "items": []
        },
        {
         "name": "拉克丝",
         "price": 1,
         "row": 4,
         "col": 2,
+        "role": "后排输出",
+        "carry": false,
+        "items": []
+       },
+       {
+        "name": "悠米",
+        "price": 2,
+        "row": 4,
+        "col": 6,
         "role": "后排输出",
         "carry": false,
         "items": []
@@ -11307,28 +11813,28 @@
       "key": "mid",
       "label": "中期",
       "level": 7,
-      "carry": "悠米",
-      "score": 1323,
-      "method": "阶段战力1323，转型相容度100",
+      "carry": "卡莎",
+      "score": 1315,
+      "method": "阶段战力1315，转型相容度100",
       "team": [
+       "卡莎",
        "悠米",
-       "加里奥",
        "拉克丝",
-       "塔莉垭",
-       "德莱文",
-       "芮尔",
-       "卡莎"
+       "安妮",
+       "艾希",
+       "伊泽瑞尔",
+       "加里奥"
       ],
       "traits": [
-       "5星之守护者",
+       "3情报特工",
+       "3星之守护者",
        "2灵能使",
        "2吉祥物",
-       "1精英战士",
        "1平民英雄"
       ],
       "board": [
        {
-        "name": "芮尔",
+        "name": "安妮",
         "price": 2,
         "row": 1,
         "col": 4,
@@ -11354,21 +11860,21 @@
         ]
        },
        {
-        "name": "悠米",
-        "price": 2,
+        "name": "卡莎",
+        "price": 3,
         "row": 4,
         "col": 4,
         "role": "主C",
         "carry": true,
         "items": [
-         "朔极之矛",
-         "水银",
-         "鬼索的狂暴之刃"
+         "泰坦的坚决",
+         "班克斯的魔法帽",
+         "斯塔缇克电刃"
         ]
        },
        {
-        "name": "拉克丝",
-        "price": 1,
+        "name": "悠米",
+        "price": 2,
         "row": 4,
         "col": 2,
         "role": "后排输出",
@@ -11376,8 +11882,8 @@
         "items": []
        },
        {
-        "name": "塔莉垭",
-        "price": 4,
+        "name": "拉克丝",
+        "price": 1,
         "row": 4,
         "col": 6,
         "role": "后排输出",
@@ -11385,8 +11891,8 @@
         "items": []
        },
        {
-        "name": "德莱文",
-        "price": 2,
+        "name": "艾希",
+        "price": 1,
         "row": 4,
         "col": 3,
         "role": "后排输出",
@@ -11394,8 +11900,8 @@
         "items": []
        },
        {
-        "name": "卡莎",
-        "price": 3,
+        "name": "伊泽瑞尔",
+        "price": 2,
         "row": 4,
         "col": 5,
         "role": "后排输出",
@@ -11408,31 +11914,31 @@
       "key": "late",
       "label": "后期",
       "level": 8,
-      "carry": "悠米",
-      "score": 1323,
-      "method": "终局模型总分1323，主C模拟550/秒",
+      "carry": "卡莎",
+      "score": 1315,
+      "method": "终局模型总分1315，主C模拟571/秒",
       "team": [
-       "悠米",
-       "加里奥",
-       "拉克丝",
-       "塔莉垭",
-       "德莱文",
-       "芮尔",
        "卡莎",
-       "费德提克"
+       "悠米",
+       "拉克丝",
+       "安妮",
+       "艾希",
+       "伊泽瑞尔",
+       "加里奥",
+       "佛耶戈"
       ],
       "traits": [
-       "5星之守护者",
+       "3情报特工",
+       "3星之守护者",
        "2灵能使",
        "2吉祥物",
-       "1精英战士",
-       "1平民英雄",
-       "1怪兽",
-       "1堕落使者"
+       "2爱心使者",
+       "2福牛守护者",
+       "1平民英雄"
       ],
       "board": [
        {
-        "name": "芮尔",
+        "name": "安妮",
         "price": 2,
         "row": 1,
         "col": 4,
@@ -11458,11 +11964,24 @@
         ]
        },
        {
-        "name": "费德提克",
-        "price": 5,
-        "row": 1,
-        "col": 3,
-        "role": "控制",
+        "name": "卡莎",
+        "price": 3,
+        "row": 4,
+        "col": 4,
+        "role": "主C",
+        "carry": true,
+        "items": [
+         "泰坦的坚决",
+         "班克斯的魔法帽",
+         "斯塔缇克电刃"
+        ]
+       },
+       {
+        "name": "佛耶戈",
+        "price": 4,
+        "row": 2,
+        "col": 4,
+        "role": "战士",
         "carry": false,
         "items": []
        },
@@ -11470,27 +11989,14 @@
         "name": "悠米",
         "price": 2,
         "row": 4,
-        "col": 4,
-        "role": "主C",
-        "carry": true,
-        "items": [
-         "朔极之矛",
-         "水银",
-         "鬼索的狂暴之刃"
-        ]
-       },
-       {
-        "name": "拉克丝",
-        "price": 1,
-        "row": 4,
         "col": 2,
         "role": "后排输出",
         "carry": false,
         "items": []
        },
        {
-        "name": "塔莉垭",
-        "price": 4,
+        "name": "拉克丝",
+        "price": 1,
         "row": 4,
         "col": 6,
         "role": "后排输出",
@@ -11498,8 +12004,8 @@
         "items": []
        },
        {
-        "name": "德莱文",
-        "price": 2,
+        "name": "艾希",
+        "price": 1,
         "row": 4,
         "col": 3,
         "role": "后排输出",
@@ -11507,8 +12013,8 @@
         "items": []
        },
        {
-        "name": "卡莎",
-        "price": 3,
+        "name": "伊泽瑞尔",
+        "price": 2,
         "row": 4,
         "col": 5,
         "role": "后排输出",
@@ -11519,54 +12025,52 @@
      }
     ],
     "items": [
-     "朔极之矛",
-     "水银",
-     "鬼索的狂暴之刃"
+     "泰坦的坚决",
+     "班克斯的魔法帽",
+     "斯塔缇克电刃"
     ],
     "operations": [
-     "2阶段：优先拿暴风之剑、女神之泪、负极斗篷、拳套、反曲之弓、无用大棒，5人口由悠米带目标装打工。",
-     "3/4阶段：中期继续由悠米持装；只保留终局重合牌，按模型承接到悠米、加里奥、拉克丝、塔莉垭、德莱文、芮尔、卡莎。",
-     "成型：成型后继续由悠米持装，终局围绕悠米；6级2费槽40%，单次商店见悠米约14.5%，从0张到9张理论期望约117金（独立抽样近似，未扣同行与牌库）。",
+     "2阶段：优先拿反曲之弓、锁子甲、无用大棒、女神之泪，5人口由卡莎带目标装打工。",
+     "3/4阶段：中期继续由卡莎持装；只保留终局重合牌，按模型承接到卡莎、悠米、拉克丝、安妮、艾希、伊泽瑞尔、加里奥。",
+     "成型：成型后继续由卡莎持装，终局围绕卡莎；7级3费槽35%，单次商店见卡莎约11.9%，从0张到9张理论期望约144金（独立抽样近似，未扣同行与牌库）。",
      "止损：目标三件差两件以上或关键主C两轮搜不到，沿当前装备承载者切换到同方向次优路线。"
     ],
     "positioningBasis": "行1靠敌方；主坦按EHP居中承伤，控制分散前置，远程主C按攻击距离沉底并与副输出错侧。",
     "derivation": "阶段承载者由目标三件套在当期棋盘逐人重跑输出模型后选出；过渡阵容按阶段战力、终局重合率与持装效率联合排序。"
    },
    "certification": {
-    "templateId": "meta-旺盛精力-悠米-6",
-    "templateName": "旺盛精力悠米机制路线",
-    "peerGroup": "条件路线（已满足专属门槛）",
+    "templateId": "official-1406",
+    "templateName": "情报特工怪兽卡莎4情报特工3怪兽",
+    "peerGroup": "常规路线",
     "sampleSize": 5000,
     "seed": 20260712,
-    "evidenceLevel": "L1.5 高敏感假设",
-    "priorPoints": -3,
+    "evidenceLevel": "L2.5 模型扰动稳健",
+    "priorPoints": 4,
     "metrics": {
-     "meanUtility": 107.5,
+     "meanUtility": 123.8,
      "interval95": [
-      97.1,
-      118
+      113.2,
+      134.4
      ],
-     "cvar10": 98.2,
-     "top1Rate": 0,
-     "top5Rate": 0.3,
-     "topQuartileRate": 0,
-     "failureRate": 32.5,
-     "robustness": 18.9
+     "cvar10": 114.3,
+     "top1Rate": 18.3,
+     "top5Rate": 61.8,
+     "topQuartileRate": 93.5,
+     "failureRate": 0,
+     "robustness": 86.3
     },
     "drivers": [
-     "转型重合85%",
-     "装备弹性72%",
-     "6级追悠米3星"
+     "转型重合55%",
+     "装备弹性86%",
+     "7级追卡莎3星"
     ],
     "dependencies": [
-     "符文:旺盛精力",
-     "机制棋子:悠米",
-     "悠米3星",
-     "三件套:朔极之矛+班克斯的魔法帽+鬼索的狂暴之刃"
+     "卡莎3星",
+     "三件套:巨人捕手+斯塔缇克电刃+海克斯科技枪刃"
     ],
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。",
-    "matchedRoute": "旺盛精力悠米机制路线",
-    "matchScore": 135
+    "matchedRoute": "情报特工怪兽卡莎4情报特工3怪兽",
+    "matchScore": 91.4
    }
   },
   {
@@ -11580,7 +12084,7 @@
    "upliftPct": 13.1,
    "stageRatio": 0.9,
    "confidence": 0.72,
-   "basis": "17.6b公告：按20次击杀、每次+2%法强并触发额外导弹的中位状态",
+   "basis": "17.6b公告、17.7保留：按20次击杀、每次+2%法强并触发额外导弹的中位状态",
    "requiredUnits": [
     "金克丝",
     "蔚"
@@ -11979,11 +12483,11 @@
       130.6
      ],
      "cvar10": 110,
-     "top1Rate": 9.2,
-     "top5Rate": 58,
-     "topQuartileRate": 45.9,
+     "top1Rate": 8.8,
+     "top5Rate": 54.6,
+     "topQuartileRate": 36.5,
      "failureRate": 0.3,
-     "robustness": 63.9
+     "robustness": 59.5
     },
     "drivers": [
      "转型重合76%",
@@ -12397,7 +12901,7 @@
     "sampleSize": 5000,
     "seed": 20260712,
     "evidenceLevel": "L2 模型候选",
-    "priorPoints": 2,
+    "priorPoints": 1,
     "metrics": {
      "meanUtility": 120.5,
      "interval95": [
@@ -12406,10 +12910,10 @@
      ],
      "cvar10": 110.9,
      "top1Rate": 2.1,
-     "top5Rate": 84.2,
-     "topQuartileRate": 38.3,
+     "top5Rate": 74,
+     "topQuartileRate": 35.2,
      "failureRate": 0.1,
-     "robustness": 66.7
+     "robustness": 63.4
     },
     "drivers": [
      "转型重合79%",
@@ -12425,432 +12929,6 @@
     "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。",
     "matchedRoute": "咒能高涨伊泽瑞尔机制路线",
     "matchScore": 170
-   }
-  },
-  {
-   "augment": "多重射击",
-   "carry": "卡莎",
-   "stage": "mid",
-   "level": 7,
-   "score": 1277,
-   "baselineScore": 1261,
-   "uplift": 16,
-   "upliftPct": 1.3,
-   "stageRatio": 0.8,
-   "confidence": 0.8,
-   "basis": "官方文本数值；叠层折算1层",
-   "requiredUnits": [
-    "卡莎"
-   ],
-   "team": [
-    {
-     "name": "卡莎",
-     "price": 3
-    },
-    {
-     "name": "悠米",
-     "price": 2
-    },
-    {
-     "name": "拉克丝",
-     "price": 1
-    },
-    {
-     "name": "安妮",
-     "price": 2
-    },
-    {
-     "name": "艾希",
-     "price": 1
-    },
-    {
-     "name": "伊泽瑞尔",
-     "price": 2
-    },
-    {
-     "name": "加里奥",
-     "price": 1
-    }
-   ],
-   "traits": [
-    "3情报特工",
-    "3星之守护者",
-    "2灵能使",
-    "2吉祥物",
-    "1平民英雄"
-   ],
-   "carryItems": [
-    "泰坦的坚决",
-    "班克斯的魔法帽",
-    "斯塔缇克电刃"
-   ],
-   "carryDps": 533,
-   "frontEHP": 13289,
-   "tankDetail": [
-    {
-     "hero": "安妮",
-     "star": 2,
-     "ehp": 7556,
-     "items": [
-      "狂徒铠甲",
-      "狂徒铠甲",
-      "圣盾使的誓约"
-     ]
-    },
-    {
-     "hero": "加里奥",
-     "star": 2,
-     "ehp": 5733,
-     "items": [
-      "石像鬼石板甲",
-      "日炎斗篷",
-      "狂徒铠甲"
-     ]
-    }
-   ],
-   "presentation": {
-    "stages": [
-     {
-      "key": "early",
-      "label": "前期",
-      "level": 5,
-      "carry": "卡莎",
-      "score": 1168,
-      "method": "阶段战力1168，转型相容度85",
-      "team": [
-       "卡莎",
-       "拉克丝",
-       "悠米",
-       "加里奥",
-       "内瑟斯"
-      ],
-      "traits": [
-       "3星之守护者",
-       "2吉祥物",
-       "1平民英雄"
-      ],
-      "board": [
-       {
-        "name": "内瑟斯",
-        "price": 1,
-        "row": 1,
-        "col": 4,
-        "role": "主坦",
-        "carry": false,
-        "items": [
-         "狂徒铠甲",
-         "狂徒铠甲",
-         "圣盾使的誓约"
-        ]
-       },
-       {
-        "name": "加里奥",
-        "price": 1,
-        "row": 1,
-        "col": 2,
-        "role": "副坦",
-        "carry": false,
-        "items": [
-         "石像鬼石板甲",
-         "日炎斗篷",
-         "狂徒铠甲"
-        ]
-       },
-       {
-        "name": "卡莎",
-        "price": 3,
-        "row": 4,
-        "col": 4,
-        "role": "主C",
-        "carry": true,
-        "items": [
-         "泰坦的坚决",
-         "班克斯的魔法帽",
-         "斯塔缇克电刃"
-        ]
-       },
-       {
-        "name": "拉克丝",
-        "price": 1,
-        "row": 4,
-        "col": 2,
-        "role": "后排输出",
-        "carry": false,
-        "items": []
-       },
-       {
-        "name": "悠米",
-        "price": 2,
-        "row": 4,
-        "col": 6,
-        "role": "后排输出",
-        "carry": false,
-        "items": []
-       }
-      ]
-     },
-     {
-      "key": "mid",
-      "label": "中期",
-      "level": 7,
-      "carry": "卡莎",
-      "score": 1277,
-      "method": "阶段战力1277，转型相容度100",
-      "team": [
-       "卡莎",
-       "悠米",
-       "拉克丝",
-       "安妮",
-       "艾希",
-       "伊泽瑞尔",
-       "加里奥"
-      ],
-      "traits": [
-       "3情报特工",
-       "3星之守护者",
-       "2灵能使",
-       "2吉祥物",
-       "1平民英雄"
-      ],
-      "board": [
-       {
-        "name": "安妮",
-        "price": 2,
-        "row": 1,
-        "col": 4,
-        "role": "主坦",
-        "carry": false,
-        "items": [
-         "狂徒铠甲",
-         "狂徒铠甲",
-         "圣盾使的誓约"
-        ]
-       },
-       {
-        "name": "加里奥",
-        "price": 1,
-        "row": 1,
-        "col": 2,
-        "role": "副坦",
-        "carry": false,
-        "items": [
-         "石像鬼石板甲",
-         "日炎斗篷",
-         "狂徒铠甲"
-        ]
-       },
-       {
-        "name": "卡莎",
-        "price": 3,
-        "row": 4,
-        "col": 4,
-        "role": "主C",
-        "carry": true,
-        "items": [
-         "泰坦的坚决",
-         "班克斯的魔法帽",
-         "斯塔缇克电刃"
-        ]
-       },
-       {
-        "name": "悠米",
-        "price": 2,
-        "row": 4,
-        "col": 2,
-        "role": "后排输出",
-        "carry": false,
-        "items": []
-       },
-       {
-        "name": "拉克丝",
-        "price": 1,
-        "row": 4,
-        "col": 6,
-        "role": "后排输出",
-        "carry": false,
-        "items": []
-       },
-       {
-        "name": "艾希",
-        "price": 1,
-        "row": 4,
-        "col": 3,
-        "role": "后排输出",
-        "carry": false,
-        "items": []
-       },
-       {
-        "name": "伊泽瑞尔",
-        "price": 2,
-        "row": 4,
-        "col": 5,
-        "role": "后排输出",
-        "carry": false,
-        "items": []
-       }
-      ]
-     },
-     {
-      "key": "late",
-      "label": "后期",
-      "level": 8,
-      "carry": "卡莎",
-      "score": 1277,
-      "method": "终局模型总分1277，主C模拟533/秒",
-      "team": [
-       "卡莎",
-       "悠米",
-       "拉克丝",
-       "安妮",
-       "艾希",
-       "伊泽瑞尔",
-       "加里奥",
-       "佛耶戈"
-      ],
-      "traits": [
-       "3情报特工",
-       "3星之守护者",
-       "2灵能使",
-       "2吉祥物",
-       "2爱心使者",
-       "2福牛守护者",
-       "1平民英雄"
-      ],
-      "board": [
-       {
-        "name": "安妮",
-        "price": 2,
-        "row": 1,
-        "col": 4,
-        "role": "主坦",
-        "carry": false,
-        "items": [
-         "狂徒铠甲",
-         "狂徒铠甲",
-         "圣盾使的誓约"
-        ]
-       },
-       {
-        "name": "加里奥",
-        "price": 1,
-        "row": 1,
-        "col": 2,
-        "role": "副坦",
-        "carry": false,
-        "items": [
-         "石像鬼石板甲",
-         "日炎斗篷",
-         "狂徒铠甲"
-        ]
-       },
-       {
-        "name": "卡莎",
-        "price": 3,
-        "row": 4,
-        "col": 4,
-        "role": "主C",
-        "carry": true,
-        "items": [
-         "泰坦的坚决",
-         "班克斯的魔法帽",
-         "斯塔缇克电刃"
-        ]
-       },
-       {
-        "name": "佛耶戈",
-        "price": 4,
-        "row": 2,
-        "col": 4,
-        "role": "战士",
-        "carry": false,
-        "items": []
-       },
-       {
-        "name": "悠米",
-        "price": 2,
-        "row": 4,
-        "col": 2,
-        "role": "后排输出",
-        "carry": false,
-        "items": []
-       },
-       {
-        "name": "拉克丝",
-        "price": 1,
-        "row": 4,
-        "col": 6,
-        "role": "后排输出",
-        "carry": false,
-        "items": []
-       },
-       {
-        "name": "艾希",
-        "price": 1,
-        "row": 4,
-        "col": 3,
-        "role": "后排输出",
-        "carry": false,
-        "items": []
-       },
-       {
-        "name": "伊泽瑞尔",
-        "price": 2,
-        "row": 4,
-        "col": 5,
-        "role": "后排输出",
-        "carry": false,
-        "items": []
-       }
-      ]
-     }
-    ],
-    "items": [
-     "泰坦的坚决",
-     "班克斯的魔法帽",
-     "斯塔缇克电刃"
-    ],
-    "operations": [
-     "2阶段：优先拿反曲之弓、锁子甲、无用大棒、女神之泪，5人口由卡莎带目标装打工。",
-     "3/4阶段：中期继续由卡莎持装；只保留终局重合牌，按模型承接到卡莎、悠米、拉克丝、安妮、艾希、伊泽瑞尔、加里奥。",
-     "成型：成型后继续由卡莎持装，终局围绕卡莎；7级3费槽35%，单次商店见卡莎约11.9%，从0张到9张理论期望约144金（独立抽样近似，未扣同行与牌库）。",
-     "止损：目标三件差两件以上或关键主C两轮搜不到，沿当前装备承载者切换到同方向次优路线。"
-    ],
-    "positioningBasis": "行1靠敌方；主坦按EHP居中承伤，控制分散前置，远程主C按攻击距离沉底并与副输出错侧。",
-    "derivation": "阶段承载者由目标三件套在当期棋盘逐人重跑输出模型后选出；过渡阵容按阶段战力、终局重合率与持装效率联合排序。"
-   },
-   "certification": {
-    "templateId": "official-1406",
-    "templateName": "情报特工怪兽卡莎4情报特工3怪兽",
-    "peerGroup": "常规路线",
-    "sampleSize": 5000,
-    "seed": 20260712,
-    "evidenceLevel": "L2.5 模型扰动稳健",
-    "priorPoints": 4,
-    "metrics": {
-     "meanUtility": 123.8,
-     "interval95": [
-      113.2,
-      134.4
-     ],
-     "cvar10": 114.3,
-     "top1Rate": 18.6,
-     "top5Rate": 62.3,
-     "topQuartileRate": 93.6,
-     "failureRate": 0,
-     "robustness": 86.5
-    },
-    "drivers": [
-     "转型重合55%",
-     "装备弹性86%",
-     "7级追卡莎3星"
-    ],
-    "dependencies": [
-     "卡莎3星",
-     "三件套:巨人捕手+斯塔缇克电刃+海克斯科技枪刃"
-    ],
-    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。",
-    "matchedRoute": "情报特工怪兽卡莎4情报特工3怪兽",
-    "matchScore": 91.4
    }
   },
   {
@@ -13263,10 +13341,10 @@
      ],
      "cvar10": 104.7,
      "top1Rate": 0.3,
-     "top5Rate": 5.3,
-     "topQuartileRate": 34.6,
+     "top5Rate": 5.1,
+     "topQuartileRate": 34.5,
      "failureRate": 4.5,
-     "robustness": 44.6
+     "robustness": 44.5
     },
     "drivers": [
      "转型重合43%",
@@ -13372,7 +13450,7 @@
       "level": 5,
       "carry": "悠米",
       "score": 1177,
-      "method": "阶段战力1177，转型相容度79",
+      "method": "阶段战力1177，转型相容度80",
       "team": [
        "娑娜",
        "拉克丝",
@@ -13684,19 +13762,19 @@
     "sampleSize": 5000,
     "seed": 20260712,
     "evidenceLevel": "L1.5 高敏感假设",
-    "priorPoints": -3,
+    "priorPoints": 0,
     "metrics": {
-     "meanUtility": 107.5,
+     "meanUtility": 117.4,
      "interval95": [
-      97.1,
-      118
+      107,
+      127.9
      ],
-     "cvar10": 98.2,
-     "top1Rate": 0,
-     "top5Rate": 0.3,
-     "topQuartileRate": 0,
-     "failureRate": 32.5,
-     "robustness": 18.9
+     "cvar10": 108,
+     "top1Rate": 2,
+     "top5Rate": 41.3,
+     "topQuartileRate": 20.4,
+     "failureRate": 1,
+     "robustness": 49
     },
     "drivers": [
      "转型重合85%",
@@ -14113,19 +14191,19 @@
     "sampleSize": 5000,
     "seed": 20260712,
     "evidenceLevel": "L1.5 高敏感假设",
-    "priorPoints": -3,
+    "priorPoints": 0,
     "metrics": {
-     "meanUtility": 107.5,
+     "meanUtility": 117.4,
      "interval95": [
-      97.1,
-      118
+      107,
+      127.9
      ],
-     "cvar10": 98.2,
-     "top1Rate": 0,
-     "top5Rate": 0.3,
-     "topQuartileRate": 0,
-     "failureRate": 32.5,
-     "robustness": 18.9
+     "cvar10": 108,
+     "top1Rate": 2,
+     "top5Rate": 41.3,
+     "topQuartileRate": 20.4,
+     "failureRate": 1,
+     "robustness": 49
     },
     "drivers": [
      "转型重合85%",
@@ -14148,8 +14226,8 @@
    "carry": "锐雯",
    "stage": "mid",
    "level": 7,
-   "score": 1030,
-   "baselineScore": 1028,
+   "score": 1031,
+   "baselineScore": 1029,
    "uplift": 2,
    "upliftPct": 0.2,
    "stageRatio": 0.6,
@@ -14201,7 +14279,7 @@
     "鬼索的狂暴之刃",
     "卢安娜的飓风"
    ],
-   "carryDps": 177,
+   "carryDps": 179,
    "frontEHP": 14324,
    "tankDetail": [
     {
@@ -14312,8 +14390,8 @@
       "label": "中期",
       "level": 7,
       "carry": "凯尔",
-      "score": 1030,
-      "method": "阶段战力1030，转型相容度100",
+      "score": 1031,
+      "method": "阶段战力1031，转型相容度100",
       "team": [
        "锐雯",
        "莎弥拉",
@@ -14414,8 +14492,8 @@
       "label": "后期",
       "level": 8,
       "carry": "锐雯",
-      "score": 1030,
-      "method": "终局模型总分1030，主C模拟177/秒",
+      "score": 1031,
+      "method": "终局模型总分1031，主C模拟179/秒",
       "team": [
        "锐雯",
        "莎弥拉",
@@ -14553,11 +14631,11 @@
       130.6
      ],
      "cvar10": 110,
-     "top1Rate": 9.2,
-     "top5Rate": 58,
-     "topQuartileRate": 45.9,
+     "top1Rate": 8.8,
+     "top5Rate": 54.6,
+     "topQuartileRate": 36.5,
      "failureRate": 0.3,
-     "robustness": 63.9
+     "robustness": 59.5
     },
     "drivers": [
      "转型重合76%",
@@ -14977,19 +15055,19 @@
     "sampleSize": 5000,
     "seed": 20260712,
     "evidenceLevel": "L1.5 高敏感假设",
-    "priorPoints": -3,
+    "priorPoints": 0,
     "metrics": {
-     "meanUtility": 107.5,
+     "meanUtility": 117.4,
      "interval95": [
-      97.1,
-      118
+      107,
+      127.9
      ],
-     "cvar10": 98.2,
-     "top1Rate": 0,
-     "top5Rate": 0.3,
-     "topQuartileRate": 0,
-     "failureRate": 32.5,
-     "robustness": 18.9
+     "cvar10": 108,
+     "top1Rate": 2,
+     "top5Rate": 41.3,
+     "topQuartileRate": 20.4,
+     "failureRate": 1,
+     "robustness": 49
     },
     "drivers": [
      "转型重合85%",
@@ -15782,10 +15860,10 @@
   {
    "id": "meta-旺盛精力-悠米-6",
    "source": "meta-solver",
-   "quality": "A",
+   "quality": "S",
    "name": "旺盛精力悠米机制路线",
    "family": "旺盛精力·悠米",
-   "goal": "反事实模拟净提升6.1%",
+   "goal": "反事实模拟净提升6.7%",
    "earlyUnits": [
     "悠米",
     "加里奥",
@@ -15843,7 +15921,7 @@
    "officialText": {
     "early": "硬门槛：旺盛精力+悠米。",
     "equipment": "悠米模型三件：朔极之矛、班克斯的魔法帽、鬼索的狂暴之刃。",
-    "hex": "无强化1309分，有强化1389分，净提升6.1%。",
+    "hex": "无强化1351分，有强化1442分，净提升6.7%。",
     "enemy": "机制置信度80%；未量化控制、站位和击杀归属误差。"
    },
    "actions": {
@@ -15857,11 +15935,11 @@
      "卡莎"
     ],
     "item": "装备往朔极之矛、班克斯的魔法帽、鬼索的狂暴之刃靠。",
-    "checkpoint": "旺盛精力场景总分1389，比同棋盘基线高6.1%。",
+    "checkpoint": "旺盛精力场景总分1442，比同棋盘基线高6.7%。",
     "stopLoss": "缺旺盛精力或悠米不启动。"
    },
    "role": "机制条件",
-   "strengthPrior": 0.8,
+   "strengthPrior": 0.9,
    "mechanic": {
     "type": "meta-counterfactual",
     "requiredAugment": "旺盛精力",
@@ -15870,7 +15948,7 @@
     ],
     "matchBonus": 12,
     "missingPenalty": 80,
-    "text": "官方文本数值；叠层折算1层；反事实+6.1%"
+    "text": "官方文本数值；叠层折算1层；反事实+6.7%"
    }
   },
   {
@@ -15932,7 +16010,7 @@
     "7级围绕金克丝完成算法棋盘",
     "按来牌替换至金克丝、蔚、莎弥拉、凯尔、希维尔、艾克、加里奥"
    ],
-   "boardNote": "算法自动生成；17.6b公告：按20次击杀、每次+2%法强并触发额外导弹的中位状态。",
+   "boardNote": "算法自动生成；17.6b公告、17.7保留：按20次击杀、每次+2%法强并触发额外导弹的中位状态。",
    "officialText": {
     "early": "硬门槛：姐妹+金克丝、蔚。",
     "equipment": "金克丝模型三件：泰坦的坚决、水银、鬼索的狂暴之刃。",
@@ -15964,7 +16042,7 @@
     ],
     "matchBonus": 13,
     "missingPenalty": 80,
-    "text": "17.6b公告：按20次击杀、每次+2%法强并触发额外导弹的中位状态；反事实+13.1%"
+    "text": "17.6b公告、17.7保留：按20次击杀、每次+2%法强并触发额外导弹的中位状态；反事实+13.1%"
    }
   },
   {
@@ -16171,7 +16249,7 @@
   },
   {
    "augment": "无双挑战",
-   "desc": "提供1个【菲奥娜】。你最强大的那个【菲奥娜】对相同弈子的每第4次攻击会造成她16%最大生命值的魔法伤害，并为【菲奥娜】提供她最大生命值12%的治疗效果。",
+   "desc": "提供1个【菲奥娜】。你最强大的那个【菲奥娜】对相同弈子的每第4次攻击会造成她16%最大生命值的魔法伤害，并为【菲奥娜】提供她最大生命值10%的治疗效果。",
    "basis": "官方文本没有可直接恢复的战斗数值"
   },
   {
@@ -16361,7 +16439,7 @@
   },
   {
    "augment": "灭绝事件",
-   "desc": "提供1个【奥瑞利安 索尔】。你最强大的那个【奥瑞利安 索尔】拥有15法术加成并且他的技能流星会更大。",
+   "desc": "提供1个【奥瑞利安 索尔】。你最强大的那个【奥瑞利安 索尔】拥有20法术加成并且他的技能流星会更大。",
    "basis": "官方文本数值；叠层折算1层"
   },
   {
@@ -16371,7 +16449,7 @@
   },
   {
    "augment": "虚空瞄准镜",
-   "desc": "提供1个【卑尔维斯】。你最强大的那个【卑尔维斯】的射程+3，并且技能会附带额外33点真实伤害。",
+   "desc": "提供1个【卑尔维斯】。你最强大的那个【卑尔维斯】的射程+3，并且技能会附带额外30点真实伤害。",
    "basis": "官方文本没有可直接恢复的战斗数值"
   },
   {
@@ -16456,7 +16534,7 @@
   },
   {
    "augment": "赐死剑气",
-   "desc": "提供1个【亚托克斯】。你最强大的那个【亚托克斯】的技能造成额外伤害，伤害值相当于他20%最大生命值。",
+   "desc": "提供1个【亚托克斯】。你最强大的那个【亚托克斯】的技能造成额外伤害，伤害值相当于他22%最大生命值。",
    "basis": "官方文本没有可直接恢复的战斗数值"
   },
   {
@@ -16574,8 +16652,8 @@
        "price": 5
       }
      ],
-     "score": 2119,
-     "carryDps": 1227,
+     "score": 2141,
+     "carryDps": 1249,
      "frontEHP": 16107,
      "subDps": 229,
      "util": 3,
@@ -16798,8 +16876,8 @@
         "label": "后期",
         "level": 8,
         "carry": "蕾欧娜",
-        "score": 2119,
-        "method": "终局模型总分2119，主C模拟1227/秒",
+        "score": 2141,
+        "method": "终局模型总分2141，主C模拟1249/秒",
         "team": [
          "蕾欧娜",
          "德莱文",
@@ -16938,11 +17016,11 @@
         138.8
        ],
        "cvar10": 117.6,
-       "top1Rate": 77,
-       "top5Rate": 98.8,
-       "topQuartileRate": 95.9,
+       "top1Rate": 76.3,
+       "top5Rate": 98.2,
+       "topQuartileRate": 94.2,
        "failureRate": 0,
-       "robustness": 96.7
+       "robustness": 95.9
       },
       "drivers": [
        "转型重合67%",
@@ -17003,8 +17081,8 @@
        "price": 5
       }
      ],
-     "score": 1974,
-     "carryDps": 1147,
+     "score": 1989,
+     "carryDps": 1162,
      "frontEHP": 14682,
      "subDps": 229,
      "util": 3,
@@ -17229,8 +17307,8 @@
         "label": "后期",
         "level": 8,
         "carry": "贾克斯",
-        "score": 1974,
-        "method": "终局模型总分1974，主C模拟1147/秒",
+        "score": 1989,
+        "method": "终局模型总分1989，主C模拟1162/秒",
         "team": [
          "贾克斯",
          "德莱文",
@@ -17437,17 +17515,17 @@
       "evidenceLevel": "L2.5 模型扰动稳健",
       "priorPoints": 1,
       "metrics": {
-       "meanUtility": 117.9,
+       "meanUtility": 118.1,
        "interval95": [
-        108.3,
-        128.1
+        108.5,
+        128.3
        ],
-       "cvar10": 109.3,
+       "cvar10": 109.5,
        "top1Rate": 0.2,
-       "top5Rate": 13.1,
-       "topQuartileRate": 58.9,
+       "top5Rate": 13.8,
+       "topQuartileRate": 60,
        "failureRate": 0.4,
-       "robustness": 59.6
+       "robustness": 60.4
       },
       "drivers": [
        "转型重合25%",
@@ -17471,12 +17549,12 @@
    "kind": "stable",
    "family": "算法稳定梯队 · T1",
    "comps": [
-    "模型·佐伊·3黑客2灵能使",
+    "模型·佐伊·3黑客2淘气包",
     "模型·凯尔·2灵能使4决斗大师",
     "模型·薇恩·2灵能使2决斗大师",
     "黑客贾克斯",
-    "小天才九五",
-    "决斗薇恩"
+    "模型·卡莎·4灵能使3情报特工",
+    "小天才九五"
    ],
    "rows": [
     {
@@ -17518,24 +17596,24 @@
        "price": 5
       },
       {
-       "name": "卡蜜尔",
-       "price": 2
+       "name": "艾克",
+       "price": 4
       }
      ],
-     "score": 1765,
-     "carryDps": 897,
-     "frontEHP": 15738,
-     "subDps": 170,
-     "util": 4.5,
+     "score": 1812,
+     "carryDps": 918,
+     "frontEHP": 16276,
+     "subDps": 188,
+     "util": 4,
      "acts": [
       "3黑客",
+      "2淘气包",
       "2灵能使",
       "2强袭枪手",
       "1气象主播",
       "1枪神",
       "1精英战士",
       "1平民英雄",
-      "2AI程序",
       "3源计划：激光特工"
      ],
      "tankDetail": [
@@ -17549,8 +17627,8 @@
        ]
       },
       {
-       "hero": "劫",
-       "ehp": 7501,
+       "hero": "艾克",
+       "ehp": 8040,
        "items": [
         "石像鬼石板甲",
         "日炎斗篷",
@@ -17559,7 +17637,7 @@
       }
      ],
      "source": "solver",
-     "displayName": "模型·佐伊·3黑客2灵能使",
+     "displayName": "模型·佐伊·3黑客2淘气包",
      "presentation": {
       "stages": [
        {
@@ -17747,8 +17825,8 @@
         "label": "后期",
         "level": 8,
         "carry": "佐伊",
-        "score": 1765,
-        "method": "终局模型总分1765，主C模拟897/秒",
+        "score": 1812,
+        "method": "终局模型总分1812，主C模拟918/秒",
         "team": [
          "佐伊",
          "迦娜",
@@ -17757,14 +17835,14 @@
          "劫",
          "赛娜",
          "厄斐琉斯",
-         "卡蜜尔"
+         "艾克"
         ],
         "traits": [
          "3黑客",
          "3源计划：激光特工",
+         "2淘气包",
          "2灵能使",
          "2强袭枪手",
-         "2AI程序",
          "1气象主播",
          "1枪神",
          "1精英战士",
@@ -17785,7 +17863,7 @@
           ]
          },
          {
-          "name": "劫",
+          "name": "艾克",
           "price": 4,
           "row": 1,
           "col": 2,
@@ -17796,15 +17874,6 @@
            "日炎斗篷",
            "狂徒铠甲"
           ]
-         },
-         {
-          "name": "卡蜜尔",
-          "price": 2,
-          "row": 1,
-          "col": 3,
-          "role": "控制",
-          "carry": false,
-          "items": []
          },
          {
           "name": "佐伊",
@@ -17818,6 +17887,15 @@
            "鬼索的狂暴之刃",
            "蓝霸符"
           ]
+         },
+         {
+          "name": "劫",
+          "price": 4,
+          "row": 2,
+          "col": 4,
+          "role": "战士",
+          "carry": false,
+          "items": []
          },
          {
           "name": "迦娜",
@@ -17904,7 +17982,7 @@
       ],
       "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。",
       "matchedRoute": "灵能佐伊4灵能使3小天才2AI程序",
-      "matchScore": 37.9
+      "matchScore": 43.5
      }
     },
     {
@@ -17950,8 +18028,8 @@
        "price": 4
       }
      ],
-     "score": 1752,
-     "carryDps": 928,
+     "score": 1755,
+     "carryDps": 930,
      "frontEHP": 16276,
      "subDps": 154,
      "util": 0.5,
@@ -18173,8 +18251,8 @@
         "label": "后期",
         "level": 8,
         "carry": "凯尔",
-        "score": 1752,
-        "method": "终局模型总分1752，主C模拟928/秒",
+        "score": 1755,
+        "method": "终局模型总分1755，主C模拟930/秒",
         "team": [
          "凯尔",
          "劫",
@@ -18305,17 +18383,17 @@
       "evidenceLevel": "L2.5 模型扰动稳健",
       "priorPoints": 2,
       "metrics": {
-       "meanUtility": 120.1,
+       "meanUtility": 120.2,
        "interval95": [
-        108.1,
-        132.2
+        108.2,
+        132.3
        ],
-       "cvar10": 109.3,
-       "top1Rate": 5.1,
-       "top5Rate": 30.9,
-       "topQuartileRate": 76,
+       "cvar10": 109.4,
+       "top1Rate": 5.2,
+       "top5Rate": 31.3,
+       "topQuartileRate": 76.4,
        "failureRate": 0.5,
-       "robustness": 70
+       "robustness": 70.3
       },
       "drivers": [
        "转型重合43%",
@@ -18374,8 +18452,8 @@
        "price": 4
       }
      ],
-     "score": 1721,
-     "carryDps": 898,
+     "score": 1724,
+     "carryDps": 901,
      "frontEHP": 16276,
      "subDps": 151,
      "util": 0.5,
@@ -18600,8 +18678,8 @@
         "label": "后期",
         "level": 8,
         "carry": "薇恩",
-        "score": 1721,
-        "method": "终局模型总分1721，主C模拟898/秒",
+        "score": 1724,
+        "method": "终局模型总分1724，主C模拟901/秒",
         "team": [
          "薇恩",
          "劫",
@@ -18740,10 +18818,10 @@
        ],
        "cvar10": 101.6,
        "top1Rate": 0,
-       "top5Rate": 0.2,
-       "topQuartileRate": 5.9,
+       "top5Rate": 0.1,
+       "topQuartileRate": 5.8,
        "failureRate": 13.9,
-       "robustness": 27.9
+       "robustness": 27.8
       },
       "drivers": [
        "转型重合49%",
@@ -18806,17 +18884,17 @@
       "evidenceLevel": "L1.5 高敏感假设",
       "priorPoints": -1,
       "metrics": {
-       "meanUtility": 114.4,
+       "meanUtility": 114.5,
        "interval95": [
-        104.7,
-        124.4
+        104.8,
+        124.5
        ],
-       "cvar10": 105.7,
+       "cvar10": 105.8,
        "top1Rate": 0.1,
        "top5Rate": 2.5,
-       "topQuartileRate": 23.1,
-       "failureRate": 2.9,
-       "robustness": 40.4
+       "topQuartileRate": 23.6,
+       "failureRate": 2.8,
+       "robustness": 40.7
       },
       "drivers": [
        "转型重合25%",
@@ -18830,6 +18908,430 @@
       "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。",
       "matchedRoute": "黑客贾克斯3战斗机甲2黑客2斗士",
       "matchScore": 75
+     }
+    },
+    {
+     "carry": "卡莎",
+     "carryPrice": 3,
+     "carryStar": 3,
+     "carryItems": [
+      "泰坦的坚决",
+      "班克斯的魔法帽",
+      "鬼索的狂暴之刃"
+     ],
+     "team": [
+      {
+       "name": "卡莎",
+       "price": 3
+      },
+      {
+       "name": "迦娜",
+       "price": 5
+      },
+      {
+       "name": "塔莉垭",
+       "price": 4
+      },
+      {
+       "name": "拉克丝",
+       "price": 1
+      },
+      {
+       "name": "娑娜",
+       "price": 3
+      },
+      {
+       "name": "莎弥拉",
+       "price": 4
+      },
+      {
+       "name": "伊泽瑞尔",
+       "price": 2
+      },
+      {
+       "name": "薇恩",
+       "price": 3
+      }
+     ],
+     "score": 1626,
+     "carryDps": 993,
+     "frontEHP": 11364,
+     "subDps": 158,
+     "util": 2.5,
+     "acts": [
+      "4灵能使",
+      "1气象主播",
+      "3情报特工",
+      "1精英战士",
+      "1平民英雄",
+      "3星之守护者",
+      "3地下魔盗团"
+     ],
+     "tankDetail": [
+      {
+       "hero": "迦娜",
+       "ehp": 5875,
+       "items": [
+        "狂徒铠甲",
+        "狂徒铠甲",
+        "圣盾使的誓约"
+       ]
+      },
+      {
+       "hero": "塔莉垭",
+       "ehp": 5489,
+       "items": [
+        "石像鬼石板甲",
+        "日炎斗篷",
+        "狂徒铠甲"
+       ]
+      }
+     ],
+     "source": "solver",
+     "displayName": "模型·卡莎·4灵能使3情报特工",
+     "presentation": {
+      "stages": [
+       {
+        "key": "early",
+        "label": "前期",
+        "level": 5,
+        "carry": "卡莎",
+        "score": 1192,
+        "method": "阶段战力1192，转型相容度75",
+        "team": [
+         "卡莎",
+         "拉克丝",
+         "悠米",
+         "加里奥",
+         "内瑟斯"
+        ],
+        "traits": [
+         "3星之守护者",
+         "2吉祥物",
+         "1平民英雄"
+        ],
+        "board": [
+         {
+          "name": "内瑟斯",
+          "price": 1,
+          "row": 1,
+          "col": 4,
+          "role": "主坦",
+          "carry": false,
+          "items": [
+           "狂徒铠甲",
+           "狂徒铠甲",
+           "圣盾使的誓约"
+          ]
+         },
+         {
+          "name": "加里奥",
+          "price": 1,
+          "row": 1,
+          "col": 2,
+          "role": "副坦",
+          "carry": false,
+          "items": [
+           "石像鬼石板甲",
+           "日炎斗篷",
+           "狂徒铠甲"
+          ]
+         },
+         {
+          "name": "卡莎",
+          "price": 3,
+          "row": 4,
+          "col": 4,
+          "role": "主C",
+          "carry": true,
+          "items": [
+           "泰坦的坚决",
+           "班克斯的魔法帽",
+           "鬼索的狂暴之刃"
+          ]
+         },
+         {
+          "name": "拉克丝",
+          "price": 1,
+          "row": 4,
+          "col": 2,
+          "role": "后排输出",
+          "carry": false,
+          "items": []
+         },
+         {
+          "name": "悠米",
+          "price": 2,
+          "row": 4,
+          "col": 6,
+          "role": "后排输出",
+          "carry": false,
+          "items": []
+         }
+        ]
+       },
+       {
+        "key": "mid",
+        "label": "中期",
+        "level": 7,
+        "carry": "卡莎",
+        "score": 1297,
+        "method": "阶段战力1297，转型相容度71",
+        "team": [
+         "卡莎",
+         "悠米",
+         "拉克丝",
+         "安妮",
+         "艾希",
+         "伊泽瑞尔",
+         "加里奥"
+        ],
+        "traits": [
+         "3情报特工",
+         "3星之守护者",
+         "2灵能使",
+         "2吉祥物",
+         "1平民英雄"
+        ],
+        "board": [
+         {
+          "name": "安妮",
+          "price": 2,
+          "row": 1,
+          "col": 4,
+          "role": "主坦",
+          "carry": false,
+          "items": [
+           "狂徒铠甲",
+           "狂徒铠甲",
+           "圣盾使的誓约"
+          ]
+         },
+         {
+          "name": "加里奥",
+          "price": 1,
+          "row": 1,
+          "col": 2,
+          "role": "副坦",
+          "carry": false,
+          "items": [
+           "石像鬼石板甲",
+           "日炎斗篷",
+           "狂徒铠甲"
+          ]
+         },
+         {
+          "name": "卡莎",
+          "price": 3,
+          "row": 4,
+          "col": 4,
+          "role": "主C",
+          "carry": true,
+          "items": [
+           "泰坦的坚决",
+           "班克斯的魔法帽",
+           "鬼索的狂暴之刃"
+          ]
+         },
+         {
+          "name": "悠米",
+          "price": 2,
+          "row": 4,
+          "col": 2,
+          "role": "后排输出",
+          "carry": false,
+          "items": []
+         },
+         {
+          "name": "拉克丝",
+          "price": 1,
+          "row": 4,
+          "col": 6,
+          "role": "后排输出",
+          "carry": false,
+          "items": []
+         },
+         {
+          "name": "艾希",
+          "price": 1,
+          "row": 4,
+          "col": 3,
+          "role": "后排输出",
+          "carry": false,
+          "items": []
+         },
+         {
+          "name": "伊泽瑞尔",
+          "price": 2,
+          "row": 4,
+          "col": 5,
+          "role": "后排输出",
+          "carry": false,
+          "items": []
+         }
+        ]
+       },
+       {
+        "key": "late",
+        "label": "后期",
+        "level": 8,
+        "carry": "卡莎",
+        "score": 1626,
+        "method": "终局模型总分1626，主C模拟993/秒",
+        "team": [
+         "卡莎",
+         "迦娜",
+         "塔莉垭",
+         "拉克丝",
+         "娑娜",
+         "莎弥拉",
+         "伊泽瑞尔",
+         "薇恩"
+        ],
+        "traits": [
+         "4灵能使",
+         "3情报特工",
+         "3星之守护者",
+         "3地下魔盗团",
+         "1气象主播",
+         "1精英战士",
+         "1平民英雄"
+        ],
+        "board": [
+         {
+          "name": "迦娜",
+          "price": 5,
+          "row": 1,
+          "col": 4,
+          "role": "主坦",
+          "carry": false,
+          "items": [
+           "狂徒铠甲",
+           "狂徒铠甲",
+           "圣盾使的誓约"
+          ]
+         },
+         {
+          "name": "塔莉垭",
+          "price": 4,
+          "row": 1,
+          "col": 2,
+          "role": "副坦",
+          "carry": false,
+          "items": [
+           "石像鬼石板甲",
+           "日炎斗篷",
+           "狂徒铠甲"
+          ]
+         },
+         {
+          "name": "卡莎",
+          "price": 3,
+          "row": 4,
+          "col": 4,
+          "role": "主C",
+          "carry": true,
+          "items": [
+           "泰坦的坚决",
+           "班克斯的魔法帽",
+           "鬼索的狂暴之刃"
+          ]
+         },
+         {
+          "name": "拉克丝",
+          "price": 1,
+          "row": 4,
+          "col": 2,
+          "role": "后排输出",
+          "carry": false,
+          "items": []
+         },
+         {
+          "name": "娑娜",
+          "price": 3,
+          "row": 4,
+          "col": 6,
+          "role": "后排输出",
+          "carry": false,
+          "items": []
+         },
+         {
+          "name": "莎弥拉",
+          "price": 4,
+          "row": 4,
+          "col": 3,
+          "role": "后排输出",
+          "carry": false,
+          "items": []
+         },
+         {
+          "name": "伊泽瑞尔",
+          "price": 2,
+          "row": 4,
+          "col": 5,
+          "role": "后排输出",
+          "carry": false,
+          "items": []
+         },
+         {
+          "name": "薇恩",
+          "price": 3,
+          "row": 3,
+          "col": 2,
+          "role": "后排输出",
+          "carry": false,
+          "items": []
+         }
+        ]
+       }
+      ],
+      "items": [
+       "泰坦的坚决",
+       "班克斯的魔法帽",
+       "鬼索的狂暴之刃"
+      ],
+      "operations": [
+       "2阶段：优先拿反曲之弓、锁子甲、无用大棒，5人口由卡莎带目标装打工。",
+       "3/4阶段：中期继续由卡莎持装；只保留终局重合牌，按模型承接到卡莎、悠米、拉克丝、安妮、艾希、伊泽瑞尔、加里奥。",
+       "成型：成型后继续由卡莎持装，终局围绕卡莎；7级3费槽35%，单次商店见卡莎约11.9%，从0张到9张理论期望约144金（独立抽样近似，未扣同行与牌库）。",
+       "止损：目标三件差两件以上或关键主C两轮搜不到，沿当前装备承载者切换到同方向次优路线。"
+      ],
+      "positioningBasis": "行1靠敌方；主坦按EHP居中承伤，控制分散前置，远程主C按攻击距离沉底并与副输出错侧。",
+      "derivation": "阶段承载者由目标三件套在当期棋盘逐人重跑输出模型后选出；过渡阵容按阶段战力、终局重合率与持装效率联合排序。"
+     },
+     "certification": {
+      "templateId": "official-1406",
+      "templateName": "情报特工怪兽卡莎4情报特工3怪兽",
+      "peerGroup": "常规路线",
+      "sampleSize": 5000,
+      "seed": 20260712,
+      "evidenceLevel": "L2.5 模型扰动稳健",
+      "priorPoints": 4,
+      "metrics": {
+       "meanUtility": 123.8,
+       "interval95": [
+        113.2,
+        134.4
+       ],
+       "cvar10": 114.3,
+       "top1Rate": 18.3,
+       "top5Rate": 61.8,
+       "topQuartileRate": 93.5,
+       "failureRate": 0,
+       "robustness": 86.3
+      },
+      "drivers": [
+       "转型重合55%",
+       "装备弹性86%",
+       "7级追卡莎3星"
+      ],
+      "dependencies": [
+       "卡莎3星",
+       "三件套:巨人捕手+斯塔缇克电刃+海克斯科技枪刃"
+      ],
+      "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。",
+      "matchedRoute": "情报特工怪兽卡莎4情报特工3怪兽",
+      "matchScore": 40
      }
     },
     {
@@ -18880,17 +19382,17 @@
       "evidenceLevel": "L2.5 模型扰动稳健",
       "priorPoints": 3,
       "metrics": {
-       "meanUtility": 121,
+       "meanUtility": 121.1,
        "interval95": [
-        111.6,
-        130.8
+        111.7,
+        130.9
        ],
-       "cvar10": 112.4,
-       "top1Rate": 6.7,
-       "top5Rate": 36.8,
-       "topQuartileRate": 88,
+       "cvar10": 112.5,
+       "top1Rate": 7,
+       "top5Rate": 37.3,
+       "topQuartileRate": 88.3,
        "failureRate": 0,
-       "robustness": 78
+       "robustness": 78.3
       },
       "drivers": [
        "转型重合33%",
@@ -18905,18 +19407,33 @@
       "matchedRoute": "小天才九五5小天才2福牛守护者2吉祥物",
       "matchScore": 75
      }
-    },
+    }
+   ],
+   "reason": "全队同口径：主C输出 + 副输出 + 前排EHP + 羁绊机制分。"
+  },
+  {
+   "tier": "T1.5",
+   "kind": "stable",
+   "family": "算法稳定梯队 · T1.5",
+   "comps": [
+    "登神决斗天使",
+    "模型·佛耶戈·3混沌战士2灵能使",
+    "机甲秘术枪手",
+    "模型·娑娜·2灵能使3强袭枪手",
+    "九五平民枪手",
+    "决斗剑姬"
+   ],
+   "rows": [
     {
-     "name": "决斗薇恩",
-     "carry": "薇恩",
-     "score": 1548,
-     "carryDps": 682,
+     "name": "登神决斗天使",
+     "carry": "凯尔",
+     "score": 1540,
+     "carryDps": 677,
      "frontEHP": 16466,
-     "subDps": 175,
+     "subDps": 169,
      "util": 2,
      "acts": [
       "6决斗大师",
-      "2情报特工",
       "1怪兽",
       "3源计划：激光特工",
       "1堕落使者"
@@ -18942,58 +19459,43 @@
       }
      ],
      "source": "official",
-     "displayName": "决斗薇恩",
+     "displayName": "登神决斗天使",
      "presentation": null,
      "certification": {
-      "templateId": "official-4526",
-      "templateName": "决斗薇恩6决斗大师3源计划激光特工",
+      "templateId": "official-1402",
+      "templateName": "登神决斗天使6决斗大师3源计划",
       "peerGroup": "常规路线",
       "sampleSize": 5000,
       "seed": 20260712,
-      "evidenceLevel": "L1.5 高敏感假设",
-      "priorPoints": -2,
+      "evidenceLevel": "L2.5 模型扰动稳健",
+      "priorPoints": 2,
       "metrics": {
-       "meanUtility": 111.2,
+       "meanUtility": 120.2,
        "interval95": [
-        100.3,
-        122
+        108.2,
+        132.3
        ],
-       "cvar10": 101.6,
-       "top1Rate": 0,
-       "top5Rate": 0.2,
-       "topQuartileRate": 5.9,
-       "failureRate": 13.9,
-       "robustness": 27.9
+       "cvar10": 109.4,
+       "top1Rate": 5.2,
+       "top5Rate": 31.3,
+       "topQuartileRate": 76.4,
+       "failureRate": 0.5,
+       "robustness": 70.3
       },
       "drivers": [
-       "转型重合49%",
-       "装备弹性72%",
-       "7级追薇恩3星"
+       "转型重合43%",
+       "装备弹性86%",
+       "5级追凯尔3星"
       ],
       "dependencies": [
-       "薇恩3星",
-       "三件套:卢安娜的飓风+巨人捕手+锐利之刃"
+       "凯尔3星",
+       "三件套:卢安娜的飓风+无尽之刃+最后的轻语"
       ],
       "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。",
-      "matchedRoute": "决斗薇恩6决斗大师3源计划激光特工",
+      "matchedRoute": "登神决斗天使6决斗大师3源计划",
       "matchScore": 75
      }
-    }
-   ],
-   "reason": "全队同口径：主C输出 + 副输出 + 前排EHP + 羁绊机制分。"
-  },
-  {
-   "tier": "T1.5",
-   "kind": "stable",
-   "family": "算法稳定梯队 · T1.5",
-   "comps": [
-    "模型·佛耶戈·3混沌战士2灵能使",
-    "机甲秘术枪手",
-    "模型·娑娜·2灵能使3强袭枪手",
-    "决斗剑姬",
-    "九五平民枪手"
-   ],
-   "rows": [
+    },
     {
      "carry": "佛耶戈",
      "carryPrice": 4,
@@ -19037,10 +19539,10 @@
        "price": 2
       }
      ],
-     "score": 1500,
-     "carryDps": 753,
+     "score": 1517,
+     "carryDps": 768,
      "frontEHP": 12898,
-     "subDps": 217,
+     "subDps": 219,
      "util": 3.5,
      "acts": [
       "3混沌战士",
@@ -19267,8 +19769,8 @@
         "label": "后期",
         "level": 8,
         "carry": "佛耶戈",
-        "score": 1500,
-        "method": "终局模型总分1500，主C模拟753/秒",
+        "score": 1517,
+        "method": "终局模型总分1517，主C模拟768/秒",
         "team": [
          "佛耶戈",
          "迦娜",
@@ -19409,11 +19911,11 @@
         134
        ],
        "cvar10": 113,
-       "top1Rate": 14,
-       "top5Rate": 59.3,
-       "topQuartileRate": 91.3,
+       "top1Rate": 13.7,
+       "top5Rate": 58.7,
+       "topQuartileRate": 91.1,
        "failureRate": 0.1,
-       "robustness": 84.2
+       "robustness": 84
       },
       "drivers": [
        "转型重合17%",
@@ -19432,10 +19934,10 @@
     {
      "name": "机甲秘术枪手",
      "carry": "厄加特",
-     "score": 1429,
+     "score": 1430,
      "carryDps": 477,
      "frontEHP": 17210,
-     "subDps": 280,
+     "subDps": 282,
      "util": 2,
      "acts": [
       "2强袭枪手",
@@ -19481,17 +19983,17 @@
       "evidenceLevel": "L2.5 模型扰动稳健",
       "priorPoints": 4,
       "metrics": {
-       "meanUtility": 123.7,
+       "meanUtility": 123.8,
        "interval95": [
-        112.2,
-        135.5
+        112.3,
+        135.6
        ],
-       "cvar10": 113.2,
-       "top1Rate": 23.8,
-       "top5Rate": 60.5,
-       "topQuartileRate": 94.1,
+       "cvar10": 113.3,
+       "top1Rate": 24.1,
+       "top5Rate": 60.7,
+       "topQuartileRate": 94.2,
        "failureRate": 0,
-       "robustness": 85.7
+       "robustness": 85.8
       },
       "drivers": [
        "转型重合17%",
@@ -19550,10 +20052,10 @@
        "price": 4
       }
      ],
-     "score": 1410,
-     "carryDps": 608,
+     "score": 1426,
+     "carryDps": 622,
      "frontEHP": 14404,
-     "subDps": 191,
+     "subDps": 195,
      "util": 3.5,
      "acts": [
       "2灵能使",
@@ -19778,8 +20280,8 @@
         "label": "后期",
         "level": 8,
         "carry": "娑娜",
-        "score": 1410,
-        "method": "终局模型总分1410，主C模拟608/秒",
+        "score": 1426,
+        "method": "终局模型总分1426，主C模拟622/秒",
         "team": [
          "娑娜",
          "迦娜",
@@ -19939,6 +20441,84 @@
      }
     },
     {
+     "name": "九五平民枪手",
+     "carry": "厄斐琉斯",
+     "score": 1375,
+     "carryDps": 546,
+     "frontEHP": 15166,
+     "subDps": 205,
+     "util": 2.5,
+     "acts": [
+      "3强袭枪手",
+      "2吉祥物",
+      "1气象主播",
+      "1枪神",
+      "2秘术卫士",
+      "1精英战士",
+      "3平民英雄",
+      "2福牛守护者",
+      "1怪兽",
+      "1堕落使者"
+     ],
+     "tankDetail": [
+      {
+       "hero": "费德提克",
+       "ehp": 9026,
+       "items": [
+        "狂徒铠甲",
+        "狂徒铠甲",
+        "圣盾使的誓约"
+       ]
+      },
+      {
+       "hero": "蕾欧娜",
+       "ehp": 6140,
+       "items": [
+        "石像鬼石板甲",
+        "日炎斗篷",
+        "狂徒铠甲"
+       ]
+      }
+     ],
+     "source": "official",
+     "displayName": "九五平民枪手",
+     "presentation": null,
+     "certification": {
+      "templateId": "official-1269",
+      "templateName": "九五平民枪手3平民英雄2枪手2吉祥物",
+      "peerGroup": "常规路线",
+      "sampleSize": 5000,
+      "seed": 20260712,
+      "evidenceLevel": "L2.5 模型扰动稳健",
+      "priorPoints": 2,
+      "metrics": {
+       "meanUtility": 119.5,
+       "interval95": [
+        108.4,
+        130.8
+       ],
+       "cvar10": 109.4,
+       "top1Rate": 2.6,
+       "top5Rate": 23.1,
+       "topQuartileRate": 71.2,
+       "failureRate": 0.5,
+       "robustness": 66.6
+      },
+      "drivers": [
+       "转型重合27%",
+       "装备弹性86%",
+       "9级追厄斐琉斯2星"
+      ],
+      "dependencies": [
+       "厄斐琉斯2星",
+       "三件套:卢安娜的飓风+锐利之刃+鬼索的狂暴之刃"
+      ],
+      "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。",
+      "matchedRoute": "九五平民枪手3平民英雄2枪手2吉祥物",
+      "matchScore": 75
+     }
+    },
+    {
      "name": "决斗剑姬",
      "carry": "菲奥娜",
      "score": 1367,
@@ -19992,10 +20572,10 @@
        ],
        "cvar10": 106.5,
        "top1Rate": 0.8,
-       "top5Rate": 7.7,
-       "topQuartileRate": 42.2,
+       "top5Rate": 7.5,
+       "topQuartileRate": 41.8,
        "failureRate": 2.1,
-       "robustness": 49.8
+       "robustness": 49.6
       },
       "drivers": [
        "转型重合41%",
@@ -20008,84 +20588,6 @@
       ],
       "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。",
       "matchedRoute": "决斗剑姬6决斗大师2福牛守护者",
-      "matchScore": 75
-     }
-    },
-    {
-     "name": "九五平民枪手",
-     "carry": "厄斐琉斯",
-     "score": 1366,
-     "carryDps": 539,
-     "frontEHP": 15166,
-     "subDps": 201,
-     "util": 2.5,
-     "acts": [
-      "3强袭枪手",
-      "2吉祥物",
-      "1气象主播",
-      "1枪神",
-      "2秘术卫士",
-      "1精英战士",
-      "3平民英雄",
-      "2福牛守护者",
-      "1怪兽",
-      "1堕落使者"
-     ],
-     "tankDetail": [
-      {
-       "hero": "费德提克",
-       "ehp": 9026,
-       "items": [
-        "狂徒铠甲",
-        "狂徒铠甲",
-        "圣盾使的誓约"
-       ]
-      },
-      {
-       "hero": "蕾欧娜",
-       "ehp": 6140,
-       "items": [
-        "石像鬼石板甲",
-        "日炎斗篷",
-        "狂徒铠甲"
-       ]
-      }
-     ],
-     "source": "official",
-     "displayName": "九五平民枪手",
-     "presentation": null,
-     "certification": {
-      "templateId": "official-1269",
-      "templateName": "九五平民枪手3平民英雄2枪手2吉祥物",
-      "peerGroup": "常规路线",
-      "sampleSize": 5000,
-      "seed": 20260712,
-      "evidenceLevel": "L2.5 模型扰动稳健",
-      "priorPoints": 2,
-      "metrics": {
-       "meanUtility": 119.4,
-       "interval95": [
-        108.3,
-        130.7
-       ],
-       "cvar10": 109.3,
-       "top1Rate": 2.5,
-       "top5Rate": 22.9,
-       "topQuartileRate": 70.8,
-       "failureRate": 0.5,
-       "robustness": 66.3
-      },
-      "drivers": [
-       "转型重合27%",
-       "装备弹性86%",
-       "9级追厄斐琉斯2星"
-      ],
-      "dependencies": [
-       "厄斐琉斯2星",
-       "三件套:卢安娜的飓风+锐利之刃+鬼索的狂暴之刃"
-      ],
-      "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。",
-      "matchedRoute": "九五平民枪手3平民英雄2枪手2吉祥物",
       "matchScore": 75
      }
     }
@@ -20496,7 +20998,7 @@
       "sampleSize": 5000,
       "seed": 20260712,
       "evidenceLevel": "L2 模型候选",
-      "priorPoints": 2,
+      "priorPoints": 1,
       "metrics": {
        "meanUtility": 120.5,
        "interval95": [
@@ -20505,10 +21007,10 @@
        ],
        "cvar10": 110.9,
        "top1Rate": 2.1,
-       "top5Rate": 84.2,
-       "topQuartileRate": 38.3,
+       "top5Rate": 74,
+       "topQuartileRate": 35.2,
        "failureRate": 0.1,
-       "robustness": 66.7
+       "robustness": 63.4
       },
       "drivers": [
        "转型重合79%",
@@ -20975,11 +21477,11 @@
         138.8
        ],
        "cvar10": 117.6,
-       "top1Rate": 77,
-       "top5Rate": 98.8,
-       "topQuartileRate": 95.9,
+       "top1Rate": 76.3,
+       "top5Rate": 98.2,
+       "topQuartileRate": 94.2,
        "failureRate": 0,
-       "robustness": 96.7
+       "robustness": 95.9
       },
       "drivers": [
        "转型重合67%",
@@ -21406,11 +21908,11 @@
         130
        ],
        "cvar10": 109.4,
-       "top1Rate": 8.4,
-       "top5Rate": 55.1,
-       "topQuartileRate": 41.1,
+       "top1Rate": 7.3,
+       "top5Rate": 52.1,
+       "topQuartileRate": 36.4,
        "failureRate": 0.5,
-       "robustness": 61
+       "robustness": 58.5
       },
       "drivers": [
        "转型重合85%",
@@ -21838,10 +22340,10 @@
        ],
        "cvar10": 109.2,
        "top1Rate": 1.4,
-       "top5Rate": 64.6,
-       "topQuartileRate": 36.4,
+       "top5Rate": 54.3,
+       "topQuartileRate": 32.9,
        "failureRate": 0.4,
-       "robustness": 60.9
+       "robustness": 57.5
       },
       "drivers": [
        "转型重合86%",
@@ -22271,10 +22773,10 @@
        ],
        "cvar10": 108.4,
        "top1Rate": 1.2,
-       "top5Rate": 59.7,
-       "topQuartileRate": 16.7,
+       "top5Rate": 44.2,
+       "topQuartileRate": 14.3,
        "failureRate": 0.8,
-       "robustness": 51.5
+       "robustness": 47.4
       },
       "drivers": [
        "转型重合85%",
@@ -22690,7 +23192,7 @@
       "sampleSize": 5000,
       "seed": 20260712,
       "evidenceLevel": "L1.5 高敏感假设",
-      "priorPoints": 0,
+      "priorPoints": -1,
       "metrics": {
        "meanUtility": 117.5,
        "interval95": [
@@ -22699,10 +23201,10 @@
        ],
        "cvar10": 108,
        "top1Rate": 0.7,
-       "top5Rate": 46.2,
-       "topQuartileRate": 11.9,
+       "top5Rate": 32.9,
+       "topQuartileRate": 10.2,
        "failureRate": 1,
-       "robustness": 46.5
+       "robustness": 43.2
       },
       "drivers": [
        "转型重合86%",
@@ -22725,11 +23227,11 @@
      "carry": "悠米",
      "stage": "mid",
      "level": 7,
-     "score": 1389,
-     "baselineScore": 1309,
-     "uplift": 80,
-     "upliftPct": 6.1,
-     "stageRatio": 0.8,
+     "score": 1442,
+     "baselineScore": 1351,
+     "uplift": 91,
+     "upliftPct": 6.7,
+     "stageRatio": 0.9,
      "confidence": 0.8,
      "basis": "官方文本数值；叠层折算1层",
      "requiredUnits": [
@@ -22777,7 +23279,7 @@
       "班克斯的魔法帽",
       "鬼索的狂暴之刃"
      ],
-     "carryDps": 617,
+     "carryDps": 669,
      "frontEHP": 14054,
      "tankDetail": [
       {
@@ -22808,8 +23310,8 @@
         "label": "前期",
         "level": 5,
         "carry": "悠米",
-        "score": 1113,
-        "method": "阶段战力1113，转型相容度81",
+        "score": 1127,
+        "method": "阶段战力1127，转型相容度82",
         "team": [
          "悠米",
          "拉克丝",
@@ -22888,8 +23390,8 @@
         "label": "中期",
         "level": 7,
         "carry": "卡莎",
-        "score": 1389,
-        "method": "阶段战力1389，转型相容度100",
+        "score": 1442,
+        "method": "阶段战力1442，转型相容度100",
         "team": [
          "悠米",
          "加里奥",
@@ -22989,8 +23491,8 @@
         "label": "后期",
         "level": 8,
         "carry": "悠米",
-        "score": 1389,
-        "method": "终局模型总分1389，主C模拟617/秒",
+        "score": 1442,
+        "method": "终局模型总分1442，主C模拟669/秒",
         "team": [
          "悠米",
          "加里奥",
@@ -23119,19 +23621,19 @@
       "sampleSize": 5000,
       "seed": 20260712,
       "evidenceLevel": "L1.5 高敏感假设",
-      "priorPoints": -3,
+      "priorPoints": 0,
       "metrics": {
-       "meanUtility": 107.5,
+       "meanUtility": 117.4,
        "interval95": [
-        97.1,
-        118
+        107,
+        127.9
        ],
-       "cvar10": 98.2,
-       "top1Rate": 0,
-       "top5Rate": 0.3,
-       "topQuartileRate": 0,
-       "failureRate": 32.5,
-       "robustness": 18.9
+       "cvar10": 108,
+       "top1Rate": 2,
+       "top5Rate": 41.3,
+       "topQuartileRate": 20.4,
+       "failureRate": 1,
+       "robustness": 49
       },
       "drivers": [
        "转型重合85%",
@@ -23160,7 +23662,7 @@
      "upliftPct": 13.1,
      "stageRatio": 0.9,
      "confidence": 0.72,
-     "basis": "17.6b公告：按20次击杀、每次+2%法强并触发额外导弹的中位状态",
+     "basis": "17.6b公告、17.7保留：按20次击杀、每次+2%法强并触发额外导弹的中位状态",
      "requiredUnits": [
       "金克丝",
       "蔚"
@@ -23559,11 +24061,11 @@
         130.6
        ],
        "cvar10": 110,
-       "top1Rate": 9.2,
-       "top5Rate": 58,
-       "topQuartileRate": 45.9,
+       "top1Rate": 8.8,
+       "top5Rate": 54.6,
+       "topQuartileRate": 36.5,
        "failureRate": 0.3,
-       "robustness": 63.9
+       "robustness": 59.5
       },
       "drivers": [
        "转型重合76%",
@@ -24031,10 +24533,10 @@
        ],
        "cvar10": 105.1,
        "top1Rate": 0.2,
-       "top5Rate": 33.2,
-       "topQuartileRate": 13.7,
+       "top5Rate": 27.7,
+       "topQuartileRate": 12,
        "failureRate": 4.3,
-       "robustness": 42.1
+       "robustness": 40.3
       },
       "drivers": [
        "转型重合58%",
@@ -24057,10 +24559,10 @@
      "carry": "塔莉垭",
      "stage": "late",
      "level": 9,
-     "score": 1442,
-     "baselineScore": 1341,
-     "uplift": 101,
-     "upliftPct": 7.5,
+     "score": 1424,
+     "baselineScore": 1327,
+     "uplift": 97,
+     "upliftPct": 7.3,
      "stageRatio": 0.5,
      "confidence": 0.8,
      "basis": "官方文本数值；叠层折算1层",
@@ -24120,7 +24622,7 @@
       "水银",
       "鬼索的狂暴之刃"
      ],
-     "carryDps": 520,
+     "carryDps": 502,
      "frontEHP": 18252,
      "tankDetail": [
       {
@@ -24150,9 +24652,9 @@
         "key": "early",
         "label": "前期",
         "level": 5,
-        "carry": "娑娜",
+        "carry": "悠米",
         "score": 1177,
-        "method": "阶段战力1177，转型相容度79",
+        "method": "阶段战力1177，转型相容度80",
         "team": [
          "娑娜",
          "拉克丝",
@@ -24194,8 +24696,8 @@
           ]
          },
          {
-          "name": "娑娜",
-          "price": 3,
+          "name": "悠米",
+          "price": 2,
           "row": 4,
           "col": 4,
           "role": "主C",
@@ -24207,8 +24709,8 @@
           ]
          },
          {
-          "name": "拉克丝",
-          "price": 1,
+          "name": "娑娜",
+          "price": 3,
           "row": 4,
           "col": 2,
           "role": "后排输出",
@@ -24216,8 +24718,8 @@
           "items": []
          },
          {
-          "name": "悠米",
-          "price": 2,
+          "name": "拉克丝",
+          "price": 1,
           "row": 4,
           "col": 6,
           "role": "后排输出",
@@ -24332,8 +24834,8 @@
         "label": "后期",
         "level": 9,
         "carry": "塔莉垭",
-        "score": 1442,
-        "method": "终局模型总分1442，主C模拟520/秒",
+        "score": 1424,
+        "method": "终局模型总分1424，主C模拟502/秒",
         "team": [
          "塔莉垭",
          "拉克丝",
@@ -24458,8 +24960,8 @@
        "鬼索的狂暴之刃"
       ],
       "operations": [
-       "2阶段：优先拿反曲之弓、锁子甲、负极斗篷、拳套、无用大棒，5人口由娑娜带目标装打工。",
-       "3/4阶段：中期卖掉持装娑娜，把三件套转给佐伊；只保留终局重合牌，按模型承接到佐伊、德莱文、安妮、拉克丝、波比、芮尔、悠米。",
+       "2阶段：优先拿反曲之弓、锁子甲、负极斗篷、拳套、无用大棒，5人口由悠米带目标装打工。",
+       "3/4阶段：中期先留一只无装悠米，再卖持装悠米把三件套转给佐伊；只保留终局重合牌，按模型承接到佐伊、德莱文、安妮、拉克丝、波比、芮尔、悠米。",
        "成型：成型后卖掉持装佐伊，把三件套转给塔莉垭，终局围绕塔莉垭；8级4费槽22%，单次商店见塔莉垭约8.2%，从0张到3张理论期望约71金（独立抽样近似，未扣同行与牌库）。",
        "止损：目标三件差两件以上或关键主C两轮搜不到，沿当前装备承载者切换到同方向次优路线。"
       ],
@@ -24482,10 +24984,10 @@
        ],
        "cvar10": 104.9,
        "top1Rate": 0.3,
-       "top5Rate": 7.1,
-       "topQuartileRate": 40.1,
+       "top5Rate": 6.9,
+       "topQuartileRate": 39.9,
        "failureRate": 4.2,
-       "robustness": 47.3
+       "robustness": 47.2
       },
       "drivers": [
        "转型重合47%",

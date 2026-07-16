@@ -408,6 +408,31 @@ function attachRouteProfiles(templatesIn) {
   });
 }
 
+function inheritMechanicGates(templatesIn) {
+  const known = templatesIn.filter(template => template.mechanic && template.mechanic.requiredAugment);
+  return templatesIn.map(template => {
+    if (template.mechanic) return template;
+    const text = [
+      template.name,
+      template.officialText && template.officialText.early,
+      template.officialText && template.officialText.hex,
+    ].filter(Boolean).join(' ');
+    const source = known.find(candidate => {
+      const gate = candidate.mechanic.requiredAugment;
+      const requiredUnits = candidate.mechanic.requiredUnits || [];
+      const declaredGate = String(template.name || '').includes(gate)
+        || (text.includes(gate) && /(前提|刚需|必拿|必须|只有|限定)/.test(text));
+      return declaredGate
+        && (template.augmentPrefs || []).includes(gate)
+        && requiredUnits.every(name => (template.coreUnits || []).includes(name));
+    });
+    return source ? {
+      ...template,
+      mechanic: { ...source.mechanic, inheritedFrom: source.id },
+    } : template;
+  });
+}
+
 function attachHeroAugmentPlans(templatesIn) {
   return templatesIn.map(template => {
     const mainCarry = template.routeProfile && template.routeProfile.mainCarry && template.routeProfile.mainCarry.name || '';
@@ -1038,7 +1063,7 @@ function rank(templates, selected, weights) {
     .slice(0, 6);
 }
 
-const templates = attachHeroAugmentPlans(attachPrimePlans(attachRouteProfiles([...manualTemplates, ...officialTemplates()])));
+const templates = attachHeroAugmentPlans(attachPrimePlans(attachRouteProfiles(inheritMechanicGates([...manualTemplates, ...officialTemplates()]))));
 
 function sameSet(a, b) {
   const aa = uniq(a).sort();

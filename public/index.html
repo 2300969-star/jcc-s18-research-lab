@@ -2512,7 +2512,8 @@ function openTeam(t) {
   document.getElementById("cs-desc").textContent =
     `暴力搜索：${CS.space.heroes} 个英雄 × ${fmt(CS.space.dpsCombos)} 种三件套（允许重复装备）≈ ${fmt(CS.space.heroes * CS.space.dpsCombos)} 次战斗模拟，另搜 ${fmt(CS.space.ehpCombos)} 种坦装组合。星级口径与主模型一致（≤3费按3星、4/5费按2星）。官方最优主C基准 = ${fmt(CS.officialBestDps)}/秒（贾克斯3星官方出装）。`;
   const flagCol = { 官方同款: css("--s1"), 同C换装: css("--s2"), 官方非C: css("--s3"), 野路子: css("--s6") };
-  const flagDesc = { 官方同款: "英雄+出装与官方一致", 同C换装: "官方主C，模型给出更强出装", 官方非C: "官方只当配角/前排的英雄", 野路子: "官方44套完全没用的英雄" };
+  const officialCount = (M.comps || []).length;
+  const flagDesc = { 官方同款: "英雄+出装与官方一致", 同C换装: "官方主C，模型给出更强出装", 官方非C: "官方只当配角/前排的英雄", 野路子: `当前官方${officialCount}套完全没用的英雄` };
   legend("lg-cs", Object.keys(flagCol).map(n => ({ n: n + "（" + flagDesc[n] + "）", c: flagCol[n] })));
   // ① 每英雄最优 bars
   const data = CS.perHeroTop;
