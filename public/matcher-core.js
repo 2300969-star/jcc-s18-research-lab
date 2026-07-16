@@ -37,13 +37,19 @@
     气象主播: ["气象", "气象主播"],
   };
   const CN_NUMBERS = { 一: 1, 二: 2, 两: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9 };
-  // 排序黏性：挑战者需领先 max(3分, 现任分*15%) 才易主；现任跌出前3则立即让位。
-  const STICKY_MIN_LEAD = 3;
-  const STICKY_RELATIVE_LEAD = 0.15;
-  // 比赛模式的执行路线不能因一两张新牌立即翻转。等级越高、主C变化越大、阵容重合越低，
-  // 挑战路线需要提供更高的领先，并且必须已有成包来牌才能真正接管经营指令。
-  const OPERATIONAL_STAGE_SWITCH_COST = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 2, 6: 5, 7: 9, 8: 13, 9: 16 };
-  const OPERATIONAL_CARRY_SWITCH_COST = { early: 2, mid: 7, late: 11 };
+  // 确定性决策模型：同一事实状态只产生一个结论。输入顺序和上次渲染结果不进入公式。
+  // 当前战力、战略价值与承诺证据分开估值；转型成本只来自真实沉没资产，不再按等级硬编码。
+  const DECISION_MODEL = Object.freeze({
+    earlyObserveMaxLevel: 3,
+    benchReadiness: 0.45,
+    unknownLocationReadiness: 0.75,
+    offStageReadiness: 0.25,
+    unassignedItemReadiness: 0.35,
+    nonCarryUpgradeEvidence: 0.55,
+    incompatibleUpgradeCostRatio: 0.5,
+    incompatibleEquippedItemCostRatio: 0.5,
+    minimumCommitmentEvidence: 18,
+  });
   // 散件方向纯度达到 2/3 时，给同方向主C路线 10% 确定性加成。
   const COMPONENT_DIRECTION_BONUS = 0.1;
   // primePlan 只给含战斗机甲实验结论的路线加命中证据；不影响无 primePlan 的路线。
@@ -243,10 +249,37 @@
       if (!name) return;
       const cleanName = String(name).split("·")[0];
       const star = Number(typeof row === "object" ? row.star : 0) || 0;
+      const location = typeof row === "object" && row.location ? row.location : "unknown";
       const prev = map.get(cleanName);
-      if (!prev || star > (prev.star || 0)) map.set(cleanName, { name: cleanName, star });
+      if (!prev) {
+        map.set(cleanName, { name: cleanName, star, location });
+        return;
+      }
+      if (star > (prev.star || 0)) prev.star = star;
+      if (location === "board" || (location === "bench" && prev.location === "unknown")) prev.location = location;
     });
     return [...map.values()];
+  }
+
+  function normalizeSelectedItems(selected) {
+    const source = selected && selected.itemRows && selected.itemRows.length
+      ? selected.itemRows
+      : (selected && selected.items || []);
+    const rows = [];
+    (source || []).forEach(row => {
+      const rawName = typeof row === "string" ? row : row && (row.name || row.value || row.label);
+      if (!rawName) return;
+      const count = Math.max(1, Math.min(9, Number(typeof row === "object" && row.count) || 1));
+      for (let i = 0; i < count; i++) {
+        rows.push({
+          name: canonicalItem(rawName),
+          holder: typeof row === "object" ? (row.holder || "") : "",
+          equipped: typeof row === "object" ? Boolean(row.equipped || row.holder) : false,
+          source: typeof row === "object" ? (row.source || "") : "",
+        });
+      }
+    });
+    return rows;
   }
 
   function unitCopies(star) {
@@ -584,7 +617,7 @@
   function coreComponentRows(t, selected, opts, w) {
     const rows = [];
     const level = clamp(Number(selected.level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
-    const selectedItems = new Set([...(selected.items || [])].map(canonicalItem));
+    const selectedItems = new Set(normalizeSelectedItems(selected).map(x => x.name));
     const p = profile(t);
     const mainName = p.mainCarry && p.mainCarry.name;
     const stageNames = new Set(level <= 5 ? (t.earlyUnits || []) : level === 6 ? (t.midUnits || []) : []);
@@ -883,7 +916,8 @@
     const unitRows = normalizeSelectedUnits(selected.units || []);
     const units = new Set(unitRows.map(x => x.name));
     const unitStars = new Map(unitRows.map(x => [x.name, x.star || 0]));
-    const items = new Set(selected.items || []);
+    const itemRows = normalizeSelectedItems(selected);
+    const items = itemRows.map(x => x.name);
     const augments = new Set(selected.augments || []);
     const augCats = new Set(selected.augmentCats || []);
     const traits = normalizeSelectedTraits(selected.traits || []);
@@ -904,7 +938,7 @@
     const unitMap = profileUnitMap(t);
     const roleItems = profileItems(t);
     const activeTraits = activeTraitMap(t);
-    const selectedCompleted = [...items].map(canonicalItem).filter(x => !COMPONENTS.includes(x));
+    const selectedCompleted = items.map(canonicalItem).filter(x => !COMPONENTS.includes(x));
     const selectedComponents = selectedComponentList(items);
     const mainCarryName = p.mainCarry && p.mainCarry.name;
     const augmentOperator = activeAugmentOperators(t, selected);
@@ -948,15 +982,24 @@
       }
     });
 
-    selectedCompleted.forEach(it => {
-      const hits = roleItems.filter(x => x.name === it);
+    const consumedRoleItems = new Set();
+    itemRows.filter(row => !COMPONENTS.includes(row.name)).forEach(row => {
+      const hits = roleItems.map((item, index) => ({ item, index }))
+        .filter(x => x.item.name === row.name && !consumedRoleItems.has(x.index));
       if (!hits.length) return;
-      const best = hits.sort((a, b) => roleItemWeight(b.role, w) - roleItemWeight(a.role, w))[0];
-      const pts = roleItemWeight(best.role, w);
+      const bestSlot = hits.sort((a, b) => {
+        const ah = row.holder && a.item.holder === row.holder ? 1 : 0;
+        const bh = row.holder && b.item.holder === row.holder ? 1 : 0;
+        return bh - ah || roleItemWeight(b.item.role, w) - roleItemWeight(a.item.role, w);
+      })[0];
+      consumedRoleItems.add(bestSlot.index);
+      const best = bestSlot.item;
+      const holderMismatch = row.equipped && row.holder && best.holder && row.holder !== best.holder;
+      const pts = Math.round(roleItemWeight(best.role, w) * (holderMismatch ? DECISION_MODEL.incompatibleEquippedItemCostRatio : 1));
       score += pts;
       heldValue += pts;
       breakdown.item += pts;
-      evidence.push(`${it}=命中${roleLabel(best.role)}装备（${best.holder || "路线"}）`);
+      evidence.push(`${row.name}${row.holder ? `（${row.holder}携带）` : ""}=命中${roleLabel(best.role)}装备（${best.holder || "路线"}）${holderMismatch ? "，持有者不匹配折算" : ""}`);
     });
 
     bestCrafts(t, items, w).forEach(row => {
@@ -1126,7 +1169,7 @@
       }
     }
 
-    if (!items.size) missing.push("还没选择装备，路线暂按来牌判断");
+    if (!items.length) missing.push("还没选择装备，路线暂按来牌判断");
     if (!augments.size && !augCats.size) missing.push("还没选择符文，符文权重未生效");
 
     const signalTotal = breakdown.hero + breakdown.item + breakdown.augment + breakdown.synergy + breakdown.future + (breakdown.trait || 0);
@@ -1248,7 +1291,7 @@
 
   function futureDemandValue(t, selected, opts, w) {
     const selectedUnitNames = new Set(normalizeSelectedUnits(selected.units || []).map(x => x.name));
-    const selectedItems = new Set((selected.items || []).map(canonicalItem));
+    const selectedItems = new Set(normalizeSelectedItems(selected).map(x => x.name));
     const p = profile(t);
     const rows = [];
     const lateTargets = [];
@@ -1357,10 +1400,6 @@
     return rows;
   }
 
-  function stickyThreshold(current) {
-    return Math.max(STICKY_MIN_LEAD, Math.ceil(rowSortScore(current) * STICKY_RELATIVE_LEAD));
-  }
-
   function routeMainCarry(t) {
     return (t && t.routeProfile && t.routeProfile.mainCarry && t.routeProfile.mainCarry.name)
       || (t && t.carryUnits && t.carryUnits[0])
@@ -1435,161 +1474,208 @@
     };
   }
 
-  function transitionProfile(current, challenger, selected) {
-    const level = clamp(Number(selected && selected.level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
-    const currentUnits = new Set(routeUnitNames(current && current.template));
-    const challengerUnits = new Set(routeUnitNames(challenger && challenger.template));
-    const held = new Set(normalizeSelectedUnits(selected && selected.units || []).map(x => x.name));
-    const shared = [...challengerUnits].filter(name => currentUnits.has(name));
-    const continuityBase = Math.max(1, Math.min(currentUnits.size || 1, challengerUnits.size || 1));
-    const continuity = shared.length / continuityBase;
-    const currentCarry = routeMainCarry(current && current.template);
-    const challengerCarry = routeMainCarry(challenger && challenger.template);
-    const carryChanged = Boolean(currentCarry && challengerCarry && currentCarry !== challengerCarry);
-    const carryHeld = Boolean(challengerCarry && held.has(challengerCarry));
-    const packageHits = [...challengerUnits].filter(name => held.has(name));
-    const stage = level <= 5 ? "early" : level <= 6 ? "mid" : "late";
-    const minPackageHits = level <= 5 ? 1 : level === 6 ? 2 : 3;
-    let ready = challengerUnits.size === 0 || !carryChanged;
-    if (carryChanged && level <= 5) ready = packageHits.length >= 1;
-    else if (carryChanged && level === 6) ready = carryHeld || packageHits.length >= 3;
-    else if (carryChanged) ready = carryHeld && packageHits.length >= Math.min(minPackageHits, challengerUnits.size);
-    const strategyDecision = challenger && challenger.strategyDecision;
-    const certifiedPivot = Boolean(strategyDecision && strategyDecision.switchCertified
-      && strategyDecision.baselineCarry === currentCarry
-      && strategyDecision.strategicCarry === challengerCarry);
-    const anti = challenger && challenger.antiFragile;
-    const antiBlocked = Boolean(anti && (anti.blocked || anti.status === "red"));
-    if (antiBlocked) ready = false;
-    const stageCost = Number(OPERATIONAL_STAGE_SWITCH_COST[level]) || 0;
-    const carryCost = carryChanged ? OPERATIONAL_CARRY_SWITCH_COST[stage] : 0;
-    const continuityCost = Math.max(0, Math.round((0.45 - continuity) * 20));
-    const readinessCost = anti && anti.status === "yellow" ? 4 : 0;
-    let cost = stageCost + carryCost + continuityCost + readinessCost;
-    if (certifiedPivot) {
-      ready = true;
-      cost = 0;
-    }
-    const reason = certifiedPivot
-      ? strategyDecision.text
-      : !ready
-      ? (antiBlocked
-        ? `${level}级转型被瓶颈阻断：${anti.bottleneckText || "核心组件未满足"}`
-        : `${level}级转型未成包：${carryChanged && !carryHeld ? `新主C${challengerCarry || "未到"}未到；` : ""}新路线仅命中${packageHits.length}张关键牌`)
-      : `转型成本${cost}分（阶段${stageCost}+换核${carryCost}+重合${continuityCost}+准备度${readinessCost}）`;
+  function stageUnitSet(template, level) {
+    const source = level <= 5 ? template.earlyUnits : level === 6 ? template.midUnits : template.coreUnits;
+    return new Set((source || []).filter(Boolean));
+  }
+
+  function currentBoardEvaluation(template, selected, weights) {
+    const w = { ...fallbackWeights, ...(weights || {}) };
+    const level = clamp(Number(selected.level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
+    const capacity = Math.max(1, level);
+    const stageUnits = stageUnitSet(template, level);
+    const unitMap = profileUnitMap(template);
+    const unitValues = normalizeSelectedUnits(selected.units || []).map(unit => {
+      const routeUnit = unitMap.get(unit.name);
+      const inStage = stageUnits.has(unit.name);
+      if (!inStage && !routeUnit) return null;
+      const role = routeUnit && routeUnit.role || "utility";
+      const base = roleUnitWeight(role, w);
+      const readiness = inStage ? 1 : DECISION_MODEL.offStageReadiness;
+      const location = unit.location === "board" ? 1
+        : unit.location === "bench" ? DECISION_MODEL.benchReadiness
+        : DECISION_MODEL.unknownLocationReadiness;
+      return {
+        name: unit.name,
+        star: unit.star || 0,
+        value: Math.round(base * (STAR_SCORE_MULTIPLIERS[unit.star] || 1) * readiness * location),
+      };
+    }).filter(Boolean).sort((a, b) => b.value - a.value || String(a.name).localeCompare(String(b.name), "zh-Hans-CN")).slice(0, capacity);
+    let score = unitValues.reduce((sum, row) => sum + row.value, 0);
+    const roleItems = profileItems(template);
+    normalizeSelectedItems(selected).forEach(item => {
+      const hit = roleItems.find(row => row.name === item.name && (!item.holder || row.holder === item.holder));
+      if (!hit) return;
+      const readiness = item.equipped ? 1 : DECISION_MODEL.unassignedItemReadiness;
+      score += Math.round(roleItemWeight(hit.role, w) * readiness);
+    });
     return {
-      level,
-      ready,
-      cost,
-      carryChanged,
-      currentCarry,
-      challengerCarry,
-      carryHeld,
-      packageHits,
-      sharedUnits: shared,
-      continuityPct: Math.round(continuity * 100),
-      strategyDecision,
-      certifiedPivot,
-      reason,
+      score: Math.max(0, score),
+      units: unitValues.map(row => starLabel(row.name, row.star)),
     };
   }
 
-  function operationalRow(rows) {
-    return (rows || []).find(row => row && row.following) || ((rows || [])[0] || null);
+  function currentBoardScore(template, selected, weights) {
+    return currentBoardEvaluation(template, selected, weights).score;
   }
 
-  function applySticky(rows, opts) {
-    if (!opts || !opts.stickyTopId || !rows.length) return rows;
-    const currentId = opts.stickyTopId;
-    const currentIndex = rows.findIndex(r => rowId(r) === currentId);
-    if (currentIndex < 0) return rows;
-    const current = rows[currentIndex];
-    const currentCarry = routeMainCarry(current.template);
-    const strategyChallenger = rows.find(row => rowId(row) !== currentId
-      && row.strategyDecision
-      && row.strategyDecision.baselineCarry === currentCarry) || null;
-    const challenger = strategyChallenger || rows[0];
-    if (rowId(challenger) === currentId) {
-      challenger.following = true;
-      challenger.sticky = { state: "current", text: "当前跟随路线仍是最高分" };
-      return rows;
+  function commitmentEvidence(template, row, selected, weights, opts) {
+    const w = { ...fallbackWeights, ...(weights || {}) };
+    const unitMap = profileUnitMap(template);
+    const mainCarry = routeMainCarry(template);
+    const evidence = [];
+    let points = 0;
+    normalizeSelectedUnits(selected.units || []).forEach(unit => {
+      const routeUnit = unitMap.get(unit.name);
+      if (!routeUnit || unit.star < 2) return;
+      const cost = unitPrice(unit.name, opts || {});
+      const target = targetCopiesFor(template, unit.name, cost);
+      const progress = clamp(unitCopies(unit.star) / Math.max(1, target), 0, 1);
+      const role = routeUnit.role || (unit.name === mainCarry ? "mainCarry" : "utility");
+      const factor = role === "mainCarry" ? 1 : DECISION_MODEL.nonCarryUpgradeEvidence;
+      const value = Math.max(1, Math.round(roleUnitWeight(role, w) * progress * factor));
+      points += value;
+      evidence.push(`${unit.name}${unit.star}星核心进度+${value}`);
+    });
+    const routeItems = profileItems(template);
+    normalizeSelectedItems(selected).forEach(item => {
+      if (!item.equipped || !item.holder) return;
+      const hit = routeItems.find(row => row.name === item.name && row.holder === item.holder);
+      if (!hit) return;
+      const value = roleItemWeight(hit.role, w);
+      points += value;
+      evidence.push(`${item.holder}已装备${item.name}+${value}`);
+    });
+    const chosen = selected.heroAugment && selected.heroAugment.selected;
+    const chosenFits = chosen && ((template.augmentPrefs || []).includes(chosen.name)
+      || (template.mechanic && template.mechanic.requiredAugment === chosen.name)
+      || (template.augmentTransitionPlan && template.augmentTransitionPlan.augment === chosen.name));
+    if (chosenFits) {
+      points += w.augment;
+      evidence.push(`英雄强化${chosen.name}已落地+${w.augment}`);
     }
-    const transition = opts.operationalCommitment ? transitionProfile(current, challenger, opts.selected || {}) : null;
-    if (transition) challenger.transition = transition;
-    const strategyDecision = challenger.strategyDecision;
-    const strategyApplies = Boolean(strategyDecision && strategyDecision.baselineCarry === routeMainCarry(current.template));
-    if (transition && transition.certifiedPivot) {
-      challenger.following = true;
-      challenger.sticky = {
-        state: "model-switched",
-        previous: current.template.name,
-        transition,
-        text: strategyDecision.text,
-      };
-      return rows;
+    if (row.strategyDecision && row.strategyDecision.switchCertified && chosenFits) {
+      points += w.augment;
+      evidence.push(`条件化实验认证转核+${w.augment}`);
     }
-    if (strategyApplies && !strategyDecision.switchCertified) {
-      current.following = true;
-      current.strategyDecision = strategyDecision;
-      challenger.followAdvice = strategyDecision.text;
-      current.sticky = {
-        state: "model-wait",
-        challenger: challenger.template.name,
-        transition,
-        text: strategyDecision.text,
+    (selected.commitments || []).forEach(event => {
+      if (event.type !== "d-spend" || !event.targetUnit) return;
+      if (!unitMap.has(event.targetUnit) && event.targetUnit !== mainCarry) return;
+      const value = Math.max(0, Number(event.gold) || 0);
+      points += value;
+      evidence.push(`已为${event.targetUnit}D牌${value}金`);
+    });
+    return { points: Math.round(points), evidence };
+  }
+
+  function transitionCostFromAssets(template, selected, weights, opts) {
+    const w = { ...fallbackWeights, ...(weights || {}) };
+    const routeUnits = new Set(routeUnitNames(template));
+    const routeItems = profileItems(template);
+    const costs = [];
+    let points = 0;
+    normalizeSelectedUnits(selected.units || []).forEach(unit => {
+      if (unit.star < 2 || routeUnits.has(unit.name)) return;
+      const price = unitPrice(unit.name, opts || {});
+      const value = Math.round(price * unitCopies(unit.star) * DECISION_MODEL.incompatibleUpgradeCostRatio);
+      if (!value) return;
+      points += value;
+      costs.push(`${unit.name}${unit.star}星沉没${value}`);
+    });
+    normalizeSelectedItems(selected).forEach(item => {
+      if (!item.equipped || !item.holder) return;
+      const compatible = routeItems.some(row => row.name === item.name && row.holder === item.holder);
+      if (compatible) return;
+      const value = Math.max(1, Math.round(w.routeItem * DECISION_MODEL.incompatibleEquippedItemCostRatio));
+      points += value;
+      costs.push(`${item.holder}已锁${item.name}${value}`);
+    });
+    (selected.commitments || []).forEach(event => {
+      if (event.type !== "d-spend" || !event.targetUnit || routeUnits.has(event.targetUnit)) return;
+      const value = Math.max(0, Number(event.gold) || 0);
+      points += value;
+      costs.push(`已为${event.targetUnit}D牌${value}金`);
+    });
+    return { points: Math.round(points), costs };
+  }
+
+  function applyDeterministicDecision(rows, selected, weights, opts) {
+    if (!rows.length) return { status: "empty", text: "暂无路线" };
+    const level = clamp(Number(selected.level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
+    rows.forEach(row => {
+      row.currentBoard = false;
+      row.strategicLeader = false;
+      row.committed = false;
+      row.currentBoardEvaluation = currentBoardEvaluation(row.template, selected, weights);
+      row.currentBoardScore = row.currentBoardEvaluation.score;
+    });
+    const current = [...rows].sort((a, b) => b.currentBoardScore - a.currentBoardScore
+      || rowSortScore(b) - rowSortScore(a)
+      || teamSearchScore(b.template) - teamSearchScore(a.template)
+      || String(a.template.name).localeCompare(String(b.template.name), "zh-Hans-CN"))[0];
+    const strategic = rows[0];
+    const leaderScore = rowSortScore(strategic);
+    rows.forEach(row => {
+      const evidence = commitmentEvidence(row.template, row, selected, weights, opts);
+      const cost = transitionCostFromAssets(row.template, selected, weights, opts);
+      const strategicGap = Math.max(0, leaderScore - rowSortScore(row));
+      const support = evidence.points - cost.points - strategicGap;
+      row.commitment = {
+        evidence: evidence.points,
+        evidenceRows: evidence.evidence,
+        transitionCost: cost.points,
+        costRows: cost.costs,
+        strategicGap,
+        support,
+        utility: rowSortScore(row) + evidence.points - cost.points,
+        formula: `承诺净值=${rowSortScore(row)}+不可逆${evidence.points}-转型${cost.points}=${rowSortScore(row) + evidence.points - cost.points}`,
       };
-      return rows;
+    });
+    const manual = opts && opts.manualLockId ? rows.find(row => rowId(row) === opts.manualLockId) : null;
+    // 抗脆弱结果已进入finalScore，不再二次硬否决；定线只看不可逆证据能否覆盖真实沉没成本与战略差距。
+    const eligible = rows.filter(row => row.commitment.evidence >= DECISION_MODEL.minimumCommitmentEvidence && row.commitment.support > 0)
+      .sort((a, b) => b.commitment.utility - a.commitment.utility
+        || rowSortScore(b) - rowSortScore(a)
+        || String(a.template.name).localeCompare(String(b.template.name), "zh-Hans-CN"));
+    let committed = null;
+    let status = "observing";
+    let text = "未出现足以覆盖转型成本的不可逆证据，暂不定线";
+    if (level <= DECISION_MODEL.earlyObserveMaxLevel) {
+      text = `${level}级观察期：只给当前战力和战略候选，不锁终局`;
+    } else if (manual) {
+      committed = manual;
+      status = "manual";
+      text = `手动锁定：${manual.template.name}`;
+    } else if (eligible.length) {
+      committed = eligible[0];
+      status = "committed";
+      text = `模型定线：${committed.template.name}；${committed.commitment.formula}`;
     }
-    if (currentIndex > 2) {
-      if (transition && !transition.ready) {
-        current.following = true;
-        challenger.followAdvice = `继续跟 ${current.template.name}（${transition.reason}）`;
-        current.sticky = {
-          state: "pivot-wait",
-          challenger: challenger.template.name,
-          transition,
-          text: `${current.template.name}虽跌出前3，但${transition.reason}`,
-        };
-        return rows;
-      }
-      challenger.sticky = {
-        state: "dropped",
-        previous: current.template.name,
-        text: `${current.template.name}跌出前3，立即让位`,
-      };
-      return rows;
-    }
-    const gap = rowSortScore(challenger) - rowSortScore(current);
-    const baseThreshold = stickyThreshold(current);
-    const threshold = baseThreshold + (transition ? transition.cost : 0);
-    if ((transition && !transition.ready) || gap < threshold) {
-      current.following = true;
-      challenger.followAdvice = transition && !transition.ready
-        ? `继续跟 ${current.template.name}（${transition.reason}）`
-        : `继续跟 ${current.template.name}（领先${gap}分，转型需${threshold}分）`;
-      current.sticky = {
-        state: transition && !transition.ready ? "pivot-wait" : "held",
-        challenger: challenger.template.name,
-        gap,
-        threshold,
-        baseThreshold,
-        transition,
-        text: transition && !transition.ready
-          ? `${challenger.template.name}暂不接管：${transition.reason}`
-          : `${challenger.template.name}领先${gap}分，未到含转型成本的${threshold}分阈值，继续跟随`,
-      };
-    } else {
-      challenger.sticky = {
-        state: "switched",
-        previous: current.template.name,
-        gap,
-        threshold,
-        baseThreshold,
-        transition,
-        text: `${challenger.template.name}领先${gap}分，达到含转型成本的${threshold}分阈值，允许易主`,
-      };
-    }
-    return rows;
+    current.currentBoard = true;
+    strategic.strategicLeader = true;
+    if (committed) committed.committed = true;
+    const decision = {
+      status,
+      level,
+      currentBoardId: rowId(current),
+      currentBoardName: current.template.name,
+      currentBoardScore: current.currentBoardScore,
+      currentBoardUnits: current.currentBoardEvaluation.units,
+      strategicId: rowId(strategic),
+      strategicName: strategic.template.name,
+      committedId: committed ? rowId(committed) : "",
+      committedName: committed ? committed.template.name : "",
+      executionId: rowId(committed || current),
+      text,
+    };
+    rows.forEach(row => { row.decision = decision; });
+    return decision;
+  }
+
+  function operationalRow(rows) {
+    return (rows || []).find(row => row && row.committed)
+      || (rows || []).find(row => row && row.currentBoard)
+      || ((rows || [])[0] || null);
   }
 
   function rank(templates, selected, weights, limit, opts) {
@@ -1611,24 +1697,25 @@
       return base;
     });
     applyVirtualBattle(rows, opts);
-    if (!opts) return rows.sort((a, b) => rowSortScore(b) - rowSortScore(a)).slice(0, limit || 5);
-    const previousRank = new Map((opts.previousOrder || []).map((id, i) => [id, i]));
     rows.sort((a, b) => {
       const delta = rowSortScore(b) - rowSortScore(a);
       if (delta) return delta;
-      const pa = previousRank.has(rowId(a)) ? previousRank.get(rowId(a)) : 9999;
-      const pb = previousRank.has(rowId(b)) ? previousRank.get(rowId(b)) : 9999;
-      if (pa !== pb) return pa - pb;
       const teamDelta = teamSearchScore(b.template) - teamSearchScore(a.template);
       if (teamDelta) return teamDelta;
       return String(a.template.name).localeCompare(String(b.template.name), "zh-Hans-CN");
     });
-    applySticky(rows, { ...opts, selected });
+    if (!opts) return rows.slice(0, limit || 5);
+    const decision = opts.operationalCommitment ? applyDeterministicDecision(rows, selected, weights, opts) : null;
     const maxRows = limit || 5;
     const visible = rows.slice(0, maxRows);
-    if (opts.operationalCommitment) {
-      const active = rows.find(row => row.following);
-      if (active && !visible.includes(active)) visible[visible.length - 1] = active;
+    if (decision) {
+      const required = rows.filter(row => row.currentBoard || row.committed);
+      required.forEach(row => {
+        if (visible.includes(row)) return;
+        const replaceAt = Math.max(3, visible.length - 1);
+        visible[replaceAt] = row;
+      });
+      visible.decision = decision;
     }
     return visible;
   }
@@ -1688,7 +1775,7 @@
   }
 
   function selectedFromSignals(signals) {
-    const selected = { units: [], items: [], augments: [], augmentCats: [], traits: [], level: null };
+    const selected = { units: [], items: [], itemRows: [], augments: [], augmentCats: [], traits: [], commitments: [], level: null };
     (signals || []).forEach(s => {
       if (!s) return;
       const kind = s.kind || s.type;
@@ -1705,14 +1792,33 @@
       if (kind === "units" && value) {
         const prev = selected.units.find(x => x.name === value || x.value === value);
         const star = Number(s.star) || 0;
+        const location = s.location || "unknown";
         if (prev) {
           if (star > (Number(prev.star) || 0)) {
             prev.star = star;
             prev.label = starLabel(value, star);
           }
+          if (location === "board" || (location === "bench" && prev.location !== "board")) prev.location = location;
         } else {
-          selected.units.push(star ? { name: value, value, star, label: starLabel(value, star) } : value);
+          selected.units.push({ name: value, value, star, location, label: starLabel(value, star) });
         }
+        return;
+      }
+      if (kind === "items" && value) {
+        const count = Math.max(1, Math.min(9, Number(s.count) || 1));
+        for (let i = 0; i < count; i++) {
+          selected.items.push(value);
+          selected.itemRows.push({ name: value, value, holder: s.holder || "", equipped: Boolean(s.equipped || s.holder), source: s.source || "" });
+        }
+        return;
+      }
+      if (kind === "commitments") {
+        selected.commitments.push({
+          type: s.commitmentType || s.type || "event",
+          targetUnit: s.targetUnit || "",
+          gold: Math.max(0, Number(s.gold) || 0),
+          label: s.label || value || "不可逆事件",
+        });
         return;
       }
       if (selected[kind] && value && !selected[kind].includes(value)) selected[kind].push(value);
@@ -1724,7 +1830,14 @@
   function resolveGameState(input, heroAugments) {
     if (input && input.stateResolved) return input;
     const selected = input || {};
-    const units = normalizeSelectedUnits(selected.units || []).map(row => row.star ? { name: row.name, value: row.name, star: row.star, label: starLabel(row.name, row.star) } : row.name);
+    const units = normalizeSelectedUnits(selected.units || []).map(row => ({
+      name: row.name,
+      value: row.name,
+      star: row.star || 0,
+      location: row.location || "unknown",
+      label: starLabel(row.name, row.star),
+    }));
+    const itemRows = normalizeSelectedItems(selected);
     const unitCopiesMap = {};
     normalizeSelectedUnits(units).forEach(row => { unitCopiesMap[row.name] = unitCopies(row.star); });
     const augments = uniq(selected.augments || []);
@@ -1755,7 +1868,7 @@
       if (grantedHero && grantedCopies > 0) {
         const wasHeld = Object.prototype.hasOwnProperty.call(unitCopiesMap, grantedHero);
         unitCopiesMap[grantedHero] = (unitCopiesMap[grantedHero] || 0) + grantedCopies;
-        if (!wasHeld) units.push(grantedHero);
+        if (!wasHeld) units.push({ name: grantedHero, value: grantedHero, star: 0, location: "unknown", label: grantedHero });
         derivedAssets.push({ kind: "units", value: grantedHero, copies: grantedCopies, source: chosen.name, label: `${grantedHero}+${grantedCopies}（${chosen.name}）` });
         auditTrail.push(`赠送资产：${grantedHero}+${grantedCopies}`);
       }
@@ -1767,7 +1880,10 @@
     return {
       ...selected,
       units,
+      items: itemRows.map(x => x.name),
+      itemRows,
       unitCopies: unitCopiesMap,
+      commitments: [...(selected.commitments || [])],
       augments,
       derivedAssets,
       auditTrail,
@@ -1822,7 +1938,7 @@
 
   function actionLines(template, selected, top) {
     const lines = [];
-    const selectedItems = new Set(selected.items || []);
+    const selectedItems = new Set(normalizeSelectedItems(selected).map(x => x.name));
     const selectedUnits = new Set(normalizeSelectedUnits(selected.units || []).map(x => x.name));
     const nextComponent = (template.componentPrefs || []).find(x => !selectedItems.has(x));
     const nextItem = (template.completedPrefs || []).find(x => !selectedItems.has(x));
@@ -1855,16 +1971,9 @@
         ? `战略转线：${top.strategyDecision.strategicCarry}接管；${top.strategyDecision.terminalText}`
         : `交接观察：${top.strategyDecision.currentHolder}暂时代持，${top.strategyDecision.handoffText}`);
     }
-    if (top && top.sticky && top.sticky.state === "model-wait") {
-      lines.push(`模型不硬转：${top.sticky.text}`);
-    } else if (top && top.sticky && top.sticky.state === "model-switched") {
-      lines.push(`模型允许转型：${top.sticky.text}`);
-    } else if (top && top.sticky && top.sticky.state === "pivot-wait") {
-      lines.push(`经营不转：继续当前线；${top.sticky.transition ? top.sticky.transition.reason : top.sticky.text}`);
-    } else if (top && top.sticky && top.sticky.state === "held") {
-      lines.push(`经营不转：${top.sticky.text}`);
-    } else if (top && top.sticky && top.sticky.state === "switched") {
-      lines.push(`允许转型：${top.sticky.text}`);
+    if (top && top.decision) {
+      if (top.decision.status === "observing") lines.push(`暂不定线：${top.decision.text}`);
+      else if (top.committed) lines.push(top.decision.text);
     }
     if (top && top.antiFragile) {
       const af = top.antiFragile;
@@ -2099,44 +2208,82 @@
     assert(itemOperator.augmentOperator.variableBonus > itemComplete.augmentOperator.variableBonus, "装备算子应随主C装备缺口收缩而衰减");
     assert(itemOperator.augmentOperator.variableBonus <= AUGMENT_ITEM_BONUS_CAP, "单条装备算子不得越过上限");
 
-    const stickyTemplates = [
-      { id: "old", name: "旧路线", quality: "S", coreUnits: [], earlyUnits: [], midUnits: [], completedPrefs: [], componentPrefs: [], augmentPrefs: [], augmentCats: [], actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 1, items: [] }, units: [], items: [], activeTraits: [] } },
-      { id: "new", name: "新路线", quality: "S", coreUnits: [], earlyUnits: [], midUnits: [], completedPrefs: ["X"], componentPrefs: [], augmentPrefs: [], augmentCats: [], actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 1, items: [] }, units: [], items: [{ name: "X", role: "route", holder: "A", components: [] }], activeTraits: [] } },
+    const decisionTemplates = [
+      {
+        id: "route-a", name: "A当前线", quality: "S", coreUnits: ["A", "C"], earlyUnits: ["A", "C"], midUnits: ["A", "C"], completedPrefs: ["护甲"], componentPrefs: [], augmentPrefs: ["A强化"], augmentCats: [], actions: {},
+        routeProfile: { mainCarry: { name: "A", starTarget: 2, items: ["护甲"] }, units: [{ name: "A", role: "mainCarry", starTarget: 2, traits: [] }, { name: "C", role: "frontline", starTarget: 1, traits: [] }], items: [{ name: "护甲", role: "mainCarry", holder: "A", components: [] }], activeTraits: [] },
+      },
+      {
+        id: "route-b", name: "B战略线", quality: "S", coreUnits: ["B", "D", "E"], earlyUnits: ["B", "D"], midUnits: ["B", "D", "E"], completedPrefs: ["X"], componentPrefs: [], augmentPrefs: ["B强化"], augmentCats: [], actions: {},
+        routeProfile: { mainCarry: { name: "B", starTarget: 2, items: ["X"] }, units: [{ name: "B", role: "mainCarry", starTarget: 2, traits: [] }, { name: "D", role: "frontline", starTarget: 1, traits: [] }, { name: "E", role: "utility", starTarget: 1, traits: [] }], items: [{ name: "X", role: "mainCarry", holder: "B", components: [] }], activeTraits: [] },
+      },
     ];
-    const baseWeights = { ...fallbackWeights, baseS: 100, routeItem: 14, augment: 0, augmentSignal: 0 };
-    let held = rank(stickyTemplates, { items: ["X"], units: [], augments: [], augmentCats: [] }, baseWeights, 2, { previousOrder: ["old", "new"], stickyTopId: "old" });
-    assert(rowId(held[0]) === "new", "黏性不得篡改真分排序");
-    assert(held[1].following, "挑战者未达到相对阈值时，旧路线只应带跟随徽章");
-    const switchWeights = { ...baseWeights, routeItem: 15 };
-    let switched = rank(stickyTemplates, { items: ["X"], units: [], augments: [], augmentCats: [] }, switchWeights, 2, { previousOrder: ["old", "new"], stickyTopId: "old" });
-    assert(rowId(switched[0]) === "new", "挑战者达到相对阈值时应易主");
+    const decisionWeights = { ...fallbackWeights, baseS: 100, mainCarryUnit: 24, mainCarryItem: 22, frontlineUnit: 8, utilityUnit: 8, routeItem: 22, futureMainCarryUnit: 0, futureCoreUnit: 0, futureItem: 0, versionStrength: 0 };
+    const decisionOpts = { operationalCommitment: true, unitPrices: { A: 1, B: 2, C: 1, D: 2, E: 3 } };
+    const ordinaryRows = rank(decisionTemplates, selectedFromSignals([
+      { kind: "levels", level: 4 },
+      { kind: "units", value: "A", location: "board" },
+      { kind: "units", value: "B", location: "board" },
+      { kind: "items", value: "X" },
+    ]), decisionWeights, 2, decisionOpts);
+    assert(ordinaryRows.decision.status === "observing" && !ordinaryRows.some(row => row.committed), "普通来牌与未装备成装不得制造路线承诺");
 
-    const commitmentTemplates = [
-      { id: "commit-old", name: "旧经营线", quality: "S", coreUnits: ["A", "C"], earlyUnits: ["A"], midUnits: ["A", "C"], completedPrefs: [], componentPrefs: [], augmentPrefs: [], augmentCats: [], actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 2, items: [] }, units: [{ name: "A", role: "mainCarry", starTarget: 2, traits: [] }, { name: "C", role: "frontline", starTarget: 1, traits: [] }], items: [], activeTraits: [] } },
-      { id: "commit-new", name: "新来牌线", quality: "S", coreUnits: ["B", "D", "E"], earlyUnits: ["B"], midUnits: ["B", "D", "E"], completedPrefs: ["X", "Y", "Z"], componentPrefs: [], augmentPrefs: [], augmentCats: [], actions: {}, routeProfile: { mainCarry: { name: "B", starTarget: 2, items: ["X", "Y", "Z"] }, units: [{ name: "B", role: "mainCarry", starTarget: 2, traits: [] }, { name: "D", role: "frontline", starTarget: 1, traits: [] }, { name: "E", role: "utility", starTarget: 1, traits: [] }], items: [{ name: "X", role: "mainCarry", holder: "B", components: [] }, { name: "Y", role: "mainCarry", holder: "B", components: [] }, { name: "Z", role: "mainCarry", holder: "B", components: [] }], activeTraits: [] } },
-    ];
-    const commitmentWeights = { ...fallbackWeights, baseS: 100, mainCarryUnit: 20, mainCarryItem: 20, frontlineUnit: 8, utilityUnit: 8, routeItem: 20, futureMainCarryUnit: 0, futureCoreUnit: 0, futureItem: 0, versionStrength: 0 };
-    const unreadySelected = selectedFromSignals([{ kind: "levels", level: 7 }, { kind: "units", value: "A" }, { kind: "items", value: "X" }, { kind: "items", value: "Y" }, { kind: "items", value: "Z" }]);
-    const unreadyRows = rank(commitmentTemplates, unreadySelected, commitmentWeights, 2, { previousOrder: ["commit-old", "commit-new"], stickyTopId: "commit-old", operationalCommitment: true });
-    assert(rowId(unreadyRows[0]) === "commit-new", "分数排序仍应展示新路线领先");
-    assert(rowId(operationalRow(unreadyRows)) === "commit-old", "新主C未到且来牌未成包时必须继续旧经营线");
-    assert(unreadyRows[0].transition && !unreadyRows[0].transition.ready, "未成包挑战路线必须返回转型阻断原因");
-    const readySelected = selectedFromSignals([{ kind: "levels", level: 7 }, { kind: "units", value: "A" }, { kind: "units", value: "B", star: 2 }, { kind: "units", value: "D" }, { kind: "units", value: "E" }, { kind: "items", value: "X" }, { kind: "items", value: "Y" }, { kind: "items", value: "Z" }]);
-    const readyRows = rank(commitmentTemplates, readySelected, commitmentWeights, 2, { previousOrder: ["commit-old", "commit-new"], stickyTopId: "commit-old", operationalCommitment: true });
-    assert(rowId(operationalRow(readyRows)) === "commit-new", "新主C与配套来牌成包且领先覆盖转型成本后应允许易主");
+    const earlyRows = rank(decisionTemplates, selectedFromSignals([
+      { kind: "levels", level: 3 },
+      { kind: "units", value: "B", star: 3, location: "board" },
+      { kind: "items", value: "X", holder: "B", equipped: true },
+    ]), decisionWeights, 2, { ...decisionOpts, manualLockId: "route-b" });
+    assert(earlyRows.decision.status === "observing" && !earlyRows.some(row => row.committed), "1至3级即使核心升星或手动锁定也只能观察，不得硬定终局");
 
-    const dropTemplates = [
-      { id: "n1", name: "新1", quality: "S", completedPrefs: ["A"], coreUnits: [], earlyUnits: [], midUnits: [], actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 1, items: [] }, units: [], items: [{ name: "A", role: "route", holder: "A", components: [] }], activeTraits: [] } },
-      { id: "n2", name: "新2", quality: "S", completedPrefs: ["B"], coreUnits: [], earlyUnits: [], midUnits: [], actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 1, items: [] }, units: [], items: [{ name: "B", role: "route", holder: "A", components: [] }], activeTraits: [] } },
-      { id: "n3", name: "新3", quality: "S", completedPrefs: ["C"], coreUnits: [], earlyUnits: [], midUnits: [], actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 1, items: [] }, units: [], items: [{ name: "C", role: "route", holder: "A", components: [] }], activeTraits: [] } },
-      { id: "old", name: "旧", quality: "S", coreUnits: [], earlyUnits: [], midUnits: [], actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 1, items: [] }, units: [], items: [], activeTraits: [] } },
+    const irreversibleSignals = [
+      { kind: "levels", level: 4 },
+      { kind: "units", value: "A", location: "board" },
+      { kind: "units", value: "B", star: 2, location: "board" },
+      { kind: "items", value: "X", holder: "B", equipped: true },
     ];
-    const dropped = rank(dropTemplates, { items: ["A", "B", "C"], units: [], augments: [], augmentCats: [] }, { ...fallbackWeights, baseS: 100, routeItem: 10 }, 4, { previousOrder: ["old", "n1", "n2", "n3"], stickyTopId: "old" });
-    assert(rowId(dropped[0]) !== "old", "旧#1跌出前3时应立即让位");
-    assert(!dropped.some(r => r.template.id === "old" && r.following), "旧#1跌出前3不应保留跟随徽章");
-    for (let i = 1; i < dropped.length; i++) {
-      assert(dropped[i - 1].finalScore >= dropped[i].finalScore, "rank结果finalScore必须单调非增");
-    }
+    const irreversibleRows = rank(decisionTemplates, selectedFromSignals(irreversibleSignals), decisionWeights, 2, decisionOpts);
+    assert(irreversibleRows.decision.status === "committed" && rowId(operationalRow(irreversibleRows)) === "route-b", "核心升星与正确持有者成装应形成可解释的不可逆承诺");
+    const committedB = irreversibleRows.find(row => rowId(row) === "route-b");
+    assert(committedB.commitment.evidenceRows.some(x => x.includes("B2星")) && committedB.commitment.evidenceRows.some(x => x.includes("B已装备X")), "承诺证据必须逐项列出核心升星与已装备关键装");
+
+    const orderA = rank(decisionTemplates, selectedFromSignals(irreversibleSignals), decisionWeights, 2, decisionOpts);
+    const orderB = rank(decisionTemplates, selectedFromSignals([...irreversibleSignals].reverse()), decisionWeights, 2, decisionOpts);
+    const decisionSnapshot = rows => JSON.stringify({
+      order: rows.map(row => [rowId(row), row.finalScore]),
+      execution: rowId(operationalRow(rows)),
+      decision: rows.decision,
+    });
+    assert(decisionSnapshot(orderA) === decisionSnapshot(orderB), "同一最终状态必须与输入顺序、历史推荐顺序完全无关");
+
+    const manualRows = rank(decisionTemplates, selectedFromSignals([{ kind: "levels", level: 4 }, { kind: "units", value: "B" }]), decisionWeights, 2, { ...decisionOpts, manualLockId: "route-a" });
+    assert(manualRows.decision.status === "manual" && rowId(operationalRow(manualRows)) === "route-a", "4级后手动锁定应作为显式不可逆事件生效");
+
+    const dSpendRows = rank(decisionTemplates, selectedFromSignals([
+      { kind: "levels", level: 4 },
+      { kind: "units", value: "B" },
+      { kind: "commitments", value: "D牌:B:20", commitmentType: "d-spend", targetUnit: "B", gold: 20 },
+    ]), decisionWeights, 2, decisionOpts);
+    assert(dSpendRows.decision.status === "committed" && rowId(operationalRow(dSpendRows)) === "route-b", "真实D牌支出达到证据门槛时应形成确定性路线承诺");
+
+    const boardRows = rank(decisionTemplates, selectedFromSignals([{ kind: "levels", level: 4 }, { kind: "units", value: "B", location: "board" }]), decisionWeights, 2, decisionOpts);
+    const benchRows = rank(decisionTemplates, selectedFromSignals([{ kind: "levels", level: 4 }, { kind: "units", value: "B", location: "bench" }]), decisionWeights, 2, decisionOpts);
+    const boardB = boardRows.find(row => rowId(row) === "route-b");
+    const benchB = benchRows.find(row => rowId(row) === "route-b");
+    assert(boardB.currentBoardScore > benchB.currentBoardScore, "场上棋子的当前战力必须高于备战席同名棋子");
+
+    const sunkRows = rank(decisionTemplates, selectedFromSignals([
+      { kind: "levels", level: 4 },
+      { kind: "units", value: "A", star: 2 },
+      { kind: "items", value: "护甲", holder: "A", equipped: true },
+      { kind: "units", value: "B", star: 2 },
+    ]), decisionWeights, 2, decisionOpts);
+    const sunkB = sunkRows.find(row => rowId(row) === "route-b");
+    assert(sunkB.commitment.transitionCost > 0 && sunkB.commitment.costRows.some(x => x.includes("A2星")), "不兼容升星与已装备成装必须进入资产转型成本");
+
+    const countedItems = selectedFromSignals([{ kind: "items", value: "反曲之弓", count: 2 }]);
+    assert(countedItems.items.length === 2 && countedItems.itemRows.length === 2, "重复散件必须保留数量，不能退化成集合");
+    const doubleBow = scoreTemplate(operatorTemplate, countedItems, fallbackWeights, {});
+    assert(doubleBow.evidence.some(x => x.includes("反曲之弓+反曲之弓") && x.includes("可立即合成")), "两把弓必须能推导疾射火炮的立即合成价值");
     const virtualBase = id => ({ id, name: id, quality: "S", coreUnits: [], earlyUnits: [], midUnits: [], actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 1, items: [] }, units: [], items: [], activeTraits: [] } });
     const virtualHigh = { ...virtualBase("稳健"), virtualBattle: { battles: 708, winRate: 82, robustScore: 90, cvar10: -0.1, interval90: [-0.2, 0.8], coverage: 100, unsupported: [] } };
     const virtualLow = { ...virtualBase("敏感"), virtualBattle: { battles: 708, winRate: 22, robustScore: 20, cvar10: -0.8, interval90: [-0.9, 0.2], coverage: 100, unsupported: [] } };
@@ -2175,6 +2322,39 @@
         }
         (fx.expect.evidenceIncludes || []).forEach(part => assert(topEvidence.includes(part), `${fx.label} 证据应包含 ${part}，实际 ${topEvidence}`));
       });
+      const earlyStateSignals = [
+        { kind: "units", value: "凯尔", star: 2 },
+        { kind: "units", value: "雷克顿", star: 2 },
+        { kind: "units", value: "安妮" },
+        { kind: "units", value: "璐璐" },
+        { kind: "units", value: "波比" },
+        { kind: "levels", level: 1 },
+      ];
+      const earlyDecisionOpts = {
+        oddsData: globalThis.JCC_ODDS,
+        unitPrices: fixtureUnitPrices,
+        unitTraits: fixtureUnitTraits,
+        heroAugments: matcherData.options.heroAugments,
+        operationalCommitment: true,
+      };
+      const earlyForward = rank(matcherData.templates, selectedFromSignals(earlyStateSignals), matcherData.weights, 5, earlyDecisionOpts);
+      const earlyReverse = rank(matcherData.templates, selectedFromSignals([...earlyStateSignals].reverse()), matcherData.weights, 5, earlyDecisionOpts);
+      const actualDecisionSnapshot = rows => JSON.stringify({
+        top3: rows.slice(0, 3).map(row => [rowId(row), row.finalScore]),
+        execution: rowId(operationalRow(rows)),
+        decision: rows.decision,
+      });
+      assert(actualDecisionSnapshot(earlyForward) === actualDecisionSnapshot(earlyReverse), "凯尔/小天才实战状态不得因先说哪张牌而改变执行结论");
+      assert(earlyForward.decision.status === "observing" && !earlyForward.some(row => row.committed), "真实模板在1级必须只输出当前棋盘与战略候选");
+      const chosenHeroAugment = rank(matcherData.templates, selectedFromSignals([
+        { kind: "levels", level: 4 },
+        { kind: "augments", value: "登神长阶" },
+      ]), matcherData.weights, 5, {
+        ...earlyDecisionOpts,
+        antiFragile: true,
+      });
+      assert(chosenHeroAugment.decision.status === "committed"
+        && chosenHeroAugment.decision.committedName.includes("登神决斗天使"), "已选择英雄强化必须关闭普通观察态，并按赠送资产与机制重新定线");
       const screenshotUnits = ["凯尔", "娑娜", "德莱文", "李青", "赛娜", "芮尔", "孙悟空", "锐雯"];
       const screenshotSignals = [
         ...screenshotUnits.map(name => ({ kind: "units", value: name, star: name === "孙悟空" ? 2 : undefined })),
@@ -2196,8 +2376,6 @@
       selectedJaxOne.heroAugmentRound = "3-2";
       const jaxOneRows = rank(matcherData.templates, selectedJaxOne, matcherData.weights, 8, {
         ...transitionOpts,
-        stickyTopId: dravenTemplate.id,
-        previousOrder: [dravenTemplate.id],
       });
       const jaxOneOperational = operationalRow(jaxOneRows);
       assert(routeMainCarry(jaxOneOperational.template) === "贾克斯", "选下无情连打并获得贾克斯后，实验认证应立即转贾克斯战略主C");
@@ -2208,8 +2386,6 @@
       selectedJaxTwo.heroAugmentRound = "3-2";
       const jaxTwoRows = rank(matcherData.templates, selectedJaxTwo, matcherData.weights, 8, {
         ...transitionOpts,
-        stickyTopId: dravenTemplate.id,
-        previousOrder: jaxOneRows.map(row => rowId(row)),
       });
       const jaxTwoOperational = operationalRow(jaxTwoRows);
       assert(routeMainCarry(jaxTwoOperational.template) === "贾克斯"
@@ -2231,7 +2407,6 @@
       const selectedGeneric = selectedFromSignals(genericSignals);
       const genericRows = rank([genericTemplate], selectedGeneric, matcherData.weights, 1, {
         ...transitionOpts,
-        previousOrder: [genericTemplate.id],
       });
       assert(genericRows[0].strategyDecision && genericRows[0].strategyDecision.switchCertified
         && genericRows[0].strategyDecision.strategicCarry === genericPlan.strategicCarry
@@ -2241,8 +2416,6 @@
       assert(genericBaseline, `通用策略${genericPlan.augment}缺少对照主C路线${genericRule.fromCarry}`);
       const genericOperationalRows = rank(matcherData.templates, selectedGeneric, matcherData.weights, 8, {
         ...transitionOpts,
-        stickyTopId: genericBaseline.id,
-        previousOrder: [genericBaseline.id],
       });
       const genericOperational = operationalRow(genericOperationalRows);
       assert(genericOperational.strategyDecision && genericOperational.strategyDecision.switchCertified
@@ -2261,9 +2434,7 @@
     AP,
     TANK,
     fallbackWeights,
-    STICKY_MIN_LEAD,
-    STICKY_RELATIVE_LEAD,
-    OPERATIONAL_STAGE_SWITCH_COST,
+    DECISION_MODEL,
     MIN_LEVEL,
     MAX_LEVEL,
     COMPONENT_DIRECTION_BONUS,
@@ -2291,6 +2462,7 @@
     signalTowerHtml,
     selectedFromSignals,
     resolveGameState,
+    normalizeSelectedItems,
     actionLines,
     primeActionLine,
     activeTraitsForTemplate,

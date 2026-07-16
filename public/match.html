@@ -67,8 +67,7 @@ button, input { font:inherit; }
 .routeName { font-size:32px; font-weight:950; line-height:1.18; overflow-wrap:anywhere; }
 .routePoints { font-size:34px; font-weight:950; color:var(--s2); white-space:nowrap; }
 .subRank { color:var(--ink2); font-size:17px; overflow-wrap:anywhere; }
-.strengthBreak, .stickyNote { color:var(--ink2); font-size:16px; overflow-wrap:anywhere; margin-top:4px; }
-.stickyNote { color:var(--muted); }
+.strengthBreak { color:var(--ink2); font-size:16px; overflow-wrap:anywhere; margin-top:4px; }
 .evidenceLine { color:var(--ink2); font-size:15px; overflow-wrap:anywhere; margin-top:4px; }
 .gateStrip { margin-top:8px; padding:9px 11px; border-radius:10px; border:1px solid var(--border); font-size:17px; font-weight:900; overflow-wrap:anywhere; }
 .gateStrip.green { color:#fff; background:var(--s2); border-color:var(--s2); }
@@ -84,8 +83,14 @@ button, input { font:inherit; }
 .heroAugStrip.waiting, .heroAugStrip.available { color:#1f1800; background:color-mix(in srgb, var(--s3) 70%, #fff 30%); border-color:var(--s3); }
 .heroAugStrip.base-only { color:var(--ink2); background:color-mix(in srgb, var(--surface) 82%, var(--muted) 18%); }
 .heroAugStrip.closed { color:#fff; background:var(--s6); border-color:var(--s6); }
-.followBadge { display:inline-grid; place-items:center; margin-left:8px; padding:2px 8px; border-radius:999px; background:var(--s2); color:#fff; font-size:14px; font-weight:950; vertical-align:middle; }
-.followStrip { margin-top:6px; padding:7px 10px; border-radius:10px; border:1px solid color-mix(in srgb, var(--s2) 45%, var(--border)); color:var(--ink2); background:color-mix(in srgb, var(--surface) 88%, var(--s2) 12%); font-size:15px; overflow-wrap:anywhere; }
+.decisionGrid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin:4px 0 8px; }
+.decisionCard { border:1px solid var(--grid); border-radius:10px; padding:10px 12px; min-width:0; background:var(--plane); }
+.decisionCard.commit { border-color:color-mix(in srgb, var(--s2) 55%, var(--border)); }
+.decisionLabel { color:var(--muted); font-size:13px; font-weight:900; }
+.decisionValue { color:var(--ink); font-size:18px; font-weight:950; margin-top:3px; overflow-wrap:anywhere; }
+.decisionNote { color:var(--ink2); font-size:13px; margin-top:3px; overflow-wrap:anywhere; }
+.lockBtn { min-height:34px; margin-top:7px; border:1px solid var(--s2); border-radius:8px; background:transparent; color:var(--s2); padding:3px 9px; cursor:pointer; font-size:14px; font-weight:900; }
+.lockBtn.on { background:var(--s2); color:#fff; }
 .reachBox { color:var(--ink2); font-size:16px; line-height:1.45; margin-top:4px; overflow-wrap:anywhere; }
 .reachToggle { margin-left:8px; border:0; background:transparent; color:var(--s2); cursor:pointer; font-weight:900; padding:0; }
 .openHint { color:var(--s2); font-size:15px; font-weight:900; margin-top:4px; }
@@ -175,6 +180,7 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
   .main { min-height:520px; }
   .routeView, .augView { min-height:520px; overflow:auto; }
   .rankTop, .augCards { grid-template-columns:1fr; }
+  .decisionGrid { grid-template-columns:1fr; }
   .routeName { font-size:28px; }
   .stageGrid { grid-template-columns:1fr; }
 }
@@ -274,12 +280,11 @@ let currentLevel = normalizeLevel(localStorage.getItem(LS + "level"));
 let currentHeroAugmentRound = normalizeHeroAugmentRound(localStorage.getItem(LS + "hero-augment-round"));
 let currentStage = normalizeStage(localStorage.getItem(LS + "stage"));
 let currentGold = normalizeGold(localStorage.getItem(LS + "gold"));
+let manualLockId = localStorage.getItem(LS + "manual-lock") || "";
 let pending = [];
 let unheard = [];
 let augChoices = null;
 let lastTop = "";
-let lastTopId = "";
-let previousOrder = [];
 let lastRenderedTop = null;
 let lastDetailRow = null;
 let expandedReachId = "";
@@ -297,6 +302,8 @@ function save() {
   localStorage.setItem(LS + "hero-augment-round", currentHeroAugmentRound);
   localStorage.setItem(LS + "stage", currentStage);
   localStorage.setItem(LS + "gold", currentGold);
+  if (manualLockId) localStorage.setItem(LS + "manual-lock", manualLockId);
+  else localStorage.removeItem(LS + "manual-lock");
 }
 function normalizeLevel(level) {
   return Math.max(MIN_LEVEL, Math.min(MAX_LEVEL, Number(level) || DEFAULT_LEVEL));
@@ -315,9 +322,7 @@ function setHeroAugmentRound(round, defer) {
   currentHeroAugmentRound = normalizeHeroAugmentRound(round);
   if (defer) return;
   save();
-  previousOrder = [];
   lastTop = "";
-  lastTopId = "";
   render();
 }
 function normalizeStage(value) {
@@ -342,6 +347,7 @@ function setGold(value, defer) {
 }
 function signalKey(s) {
   if (s.kind === "units") return `units|${s.value}`;
+  if (s.kind === "items") return `items|${s.value}|${s.holder || ""}`;
   return `${s.kind}|${s.value}|${s.kind === "traits" ? (s.count || "") : ""}`;
 }
 function normalizeSignal(s) {
@@ -353,6 +359,12 @@ function normalizeSignal(s) {
     label: s && s.kind === "units" && star ? `${value}·${star}星` : (s && s.label || value),
     count: s && s.count,
     star: star || undefined,
+    holder: s && s.holder,
+    equipped: Boolean(s && (s.equipped || s.holder)),
+    location: s && s.location,
+    commitmentType: s && s.commitmentType,
+    targetUnit: s && s.targetUnit,
+    gold: s && s.gold,
     via: s && s.via,
   };
 }
@@ -382,6 +394,17 @@ function addSignal(s, defer) {
       existing.star = next.star;
       existing.label = next.label;
       existing.via = next.via || existing.via;
+      if (next.location) existing.location = next.location;
+    } else if (next.kind === "units" && next.location && next.location !== existing.location) {
+      existing.location = next.location;
+      existing.label = next.label;
+    } else if (next.kind === "items") {
+      existing.count = Math.max(Number(existing.count) || 1, Number(next.count) || 1);
+      existing.holder = next.holder || existing.holder;
+      existing.equipped = next.equipped || existing.equipped;
+      existing.label = existing.holder
+        ? `${existing.holder}带${existing.value}${existing.count > 1 ? `×${existing.count}` : ""}`
+        : `${existing.value}${existing.count > 1 ? `×${existing.count}` : ""}`;
     } else if (next.via === "llm") {
       existing.via = "llm";
     }
@@ -430,6 +453,9 @@ function signalText(rows) {
     if (s.kind === "traits") return `${s.count}${s.value}`;
     if (s.kind === "levels") return `等级${s.level || s.value}`;
     if (s.kind === "units" && s.star) return `${s.value}·${s.star}星`;
+    if (s.kind === "units" && s.location) return `${s.value}·${s.location === "bench" ? "备战席" : "场上"}`;
+    if (s.kind === "items") return `${s.holder ? `${s.holder}带` : ""}${s.value}${Number(s.count) > 1 ? `×${s.count}` : ""}`;
+    if (s.kind === "commitments") return s.label || s.value;
     return s.value || s.label || "";
   }).filter(Boolean).join("、") || "-";
 }
@@ -467,9 +493,8 @@ function clearGame() {
   currentHeroAugmentRound = "unknown";
   currentStage = "unknown";
   currentGold = "unknown";
-  previousOrder = [];
+  manualLockId = "";
   lastTop = "";
-  lastTopId = "";
   lastRenderedTop = null;
   expandedReachId = "";
   save();
@@ -537,12 +562,12 @@ function renderSignals() {
   const state = selectedObj();
   const derived = state.derivedAssets || [];
   box.innerHTML = `<span class="label">信号</span>` + (signals.length
-    ? signals.map(s => `<button class="chip" data-k="${esc(s.kind)}" data-v="${esc(s.value)}" data-c="${esc(s.count || "")}">${esc(s.label || s.value)}${s.via === "llm" ? '<span class="aiMark">AI</span>' : ""} ×</button>`).join("")
+    ? signals.map(s => `<button class="chip" data-k="${esc(s.kind)}" data-v="${esc(s.value)}" data-c="${esc(s.count || "")}" data-h="${esc(s.holder || "")}">${esc(s.label || s.value)}${s.via === "llm" ? '<span class="aiMark">AI</span>' : ""} ×</button>`).join("")
     : `<span class="label">还没识别到信号</span>`) + (derived.length
     ? `<span class="label">派生</span>${derived.map(row => `<span class="derivedChip">${esc(row.label || `${row.value}+${row.copies}`)}</span>`).join("")}`
     : "");
   box.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => {
-    removeSignal({ kind: btn.dataset.k, value: btn.dataset.v, count: btn.dataset.c ? Number(btn.dataset.c) : undefined });
+    removeSignal({ kind: btn.dataset.k, value: btn.dataset.v, count: btn.dataset.c ? Number(btn.dataset.c) : undefined, holder: btn.dataset.h || "" });
     render();
   }));
 }
@@ -607,10 +632,9 @@ function rankedRoutes() {
     unitPrices: UNIT_PRICES,
     unitTraits: UNIT_TRAITS,
     heroAugments: STAGE2_MATCHER.options.heroAugments || [],
-    previousOrder,
-    stickyTopId: lastTopId,
     antiFragile: currentLevel >= 4,
     operationalCommitment: true,
+    manualLockId,
   });
 }
 function unheardHtml() {
@@ -846,13 +870,11 @@ function openRouteDetail(row) {
     const state = selectedObj();
     if ((state.auditTrail || []).length) mk("div", "detailLine", "局面结算：" + state.auditTrail.join("；"), body);
   }
-  if (row.sticky) {
-    mk("div", "detailSection", "执行路线管理", body);
-    mk("div", "detailLine", row.sticky.text || "当前执行路线保持不变。", body);
-    if (row.sticky.transition) {
-      const tr = row.sticky.transition;
-      mk("div", "detailLine", `阵容重合${tr.continuityPct}%；新路线命中${(tr.packageHits || []).length}张关键牌；${tr.carryChanged ? `主C ${tr.currentCarry || "-"} → ${tr.challengerCarry || "-"}` : "主C不变"}。`, body);
-    }
+  if (row.commitment) {
+    mk("div", "detailSection", "确定性定线模型", body);
+    mk("div", "detailLine", row.commitment.formula, body);
+    mk("div", "detailLine", `不可逆证据：${(row.commitment.evidenceRows || []).join("、") || "无"}；转型沉没：${(row.commitment.costRows || []).join("、") || "无"}；战略差距${row.commitment.strategicGap || 0}分。`, body);
+    if (row.decision) mk("div", "detailLine", row.decision.text, body);
   }
   if (row.strategyDecision) {
     const strategy = row.strategyDecision;
@@ -964,68 +986,88 @@ function renderRoute() {
     box.removeAttribute("role");
     box.innerHTML = `<div class="empty">说出这把看到的棋子、装备、符文。<br>例如：安妮波比养刀，或者符文无情连打DD街区团队建设。</div>${unheardHtml()}`;
     lastTop = "";
-    lastTopId = "";
     lastRenderedTop = null;
     lastDetailRow = null;
-    previousOrder = ranked.map(r => r.template.id || r.template.name);
     return;
   }
   const leader = ranked[0], second = ranked[1], third = ranked[2];
-  const top = MatcherCore.operationalRow ? MatcherCore.operationalRow(ranked) : (ranked.find(r => r.following) || leader);
-  const t = top.template;
-  const topScore = rowScore(top);
+  const decision = ranked.decision || leader.decision || {};
+  const current = ranked.find(row => row.currentBoard) || leader;
+  const committed = ranked.find(row => row.committed) || null;
+  const actionRow = committed || current;
+  const detailRow = committed || leader;
+  const t = detailRow.template;
+  const topScore = rowScore(detailRow);
+  const actionScore = committed ? rowScore(committed) : (current.currentBoardScore || 0);
   const secondScore = second ? rowScore(second) : 0;
   const thirdScore = third ? rowScore(third) : 0;
-  const leaderDiffers = routeId(leader) !== routeId(top);
-  if (lastTop && lastTop !== top.template.name) showBanner(`执行路线切换 ${lastTop} → ${top.template.name}`);
-  lastTop = top.template.name;
-  lastTopId = routeId(top);
-  lastRenderedTop = { name: t.name, finalScore: topScore, sample: top.virtualDecision ? top.virtualDecision.robustScore : null };
-  lastDetailRow = top;
+  const committedName = committed ? committed.template.name : "";
+  if (lastTop && committedName && lastTop !== committedName) showBanner(`定线切换 ${lastTop} → ${committedName}`);
+  lastTop = committedName;
+  lastRenderedTop = { name: leader.template.name, finalScore: rowScore(leader), sample: leader.virtualDecision ? leader.virtualDecision.robustScore : null };
+  lastDetailRow = detailRow;
   const delta = Math.max(0, second ? rowScore(leader) - secondScore : rowScore(leader));
-  const actions = MatcherCore.actionLines(t, selectedObj(), top);
-  const reach = top.reachability;
-  const af = top.antiFragile;
+  const actions = MatcherCore.actionLines(actionRow.template, selectedObj(), actionRow);
+  if (decision.status === "observing" && currentLevel <= 3) actions.unshift("只做当前过渡，不锁任何终局阵容");
+  const af = detailRow.antiFragile;
   const breakLine = af
-    ? `基础强度${top.stageStrength || 0}分 → 抗脆弱${top.preSimulationScore ?? topScore}分 → 虚拟实战蒸馏${topScore}分`
-    : `已握资产${top.heldValue || 0}分 + 概率折现${top.futureValue || 0}分 = ${topScore}分`;
-  const evidenceLine = (top.evidence || []).slice(0, 3).join("；");
-  const stickyLine = leaderDiffers
-    ? (leader.followAdvice || (top.sticky && top.sticky.text) || `继续执行${t.name}`)
-    : ((top.sticky && top.sticky.text) || "执行：当前最高分路线");
-  const followBadge = top.following ? `<span class="followBadge">跟随中</span>` : "";
-  const followStrip = leaderDiffers
-    ? `<div class="followStrip"><span class="followBadge">暂缓转型</span> 分数领先路线：${esc(leader.template.name)} · ${rowScore(leader)}分<br>${esc(leader.followAdvice || "新路线尚未满足接管条件")}</div>`
-    : "";
+    ? `基础强度${detailRow.stageStrength || 0}分 → 抗脆弱${detailRow.preSimulationScore ?? topScore}分 → 虚拟实战蒸馏${topScore}分`
+    : `已握资产${detailRow.heldValue || 0}分 + 概率折现${detailRow.futureValue || 0}分 = ${topScore}分`;
+  const evidenceLine = (detailRow.evidence || []).slice(0, 3).join("；");
   const gateHtml = af
     ? `<div class="gateStrip ${esc(af.status)}">${esc(af.label)} · 核心度${af.readyPct}% · 瓶颈：${esc(af.bottleneckText)}</div><div class="formulaLine">${esc(af.formula)}</div>`
     : "";
-  const sampleHtml = top.virtualDecision
-    ? `<div class="sampleStrip">虚拟实战 ${top.virtualDecision.battles}场 · 胜率${top.virtualDecision.winRate}% · CVaR ${top.virtualDecision.cvar10} · 覆盖${top.virtualDecision.coverage}% · 蒸馏${top.virtualDecision.priorPoints >= 0 ? "+" : ""}${top.virtualDecision.priorPoints}分</div>`
+  const sampleHtml = detailRow.virtualDecision
+    ? `<div class="sampleStrip">虚拟实战 ${detailRow.virtualDecision.battles}场 · 胜率${detailRow.virtualDecision.winRate}% · CVaR ${detailRow.virtualDecision.cvar10} · 覆盖${detailRow.virtualDecision.coverage}% · 蒸馏${detailRow.virtualDecision.priorPoints >= 0 ? "+" : ""}${detailRow.virtualDecision.priorPoints}分</div>`
     : "";
-  const strategyHtml = top.strategyDecision
-    ? `<div class="strategyStrip ${top.strategyDecision.switchCertified ? "ready" : ""}">条件化策略：${esc(top.strategyDecision.text)} · ${top.strategyDecision.evidenceCount || top.strategyDecision.totalBattles}${esc(top.strategyDecision.evidenceUnit || "场")}</div>`
+  const strategyHtml = detailRow.strategyDecision
+    ? `<div class="strategyStrip ${detailRow.strategyDecision.switchCertified ? "ready" : ""}">条件化策略：${esc(detailRow.strategyDecision.text)} · ${detailRow.strategyDecision.evidenceCount || detailRow.strategyDecision.totalBattles}${esc(detailRow.strategyDecision.evidenceUnit || "场")}</div>`
     : "";
+  const commitmentRow = committed || leader;
+  const commitmentFormula = currentLevel <= 3
+    ? "1至3级不启用定线算子"
+    : commitmentRow.commitment ? commitmentRow.commitment.formula : "尚无不可逆证据";
+  const lockDisabled = currentLevel <= 3;
+  const lockLabel = manualLockId ? "解除手动锁定" : (lockDisabled ? "4级后可手动锁定" : "手动锁定战略#1");
+  const strategicText = [leader, second, third].filter(Boolean).map((row, index) => `#${index + 1} ${row.template.name} ${rowScore(row)}分`).join(" ｜ ");
+  const currentUnitsText = (decision.currentBoardUnits || []).join("、") || "还未录入可上场棋子";
+  const actionTitle = committed
+    ? committed.template.name
+    : currentLevel <= 3 ? `当前过渡 · ${currentUnitsText}` : current.template.name;
   box.innerHTML = `
     <div>
-      <div class="rankTop">
-        <div class="routeName">执行 ${esc(t.name)}${followBadge}</div>
-        <div class="routePoints">${topScore}分</div>
+      <div class="decisionGrid">
+        <div class="decisionCard">
+          <div class="decisionLabel">当前最强棋盘</div>
+          <div class="decisionValue">${esc(currentUnitsText)}</div>
+          <div class="decisionNote">现场战力 ${current.currentBoardScore || 0}；承接参考：${esc(current.template.name)}</div>
+        </div>
+        <div class="decisionCard">
+          <div class="decisionLabel">战略候选</div>
+          <div class="decisionValue">${esc(leader.template.name)}</div>
+          <div class="decisionNote">${esc(strategicText)}</div>
+        </div>
+        <div class="decisionCard commit">
+          <div class="decisionLabel">定线状态</div>
+          <div class="decisionValue">${decision.status === "manual" ? "手动锁定" : decision.status === "committed" ? "模型定线" : "继续观察"}</div>
+          <div class="decisionNote">${esc(decision.text || "暂不定线")}<br>${esc(commitmentFormula)}</div>
+          <button class="lockBtn ${manualLockId ? "on" : ""}" id="routeLockBtn" ${lockDisabled && !manualLockId ? "disabled" : ""}>${lockLabel}</button>
+        </div>
       </div>
-      <div class="subRank">${leaderDiffers
-        ? `分数#1 ${esc(leader.template.name)} ${rowScore(leader)}分 ｜ 当前执行线保留经营连续性`
-        : `领先#2 ${delta}分 ｜ #2 ${second ? esc(second.template.name) + " " + secondScore + "分" : "-"} ｜ #3 ${third ? esc(third.template.name) + " " + thirdScore + "分" : "-"}`}</div>
+      <div class="rankTop">
+        <div class="routeName">${committed ? "已定线" : "当前动作"} ${esc(actionTitle)}</div>
+        <div class="routePoints">${actionScore}分</div>
+      </div>
+      <div class="subRank">战略#1领先#2 ${delta}分 ｜ #2 ${second ? esc(second.template.name) + " " + secondScore + "分" : "-"} ｜ #3 ${third ? esc(third.template.name) + " " + thirdScore + "分" : "-"}</div>
       <div class="openHint">点击查看前期 / 中期 / 后期阵容</div>
-      ${heroAugmentHtml(top)}
+      ${heroAugmentHtml(detailRow)}
       ${strategyHtml}
       ${gateHtml}
       ${sampleHtml}
       <div class="strengthBreak">${esc(breakLine)}</div>
       ${evidenceLine ? `<div class="evidenceLine">证据：${esc(evidenceLine)}</div>` : ""}
-      ${reachHtml(top)}
-      <div class="stickyNote">${esc(stickyLine)}</div>
-      ${followStrip}
-      ${MatcherCore.signalTowerHtml(top).replaceAll("s2SignalTower", "meta").replaceAll("s2Signal", "metric")}
+      ${reachHtml(detailRow)}
+      ${MatcherCore.signalTowerHtml(detailRow).replaceAll("s2SignalTower", "meta").replaceAll("s2Signal", "metric")}
     </div>
     <div class="actions">${actions.map(x => `<div class="action">${esc(x)}</div>`).join("")}</div>
     <div></div>
@@ -1036,11 +1078,16 @@ function renderRoute() {
     expandedReachId = expandedReachId === id ? "" : id;
     render();
   }));
+  const lockButton = $("routeLockBtn");
+  if (lockButton) lockButton.addEventListener("click", () => {
+    manualLockId = manualLockId ? "" : routeId(leader);
+    save();
+    render();
+  });
   box.classList.add("clickable");
   box.tabIndex = 0;
   box.setAttribute("role", "button");
   box.setAttribute("aria-label", `查看 ${t.name} 前中后期阵容`);
-  previousOrder = ranked.map(r => r.template.id || r.template.name);
 }
 function augOptionInfo(sig) {
   const name = sig.value;

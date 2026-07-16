@@ -339,6 +339,19 @@
     };
   }
 
+  function findCountedItemAt(text, i) {
+    const n = parseNumberAt(text, i);
+    if (!n) return null;
+    const measure = ["把", "件", "个"].find(word => text.startsWith(word, i + n.len)) || "";
+    const item = findVocabAt(text, i + n.len + measure.length, "items");
+    if (!item) return null;
+    return {
+      entry: { ...item.entry, count: n.count, label: `${item.entry.value}×${n.count}` },
+      len: n.len + measure.length + item.len,
+      method: "item-count",
+    };
+  }
+
   function bestCandidates(raw, kindFilter) {
     const clean = norm(raw);
     if (Array.from(clean).length < 2) return [];
@@ -425,6 +438,8 @@
       if (heroRound) return heroRound;
       const level = parseLevelAt(text, i);
       if (level) return level;
+      const countedItem = findCountedItemAt(text, i);
+      if (countedItem) return countedItem;
       const starUnit = findStarUnitAt(text, i);
       if (starUnit) return starUnit;
       const trait = findTraitAt(text, i);
@@ -478,14 +493,27 @@
       }
     }
     flush();
-    const seen = new Set();
+    const compact = [];
+    const seen = new Map();
+    add.forEach(row => {
+      const k = `${row.kind}|${row.value}`;
+      const previous = seen.get(k);
+      if (!previous) {
+        const copy = { ...row };
+        compact.push(copy);
+        seen.set(k, copy);
+        return;
+      }
+      if (row.kind === "items") {
+        previous.count = Math.min(9, (Number(previous.count) || 1) + (Number(row.count) || 1));
+        previous.label = `${previous.value}×${previous.count}`;
+      } else if (row.kind === "units" && Number(row.star) > Number(previous.star || 0)) {
+        previous.star = row.star;
+        previous.label = `${row.value}·${row.star}星`;
+      }
+    });
     return {
-      add: add.filter(x => {
-        const k = `${x.kind}|${x.value}`;
-        if (seen.has(k)) return false;
-        seen.add(k);
-        return true;
-      }),
+      add: compact,
       pending: pending.filter(x => x.raw && x.candidates.length),
       unheard: [...new Set(unheard)],
     };
@@ -502,6 +530,12 @@
       label: row.label || value,
       count: row.count,
       star: row.star,
+      holder: row.holder,
+      equipped: row.equipped,
+      location: row.location,
+      commitmentType: row.commitmentType,
+      targetUnit: row.targetUnit,
+      gold: row.gold,
       level: row.level,
       round: row.round,
       via: "correction",
@@ -569,22 +603,81 @@
       return out;
     }
 
+    // 实际D牌支出是不可逆事件，必须先于“当前有多少金币”解析，避免同一个数字被状态语法抢走。
+    let decisionText = raw;
+    const spendPatterns = [
+      /(?:为|给)?(.+?)(?:D|d|搜)(?:了)?(\d{1,3})(?:金币|金|块)?/,
+      /(?:D|d|搜)(?:了)?(\d{1,3})(?:金币|金|块)?(?:追|找)(.+)/,
+    ];
+    for (const pattern of spendPatterns) {
+      const match = decisionText.match(pattern);
+      if (!match) continue;
+      const targetText = pattern === spendPatterns[0] ? match[1] : match[2];
+      const gold = Number(pattern === spendPatterns[0] ? match[2] : match[1]);
+      const target = tokenize(targetText, "units").add[0];
+      if (target && gold > 0) {
+        out.add.push({
+          kind: "commitments",
+          value: `D牌:${target.value}:${gold}`,
+          label: `为${target.value}D牌${gold}金`,
+          commitmentType: "d-spend",
+          targetUnit: target.value,
+          gold,
+        });
+        decisionText = decisionText.replace(match[0], "");
+      }
+      break;
+    }
+
     const stagePattern = /(?:当前回合|现在|当前)?\s*([234])[-杠]([12])/;
     const goldPattern = /(?:金币\s*(\d{1,3})|(?:有|现在)?\s*(\d{1,3})\s*(?:金币|块钱|块|金))/;
-    const stageMatch = raw.match(stagePattern);
+    const stageMatch = decisionText.match(stagePattern);
     if (stageMatch) out.add.push({ kind: "stage", value: `${stageMatch[1]}-${stageMatch[2]}`, label: `当前回合${stageMatch[1]}-${stageMatch[2]}` });
-    const goldMatch = raw.match(goldPattern);
+    const goldMatch = decisionText.match(goldPattern);
     if (goldMatch) {
       const value = Number(goldMatch[1] || goldMatch[2]);
       out.add.push({ kind: "gold", value, label: `${value}金币` });
     }
     // 状态片段已结构化，后续词表解析不再重复消费，避免“30金”误识别成英雄或没听懂文本。
-    const decisionText = raw.replace(stagePattern, "").replace(goldPattern, "");
+    decisionText = decisionText.replace(stagePattern, "").replace(goldPattern, "");
 
     const corrected = correctionResult(decisionText, currentSignals);
     if (corrected) {
       Object.assign(out, corrected);
       return out;
+    }
+
+    const located = decisionText.match(/^(?:备战席|板凳|场下)(.+)$/);
+    if (located) {
+      const got = tokenize(located[1]);
+      got.add.forEach(row => out.add.push(row.kind === "units" ? { ...row, location: "bench", label: `${row.label || row.value}·备战席` } : row));
+      out.pending = got.pending;
+      out.unheard = got.unheard;
+      return out;
+    }
+    const boarded = decisionText.match(/^(?:场上|上场)(.+)$/);
+    if (boarded) {
+      const got = tokenize(boarded[1]);
+      got.add.forEach(row => out.add.push(row.kind === "units" ? { ...row, location: "board", label: `${row.label || row.value}·场上` } : row));
+      out.pending = got.pending;
+      out.unheard = got.unheard;
+      return out;
+    }
+
+    const equipped = decisionText.match(/^(.+?)(?:带着|带了|带|装备了|装备|装上)(.+)$/);
+    if (equipped) {
+      const holderRows = tokenize(equipped[1]);
+      const assetRows = tokenize(equipped[2]);
+      const holder = holderRows.add.find(row => row.kind === "units");
+      const equippedItems = assetRows.add.filter(row => row.kind === "items");
+      if (holder && equippedItems.length) {
+        out.add.push(holder);
+        assetRows.add.filter(row => row.kind !== "items").forEach(row => out.add.push(row));
+        equippedItems.forEach(row => out.add.push({ ...row, holder: holder.value, equipped: true, label: `${holder.value}带${row.value}${Number(row.count) > 1 ? `×${row.count}` : ""}` }));
+        out.pending = [...holderRows.pending, ...assetRows.pending];
+        out.unheard = [...holderRows.unheard, ...assetRows.unheard];
+        return out;
+      }
     }
 
     // Natural speech often lists an offer as "来了A、来了B、来了C，选哪个".
@@ -729,6 +822,17 @@
     if (decisionState.pending.length || decisionState.unheard.length) throw new Error("已识别的状态不应残留待确认或没听懂文本");
     const stateOnly = parse("3杠2，30金", []);
     if (stateOnly.add.some(x => x.kind === "units") || stateOnly.unheard.length) throw new Error("状态片段不应二次误识别");
+    const countedItem = parse("两把弓", []);
+    if (!countedItem.add.some(x => x.kind === "items" && x.value === "反曲之弓" && x.count === 2)) throw new Error("重复散件数量必须保留");
+    const equippedItem = parse("凯尔带羊刀", []);
+    if (!equippedItem.add.some(x => x.kind === "items" && x.value === "鬼索的狂暴之刃" && x.holder === "凯尔" && x.equipped)) throw new Error("成装必须记录实际持有者");
+    const benchedUnit = parse("备战席安妮", []);
+    if (!benchedUnit.add.some(x => x.kind === "units" && x.value === "安妮" && x.location === "bench")) throw new Error("备战席棋子必须与场上棋子区分");
+    const boardedUnit = parse("场上波比", []);
+    if (!boardedUnit.add.some(x => x.kind === "units" && x.value === "波比" && x.location === "board")) throw new Error("场上棋子必须记录位置");
+    const dSpend = parse("为凯尔D了20金", []);
+    if (!dSpend.add.some(x => x.kind === "commitments" && x.commitmentType === "d-spend" && x.targetUnit === "凯尔" && x.gold === 20)) throw new Error("实际D牌支出必须形成不可逆事件");
+    if (dSpend.add.some(x => x.kind === "gold")) throw new Error("D牌支出不得误记为当前金币");
     console.log("signal-parser assertions passed");
   }
 
