@@ -139,7 +139,10 @@ function buildUnit(spec, index, side, activeTraits) {
     mergeBonus(bonus, active.def.team, active.index);
     if ((spec.traits || []).includes(active.name)) mergeBonus(bonus, active.def.member, active.index);
   });
-  const mechanicSupported = !!(spec.mechanic && spec.mechanic.requiredAugment === "姐妹" && hero.name === "金克丝");
+  const mechanicSupported = !!(spec.mechanic && (
+    (spec.mechanic.requiredAugment === "姐妹" && hero.name === "金克丝")
+    || (spec.mechanic.requiredAugment === "无情连打" && hero.name === "贾克斯")
+  ));
   if (mechanicSupported) bonus.ap += 40; // 姐妹中位口径：20次击杀×2%法强。
   const hpBase = Number(hero.initHP) * STAR_HP[star - 1];
   const hpFlat = stats.reduce((sum, row) => sum + row.hp, 0);
@@ -169,7 +172,7 @@ function buildUnit(spec, index, side, activeTraits) {
     amp: 1 + (stats.reduce((s, x) => s + x.ampPct, 0) + bonus.ampPct) / 100,
     armor: Number(hero.armor) + stats.reduce((s, x) => s + x.armor, 0) + bonus.armor,
     mr: Number(hero.magicResist) + stats.reduce((s, x) => s + x.mr, 0) + bonus.mr,
-    range: Math.max(1, Number(hero.attackRange || 1)),
+    range: Math.max(1, Number(hero.attackRange || 1) + (itemNames.includes("疾射火炮") ? 1 : 0)),
     mana: Number(hero.initMP) + stats.reduce((s, x) => s + x.startMana, 0),
     maxMana: Number(hero.maxMP),
     manaMult: bonus.manaMult,
@@ -185,6 +188,7 @@ function buildUnit(spec, index, side, activeTraits) {
     attacks: 0,
     casts: 0,
     jaxStacks: 0,
+    relentlessAs: 0,
     kaisaAs: 0,
     adBuffUntil: 0,
     adBuffAmount: 0,
@@ -251,6 +255,10 @@ function attack(source, target, rng, log, time) {
     const increment = numericAt(groups[1], source.star);
     deal(source, target, (base + Math.min(7, source.jaxStacks) * increment) * source.apMult, "magic", rng, log, time);
     source.jaxStacks++;
+    if (source.mechanicSupported && source.mechanic.requiredAugment === "无情连打") {
+      source.relentlessAs += Number(source.mechanic.attackSpeedPerThird || 0.12);
+      log.push({ time, type: "augment-stack", source: source.name, augment: "无情连打", value: source.relentlessAs });
+    }
   }
   if (source.name === "卡莎" && source.attacks % 3 === 0 && source.ability.magic > 0) {
     deal(source, target, source.ability.magic * source.apMult, "magic", rng, log, time);
@@ -323,7 +331,7 @@ function stepUnit(unit, allies, enemies, rng, log, time) {
   if (unit.attackTimer <= 0) {
     attack(unit, target, rng, log, time);
     const titanSpeed = unit.items.includes("泰坦的坚决") ? unit.titan * 0.02 : 0;
-    unit.attackTimer = 1 / clamp(unit.attackSpeed * (1 + unit.rage + titanSpeed), 0.2, 5);
+    unit.attackTimer = 1 / clamp(unit.attackSpeed * (1 + unit.rage + titanSpeed + unit.relentlessAs), 0.2, 5);
   }
 }
 
@@ -407,6 +415,19 @@ function runAssertions() {
   assert(Math.sign(a.margin) === -Math.sign(b.margin), "paired side swap should invert margin");
   assert(a.log.some(row => row.type === "cast"), "mana units must cast in event timeline");
   assert(Number.isFinite(a.margin) && Number.isFinite(a.seconds), "battle metrics must stay finite");
+  const jaxShell = mechanic => [
+    { name: "孙悟空", role: "frontline", star: 2, traits: ["战斗机甲", "护卫"], items: ["狂徒铠甲"] },
+    { name: "德莱文", role: "utility", star: 1, traits: ["战斗机甲", "精英战士"], items: [] },
+    { name: "贾克斯", role: "mainCarry", star: 2, traits: ["战斗机甲", "斗士"], items: ["泰坦的坚决", "鬼索的狂暴之刃", "疾射火炮"], mechanic },
+  ];
+  const durableTarget = [
+    { name: "阿利斯塔", role: "frontline", star: 3, traits: ["福牛守护者", "吉祥物", "秘术卫士"], items: ["狂徒铠甲", "石像鬼石板甲", "巨龙之爪"] },
+  ];
+  const plainJax = simulateBattle(jaxShell(null), durableTarget, { seed: 19, maxSeconds: 14, keepLog: true });
+  const relentlessJax = simulateBattle(jaxShell({ requiredAugment: "无情连打", attackSpeedPerThird: 0.12 }), durableTarget, { seed: 19, maxSeconds: 14, keepLog: true });
+  assert(relentlessJax.log.some(row => row.type === "augment-stack" && row.augment === "无情连打"), "relentless assault must stack after Jax third attacks");
+  assert(relentlessJax.seconds < plainJax.seconds && relentlessJax.margin > plainJax.margin, "relentless assault must improve paired-seed Jax kill time and margin");
+  assert(relentlessJax.leftCoverage === 1 && !relentlessJax.leftUnsupported.includes("机制:无情连打"), "relentless assault must be a covered combat mechanic");
   console.log("combat-engine assertions passed");
 }
 
