@@ -1,4 +1,4 @@
-// 17.6b“姐妹”机制实验：补足通用木桩模型看不到的永久击杀成长、蓝霸回蓝与导弹进化。
+// “姐妹”机制实验：补足通用木桩模型看不到的永久击杀成长、蓝霸回蓝与导弹进化。
 const fs = require('fs');
 const { simulate, tankEHP, chess, equip } = require('../core/model.js');
 const { currentVersion } = require('../core/version-context.js');
@@ -10,7 +10,7 @@ const race = read('race.js');
 const job = read('job.js');
 const hex = read('hex.js');
 
-// 官方17.6b公告给出的确定数值。导弹“增加”的具体伤害分配未公开，因此按每20次击杀+1枚、最多3枚做保守总伤口径。
+// 官方17.6b公告给出的确定数值在17.7继续生效。导弹“增加”的具体伤害分配未公开，因此按每20次击杀+1枚、最多3枚做保守总伤口径。
 const SISTERS = {
   augment: '姐妹',
   jinxApPerKill: 2,
@@ -86,7 +86,7 @@ function boardBonus(traits, superStars = 0) {
   const has = name => traits.find(t => t.name === name);
   const anima = has('幻灵战队')?.active || 0;
   const animaPower = anima >= 7 ? 60 : anima >= 5 ? 35 : anima >= 3 ? 10 : 0;
-  const supers = has('超级英雄') ? 20 + 5 * superStars : 0;
+  const supers = has('超级英雄') ? 20 + 6 * superStars : 0;
   return { ap: animaPower, adPct: animaPower, ampPct: supers };
 }
 
@@ -206,7 +206,7 @@ const out = {
   generated: new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date()),
   source: {
     officialAugment: sistersHex,
-    patch: '17.6b：金克丝击杀1%→2%法强，蔚击杀1%→2%最大生命，导弹与护盾增加阈值100→20次。',
+    patch: '17.6b引入并在17.7保留：金克丝击杀1%→2%法强，蔚击杀1%→2%最大生命，导弹与护盾增加阈值100→20次。',
   },
   mechanics: SISTERS,
   assumptions: [
@@ -219,7 +219,7 @@ const out = {
     '通用搜索使用不死亡的单体木桩，没有击杀事件。',
     'hex.js没有姐妹的成长数值，普通文本解析无法恢复机制。',
     '蓝霸符的击杀回蓝此前未建模，导致技能循环装备被低估。',
-    '官方44套阵容没有姐妹金克丝模板，所以stage2没有任何路线可匹配。',
+    '17.6b初始快照没有官方姐妹金克丝模板；17.7重算已接入新增官方模板并继承同一机制门槛。',
   ],
   boards: boardRows,
   itemRank: itemRank.slice(0, 10),
@@ -230,7 +230,7 @@ const out = {
 
 function report(data) {
   const lines = [
-    '# 17.6b 姐妹无限技能金克丝实验', '',
+    `# ${data.version} 姐妹无限技能金克丝实验`, '',
     `数据版本：${data.version}`, '',
     '## 为什么旧模型算不出来',
     ...data.blindSpot.map(x => `- ${x}`), '',

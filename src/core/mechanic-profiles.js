@@ -72,7 +72,7 @@ function sistersProfile(base) {
     carryBonus: { ap: SISTERS_KILLS * 2 },
     supported: true,
     confidence: 0.72,
-    basis: `17.6b公告：按${SISTERS_KILLS}次击杀、每次+2%法强并触发额外导弹的中位状态`,
+    basis: `17.6b公告、17.7保留：按${SISTERS_KILLS}次击杀、每次+2%法强并触发额外导弹的中位状态`,
     transformCarry(sim, context) {
       const names = (context.items.ids || []).map(id => itemNames[id]);
       const blueRatio = names.includes('蓝霸符') ? 55 / 45 : 1;

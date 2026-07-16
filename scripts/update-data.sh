@@ -43,11 +43,14 @@ node src/pipeline/transition.js
 node src/pipeline/numeric-lens.js
 node src/pipeline/research-lab.js
 node src/pipeline/reinvent.js
+node src/experiments/jinx-sisters-lab.js
 node src/experiments/mecha-branch.js
 node src/experiments/mecha-prime-lab.js
 node src/core/mechanic-profiles.js
 node src/pipeline/meta-solver.js
 node src/pipeline/stage2-matcher.js
 node src/pipeline/route-certifier.js
+node src/pipeline/virtual-battle-lab.js
+node src/audit/audit.js
 echo
 echo "完成。明细见 docs/notes/阵容全量明细.md，前端打开 public/index.html。"

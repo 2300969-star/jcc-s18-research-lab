@@ -15,14 +15,14 @@ const TRAIT_EFFECTS = {
   "平民英雄": { tiers: [1, 2, 3], team: { manaMult: [1.04, 1.08, 1.2] } },
   "小天才": { tiers: [3, 5], team: { ampPct: [3, 14], ehpMult: [1.03, 1.14] } },
   "星之守护者": { tiers: [3, 5, 7, 9], team: { manaMult: [1.35, 1.9, 2.5, 3.4] } },
-  "超级英雄": { tiers: [3], team: { ampPct: [25] } },
+  "超级英雄": { tiers: [3], dynamic: "superStars" },
   "福牛守护者": { tiers: [2, 4, 6, 8, 10], team: { armor: [10, 45, 90, 150, 500], mr: [10, 45, 90, 150, 500] } },
   "战斗机甲": { tiers: [3, 5, 8], member: { adPct: [60, 110, 110], ap: [60, 110, 110] } },
   "源计划：激光特工": { tiers: [3, 5, 7, 10], team: { onHitMagic: [27, 35, 55, 80] } },
   "混沌战士": { tiers: [3, 5, 7], team: { ampPct: [25, 40, 70] } },
-  "灵能使": { tiers: [2, 4, 6, 8], team: { ap: [25, 50, 80, 120] } },
+  "灵能使": { tiers: [2, 4, 6, 8], team: { ap: [30, 60, 80, 120] } },
   "决斗大师": { tiers: [2, 4, 6, 8], member: { asPct: [30, 54, 90, 144] } },
-  "强袭枪手": { tiers: [2, 3, 4, 5], team: { adPct: [5, 10, 15, 20] } },
+  "强袭枪手": { tiers: [2, 3, 4, 5], team: { adPct: [6, 12, 15, 20] } },
   "护卫": { tiers: [2, 4, 6], team: { armor: [25, 75, 200] }, member: { armor: [50, 150, 400] } },
   "吉祥物": { tiers: [2, 4, 6], team: { ehpMult: [1.015, 1.03, 1.06] } },
   "爱心使者": { tiers: [2, 4, 6], team: { ap: [4, 7, 11] } },
@@ -108,7 +108,13 @@ function traitBonuses(team) {
     const def = TRAIT_EFFECTS[name];
     if (!def) continue;
     const index = tierIndex(count, def.tiers);
-    if (index >= 0) active.push({ name, count, need: def.tiers[index], index, def });
+    if (index >= 0) {
+      if (def.dynamic === "superStars") {
+        const threeStars = team.filter(unit => Number(unit.star || unit.starTarget) === 3).length;
+        const ampPct = 20 + threeStars * 6;
+        active.push({ name, count, need: def.tiers[index], index, def: { ...def, team: { ampPct: [ampPct] } } });
+      } else active.push({ name, count, need: def.tiers[index], index, def });
+    }
   }
   return active;
 }
