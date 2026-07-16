@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-16T17:48:30.130Z",
+  "generated": "2026-07-16T18:37:52.732Z",
   "experiment": "augment-conditioned-transition-v1",
   "scenario": {
     "level": 4,
@@ -85,11 +85,11 @@
     "samples": 96,
     "battles": 384,
     "plainMeanMargin": 0.394,
-    "augmentedMeanMargin": 0.447,
-    "meanDelta": 5.33,
-    "standardError": 0.517,
-    "lcb95": 4.48,
-    "probabilityPositive": 83.33
+    "augmentedMeanMargin": 0.43,
+    "meanDelta": 3.65,
+    "standardError": 0.374,
+    "lcb95": 3.03,
+    "probabilityPositive": 88.54
   },
   "rankings": [
     {
@@ -100,14 +100,14 @@
       "terminalCarry": "贾克斯",
       "samples": 240,
       "battles": 1440,
-      "utility": 65.28,
+      "utility": 64.22,
       "interval90": [
-        24.12,
-        91.79
+        23.94,
+        91.62
       ],
-      "cvar10": 24.05,
-      "winIndex": 69.17,
-      "meanMargin": 0.224,
+      "cvar10": 23.9,
+      "winIndex": 68,
+      "meanMargin": 0.202,
       "coverage": 100,
       "jax2ByMidPct": 44.17,
       "jax3TerminalPct": 0.42,
@@ -122,14 +122,14 @@
       "terminalCarry": "蕾欧娜",
       "samples": 240,
       "battles": 1440,
-      "utility": 60.3,
+      "utility": 59.43,
       "interval90": [
-        24.24,
-        91.31
+        24.17,
+        91.05
       ],
-      "cvar10": 23.98,
-      "winIndex": 62.47,
-      "meanMargin": 0.164,
+      "cvar10": 23.81,
+      "winIndex": 61.65,
+      "meanMargin": 0.143,
       "coverage": 100,
       "jax2ByMidPct": 44.17,
       "jax3TerminalPct": 0.42,
@@ -144,14 +144,14 @@
       "terminalCarry": "贾克斯",
       "samples": 240,
       "battles": 1440,
-      "utility": 60.23,
+      "utility": 59.41,
       "interval90": [
-        24.24,
-        91.19
+        24.17,
+        91.01
       ],
-      "cvar10": 23.98,
-      "winIndex": 62.4,
-      "meanMargin": 0.163,
+      "cvar10": 23.81,
+      "winIndex": 61.65,
+      "meanMargin": 0.142,
       "coverage": 100,
       "jax2ByMidPct": 44.17,
       "jax3TerminalPct": 0.42,
@@ -166,14 +166,14 @@
       "terminalCarry": "德莱文",
       "samples": 240,
       "battles": 1440,
-      "utility": 57.77,
+      "utility": 56.71,
       "interval90": [
-        26.71,
-        90.4
+        26.64,
+        90.09
       ],
-      "cvar10": 26.72,
-      "winIndex": 58.73,
-      "meanMargin": 0.144,
+      "cvar10": 26.62,
+      "winIndex": 57.18,
+      "meanMargin": 0.135,
       "coverage": 100,
       "jax2ByMidPct": 44.17,
       "jax3TerminalPct": 0.42,
@@ -184,50 +184,50 @@
   "comparisons": {
     "immediate-jax": {
       "meanDelta": 7.51,
-      "standardError": 1.151,
-      "lcb95": 5.62,
-      "probabilityPositive": 66.67
+      "standardError": 1.166,
+      "lcb95": 5.59,
+      "probabilityPositive": 65
     },
     "bridge-jax": {
-      "meanDelta": 2.46,
-      "standardError": 0.923,
-      "lcb95": 0.94,
+      "meanDelta": 2.7,
+      "standardError": 0.966,
+      "lcb95": 1.11,
       "probabilityPositive": 44.17
     },
     "jax-leona": {
-      "meanDelta": 2.53,
-      "standardError": 0.921,
-      "lcb95": 1.01,
+      "meanDelta": 2.73,
+      "standardError": 0.962,
+      "lcb95": 1.14,
       "probabilityPositive": 44.58
     }
   },
   "stateInference": {
     "jaxOneImmediate": {
       "sampleCount": 134,
-      "meanDelta": 6.2,
-      "standardError": 1.54,
-      "lcb95": 3.66,
-      "probabilityPositive": 65.67
+      "meanDelta": 5.4,
+      "standardError": 1.506,
+      "lcb95": 2.93,
+      "probabilityPositive": 61.94
     },
     "jaxTwoBridge": {
       "sampleCount": 106,
-      "meanDelta": 9.15,
-      "standardError": 1.719,
-      "lcb95": 6.33,
-      "probabilityPositive": 66.98
+      "meanDelta": 10.14,
+      "standardError": 1.795,
+      "lcb95": 7.18,
+      "probabilityPositive": 67.92
     },
     "jaxThreeTerminal": {
       "sampleCount": 1,
-      "meanDelta": -2.63,
+      "meanDelta": -2.74,
       "standardError": 0,
-      "lcb95": -2.63,
+      "lcb95": -2.74,
       "probabilityPositive": 0
     },
     "leonaVsJaxTerminal": {
-      "meanDelta": 0.06,
-      "standardError": 0.144,
-      "lcb95": -0.17,
-      "probabilityPositive": 2.92
+      "meanDelta": 0.02,
+      "standardError": 0.153,
+      "lcb95": -0.23,
+      "probabilityPositive": 3.33
     }
   },
   "decision": {
@@ -245,44 +245,44 @@
     },
     "handoffText": "贾克斯达到2星后优势扩大，继续持有输出装与至尊机甲",
     "terminalPolicyId": "bridge-jax",
-    "terminalText": "贾克斯保留终局；蕾欧娜转核未过稳健门槛（LCB -0.17）",
+    "terminalText": "贾克斯保留终局；蕾欧娜转核未过稳健门槛（LCB -0.23）",
     "inference": {
       "sampleCount": 134,
-      "meanDelta": 6.2,
-      "standardError": 1.54,
-      "lcb95": 3.66,
-      "probabilityPositive": 65.67
+      "meanDelta": 5.4,
+      "standardError": 1.506,
+      "lcb95": 2.93,
+      "probabilityPositive": 61.94
     },
     "stateInference": {
       "jaxOneImmediate": {
         "sampleCount": 134,
-        "meanDelta": 6.2,
-        "standardError": 1.54,
-        "lcb95": 3.66,
-        "probabilityPositive": 65.67
+        "meanDelta": 5.4,
+        "standardError": 1.506,
+        "lcb95": 2.93,
+        "probabilityPositive": 61.94
       },
       "jaxTwoBridge": {
         "sampleCount": 106,
-        "meanDelta": 9.15,
-        "standardError": 1.719,
-        "lcb95": 6.33,
-        "probabilityPositive": 66.98
+        "meanDelta": 10.14,
+        "standardError": 1.795,
+        "lcb95": 7.18,
+        "probabilityPositive": 67.92
       },
       "jaxThreeTerminal": {
         "sampleCount": 1,
-        "meanDelta": -2.63,
+        "meanDelta": -2.74,
         "standardError": 0,
-        "lcb95": -2.63,
+        "lcb95": -2.74,
         "probabilityPositive": 0
       },
       "leonaVsJaxTerminal": {
-        "meanDelta": 0.06,
-        "standardError": 0.144,
-        "lcb95": -0.17,
-        "probabilityPositive": 2.92
+        "meanDelta": 0.02,
+        "standardError": 0.153,
+        "lcb95": -0.23,
+        "probabilityPositive": 3.33
       }
     },
-    "sampleSupport": 65.67,
+    "sampleSupport": 61.94,
     "comparedPolicies": [
       "keep-draven",
       "immediate-jax",

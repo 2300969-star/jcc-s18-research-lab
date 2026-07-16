@@ -48,9 +48,11 @@ node src/experiments/mecha-branch.js
 node src/experiments/mecha-prime-lab.js
 node src/core/mechanic-profiles.js
 node src/pipeline/meta-solver.js
-# 先生成当前版本路线画像，再做条件化转型实验；最后二次生成将结论蒸馏回模板。
+# 先生成并认证当前路线，再跑专项实验与全强化策略编译；最后将认证规则蒸馏回模板。
 node src/pipeline/stage2-matcher.js
+node src/pipeline/route-certifier.js
 node src/experiments/augment-transition-lab.js
+node src/experiments/strategy-policy-compiler.js
 node src/pipeline/stage2-matcher.js
 node src/pipeline/route-certifier.js
 node src/pipeline/virtual-battle-lab.js

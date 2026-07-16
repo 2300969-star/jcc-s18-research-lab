@@ -139,11 +139,17 @@ function buildUnit(spec, index, side, activeTraits) {
     mergeBonus(bonus, active.def.team, active.index);
     if ((spec.traits || []).includes(active.name)) mergeBonus(bonus, active.def.member, active.index);
   });
+  // Generic policy experiments inject only numeric bonuses recovered from the
+  // official augment text. Unsupported control/targeting mechanics stay out.
+  mergeBonus(bonus, spec.bonus, 0);
   const mechanicSupported = !!(spec.mechanic && (
     (spec.mechanic.requiredAugment === "姐妹" && hero.name === "金克丝")
     || (spec.mechanic.requiredAugment === "无情连打" && hero.name === "贾克斯")
+    || (spec.mechanic.genericNumeric === true && Object.keys(spec.bonus || {}).length > 0)
   ));
-  if (mechanicSupported) bonus.ap += 40; // 姐妹中位口径：20次击杀×2%法强。
+  if (spec.mechanic && spec.mechanic.requiredAugment === "姐妹" && hero.name === "金克丝") {
+    bonus.ap += 40; // 姐妹中位口径：20次击杀×2%法强。
+  }
   const hpBase = Number(hero.initHP) * STAR_HP[star - 1];
   const hpFlat = stats.reduce((sum, row) => sum + row.hp, 0);
   const hp = (hpBase * (1 + bonus.hpPct / 100) + hpFlat) * bonus.ehpMult;
@@ -428,6 +434,14 @@ function runAssertions() {
   assert(relentlessJax.log.some(row => row.type === "augment-stack" && row.augment === "无情连打"), "relentless assault must stack after Jax third attacks");
   assert(relentlessJax.seconds < plainJax.seconds && relentlessJax.margin > plainJax.margin, "relentless assault must improve paired-seed Jax kill time and margin");
   assert(relentlessJax.leftCoverage === 1 && !relentlessJax.leftUnsupported.includes("机制:无情连打"), "relentless assault must be a covered combat mechanic");
+  const genericPlain = simulateBattle([
+    { name: "德莱文", role: "mainCarry", star: 2, traits: ["战斗机甲", "精英战士"], items: ["无尽之刃"] },
+  ], durableTarget, { seed: 29, maxSeconds: 14 });
+  const genericBoosted = simulateBattle([
+    { name: "德莱文", role: "mainCarry", star: 2, traits: ["战斗机甲", "精英战士"], items: ["无尽之刃"], mechanic: { requiredAugment: "德莱文联盟", genericNumeric: true }, bonus: { adPct: 25 } },
+  ], durableTarget, { seed: 29, maxSeconds: 14 });
+  assert(genericBoosted.left.damage > genericPlain.left.damage, "generic numeric augment must apply its declared bonus");
+  assert(genericBoosted.leftCoverage === 1 && !genericBoosted.leftUnsupported.includes("机制:德莱文联盟"), "generic numeric augment must report covered mechanics");
   console.log("combat-engine assertions passed");
 }
 
