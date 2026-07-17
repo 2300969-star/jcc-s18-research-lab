@@ -85,16 +85,48 @@ button, input { font:inherit; }
 .heroAugStrip.waiting, .heroAugStrip.available { color:#1f1800; background:color-mix(in srgb, var(--s3) 70%, #fff 30%); border-color:var(--s3); }
 .heroAugStrip.base-only { color:var(--ink2); background:color-mix(in srgb, var(--surface) 82%, var(--muted) 18%); }
 .heroAugStrip.closed { color:#fff; background:var(--s6); border-color:var(--s6); }
-.decisionGrid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin:4px 0 8px; }
-.decisionCard { border:1px solid var(--grid); border-radius:10px; padding:10px 12px; min-width:0; background:var(--plane); }
-.decisionCard.commit { border-color:color-mix(in srgb, var(--s2) 55%, var(--border)); }
+.decisionGrid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin:4px 0 10px; }
+.decisionCard { position:relative; border:1px solid var(--grid); border-radius:8px; padding:10px 12px; min-width:0; background:var(--plane); }
+.decisionCard.commit { border-color:color-mix(in srgb, var(--s2) 70%, var(--border)); background:color-mix(in srgb, var(--surface) 88%, var(--s2) 12%); }
+.decisionCard.commit::before { content:"当前"; position:absolute; right:10px; top:9px; color:var(--s2); font-size:12px; font-weight:950; }
 .decisionLabel { color:var(--muted); font-size:13px; font-weight:900; }
 .decisionValue { color:var(--ink); font-size:18px; font-weight:950; margin-top:3px; overflow-wrap:anywhere; }
 .decisionNote { color:var(--ink2); font-size:13px; margin-top:3px; overflow-wrap:anywhere; }
-.forecastStrip { margin:4px 0 8px; padding:9px 11px; border:1px solid var(--border); border-radius:10px; font-size:16px; font-weight:900; overflow-wrap:anywhere; }
-.forecastStrip.green { color:var(--ink2); background:color-mix(in srgb, var(--surface) 88%, var(--s2) 12%); border-color:color-mix(in srgb, var(--s2) 55%, var(--border)); }
-.forecastStrip.yellow { color:#241a00; background:color-mix(in srgb, var(--s3) 72%, #fff 28%); border-color:var(--s3); }
-.forecastStrip.red { color:#fff; background:var(--s6); border-color:var(--s6); }
+.commandPanel { margin:4px 0 10px; padding:13px; border:1px solid color-mix(in srgb, var(--s2) 58%, var(--border)); border-left:6px solid var(--s2); border-radius:8px; background:color-mix(in srgb, var(--surface) 93%, var(--s2) 7%); }
+.commandPanel.yellow { border-color:color-mix(in srgb, var(--s3) 66%, var(--border)); border-left-color:var(--s3); background:color-mix(in srgb, var(--surface) 92%, var(--s3) 8%); }
+.commandPanel.red { border-color:color-mix(in srgb, var(--s6) 66%, var(--border)); border-left-color:var(--s6); background:color-mix(in srgb, var(--surface) 93%, var(--s6) 7%); }
+.commandHead { display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:10px; align-items:center; }
+.commandStatus { min-height:30px; display:inline-flex; align-items:center; border-radius:999px; padding:3px 11px; color:#fff; background:var(--s2); font-size:14px; font-weight:950; white-space:nowrap; }
+.commandPanel.yellow .commandStatus { color:#211800; background:var(--s3); }
+.commandPanel.red .commandStatus { background:var(--s6); }
+.commandTitle { min-width:0; color:var(--ink); font-size:25px; line-height:1.2; font-weight:950; overflow-wrap:anywhere; }
+.commandScore { color:var(--s2); font-size:29px; font-weight:950; white-space:nowrap; }
+.commandReason { margin-top:7px; color:var(--ink2); font-size:15px; font-weight:800; overflow-wrap:anywhere; }
+.commandGrid { display:grid; grid-template-columns:1.15fr .75fr 1fr 1fr; gap:8px; margin-top:11px; }
+.commandCell { min-width:0; min-height:88px; border:1px solid var(--grid); border-radius:8px; padding:9px 10px; background:var(--surface); }
+.commandCell.primary { border-color:color-mix(in srgb, var(--s2) 62%, var(--border)); box-shadow:inset 3px 0 0 var(--s2); }
+.commandCell.switch { border-color:color-mix(in srgb, var(--s3) 58%, var(--border)); }
+.commandCell.stay { border-color:color-mix(in srgb, var(--s1) 45%, var(--border)); }
+.commandStep { color:var(--muted); font-size:12px; font-weight:950; }
+.commandValue { margin-top:4px; color:var(--ink); font-size:17px; line-height:1.36; font-weight:900; overflow-wrap:anywhere; }
+.keyFlags { display:flex; flex-wrap:wrap; gap:7px; margin-top:9px; }
+.keyFlag { min-width:0; max-width:100%; border:1px solid var(--border); border-radius:999px; padding:4px 10px; color:var(--ink2); background:var(--surface); font-size:13px; font-weight:850; overflow-wrap:anywhere; }
+.keyFlag.green { color:var(--s2); border-color:color-mix(in srgb, var(--s2) 58%, var(--border)); }
+.keyFlag.yellow { color:color-mix(in srgb, var(--s3) 76%, var(--ink)); border-color:color-mix(in srgb, var(--s3) 60%, var(--border)); }
+.keyFlag.red { color:var(--s6); border-color:color-mix(in srgb, var(--s6) 62%, var(--border)); }
+.keyFlag.event { color:var(--s5); border-color:color-mix(in srgb, var(--s5) 58%, var(--border)); }
+.supportActions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin:8px 0; }
+.supportAction { min-width:0; border-left:4px solid var(--s2); border-radius:8px; padding:8px 11px; background:color-mix(in srgb, var(--surface) 90%, var(--s2) 10%); color:var(--ink); font-size:16px; font-weight:850; overflow-wrap:anywhere; }
+.modelEvidence { margin-top:9px; border:1px solid var(--grid); border-radius:8px; background:var(--plane); overflow:hidden; cursor:default; }
+.modelEvidence > summary { min-height:46px; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:9px 12px; color:var(--ink); cursor:pointer; font-size:16px; font-weight:950; list-style:none; }
+.modelEvidence > summary::-webkit-details-marker { display:none; }
+.modelEvidence > summary::after { content:"展开"; color:var(--s2); font-size:13px; }
+.modelEvidence[open] > summary::after { content:"收起"; }
+.evidenceSummary { color:var(--muted); font-size:13px; font-weight:800; text-align:right; }
+.evidenceBody { padding:0 12px 12px; border-top:1px solid var(--grid); }
+.compactRank { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:10px; align-items:center; margin-top:10px; }
+.compactRoute { color:var(--ink); font-size:19px; font-weight:950; overflow-wrap:anywhere; }
+.compactScore { color:var(--s2); font-size:22px; font-weight:950; white-space:nowrap; }
 .portfolioLine { color:var(--ink2); font-size:14px; font-weight:800; margin:-2px 0 8px; overflow-wrap:anywhere; }
 .lockBtn { min-height:34px; margin-top:7px; border:1px solid var(--s2); border-radius:8px; background:transparent; color:var(--s2); padding:3px 9px; cursor:pointer; font-size:14px; font-weight:900; }
 .lockBtn.on { background:var(--s2); color:#fff; }
@@ -188,8 +220,18 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
   .routeView, .augView { min-height:520px; overflow:auto; }
   .rankTop, .augCards { grid-template-columns:1fr; }
   .decisionGrid { grid-template-columns:1fr; }
+  .commandHead { grid-template-columns:auto minmax(0,1fr); }
+  .commandScore { grid-column:2; font-size:24px; }
+  .commandGrid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .supportActions { grid-template-columns:1fr; }
   .routeName { font-size:28px; }
   .stageGrid { grid-template-columns:1fr; }
+}
+@media (max-width: 560px) {
+  .commandGrid { grid-template-columns:1fr; }
+  .commandCell { min-height:0; }
+  .commandTitle { font-size:21px; }
+  .evidenceSummary { display:none; }
 }
 </style>
 </head>
@@ -1238,8 +1280,26 @@ function renderRoute() {
     : "继续观察";
   const forecast = decision.forecast || null;
   const warning = forecast && forecast.warning;
-  const forecastHtml = warning
-    ? `<div class="forecastStrip ${esc(warning.severity || "green")}">前瞻${warning.severity === "red" ? "止损" : warning.severity === "yellow" ? "预警" : "观察"} · ${esc(warning.text)}<br>现在：${esc(forecast.action || "继续观察")}<br>下次检查：${esc(forecast.nextCheck || warning.deadline)} · 转：${esc(forecast.switchCondition || forecast.trigger || "条件满足再转")}<br>不转：${esc(forecast.stayCondition || "条件未满足就保留当前板")}</div>`
+  const severity = warning && warning.severity ? warning.severity : "green";
+  const commandStatus = severity === "red" ? "立即止损" : severity === "yellow" ? "准备转型" : "继续观察";
+  const commandAction = forecast && forecast.action ? forecast.action : (actions[0] || "保持当前最强板");
+  const commandCheck = forecast && (forecast.nextCheck || (warning && warning.deadline))
+    ? (forecast.nextCheck || warning.deadline)
+    : "下一阶段或关键资产变化时";
+  const commandSwitch = forecast && (forecast.switchCondition || forecast.trigger)
+    ? (forecast.switchCondition || forecast.trigger)
+    : "关键棋子、装备或强化形成闭环";
+  const commandStay = forecast && forecast.stayCondition
+    ? forecast.stayCondition
+    : "转型条件未满足就保留当前板";
+  const commandReason = warning && warning.text ? warning.text : (decision.text || "按当前资产继续执行，等待新信号重算");
+  const primaryActionTexts = [commandAction, commandSwitch, commandStay, execution.heroAugment && execution.heroAugment.text].filter(Boolean);
+  const supportActions = actions.filter(action => !primaryActionTexts.some(primary => action === primary || action.includes(primary) || primary.includes(action))).slice(0, 2);
+  const riskFlag = af
+    ? `<span class="keyFlag ${esc(af.status)}">${esc(af.label)} · 核心度${af.readyPct}% · ${esc(af.bottleneckText)}</span>`
+    : "";
+  const heroFlag = execution.heroAugment
+    ? `<span class="keyFlag event">强化事件 · ${esc(execution.heroAugment.text)}</span>`
     : "";
   const portfolioHtml = forecast && Array.isArray(forecast.portfolio)
     ? `<div class="portfolioLine">路线组合：${forecast.portfolio.map(row => `${esc(row.role)} ${esc(row.family || row.name)}`).join(" → ")}</div>`
@@ -1252,36 +1312,70 @@ function renderRoute() {
           <div class="decisionValue">${esc(currentUnitsText)}</div>
           <div class="decisionNote">当前强度 ${currentStrength}；承接参考：${esc(currentName)}</div>
         </div>
-        <div class="decisionCard">
-          <div class="decisionLabel">终局最高上限</div>
-          <div class="decisionValue">${esc(strategicName)}</div>
-          <div class="decisionNote">前四价值 ${top4Value}；吃鸡上限 ${top1Value}<br>战略主C：${esc(strategicCarry)}</div>
-        </div>
         <div class="decisionCard commit">
           <div class="decisionLabel">现在执行</div>
           <div class="decisionValue">${esc(executionConclusion)}</div>
           <div class="decisionNote">${esc(statusText)}；${esc(decision.text || "暂不定线")}<br>${esc(commitmentFormula)}</div>
           <button class="lockBtn ${manualLockId ? "on" : ""}" id="routeLockBtn" ${lockDisabled && !manualLockId ? "disabled" : ""}>${lockLabel}</button>
         </div>
+        <div class="decisionCard">
+          <div class="decisionLabel">终局最高上限</div>
+          <div class="decisionValue">${esc(strategicName)}</div>
+          <div class="decisionNote">前四价值 ${top4Value}；吃鸡上限 ${top1Value}<br>战略主C：${esc(strategicCarry)}</div>
+        </div>
       </div>
-      ${forecastHtml}
-      ${portfolioHtml}
-      <div class="rankTop">
-        <div class="routeName">${esc(actionTitle)}</div>
-        <div class="routePoints">${executionScore}分</div>
+      <div class="commandPanel ${esc(severity)}">
+        <div class="commandHead">
+          <span class="commandStatus">${esc(commandStatus)}</span>
+          <div class="commandTitle">${esc(actionTitle)}</div>
+          <div class="commandScore">${executionScore}分</div>
+        </div>
+        <div class="commandReason">判断：${esc(commandReason)}</div>
+        <div class="commandGrid">
+          <div class="commandCell primary">
+            <div class="commandStep">1 · 现在做</div>
+            <div class="commandValue">${esc(commandAction)}</div>
+          </div>
+          <div class="commandCell">
+            <div class="commandStep">2 · 下次检查</div>
+            <div class="commandValue">${esc(commandCheck)}</div>
+          </div>
+          <div class="commandCell switch">
+            <div class="commandStep">3 · 满足才转</div>
+            <div class="commandValue">${esc(commandSwitch)}</div>
+          </div>
+          <div class="commandCell stay">
+            <div class="commandStep">4 · 这些情况不转</div>
+            <div class="commandValue">${esc(commandStay)}</div>
+          </div>
+        </div>
+        <div class="keyFlags">${riskFlag}${heroFlag}</div>
+        ${portfolioHtml}
       </div>
-      <div class="subRank">真分榜（按 score） ${esc(strategicText)} ｜ #1领先#2 ${delta}分</div>
       <div class="openHint">点击查看前期 / 中期 / 后期阵容</div>
-      ${heroAugmentHtml(execution)}
-      ${strategyHtml}
-      ${gateHtml}
-      ${sampleHtml}
-      <div class="strengthBreak">${esc(breakLine)}</div>
-      ${evidenceLine ? `<div class="evidenceLine">证据：${esc(evidenceLine)}</div>` : ""}
-      ${reachHtml(execution)}
-      ${MatcherCore.signalTowerHtml(execution).replaceAll("s2SignalTower", "meta").replaceAll("s2Signal", "metric")}
+      ${supportActions.length ? `<div class="supportActions">${supportActions.map(action => `<div class="supportAction">补充动作 · ${esc(action)}</div>`).join("")}</div>` : ""}
+      <details class="modelEvidence">
+        <summary>
+          <span>模型依据</span>
+          <span class="evidenceSummary">真分榜 · 强化结算 · 瓶颈 · 虚拟实战 · 公式</span>
+        </summary>
+        <div class="evidenceBody">
+          <div class="compactRank">
+            <div class="compactRoute">${esc(executionName)}</div>
+            <div class="compactScore">${executionScore}分</div>
+          </div>
+          <div class="subRank">真分榜 ${esc(strategicText)} ｜ #1领先#2 ${delta}分</div>
+          ${heroAugmentHtml(execution)}
+          ${strategyHtml}
+          ${gateHtml}
+          ${sampleHtml}
+          <div class="strengthBreak">${esc(breakLine)}</div>
+          ${evidenceLine ? `<div class="evidenceLine">证据：${esc(evidenceLine)}</div>` : ""}
+          ${reachHtml(execution)}
+          ${MatcherCore.signalTowerHtml(execution).replaceAll("s2SignalTower", "meta").replaceAll("s2Signal", "metric")}
+        </div>
+      </details>
     </div>
-    <div class="actions">${actions.map(x => `<div class="action">${esc(x)}</div>`).join("")}</div>
     <div></div>
     ${unheardHtml()}
   `;
@@ -1387,11 +1481,12 @@ $("submitInput").addEventListener("click", () => {
   focusInput();
 });
 $("routeView").addEventListener("click", ev => {
-  if (ev.target.closest("button,a,input,textarea,select")) return;
+  if (ev.target.closest("button,a,input,textarea,select,details,summary")) return;
   openRouteDetail(lastDetailRow);
 });
 $("routeView").addEventListener("keydown", ev => {
   if (ev.key !== "Enter" && ev.key !== " ") return;
+  if (ev.target.closest("button,a,input,textarea,select,details,summary")) return;
   ev.preventDefault();
   openRouteDetail(lastDetailRow);
 });
