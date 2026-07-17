@@ -2090,6 +2090,98 @@
     return `维持${target.template.name}，金币优先换场上质量，不追无关三星`;
   }
 
+  function pivotTriggerForRow(row, selected) {
+    const heldUnits = new Map(normalizeSelectedUnits(selected.units || []).map(unit => [unit.name, unit]));
+    const heldItems = new Set(normalizeSelectedItems(selected).map(item => item.name));
+    const carry = carryName(row);
+    const carryCost = routeUnitCost(row.template, carry);
+    const carryHeld = heldUnits.get(carry);
+    const requiredStar = carryCost >= 4 ? 1 : 2;
+    let unitTrigger = "";
+    if (!carryHeld) {
+      unitTrigger = carryCost >= 4 ? `刷到${carry}1张` : `刷到${carry}并能做成2星`;
+    } else if ((Number(carryHeld.star) || 1) < requiredStar) {
+      unitTrigger = `${carry}升到${requiredStar}星`;
+    } else {
+      const support = (profile(row.template).units || [])
+        .filter(unit => unit && unit.name && unit.name !== carry && !heldUnits.has(unit.name))
+        .sort((a, b) => routeUnitCost(row.template, b.name) - routeUnitCost(row.template, a.name)
+          || stableCompare(a.name, b.name))[0];
+      unitTrigger = support ? `刷到${support.name}补齐关键位` : `${carry}核心牌已到`;
+    }
+    const carryItems = ((profile(row.template).mainCarry || {}).items || []).map(canonicalItem).filter(Boolean);
+    const missingItems = carryItems.filter(item => !heldItems.has(item)).slice(0, 2);
+    const itemTrigger = missingItems.length ? `还需${missingItems.join("或")}` : "核心装备条件已满足";
+    return { carry, carryCost, requiredStar, unitTrigger, itemTrigger };
+  }
+
+  function lateRerollInfeasible(row, selected, stageKey) {
+    if (stageKey === "1-5") return false;
+    const carry = carryName(row);
+    const carryCost = routeUnitCost(row.template, carry);
+    const starTarget = Number((profile(row.template).mainCarry || {}).starTarget) || 2;
+    if (carryCost > 2 || starTarget < 3) return false;
+    const held = normalizeSelectedUnits(selected.units || []).find(unit => unit.name === carry);
+    return !held || (Number(held.star) || 1) < 2;
+  }
+
+  function buildPivotOptions(rows, planningBase, selected, stageKey, currentLate) {
+    const explicitIds = new Set(((planningBase.template.forwardPlan && planningBase.template.forwardPlan.pivots
+      && planningBase.template.forwardPlan.pivots[stageKey]) || []).map(pivot => pivot.targetId));
+    const basePlanning = Number(planningBase.planning && planningBase.planning.value) || 0;
+    const candidates = rows.filter(row => rowId(row) !== rowId(planningBase)
+      && !row.mechanicBlocked
+      && !row.template.forwardPlan?.falseCeiling)
+      .map(row => {
+        const transition = staticTransitionCost(planningBase, row, stageKey);
+        const late = Number(forwardMetric(row, "8-9").calibratedScore) || 0;
+        const next = Number(forwardMetric(row, nextForwardStage(stageKey)).calibratedScore) || 0;
+        const explicit = explicitIds.has(rowId(row));
+        const lateRerollBlocked = lateRerollInfeasible(row, selected, stageKey);
+        const planningGain = roundNumber((Number(row.planning && row.planning.value) || 0) - basePlanning, 1);
+        return {
+          row,
+          transition,
+          late,
+          next,
+          explicit,
+          lateRerollBlocked,
+          planningGain,
+          lateGain: roundNumber(late - currentLate, 1),
+          branchValue: roundNumber(late + next * 0.35 - transition.cost * FORWARD_MODEL.futureTransitionPenalty + (explicit ? 8 : 0), 1),
+        };
+      })
+      .filter(candidate => !candidate.lateRerollBlocked
+        && candidate.lateGain >= 8
+        && candidate.transition.cost <= FORWARD_MODEL.futureTransitionCap
+        && candidate.transition.compatibility >= FORWARD_MODEL.futureCompatibilityFloor)
+      .sort((a, b) => b.branchValue - a.branchValue
+        || b.lateGain - a.lateGain
+        || stableCompare(a.row.template.name, b.row.template.name));
+    const uniqueFamilies = [];
+    const seenFamilies = new Set();
+    candidates.forEach(candidate => {
+      const family = rowFamily(candidate.row);
+      if (seenFamilies.has(family) || uniqueFamilies.length >= 3) return;
+      seenFamilies.add(family);
+      const trigger = pivotTriggerForRow(candidate.row, selected);
+      uniqueFamilies.push({
+        id: rowId(candidate.row),
+        name: candidate.row.template.name,
+        family,
+        carry: trigger.carry,
+        unitTrigger: trigger.unitTrigger,
+        itemTrigger: trigger.itemTrigger,
+        planningGain: candidate.planningGain,
+        lateGain: candidate.lateGain,
+        transitionCost: roundNumber(candidate.transition.cost, 1),
+        compatibility: roundNumber(candidate.transition.compatibility * 100, 0),
+        source: candidate.explicit ? "模型预演分支" : "全库兼容搜索",
+      });
+    });
+    return uniqueFamilies;
+  }
+
   function buildForwardWarning(current, target, selected) {
     const plan = current.template && current.template.forwardPlan;
     const stageKey = forwardStageKey(selected.level);
@@ -2112,7 +2204,7 @@
   function buildRollingPlan(rows, current, strategic, selected) {
     const stageKey = forwardStageKey(selected.level);
     rows.forEach(row => { row.planning = planningScore(row, current, selected, stageKey, rows); });
-    const futureCandidates = rows.filter(row => !row.mechanicBlocked).sort((a, b) => b.planning.value - a.planning.value
+    const futureCandidates = rows.filter(row => !row.mechanicBlocked && !lateRerollInfeasible(row, selected, stageKey)).sort((a, b) => b.planning.value - a.planning.value
       || rowSortScore(b) - rowSortScore(a)
       || stableCompare(a.template.name, b.template.name));
     const executableCandidates = futureCandidates.filter(row => row.feasible || row.committed);
@@ -2136,12 +2228,13 @@
     const pivotRows = (planningBase.template.forwardPlan && planningBase.template.forwardPlan.pivots
       && planningBase.template.forwardPlan.pivots[stageKey] || [])
       .map(pivot => rows.find(row => rowId(row) === pivot.targetId))
-      .filter(row => row && !row.mechanicBlocked);
+      .filter(row => row && !row.mechanicBlocked && !lateRerollInfeasible(row, selected, stageKey));
     const bridge = pivotRows.find(row => Number(row.planning && row.planning.transitionCost) <= 75
       && !row.template.forwardPlan?.falseCeiling
       && (Number(forwardMetric(row, "8-9").calibratedScore) || 0) >= currentLate + 12);
     const genericFuture = rows.filter(row => rowId(row) !== rowId(planningBase)
       && !row.mechanicBlocked
+      && !lateRerollInfeasible(row, selected, stageKey)
       && !row.template.forwardPlan?.falseCeiling)
       .map(row => {
         const transition = staticTransitionCost(planningBase, row, stageKey);
@@ -2162,6 +2255,7 @@
     const futureTarget = stageKey === "8-9" ? planningBase : bridge || genericFuture || planningBase;
     const warningTarget = futureTarget;
     const warning = buildForwardWarning(planningBase, warningTarget, selected);
+    const pivotOptions = stageKey === "8-9" ? [] : buildPivotOptions(rows, planningBase, selected, stageKey, currentLate);
     const portfolioRows = [current, planningBase, bridge || futureTarget, strategic].filter(Boolean)
       .filter((row, index, all) => all.findIndex(other => rowId(other) === rowId(row)) === index);
     const warningCarry = carryName(warningTarget);
@@ -2185,6 +2279,7 @@
       nextCheck: warning.deadline,
       stayCondition: `当前板仍能稳血，或${warningCarry}与关键装未同时出现，就不拆板`,
       switchCondition: trigger,
+      pivotOptions,
       portfolio: portfolioRows.map((row, index) => ({
         role: index === 0 ? "保血" : index === portfolioRows.length - 1 ? "上限" : "可转",
         id: rowId(row),
@@ -2319,6 +2414,7 @@
       nextCheck: rolling.nextCheck,
       stayCondition: rolling.stayCondition,
       switchCondition: rolling.switchCondition,
+      pivotOptions: rolling.pivotOptions,
       portfolio: rolling.portfolio,
       formula: `Q=${rolling.target.planning.current}×${FORWARD_MODEL.currentWeight}+${rolling.target.planning.next}×${FORWARD_MODEL.nextWeight}+${rolling.target.planning.terminal}×${FORWARD_MODEL.terminalWeight}-转型${rolling.target.planning.transitionCost}×${FORWARD_MODEL.transitionPenalty}-沉没${rolling.target.planning.sunkCost}×${FORWARD_MODEL.sunkAssetPenalty}-资源${rolling.target.planning.resourcePenalty}-尾险${rolling.target.planning.tailRisk}+期权${rolling.target.planning.optionValue}+连续性${rolling.target.planning.commitmentCredit}=${rolling.target.planning.value}`,
     } : null;
@@ -3166,9 +3262,32 @@
       && /转型条件|止损条件/.test(forecastRows.decision.forecast.switchCondition)
       && forecastRows.decision.forecast.stayCondition.includes("不拆板"),
     "前瞻必须同时输出转与不转的确定条件");
+    assert(forecastRows.decision.forecast.pivotOptions.length === 1
+      && forecastRows.decision.forecast.pivotOptions[0].id === "兼容登顶转型线"
+      && forecastRows.decision.forecast.pivotOptions[0].unitTrigger.includes("Q")
+      && forecastRows.decision.forecast.pivotOptions[0].name === "兼容登顶转型线",
+    "前瞻必须把候选路线展开为‘刷到什么→转什么’的确定性分支");
     const lockedForecast = rank([forecastLow, forecastCap], selectedFromSignals(forecastSignals), fallbackWeights, 2, { operationalCommitment: true, manualLockId: "前强后弱预警线", unitPrices: { P: 1, Q: 4 } });
     assert(lockedForecast.decision.status === "manual" && lockedForecast.decision.executionId === "前强后弱预警线", "手动锁定仍是滚动规划唯一绝对锁");
     assertNoBadNumbers(JSON.stringify(forecastRows.decision), "滚动前瞻不得输出999/Infinity/NaN");
+    const lateBase = outcomeTemplate("七级保血线", 90, 22, { top1Rate: 1, topQuartileRate: 70, robustness: 70, failureRate: 8 }, "P", 1, 78, 18);
+    lateBase.forwardPlan = {
+      falseCeiling: true, steepDrop: true, warningStage: "4-5",
+      stages: { "1-5": { calibratedScore: 88, cvar10: -0.2 }, "6-7": { calibratedScore: 58, cvar10: -0.5 }, "8-9": { calibratedScore: 22, cvar10: -0.8 } },
+      pivots: { "1-5": [], "6-7": [{ targetId: "迟到赌低费", optionValue: 90 }] },
+    };
+    const lateReroll = outcomeTemplate("迟到赌低费", 42, 94, { top1Rate: 70, topQuartileRate: 82, robustness: 80, failureRate: 2 }, "R", 2, 70, 92);
+    lateReroll.forwardPlan = {
+      falseCeiling: false, steepDrop: false, warningStage: "4-5",
+      stages: { "1-5": { calibratedScore: 48, cvar10: -0.4 }, "6-7": { calibratedScore: 80, cvar10: -0.2 }, "8-9": { calibratedScore: 94, cvar10: -0.1 } },
+      pivots: { "1-5": [], "6-7": [] },
+    };
+    const lateRerollRows = rank([lateBase, lateReroll], selectedFromSignals([
+      { kind: "levels", level: 7 }, { kind: "stage", value: "4-1" }, { kind: "units", value: "P", star: 2 },
+    ]), fallbackWeights, 2, { operationalCommitment: true, unitPrices: { P: 1, R: 2 } });
+    assert(lateRerollRows.decision.forecast.targetId !== "迟到赌低费"
+      && !lateRerollRows.decision.forecast.pivotOptions.some(option => option.id === "迟到赌低费"),
+    "6级后未持有两星低费主C时，赌三星分支不得再进入转型目标或刷牌分岔");
     const virtualBase = id => ({ id, name: id, quality: "S", coreUnits: [], earlyUnits: [], midUnits: [], actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 1, items: [] }, units: [], items: [], activeTraits: [] } });
     const virtualHigh = { ...virtualBase("稳健"), virtualBattle: { battles: 708, winRate: 82, robustScore: 90, cvar10: -0.1, interval90: [-0.2, 0.8], coverage: 100, unsupported: [] } };
     const virtualLow = { ...virtualBase("敏感"), virtualBattle: { battles: 708, winRate: 22, robustScore: 20, cvar10: -0.8, interval90: [-0.9, 0.2], coverage: 100, unsupported: [] } };

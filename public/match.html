@@ -92,17 +92,24 @@ button, input { font:inherit; }
 .decisionLabel { color:var(--muted); font-size:13px; font-weight:900; }
 .decisionValue { color:var(--ink); font-size:18px; font-weight:950; margin-top:3px; overflow-wrap:anywhere; }
 .decisionNote { color:var(--ink2); font-size:13px; margin-top:3px; overflow-wrap:anywhere; }
+.routeFlow { display:grid; grid-template-columns:minmax(0,1fr) 54px minmax(0,1fr) 54px minmax(0,1fr); gap:0; align-items:stretch; margin:4px 0 10px; }
+.flowNode { min-width:0; min-height:116px; border:1px solid var(--grid); border-radius:8px; padding:11px 12px; background:var(--plane); }
+.flowNode.active { border-color:color-mix(in srgb, var(--s2) 68%, var(--border)); background:color-mix(in srgb, var(--surface) 89%, var(--s2) 11%); }
+.flowNode.active.red { border-color:color-mix(in srgb, var(--s6) 70%, var(--border)); background:color-mix(in srgb, var(--surface) 92%, var(--s6) 8%); }
+.flowNode.active.yellow { border-color:color-mix(in srgb, var(--s3) 68%, var(--border)); background:color-mix(in srgb, var(--surface) 91%, var(--s3) 9%); }
+.flowKicker { display:flex; align-items:center; justify-content:space-between; gap:8px; color:var(--muted); font-size:12px; font-weight:950; }
+.flowBadge { border-radius:999px; padding:2px 8px; color:#fff; background:var(--s2); font-size:11px; white-space:nowrap; }
+.flowNode.red .flowBadge { background:var(--s6); }
+.flowNode.yellow .flowBadge { color:#211800; background:var(--s3); }
+.flowTitle { margin-top:5px; color:var(--ink); font-size:18px; line-height:1.35; font-weight:950; overflow-wrap:anywhere; }
+.flowMeta { margin-top:5px; color:var(--ink2); font-size:13px; overflow-wrap:anywhere; }
+.flowArrow { display:grid; place-content:center; justify-items:center; color:var(--muted); }
+.flowArrow b { font-size:25px; line-height:1; color:var(--s2); }
+.flowArrow small { margin-top:5px; font-size:11px; font-weight:900; }
 .commandPanel { margin:4px 0 10px; padding:13px; border:1px solid color-mix(in srgb, var(--s2) 58%, var(--border)); border-left:6px solid var(--s2); border-radius:8px; background:color-mix(in srgb, var(--surface) 93%, var(--s2) 7%); }
 .commandPanel.yellow { border-color:color-mix(in srgb, var(--s3) 66%, var(--border)); border-left-color:var(--s3); background:color-mix(in srgb, var(--surface) 92%, var(--s3) 8%); }
 .commandPanel.red { border-color:color-mix(in srgb, var(--s6) 66%, var(--border)); border-left-color:var(--s6); background:color-mix(in srgb, var(--surface) 93%, var(--s6) 7%); }
-.commandHead { display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:10px; align-items:center; }
-.commandStatus { min-height:30px; display:inline-flex; align-items:center; border-radius:999px; padding:3px 11px; color:#fff; background:var(--s2); font-size:14px; font-weight:950; white-space:nowrap; }
-.commandPanel.yellow .commandStatus { color:#211800; background:var(--s3); }
-.commandPanel.red .commandStatus { background:var(--s6); }
-.commandTitle { min-width:0; color:var(--ink); font-size:25px; line-height:1.2; font-weight:950; overflow-wrap:anywhere; }
-.commandScore { color:var(--s2); font-size:29px; font-weight:950; white-space:nowrap; }
-.commandReason { margin-top:7px; color:var(--ink2); font-size:15px; font-weight:800; overflow-wrap:anywhere; }
-.commandGrid { display:grid; grid-template-columns:1.15fr .75fr 1fr 1fr; gap:8px; margin-top:11px; }
+.commandGrid { display:grid; grid-template-columns:1.3fr .55fr 1fr; gap:8px; margin-top:11px; }
 .commandCell { min-width:0; min-height:88px; border:1px solid var(--grid); border-radius:8px; padding:9px 10px; background:var(--surface); }
 .commandCell.primary { border-color:color-mix(in srgb, var(--s2) 62%, var(--border)); box-shadow:inset 3px 0 0 var(--s2); }
 .commandCell.switch { border-color:color-mix(in srgb, var(--s3) 58%, var(--border)); }
@@ -115,6 +122,31 @@ button, input { font:inherit; }
 .keyFlag.yellow { color:color-mix(in srgb, var(--s3) 76%, var(--ink)); border-color:color-mix(in srgb, var(--s3) 60%, var(--border)); }
 .keyFlag.red { color:var(--s6); border-color:color-mix(in srgb, var(--s6) 62%, var(--border)); }
 .keyFlag.event { color:var(--s5); border-color:color-mix(in srgb, var(--s5) 58%, var(--border)); }
+.pivotSection { margin-top:11px; border-top:1px solid color-mix(in srgb, var(--ink) 10%, transparent); padding-top:10px; }
+.pivotHead { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:8px; }
+.pivotTitle { color:var(--ink); font-size:17px; font-weight:950; }
+.pivotHint { color:var(--muted); font-size:12px; font-weight:800; text-align:right; }
+.pivotMap { display:grid; grid-template-columns:180px 34px minmax(0,1fr); gap:8px; align-items:stretch; }
+.pivotOrigin { display:grid; align-content:center; border:1px solid color-mix(in srgb, var(--s6) 58%, var(--border)); border-radius:8px; padding:10px 11px; background:var(--surface); }
+.pivotOrigin.green { border-color:color-mix(in srgb, var(--s2) 58%, var(--border)); }
+.pivotOrigin.yellow { border-color:color-mix(in srgb, var(--s3) 58%, var(--border)); }
+.pivotOriginLabel { color:var(--muted); font-size:12px; font-weight:950; }
+.pivotOriginValue { margin-top:4px; color:var(--ink); font-size:17px; font-weight:950; overflow-wrap:anywhere; }
+.pivotRail { position:relative; min-height:100%; }
+.pivotRail::before { content:""; position:absolute; left:0; right:0; top:50%; height:2px; background:color-mix(in srgb, var(--s2) 56%, var(--grid)); }
+.pivotRail::after { content:""; position:absolute; right:0; top:calc(50% - 5px); width:0; height:0; border-top:6px solid transparent; border-bottom:6px solid transparent; border-left:8px solid var(--s2); }
+.pivotBranches { display:grid; gap:7px; min-width:0; }
+.pivotBranch { display:grid; grid-template-columns:minmax(145px,.8fr) 26px minmax(190px,1.2fr) auto; gap:8px; align-items:center; min-width:0; border:1px solid var(--grid); border-radius:8px; padding:8px 10px; background:var(--surface); }
+.pivotBranch:first-child { border-color:color-mix(in srgb, var(--s2) 62%, var(--border)); }
+.pivotTrigger { min-width:0; }
+.pivotTrigger strong { display:block; color:var(--s2); font-size:16px; font-weight:950; overflow-wrap:anywhere; }
+.pivotTrigger small { display:block; margin-top:2px; color:var(--ink2); font-size:12px; overflow-wrap:anywhere; }
+.pivotGo { color:var(--s2); font-size:20px; font-weight:950; text-align:center; }
+.pivotTarget { min-width:0; color:var(--ink); font-size:16px; font-weight:950; overflow-wrap:anywhere; }
+.pivotTarget small { display:block; margin-top:2px; color:var(--muted); font-size:11px; font-weight:800; }
+.pivotMetrics { display:grid; justify-items:end; gap:2px; color:var(--ink2); font-size:11px; white-space:nowrap; }
+.pivotGain { color:var(--s2); font-size:13px; font-weight:950; }
+.noPivot { border:1px dashed var(--border); border-radius:8px; padding:10px 12px; color:var(--ink2); background:var(--surface); font-size:14px; font-weight:850; }
 .supportActions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin:8px 0; }
 .supportAction { min-width:0; border-left:4px solid var(--s2); border-radius:8px; padding:8px 11px; background:color-mix(in srgb, var(--surface) 90%, var(--s2) 10%); color:var(--ink); font-size:16px; font-weight:850; overflow-wrap:anywhere; }
 .modelEvidence { margin-top:9px; border:1px solid var(--grid); border-radius:8px; background:var(--plane); overflow:hidden; cursor:default; }
@@ -220,9 +252,18 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
   .routeView, .augView { min-height:520px; overflow:auto; }
   .rankTop, .augCards { grid-template-columns:1fr; }
   .decisionGrid { grid-template-columns:1fr; }
-  .commandHead { grid-template-columns:auto minmax(0,1fr); }
-  .commandScore { grid-column:2; font-size:24px; }
+  .routeFlow { grid-template-columns:1fr; gap:7px; }
+  .flowNode { min-height:0; }
+  .flowArrow { grid-template-columns:auto auto; gap:6px; padding:2px 0; }
+  .flowArrow b { transform:rotate(90deg); font-size:20px; }
+  .flowArrow small { margin:0; }
   .commandGrid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .commandCell.stay { grid-column:1 / -1; }
+  .pivotMap { grid-template-columns:1fr; }
+  .pivotRail { height:24px; min-height:24px; }
+  .pivotRail::before { left:50%; right:auto; top:0; bottom:0; width:2px; height:auto; }
+  .pivotRail::after { right:auto; left:calc(50% - 5px); top:auto; bottom:0; border-left:6px solid transparent; border-right:6px solid transparent; border-top:8px solid var(--s2); border-bottom:0; }
+  .pivotBranch { grid-template-columns:minmax(130px,.8fr) 24px minmax(170px,1.2fr) auto; }
   .supportActions { grid-template-columns:1fr; }
   .routeName { font-size:28px; }
   .stageGrid { grid-template-columns:1fr; }
@@ -230,7 +271,9 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
 @media (max-width: 560px) {
   .commandGrid { grid-template-columns:1fr; }
   .commandCell { min-height:0; }
-  .commandTitle { font-size:21px; }
+  .pivotBranch { grid-template-columns:1fr; }
+  .pivotGo { transform:rotate(90deg); }
+  .pivotMetrics { justify-items:start; grid-template-columns:repeat(3,auto); gap:8px; white-space:normal; }
   .evidenceSummary { display:none; }
 }
 </style>
@@ -1272,7 +1315,6 @@ function renderRoute() {
     routeId(execution) === routeId(current) ? currentStrength : null, rowScore(execution));
   const earlyExecutionTitle = currentUnits.length ? "当前过渡" : "观察";
   const executionConclusion = currentLevel <= 3 ? earlyExecutionTitle : `${executionFamily} · 主C${executionCarry}`;
-  const actionTitle = currentLevel <= 3 ? earlyExecutionTitle : `现在执行 · ${executionFamily} · 主C${executionCarry}`;
   const statusText = decision.status === "manual" ? "手动锁定"
     : decision.status === "committed" ? "模型定线"
     : decision.status === "pivoting" ? "执行转型"
@@ -1292,7 +1334,6 @@ function renderRoute() {
   const commandStay = forecast && forecast.stayCondition
     ? forecast.stayCondition
     : "转型条件未满足就保留当前板";
-  const commandReason = warning && warning.text ? warning.text : (decision.text || "按当前资产继续执行，等待新信号重算");
   const primaryActionTexts = [commandAction, commandSwitch, commandStay, execution.heroAugment && execution.heroAugment.text].filter(Boolean);
   const supportActions = actions.filter(action => !primaryActionTexts.some(primary => action === primary || action.includes(primary) || primary.includes(action))).slice(0, 2);
   const riskFlag = af
@@ -1301,36 +1342,61 @@ function renderRoute() {
   const heroFlag = execution.heroAugment
     ? `<span class="keyFlag event">强化事件 · ${esc(execution.heroAugment.text)}</span>`
     : "";
+  const flowStrategyTitle = severity === "red"
+    ? `止损过渡 · 不再追加${executionCarry}`
+    : severity === "yellow"
+      ? `保血等待分支 · ${executionFamily}`
+      : `继续执行 · ${executionConclusion}`;
+  const pivotOptions = forecast && Array.isArray(forecast.pivotOptions) ? forecast.pivotOptions : [];
+  const pivotHtml = pivotOptions.length
+    ? `<div class="pivotMap">
+        <div class="pivotOrigin ${esc(severity)}">
+          <div class="pivotOriginLabel">当前策略</div>
+          <div class="pivotOriginValue">${esc(severity === "red" ? "停止投入，只用现板保血" : severity === "yellow" ? "留经济，等待转型牌" : "继续执行，同时保留分支")}</div>
+        </div>
+        <div class="pivotRail" aria-hidden="true"></div>
+        <div class="pivotBranches">${pivotOptions.map((option, index) => `
+          <div class="pivotBranch">
+            <div class="pivotTrigger">
+              <strong>${esc(option.unitTrigger)}</strong>
+              <small>${esc(option.itemTrigger)}</small>
+            </div>
+            <div class="pivotGo">→</div>
+            <div class="pivotTarget">${esc(option.name)}<small>${esc(option.family)} · 主C${esc(option.carry)}</small></div>
+            <div class="pivotMetrics">
+              <span class="pivotGain">后期${Number(option.lateGain) >= 0 ? "+" : ""}${option.lateGain}</span>
+              <span>兼容${option.compatibility}%</span>
+              <span>成本${option.transitionCost}</span>
+            </div>
+          </div>`).join("")}</div>
+      </div>`
+    : `<div class="noPivot">当前没有通过模型兼容门槛的转型分支。新棋子或装备录入后会立即重算，不为未出现的牌预先拆板。</div>`;
   const portfolioHtml = forecast && Array.isArray(forecast.portfolio)
     ? `<div class="portfolioLine">路线组合：${forecast.portfolio.map(row => `${esc(row.role)} ${esc(row.family || row.name)}`).join(" → ")}</div>`
     : "";
   box.innerHTML = `
     <div>
-      <div class="decisionGrid">
-        <div class="decisionCard">
-          <div class="decisionLabel">当前最强板</div>
-          <div class="decisionValue">${esc(currentUnitsText)}</div>
-          <div class="decisionNote">当前强度 ${currentStrength}；承接参考：${esc(currentName)}</div>
+      <div class="routeFlow">
+        <div class="flowNode">
+          <div class="flowKicker"><span>当前上场</span><span>强度 ${currentStrength}</span></div>
+          <div class="flowTitle">${esc(currentUnitsText)}</div>
+          <div class="flowMeta">当前承接：${esc(currentName)}</div>
         </div>
-        <div class="decisionCard commit">
-          <div class="decisionLabel">现在执行</div>
-          <div class="decisionValue">${esc(executionConclusion)}</div>
-          <div class="decisionNote">${esc(statusText)}；${esc(decision.text || "暂不定线")}<br>${esc(commitmentFormula)}</div>
+        <div class="flowArrow"><b>→</b><small>现在</small></div>
+        <div class="flowNode active ${esc(severity)}">
+          <div class="flowKicker"><span>当前策略</span><span class="flowBadge">${esc(commandStatus)}</span></div>
+          <div class="flowTitle">${esc(flowStrategyTitle)}</div>
+          <div class="flowMeta">当前价值 ${executionScore} · ${esc(severity === "red" ? "停投但不立即拆板" : severity === "yellow" ? "等待触发再换线" : statusText)}</div>
           <button class="lockBtn ${manualLockId ? "on" : ""}" id="routeLockBtn" ${lockDisabled && !manualLockId ? "disabled" : ""}>${lockLabel}</button>
         </div>
-        <div class="decisionCard">
-          <div class="decisionLabel">终局最高上限</div>
-          <div class="decisionValue">${esc(strategicName)}</div>
-          <div class="decisionNote">前四价值 ${top4Value}；吃鸡上限 ${top1Value}<br>战略主C：${esc(strategicCarry)}</div>
+        <div class="flowArrow"><b>→</b><small>有条件</small></div>
+        <div class="flowNode">
+          <div class="flowKicker"><span>终局上限</span><span>吃鸡 ${top1Value}</span></div>
+          <div class="flowTitle">${esc(strategicName)}</div>
+          <div class="flowMeta">前四价值 ${top4Value} · 主C${esc(strategicCarry)}</div>
         </div>
       </div>
       <div class="commandPanel ${esc(severity)}">
-        <div class="commandHead">
-          <span class="commandStatus">${esc(commandStatus)}</span>
-          <div class="commandTitle">${esc(actionTitle)}</div>
-          <div class="commandScore">${executionScore}分</div>
-        </div>
-        <div class="commandReason">判断：${esc(commandReason)}</div>
         <div class="commandGrid">
           <div class="commandCell primary">
             <div class="commandStep">1 · 现在做</div>
@@ -1340,17 +1406,19 @@ function renderRoute() {
             <div class="commandStep">2 · 下次检查</div>
             <div class="commandValue">${esc(commandCheck)}</div>
           </div>
-          <div class="commandCell switch">
-            <div class="commandStep">3 · 满足才转</div>
-            <div class="commandValue">${esc(commandSwitch)}</div>
-          </div>
           <div class="commandCell stay">
-            <div class="commandStep">4 · 这些情况不转</div>
+            <div class="commandStep">3 · 不转底线</div>
             <div class="commandValue">${esc(commandStay)}</div>
           </div>
         </div>
         <div class="keyFlags">${riskFlag}${heroFlag}</div>
-        ${portfolioHtml}
+        <div class="pivotSection">
+          <div class="pivotHead">
+            <div class="pivotTitle">刷牌分岔：看到什么，转什么</div>
+            <div class="pivotHint">先留牌；棋子与装备门槛同时满足后再换线</div>
+          </div>
+          ${pivotHtml}
+        </div>
       </div>
       <div class="openHint">点击查看前期 / 中期 / 后期阵容</div>
       ${supportActions.length ? `<div class="supportActions">${supportActions.map(action => `<div class="supportAction">补充动作 · ${esc(action)}</div>`).join("")}</div>` : ""}
@@ -1365,6 +1433,7 @@ function renderRoute() {
             <div class="compactScore">${executionScore}分</div>
           </div>
           <div class="subRank">真分榜 ${esc(strategicText)} ｜ #1领先#2 ${delta}分</div>
+          ${portfolioHtml}
           ${heroAugmentHtml(execution)}
           ${strategyHtml}
           ${gateHtml}
