@@ -91,6 +91,11 @@ button, input { font:inherit; }
 .decisionLabel { color:var(--muted); font-size:13px; font-weight:900; }
 .decisionValue { color:var(--ink); font-size:18px; font-weight:950; margin-top:3px; overflow-wrap:anywhere; }
 .decisionNote { color:var(--ink2); font-size:13px; margin-top:3px; overflow-wrap:anywhere; }
+.forecastStrip { margin:4px 0 8px; padding:9px 11px; border:1px solid var(--border); border-radius:10px; font-size:16px; font-weight:900; overflow-wrap:anywhere; }
+.forecastStrip.green { color:var(--ink2); background:color-mix(in srgb, var(--surface) 88%, var(--s2) 12%); border-color:color-mix(in srgb, var(--s2) 55%, var(--border)); }
+.forecastStrip.yellow { color:#241a00; background:color-mix(in srgb, var(--s3) 72%, #fff 28%); border-color:var(--s3); }
+.forecastStrip.red { color:#fff; background:var(--s6); border-color:var(--s6); }
+.portfolioLine { color:var(--ink2); font-size:14px; font-weight:800; margin:-2px 0 8px; overflow-wrap:anywhere; }
 .lockBtn { min-height:34px; margin-top:7px; border:1px solid var(--s2); border-radius:8px; background:transparent; color:var(--s2); padding:3px 9px; cursor:pointer; font-size:14px; font-weight:900; }
 .lockBtn.on { background:var(--s2); color:#fff; }
 .reachBox { color:var(--ink2); font-size:16px; line-height:1.45; margin-top:4px; overflow-wrap:anywhere; }
@@ -264,7 +269,7 @@ const MIN_LEVEL = MatcherCore.MIN_LEVEL || 1;
 const MAX_LEVEL = MatcherCore.MAX_LEVEL || 9;
 const LEVEL_CHOICES = Array.from({ length: MAX_LEVEL - MIN_LEVEL + 1 }, (_, i) => MIN_LEVEL + i);
 const HERO_AUGMENT_CHOICES = ["unknown", "2-1", "3-2", "4-2"];
-const STAGE_CHOICES = ["unknown", "2-1", "3-2", "4-2"];
+const STAGE_CHOICES = ["unknown", "2-1", "2-5", "3-1", "3-2", "3-5", "4-1", "4-2", "4-5", "5-1", "5-5", "6-1"];
 const GOLD_CHOICES = [
   { value: "unknown", label: "金币未知" },
   { value: "0", label: "0-9金" },
@@ -1183,6 +1188,7 @@ function renderRoute() {
   const delta = Math.max(0, second ? rowScore(leader) - secondScore : rowScore(leader));
   const actions = [...(MatcherCore.actionLines(execution.template, selected, execution) || [])];
   if (currentLevel <= 3) actions.unshift("只做当前过渡，不锁任何终局阵容");
+  actions.splice(3);
   const af = execution.antiFragile;
   const breakLine = af
     ? `基础强度${execution.stageStrength || 0}分 → 抗脆弱${execution.preSimulationScore ?? topScore}分 → 虚拟实战蒸馏${topScore}分`
@@ -1219,7 +1225,19 @@ function renderRoute() {
   const earlyExecutionTitle = currentUnits.length ? "当前过渡" : "观察";
   const executionConclusion = currentLevel <= 3 ? earlyExecutionTitle : executionName;
   const actionTitle = currentLevel <= 3 ? earlyExecutionTitle : `现在执行 · ${executionName}`;
-  const statusText = decision.status === "manual" ? "手动锁定" : decision.status === "committed" ? "模型定线" : "继续观察";
+  const statusText = decision.status === "manual" ? "手动锁定"
+    : decision.status === "committed" ? "模型定线"
+    : decision.status === "pivoting" ? "执行转型"
+    : decision.status === "planning" ? "准备转型"
+    : "继续观察";
+  const forecast = decision.forecast || null;
+  const warning = forecast && forecast.warning;
+  const forecastHtml = warning
+    ? `<div class="forecastStrip ${esc(warning.severity || "green")}">前瞻${warning.severity === "red" ? "止损" : warning.severity === "yellow" ? "预警" : "观察"} · ${esc(warning.text)} · 截止${esc(warning.deadline)}<br>现在：${esc(forecast.action || "继续观察")}</div>`
+    : "";
+  const portfolioHtml = forecast && Array.isArray(forecast.portfolio)
+    ? `<div class="portfolioLine">路线组合：${forecast.portfolio.map(row => `${esc(row.role)} ${esc(row.name)}`).join(" → ")}</div>`
+    : "";
   box.innerHTML = `
     <div>
       <div class="decisionGrid">
@@ -1240,6 +1258,8 @@ function renderRoute() {
           <button class="lockBtn ${manualLockId ? "on" : ""}" id="routeLockBtn" ${lockDisabled && !manualLockId ? "disabled" : ""}>${lockLabel}</button>
         </div>
       </div>
+      ${forecastHtml}
+      ${portfolioHtml}
       <div class="rankTop">
         <div class="routeName">${esc(actionTitle)}</div>
         <div class="routePoints">${executionScore}分</div>

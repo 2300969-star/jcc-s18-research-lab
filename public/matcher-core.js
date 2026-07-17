@@ -59,6 +59,22 @@
   const EXECUTION_TOP1_WEIGHT_MAX = 0.6;
   const CERTIFICATION_TOP1_PRIOR_RATIO = 0.15;
   const CERTIFICATION_TOP4_CURRENT_RATIO = 0.25;
+  // 两阶段滚动规划：现场、下一阶段和终局共同估值；所有惩罚都来自当前事实状态。
+  // 不读取上一次推荐，因此同一最终状态必然得到同一规划结论。
+  const FORWARD_MODEL = Object.freeze({
+    currentWeight: 0.45,
+    nextWeight: 0.3,
+    terminalWeight: 0.25,
+    transitionPenalty: 0.28,
+    sunkAssetPenalty: 0.12,
+    resourceGapPenalty: 0.08,
+    tailRiskPenalty: 10,
+    optionValueCap: 7,
+    commitmentCreditRatio: 0.2,
+    commitmentCreditCap: 12,
+    switchMargin: 3,
+  });
+  const ROUND_ORDER = ["2-1", "2-5", "3-1", "3-2", "3-5", "4-1", "4-2", "4-5", "5-1", "5-5", "6-1"];
   // 散件方向纯度达到 2/3 时，给同方向主C路线 10% 确定性加成。
   const COMPONENT_DIRECTION_BONUS = 0.1;
   // primePlan 只给含战斗机甲实验结论的路线加命中证据；不影响无 primePlan 的路线。
@@ -1789,6 +1805,8 @@
       };
     }).filter(Boolean).sort((a, b) => b.value - a.value || String(a.name).localeCompare(String(b.name), "zh-Hans-CN")).slice(0, capacity);
     let score = unitValues.reduce((sum, row) => sum + row.value, 0);
+    const selectedMain = normalizeSelectedUnits(selected.units || []).find(unit => unit.name === routeMainCarry(template));
+    if (selectedMain && selectedMain.star >= 3) score += STAR_MILESTONE_BONUS;
     completedItemAssignments(template, selected, w, "current").forEach(match => { score += match.pts; });
     return {
       score: Math.max(0, score),
@@ -1883,6 +1901,207 @@
     return { points: Math.round(points), costs };
   }
 
+  function forwardStageKey(level) {
+    const value = clamp(Number(level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
+    return value <= 5 ? "1-5" : value <= 7 ? "6-7" : "8-9";
+  }
+
+  function nextForwardStage(key) {
+    return key === "1-5" ? "6-7" : key === "6-7" ? "8-9" : "8-9";
+  }
+
+  function inferredRound(selected) {
+    const explicit = String(selected.stage || selected.currentStage || "");
+    if (ROUND_ORDER.includes(explicit)) return explicit;
+    const level = clamp(Number(selected.level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
+    return ({ 1: "2-1", 2: "2-1", 3: "2-5", 4: "3-2", 5: "3-5", 6: "4-1", 7: "4-2", 8: "4-5", 9: "5-1" })[level];
+  }
+
+  function forwardMetric(row, key) {
+    const metric = row.template && row.template.forwardPlan && row.template.forwardPlan.stages
+      && row.template.forwardPlan.stages[key];
+    if (metric) return metric;
+    const fallback = key === "1-5" ? row.currentStrength : key === "6-7" ? row.top4Value : row.top1Value;
+    return { calibratedScore: Number(fallback) || 0, cvar10: 0, percentile: 50, coverage: 0 };
+  }
+
+  function staticTransitionCost(current, target, stageKey) {
+    if (rowId(current) === rowId(target)) return { cost: 0, compatibility: 1, source: "same-route" };
+    const plan = current.template && current.template.forwardPlan;
+    const exact = plan && plan.pivots && (plan.pivots[stageKey] || []).find(row => row.targetId === rowId(target));
+    if (exact) return {
+      cost: Number(exact.transitionCost) || 0,
+      compatibility: Number(exact.compatibility) || 0,
+      source: "transition-graph",
+    };
+    const currentStage = routeStageRows(current.template).find(stage => stage.key === stageKey);
+    const targetStage = routeStageRows(target.template).find(stage => stage.key === nextForwardStage(stageKey));
+    const jaccard = (left, right) => {
+      const a = new Set(left || []), b = new Set(right || []), union = new Set([...a, ...b]);
+      return union.size ? [...a].filter(value => b.has(value)).length / union.size : 0;
+    };
+    const itemParts = template => ((template.routeProfile && template.routeProfile.items) || []).flatMap(item => item.components || []);
+    const traits = template => ((template.routeProfile && template.routeProfile.activeTraits) || []).map(row => row.name || row.label).filter(Boolean);
+    const direction = template => {
+      const items = ((template.routeProfile && template.routeProfile.mainCarry && template.routeProfile.mainCarry.items) || []).join("|");
+      const physical = ATTACK.filter(name => items.includes(name)).length;
+      const magic = AP.filter(name => items.includes(name)).length;
+      return physical > magic ? "physical" : magic > physical ? "magic" : "mixed";
+    };
+    const unitOverlap = jaccard(stageUnitNames(currentStage), stageUnitNames(targetStage));
+    const itemOverlap = jaccard(itemParts(current.template), itemParts(target.template));
+    const traitOverlap = jaccard(traits(current.template), traits(target.template));
+    const leftDirection = direction(current.template), rightDirection = direction(target.template);
+    const directionOverlap = leftDirection === rightDirection ? 1 : leftDirection === "mixed" || rightDirection === "mixed" ? 0.5 : 0;
+    const compatibility = 0.5 * unitOverlap + 0.25 * itemOverlap + 0.15 * traitOverlap + 0.1 * directionOverlap;
+    return { cost: roundNumber((1 - compatibility) * 100, 1), compatibility: roundNumber(compatibility, 3), source: "runtime-transition" };
+  }
+
+  function routeOptionValue(row, stageKey, allRows) {
+    const pivots = row.template && row.template.forwardPlan && row.template.forwardPlan.pivots
+      && row.template.forwardPlan.pivots[stageKey] || [];
+    const feasibleIds = new Set((allRows || []).filter(candidate => !candidate.mechanicBlocked).map(rowId));
+    const usable = feasibleIds.size ? pivots.filter(pivot => feasibleIds.has(pivot.targetId)) : pivots;
+    if (!usable.length) return 0;
+    const best = Math.max(...usable.map(pivot => Number(pivot.optionValue) || 0));
+    return clamp((best - 45) * 0.18, 0, FORWARD_MODEL.optionValueCap);
+  }
+
+  function resourceGapPenalty(row, selected) {
+    const expected = Number(row.reachability && row.reachability.expectedGold) || 0;
+    const gold = selected.gold === null || selected.gold === undefined ? 30 : Number(selected.gold);
+    return Math.max(0, expected - Math.max(0, gold)) * FORWARD_MODEL.resourceGapPenalty;
+  }
+
+  function planningScore(row, current, selected, stageKey, allRows) {
+    const nextKey = nextForwardStage(stageKey);
+    const next = forwardMetric(row, nextKey);
+    const terminal = forwardMetric(row, "8-9");
+    const transition = staticTransitionCost(current, row, stageKey);
+    // 已经由条件化实验定义“当前装备架→战略主C”的路线，执行该策略不等于立刻拆板换阵。
+    const effectiveTransitionCost = row.strategyDecision ? 0 : transition.cost;
+    const sunk = Number(row.commitment && row.commitment.transitionCost) || 0;
+    const cvar = clamp(Number(next.cvar10) || 0, -1, 1);
+    const tailRisk = (1 - (cvar + 1) / 2) * FORWARD_MODEL.tailRiskPenalty;
+    const optionValue = routeOptionValue(row, stageKey, allRows);
+    const resourcePenalty = resourceGapPenalty(row, selected);
+    const commitmentCredit = row.committed
+      ? Math.min(FORWARD_MODEL.commitmentCreditCap, (Number(row.commitment && row.commitment.evidence) || 0) * FORWARD_MODEL.commitmentCreditRatio)
+      : 0;
+    const value = (Number(row.executionValue) || 0) * FORWARD_MODEL.currentWeight
+      + (Number(next.calibratedScore) || 0) * FORWARD_MODEL.nextWeight
+      + (Number(terminal.calibratedScore) || 0) * FORWARD_MODEL.terminalWeight
+      - effectiveTransitionCost * FORWARD_MODEL.transitionPenalty
+      - sunk * FORWARD_MODEL.sunkAssetPenalty
+      - resourcePenalty
+      - tailRisk
+      + optionValue
+      + commitmentCredit;
+    return {
+      value: roundNumber(value, 1),
+      current: Number(row.executionValue) || 0,
+      next: Number(next.calibratedScore) || 0,
+      terminal: Number(terminal.calibratedScore) || 0,
+      transitionCost: roundNumber(effectiveTransitionCost, 1),
+      transitionCompatibility: roundNumber(transition.compatibility, 3),
+      sunkCost: sunk,
+      resourcePenalty: roundNumber(resourcePenalty, 1),
+      tailRisk: roundNumber(tailRisk, 1),
+      optionValue: roundNumber(optionValue, 1),
+      commitmentCredit: roundNumber(commitmentCredit, 1),
+    };
+  }
+
+  function checkpointDistance(current, target) {
+    const left = ROUND_ORDER.indexOf(current);
+    const right = ROUND_ORDER.indexOf(target);
+    if (left < 0 || right < 0) return 99;
+    return right - left;
+  }
+
+  function carryName(row) {
+    return routeMainCarry(row && row.template) || "核心主C";
+  }
+
+  function planningAction(target, current, selected, warning, preparationOnly) {
+    const same = rowId(target) === rowId(current);
+    const missing = target.reachability && target.reachability.missing || [];
+    const first = missing[0];
+    const level = clamp(Number(selected.level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
+    if (!same) {
+      if (preparationOnly) return `停止给${carryName(current)}追加装备或D牌；只留${carryName(target)}与共用散件，下一回合复查转型`;
+      if (warning.severity === "red") return `停止给${carryName(current)}追加沉没投入，立即留${carryName(target)}体系牌并转${target.template.name}`;
+      return `保留当前两星板过渡，只留${carryName(target)}及共用散件，${warning.deadline}前完成转型检查`;
+    }
+    if (first) {
+      const ideal = first.cost <= 1 ? 5 : first.cost === 2 ? 6 : first.cost === 3 ? 7 : first.cost === 4 ? 8 : 9;
+      return level < ideal ? `不在${level}级硬D，先拉${ideal}再找${first.name}` : `${level}级开始找${first.name}，只花到路线质量门槛`;
+    }
+    return `维持${target.template.name}，金币优先换场上质量，不追无关三星`;
+  }
+
+  function buildForwardWarning(current, target, selected) {
+    const plan = current.template && current.template.forwardPlan;
+    const stageKey = forwardStageKey(selected.level);
+    const now = forwardMetric(current, stageKey);
+    const next = forwardMetric(current, nextForwardStage(stageKey));
+    const late = forwardMetric(current, "8-9");
+    const decline = roundNumber((Number(next.calibratedScore) || 0) - (Number(now.calibratedScore) || 0), 1);
+    const targetAdvantage = roundNumber((Number(target.planning && target.planning.value) || 0) - (Number(current.planning && current.planning.value) || 0), 1);
+    const risky = Boolean(plan && (plan.falseCeiling || plan.steepDrop)) || decline <= -8 || targetAdvantage >= FORWARD_MODEL.switchMargin;
+    const deadline = plan && plan.warningStage || (stageKey === "1-5" ? "3-5" : stageKey === "6-7" ? "4-5" : "5-1");
+    const distance = checkpointDistance(inferredRound(selected), deadline);
+    const severity = !risky ? "green" : distance <= 0 ? "red" : distance <= 1 ? "yellow" : "green";
+    const targetText = rowId(target) === rowId(current) ? "继续观察同线升级" : `预备转${target.template.name}`;
+    const text = risky
+      ? `${current.template.name}下一阶段${decline >= 0 ? "+" : ""}${decline}分、后期${late.calibratedScore}分；${targetText}`
+      : `${current.template.name}阶段曲线稳定，保留转型选择权`;
+    return { severity, deadline, decline, targetAdvantage, text, risky };
+  }
+
+  function buildRollingPlan(rows, current, strategic, selected) {
+    const stageKey = forwardStageKey(selected.level);
+    rows.forEach(row => { row.planning = planningScore(row, current, selected, stageKey, rows); });
+    const futureCandidates = rows.filter(row => !row.mechanicBlocked).sort((a, b) => b.planning.value - a.planning.value
+      || rowSortScore(b) - rowSortScore(a)
+      || stableCompare(a.template.name, b.template.name));
+    const executableCandidates = futureCandidates.filter(row => row.feasible || row.committed);
+    const target = executableCandidates[0] || current;
+    const currentLate = Number(forwardMetric(current, "8-9").calibratedScore) || 0;
+    const pivotRows = (current.template.forwardPlan && current.template.forwardPlan.pivots
+      && current.template.forwardPlan.pivots[stageKey] || [])
+      .map(pivot => rows.find(row => rowId(row) === pivot.targetId))
+      .filter(row => row && !row.mechanicBlocked);
+    const bridge = pivotRows.find(row => Number(row.planning && row.planning.transitionCost) <= 75
+      && !row.template.forwardPlan?.falseCeiling
+      && (Number(forwardMetric(row, "8-9").calibratedScore) || 0) >= currentLate + 12);
+    const genericFuture = futureCandidates.find(row => rowId(row) !== rowId(current)
+      && !row.template.forwardPlan?.falseCeiling
+      && (Number(forwardMetric(row, "8-9").calibratedScore) || 0) >= currentLate + 12);
+    const futureTarget = stageKey === "8-9" ? target : bridge || genericFuture || target;
+    const warningTarget = rowId(target) === rowId(current) ? futureTarget : target;
+    const warning = buildForwardWarning(current, warningTarget, selected);
+    const portfolioRows = [current, bridge || futureTarget, strategic].filter(Boolean)
+      .filter((row, index, all) => all.findIndex(other => rowId(other) === rowId(row)) === index);
+    const trigger = rowId(target) === rowId(current)
+      ? `止损条件：${warning.deadline}时阶段分继续下滑或核心仍未达标，切换到兼容路线`
+      : `转型触发：见到${carryName(target)}2星或凑出两件核心装；血量低于35则提前一回合`;
+    return {
+      stageKey,
+      target,
+      warning,
+      action: planningAction(warning.risky ? warningTarget : target, current, selected, warning,
+        rowId(target) === rowId(current) && rowId(warningTarget) !== rowId(current)),
+      trigger,
+      portfolio: portfolioRows.map((row, index) => ({
+        role: index === 0 ? "保血" : index === portfolioRows.length - 1 ? "上限" : "可转",
+        id: rowId(row),
+        name: row.template.name,
+        score: row.planning.value,
+      })),
+    };
+  }
+
   function applyDeterministicDecision(rows, selected, weights, opts) {
     if (!rows.length) return { status: "empty", text: "暂无路线" };
     const level = clamp(Number(selected.level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
@@ -1935,7 +2154,7 @@
     });
     const requestedManual = opts && opts.manualLockId ? rows.find(row => rowId(row) === opts.manualLockId) : null;
     const manual = requestedManual && requestedManual.feasible ? requestedManual : null;
-    const eligible = rows.filter(row => row.feasible
+    const eligible = rows.filter(row => (row.feasible || (!row.mechanicBlocked && row.commitment.evidenceKinds.includes("hero-augment")))
       && (!row.terminalLimited || row.commitment.evidenceKinds.some(kind => kind !== "core-upgrade"))
       && row.commitment.evidence >= DECISION_MODEL.minimumCommitmentEvidence
       && row.commitment.support > 0)
@@ -1965,8 +2184,43 @@
     current.currentBoard = true;
     strategic.strategicLeader = true;
     if (committed) committed.committed = true;
-    const execution = committed || current;
+    const hasForwardPlan = rows.some(row => row.template && row.template.forwardPlan);
+    const rolling = hasForwardPlan ? buildRollingPlan(rows, current, strategic, selected) : null;
+    let execution = committed || current;
+    if (level <= DECISION_MODEL.earlyObserveMaxLevel) {
+      execution = current;
+    } else if (manual) {
+      execution = manual;
+    } else if (rolling && rolling.target) {
+      execution = rolling.target;
+      if (rowId(execution) !== rowId(current)) {
+        status = committed && rowId(committed) === rowId(execution) ? "committed"
+          : committed ? "pivoting" : "planning";
+        text = committed && rowId(committed) === rowId(execution)
+          ? `不可逆证据与滚动规划一致：转${execution.template.name}`
+          : committed
+            ? `转型净收益已覆盖沉没资产：${committed.template.name} → ${execution.template.name}`
+            : `滚动规划：当前板继续保血，同时准备转${execution.template.name}`;
+      } else if (committed && rowId(committed) === rowId(execution)) {
+        status = "committed";
+      } else {
+        status = "observing";
+        text = rolling.warning.risky ? `暂不换板，但${rolling.warning.deadline}必须复查上限` : "阶段曲线稳定，继续当前执行线";
+      }
+    }
     execution.execution = true;
+    const forecast = rolling ? {
+      stageKey: rolling.stageKey,
+      targetId: rowId(rolling.target),
+      targetName: rolling.target.template.name,
+      targetScore: rolling.target.planning.value,
+      currentScore: current.planning.value,
+      warning: rolling.warning,
+      action: rolling.action,
+      trigger: rolling.trigger,
+      portfolio: rolling.portfolio,
+      formula: `Q=${rolling.target.planning.current}×${FORWARD_MODEL.currentWeight}+${rolling.target.planning.next}×${FORWARD_MODEL.nextWeight}+${rolling.target.planning.terminal}×${FORWARD_MODEL.terminalWeight}-转型${rolling.target.planning.transitionCost}×${FORWARD_MODEL.transitionPenalty}-沉没${rolling.target.planning.sunkCost}×${FORWARD_MODEL.sunkAssetPenalty}-资源${rolling.target.planning.resourcePenalty}-尾险${rolling.target.planning.tailRisk}+期权${rolling.target.planning.optionValue}+连续性${rolling.target.planning.commitmentCredit}=${rolling.target.planning.value}`,
+    } : null;
     const decision = {
       status,
       level,
@@ -1987,6 +2241,7 @@
       top1Value: execution.top1Value,
       executionValue: execution.executionValue,
       executionWeights: execution.executionWeights,
+      forecast,
       manualLockInvalid: Boolean(requestedManual && !manual),
       text,
     };
@@ -2037,7 +2292,7 @@
     const visible = rows.slice(0, maxRows);
     if (decision) {
       const visibleIds = new Set(visible.map(rowId));
-      const required = rows.filter(row => row.currentBoard || row.strategicLeader || row.committed);
+      const required = rows.filter(row => row.currentBoard || row.strategicLeader || row.committed || row.execution);
       required.forEach(row => {
         const id = rowId(row);
         if (visibleIds.has(id)) return;
@@ -2330,6 +2585,10 @@
     const mechanicActive = mechanic && (!mechanic.requiredAugment || (selected.augments || []).includes(mechanic.requiredAugment))
       && (mechanic.requiredUnits || []).every(name => selectedUnits.has(name));
     const heroAugment = top && top.heroAugment;
+    if (top && top.decision && top.decision.forecast) {
+      lines.push(top.decision.forecast.action);
+      lines.push(top.decision.forecast.trigger);
+    }
     if (heroAugment) {
       if (heroAugment.status === "waiting" && ["3-2", "4-2"].includes(heroAugment.round) && heroAugment.traits.length) {
         lines.push(`${heroAugment.round}英雄强化：前一轮优先激活${heroAugment.traits.slice(0, 2).join("/")}，等${heroAugment.heroes.slice(0, 2).join("/")}专属`);
@@ -2355,6 +2614,7 @@
     }
     if (top && top.decision) {
       if (top.decision.status === "observing") lines.push(`暂不定线：${top.decision.text}`);
+      else if (top.decision.status === "planning" || top.decision.status === "pivoting") lines.push(top.decision.text);
       else if (top.committed) lines.push(top.decision.text);
     }
     if (top && top.antiFragile) {
@@ -2779,6 +3039,26 @@
     const highResourceRows = rank([preserve, capRoute], selectedFromSignals([...executionSignals, { kind: "health", value: 100 }, { kind: "gold", value: 100 }, { kind: "stage", value: "4-1" }]), fallbackWeights, 2, { operationalCommitment: true, unitPrices: { P: 1, Q: 4 } });
     assert(lowResourceRows.decision.executionId === "保血线" && highResourceRows.decision.executionId === "登顶线", "低血应偏current/top4，高血高经济才提高top1执行权重");
     assertNoBadNumbers(JSON.stringify([projectionRows.decision, outcomeRows, lowResourceRows.decision, highResourceRows.decision]), "新决策层不得输出999/Infinity/NaN");
+    const forecastLow = outcomeTemplate("前强后弱预警线", 92, 25, { top1Rate: 1, topQuartileRate: 70, robustness: 72, failureRate: 5 }, "P", 1, 78, 20);
+    const forecastCap = outcomeTemplate("兼容登顶转型线", 55, 96, { top1Rate: 82, topQuartileRate: 88, robustness: 91, failureRate: 0 }, "Q", 4, 86, 96);
+    forecastLow.forwardPlan = {
+      falseCeiling: true, steepDrop: true, warningStage: "3-5",
+      stages: { "1-5": { calibratedScore: 82, cvar10: -0.2 }, "6-7": { calibratedScore: 42, cvar10: -0.55 }, "8-9": { calibratedScore: 24, cvar10: -0.8 } },
+      pivots: { "1-5": [{ targetId: "兼容登顶转型线", targetName: "兼容登顶转型线", transitionCost: 10, compatibility: 0.9, optionValue: 82 }], "6-7": [] },
+    };
+    forecastCap.forwardPlan = {
+      falseCeiling: false, steepDrop: false, warningStage: "4-5",
+      stages: { "1-5": { calibratedScore: 55, cvar10: -0.35 }, "6-7": { calibratedScore: 84, cvar10: -0.2 }, "8-9": { calibratedScore: 96, cvar10: -0.1 } },
+      pivots: { "1-5": [], "6-7": [] },
+    };
+    const forecastSignals = [{ kind: "levels", level: 5 }, { kind: "stage", value: "3-5" }, { kind: "health", value: 70 }, { kind: "gold", value: 50 }, { kind: "units", value: "P", star: 2 }];
+    const forecastRows = rank([forecastLow, forecastCap], selectedFromSignals(forecastSignals), fallbackWeights, 2, { operationalCommitment: true, unitPrices: { P: 1, Q: 4 } });
+    assert(forecastRows.decision.currentId === "前强后弱预警线" && forecastRows.decision.executionId === "兼容登顶转型线", "滚动规划应在当前板仍强时提前转向兼容高上限路线");
+    assert(forecastRows.decision.forecast.warning.severity === "red" && forecastRows.decision.forecast.warning.deadline === "3-5", "到达高开低走路线截止回合必须给红色止损预警");
+    assert(forecastRows.decision.forecast.portfolio.length >= 2 && forecastRows.decision.forecast.action.includes("停止给"), "前瞻必须输出路线组合和具体止损动作");
+    const lockedForecast = rank([forecastLow, forecastCap], selectedFromSignals(forecastSignals), fallbackWeights, 2, { operationalCommitment: true, manualLockId: "前强后弱预警线", unitPrices: { P: 1, Q: 4 } });
+    assert(lockedForecast.decision.status === "manual" && lockedForecast.decision.executionId === "前强后弱预警线", "手动锁定仍是滚动规划唯一绝对锁");
+    assertNoBadNumbers(JSON.stringify(forecastRows.decision), "滚动前瞻不得输出999/Infinity/NaN");
     const virtualBase = id => ({ id, name: id, quality: "S", coreUnits: [], earlyUnits: [], midUnits: [], actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 1, items: [] }, units: [], items: [], activeTraits: [] } });
     const virtualHigh = { ...virtualBase("稳健"), virtualBattle: { battles: 708, winRate: 82, robustScore: 90, cvar10: -0.1, interval90: [-0.2, 0.8], coverage: 100, unsupported: [] } };
     const virtualLow = { ...virtualBase("敏感"), virtualBattle: { battles: 708, winRate: 22, robustScore: 20, cvar10: -0.8, interval90: [-0.9, 0.2], coverage: 100, unsupported: [] } };
@@ -2793,6 +3073,7 @@
       const matcherData = require(path.join(rootDir, "artifacts", "results", "stage2_matcher_results.json"));
       require(path.join(__dirname, "odds-data.js"));
       const fixtureRows = require(path.join(rootDir, "tests", "fixtures", "hands.json"));
+      const forwardStateRows = require(path.join(rootDir, "tests", "fixtures", "forward-states.json"));
       const fixtureUnitPrices = Object.fromEntries((matcherData.options.unitSearch || []).map(x => [x.name, x.price]));
       const fixtureUnitTraits = Object.fromEntries((matcherData.options.unitSearch || []).map(x => [x.name, x.traits || []]));
       const bubbleSignals = [
@@ -2844,6 +3125,26 @@
           fx.expect.topAnyNameIncludes.forEach(part => assert(topNames.includes(part), `${fx.label} 前${fx.expect.topN || 1} 应包含 ${part}，实际 ${topNames}`));
         }
         (fx.expect.evidenceIncludes || []).forEach(part => assert(topEvidence.includes(part), `${fx.label} 证据应包含 ${part}，实际 ${topEvidence}`));
+      });
+      forwardStateRows.forEach(fx => {
+        const selectedFx = selectedFromSignals(fx.signals || []);
+        selectedFx.heroAugmentRound = fx.heroAugmentRound || "unknown";
+        const rows = rank(matcherData.templates, selectedFx, matcherData.weights, 8, {
+          oddsData: globalThis.JCC_ODDS,
+          unitPrices: fixtureUnitPrices,
+          unitTraits: fixtureUnitTraits,
+          heroAugments: matcherData.options.heroAugments,
+          antiFragile: true,
+          operationalCommitment: true,
+        });
+        const currentTemplate = matcherData.templates.find(template => template.id === rows.decision.currentId);
+        const executionTemplate = matcherData.templates.find(template => template.id === rows.decision.executionId);
+        if (fx.expect.currentMainCarry) assert(routeMainCarry(currentTemplate) === fx.expect.currentMainCarry, `${fx.label} 当前主C应为${fx.expect.currentMainCarry}`);
+        if (fx.expect.executionMainCarry) assert(routeMainCarry(executionTemplate) === fx.expect.executionMainCarry, `${fx.label} 执行主C应为${fx.expect.executionMainCarry}`);
+        if (fx.expect.status) assert(rows.decision.status === fx.expect.status, `${fx.label} 状态应为${fx.expect.status}`);
+        if (fx.expect.warningSeverity) assert(rows.decision.forecast.warning.severity === fx.expect.warningSeverity, `${fx.label} 预警应为${fx.expect.warningSeverity}`);
+        if (fx.expect.actionIncludes) assert(rows.decision.forecast.action.includes(fx.expect.actionIncludes), `${fx.label} 动作应包含${fx.expect.actionIncludes}`);
+        if (fx.expect.portfolioMin) assert(rows.decision.forecast.portfolio.length >= fx.expect.portfolioMin, `${fx.label} 路线组合不足${fx.expect.portfolioMin}条`);
       });
       const earlyStateSignals = [
         { kind: "units", value: "凯尔", star: 2 },
@@ -2953,7 +3254,7 @@
       assert(rowId(genericOperational) === genericOperationalRows.decision.executionId, "通用策略执行行必须精确服从decision.executionId，不得覆盖真分榜");
       console.log(`无情连打转型回归: 1星=${jaxOneOperational.strategyDecision.lcb95}, 2星=${jaxTwoOperational.strategyDecision.lcb95}`);
       console.log(`通用策略回归: ${genericPlan.augment}→${genericPlan.strategicCarry}, LCB=${genericRows[0].strategyDecision.lcb95}`);
-      console.log(`fixture assertions passed (${fixtureRows.length})`);
+      console.log(`fixture assertions passed (${fixtureRows.length} hands + ${forwardStateRows.length} forward states)`);
     }
     console.log("matcher-core assertions passed");
   }

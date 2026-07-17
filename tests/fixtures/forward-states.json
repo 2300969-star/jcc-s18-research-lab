@@ -1,0 +1,75 @@
+[
+  {
+    "label": "超英猫咪3-5高开低走预警",
+    "heroAugmentRound": "unknown",
+    "signals": [
+      { "kind": "levels", "level": 5 },
+      { "kind": "stage", "value": "3-5" },
+      { "kind": "gold", "value": 40 },
+      { "kind": "health", "value": 75 },
+      { "kind": "units", "value": "李青" },
+      { "kind": "units", "value": "墨菲特" },
+      { "kind": "units", "value": "普朗克" },
+      { "kind": "units", "value": "悠米" },
+      { "kind": "units", "value": "加里奥" },
+      { "kind": "items", "value": "女神之泪" },
+      { "kind": "items", "value": "无用大棒" }
+    ],
+    "expect": { "warningSeverity": "red", "actionIncludes": "停止给悠米", "portfolioMin": 2 }
+  },
+  {
+    "label": "无情连打带回合金币仍以贾克斯为战略主C",
+    "heroAugmentRound": "3-2",
+    "signals": [
+      { "kind": "levels", "level": 4 },
+      { "kind": "stage", "value": "3-2" },
+      { "kind": "gold", "value": 30 },
+      { "kind": "units", "value": "凯尔" },
+      { "kind": "units", "value": "娑娜" },
+      { "kind": "units", "value": "德莱文" },
+      { "kind": "units", "value": "李青" },
+      { "kind": "units", "value": "赛娜" },
+      { "kind": "units", "value": "芮尔" },
+      { "kind": "units", "value": "孙悟空" },
+      { "kind": "units", "value": "锐雯" },
+      { "kind": "items", "value": "锁子甲" },
+      { "kind": "augments", "value": "无情连打" }
+    ],
+    "expect": { "executionMainCarry": "贾克斯", "status": "committed" }
+  },
+  {
+    "label": "双重气泡带回合金币仍以佐伊为战略主C",
+    "heroAugmentRound": "3-2",
+    "signals": [
+      { "kind": "levels", "level": 4 },
+      { "kind": "stage", "value": "3-2" },
+      { "kind": "gold", "value": 30 },
+      { "kind": "augments", "value": "双重气泡" },
+      { "kind": "units", "value": "佐伊" },
+      { "kind": "units", "value": "安妮", "star": 2 },
+      { "kind": "units", "value": "璐璐", "star": 2 },
+      { "kind": "units", "value": "波比" }
+    ],
+    "expect": { "executionMainCarry": "佐伊", "status": "committed" }
+  },
+  {
+    "label": "三星劫当前板必须识别劫主C",
+    "heroAugmentRound": "4-2",
+    "signals": [
+      { "kind": "levels", "level": 8 },
+      { "kind": "stage", "value": "4-5" },
+      { "kind": "gold", "value": 35 },
+      { "kind": "health", "value": 42 },
+      { "kind": "augments", "value": "夺影术" },
+      { "kind": "units", "value": "劫", "star": 3 },
+      { "kind": "units", "value": "菲奥娜", "star": 2 },
+      { "kind": "units", "value": "凯尔", "star": 2 },
+      { "kind": "units", "value": "亚索", "star": 2 },
+      { "kind": "units", "value": "尼菈", "star": 2 },
+      { "kind": "units", "value": "瑟庄妮", "star": 2 },
+      { "kind": "items", "value": "汲取剑" },
+      { "kind": "items", "value": "水银" }
+    ],
+    "expect": { "currentMainCarry": "劫", "executionMainCarry": "劫" }
+  }
+]
