@@ -66,7 +66,7 @@ function routeStage(template, key) {
   return ((template.routeProfile && template.routeProfile.stages) || []).find(stage => stage.key === key) || null;
 }
 
-function stageBoard(template, key) {
+function stageBoard(template, key, options = {}) {
   const stage = routeStage(template, key);
   if (!stage) return [];
   const boardByName = new Map((stage.board || []).map(unit => [unit.name, unit]));
@@ -78,6 +78,11 @@ function stageBoard(template, key) {
   const executionCarry = stage.roles && stage.roles.executionCarry
     || stage.carry && stage.carry.execution
     || template.routeProfile && template.routeProfile.mainCarry && template.routeProfile.mainCarry.name;
+  const mechanicTargets = new Set(template.mechanic && (
+    template.mechanic.targetUnits && template.mechanic.targetUnits.length
+      ? template.mechanic.targetUnits
+      : (template.mechanic.requiredUnits || []).slice(0, 1)
+  ) || []);
   return (stage.units || []).map(unit => {
     const board = boardByName.get(unit.name) || {};
     const hero = heroByName[unit.name] || {};
@@ -99,7 +104,11 @@ function stageBoard(template, key) {
       star,
       items,
       traits: unit.traits || [],
-      mechanic: isCarry ? template.mechanic || null : null,
+      // 英雄强化属于指定棋子，不等于路线战略主C。条件前排与输出位
+      // 分离时，机制必须留在强化英雄身上。
+      mechanic: options.includeMechanic === false || !mechanicTargets.has(unit.name)
+        ? null
+        : template.mechanic || null,
     };
   }).filter(unit => heroByName[unit.name]);
 }

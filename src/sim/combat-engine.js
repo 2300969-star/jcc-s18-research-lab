@@ -11,6 +11,15 @@ const CRIT_DAMAGE = 1.4;
 const STAR_HP = [1, 1.8, 3.24];
 const STAR_AD = [1, 1.5, 2.25];
 const BOARD_COLS = 7;
+const DEFAULT_COMBAT_MODIFIERS = Object.freeze({
+  damageAmpPct: 0,
+  armorShredPct: 0,
+  mrShredPct: 0,
+  shieldDamageMultiplier: 1,
+  woundOnDamage: false,
+  backlineAccess: false,
+  controlDurationMultiplier: 1,
+});
 const TRAIT_EFFECTS = {
   "幻灵战队": { tiers: [3, 5, 7], team: { adPct: [10, 35, 60], ap: [10, 35, 60] } },
   "平民英雄": { tiers: [1, 2, 3], team: { manaMult: [1.04, 1.08, 1.2] } },
@@ -42,6 +51,10 @@ for (const hero of Object.values(chess)) {
 
 function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value));
+}
+
+function combatModifiers(value) {
+  return { ...DEFAULT_COMBAT_MODIFIERS, ...(value || {}) };
 }
 
 function seeded(seed) {
@@ -150,7 +163,7 @@ function defaultPosition(unit, index, side) {
   return { row, col: order[index % order.length] };
 }
 
-function buildUnit(spec, index, side, activeTraits, teamEvents = []) {
+function buildUnit(spec, index, side, activeTraits, teamEvents = [], sideModifiers = {}) {
   const hero = heroByName[spec.name];
   if (!hero) return null;
   const star = clamp(Number(spec.star || spec.starTarget || (Number(hero.price) >= 4 ? 2 : 2)), 1, 3);
@@ -183,6 +196,7 @@ function buildUnit(spec, index, side, activeTraits, teamEvents = []) {
   const hp = (hpBase * (1 + bonus.hpPct / 100) + hpFlat + bonus.hpFlat) * bonus.ehpMult;
   const position = spec.position || defaultPosition(spec, index, side);
   const ability = parseAbility(hero, star);
+  const modifiers = combatModifiers(sideModifiers);
   const attackSpeed = Number(hero.attackSpeed) * (1 + (stats.reduce((s, x) => s + x.asPct, 0) + bonus.asPct) / 100);
   return {
     id: `${side}:${index}:${hero.id}`,
@@ -205,7 +219,7 @@ function buildUnit(spec, index, side, activeTraits, teamEvents = []) {
     attackSpeed,
     baseAttackSpeed: attackSpeed,
     critChance: clamp((Number(hero.criticalStrikeChance || 25) + stats.reduce((s, x) => s + x.critPct, 0) + bonus.critPct) / 100, 0, 1),
-    amp: 1 + (stats.reduce((s, x) => s + x.ampPct, 0) + bonus.ampPct) / 100,
+    amp: 1 + (stats.reduce((s, x) => s + x.ampPct, 0) + bonus.ampPct + Number(modifiers.damageAmpPct || 0)) / 100,
     armor: Number(hero.armor) + ability.passiveArmor + stats.reduce((s, x) => s + x.armor, 0) + bonus.armor,
     mr: Number(hero.magicResist) + ability.passiveMr + stats.reduce((s, x) => s + x.mr, 0) + bonus.mr,
     range: Math.max(1, Number(hero.attackRange || 1) + (itemNames.includes("疾射火炮") ? 1 : 0)),
@@ -216,6 +230,14 @@ function buildUnit(spec, index, side, activeTraits, teamEvents = []) {
     mechanic: spec.mechanic || null,
     mechanicSupported,
     mechanicEvents,
+    combatModifiers: modifiers,
+    armorShredUntil: 0,
+    armorShredPct: 0,
+    mrShredUntil: 0,
+    mrShredPct: 0,
+    mrShredAura: 0,
+    woundUntil: 0,
+    sunfireTimer: 0,
     eventStatBonus: { asPct: 0 },
     ability,
     attackTimer: 0,
@@ -243,10 +265,10 @@ function buildUnit(spec, index, side, activeTraits, teamEvents = []) {
   };
 }
 
-function buildTeam(specs, side) {
+function buildTeam(specs, side, sideModifiers = {}) {
   const active = traitBonuses(specs);
   const teamEvents = specs.flatMap(spec => spec.mechanic && spec.mechanic.events || []).filter(event => event.scope === "team");
-  return specs.map((spec, index) => buildUnit(spec, index, side, active, teamEvents)).filter(Boolean);
+  return specs.map((spec, index) => buildUnit(spec, index, side, active, teamEvents, sideModifiers)).filter(Boolean);
 }
 
 function distance(a, b) {
@@ -257,34 +279,60 @@ function mitigation(resist) {
   return resist >= 0 ? 100 / (100 + resist) : 2 - 100 / (100 - resist);
 }
 
+function healUnit(unit, raw, time) {
+  const immune = unit.items.includes("连指手套");
+  const received = unit.woundUntil > time && !immune ? 0.67 : 1;
+  const amount = Math.min(unit.maxHp - unit.hp, Math.max(0, raw) * received);
+  unit.hp += amount;
+  unit.healing += amount;
+  return amount;
+}
+
 function deal(source, target, raw, type, rng, log, time) {
   if (!target || !target.alive || raw <= 0) return 0;
   const variance = 0.95 + rng() * 0.1;
-  const reduced = type === "true" ? raw : raw * mitigation(type === "physical" ? target.armor : target.mr);
+  const armorShred = Math.max(source.combatModifiers.armorShredPct || 0, target.armorShredUntil > time ? target.armorShredPct : 0);
+  const mrShred = Math.max(source.combatModifiers.mrShredPct || 0, target.mrShredUntil > time ? target.mrShredPct : 0, target.mrShredAura || 0);
+  const resist = type === "physical" ? target.armor * (1 - armorShred) : target.mr * (1 - mrShred);
+  const reduced = type === "true" ? raw : raw * mitigation(resist);
   const activeReduction = target.baseDamageReduction + (target.damageReductionUntil > time ? target.abilityDamageReduction : 0);
   let amount = Math.max(0, reduced * source.amp * variance * (1 - clamp(activeReduction, 0, 0.9)));
-  const shieldHit = Math.min(target.shield, amount);
+  const shieldMultiplier = Math.max(1, Number(source.combatModifiers.shieldDamageMultiplier || 1));
+  const shieldHit = Math.min(target.shield, amount * shieldMultiplier);
   target.shield -= shieldHit;
-  amount -= shieldHit;
+  amount -= shieldHit / shieldMultiplier;
   target.hp -= amount;
-  source.damage += shieldHit + amount;
-  if (source.omnivamp > 0 && source.alive) {
-    const healed = Math.min(source.maxHp - source.hp, (shieldHit + amount) * source.omnivamp);
-    source.hp += healed;
-    source.healing += healed;
+  const creditedDamage = shieldHit / shieldMultiplier + amount;
+  source.damage += creditedDamage;
+  if (source.items.includes("最后的轻语") && type === "physical") {
+    target.armorShredPct = Math.max(target.armorShredPct, 0.3);
+    target.armorShredUntil = Math.max(target.armorShredUntil, time + 3);
   }
-  target.mana = Math.min(target.maxMana, target.mana + (shieldHit + amount) / Math.max(1, target.maxHp) * 25);
-  log.push({ time, type: "damage", source: source.name, target: target.name, amount: shieldHit + amount });
+  if (source.items.includes("莫雷洛秘典") || source.combatModifiers.woundOnDamage) {
+    target.woundUntil = Math.max(target.woundUntil, time + 10);
+  }
+  if (source.omnivamp > 0 && source.alive) {
+    healUnit(source, creditedDamage * source.omnivamp, time);
+  }
+  target.mana = Math.min(target.maxMana, target.mana + creditedDamage / Math.max(1, target.maxHp) * 25);
+  log.push({ time, type: "damage", source: source.name, target: target.name, amount: creditedDamage });
   if (target.hp <= 0) {
     target.hp = 0;
     target.alive = false;
     log.push({ time, type: "death", source: source.name, target: target.name });
   }
-  return shieldHit + amount;
+  return creditedDamage;
 }
 
 function nearest(source, enemies) {
-  return enemies.filter(x => x.alive).sort((a, b) => distance(source, a) - distance(source, b) || a.hp - b.hp || a.id.localeCompare(b.id))[0];
+  return enemies.filter(x => x.alive).sort((a, b) => {
+    if (source.combatModifiers.backlineAccess) {
+      const role = value => value.role === "mainCarry" ? 0 : value.role === "utility" ? 1 : value.role === "frontline" ? 3 : 2;
+      const roleDelta = role(a) - role(b);
+      if (roleDelta) return roleDelta;
+    }
+    return distance(source, a) - distance(source, b) || a.hp - b.hp || a.id.localeCompare(b.id);
+  })[0];
 }
 
 function moveToward(source, target) {
@@ -292,7 +340,7 @@ function moveToward(source, target) {
   else if (source.col !== target.col) source.col += Math.sign(target.col - source.col);
 }
 
-function attack(source, target, rng, log, time) {
+function attack(source, target, enemies, rng, log, time) {
   source.attacks++;
   const crit = rng() < source.critChance;
   const raw = (source.ad + (source.adBuffUntil > time ? source.adBuffAmount : 0)) * (crit ? CRIT_DAMAGE : 1);
@@ -302,9 +350,7 @@ function attack(source, target, rng, log, time) {
   }
   source.mechanicEvents.filter(event => event.type === "nth-attack" && source.attacks % Math.max(1, event.every) === 0).forEach(event => {
     deal(source, target, source.maxHp * event.damageMaxHpPct, event.damageType || "magic", rng, log, time);
-    const healed = Math.min(source.maxHp - source.hp, source.maxHp * Number(event.healMaxHpPct || 0));
-    source.hp += healed;
-    source.healing += healed;
+    healUnit(source, source.maxHp * Number(event.healMaxHpPct || 0), time);
     log.push({ time, type: "augment-proc", source: source.name, augment: source.mechanic.requiredAugment, event: "nth-attack" });
   });
   source.mechanicEvents.filter(event => event.type === "nth-attack-stat" && source.attacks % Math.max(1, event.every) === 0).forEach(event => {
@@ -317,7 +363,16 @@ function attack(source, target, rng, log, time) {
   if (source.onHitMagic) deal(source, target, source.onHitMagic, "magic", rng, log, time);
   if (source.items.includes("鬼索的狂暴之刃")) source.rage += 0.05;
   if (source.items.includes("泰坦的坚决")) source.titan = Math.min(25, source.titan + 1);
-  if (source.items.includes("斯塔缇克电刃") && source.attacks % 3 === 0) deal(source, target, 30, "magic", rng, log, time);
+  if (source.items.includes("斯塔缇克电刃") && source.attacks % 3 === 0) {
+    enemies.filter(enemy => enemy.alive)
+      .sort((a, b) => distance(target, a) - distance(target, b) || a.id.localeCompare(b.id))
+      .slice(0, 4)
+      .forEach(enemy => {
+        deal(source, enemy, 30, "magic", rng, log, time);
+        enemy.mrShredPct = Math.max(enemy.mrShredPct, 0.3);
+        enemy.mrShredUntil = Math.max(enemy.mrShredUntil, time + 5);
+      });
+  }
   if (source.name === "贾克斯" && source.attacks % 3 === 0) {
     const groups = String((heroByName[source.name] || {}).skillBriefValue || "").split("|");
     const base = numericAt(groups[0], source.star);
@@ -369,7 +424,8 @@ function cast(source, enemies, allies, rng, log, time) {
   };
   targets.forEach(target => {
     hitWithSpell(target);
-    if (ability.control > 0 && target.alive) target.stunnedUntil = Math.max(target.stunnedUntil, time + Math.min(8, ability.control));
+    if (ability.control > 0 && target.alive) target.stunnedUntil = Math.max(target.stunnedUntil,
+      time + Math.min(8, ability.control * Number(source.combatModifiers.controlDurationMultiplier || 1)));
   });
   source.mechanicEvents.filter(event => event.type === "spell-echo").forEach(event => {
     const pool = enemies.filter(enemy => enemy.alive && !targets.includes(enemy));
@@ -378,7 +434,8 @@ function cast(source, enemies, allies, rng, log, time) {
     echoTargets.forEach(target => hitWithSpell(target, Number(event.ratio || 0)));
   });
   source.mechanicEvents.filter(event => event.type === "cast-control").forEach(event => {
-    targets.forEach(target => { if (target.alive) target.stunnedUntil = Math.max(target.stunnedUntil, time + Number(event.seconds || 0)); });
+    targets.forEach(target => { if (target.alive) target.stunnedUntil = Math.max(target.stunnedUntil,
+      time + Number(event.seconds || 0) * Number(source.combatModifiers.controlDurationMultiplier || 1)); });
   });
   source.mechanicEvents.filter(event => event.type === "cast-max-hp-damage").forEach(event => {
     if (primary.alive) deal(source, primary, source.maxHp * Number(event.ratio || 0), event.damageType || "magic", rng, log, time);
@@ -402,14 +459,10 @@ function cast(source, enemies, allies, rng, log, time) {
     source.maxHpBuffUntil = time + Math.max(0.1, ability.duration);
   }
   if (ability.heal > 0) {
-    const amount = Math.min(source.maxHp - source.hp, ability.heal * source.apMult);
-    source.hp += amount;
-    source.healing += amount;
+    healUnit(source, ability.heal * source.apMult, time);
   }
   if (source.items.includes("海克斯科技枪刃") || source.items.includes("汲取剑")) {
-    const amount = Math.min(source.maxHp - source.hp, source.damage * 0.03);
-    source.hp += amount;
-    source.healing += amount;
+    healUnit(source, source.damage * 0.03, time);
   }
   log.push({ time, type: "cast", source: source.name, targets: targets.map(x => x.name) });
 }
@@ -423,6 +476,15 @@ function stepUnit(unit, allies, enemies, rng, log, time) {
   }
   const target = nearest(unit, enemies);
   if (!target) return;
+  if (unit.items.includes("日炎斗篷") && unit.sunfireTimer <= time) {
+    const burnTarget = enemies.filter(enemy => enemy.alive && distance(unit, enemy) <= 2)
+      .sort((a, b) => distance(unit, a) - distance(unit, b) || a.id.localeCompare(b.id))[0];
+    if (burnTarget) {
+      burnTarget.woundUntil = Math.max(burnTarget.woundUntil, time + 10);
+      deal(unit, burnTarget, burnTarget.maxHp * 0.01, "true", rng, log, time);
+    }
+    unit.sunfireTimer = time + 2;
+  }
   if (unit.maxMana > 0 && unit.mana >= unit.maxMana) {
     cast(unit, enemies, allies, rng, log, time);
     return;
@@ -439,10 +501,28 @@ function stepUnit(unit, allies, enemies, rng, log, time) {
   }
   unit.attackTimer -= STEP;
   if (unit.attackTimer <= 0) {
-    attack(unit, target, rng, log, time);
+    attack(unit, target, enemies, rng, log, time);
     const titanSpeed = unit.items.includes("泰坦的坚决") ? unit.titan * 0.02 : 0;
     unit.attackTimer = 1 / clamp(unit.attackSpeed * (1 + unit.rage + titanSpeed + unit.relentlessAs), 0.2, 5);
   }
+}
+
+function applyOpeningItems(team) {
+  team.filter(unit => unit.items.includes("钢铁烈阳之匣")).forEach(holder => {
+    const shield = [300, 350, 400][holder.star - 1] || 300;
+    team.filter(ally => ally.row === holder.row && Math.abs(ally.col - holder.col) <= 2)
+      .forEach(ally => { ally.shield += shield; });
+  });
+}
+
+function updateAuras(left, right) {
+  [...left, ...right].forEach(unit => { unit.mrShredAura = 0; });
+  const apply = (holders, enemies) => holders.filter(unit => unit.alive && unit.items.includes("离子火花")).forEach(holder => {
+    enemies.filter(enemy => enemy.alive && distance(holder, enemy) <= 2)
+      .forEach(enemy => { enemy.mrShredAura = Math.max(enemy.mrShredAura, 0.3); });
+  });
+  apply(left, right);
+  apply(right, left);
 }
 
 function teamHealth(team) {
@@ -467,13 +547,16 @@ function unsupportedFor(team) {
 function simulateBattle(leftSpecs, rightSpecs, options = {}) {
   const rng = seeded(options.seed || 1);
   const maxSeconds = options.maxSeconds || MAX_SECONDS;
-  const left = buildTeam(leftSpecs, 0);
-  const right = buildTeam(rightSpecs, 1);
+  const left = buildTeam(leftSpecs, 0, options.leftModifiers);
+  const right = buildTeam(rightSpecs, 1, options.rightModifiers);
+  applyOpeningItems(left);
+  applyOpeningItems(right);
   const initialLeft = teamHealth(left);
   const initialRight = teamHealth(right);
   const log = [];
   let time = 0;
   while (time < maxSeconds && left.some(x => x.alive) && right.some(x => x.alive)) {
+    updateAuras(left, right);
     const order = [...left, ...right].filter(x => x.alive).sort((a, b) => b.attackSpeed - a.attackSpeed || a.id.localeCompare(b.id));
     order.forEach(unit => stepUnit(unit, unit.side === 0 ? left : right, unit.side === 0 ? right : left, rng, log, time));
     time = Math.round((time + STEP) * 10) / 10;

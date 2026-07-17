@@ -412,6 +412,7 @@ function normalizeBoard(rows, fallbackNames, carryName) {
     return {
       name: row.name,
       price: Number(row.price) || priceOf(row.name),
+      starTarget: Number(row.starTarget) || null,
       row: Number(row.row) >= 1 && Number(row.row) <= 4 ? Number(row.row) : fallback.row,
       col: Number(row.col) >= 1 && Number(row.col) <= 7 ? Number(row.col) : fallback.col,
       role: boardRole,
@@ -463,7 +464,9 @@ function buildStage(window, rows, fallbackNames, strategicCarry, carryHint) {
         price: unit.price,
         role,
         roles: unit.roles,
-        starTarget: role === 'mainCarry' ? starTargetFor(unit.name) : (unit.price >= 4 ? 2 : 1),
+        // 官方成型棋盘会明确标出追三星目标。没有显式目标时，成型棋盘
+        // 默认按二星估值，避免把所有非主C错误压成一星。
+        starTarget: Number(unit.starTarget) || (role === 'mainCarry' ? starTargetFor(unit.name) : 2),
         traits: traitsForHero(unit.name),
       };
     }),
@@ -668,6 +671,7 @@ function officialBoardRows(rows) {
     return {
       name: unit.name || nameOf.hero(unit.hero_id),
       price: Number(unit.price) || priceOf(unit.name || nameOf.hero(unit.hero_id)),
+      starTarget: Number(unit.starTarget || unit.star) || (unit.star3 ? 3 : null),
       row: Number(unit.row) || row,
       col: Number(unit.col) || col,
       carry: !!unit.carry || !!unit.is_carry_hero,
