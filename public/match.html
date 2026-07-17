@@ -295,6 +295,7 @@ let unheard = [];
 let augChoices = null;
 let lastExecutionId = "";
 let lastExecutionName = "";
+let lastExecutionFamily = "";
 let lastRenderedTop = null;
 let lastDetailRow = null;
 let expandedReachId = "";
@@ -596,6 +597,7 @@ function clearGame() {
   manualLockId = "";
   lastExecutionId = "";
   lastExecutionName = "";
+  lastExecutionFamily = "";
   lastRenderedTop = null;
   expandedReachId = "";
   save();
@@ -1155,6 +1157,7 @@ function renderRoute() {
     box.innerHTML = `<div class="empty">说出这把看到的棋子、装备、符文。<br>例如：安妮波比养刀，或者符文无情连打DD街区团队建设。</div>${unheardHtml()}`;
     lastExecutionId = "";
     lastExecutionName = "";
+    lastExecutionFamily = "";
     lastRenderedTop = null;
     lastDetailRow = null;
     return;
@@ -1174,15 +1177,17 @@ function renderRoute() {
   const execution = rowById(ranked, decision.executionId) || operational || current;
   const executionId = decision.executionId || routeId(execution);
   const executionName = execution.template.name;
+  const executionFamily = decision.executionFamily || execution.template.family || executionName;
   const t = execution.template;
   const selected = selectedObj();
   const topScore = rowScore(execution);
   const secondScore = second ? rowScore(second) : 0;
-  if (lastExecutionId && executionId && lastExecutionId !== executionId) {
-    showBanner(`执行路线变化 ${lastExecutionName || lastExecutionId} → ${executionName}`);
+  if (lastExecutionFamily && executionFamily && lastExecutionFamily !== executionFamily) {
+    showBanner(`执行体系变化 ${lastExecutionFamily} → ${executionFamily}`);
   }
   lastExecutionId = executionId;
   lastExecutionName = executionName;
+  lastExecutionFamily = executionFamily;
   lastRenderedTop = { name: leader.template.name, finalScore: rowScore(leader), sample: leader.virtualDecision ? leader.virtualDecision.robustScore : null };
   lastDetailRow = execution;
   const delta = Math.max(0, second ? rowScore(leader) - secondScore : rowScore(leader));
@@ -1211,6 +1216,7 @@ function renderRoute() {
   const lockLabel = manualLockId ? "解除手动锁定" : (lockDisabled ? "4级后可手动锁定" : "手动锁定终局上限");
   const strategicText = [leader, second, third].filter(Boolean).map((row, index) => `#${index + 1} ${row.template.name} ${rowScore(row)}分`).join(" ｜ ");
   const strategicCarry = strategic.template.routeProfile?.mainCarry?.name || strategic.template.carryUnits?.[0] || "待定";
+  const executionCarry = execution.template.routeProfile?.mainCarry?.name || execution.template.carryUnits?.[0] || "待定";
   const currentUnits = (decision.currentUnits || decision.currentBoardUnits || current.currentBoardEvaluation?.units || [])
     .map(row => typeof row === "string" ? row : row && (row.name || row.value))
     .filter(Boolean);
@@ -1223,8 +1229,8 @@ function renderRoute() {
   const executionScore = scoreText(decision.executionValue, execution.executionValue, execution.executionStrength,
     routeId(execution) === routeId(current) ? currentStrength : null, rowScore(execution));
   const earlyExecutionTitle = currentUnits.length ? "当前过渡" : "观察";
-  const executionConclusion = currentLevel <= 3 ? earlyExecutionTitle : executionName;
-  const actionTitle = currentLevel <= 3 ? earlyExecutionTitle : `现在执行 · ${executionName}`;
+  const executionConclusion = currentLevel <= 3 ? earlyExecutionTitle : `${executionFamily} · 主C${executionCarry}`;
+  const actionTitle = currentLevel <= 3 ? earlyExecutionTitle : `现在执行 · ${executionFamily} · 主C${executionCarry}`;
   const statusText = decision.status === "manual" ? "手动锁定"
     : decision.status === "committed" ? "模型定线"
     : decision.status === "pivoting" ? "执行转型"
@@ -1233,10 +1239,10 @@ function renderRoute() {
   const forecast = decision.forecast || null;
   const warning = forecast && forecast.warning;
   const forecastHtml = warning
-    ? `<div class="forecastStrip ${esc(warning.severity || "green")}">前瞻${warning.severity === "red" ? "止损" : warning.severity === "yellow" ? "预警" : "观察"} · ${esc(warning.text)} · 截止${esc(warning.deadline)}<br>现在：${esc(forecast.action || "继续观察")}</div>`
+    ? `<div class="forecastStrip ${esc(warning.severity || "green")}">前瞻${warning.severity === "red" ? "止损" : warning.severity === "yellow" ? "预警" : "观察"} · ${esc(warning.text)}<br>现在：${esc(forecast.action || "继续观察")}<br>下次检查：${esc(forecast.nextCheck || warning.deadline)} · 转：${esc(forecast.switchCondition || forecast.trigger || "条件满足再转")}<br>不转：${esc(forecast.stayCondition || "条件未满足就保留当前板")}</div>`
     : "";
   const portfolioHtml = forecast && Array.isArray(forecast.portfolio)
-    ? `<div class="portfolioLine">路线组合：${forecast.portfolio.map(row => `${esc(row.role)} ${esc(row.name)}`).join(" → ")}</div>`
+    ? `<div class="portfolioLine">路线组合：${forecast.portfolio.map(row => `${esc(row.role)} ${esc(row.family || row.name)}`).join(" → ")}</div>`
     : "";
   box.innerHTML = `
     <div>

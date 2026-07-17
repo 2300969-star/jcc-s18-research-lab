@@ -73,6 +73,12 @@
     commitmentCreditRatio: 0.2,
     commitmentCreditCap: 12,
     switchMargin: 3,
+    executionReadinessFloor: 0.7,
+    executionTransitionCap: 75,
+    transitionDeadbandRatio: 0.08,
+    futureTransitionCap: 70,
+    futureCompatibilityFloor: 0.3,
+    futureTransitionPenalty: 0.35,
   });
   const ROUND_ORDER = ["2-1", "2-5", "3-1", "3-2", "3-5", "4-1", "4-2", "4-5", "5-1", "5-5", "6-1"];
   // 散件方向纯度达到 2/3 时，给同方向主C路线 10% 确定性加成。
@@ -1531,6 +1537,12 @@
     return row && row.template && (row.template.id || row.template.name);
   }
 
+  function rowFamily(row) {
+    return row && row.template && (row.template.family
+      || row.template.routeProfile && row.template.routeProfile.family)
+      || rowId(row);
+  }
+
   function rowSortScore(row) {
     return Number.isFinite(Number(row.finalScore)) ? Number(row.finalScore) : Number(row.stageStrength);
   }
@@ -1541,7 +1553,11 @@
       const battle = row.template && row.template.virtualBattle;
       if (!battle || row.mechanicBlocked) return;
       const coverage = clamp(Number(battle.coverage) || 0, 0, 100) / 100;
-      const robust = clamp(Number(battle.robustScore) || VIRTUAL_BATTLE_CENTER, 0, 100);
+      const rawRobust = clamp(Number(battle.robustScore) || VIRTUAL_BATTLE_CENTER, 0, 100);
+      const stressRobust = Number.isFinite(Number(battle.stressRobustScore))
+        ? clamp(Number(battle.stressRobustScore), 0, 100)
+        : rawRobust;
+      const robust = Math.min(rawRobust, stressRobust);
       const raw = VIRTUAL_BATTLE_PRIOR_CAP * Math.tanh((robust - VIRTUAL_BATTLE_CENTER) / VIRTUAL_BATTLE_SCALE);
       const prior = Math.round(raw * coverage);
       row.preSimulationScore = row.finalScore;
@@ -1554,11 +1570,14 @@
         cvar10: Number(battle.cvar10) || 0,
         interval90: battle.interval90 || [],
         robustScore: robust,
+        rawRobustScore: rawRobust,
+        stressPenalty: Math.round((rawRobust - robust) * 10) / 10,
         coverage: Math.round(coverage * 1000) / 10,
         priorPoints: prior,
         unsupported: battle.unsupported || [],
       };
-      row.evidence = uniq([`虚拟实战${prior >= 0 ? "+" : ""}${prior}（${battle.battles}场，胜率${battle.winRate}%，CVaR ${battle.cvar10}，覆盖${battle.coverage}%）`, ...(row.evidence || [])]).slice(0, 6);
+      const pressureText = rawRobust > robust ? `，机制压力-${Math.round((rawRobust - robust) * 10) / 10}` : "";
+      row.evidence = uniq([`虚拟实战${prior >= 0 ? "+" : ""}${prior}（${battle.battles}场，胜率${battle.winRate}%，CVaR ${battle.cvar10}，覆盖${battle.coverage}%${pressureText}）`, ...(row.evidence || [])]).slice(0, 6);
     });
     return rows;
   }
@@ -1920,7 +1939,18 @@
   function forwardMetric(row, key) {
     const metric = row.template && row.template.forwardPlan && row.template.forwardPlan.stages
       && row.template.forwardPlan.stages[key];
-    if (metric) return metric;
+    if (metric) {
+      const rawCalibratedScore = Number(metric.calibratedScore) || 0;
+      const stressAdjustedScore = Number.isFinite(Number(metric.stressAdjustedScore))
+        ? Math.min(rawCalibratedScore, Number(metric.stressAdjustedScore))
+        : rawCalibratedScore;
+      return {
+        ...metric,
+        rawCalibratedScore,
+        calibratedScore: stressAdjustedScore,
+        stressAdjustedScore,
+      };
+    }
     const fallback = key === "1-5" ? row.currentStrength : key === "6-7" ? row.top4Value : row.top1Value;
     return { calibratedScore: Number(fallback) || 0, cvar10: 0, percentile: 50, coverage: 0 };
   }
@@ -2023,14 +2053,34 @@
     return routeMainCarry(row && row.template) || "核心主C";
   }
 
+  function routeUnitCost(template, name) {
+    const rows = uniq([
+      ...((template && template.routeProfile && template.routeProfile.units) || []),
+      ...routeStageRows(template).flatMap(stage => stage.units || []),
+    ].filter(row => row && row.name === name).map(row => Number(row.price) || 0));
+    return rows.find(Boolean) || 0;
+  }
+
+  function idealRollLevel(cost) {
+    return cost <= 1 ? 5 : cost === 2 ? 6 : cost === 3 ? 7 : cost === 4 ? 8 : 9;
+  }
+
   function planningAction(target, current, selected, warning, preparationOnly) {
     const same = rowId(target) === rowId(current);
     const missing = target.reachability && target.reachability.missing || [];
     const first = missing[0];
     const level = clamp(Number(selected.level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
+    const carry = carryName(target);
+    const carryUnavailable = (target.reachability && target.reachability.lateTargets || []).includes(carry);
+    const carryLevel = idealRollLevel(routeUnitCost(target.template, carry));
+    if (same && warning.risky && target.template.forwardPlan && target.template.forwardPlan.falseCeiling) {
+      return `把${carry}当阶段战力，不再追加无认证的追三投入；${warning.deadline}重算高费补强`;
+    }
     if (!same) {
-      if (preparationOnly) return `停止给${carryName(current)}追加装备或D牌；只留${carryName(target)}与共用散件，下一回合复查转型`;
-      if (warning.severity === "red") return `停止给${carryName(current)}追加沉没投入，立即留${carryName(target)}体系牌并转${target.template.name}`;
+      if (preparationOnly && carryUnavailable) return `保留当前两星板与共用散件；${carryLevel}级前不找${carry}，${warning.deadline}复查能否转${target.template.name}`;
+      if (preparationOnly) return `停止给${carryName(current)}追加装备或D牌；只留已出现的${carry}体系牌与共用散件，${warning.deadline}复查转型`;
+      if (warning.severity === "red" && carryUnavailable) return `停止给${carryName(current)}追加沉没投入，保留经济；先升${carryLevel}，见到${carry}后再转${target.template.name}`;
+      if (warning.severity === "red") return `停止给${carryName(current)}追加沉没投入，留已出现的${carry}体系牌并转${target.template.name}`;
       return `保留当前两星板过渡，只留${carryName(target)}及共用散件，${warning.deadline}前完成转型检查`;
     }
     if (first) {
@@ -2066,37 +2116,80 @@
       || rowSortScore(b) - rowSortScore(a)
       || stableCompare(a.template.name, b.template.name));
     const executableCandidates = futureCandidates.filter(row => row.feasible || row.committed);
-    const target = executableCandidates[0] || current;
-    const currentLate = Number(forwardMetric(current, "8-9").calibratedScore) || 0;
-    const pivotRows = (current.template.forwardPlan && current.template.forwardPlan.pivots
-      && current.template.forwardPlan.pivots[stageKey] || [])
+    const bestCandidate = executableCandidates[0] || current;
+    const candidateGain = Number(bestCandidate.planning.value) - Number(current.planning.value);
+    const candidateReadiness = (Number(bestCandidate.currentBoardScore) || 0) / Math.max(1, Number(current.currentBoardScore) || 0);
+    const transitionCost = Number(bestCandidate.planning.transitionCost) || 0;
+    const switchGate = FORWARD_MODEL.switchMargin
+      + Math.max(0, transitionCost - 40) * FORWARD_MODEL.transitionDeadbandRatio;
+    const irreversible = Boolean(bestCandidate.committed
+      || (bestCandidate.commitment && bestCandidate.commitment.evidenceKinds || []).some(kind => kind !== "core-upgrade"));
+    const canExecuteCandidate = rowId(bestCandidate) !== rowId(current)
+      && (current.blocked || irreversible || (candidateGain >= switchGate
+        && candidateReadiness >= FORWARD_MODEL.executionReadinessFloor
+        && transitionCost <= FORWARD_MODEL.executionTransitionCap));
+    const target = canExecuteCandidate ? bestCandidate : current;
+    // 不可逆强化可以决定“现在执行”，但不能把同一条低上限路线永久冒充“未来目标”。
+    // 从实际执行线继续向外搜索兼容上限，形成执行核与终局升级两层结论。
+    const planningBase = target;
+    const currentLate = Number(forwardMetric(planningBase, "8-9").calibratedScore) || 0;
+    const pivotRows = (planningBase.template.forwardPlan && planningBase.template.forwardPlan.pivots
+      && planningBase.template.forwardPlan.pivots[stageKey] || [])
       .map(pivot => rows.find(row => rowId(row) === pivot.targetId))
       .filter(row => row && !row.mechanicBlocked);
     const bridge = pivotRows.find(row => Number(row.planning && row.planning.transitionCost) <= 75
       && !row.template.forwardPlan?.falseCeiling
       && (Number(forwardMetric(row, "8-9").calibratedScore) || 0) >= currentLate + 12);
-    const genericFuture = futureCandidates.find(row => rowId(row) !== rowId(current)
-      && !row.template.forwardPlan?.falseCeiling
-      && (Number(forwardMetric(row, "8-9").calibratedScore) || 0) >= currentLate + 12);
-    const futureTarget = stageKey === "8-9" ? target : bridge || genericFuture || target;
-    const warningTarget = rowId(target) === rowId(current) ? futureTarget : target;
-    const warning = buildForwardWarning(current, warningTarget, selected);
-    const portfolioRows = [current, bridge || futureTarget, strategic].filter(Boolean)
+    const genericFuture = rows.filter(row => rowId(row) !== rowId(planningBase)
+      && !row.mechanicBlocked
+      && !row.template.forwardPlan?.falseCeiling)
+      .map(row => {
+        const transition = staticTransitionCost(planningBase, row, stageKey);
+        const late = Number(forwardMetric(row, "8-9").calibratedScore) || 0;
+        return {
+          row,
+          transition,
+          late,
+          value: late - transition.cost * FORWARD_MODEL.futureTransitionPenalty,
+        };
+      })
+      .filter(candidate => candidate.late >= currentLate + 12
+        && candidate.transition.cost <= FORWARD_MODEL.futureTransitionCap
+        && candidate.transition.compatibility >= FORWARD_MODEL.futureCompatibilityFloor)
+      .sort((a, b) => b.value - a.value
+        || b.late - a.late
+        || stableCompare(a.row.template.name, b.row.template.name))[0]?.row;
+    const futureTarget = stageKey === "8-9" ? planningBase : bridge || genericFuture || planningBase;
+    const warningTarget = futureTarget;
+    const warning = buildForwardWarning(planningBase, warningTarget, selected);
+    const portfolioRows = [current, planningBase, bridge || futureTarget, strategic].filter(Boolean)
       .filter((row, index, all) => all.findIndex(other => rowId(other) === rowId(row)) === index);
-    const trigger = rowId(target) === rowId(current)
-      ? `止损条件：${warning.deadline}时阶段分继续下滑或核心仍未达标，切换到兼容路线`
-      : `转型触发：见到${carryName(target)}2星或凑出两件核心装；血量低于35则提前一回合`;
+    const warningCarry = carryName(warningTarget);
+    const warningCarryUnavailable = (warningTarget.reachability && warningTarget.reachability.lateTargets || []).includes(warningCarry);
+    const warningCarryLevel = idealRollLevel(routeUnitCost(warningTarget.template, warningCarry));
+    const trigger = rowId(warningTarget) !== rowId(planningBase)
+      ? warningCarryUnavailable
+        ? `转型条件：升到${warningCarryLevel}且见到${warningCarry}；未满足则保留当前板，不为未来牌硬D`
+        : `止损条件：${warning.deadline}时阶段分继续下滑且${warningCarry}已出现，再切兼容路线`
+      : warning.risky && planningBase.template.forwardPlan?.falseCeiling
+        ? `上限结论：暂无模型认证的兼容升级线；停止追加追三，${warning.deadline}按新来牌重算`
+        : `转型触发：见到${carryName(target)}2星或凑出两件核心装；血量低于35则提前一回合`;
     return {
       stageKey,
       target,
+      futureTarget: warningTarget,
       warning,
-      action: planningAction(warning.risky ? warningTarget : target, current, selected, warning,
-        rowId(target) === rowId(current) && rowId(warningTarget) !== rowId(current)),
+      action: planningAction(warning.risky ? warningTarget : target, planningBase, selected, warning,
+        rowId(warningTarget) !== rowId(planningBase)),
       trigger,
+      nextCheck: warning.deadline,
+      stayCondition: `当前板仍能稳血，或${warningCarry}与关键装未同时出现，就不拆板`,
+      switchCondition: trigger,
       portfolio: portfolioRows.map((row, index) => ({
         role: index === 0 ? "保血" : index === portfolioRows.length - 1 ? "上限" : "可转",
         id: rowId(row),
         name: row.template.name,
+        family: rowFamily(row),
         score: row.planning.value,
       })),
     };
@@ -2121,7 +2214,9 @@
       row.executionAmbition = executionProfile.ambition;
       row.executionWeights = executionProfile.weights;
     });
-    const currentPool = rows.some(row => row.feasible) ? rows.filter(row => row.feasible) : rows;
+    // “当前最强板”只回答眼前谁能打，不能被终局缺牌成本或未来抗脆弱门槛污染。
+    // 仅排除本局已经不可能成立的专属机制路线。
+    const currentPool = rows.some(row => !row.mechanicBlocked) ? rows.filter(row => !row.mechanicBlocked) : rows;
     const current = [...currentPool].sort((a, b) => b.currentBoardScore - a.currentBoardScore
       || rowSortScore(b) - rowSortScore(a)
       || teamSearchScore(b.template) - teamSearchScore(a.template)
@@ -2204,20 +2299,26 @@
       } else if (committed && rowId(committed) === rowId(execution)) {
         status = "committed";
       } else {
-        status = "observing";
-        text = rolling.warning.risky ? `暂不换板，但${rolling.warning.deadline}必须复查上限` : "阶段曲线稳定，继续当前执行线";
+        const preparing = rolling.futureTarget && rowId(rolling.futureTarget) !== rowId(current) && rolling.warning.risky;
+        status = preparing ? "planning" : "observing";
+        text = preparing
+          ? `当前板继续保血；到${rolling.warning.deadline}只在转型条件满足时换线`
+          : "阶段曲线稳定，继续当前执行线";
       }
     }
     execution.execution = true;
     const forecast = rolling ? {
       stageKey: rolling.stageKey,
-      targetId: rowId(rolling.target),
-      targetName: rolling.target.template.name,
-      targetScore: rolling.target.planning.value,
+      targetId: rowId(rolling.futureTarget || rolling.target),
+      targetName: (rolling.futureTarget || rolling.target).template.name,
+      targetScore: (rolling.futureTarget || rolling.target).planning.value,
       currentScore: current.planning.value,
       warning: rolling.warning,
       action: rolling.action,
       trigger: rolling.trigger,
+      nextCheck: rolling.nextCheck,
+      stayCondition: rolling.stayCondition,
+      switchCondition: rolling.switchCondition,
       portfolio: rolling.portfolio,
       formula: `Q=${rolling.target.planning.current}×${FORWARD_MODEL.currentWeight}+${rolling.target.planning.next}×${FORWARD_MODEL.nextWeight}+${rolling.target.planning.terminal}×${FORWARD_MODEL.terminalWeight}-转型${rolling.target.planning.transitionCost}×${FORWARD_MODEL.transitionPenalty}-沉没${rolling.target.planning.sunkCost}×${FORWARD_MODEL.sunkAssetPenalty}-资源${rolling.target.planning.resourcePenalty}-尾险${rolling.target.planning.tailRisk}+期权${rolling.target.planning.optionValue}+连续性${rolling.target.planning.commitmentCredit}=${rolling.target.planning.value}`,
     } : null;
@@ -2230,13 +2331,16 @@
       currentBoardUnits: current.currentBoardEvaluation.units,
       currentId: rowId(current),
       currentName: current.template.name,
+      currentFamily: rowFamily(current),
       currentStrength: current.currentStrength,
       strategicId: rowId(strategic),
       strategicName: strategic.template.name,
+      strategicFamily: rowFamily(strategic),
       committedId: committed ? rowId(committed) : "",
       committedName: committed ? committed.template.name : "",
       executionId: rowId(execution),
       executionName: execution.template.name,
+      executionFamily: rowFamily(execution),
       top4Value: execution.top4Value,
       top1Value: execution.top1Value,
       executionValue: execution.executionValue,
@@ -3053,9 +3157,15 @@
     };
     const forecastSignals = [{ kind: "levels", level: 5 }, { kind: "stage", value: "3-5" }, { kind: "health", value: 70 }, { kind: "gold", value: 50 }, { kind: "units", value: "P", star: 2 }];
     const forecastRows = rank([forecastLow, forecastCap], selectedFromSignals(forecastSignals), fallbackWeights, 2, { operationalCommitment: true, unitPrices: { P: 1, Q: 4 } });
-    assert(forecastRows.decision.currentId === "前强后弱预警线" && forecastRows.decision.executionId === "兼容登顶转型线", "滚动规划应在当前板仍强时提前转向兼容高上限路线");
+    assert(forecastRows.decision.currentId === "前强后弱预警线"
+      && forecastRows.decision.executionId === "前强后弱预警线"
+      && forecastRows.decision.forecast.targetId === "兼容登顶转型线",
+    "滚动规划应提前报出兼容高上限路线，但现场承接不足时不得假装已经转型");
     assert(forecastRows.decision.forecast.warning.severity === "red" && forecastRows.decision.forecast.warning.deadline === "3-5", "到达高开低走路线截止回合必须给红色止损预警");
-    assert(forecastRows.decision.forecast.portfolio.length >= 2 && forecastRows.decision.forecast.action.includes("停止给"), "前瞻必须输出路线组合和具体止损动作");
+    assert(forecastRows.decision.forecast.portfolio.length >= 2
+      && /转型条件|止损条件/.test(forecastRows.decision.forecast.switchCondition)
+      && forecastRows.decision.forecast.stayCondition.includes("不拆板"),
+    "前瞻必须同时输出转与不转的确定条件");
     const lockedForecast = rank([forecastLow, forecastCap], selectedFromSignals(forecastSignals), fallbackWeights, 2, { operationalCommitment: true, manualLockId: "前强后弱预警线", unitPrices: { P: 1, Q: 4 } });
     assert(lockedForecast.decision.status === "manual" && lockedForecast.decision.executionId === "前强后弱预警线", "手动锁定仍是滚动规划唯一绝对锁");
     assertNoBadNumbers(JSON.stringify(forecastRows.decision), "滚动前瞻不得输出999/Infinity/NaN");
