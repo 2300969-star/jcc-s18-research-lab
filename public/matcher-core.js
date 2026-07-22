@@ -108,11 +108,22 @@
   const AUGMENT_ECON_DISCOUNT_CAP = 0.3;
   const AUGMENT_ITEM_MISSING_CAP = 3;
   const AUGMENT_ITEM_BONUS_CAP = 10;
-  // 英雄强化回合只提供费用可行域；具体的1/2、2/3等同局组合仍由游戏随机决定。
+  // 英雄强化回合先提供“可能出现费用”的并集；同局实际只会落入一个相邻费用桶。
+  // 官方12.23：2-1为1/2费或2/3费；13.5又把2费升级到3费的概率降为5%。
+  // 因此3费在2-1不是绝对不可能，但只能按稀有事件的期望值计分，不能按完整期权定线。
   const HERO_AUGMENT_ROUND_COSTS = {
     "2-1": [1, 2, 3],
     "3-2": [2, 3, 4],
     "4-2": [3, 4, 5],
+  };
+  const HERO_AUGMENT_RARE_COST_PRIORS = {
+    "2-1": { 3: 0.05 },
+    "4-2": { 5: 0.05 },
+  };
+  const HERO_AUGMENT_ROUND_HINTS = {
+    "2-1": "常规1/2费；3费仅约5%升级事件，不作为预先定线依据；排除4/5费",
+    "3-2": "费用桶为2/3费或3/4费；排除1/5费",
+    "4-2": "费用桶为3/4费或4/5费；5费约5%；排除1/2费",
   };
   // 可出现的主C专属强化提供有限期权值；本局不可能出现时只关闭专属分支，不误杀基础阵容。
   const HERO_AUGMENT_OPTION_BONUS = 6;
@@ -407,6 +418,20 @@
     return HERO_AUGMENT_ROUND_COSTS[raw] ? raw : "unknown";
   }
 
+  function heroAugmentCostFactor(round, cost) {
+    const priors = HERO_AUGMENT_RARE_COST_PRIORS[round] || {};
+    return Object.prototype.hasOwnProperty.call(priors, cost) ? Number(priors[cost]) || 0 : 1;
+  }
+
+  function heroAugmentOptionExpectation(round, rows) {
+    const factors = (rows || []).map(row => heroAugmentCostFactor(round, Number(row.cost)));
+    const appearanceFactor = factors.length ? Math.max(...factors) : 0;
+    return {
+      appearanceFactor,
+      scoreDelta: HERO_AUGMENT_OPTION_BONUS * appearanceFactor,
+    };
+  }
+
   function heroAugmentRoleContract(t, selected) {
     const state = selected && selected.heroAugment || {};
     const chosen = state.status === "resolved" && state.selected;
@@ -443,7 +468,21 @@
     const traits = uniq(eligible.flatMap(row => row.traits || [])).slice(0, 3);
     const heroes = uniq(eligible.map(row => row.hero));
     const optionNames = uniq(candidates.map(row => row.name));
-    const base = { round, costs, excludedCosts, mainCarry, traits, heroes, options, eligible, required: !!required.length, scoreDelta: 0, hardBlock: false };
+    const expectation = heroAugmentOptionExpectation(round, eligible);
+    const base = {
+      round,
+      costs,
+      excludedCosts,
+      mainCarry,
+      traits,
+      heroes,
+      options,
+      eligible,
+      required: !!required.length,
+      appearanceFactor: expectation.appearanceFactor,
+      scoreDelta: 0,
+      hardBlock: false,
+    };
     if (globalHeroAugment.status === "conflict") {
       return {
         ...base,
@@ -486,6 +525,13 @@
       };
     }
     if (required.length) {
+      if (expectation.appearanceFactor > 0 && expectation.appearanceFactor < 1) {
+        return {
+          ...base,
+          status: "rare",
+          text: `等${round}强化决定：${heroes.join("/")}专属仅约${Math.round(expectation.appearanceFactor * 100)}%稀有出现，不作为预定线依据`,
+        };
+      }
       return { ...base, status: "waiting", text: `等${round}强化决定：${heroes.join("/")}专属仍在费用池` };
     }
     if (mainOptions.length && !eligible.length) {
@@ -497,10 +543,19 @@
       };
     }
     if (mainOptions.length) {
+      if (expectation.appearanceFactor > 0 && expectation.appearanceFactor < 1) {
+        const expectedScore = Math.round(expectation.scoreDelta * 10) / 10;
+        return {
+          ...base,
+          status: "rare",
+          scoreDelta: expectedScore,
+          text: `${round}稀有事件：${heroes.join("/")}专属约${Math.round(expectation.appearanceFactor * 100)}%可出现，期权+${expectedScore}分（不作为定线依据）`,
+        };
+      }
       return {
         ...base,
         status: "waiting",
-        scoreDelta: HERO_AUGMENT_OPTION_BONUS,
+        scoreDelta: expectation.scoreDelta,
         text: `等${round}强化决定：${heroes.join("/")}专属可出现，期权+${HERO_AUGMENT_OPTION_BONUS}分`,
       };
     }
@@ -2893,6 +2948,13 @@
     assert(lowAtFour.heroAugment.status === "base-only" && !lowAtFour.mechanicBlocked, "4-2应关闭二费专属分支但保留基础阵容");
     assert(threeAtFour.heroAugment.status === "waiting" && threeAtFour.stageStrength > noRoundBefore.stageStrength, "4-2必须保留三费英雄强化并计入期权");
     assert(hardAtFour.heroAugment.status === "closed" && hardAtFour.stageStrength === 0, "4-2应硬关闭二费专属门槛路线");
+    const lowAtTwo = scoreTemplate(lowOptional, { units: [], items: [], augments: [], augmentCats: [], heroAugmentRound: "2-1" }, fallbackWeights, {});
+    const threeAtTwo = scoreTemplate(threeOptional, { units: [], items: [], augments: [], augmentCats: [], heroAugmentRound: "2-1" }, fallbackWeights, {});
+    assert(lowAtTwo.heroAugment.status === "waiting" && lowAtTwo.heroAugment.scoreDelta === HERO_AUGMENT_OPTION_BONUS,
+      "2-1二费专属必须保留完整期权值");
+    assert(threeAtTwo.heroAugment.status === "rare" && threeAtTwo.heroAugment.appearanceFactor === 0.05
+      && threeAtTwo.heroAugment.scoreDelta === 0.3 && /不作为定线依据/.test(threeAtTwo.heroAugment.text),
+      "2-1三费专属必须按5%稀有事件折现，不能领取完整+6期权");
     const heroCatalog = [
       { name: "嗜火", hero: "安妮", cost: 2, traits: ["小天才", "福牛守护者", "灵能使"], effect: { grantedHero: "安妮", grantedCopies: 1, areaExpanded: true, stunSeconds: 2 } },
       { name: "无情连打", hero: "贾克斯", cost: 3, traits: ["战斗机甲", "斗士"], effect: { grantedHero: "贾克斯", grantedCopies: 1, areaExpanded: false, stunSeconds: 0 } },
@@ -3510,6 +3572,8 @@
     AUGMENT_OPERATOR_SINGLE_CAP,
     AUGMENT_OPERATOR_TOTAL_CAP,
     HERO_AUGMENT_ROUND_COSTS,
+    HERO_AUGMENT_RARE_COST_PRIORS,
+    HERO_AUGMENT_ROUND_HINTS,
     HERO_AUGMENT_OPTION_BONUS,
     HERO_AUGMENT_UNAVAILABLE_PENALTY,
     HERO_AUGMENT_CONTROL_CAP,
@@ -3528,6 +3592,7 @@
     activeTraitsForTemplate,
     heroAugmentDecision,
     normalizeHeroAugmentRound,
+    heroAugmentCostFactor,
     parseTraitsInText,
     normalizeSelectedUnits,
     runTests,

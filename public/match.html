@@ -796,6 +796,7 @@ function renderHeroAugmentRound() {
   const box = $("heroAugRow");
   const costs = MatcherCore.HERO_AUGMENT_ROUND_COSTS && MatcherCore.HERO_AUGMENT_ROUND_COSTS[currentHeroAugmentRound];
   const excluded = costs ? [1, 2, 3, 4, 5].filter(x => !costs.includes(x)) : [];
+  const roundHint = MatcherCore.HERO_AUGMENT_ROUND_HINTS && MatcherCore.HERO_AUGMENT_ROUND_HINTS[currentHeroAugmentRound];
   const resolved = selectedObj();
   const state = resolved.heroAugment || {};
   const resolvedHint = state.status === "resolved" && state.selected
@@ -804,7 +805,7 @@ function renderHeroAugmentRound() {
   box.innerHTML = `<span class="label">英雄强化</span>` + HERO_AUGMENT_CHOICES.map(round =>
     `<button class="heroAugChip ${round === currentHeroAugmentRound ? "on" : ""}" data-hero-round="${round}">${round === "unknown" ? "未知" : round}</button>`
   ).join("") + (costs
-    ? `<span class="heroAugHint">${resolvedHint || `候选${costs.join("/")}费；排除${excluded.join("/")}费专属强化`}</span>`
+    ? `<span class="heroAugHint">${resolvedHint || roundHint || `候选${costs.join("/")}费；排除${excluded.join("/")}费专属强化`}</span>`
     : `<span class="heroAugHint">${resolvedHint || "开局按预告选择，立即裁剪不可能路线"}</span>`);
   box.querySelectorAll("[data-hero-round]").forEach(btn => btn.addEventListener("click", () => setHeroAugmentRound(btn.dataset.heroRound)));
 }
