@@ -8,7 +8,7 @@
   const FILLERS = [
     "来了", "来个", "拿了", "拿到", "拿着", "一个", "还有", "然后", "以及", "给我", "看到",
     "看见", "现在", "这把", "有个", "有一个", "帮我", "可以", "的话", "那个", "这个",
-    "我是", "我这边", "我现在", "这边", "已经", "嗯", "啊",
+    "我是", "我这边", "我现在", "这边", "已经", "开场", "嗯", "啊",
   ];
   const CLEAR_WORDS = ["重开", "新的一局", "新局", "清空", "重新开始"];
   const REMOVE_WORDS = ["删掉", "去掉", "不要", "删除", "移除", "卖掉", "卖了", "清除"];
@@ -183,6 +183,14 @@
     return { options: {}, templates: [] };
   }
 
+  function getMechanisms() {
+    if (root && root.JCC_MECHANISMS) return root.JCC_MECHANISMS;
+    if (typeof require === "function") {
+      try { return require("../artifacts/results/mechanism_catalog.json"); } catch (e) {}
+    }
+    return { openingEncounters: [], guardians: [] };
+  }
+
   function norm(s) {
     return String(s || "").toLowerCase().replace(/[\s,，、+＋/|;；:：!！?？。,.()（）\[\]【】·.\-_—>→]/g, "");
   }
@@ -219,6 +227,7 @@
   function buildVocab() {
     if (cache) return cache;
     const matcher = getMatcher();
+    const mechanisms = getMechanisms();
     const entries = [];
     const push = (kind, value, labels) => {
       [value, ...(labels || [])].filter(Boolean).forEach(label => {
@@ -243,6 +252,8 @@
     const monsters = new Set();
     (matcher.templates || []).forEach(t => (t.monsterPrefs || []).forEach(x => monsters.add(x)));
     monsters.forEach(x => push("monsters", x, []));
+    (mechanisms.guardians || []).forEach(row => push("monsters", row.name, []));
+    (mechanisms.openingEncounters || []).forEach(row => push("encounters", row.name, []));
 
     const seen = new Set();
     const clean = entries.filter(e => {
@@ -838,6 +849,10 @@
     const dSpend = parse("为凯尔D了20金", []);
     if (!dSpend.add.some(x => x.kind === "commitments" && x.commitmentType === "d-spend" && x.targetUnit === "凯尔" && x.gold === 20)) throw new Error("实际D牌支出必须形成不可逆事件");
     if (dSpend.add.some(x => x.kind === "gold")) throw new Error("D牌支出不得误记为当前金币");
+    const encounter = parse("开场金币订阅", []);
+    assertIncludes(encounter.add, "encounters", "金币订阅");
+    const guardian = parse("防御塔经济", []);
+    assertIncludes(guardian.add, "monsters", "防御塔（经济）");
     console.log("signal-parser assertions passed");
   }
 

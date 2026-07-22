@@ -120,6 +120,24 @@ button, input { font:inherit; }
 .commandCell.stay { border-color:color-mix(in srgb, var(--s1) 45%, var(--border)); }
 .commandStep { color:var(--muted); font-size:12px; font-weight:950; }
 .commandValue { margin-top:4px; color:var(--ink); font-size:17px; line-height:1.36; font-weight:900; overflow-wrap:anywhere; }
+.jointReach { margin-top:9px; border:1px solid var(--grid); border-radius:8px; padding:9px; background:var(--surface); }
+.jointReachHead { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:7px; color:var(--ink); font-size:13px; font-weight:950; }
+.jointReachHead small { color:var(--muted); font-size:11px; font-weight:800; }
+.jointReachGrid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:7px; }
+.jointCard { min-width:0; border:1px solid var(--grid); border-radius:8px; padding:8px 9px; background:var(--plane); }
+.jointCard.green { border-color:color-mix(in srgb, var(--s2) 58%, var(--border)); }
+.jointCard.yellow { border-color:color-mix(in srgb, var(--s3) 62%, var(--border)); }
+.jointCard.red { border-color:color-mix(in srgb, var(--s6) 58%, var(--border)); }
+.jointTitle { display:flex; align-items:center; justify-content:space-between; gap:8px; color:var(--ink2); font-size:12px; font-weight:900; }
+.jointPct { color:var(--ink); font-size:20px; font-weight:950; }
+.jointBar { height:6px; margin-top:6px; border-radius:99px; overflow:hidden; background:var(--grid); }
+.jointBar i { display:block; height:100%; border-radius:inherit; background:var(--s2); }
+.jointCard.yellow .jointBar i { background:var(--s3); }
+.jointCard.red .jointBar i { background:var(--s6); }
+.jointMeta { margin-top:6px; color:var(--muted); font-size:11px; line-height:1.35; overflow-wrap:anywhere; }
+.jointMechanisms { display:flex; flex-wrap:wrap; gap:5px; margin-top:7px; }
+.jointMechanism { border:1px solid var(--grid); border-radius:999px; padding:2px 7px; color:var(--ink2); font-size:11px; font-weight:800; }
+.jointMechanism.pending { color:var(--muted); border-style:dashed; }
 .keyFlags { display:flex; flex-wrap:wrap; gap:7px; margin-top:9px; }
 .keyFlag { min-width:0; max-width:100%; border:1px solid var(--border); border-radius:999px; padding:4px 10px; color:var(--ink2); background:var(--surface); font-size:13px; font-weight:850; overflow-wrap:anywhere; }
 .keyFlag.green { color:var(--s2); border-color:color-mix(in srgb, var(--s2) 58%, var(--border)); }
@@ -273,6 +291,7 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
   .flowArrow b { transform:rotate(90deg); font-size:20px; }
   .flowArrow small { margin:0; }
   .commandGrid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .jointReachGrid { grid-template-columns:repeat(2,minmax(0,1fr)); }
   .commandCell.stay { grid-column:1 / -1; }
   .pivotMap { grid-template-columns:1fr; }
   .pivotRail { height:24px; min-height:24px; }
@@ -285,6 +304,7 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
 }
 @media (max-width: 560px) {
   .commandGrid { grid-template-columns:1fr; }
+  .jointReachGrid { grid-template-columns:1fr; }
   .commandCell { min-height:0; }
   .pivotBranch { grid-template-columns:1fr; }
   .pivotGo { transform:rotate(90deg); }
@@ -353,7 +373,9 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
 <script src="data.js?v=meta-20260712a"></script>
 <script src="stage2-matcher-data.js?v=hero-round-20260712a"></script>
 <script src="odds-data.js?v=match-20260706e"></script>
-<script src="matcher-core.js?v=hero-role-contract-20260717a"></script>
+<script src="mechanism-data.js?v=mechanism-20260723a"></script>
+<script src="shop-reachability.js?v=joint-shop-20260723a"></script>
+<script src="matcher-core.js?v=joint-shop-20260723a"></script>
 <script src="signal-parser.js?v=match-20260706e"></script>
 <script src="augment-advisor.js?v=match-20260715a"></script>
 <script src="llm-lane.js?v=match-20260712b"></script>
@@ -925,6 +947,7 @@ function rankWithManualLock(lockId) {
     oddsData: window.JCC_ODDS,
     unitPrices: UNIT_PRICES,
     unitTraits: UNIT_TRAITS,
+    mechanismData: window.JCC_MECHANISMS,
     heroAugments: STAGE2_MATCHER.options.heroAugments || [],
     antiFragile: currentLevel >= 4,
     operationalCommitment: true,
@@ -1295,6 +1318,17 @@ function openRouteDetail(row) {
       mk("div", "detailLine", "核心组件：" + af.core.map(x => `${x.label}${Math.round(x.readiness * 100)}%`).join("、"), body);
     }
   }
+  if (row.reachability && row.reachability.joint) {
+    const joint = row.reachability.joint;
+    mk("div", "detailSection", "共享商店联合可达性", body);
+    (joint.packages || []).forEach(pkg => {
+      const bottleneck = pkg.bottleneck && pkg.bottleneck.need > 0 ? `；瓶颈${pkg.bottleneck.name}缺${pkg.bottleneck.need}张，牌值${pkg.bottleneck.cardValueGold}金` : "；关键棋子已齐";
+      mk("div", "detailLine", `${pkg.label}：完成率${pkg.completionPct}%（${pkg.trials}次确定性蒙特卡洛，${pkg.gold}金${pkg.budgetSource === "stage-prior" ? "阶段预算先验" : "当前预算"}）${bottleneck}`, body);
+    });
+    const mechanismLines = [...(joint.mechanisms && joint.mechanisms.applied || []), ...(joint.mechanisms && joint.mechanisms.pending || [])];
+    if (mechanismLines.length) mk("div", "detailLine", `机制边界：${mechanismLines.join("；")}`, body);
+    mk("div", "detailLine", "牌池份数是历史先验；未录入对手持牌不会从共享牌池扣除。概率只用于风险，不折算缺卡金币。", body);
+  }
   if (row.virtualDecision) {
     const sample = row.virtualDecision;
     mk("div", "detailSection", "虚拟实战数字孪生", body);
@@ -1375,6 +1409,29 @@ function reachHtml(row) {
   const late = lateRows.length ? `后期目标：${lateVisible.join("、")}${!expanded && lateRows.length > 3 ? ` 等${lateRows.length}项` : ""}` : "";
   const toggle = costItems.length > 3 || lateRows.length > 3 ? `<button class="reachToggle" data-reach="${esc(id)}">${expanded ? "收起" : "展开"}</button>` : "";
   return `<div class="reachBox">缺口：${esc(costText)}${toggle}${late ? `<br>${esc(late)}` : ""}</div>`;
+}
+function jointReachHtml(row) {
+  const joint = row && row.reachability && row.reachability.joint;
+  if (!joint || !(joint.packages || []).length) return "";
+  const stateClass = pct => pct >= 60 ? "green" : pct >= 25 ? "yellow" : "red";
+  const cards = joint.packages.slice(0, 3).map(pkg => {
+    const bottleneck = pkg.bottleneck;
+    const gap = bottleneck && bottleneck.need > 0
+      ? `瓶颈 ${bottleneck.name}缺${bottleneck.need}张 · 牌值${bottleneck.cardValueGold}金`
+      : "关键棋子已齐";
+    return `<div class="jointCard ${stateClass(pkg.completionPct)}">
+      <div class="jointTitle"><span>${esc(pkg.label)}</span><span class="jointPct">${pkg.completionPct}%</span></div>
+      <div class="jointBar"><i style="width:${Math.max(0, Math.min(100, pkg.completionPct))}%"></i></div>
+      <div class="jointMeta">${esc(gap)} · ${pkg.gold}金${pkg.budgetSource === "stage-prior" ? "阶段预算先验" : "当前预算"} · ${pkg.trials}次</div>
+    </div>`;
+  }).join("");
+  const applied = (joint.mechanisms && joint.mechanisms.applied || []).map(text => `<span class="jointMechanism">已生效 · ${esc(text)}</span>`);
+  const pending = (joint.mechanisms && joint.mechanisms.pending || []).map(text => `<span class="jointMechanism pending">未计入 · ${esc(text)}</span>`);
+  return `<div class="jointReach">
+    <div class="jointReachHead"><span>共享商店联合可达性</span><small>概率单列；金额只算棋子面值</small></div>
+    <div class="jointReachGrid">${cards}</div>
+    ${applied.length || pending.length ? `<div class="jointMechanisms">${[...applied, ...pending].join("")}</div>` : ""}
+  </div>`;
 }
 function heroAugmentHtml(row) {
   const hero = row && row.heroAugment;
@@ -1594,6 +1651,7 @@ function renderRoute() {
             <div class="commandValue" id="decisionStayText">${esc(commandStay)}</div>
           </div>
         </div>
+        ${jointReachHtml(execution)}
         <div class="keyFlags">${riskFlag}${heroFlag}</div>
         <div class="pivotSection">
           <div class="pivotHead">
