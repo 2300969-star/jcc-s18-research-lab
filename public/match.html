@@ -40,6 +40,10 @@ button, input { font:inherit; }
 .llmDot.ok { background:var(--s2); box-shadow:0 0 0 4px color-mix(in srgb, var(--s2) 22%, transparent); }
 .llmDot.fail { background:var(--muted); }
 .aiMark { display:inline-grid; place-items:center; min-width:24px; height:20px; margin-left:6px; border-radius:999px; background:var(--s5); color:#fff; font-size:12px; font-weight:950; vertical-align:middle; }
+.narrationState { display:inline-flex; align-items:center; width:max-content; min-height:25px; margin-bottom:2px; border:1px solid color-mix(in srgb, var(--s5) 55%, var(--border)); border-radius:999px; padding:2px 9px; color:var(--s5); background:color-mix(in srgb, var(--surface) 90%, var(--s5) 10%); font-size:12px; font-weight:950; }
+.narrationState.work { color:var(--muted); border-color:var(--border); background:var(--surface); }
+.toggleLine { display:flex !important; grid-template-columns:auto 1fr; align-items:center; gap:9px !important; min-height:38px; }
+.toggleLine input { width:20px; height:20px; padding:0; accent-color:var(--s5); }
 .banner { position:fixed; left:50%; top:16px; transform:translateX(-50%); z-index:5; background:var(--s2); color:#fff;
   padding:10px 18px; border-radius:999px; font-weight:900; box-shadow:0 10px 30px rgba(0,0,0,.24); opacity:0; pointer-events:none; transition:opacity .18s; }
 .banner.show { opacity:1; }
@@ -325,6 +329,10 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
   <label>模型名
     <input id="llmModel" autocomplete="off">
   </label>
+  <label class="toggleLine">
+    <input id="llmNarrationEnabled" type="checkbox">
+    <span>动作讲解：只压缩行动合同，不参与推荐与打分</span>
+  </label>
   <div class="settingsActions">
     <button id="llmTest" class="smallBtn">测试连接</button>
     <button id="llmExport" class="smallBtn">导出没听懂日志</button>
@@ -349,6 +357,7 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
 <script src="signal-parser.js?v=match-20260706e"></script>
 <script src="augment-advisor.js?v=match-20260715a"></script>
 <script src="llm-lane.js?v=match-20260712b"></script>
+<script src="decision-narrator.js?v=match-20260723a"></script>
 <script>
 "use strict";
 const LS = "jcc-match-";
@@ -400,6 +409,11 @@ let expandedReachId = "";
 let bannerTimer = null;
 let llmSeq = 0;
 let llmAbortController = null;
+let narrationSeq = 0;
+let narrationAbortController = null;
+let narrationTimer = null;
+let currentNarrationKey = "";
+const narrationCache = new Map();
 let isComposing = false;
 
 function load() {
@@ -718,6 +732,7 @@ function appendMatchLog(entry) {
 }
 function clearGame() {
   cancelPendingLlm();
+  cancelDecisionNarration();
   archiveMatchLog();
   signals = [];
   pending = [];
@@ -954,7 +969,64 @@ function llmSettings() {
     apiBase: localStorage.getItem(LLM_LS + "apiBase") || LLMLane.DEFAULT_API_BASE,
     apiKey: localStorage.getItem(LLM_LS + "key") || "",
     model: localStorage.getItem(LLM_LS + "model") || LLMLane.DEFAULT_MODEL,
+    narrationEnabled: localStorage.getItem(LLM_LS + "narration") !== "0",
   };
+}
+function cancelDecisionNarration(resetKey = true) {
+  narrationSeq++;
+  clearTimeout(narrationTimer);
+  narrationTimer = null;
+  if (narrationAbortController) narrationAbortController.abort();
+  narrationAbortController = null;
+  if (resetKey) currentNarrationKey = "";
+}
+function applyDecisionNarration(texts, state, key) {
+  if (!texts || key !== currentNarrationKey) return;
+  const ids = { now: "decisionNowText", check: "decisionCheckText", stay: "decisionStayText" };
+  Object.entries(ids).forEach(([field, id]) => {
+    const node = $(id);
+    if (node && texts[field]) node.textContent = texts[field];
+  });
+  const badge = $("narrationState");
+  if (badge) {
+    badge.textContent = state === "work" ? "AI整理中" : "AI已整理 · 决策未变";
+    badge.className = `narrationState ${state === "work" ? "work" : ""}`;
+  }
+}
+function queueDecisionNarration(contract) {
+  const settings = llmSettings();
+  const key = DecisionNarrator.narrationKey(contract);
+  cancelDecisionNarration(false);
+  currentNarrationKey = key;
+  if (!settings.narrationEnabled || !key || (!settings.apiKey && settings.apiBase.toLowerCase() !== "mock")) return;
+  const cached = narrationCache.get(key);
+  if (cached) {
+    applyDecisionNarration(cached, "ok", key);
+    return;
+  }
+  narrationTimer = setTimeout(async () => {
+    if (key !== currentNarrationKey) return;
+    const controller = new AbortController();
+    narrationAbortController = controller;
+    const seq = ++narrationSeq;
+    applyDecisionNarration(DecisionNarrator.fallbackTexts(contract), "work", key);
+    const result = await DecisionNarrator.narrate({
+      ...settings,
+      contract,
+      matcher: STAGE2_MATCHER,
+      signal: controller.signal,
+    });
+    if (seq !== narrationSeq || controller.signal.aborted || key !== currentNarrationKey) return;
+    narrationAbortController = null;
+    if (!result.ok) {
+      const badge = $("narrationState");
+      if (badge) badge.classList.add("hidden");
+      return;
+    }
+    narrationCache.set(key, result.texts);
+    if (narrationCache.size > 80) narrationCache.delete(narrationCache.keys().next().value);
+    applyDecisionNarration(result.texts, "ok", key);
+  }, 500);
 }
 function setLlmStatus(status) {
   const dot = $("llmDot");
@@ -1028,11 +1100,15 @@ function fillSettingsPanel() {
   $("llmApiBase").value = s.apiBase;
   $("llmKey").value = s.apiKey;
   $("llmModel").value = s.model;
+  $("llmNarrationEnabled").checked = s.narrationEnabled;
 }
 function saveSettingsPanel() {
   localStorage.setItem(LLM_LS + "apiBase", $("llmApiBase").value.trim() || LLMLane.DEFAULT_API_BASE);
   localStorage.setItem(LLM_LS + "key", $("llmKey").value.trim());
   localStorage.setItem(LLM_LS + "model", $("llmModel").value.trim() || LLMLane.DEFAULT_MODEL);
+  localStorage.setItem(LLM_LS + "narration", $("llmNarrationEnabled").checked ? "1" : "0");
+  cancelDecisionNarration();
+  render();
 }
 function downloadText(filename, text) {
   const a = document.createElement("a");
@@ -1317,6 +1393,7 @@ function renderRoute() {
     && currentGold === "unknown"
     && currentHealth === "unknown";
   if (noGameInput || !ranked.length) {
+    cancelDecisionNarration();
     box.classList.remove("clickable");
     box.removeAttribute("tabindex");
     box.removeAttribute("role");
@@ -1331,6 +1408,7 @@ function renderRoute() {
   const leader = ranked[0], second = ranked[1], third = ranked[2];
   const decision = ranked.decision || leader.decision || {};
   if (decision.status === "insufficient") {
+    cancelDecisionNarration();
     const held = (decision.currentBoardUnits || []).join("、");
     const missing = decision.sufficiency && decision.sufficiency.missing || [];
     box.classList.remove("clickable");
@@ -1425,16 +1503,19 @@ function renderRoute() {
   const warning = forecast && forecast.warning;
   const severity = warning && warning.severity ? warning.severity : "green";
   const commandStatus = severity === "red" ? "立即止损" : severity === "yellow" ? "准备转型" : "继续观察";
-  const commandAction = forecast && forecast.action ? forecast.action : (actions[0] || "保持当前最强板");
-  const commandCheck = forecast && (forecast.nextCheck || (warning && warning.deadline))
-    ? (forecast.nextCheck || warning.deadline)
-    : "下一阶段或关键资产变化时";
+  const actionContract = decision.actionContract || null;
+  const deterministicNarration = actionContract ? DecisionNarrator.fallbackTexts(actionContract) : null;
+  const commandAction = deterministicNarration && deterministicNarration.now
+    || (forecast && forecast.action ? forecast.action : (actions[0] || "保持当前最强板"));
+  const commandCheck = deterministicNarration && deterministicNarration.check
+    || (forecast && (forecast.nextCheck || (warning && warning.deadline))
+      ? (forecast.nextCheck || warning.deadline)
+      : "下一阶段或关键资产变化时");
   const commandSwitch = forecast && (forecast.switchCondition || forecast.trigger)
     ? (forecast.switchCondition || forecast.trigger)
     : "关键棋子、装备或强化形成闭环";
-  const commandStay = forecast && forecast.stayCondition
-    ? forecast.stayCondition
-    : "转型条件未满足就保留当前板";
+  const commandStay = deterministicNarration && deterministicNarration.stay
+    || (forecast && forecast.stayCondition ? forecast.stayCondition : "转型条件未满足就保留当前板");
   const primaryActionTexts = [commandAction, commandSwitch, commandStay, execution.heroAugment && execution.heroAugment.text].filter(Boolean);
   const supportActions = actions.filter(action => !primaryActionTexts.some(primary => action === primary || action.includes(primary) || primary.includes(action))).slice(0, 2);
   const riskFlag = af
@@ -1498,18 +1579,19 @@ function renderRoute() {
         </div>
       </div>
       <div class="commandPanel ${esc(severity)}">
+        <span class="narrationState hidden" id="narrationState"></span>
         <div class="commandGrid">
           <div class="commandCell primary">
             <div class="commandStep">1 · 现在做</div>
-            <div class="commandValue">${esc(commandAction)}</div>
+            <div class="commandValue" id="decisionNowText">${esc(commandAction)}</div>
           </div>
           <div class="commandCell">
             <div class="commandStep">2 · 下次检查</div>
-            <div class="commandValue">${esc(commandCheck)}</div>
+            <div class="commandValue" id="decisionCheckText">${esc(commandCheck)}</div>
           </div>
           <div class="commandCell stay">
             <div class="commandStep">3 · 不转底线</div>
-            <div class="commandValue">${esc(commandStay)}</div>
+            <div class="commandValue" id="decisionStayText">${esc(commandStay)}</div>
           </div>
         </div>
         <div class="keyFlags">${riskFlag}${heroFlag}</div>
@@ -1549,6 +1631,7 @@ function renderRoute() {
     <div></div>
     ${unheardHtml()}
   `;
+  queueDecisionNarration(actionContract);
   box.querySelectorAll("[data-reach]").forEach(btn => btn.addEventListener("click", () => {
     const id = btn.dataset.reach;
     expandedReachId = expandedReachId === id ? "" : id;
@@ -1572,6 +1655,7 @@ function augOptionInfo(sig) {
   return { name, option, routeHits: routeHits.length, marginal: null };
 }
 function renderAugTriple() {
+  cancelDecisionNarration();
   $("routeView").classList.add("hidden");
   $("augView").classList.remove("hidden");
   const offerActive = heroAugmentOffer && heroAugmentOffer.status === "offered";
@@ -1718,7 +1802,7 @@ $("settingsClose").addEventListener("click", () => {
   $("settingsPanel").classList.add("hidden");
   focusInput();
 });
-["llmApiBase", "llmKey", "llmModel"].forEach(id => $(id).addEventListener("change", saveSettingsPanel));
+["llmApiBase", "llmKey", "llmModel", "llmNarrationEnabled"].forEach(id => $(id).addEventListener("change", saveSettingsPanel));
 $("llmTest").addEventListener("click", async () => {
   saveSettingsPanel();
   $("llmTestState").textContent = "测试中...";
