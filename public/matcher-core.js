@@ -181,9 +181,9 @@
   const ANTIFRAGILE_HARD_GATE_PENALTY = 32;
   const ANTIFRAGILE_ROLL_GOLD = { 1: 0, 2: 0, 3: 8, 4: 12, 5: 24, 6: 36, 7: 50, 8: 45, 9: 55 };
   const ANTIFRAGILE_UNREACHABLE_PROB = 0.05;
-  const ANTIFRAGILE_HUGE_GOLD = 80;
+  const ANTIFRAGILE_HUGE_CARD_VALUE = 80;
   const ANTIFRAGILE_UNREACHABLE_PENALTY = 70;
-  const ANTIFRAGILE_HUGE_GOLD_PENALTY = 42;
+  const ANTIFRAGILE_HUGE_CARD_VALUE_PENALTY = 42;
   const ANTIFRAGILE_RED_STATUS_PENALTY = 80;
   const ECONOMY_AUGMENTS = ["高端购物", "升级咯！", "升级咯", "对冲基金", "明智消费", "利滚利", "利滚利加强版", "DD街区", "快速思考"];
 
@@ -945,7 +945,7 @@
         availability,
         timing,
         coreIndex,
-        expectedGold: readiness >= 1 ? 0 : (costRow.available ? costRow.expectedGold : ANTIFRAGILE_HUGE_GOLD * 2),
+        cardValueGold: readiness >= 1 ? 0 : costRow.cardValueGold,
         need: readiness >= 1 ? 0 : 1,
       });
     });
@@ -980,7 +980,7 @@
         availability,
         timing,
         coreIndex,
-        expectedGold: readiness >= 1 ? 0 : (costRow.available ? costRow.expectedGold : ANTIFRAGILE_HUGE_GOLD * 2),
+        cardValueGold: readiness >= 1 ? 0 : costRow.cardValueGold,
         need: Math.max(0, target - (ownedCopyMap(selected).get(unit.name) || 0)),
       });
     });
@@ -1001,7 +1001,7 @@
         availability,
         timing: 1,
         coreIndex,
-        expectedGold: 0,
+        cardValueGold: 0,
         need: readiness >= 1 ? 0 : 1,
       });
     });
@@ -1087,27 +1087,27 @@
     const lateRows = missingRows.filter(x => x.need > 0 && Number(x.probability) <= 0);
     const bottleneckRatio = missingRows.reduce((sum, x) => sum + x.coreIndex * (1 - x.readiness), 0) / total;
     const worstLossRatio = missingRows.reduce((sum, x) => sum + x.weight * (1 - x.readiness), 0) / total;
-    const expectedGold = actionableRows.reduce((sum, x) => sum + (Number.isFinite(Number(x.expectedGold)) ? Math.max(0, Number(x.expectedGold)) : 0), 0);
+    const cardValueGold = actionableRows.reduce((sum, x) => sum + (Number.isFinite(Number(x.cardValueGold)) ? Math.max(0, Number(x.cardValueGold)) : 0), 0);
     const hasGold = selected.gold !== null && selected.gold !== undefined && selected.gold !== "" && Number.isFinite(Number(selected.gold));
     const availableGold = hasGold ? Math.max(0, Number(selected.gold)) : null;
     const option = routeOptionValue(t, selected, templates);
     const bottleneckPenalty = Math.round(Math.min(80, bottleneckRatio * ANTIFRAGILE_BOTTLENECK_PENALTY));
     const cvarPenalty = Math.round(worstLossRatio * ANTIFRAGILE_CVAR_PENALTY);
     const lowProbBlocked = actionableRows.some(row => Number(row.probability) <= ANTIFRAGILE_UNREACHABLE_PROB);
-    const hugeGoldBlocked = expectedGold >= ANTIFRAGILE_HUGE_GOLD;
-    const goldBlocked = hasGold && expectedGold > availableGold;
+    const hugeCardValueBlocked = cardValueGold >= ANTIFRAGILE_HUGE_CARD_VALUE;
+    const goldBlocked = hasGold && cardValueGold > availableGold;
     const mechanicBlocked = !!stageResult.mechanicBlocked;
-    const blocked = lowProbBlocked || hugeGoldBlocked || goldBlocked || mechanicBlocked;
+    const blocked = lowProbBlocked || hugeCardValueBlocked || goldBlocked || mechanicBlocked;
     const blockPenalty = (lowProbBlocked ? ANTIFRAGILE_UNREACHABLE_PENALTY : 0)
-      + (hugeGoldBlocked ? ANTIFRAGILE_HUGE_GOLD_PENALTY : 0)
-      + (goldBlocked && !hugeGoldBlocked ? ANTIFRAGILE_HUGE_GOLD_PENALTY : 0);
+      + (hugeCardValueBlocked ? ANTIFRAGILE_HUGE_CARD_VALUE_PENALTY : 0)
+      + (goldBlocked && !hugeCardValueBlocked ? ANTIFRAGILE_HUGE_CARD_VALUE_PENALTY : 0);
     const status = antiFragileStatus(ready, bottleneckRatio, blocked);
     const optionBonus = Math.round(option * ANTIFRAGILE_OPTION_BONUS);
     const readyBonus = Math.round(ready * ANTIFRAGILE_READY_BONUS);
     const hardPenalty = ready < ANTIFRAGILE_READY_YELLOW ? ANTIFRAGILE_HARD_GATE_PENALTY : ready < ANTIFRAGILE_READY_GREEN ? Math.round(ANTIFRAGILE_HARD_GATE_PENALTY / 2) : 0;
     const statusPenalty = status === "red" ? ANTIFRAGILE_RED_STATUS_PENALTY : 0;
     const score = Math.max(0, Math.round(stageResult.stageStrength - bottleneckPenalty - cvarPenalty - hardPenalty - blockPenalty - statusPenalty + optionBonus + readyBonus));
-    const goldText = expectedGold > 0 ? `，全缺口约${Math.round(expectedGold)}金${hasGold ? `/现有${Math.round(availableGold)}金` : ""}` : "";
+    const goldText = cardValueGold > 0 ? `，缺卡牌值${Math.round(cardValueGold)}金${hasGold ? `/现有${Math.round(availableGold)}金` : ""}` : "";
     const lateText = lateRows.length ? `，后期目标${lateRows.map(x => x.name).sort(stableCompare).join("/")}` : "";
     const bottleneckText = bottleneck ? `${bottleneck.label}（聚合缺口${missingRows.length}项，可达${Math.round((bottleneck.probability || 0) * 100)}%${goldText}${lateText}）` : "核心组件已基本到位";
     const formula = `抗脆弱=${stageResult.stageStrength}-瓶颈${bottleneckPenalty}-下限${cvarPenalty}-硬门槛${hardPenalty}-不可达${blockPenalty}-红灯${statusPenalty}+期权${optionBonus}+准备${readyBonus}=${score}`;
@@ -1126,9 +1126,9 @@
       blockPenalty,
       blocked,
       lowProbBlocked,
-      hugeGoldBlocked,
+      hugeCardValueBlocked,
       goldBlocked,
-      expectedGold: Math.round(expectedGold),
+      cardValueGold: Math.round(cardValueGold),
       availableGold,
       lateTargets: lateRows.map(x => x.name).sort(stableCompare),
       option,
@@ -1348,7 +1348,7 @@
         augmentOperator.actions.push(line);
       }
       future.lateTargets.forEach(x => missing.push(`后期目标：${x}`));
-      future.missing.forEach(x => missing.push(`缺${x.name}${x.need}张约${Math.round(x.expectedGold)}金`));
+      future.missing.forEach(x => missing.push(`缺${x.name}${x.need}张·牌值${Math.round(x.cardValueGold)}金`));
       const missingItems = roleItems.filter(x => !fulfilledItemSlots.has(x._slotIndex));
       if (missingItems.length) missing.push(`关键装：${uniq(missingItems.slice(0, 3).map(x => x.name)).join("、")}`);
     } else {
@@ -1570,7 +1570,8 @@
         need,
         targetCopies,
         oddsPct: Math.round(odds * 100),
-        expectedGold: 0,
+        cardValueGold: need * cost,
+        expectedRerollGold: 0,
         available: odds > 0,
         effectiveLevel,
       };
@@ -1579,8 +1580,8 @@
     const pool = Number(poolCopies[cost]) || 1;
     const remainingFactor = clamp((pool - owned) / pool, 0.05, 1);
     const pSlot = odds / count * remainingFactor;
-    const baseExpectedGold = (need / (5 * pSlot)) * 2;
-    const expectedGold = baseExpectedGold * clamp(Number(economy.goldMultiplier) || 1, 0.5, 1);
+    const baseExpectedRerollGold = (need / (5 * pSlot)) * 2;
+    const expectedRerollGold = baseExpectedRerollGold * clamp(Number(economy.goldMultiplier) || 1, 0.5, 1);
     return {
       name,
       cost,
@@ -1588,8 +1589,9 @@
       need,
       targetCopies,
       oddsPct: Math.round(odds * 100),
-      expectedGold,
-      baseExpectedGold,
+      cardValueGold: need * cost,
+      expectedRerollGold,
+      baseExpectedRerollGold,
       available: true,
       effectiveLevel,
     };
@@ -1601,8 +1603,8 @@
     return w.futureCoreUnit;
   }
 
-  function discountedValue(baseValue, expectedGold) {
-    return Math.round(baseValue * clamp(1 - expectedGold / FUTURE_VALUE_GOLD_CAP, 0, 1));
+  function discountedValue(baseValue, expectedRerollGold) {
+    return Math.round(baseValue * clamp(1 - expectedRerollGold / FUTURE_VALUE_GOLD_CAP, 0, 1));
   }
 
   function futureDemandValue(t, selected, opts, w) {
@@ -1629,10 +1631,10 @@
         return;
       }
       const base = futureUnitBaseValue(t, unit, w);
-      const pts = discountedValue(base, row.expectedGold);
+      const pts = discountedValue(base, row.expectedRerollGold);
       if (pts > 0) {
         value += pts;
-        evidence.push(`缺${roleLabel(unit.role)}${unit.name}${row.need}张折现+${pts}（约${Math.round(row.expectedGold)}金）`);
+        evidence.push(`缺${roleLabel(unit.role)}${unit.name}${row.need}张折现+${pts}（牌值${Math.round(row.cardValueGold)}金）`);
       }
       rows.push(row);
     });
@@ -1659,18 +1661,18 @@
     });
     const targets = rawTargets.filter(x => x.need > 0 && x.available);
     const lateTargets = rawTargets.filter(x => x.need > 0 && !x.available).map(x => x.name);
-    const expectedGold = targets.reduce((sum, x) => sum + x.expectedGold, 0);
+    const cardValueGold = targets.reduce((sum, x) => sum + x.cardValueGold, 0);
     const hasGold = selected.gold !== null && selected.gold !== undefined && selected.gold !== "" && Number.isFinite(Number(selected.gold));
     const availableGold = hasGold ? Math.max(0, Number(selected.gold)) : null;
-    const goldBlocked = hasGold && expectedGold > availableGold;
+    const goldBlocked = hasGold && cardValueGold > availableGold;
     const summary = targets.length
-      ? targets.map(x => `缺${x.name}${x.need}张约${Math.round(x.expectedGold)}金`).join("、") + `；合计约${Math.round(expectedGold)}金`
-      : "当前可刷缺口已见，约0金";
+      ? targets.map(x => `缺${x.name}${x.need}张·牌值${Math.round(x.cardValueGold)}金`).join("、") + `；缺卡总牌值${Math.round(cardValueGold)}金`
+      : "当前可刷缺口已见，缺卡牌值0金";
     return {
       level,
       missing: targets,
       lateTargets: uniq(lateTargets),
-      expectedGold: Math.round(expectedGold),
+      cardValueGold: Math.round(cardValueGold),
       availableGold,
       goldBlocked,
       blocked: goldBlocked,
@@ -2288,7 +2290,7 @@
   }
 
   function resourceGapPenalty(row, selected) {
-    const expected = Number(row.reachability && row.reachability.expectedGold) || 0;
+    const expected = Number(row.reachability && row.reachability.cardValueGold) || 0;
     const gold = selected.gold === null || selected.gold === undefined ? 30 : Number(selected.gold);
     return Math.max(0, expected - Math.max(0, gold)) * FORWARD_MODEL.resourceGapPenalty;
   }
@@ -3441,6 +3443,15 @@
     const levelOne = selectedFromSignals([{ kind: "levels", value: "1", level: 1 }]);
     const firstCost = expectedCostForUnit("A", 1, levelOne, { oddsData: odds, unitPrices });
     assert(firstCost.oddsPct === 100 && firstCost.available, "1级应按一费100%概率计算");
+    const threeCostGap = expectedCostForUnit("B", 9, selectedFromSignals([
+      { kind: "levels", level: 7 },
+      { kind: "units", value: "B", star: 2 },
+    ]), { oddsData: odds, unitPrices: { B: 3 } });
+    assert(threeCostGap.need === 6, "二星三费追三星应还缺6张");
+    assert(threeCostGap.cardValueGold === 18, "缺卡金额只能按6张×3金币=18金币计算");
+    assert(threeCostGap.expectedRerollGold > threeCostGap.cardValueGold, "概率刷新难度应与缺卡牌值分字段保存");
+    assert(!Object.prototype.hasOwnProperty.call(threeCostGap, "expectedGold"), "不得再暴露混淆概率与牌值的expectedGold字段");
+    assert(full.reachability.summary.includes("牌值") && !full.reachability.summary.includes("约"), "缺口摘要只应展示卡牌价值");
     const antiTemplates = [
       { id: "stable", name: "稳定线", quality: "S", coreUnits: ["A"], earlyUnits: ["A"], midUnits: ["A"], completedPrefs: ["锐利之刃"], actions: {}, routeProfile: { mainCarry: { name: "A", starTarget: 1, items: ["锐利之刃"] }, units: [{ name: "A", role: "mainCarry", starTarget: 1, traits: [] }], items: [{ name: "锐利之刃", role: "mainCarry", holder: "A", components: ["暴风之剑", "暴风之剑"] }], activeTraits: [] } },
       { id: "trap", name: "陷阱线", quality: "S", coreUnits: ["B"], earlyUnits: ["A"], midUnits: ["B"], completedPrefs: ["蓝霸符"], actions: {}, routeProfile: { mainCarry: { name: "B", starTarget: 3, items: ["蓝霸符"] }, units: [{ name: "B", role: "mainCarry", starTarget: 3, traits: [] }], items: [{ name: "蓝霸符", role: "mainCarry", holder: "B", components: ["女神之泪", "女神之泪"] }], activeTraits: [] } },
@@ -3528,7 +3539,7 @@
     const economyOperator = rank([operatorTemplate], selectedFromSignals([{ kind: "levels", level: 6 }, { kind: "augments", value: "高端购物" }]), fallbackWeights, 1, operatorOpts)[0];
     const economyBase = rank([operatorTemplate], selectedFromSignals([{ kind: "levels", level: 6 }]), fallbackWeights, 1, operatorOpts)[0];
     assert(economyOperator.reachability.missing[0].effectiveLevel === 7, "高端购物应让6级按7级商店概率计算");
-    assert(economyOperator.reachability.expectedGold < economyBase.reachability.expectedGold, "经济算子应降低路线期望D牌成本");
+    assert(economyOperator.reachability.missing[0].expectedRerollGold < economyBase.reachability.missing[0].expectedRerollGold, "经济算子应独立降低概率层的期望刷新成本");
     const itemOperator = rank([operatorTemplate], selectedFromSignals([{ kind: "levels", level: 6 }, { kind: "augments", value: "便携锻炉" }]), fallbackWeights, 1, operatorOpts)[0];
     const itemComplete = rank([operatorTemplate], selectedFromSignals([{ kind: "levels", level: 6 }, { kind: "augments", value: "便携锻炉" }, { kind: "items", value: "鬼索的狂暴之刃" }, { kind: "items", value: "疾射火炮" }, { kind: "items", value: "泰坦的坚决" }]), fallbackWeights, 1, operatorOpts)[0];
     assert(itemOperator.augmentOperator.variableBonus > itemComplete.augmentOperator.variableBonus, "装备算子应随主C装备缺口收缩而衰减");

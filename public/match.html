@@ -1366,10 +1366,10 @@ function reachHtml(row) {
   if (!reach) return "";
   const id = routeId(row);
   const expanded = expandedReachId === id;
-  const costItems = (reach.missing || []).map(x => `缺${x.name}${x.need}张约${Math.round(x.expectedGold)}金`);
+  const costItems = (reach.missing || []).map(x => `缺${x.name}${x.need}张·牌值${Math.round(x.cardValueGold)}金`);
   const visible = expanded || costItems.length <= 3 ? costItems : costItems.slice(0, 2);
   const folded = costItems.length > 3 && !expanded;
-  const costText = visible.length ? visible.join("、") + (folded ? ` 等${costItems.length}项` : "") : "当前可刷缺口已见，约0金";
+  const costText = visible.length ? visible.join("、") + (folded ? ` 等${costItems.length}项` : "") : "当前可刷缺口已见，缺卡牌值0金";
   const lateRows = reach.lateTargets || [];
   const lateVisible = expanded || lateRows.length <= 3 ? lateRows : lateRows.slice(0, 3);
   const late = lateRows.length ? `后期目标：${lateVisible.join("、")}${!expanded && lateRows.length > 3 ? ` 等${lateRows.length}项` : ""}` : "";
