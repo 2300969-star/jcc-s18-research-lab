@@ -50,6 +50,31 @@
     incompatibleEquippedItemCostRatio: 0.5,
     minimumCommitmentEvidence: 18,
   });
+  // 当前上场求解只看局面资产，不读取路线名或终局强度；路线仅用于第二步承接评估。
+  const BOARD_SOLVER_MODEL = Object.freeze({
+    baseUnit: 4,
+    costWeight: 4,
+    activeTraitPerUnit: 3,
+    completedItem: 5,
+    componentItem: 2,
+    boardLocationTieBreak: 1.5,
+    benchLocationTieBreak: 0.5,
+    beamWidth: 640,
+  });
+  // 拒答门槛：先验证是否有足够的局面事实，再允许输出“执行路线”。默认等级不算证据。
+  const SUFFICIENCY_MODEL = Object.freeze({
+    unit: 0.15,
+    unitCap: 0.45,
+    explicitLocation: 0.15,
+    upgradedUnit: 0.15,
+    item: 0.1,
+    equippedItem: 0.15,
+    augment: 0.3,
+    commitment: 0.3,
+    trait: 0.1,
+    context: 0.05,
+    threshold: 0.3,
+  });
   // 执行效用随血量与经济连续变化：低血偏现场/前四，高血高经济才逐步提高登顶权重。
   const EXECUTION_HEALTH_LOW = 30;
   const EXECUTION_HEALTH_HIGH = 80;
@@ -1929,6 +1954,143 @@
     return new Set((source || []).filter(Boolean));
   }
 
+  function unitTraitsForBoard(name, opts) {
+    const rows = opts && opts.unitTraits && opts.unitTraits[name];
+    return Array.isArray(rows) ? rows.filter(Boolean) : [];
+  }
+
+  function boardTraitThresholds(templates) {
+    const thresholds = new Map();
+    (templates || []).forEach(template => activeTraitRows(template).forEach(row => {
+      const count = Math.max(1, Number(row.count) || 1);
+      const current = thresholds.get(row.name) || [];
+      if (!current.includes(count)) current.push(count);
+      thresholds.set(row.name, current.sort((a, b) => a - b));
+    }));
+    return thresholds;
+  }
+
+  function evaluateBoardUnits(units, selected, opts, thresholds) {
+    const itemRows = normalizeSelectedItems(selected);
+    const itemByHolder = new Map();
+    itemRows.filter(item => item.holder).forEach(item => {
+      const value = COMPONENTS.includes(canonicalItem(item.name)) ? BOARD_SOLVER_MODEL.componentItem : BOARD_SOLVER_MODEL.completedItem;
+      itemByHolder.set(item.holder, (itemByHolder.get(item.holder) || 0) + value);
+    });
+    const traitCounts = new Map();
+    let unitScore = 0;
+    units.forEach(unit => {
+      const cost = Math.max(1, unitPrice(unit.name, opts || {}));
+      const starFactor = STAR_SCORE_MULTIPLIERS[unit.star] || 1;
+      const location = unit.location === "board" ? BOARD_SOLVER_MODEL.boardLocationTieBreak
+        : unit.location === "bench" ? BOARD_SOLVER_MODEL.benchLocationTieBreak : 0;
+      unitScore += (BOARD_SOLVER_MODEL.baseUnit + cost * BOARD_SOLVER_MODEL.costWeight) * starFactor
+        + (itemByHolder.get(unit.name) || 0) + location;
+      unitTraitsForBoard(unit.name, opts).forEach(trait => traitCounts.set(trait, (traitCounts.get(trait) || 0) + 1));
+    });
+    const activeTraits = [];
+    let traitScore = 0;
+    traitCounts.forEach((count, name) => {
+      const reached = (thresholds.get(name) || []).filter(threshold => threshold <= count).pop() || 0;
+      if (!reached) return;
+      traitScore += reached * BOARD_SOLVER_MODEL.activeTraitPerUnit;
+      activeTraits.push({ name, count: reached, label: `${reached}${name}` });
+    });
+    activeTraits.sort((a, b) => b.count - a.count || stableCompare(a.name, b.name));
+    const names = units.map(unit => unit.name).sort(stableCompare);
+    return {
+      score: Math.round((unitScore + traitScore) * 10) / 10,
+      unitScore: Math.round(unitScore * 10) / 10,
+      traitScore,
+      activeTraits,
+      key: names.join("|"),
+    };
+  }
+
+  function optimizeCurrentBoard(selected, opts, templates) {
+    const level = clamp(Number(selected.level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
+    const capacity = Math.max(1, level);
+    const candidates = normalizeSelectedUnits(selected.units || []).sort((a, b) => stableCompare(a.name, b.name));
+    const thresholds = boardTraitThresholds(templates || []);
+    if (!candidates.length) return { score: 0, units: [], unitRows: [], activeTraits: [], capacity, bench: [] };
+    let states = [{ units: [], evaluation: { score: 0, key: "" } }];
+    candidates.forEach(candidate => {
+      const next = states.slice();
+      states.forEach(state => {
+        if (state.units.length >= capacity) return;
+        const units = [...state.units, candidate];
+        next.push({ units, evaluation: evaluateBoardUnits(units, selected, opts, thresholds) });
+      });
+      const deduped = new Map();
+      next.forEach(state => {
+        const evaluation = state.evaluation && Number.isFinite(state.evaluation.score)
+          ? state.evaluation : evaluateBoardUnits(state.units, selected, opts, thresholds);
+        const previous = deduped.get(evaluation.key);
+        if (!previous || evaluation.score > previous.evaluation.score) deduped.set(evaluation.key, { units: state.units, evaluation });
+      });
+      states = [...deduped.values()].sort((a, b) => b.evaluation.score - a.evaluation.score
+        || b.units.length - a.units.length || stableCompare(a.evaluation.key, b.evaluation.key))
+        .slice(0, BOARD_SOLVER_MODEL.beamWidth);
+    });
+    const best = states.filter(state => state.units.length <= capacity).sort((a, b) => b.evaluation.score - a.evaluation.score
+      || b.units.length - a.units.length || stableCompare(a.evaluation.key, b.evaluation.key))[0];
+    const chosen = best ? best.units : [];
+    const chosenNames = new Set(chosen.map(unit => unit.name));
+    const carry = [...chosen].sort((a, b) => evaluateBoardUnits([b], selected, opts, thresholds).score - evaluateBoardUnits([a], selected, opts, thresholds).score
+      || stableCompare(a.name, b.name))[0] || null;
+    return {
+      score: best ? best.evaluation.score : 0,
+      unitScore: best ? best.evaluation.unitScore : 0,
+      traitScore: best ? best.evaluation.traitScore : 0,
+      units: chosen.map(unit => starLabel(unit.name, unit.star)),
+      unitRows: chosen,
+      carry: carry ? starLabel(carry.name, carry.star) : "",
+      activeTraits: best ? best.evaluation.activeTraits : [],
+      capacity,
+      bench: candidates.filter(unit => !chosenNames.has(unit.name)).map(unit => starLabel(unit.name, unit.star)),
+    };
+  }
+
+  function routeCompatibilityWithBoard(template, board, level) {
+    const names = (board && board.unitRows || []).map(unit => unit.name);
+    if (!names.length) return { ratio: 0, hits: [], score: 0 };
+    const stageUnits = stageUnitSet(template, level);
+    const hits = names.filter(name => stageUnits.has(name));
+    const ratio = hits.length / names.length;
+    return { ratio, hits, score: Math.round((Number(board.score) || 0) * (0.65 + 0.35 * ratio) * 10) / 10 };
+  }
+
+  function decisionSufficiency(selected) {
+    const units = normalizeSelectedUnits(selected.units || []);
+    const items = normalizeSelectedItems(selected);
+    const augments = selected.augments || [];
+    const traits = normalizeSelectedTraits(selected.traits || []);
+    const commitments = selected.commitments || [];
+    const explicitLocations = units.filter(unit => unit.location === "board" || unit.location === "bench").length;
+    const upgrades = units.filter(unit => unit.star >= 2).length;
+    const equipped = items.filter(item => item.holder || item.equipped).length;
+    const contextFacts = [selected.stage, selected.gold, selected.health].filter(value => value !== null && value !== undefined && value !== "" && value !== "unknown").length;
+    const raw = Math.min(SUFFICIENCY_MODEL.unitCap, units.length * SUFFICIENCY_MODEL.unit)
+      + (explicitLocations ? SUFFICIENCY_MODEL.explicitLocation : 0)
+      + (upgrades ? SUFFICIENCY_MODEL.upgradedUnit : 0)
+      + (items.length ? SUFFICIENCY_MODEL.item : 0)
+      + (equipped ? SUFFICIENCY_MODEL.equippedItem : 0)
+      + (augments.length ? SUFFICIENCY_MODEL.augment : 0)
+      + (commitments.length ? SUFFICIENCY_MODEL.commitment : 0)
+      + (traits.length ? SUFFICIENCY_MODEL.trait : 0)
+      + (contextFacts ? SUFFICIENCY_MODEL.context : 0);
+    const score = Math.round(clamp(raw, 0, 1) * 100);
+    const anchor = augments.length > 0 || commitments.length > 0 || units.length >= 2 || upgrades > 0 || explicitLocations > 0 || equipped > 0;
+    const enough = anchor && raw >= SUFFICIENCY_MODEL.threshold;
+    const missing = [];
+    if (!units.length) missing.push("录入至少2张可上场棋子");
+    else if (units.length === 1 && !upgrades && !explicitLocations) missing.push("再录入1张棋子或说明这张牌已升星/上场");
+    if (!items.length) missing.push("录入散件或已装备成装");
+    if (!explicitLocations && units.length) missing.push("需要时说明场上与备战席");
+    if (!contextFacts) missing.push("补当前回合、金币或血量可提高动作精度");
+    return { enough, score, missing: missing.slice(0, 3), facts: { units: units.length, explicitLocations, upgrades, items: items.length, equipped, augments: augments.length, commitments: commitments.length, traits: traits.length, contextFacts } };
+  }
+
   function currentBoardEvaluation(template, selected, weights) {
     const w = { ...fallbackWeights, ...(weights || {}) };
     const level = clamp(Number(selected.level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
@@ -2421,12 +2583,19 @@
   function applyDeterministicDecision(rows, selected, weights, opts) {
     if (!rows.length) return { status: "empty", text: "暂无路线" };
     const level = clamp(Number(selected.level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
+    const globalBoard = optimizeCurrentBoard(selected, opts || {}, rows.map(row => row.template));
     rows.forEach(row => {
       row.currentBoard = false;
       row.strategicLeader = false;
       row.committed = false;
       row.execution = false;
-      row.currentBoardEvaluation = currentBoardEvaluation(row.template, selected, weights);
+      const compatibility = routeCompatibilityWithBoard(row.template, globalBoard, level);
+      row.currentBoardEvaluation = {
+        ...globalBoard,
+        score: compatibility.score,
+        compatibility: Math.round(compatibility.ratio * 100),
+        compatibilityHits: compatibility.hits,
+      };
       row.currentBoardScore = row.currentBoardEvaluation.score;
       row.blocked = Boolean(row.mechanicBlocked
         || (row.reachability && row.reachability.blocked)
@@ -2437,6 +2606,38 @@
       row.executionAmbition = executionProfile.ambition;
       row.executionWeights = executionProfile.weights;
     });
+    const sufficiency = decisionSufficiency(selected);
+    if (opts && opts.manualLockId) {
+      sufficiency.enough = true;
+      sufficiency.score = Math.max(sufficiency.score, Math.round(SUFFICIENCY_MODEL.threshold * 100));
+      sufficiency.manualLock = true;
+    }
+    if (!sufficiency.enough) {
+      const decision = {
+        status: "insufficient",
+        level,
+        currentBoardId: "",
+        currentBoardName: globalBoard.units.length ? "当前可上场资产" : "信息不足",
+        currentBoardScore: globalBoard.score,
+        currentBoardUnits: globalBoard.units,
+        currentBoardTraits: globalBoard.activeTraits,
+        currentBoardBench: globalBoard.bench,
+        currentBoardCarry: globalBoard.carry,
+        currentId: "",
+        currentName: "",
+        strategicId: "",
+        strategicName: "",
+        committedId: "",
+        committedName: "",
+        executionId: "",
+        executionName: "",
+        forecast: null,
+        sufficiency,
+        text: `信息充分度${sufficiency.score}%：暂不输出执行路线`,
+      };
+      rows.forEach(row => { row.decision = decision; });
+      return decision;
+    }
     // “当前最强板”只回答眼前谁能打，不能被终局缺牌成本或未来抗脆弱门槛污染。
     // 仅排除本局已经不可能成立的专属机制路线。
     const currentPool = rows.some(row => !row.mechanicBlocked) ? rows.filter(row => !row.mechanicBlocked) : rows;
@@ -2550,9 +2751,12 @@
       status,
       level,
       currentBoardId: rowId(current),
-      currentBoardName: current.template.name,
-      currentBoardScore: current.currentBoardScore,
-      currentBoardUnits: current.currentBoardEvaluation.units,
+      currentBoardName: "当前最强上场",
+      currentBoardScore: globalBoard.score,
+      currentBoardUnits: globalBoard.units,
+      currentBoardTraits: globalBoard.activeTraits,
+      currentBoardBench: globalBoard.bench,
+      currentBoardCarry: globalBoard.carry,
       currentId: rowId(current),
       currentName: current.template.name,
       currentFamily: rowFamily(current),
@@ -2570,6 +2774,7 @@
       executionValue: execution.executionValue,
       executionWeights: execution.executionWeights,
       forecast,
+      sufficiency,
       manualLockInvalid: Boolean(requestedManual && !manual),
       text,
     };
@@ -2579,6 +2784,7 @@
 
   function operationalRow(rows) {
     const executionId = rows && rows.decision && rows.decision.executionId;
+    if (rows && rows.decision && rows.decision.status === "insufficient") return null;
     return (rows || []).find(row => row && rowId(row) === executionId)
       || (rows || []).find(row => row && row.execution)
       || ((rows || [])[0] || null);
@@ -3316,6 +3522,28 @@
     const boardB = boardRows.find(row => rowId(row) === "route-b");
     const benchB = benchRows.find(row => rowId(row) === "route-b");
     assert(boardB.currentBoardScore > benchB.currentBoardScore, "场上棋子的当前战力必须高于备战席同名棋子");
+    const insufficientRows = rank(decisionTemplates, selectedFromSignals([{ kind: "levels", level: 3 }]), decisionWeights, 2, decisionOpts);
+    assert(insufficientRows.decision.status === "insufficient" && !insufficientRows.decision.executionId,
+      "只有等级而没有局面资产时必须拒绝定阵容");
+    const boardSignals = [
+      { kind: "levels", level: 2 },
+      { kind: "units", value: "A", star: 2, location: "bench" },
+      { kind: "units", value: "B", location: "board" },
+      { kind: "units", value: "C", location: "bench" },
+    ];
+    const boardOpts = { unitPrices: { A: 1, B: 2, C: 3 }, unitTraits: { A: ["甲"], B: ["甲"], C: ["乙"] } };
+    const solvedForward = optimizeCurrentBoard(selectedFromSignals(boardSignals), boardOpts, decisionTemplates);
+    const solvedReverse = optimizeCurrentBoard(selectedFromSignals([...boardSignals].reverse()), boardOpts, decisionTemplates);
+    assert(solvedForward.units.length === 2 && JSON.stringify(solvedForward) === JSON.stringify(solvedReverse),
+      "当前板求解必须服从人口上限且与输入顺序无关");
+    const renamedTemplates = decisionTemplates.map((template, index) => ({
+      ...template,
+      id: `renamed-${index}`,
+      name: `重命名路线${index}`,
+    }));
+    const solvedAfterRename = optimizeCurrentBoard(selectedFromSignals(boardSignals), boardOpts, renamedTemplates);
+    assert(JSON.stringify(solvedForward) === JSON.stringify(solvedAfterRename),
+      "路线名称与编号不得反向影响当前最强上场求解");
 
     const sunkRows = rank(decisionTemplates, selectedFromSignals([
       { kind: "levels", level: 4 },
@@ -3375,13 +3603,18 @@
     });
     const earlyWeak = outcomeTemplate("前强上限弱", 92, 45, { top1Rate: 1, topQuartileRate: 65, robustness: 70, failureRate: 10 }, "L", 1);
     const lateCap = outcomeTemplate("前弱上限高", 60, 90, { top1Rate: 61.9, topQuartileRate: 91.3, robustness: 92.9, failureRate: 0 }, "H", 4);
-    const outcomeRows = rank([earlyWeak, lateCap], selectedFromSignals([{ kind: "levels", level: 3 }]), fallbackWeights, 2, { operationalCommitment: true, unitPrices: { L: 1, H: 4 } });
+    const outcomeState = selectedFromSignals([
+      { kind: "levels", level: 3 },
+      { kind: "units", value: "L", star: 3, location: "board" },
+      { kind: "units", value: "H", location: "bench" },
+    ]);
+    const outcomeRows = rank([earlyWeak, lateCap], outcomeState, fallbackWeights, 2, { operationalCommitment: true, unitPrices: { L: 1, H: 4 } });
     const earlyOutcome = outcomeRows.find(row => rowId(row) === "前强上限弱");
     const lateOutcome = outcomeRows.find(row => rowId(row) === "前弱上限高");
     assert(earlyOutcome.currentStrength > lateOutcome.currentStrength && earlyOutcome.top1Value + 40 < lateOutcome.top1Value && outcomeRows.decision.status === "observing", "认证数据必须允许低费路线当前强但top1显著低，且1-3级不定终局");
     assert(outcomeRows.decision.currentId === "前强上限弱" && outcomeRows.decision.strategicId === "前弱上限高"
       && outcomeRows.decision.executionId === "前强上限弱", "当前板、终局上限、现在执行必须是三条独立结论");
-    const outcomeProjected = rank([earlyWeak, lateCap], selectedFromSignals([{ kind: "levels", level: 3 }]), fallbackWeights, 1, { operationalCommitment: true, unitPrices: { L: 1, H: 4 } });
+    const outcomeProjected = rank([earlyWeak, lateCap], outcomeState, fallbackWeights, 1, { operationalCommitment: true, unitPrices: { L: 1, H: 4 } });
     assert(outcomeProjected.some(row => rowId(row) === outcomeProjected.decision.currentId)
       && outcomeProjected.some(row => rowId(row) === outcomeProjected.decision.strategicId), "topK投影必须同时保留当前板与终局上限行");
 
@@ -3488,7 +3721,10 @@
       assert(JSON.stringify(bubbleRows.slice(0, 5).map(row => [rowId(row), row.finalScore])) === JSON.stringify(bubbleRowsReversed.slice(0, 5).map(row => [rowId(row), row.finalScore])), "双重气泡最终状态不得受输入顺序影响");
       const bubbleLevelFour = rank(matcherData.templates, selectedFromSignals(bubbleSignals.map(signal => signal.kind === "levels" ? { ...signal, level: 4 } : signal)), matcherData.weights, 10, bubbleOpts);
       const bubbleCommitted = matcherData.templates.find(template => template.id === bubbleLevelFour.decision.committedId);
-      assert(bubbleLevelFour.decision.status === "committed" && routeMainCarry(bubbleCommitted) === "佐伊", "4级后已选双重气泡必须把不可逆承诺结算到佐伊主C路线");
+      const bubbleExecution = matcherData.templates.find(template => template.id === bubbleLevelFour.decision.executionId);
+      assert(["committed", "planning", "pivoting"].includes(bubbleLevelFour.decision.status)
+        && routeMainCarry(bubbleCommitted) === "佐伊" && routeMainCarry(bubbleExecution) === "佐伊",
+      "4级后已选双重气泡必须把不可逆承诺与当前执行都结算到佐伊主C路线");
       const generatedOperators = matcherData.templates.filter(t => (t.augmentOperators || []).length);
       if (generatedOperators.length) {
         assert(!generatedOperators.some(t => (t.augmentOperators || []).some(x => !(t.augmentPrefs || []).includes(x.name))), "算子必须属于该路线推荐符文");
@@ -3524,9 +3760,8 @@
           antiFragile: true,
           operationalCommitment: true,
         });
-        const currentTemplate = matcherData.templates.find(template => template.id === rows.decision.currentId);
         const executionTemplate = matcherData.templates.find(template => template.id === rows.decision.executionId);
-        if (fx.expect.currentMainCarry) assert(routeMainCarry(currentTemplate) === fx.expect.currentMainCarry, `${fx.label} 当前主C应为${fx.expect.currentMainCarry}`);
+        if (fx.expect.currentMainCarry) assert(String(rows.decision.currentBoardCarry || "").startsWith(fx.expect.currentMainCarry), `${fx.label} 当前主C应为${fx.expect.currentMainCarry}`);
         if (fx.expect.executionMainCarry) assert(routeMainCarry(executionTemplate) === fx.expect.executionMainCarry, `${fx.label} 执行主C应为${fx.expect.executionMainCarry}`);
         if (fx.expect.status) assert(rows.decision.status === fx.expect.status, `${fx.label} 状态应为${fx.expect.status}`);
         if (fx.expect.warningSeverity) assert(rows.decision.forecast.warning.severity === fx.expect.warningSeverity, `${fx.label} 预警应为${fx.expect.warningSeverity}`);
@@ -3673,6 +3908,8 @@
     HERO_AUGMENT_OPTION_BONUS,
     HERO_AUGMENT_OFFER_SLOTS,
     HERO_AUGMENT_REROLLS_PER_SLOT,
+    BOARD_SOLVER_MODEL,
+    SUFFICIENCY_MODEL,
     HERO_AUGMENT_UNAVAILABLE_PENALTY,
     HERO_AUGMENT_CONTROL_CAP,
     DEFAULT_LEVEL,
@@ -3691,6 +3928,8 @@
     heroAugmentDecision,
     heroAugmentOptionExpectation,
     normalizeHeroAugmentOffer,
+    optimizeCurrentBoard,
+    decisionSufficiency,
     normalizeHeroAugmentRound,
     heroAugmentCostFactor,
     parseTraitsInText,

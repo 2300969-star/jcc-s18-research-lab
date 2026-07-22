@@ -194,6 +194,12 @@ button, input { font:inherit; }
 .augEvidence { color:var(--muted); font-size:15px; }
 .augStatus { padding:9px 12px; border:1px solid color-mix(in srgb, var(--s3) 55%, var(--border)); border-radius:10px; background:color-mix(in srgb, var(--surface) 86%, var(--s3) 14%); color:var(--ink2); font-size:17px; font-weight:850; }
 .empty { height:100%; display:grid; place-items:center; color:var(--muted); font-size:24px; text-align:center; padding:20px; }
+.insufficientPanel { min-height:340px; display:grid; place-items:center; text-align:center; align-content:center; gap:18px; }
+.insufficientScore { font-size:16px; color:var(--muted); font-weight:850; }
+.insufficientTitle { font-size:36px; line-height:1.15; font-weight:950; }
+.insufficientFacts { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; }
+.insufficientFact { border:1px solid var(--border); border-radius:10px; background:var(--plane); padding:12px 16px; font-size:18px; font-weight:900; }
+.insufficientHeld { color:var(--ink2); font-size:18px; }
 .settingsPanel { position:fixed; right:16px; top:88px; z-index:8; width:min(520px, calc(100vw - 32px)); border:1px solid var(--border); border-radius:16px; background:var(--surface); box-shadow:0 18px 46px rgba(0,0,0,.28); padding:18px; display:grid; gap:12px; }
 .settingsPanel h2 { font-size:24px; line-height:1.2; }
 .settingsPanel label { display:grid; gap:6px; color:var(--ink2); font-size:15px; font-weight:800; }
@@ -1134,28 +1140,29 @@ function inferBoard(t) {
   return rows;
 }
 function renderBoard(body, t) {
-  const hasModelBoard = (t.board || []).length > 0;
-  const boardRows = hasModelBoard ? t.board : inferBoard(t);
-  if (!boardRows.length) return;
-  mk("div", "detailSection", "站位草图", body);
-  if (hasModelBoard) {
-    if (t.boardNote) mk("div", "detailLine", t.boardNote, body);
-  } else {
-    mk("div", "detailLine", "推断站位：模板未提供站位，按主C、前排、功能位自动生成；行1靠敌方。", body);
-  }
-  const board = mk("div", "board", null, body);
-  for (let r = 1; r <= 4; r++) {
-    const brow = mk("div", "brow" + (r % 2 === 0 ? " off" : ""), null, board);
-    for (let c = 1; c <= 7; c++) {
-      const u = boardRows.find(x => x.row === r && x.col === c);
-      const cell = mk("div", "cell" + (u ? (u.carry ? " carry" : "") : " empty"), null, brow);
-      if (!u) continue;
-      cell.style.borderTop = "3px solid " + (u.carry ? "var(--s2)" : "var(--grid)");
-      mk("div", "cn", (u.carry ? "主C " : "") + u.name, cell);
-      mk("div", "cost", u.role || "-", cell);
-      (u.items || []).forEach(it => mk("div", "it", it, cell));
+  const stages = (t.routeProfile && t.routeProfile.stages || []).filter(stage => (stage.board || []).length);
+  const views = stages.length
+    ? stages.map(stage => ({ title: `${stage.label || stage.key}站位`, note: `等级${stage.levelMin}-${stage.levelMax}；行1靠敌方。`, rows: stage.board }))
+    : [{ title: "终局推断站位", note: "模板缺少标准站位，按角色自动生成；行1靠敌方。", rows: (t.board || []).length ? t.board : inferBoard(t) }];
+  views.forEach(view => {
+    if (!view.rows.length) return;
+    mk("div", "detailSection", view.title, body);
+    mk("div", "detailLine", view.note, body);
+    const board = mk("div", "board", null, body);
+    for (let r = 1; r <= 4; r++) {
+      const brow = mk("div", "brow" + (r % 2 === 0 ? " off" : ""), null, board);
+      for (let c = 1; c <= 7; c++) {
+        const u = view.rows.find(x => Number(x.row) === r && Number(x.col) === c);
+        const carry = Boolean(u && (u.carry || (u.roles || []).includes("strategicCarry") || u.role === "mainCarry"));
+        const cell = mk("div", "cell" + (u ? (carry ? " carry" : "") : " empty"), null, brow);
+        if (!u) continue;
+        cell.style.borderTop = "3px solid " + (carry ? "var(--s2)" : "var(--grid)");
+        mk("div", "cn", (carry ? "主C " : "") + u.name, cell);
+        mk("div", "cost", u.role || "-", cell);
+        (u.items || []).forEach(it => mk("div", "it", it, cell));
+      }
     }
-  }
+  });
 }
 function renderPrimePlan(body, t) {
   const plan = t && t.primePlan;
@@ -1227,11 +1234,16 @@ function openRouteDetail(row) {
 
   mk("div", "detailSection", "前中后期阵容", body);
   const stageGrid = mk("div", "stageGrid", null, body);
-  [
+  const canonicalStages = (t.routeProfile && t.routeProfile.stages || []).map((stage, index) => [
+    stage.label || ["前期", "中期", "后期"][index],
+    `等级${stage.levelMin}-${stage.levelMax}`,
+    (stage.units || []).map(unit => typeof unit === "string" ? unit : unit.name).filter(Boolean),
+  ]);
+  (canonicalStages.length ? canonicalStages : [
     ["前期", "二阶段可拿", t.earlyUnits || []],
     ["中期", "三/四阶段承接", t.midUnits || []],
     ["后期", "终局核心", t.coreUnits || []],
-  ].forEach(([title, sub, units]) => {
+  ]).forEach(([title, sub, units]) => {
     const box = mk("div", "stageBox", null, stageGrid);
     mk("div", "stageTitle", `${title} · ${sub}`, box);
     mk("div", "stageUnits", unitsText(units), box);
@@ -1318,6 +1330,25 @@ function renderRoute() {
   }
   const leader = ranked[0], second = ranked[1], third = ranked[2];
   const decision = ranked.decision || leader.decision || {};
+  if (decision.status === "insufficient") {
+    const held = (decision.currentBoardUnits || []).join("、");
+    const missing = decision.sufficiency && decision.sufficiency.missing || [];
+    box.classList.remove("clickable");
+    box.removeAttribute("tabindex");
+    box.removeAttribute("role");
+    box.innerHTML = `<div class="insufficientPanel">
+      <div class="insufficientScore">信息充分度 ${esc(decision.sufficiency && decision.sufficiency.score || 0)}%</div>
+      <div class="insufficientTitle">信息不足，先不定阵容</div>
+      ${held ? `<div class="insufficientHeld">当前已知：${esc(held)}</div>` : ""}
+      <div class="insufficientFacts">${missing.map(row => `<span class="insufficientFact">${esc(row)}</span>`).join("")}</div>
+    </div>${unheardHtml()}`;
+    lastExecutionId = "";
+    lastExecutionName = "";
+    lastExecutionFamily = "";
+    lastRenderedTop = null;
+    lastDetailRow = null;
+    return;
+  }
   const current = rowById(ranked, decision.currentId || decision.currentBoardId)
     || ranked.find(row => row.currentBoard || row.current)
     || leader;
@@ -1375,6 +1406,7 @@ function renderRoute() {
     .map(row => typeof row === "string" ? row : row && (row.name || row.value))
     .filter(Boolean);
   const currentUnitsText = currentUnits.join("、") || "还未录入可上场棋子";
+  const currentCarryText = decision.currentBoardCarry ? ` · 当前C ${decision.currentBoardCarry}` : "";
   const currentName = decision.currentName || decision.currentBoardName || current.template.name;
   const strategicName = decision.strategicName || strategic.template.name;
   const currentStrength = scoreText(decision.currentStrength, current.currentStrength, decision.currentBoardScore, current.currentBoardScore, rowScore(current));
@@ -1449,7 +1481,7 @@ function renderRoute() {
         <div class="flowNode">
           <div class="flowKicker"><span>当前上场</span><span>强度 ${currentStrength}</span></div>
           <div class="flowTitle">${esc(currentUnitsText)}</div>
-          <div class="flowMeta">当前承接：${esc(currentName)}</div>
+          <div class="flowMeta">当前承接：${esc(currentName)}${esc(currentCarryText)}</div>
         </div>
         <div class="flowArrow"><b>→</b><small>现在</small></div>
         <div class="flowNode active ${esc(severity)}">
