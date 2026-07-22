@@ -2580,6 +2580,77 @@
     };
   }
 
+  function actionCheckpoint(level, selected) {
+    const known = String(selected && (selected.currentStage || selected.stage) || "");
+    if (known && known !== "unknown") return known;
+    if (level <= 3) return "2-5";
+    if (level <= 5) return "3-5";
+    if (level <= 7) return "4-2";
+    return "5-1";
+  }
+
+  // 行动合同是展示层与讲解层共用的唯一事实源。LLM只能改写，不能生成决策。
+  function buildActionContract(execution, current, strategic, selected, forecast) {
+    if (!execution || !execution.template) return null;
+    const level = clamp(Number(selected.level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
+    const carry = carryName(execution);
+    const carryRow = (profile(execution.template).units || []).find(unit => unit && unit.name === carry) || {};
+    const carryCost = routeUnitCost(execution.template, carry);
+    const targetStar = Number((profile(execution.template).mainCarry || {}).starTarget)
+      || Number(carryRow.starTarget) || (carryCost <= 3 ? 3 : 2);
+    const heldUnits = new Map(normalizeSelectedUnits(selected.units || []).map(unit => [unit.name, unit]));
+    const heldCarry = heldUnits.get(carry);
+    const currentStar = heldCarry ? Number(heldCarry.star) || 1 : 0;
+    const mainItems = uniq(((profile(execution.template).mainCarry || {}).items || []).map(canonicalItem).filter(Boolean));
+    const heldItems = new Set(normalizeSelectedItems(selected).map(item => canonicalItem(item.name)));
+    const heldCoreItems = mainItems.filter(item => heldItems.has(item));
+    const missingCoreItems = mainItems.filter(item => !heldItems.has(item));
+    const itemGoal = Math.min(2, mainItems.length);
+    const routeUnits = stageUnitSet(execution.template, level);
+    const keepUnits = normalizeSelectedUnits(selected.units || [])
+      .filter(unit => routeUnits.has(unit.name))
+      .sort((a, b) => (Number(b.star) || 1) - (Number(a.star) || 1) || stableCompare(a.name, b.name))
+      .slice(0, 5)
+      .map(unit => starLabel(unit.name, unit.star));
+    const primaryAction = forecast && forecast.action
+      ? forecast.action
+      : `维持${execution.template.name}，只补当前上场质量`;
+    const nowFacts = [primaryAction];
+    if (keepUnits.length && !/(只留|保留)/.test(primaryAction)) nowFacts.push(`保留已持有的${keepUnits.join("、")}`);
+
+    const checkpoint = forecast && (forecast.nextCheck || forecast.warning && forecast.warning.deadline)
+      || actionCheckpoint(level, selected);
+    const checkFacts = [`${checkpoint}检查${carry}：目标${targetStar}星，当前${currentStar ? `${currentStar}星` : "未持有"}`];
+    if (itemGoal) {
+      checkFacts.push(`核心装进度${heldCoreItems.length}/${itemGoal}${missingCoreItems.length ? `，缺${missingCoreItems.slice(0, 2).join("或")}` : "，已达到门槛"}`);
+    }
+    const firstPivot = forecast && Array.isArray(forecast.pivotOptions) ? forecast.pivotOptions[0] : null;
+    if (firstPivot) checkFacts.push(`备选${firstPivot.name}：${firstPivot.unitTrigger}且${firstPivot.itemTrigger}`);
+
+    const stayFacts = [];
+    if (forecast && forecast.stayCondition) stayFacts.push(forecast.stayCondition);
+    const milestone = itemGoal ? `${carry}${targetStar}星且核心装达到${itemGoal}件` : `${carry}${targetStar}星`;
+    stayFacts.push(`达到${milestone}时继续投入；未达到前不追加不可逆成本`);
+
+    const switchFacts = [];
+    if (forecast && (forecast.switchCondition || forecast.trigger)) switchFacts.push(forecast.switchCondition || forecast.trigger);
+    (forecast && forecast.pivotOptions || []).slice(0, 3).forEach(option => {
+      switchFacts.push(`${option.unitTrigger}+${option.itemTrigger}→${option.name}`);
+    });
+    return {
+      version: 1,
+      routeId: rowId(execution),
+      routeName: execution.template.name,
+      strategicRouteId: strategic ? rowId(strategic) : "",
+      checkpoint,
+      now: { facts: uniq(nowFacts).slice(0, 2) },
+      check: { facts: uniq(checkFacts).slice(0, 3) },
+      stay: { facts: uniq(stayFacts).slice(0, 2) },
+      switchWhen: uniq(switchFacts).slice(0, 4),
+      facts: { level, carry, currentStar, targetStar, heldCoreItems, missingCoreItems, itemGoal, keepUnits },
+    };
+  }
+
   function applyDeterministicDecision(rows, selected, weights, opts) {
     if (!rows.length) return { status: "empty", text: "暂无路线" };
     const level = clamp(Number(selected.level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
@@ -2632,6 +2703,7 @@
         executionId: "",
         executionName: "",
         forecast: null,
+        actionContract: null,
         sufficiency,
         text: `信息充分度${sufficiency.score}%：暂不输出执行路线`,
       };
@@ -2747,6 +2819,7 @@
       portfolio: rolling.portfolio,
       formula: `Q=${rolling.target.planning.current}×${FORWARD_MODEL.currentWeight}+${rolling.target.planning.next}×${FORWARD_MODEL.nextWeight}+${rolling.target.planning.terminal}×${FORWARD_MODEL.terminalWeight}-转型${rolling.target.planning.transitionCost}×${FORWARD_MODEL.transitionPenalty}-沉没${rolling.target.planning.sunkCost}×${FORWARD_MODEL.sunkAssetPenalty}-资源${rolling.target.planning.resourcePenalty}-尾险${rolling.target.planning.tailRisk}+期权${rolling.target.planning.optionValue}+连续性${rolling.target.planning.commitmentCredit}=${rolling.target.planning.value}`,
     } : null;
+    const actionContract = buildActionContract(execution, current, strategic, selected, forecast);
     const decision = {
       status,
       level,
@@ -2774,6 +2847,7 @@
       executionValue: execution.executionValue,
       executionWeights: execution.executionWeights,
       forecast,
+      actionContract,
       sufficiency,
       manualLockInvalid: Boolean(requestedManual && !manual),
       text,
@@ -3658,6 +3732,14 @@
       && forecastRows.decision.forecast.pivotOptions[0].unitTrigger.includes("Q")
       && forecastRows.decision.forecast.pivotOptions[0].name === "兼容登顶转型线",
     "前瞻必须把候选路线展开为‘刷到什么→转什么’的确定性分支");
+    const actionContract = forecastRows.decision.actionContract;
+    assert(actionContract && actionContract.version === 1
+      && actionContract.checkpoint === "3-5"
+      && actionContract.now.facts.length > 0
+      && actionContract.check.facts.some(line => line.includes("目标") && line.includes("当前"))
+      && actionContract.stay.facts.some(line => line.includes("不追加不可逆成本"))
+      && actionContract.switchWhen.some(line => line.includes("兼容登顶转型线")),
+    "行动合同必须把动作、检查、里程碑和转型触发结构化，供展示层与讲解层共用");
     const lockedForecast = rank([forecastLow, forecastCap], selectedFromSignals(forecastSignals), fallbackWeights, 2, { operationalCommitment: true, manualLockId: "前强后弱预警线", unitPrices: { P: 1, Q: 4 } });
     assert(lockedForecast.decision.status === "manual" && lockedForecast.decision.executionId === "前强后弱预警线", "手动锁定仍是滚动规划唯一绝对锁");
     assertNoBadNumbers(JSON.stringify(forecastRows.decision), "滚动前瞻不得输出999/Infinity/NaN");
@@ -3930,6 +4012,7 @@
     normalizeHeroAugmentOffer,
     optimizeCurrentBoard,
     decisionSufficiency,
+    buildActionContract,
     normalizeHeroAugmentRound,
     heroAugmentCostFactor,
     parseTraitsInText,
