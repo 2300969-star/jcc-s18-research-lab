@@ -49,7 +49,7 @@ button, input { font:inherit; }
 .banner.show { opacity:1; }
 .status { display:grid; grid-template-columns:1fr; gap:8px; min-height:94px; }
 .pending, .signals { display:flex; gap:8px; flex-wrap:wrap; align-items:center; min-height:42px; }
-.levelRow, .decisionStateRow, .heroAugRow { display:flex; gap:8px; flex-wrap:wrap; align-items:center; min-height:38px; }
+.levelRow, .decisionStateRow, .heroAugRow, .mechanismProgressRow { display:flex; gap:8px; flex-wrap:wrap; align-items:center; min-height:38px; }
 .label { color:var(--muted); font-size:15px; font-weight:800; margin-right:2px; }
 .chip, .candidate { min-height:44px; border:1px solid var(--border); border-radius:999px; background:var(--surface); color:var(--ink); padding:6px 14px; cursor:pointer; font-size:18px; }
 .chip { border-color:color-mix(in srgb, var(--s2) 55%, var(--border)); }
@@ -63,6 +63,13 @@ button, input { font:inherit; }
 .heroAugChip { min-height:36px; border:1px solid var(--border); border-radius:999px; background:var(--plane); color:var(--ink2); padding:4px 13px; cursor:pointer; font-size:16px; font-weight:850; }
 .heroAugChip.on { background:var(--s5); border-color:var(--s5); color:#fff; }
 .heroAugHint { color:var(--muted); font-size:14px; font-weight:750; }
+.mechanismProgressRow:empty { display:none; }
+.mechanismControl { display:inline-flex; align-items:center; gap:5px; min-height:36px; border:1px solid color-mix(in srgb, var(--s1) 48%, var(--border)); border-radius:8px; padding:3px 5px 3px 9px; background:var(--plane); }
+.mechanismControlName { color:var(--ink2); font-size:14px; font-weight:900; }
+.mechanismStateChip { min-height:28px; border:1px solid var(--border); border-radius:6px; padding:2px 8px; background:var(--surface); color:var(--ink2); cursor:pointer; font-size:13px; font-weight:850; }
+.mechanismStateChip.on { color:#fff; background:var(--s1); border-color:var(--s1); }
+.mechanismCounter { width:78px; min-height:28px; border:1px solid var(--border); border-radius:6px; padding:2px 7px; color:var(--ink); background:var(--surface); font-size:14px; font-weight:850; }
+.mechanismUnit { color:var(--muted); font-size:13px; font-weight:800; }
 .candidate { border-color:color-mix(in srgb, var(--s3) 65%, var(--border)); }
 .drop { min-width:44px; padding:6px 12px; color:var(--s6); }
 .main { min-height:0; display:grid; grid-template-columns:minmax(0,1fr); }
@@ -137,6 +144,7 @@ button, input { font:inherit; }
 .jointMeta { margin-top:6px; color:var(--muted); font-size:11px; line-height:1.35; overflow-wrap:anywhere; }
 .jointMechanisms { display:flex; flex-wrap:wrap; gap:5px; margin-top:7px; }
 .jointMechanism { border:1px solid var(--grid); border-radius:999px; padding:2px 7px; color:var(--ink2); font-size:11px; font-weight:800; }
+.jointMechanism.tracked { color:var(--s2); border-color:color-mix(in srgb, var(--s2) 55%, var(--border)); }
 .jointMechanism.pending { color:var(--muted); border-style:dashed; }
 .keyFlags { display:flex; flex-wrap:wrap; gap:7px; margin-top:9px; }
 .keyFlag { min-width:0; max-width:100%; border:1px solid var(--border); border-radius:999px; padding:4px 10px; color:var(--ink2); background:var(--surface); font-size:13px; font-weight:850; overflow-wrap:anywhere; }
@@ -269,7 +277,7 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
   .settingsBtn { width:46px; font-size:20px; }
   .status { min-height:0; gap:4px; }
   .pending, .signals { min-height:34px; gap:5px; }
-  .levelRow, .decisionStateRow, .heroAugRow { min-height:32px; gap:5px; }
+  .levelRow, .decisionStateRow, .heroAugRow, .mechanismProgressRow { min-height:32px; gap:5px; }
   .chip, .candidate { min-height:36px; padding:4px 10px; font-size:16px; }
   .levelChip, .stateChip, .heroAugChip { min-height:31px; padding:3px 9px; font-size:14px; }
   .main { min-height:420px; }
@@ -331,6 +339,7 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
     <div class="levelRow" id="levelRow"></div>
     <div class="decisionStateRow" id="decisionStateRow"></div>
     <div class="heroAugRow" id="heroAugRow"></div>
+    <div class="mechanismProgressRow" id="mechanismProgressRow"></div>
     <div class="signals" id="signals"></div>
   </div>
   <main class="main">
@@ -373,10 +382,10 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
 <script src="data.js?v=meta-20260712a"></script>
 <script src="stage2-matcher-data.js?v=hero-round-20260712a"></script>
 <script src="odds-data.js?v=match-20260706e"></script>
-<script src="mechanism-data.js?v=mechanism-20260723a"></script>
+<script src="mechanism-data.js?v=guardian-progress-20260723"></script>
 <script src="shop-reachability.js?v=joint-shop-20260723a"></script>
-<script src="matcher-core.js?v=joint-shop-20260723a"></script>
-<script src="signal-parser.js?v=match-20260706e"></script>
+<script src="matcher-core.js?v=guardian-progress-20260723"></script>
+<script src="signal-parser.js?v=guardian-progress-20260723"></script>
 <script src="augment-advisor.js?v=match-20260715a"></script>
 <script src="llm-lane.js?v=match-20260712b"></script>
 <script src="decision-narrator.js?v=match-20260723a"></script>
@@ -578,6 +587,10 @@ function normalizeSignal(s) {
     commitmentType: s && s.commitmentType,
     targetUnit: s && s.targetUnit,
     gold: s && s.gold,
+    guardian: s && (s.guardian || (s.kind === "mechanismStates" ? value : undefined)),
+    status: s && s.status,
+    progress: s && Number.isFinite(Number(s.progress)) ? Math.max(0, Number(s.progress)) : undefined,
+    metric: s && s.metric,
     via: s && s.via,
   };
 }
@@ -670,6 +683,8 @@ function addSignal(s, defer) {
       existing.count = next.count;
       existing.label = next.count ? `${next.count}${next.value}` : (next.label || next.value);
       existing.via = next.via || existing.via;
+    } else if (next.kind === "mechanismStates") {
+      signals[existingIndex] = { ...existing, ...next, via: next.via || existing.via };
     } else if (next.via === "llm") {
       existing.via = "llm";
     }
@@ -685,6 +700,9 @@ function addSignal(s, defer) {
 }
 function removeSignal(s, defer) {
   signals = signals.filter(x => signalKey(x) !== signalKey(s));
+  if (s && s.kind === "monsters") {
+    signals = signals.filter(x => x.kind !== "mechanismStates" || (x.guardian || x.value) !== s.value);
+  }
   if (!defer) save();
 }
 function removeByValue(value) {
@@ -726,6 +744,7 @@ function signalText(rows) {
     if (s.kind === "units" && s.location) return `${s.value}·${s.location === "bench" ? "备战席" : "场上"}`;
     if (s.kind === "items") return `${s.holder ? `${s.holder}带` : ""}${s.value}${Number(s.count) > 1 ? `×${s.count}` : ""}`;
     if (s.kind === "commitments") return s.label || s.value;
+    if (s.kind === "mechanismStates") return s.label || s.value;
     return s.value || s.label || "";
   }).filter(Boolean).join("、") || "-";
 }
@@ -919,6 +938,46 @@ function renderHeroAugmentRound() {
     ? `<span class="heroAugHint">${resolvedHint || roundHint || `候选${costs.join("/")}费；排除${excluded.join("/")}费专属强化`}</span>`
     : `<span class="heroAugHint">${resolvedHint || "开局按预告选择，立即裁剪不可能路线"}</span>`);
   box.querySelectorAll("[data-hero-round]").forEach(btn => btn.addEventListener("click", () => setHeroAugmentRound(btn.dataset.heroRound)));
+}
+function renderMechanismProgress() {
+  const box = $("mechanismProgressRow");
+  const catalog = window.JCC_MECHANISMS || {};
+  const selectedGuardians = new Set(signals.filter(row => row.kind === "monsters").map(row => row.value));
+  const models = (catalog.guardianProgress || []).filter(row => selectedGuardians.has(row.guardian));
+  if (!models.length) {
+    box.innerHTML = "";
+    return;
+  }
+  const stateByGuardian = new Map(signals.filter(row => row.kind === "mechanismStates").map(row => [row.guardian || row.value, row]));
+  box.innerHTML = `<span class="label">机制进度</span>` + models.map((model, index) => {
+    const current = stateByGuardian.get(model.guardian) || {};
+    const controlName = `${model.guardian.replace(/（(?:经济|战力)）$/, "")} · ${model.label}`;
+    if (model.type === "counter") {
+      return `<span class="mechanismControl"><span class="mechanismControlName">${esc(controlName)}</span><input class="mechanismCounter" data-mechanism-counter="${index}" type="number" min="${esc(model.min || 0)}" step="${esc(model.step || 1)}" value="${esc(current.progress == null ? 0 : current.progress)}" aria-label="${esc(model.guardian + model.label)}"><span class="mechanismUnit">${esc(model.unit || "")}</span></span>`;
+    }
+    return `<span class="mechanismControl"><span class="mechanismControlName">${esc(controlName)}</span>${(model.states || []).map(option => `<button class="mechanismStateChip ${current.status === option.id ? "on" : ""}" data-mechanism-state="${index}" data-status="${esc(option.id)}">${esc(option.label)}</button>`).join("")}</span>`;
+  }).join("");
+  box.querySelectorAll("[data-mechanism-state]").forEach(btn => btn.addEventListener("click", () => {
+    const model = models[Number(btn.dataset.mechanismState)];
+    const option = (model.states || []).find(row => row.id === btn.dataset.status);
+    addSignal({ kind: "mechanismStates", value: model.guardian, guardian: model.guardian, status: btn.dataset.status, label: `${model.guardian.replace(/（(?:经济|战力)）$/, "")}·${option ? option.label : btn.dataset.status}` });
+    render();
+  }));
+  box.querySelectorAll("[data-mechanism-counter]").forEach(input => {
+    const commit = () => {
+      const model = models[Number(input.dataset.mechanismCounter)];
+      const progress = Math.max(Number(model.min) || 0, Number(input.value) || 0);
+      addSignal({ kind: "mechanismStates", value: model.guardian, guardian: model.guardian, status: "tracked", progress, metric: model.metric, label: `${model.guardian.replace(/（(?:经济|战力)）$/, "")}·${progress}${model.unit || ""}` });
+      render();
+    };
+    input.addEventListener("change", commit);
+    input.addEventListener("keydown", ev => {
+      if (ev.key !== "Enter") return;
+      ev.preventDefault();
+      commit();
+      focusInput();
+    });
+  });
 }
 function renderPending() {
   const box = $("pending");
@@ -1325,7 +1384,7 @@ function openRouteDetail(row) {
       const bottleneck = pkg.bottleneck && pkg.bottleneck.need > 0 ? `；瓶颈${pkg.bottleneck.name}缺${pkg.bottleneck.need}张，牌值${pkg.bottleneck.cardValueGold}金` : "；关键棋子已齐";
       mk("div", "detailLine", `${pkg.label}：完成率${pkg.completionPct}%（${pkg.trials}次确定性蒙特卡洛，${pkg.gold}金${pkg.budgetSource === "stage-prior" ? "阶段预算先验" : "当前预算"}）${bottleneck}`, body);
     });
-    const mechanismLines = [...(joint.mechanisms && joint.mechanisms.applied || []), ...(joint.mechanisms && joint.mechanisms.pending || [])];
+    const mechanismLines = [...(joint.mechanisms && joint.mechanisms.applied || []), ...(joint.mechanisms && joint.mechanisms.tracked || []), ...(joint.mechanisms && joint.mechanisms.pending || [])];
     if (mechanismLines.length) mk("div", "detailLine", `机制边界：${mechanismLines.join("；")}`, body);
     mk("div", "detailLine", "牌池份数是历史先验；未录入对手持牌不会从共享牌池扣除。概率只用于风险，不折算缺卡金币。", body);
   }
@@ -1426,11 +1485,12 @@ function jointReachHtml(row) {
     </div>`;
   }).join("");
   const applied = (joint.mechanisms && joint.mechanisms.applied || []).map(text => `<span class="jointMechanism">已生效 · ${esc(text)}</span>`);
+  const tracked = (joint.mechanisms && joint.mechanisms.tracked || []).map(text => `<span class="jointMechanism tracked">已记录 · ${esc(text)}</span>`);
   const pending = (joint.mechanisms && joint.mechanisms.pending || []).map(text => `<span class="jointMechanism pending">未计入 · ${esc(text)}</span>`);
   return `<div class="jointReach">
     <div class="jointReachHead"><span>共享商店联合可达性</span><small>概率单列；金额只算棋子面值</small></div>
     <div class="jointReachGrid">${cards}</div>
-    ${applied.length || pending.length ? `<div class="jointMechanisms">${[...applied, ...pending].join("")}</div>` : ""}
+    ${applied.length || tracked.length || pending.length ? `<div class="jointMechanisms">${[...applied, ...tracked, ...pending].join("")}</div>` : ""}
   </div>`;
 }
 function heroAugmentHtml(row) {
@@ -1800,6 +1860,7 @@ function render() {
   renderLevel();
   renderDecisionState();
   renderHeroAugmentRound();
+  renderMechanismProgress();
   renderSignals();
   renderPending();
   if (augChoices && augChoices.length) renderAugTriple();

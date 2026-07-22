@@ -1764,13 +1764,41 @@
   function jointMechanismContext(selected, opts) {
     const economy = opts && opts.augmentEconomy || {};
     const applied = [];
+    const tracked = [];
     const pending = [];
     if (economy.shopLevelOffset) applied.push(`高端购物：商店概率等级+${economy.shopLevelOffset}`);
     const catalog = opts && opts.mechanismData || {};
     const guardianRows = catalog.guardians || [];
+    const progressModels = new Map((catalog.guardianProgress || []).map(row => [row.guardian, row]));
+    const progressStates = new Map((selected.mechanismStates || []).map(row => [row.guardian || row.value, row]));
+    const guardianModifiers = new Map((((catalog.shopModifiers || {}).guardians) || []).map(row => [row.name, row]));
     (selected.monsters || []).forEach(name => {
       const rows = guardianRows.filter(row => row.name === name || row.baseName === name);
-      rows.filter(row => row.domain === "shop-state").forEach(row => pending.push(`${row.name}：需确认机制已触发，暂不修正概率`));
+      rows.forEach(row => {
+        const model = progressModels.get(row.name);
+        const state = progressStates.get(row.name);
+        if (model && state) {
+          if (model.type === "counter") {
+            const progress = Math.max(0, Number(state.progress) || 0);
+            const gained = model.effect && model.effect.per
+              ? Math.floor(progress / Number(model.effect.per)) * Number(model.effect.value || 0)
+              : 0;
+            tracked.push(`${row.name}：${model.label}${progress}${model.unit || ""}${gained > 0 ? `，已确认增益${gained}${model.effect.unit || ""}` : ""}`);
+          } else {
+            const stateLabel = (model.states || []).find(option => option.id === state.status);
+            tracked.push(`${row.name}：${stateLabel ? stateLabel.label : state.status || "已记录"}${model.effect && model.effect.activeState === state.status ? `；${model.effect.text}` : ""}`);
+          }
+        }
+        const modifier = guardianModifiers.get(row.name);
+        if (!modifier) return;
+        if (row.name === "防御塔（经济）" && state && state.status === "built") {
+          pending.push(`${row.name}：已建成，但公开数据缺少4/5费增幅，仍不修正概率`);
+        } else if (row.name === "爆裂球果（经济）" && state && state.status === "available") {
+          pending.push(`${row.name}：转换权可用；需指定被转换棋子后才进入同费转换模型`);
+        } else {
+          pending.push(`${row.name}：需确认机制已触发，暂不修正概率`);
+        }
+      });
     });
     const encounterRows = new Map((catalog.openingEncounters || []).map(row => [row.name, row]));
     (selected.encounters || []).forEach(name => {
@@ -1783,7 +1811,8 @@
       copyCredits: economy.copyTarget && economy.copyCredit ? { [economy.copyTarget]: Number(economy.copyCredit) || 0 } : {},
       freeRerolls: 0,
       applied,
-      pending,
+      tracked: uniq(tracked),
+      pending: uniq(pending),
     };
   }
 
@@ -3140,7 +3169,7 @@
   }
 
   function selectedFromSignals(signals) {
-    const selected = { units: [], items: [], itemRows: [], augments: [], augmentRows: [], augmentCats: [], traits: [], monsters: [], encounters: [], commitments: [], level: null, stage: "", gold: null, health: null };
+    const selected = { units: [], items: [], itemRows: [], augments: [], augmentRows: [], augmentCats: [], traits: [], monsters: [], encounters: [], mechanismStates: [], commitments: [], level: null, stage: "", gold: null, health: null };
     (signals || []).forEach(s => {
       if (!s) return;
       const kind = s.kind || s.type;
@@ -3192,6 +3221,18 @@
           targetUnit: s.targetUnit || "",
           gold: Math.max(0, Number(s.gold) || 0),
           label: s.label || value || "不可逆事件",
+        });
+        return;
+      }
+      if (kind === "mechanismStates" && value) {
+        selected.mechanismStates = selected.mechanismStates.filter(row => (row.guardian || row.value) !== value);
+        selected.mechanismStates.push({
+          guardian: s.guardian || value,
+          value,
+          status: s.status || "tracked",
+          progress: Number.isFinite(Number(s.progress)) ? Math.max(0, Number(s.progress)) : undefined,
+          metric: s.metric || "",
+          label: s.label || value,
         });
         return;
       }
@@ -3299,6 +3340,14 @@
       traits: normalizeSelectedTraits(selected.traits || []),
       monsters: uniq(selected.monsters || []).sort(stableCompare),
       encounters: uniq(selected.encounters || []).sort(stableCompare),
+      mechanismStates: [...(selected.mechanismStates || [])].map(row => ({
+        guardian: row.guardian || row.value,
+        value: row.value || row.guardian,
+        status: row.status || "tracked",
+        progress: Number.isFinite(Number(row.progress)) ? Math.max(0, Number(row.progress)) : undefined,
+        metric: row.metric || "",
+        label: row.label || row.value || row.guardian,
+      })).sort((a, b) => stableCompare(`${a.guardian}|${a.status}|${a.progress || 0}`, `${b.guardian}|${b.status}|${b.progress || 0}`)),
       level: Number.isFinite(Number(selected.level)) ? clamp(Number(selected.level), MIN_LEVEL, MAX_LEVEL) : null,
       stage: stableText(selected.stage).trim(),
       gold: selected.gold !== null && selected.gold !== undefined && selected.gold !== "" && Number.isFinite(Number(selected.gold)) ? Math.max(0, Number(selected.gold)) : null,
@@ -3738,6 +3787,32 @@
     "已选高端购物必须对所有候选路线生效，不能依赖路线推荐词表");
     const virtualTenRow = rank([globalShopTemplate], selectedFromSignals([{ kind: "levels", level: 9 }, { kind: "augments", value: "高端购物" }]), fallbackWeights, 1, operatorOpts)[0];
     assert(virtualTenRow.reachability.missing[0].effectiveLevel === 10, "9级高端购物必须套用虚拟10级商店概率");
+    const mechanismFixture = {
+      guardians: [
+        { name: "防御塔（经济）", baseName: "防御塔", domain: "shop-state" },
+        { name: "迅捷蟹（经济）", baseName: "迅捷蟹", domain: "future-budget" },
+        { name: "阿木木（战力）", baseName: "阿木木", domain: "shop-state" },
+      ],
+      guardianProgress: [
+        { guardian: "防御塔（经济）", type: "state", label: "建造状态", states: [{ id: "built", label: "已建成" }], effect: { activeState: "built", text: "提高4/5费概率" } },
+        { guardian: "迅捷蟹（经济）", type: "counter", label: "成长层数", unit: "层", effect: { per: 100, value: 1, unit: "金币" } },
+        { guardian: "阿木木（战力）", type: "counter", label: "已购情书", unit: "封", effect: { per: 1, value: 5, unit: "%法强" } },
+      ],
+      shopModifiers: { guardians: [{ name: "防御塔（经济）" }] },
+      openingEncounters: [],
+    };
+    const progressSelected = selectedFromSignals([
+      { kind: "monsters", value: "防御塔（经济）" },
+      { kind: "mechanismStates", value: "防御塔（经济）", status: "built" },
+      { kind: "monsters", value: "迅捷蟹（经济）" },
+      { kind: "mechanismStates", value: "迅捷蟹（经济）", status: "tracked", metric: "layers", progress: 230 },
+      { kind: "monsters", value: "阿木木（战力）" },
+      { kind: "mechanismStates", value: "阿木木（战力）", status: "tracked", metric: "letters", progress: 3 },
+    ]);
+    const progressContext = jointMechanismContext(progressSelected, { mechanismData: mechanismFixture });
+    assert(progressContext.tracked.some(x => x.includes("230层") && x.includes("2金币")), "迅捷蟹层数必须换算为已确认的未来收益");
+    assert(progressContext.tracked.some(x => x.includes("3封") && x.includes("15%法强")), "阿木木情书必须换算为已确认战力");
+    assert(progressContext.pending.some(x => x.includes("已建成") && x.includes("仍不修正概率")), "防御塔建成但增幅未知时仍不得拍脑袋改概率");
     const itemOperator = rank([operatorTemplate], selectedFromSignals([{ kind: "levels", level: 6 }, { kind: "augments", value: "便携锻炉" }]), fallbackWeights, 1, operatorOpts)[0];
     const itemComplete = rank([operatorTemplate], selectedFromSignals([{ kind: "levels", level: 6 }, { kind: "augments", value: "便携锻炉" }, { kind: "items", value: "鬼索的狂暴之刃" }, { kind: "items", value: "疾射火炮" }, { kind: "items", value: "泰坦的坚决" }]), fallbackWeights, 1, operatorOpts)[0];
     assert(itemOperator.augmentOperator.variableBonus > itemComplete.augmentOperator.variableBonus, "装备算子应随主C装备缺口收缩而衰减");

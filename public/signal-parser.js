@@ -201,6 +201,56 @@
     return out;
   }
 
+  function mechanismStateSignal(guardian, status, label, progress, metric) {
+    return {
+      kind: "mechanismStates",
+      value: guardian,
+      guardian,
+      status,
+      progress: Number.isFinite(Number(progress)) ? Math.max(0, Number(progress)) : undefined,
+      metric,
+      label,
+    };
+  }
+
+  function parseMechanismStateText(text, currentSignals) {
+    let clean = norm(text);
+    const add = [];
+    const currentPoro = (currentSignals || []).find(row => row && row.kind === "monsters" && /^魄罗粉丝（(?:经济|战力)）$/.test(row.value));
+    const poroGuardian = currentPoro ? currentPoro.value : "魄罗粉丝（经济）";
+    const addState = (guardian, status, label, progress, metric) => {
+      if (!add.some(row => row.kind === "monsters" && row.value === guardian)) add.push({ kind: "monsters", value: guardian, label: guardian });
+      add.push(mechanismStateSignal(guardian, status, label, progress, metric));
+    };
+    const stateRules = [
+      { guardian: "防御塔（经济）", status: "building", label: "防御塔·建造中", forms: ["防御塔建造中", "经济防御塔建造中", "防御塔还没建好", "防御塔未建成"] },
+      { guardian: "防御塔（经济）", status: "built", label: "防御塔·已建成", forms: ["防御塔已经建成", "防御塔已建成", "防御塔建成", "防御塔建好了", "防御塔造好了", "经济防御塔已建成"] },
+      { guardian: "爆裂球果（经济）", status: "cooldown", label: "爆裂球果·冷却中", forms: ["爆裂球果冷却中", "球果冷却中", "球果已经用了", "球果已用", "球果没了"] },
+      { guardian: "爆裂球果（经济）", status: "available", label: "爆裂球果·可用", forms: ["爆裂球果可用", "球果可用", "球果好了", "球果长好了"] },
+      { guardian: poroGuardian, status: "collecting", label: "魄罗粉丝·积累中", forms: ["经济魄罗积累中", "魄罗观众席积累中"] },
+      { guardian: poroGuardian, status: "full", label: "魄罗粉丝·已满员", forms: ["经济魄罗满员", "魄罗粉丝满员", "魄罗观众席满了", "观众席满了", "魄罗满员"] },
+    ];
+    stateRules.forEach(rule => {
+      const form = rule.forms.find(value => clean.includes(value));
+      if (!form) return;
+      addState(rule.guardian, rule.status, rule.label);
+      clean = clean.replace(form, "");
+    });
+    const countValue = token => /^\d+$/.test(token) ? Number(token) : CN_NUMBERS[token];
+    const counters = [
+      { regex: /迅捷蟹(?:经济)?(?:成长)?(?:层数)?(\d{1,4}|[一二两三四五六七八九])层?/, guardian: "迅捷蟹（经济）", metric: "layers", status: "tracked", label: value => `迅捷蟹·${value}层` },
+      { regex: /阿木木(?:战力)?(?:买了|已有|有)?(\d{1,3}|[一二两三四五六七八九])封?情书/, guardian: "阿木木（战力）", metric: "letters", status: "tracked", label: value => `阿木木·${value}封情书` },
+    ];
+    counters.forEach(rule => {
+      const match = clean.match(rule.regex);
+      if (!match) return;
+      const value = countValue(match[1]);
+      addState(rule.guardian, rule.status, rule.label(value), value, rule.metric);
+      clean = clean.replace(match[0], "");
+    });
+    return { add, remaining: clean };
+  }
+
   function toPinyin(s) {
     return Array.from(String(s || "")).map(ch => {
       if (/[a-z0-9]/i.test(ch)) return ch.toLowerCase();
@@ -729,6 +779,9 @@
       return out;
     }
 
+    const mechanismState = parseMechanismStateText(decisionText, currentSignals);
+    out.add.push(...mechanismState.add);
+    decisionText = mechanismState.remaining;
     const got = tokenize(decisionText);
     out.add.push(...got.add);
     out.pending = got.pending;
@@ -853,6 +906,19 @@
     assertIncludes(encounter.add, "encounters", "金币订阅");
     const guardian = parse("防御塔经济", []);
     assertIncludes(guardian.add, "monsters", "防御塔（经济）");
+    const towerBuilt = parse("防御塔已建成", []);
+    assertIncludes(towerBuilt.add, "monsters", "防御塔（经济）");
+    if (!towerBuilt.add.some(x => x.kind === "mechanismStates" && x.value === "防御塔（经济）" && x.status === "built")) throw new Error("应识别防御塔已建成状态");
+    const fruitReady = parse("球果可用", []);
+    if (!fruitReady.add.some(x => x.kind === "mechanismStates" && x.value === "爆裂球果（经济）" && x.status === "available")) throw new Error("应识别球果可用状态");
+    const crabLayers = parse("迅捷蟹230层", []);
+    if (!crabLayers.add.some(x => x.kind === "mechanismStates" && x.metric === "layers" && x.progress === 230)) throw new Error("应识别迅捷蟹成长层数");
+    const amumuLetters = parse("阿木木3封情书", []);
+    if (!amumuLetters.add.some(x => x.kind === "mechanismStates" && x.metric === "letters" && x.progress === 3)) throw new Error("应识别阿木木情书数量");
+    const poroFull = parse("魄罗满员", []);
+    if (!poroFull.add.some(x => x.kind === "mechanismStates" && x.value === "魄罗粉丝（经济）" && x.status === "full")) throw new Error("应识别魄罗满员状态");
+    const battlePoroFull = parse("魄罗满员", [{ kind: "monsters", value: "魄罗粉丝（战力）" }]);
+    if (!battlePoroFull.add.some(x => x.kind === "mechanismStates" && x.value === "魄罗粉丝（战力）" && x.status === "full")) throw new Error("魄罗进度应沿用已选战力形态");
     console.log("signal-parser assertions passed");
   }
 

@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "version": "17.17.7",
   "generatedAt": "2026-07-16 16:40:29",
   "source": {
@@ -456,6 +456,122 @@
       "description": "赢得战斗会获得一个可爱的魄罗粉丝，观众席满员后，狂热的魄罗们会在棋盘上点亮2个聚光灯格，为棋子提供20%伤害增幅以及3法力恢复。",
       "domain": "combat",
       "requiresProgress": true
+    }
+  ],
+  "guardianProgress": [
+    {
+      "guardian": "迅捷蟹（经济）",
+      "type": "counter",
+      "metric": "layers",
+      "label": "成长层数",
+      "unit": "层",
+      "min": 0,
+      "step": 100,
+      "effect": {
+        "domain": "future-budget",
+        "per": 100,
+        "value": 1,
+        "unit": "金币",
+        "text": "每100层额外掉落1金币"
+      }
+    },
+    {
+      "guardian": "魄罗粉丝（经济）",
+      "type": "state",
+      "label": "观众席",
+      "states": [
+        {
+          "id": "collecting",
+          "label": "积累中"
+        },
+        {
+          "id": "full",
+          "label": "已满员"
+        }
+      ],
+      "effect": {
+        "domain": "future-budget",
+        "activeState": "full",
+        "text": "满员后击败敌人有50%掉落金币或高价值弈子"
+      }
+    },
+    {
+      "guardian": "魄罗粉丝（战力）",
+      "type": "state",
+      "label": "观众席",
+      "states": [
+        {
+          "id": "collecting",
+          "label": "积累中"
+        },
+        {
+          "id": "full",
+          "label": "已满员"
+        }
+      ],
+      "effect": {
+        "domain": "combat",
+        "activeState": "full",
+        "text": "满员后点亮2个聚光灯格，提供20%伤害增幅和3法力恢复"
+      }
+    },
+    {
+      "guardian": "爆裂球果（经济）",
+      "type": "state",
+      "label": "球果",
+      "states": [
+        {
+          "id": "cooldown",
+          "label": "冷却中"
+        },
+        {
+          "id": "available",
+          "label": "球果可用"
+        }
+      ],
+      "effect": {
+        "domain": "shop-state",
+        "activeState": "available",
+        "requiresTarget": true,
+        "text": "可将备战席棋子转换为同费不同名棋子"
+      }
+    },
+    {
+      "guardian": "阿木木（战力）",
+      "type": "counter",
+      "metric": "letters",
+      "label": "已购情书",
+      "unit": "封",
+      "min": 0,
+      "step": 1,
+      "effect": {
+        "domain": "combat",
+        "per": 1,
+        "value": 5,
+        "unit": "%法强",
+        "text": "每封情书使阿木木法强提高5%"
+      }
+    },
+    {
+      "guardian": "防御塔（经济）",
+      "type": "state",
+      "label": "建造状态",
+      "states": [
+        {
+          "id": "building",
+          "label": "建造中"
+        },
+        {
+          "id": "built",
+          "label": "已建成"
+        }
+      ],
+      "effect": {
+        "domain": "shop-state",
+        "activeState": "built",
+        "exactValueKnown": false,
+        "text": "建成后提高4/5费刷新概率，公开数据未给出精确增幅"
+      }
     }
   ],
   "shopModifiers": {

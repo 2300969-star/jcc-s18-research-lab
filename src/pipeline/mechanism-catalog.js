@@ -7,6 +7,36 @@ const { ROOT, resultPath, reportPath, publicPath, ensureOutputDirs } = require("
 const readData = name => JSON.parse(fs.readFileSync(path.join(ROOT, "data", name), "utf8"));
 const values = file => Object.values(readData(file).data || {});
 const compactName = name => String(name || "").replace(/[（(](?:经济|战力)[）)]/g, "").trim();
+const GUARDIAN_PROGRESS = [
+  {
+    guardian: "迅捷蟹（经济）", type: "counter", metric: "layers", label: "成长层数", unit: "层", min: 0, step: 100,
+    effect: { domain: "future-budget", per: 100, value: 1, unit: "金币", text: "每100层额外掉落1金币" },
+  },
+  {
+    guardian: "魄罗粉丝（经济）", type: "state", label: "观众席",
+    states: [{ id: "collecting", label: "积累中" }, { id: "full", label: "已满员" }],
+    effect: { domain: "future-budget", activeState: "full", text: "满员后击败敌人有50%掉落金币或高价值弈子" },
+  },
+  {
+    guardian: "魄罗粉丝（战力）", type: "state", label: "观众席",
+    states: [{ id: "collecting", label: "积累中" }, { id: "full", label: "已满员" }],
+    effect: { domain: "combat", activeState: "full", text: "满员后点亮2个聚光灯格，提供20%伤害增幅和3法力恢复" },
+  },
+  {
+    guardian: "爆裂球果（经济）", type: "state", label: "球果",
+    states: [{ id: "cooldown", label: "冷却中" }, { id: "available", label: "球果可用" }],
+    effect: { domain: "shop-state", activeState: "available", requiresTarget: true, text: "可将备战席棋子转换为同费不同名棋子" },
+  },
+  {
+    guardian: "阿木木（战力）", type: "counter", metric: "letters", label: "已购情书", unit: "封", min: 0, step: 1,
+    effect: { domain: "combat", per: 1, value: 5, unit: "%法强", text: "每封情书使阿木木法强提高5%" },
+  },
+  {
+    guardian: "防御塔（经济）", type: "state", label: "建造状态",
+    states: [{ id: "building", label: "建造中" }, { id: "built", label: "已建成" }],
+    effect: { domain: "shop-state", activeState: "built", exactValueKnown: false, text: "建成后提高4/5费刷新概率，公开数据未给出精确增幅" },
+  },
+];
 
 function encounterDomain(row) {
   const text = `${row.name} ${row.desc || ""}`;
@@ -72,7 +102,7 @@ function buildCatalog() {
     requiresProgress: /建成后|观众席满员|每4个回合后|随机刷新|受到攻击后/.test(row.skillDesc || ""),
   }));
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     version: galaxy.version,
     generatedAt: galaxy.time || "2026-07-16 16:40:29",
     source: {
@@ -91,6 +121,7 @@ function buildCatalog() {
     },
     openingEncounters,
     guardians,
+    guardianProgress: GUARDIAN_PROGRESS,
     shopModifiers: {
       augments: [
         { name: "高端购物", effect: "shop-level-offset", value: 1, automatic: true },
@@ -139,6 +170,12 @@ function report(catalog) {
     "",
     ...[...catalog.shopModifiers.augments, ...catalog.shopModifiers.guardians].map(row => `- ${row.name}：${row.effect}；${row.automatic ? "确认后自动生效" : `默认不自动生效（${row.reason}）`}`),
     "",
+    "## 守护者进度模型",
+    "",
+    "| 守护者 | 状态类型 | 已确认效果 |",
+    "|---|---|---|",
+    ...catalog.guardianProgress.map(row => `| ${row.guardian} | ${row.type === "counter" ? `${row.label}计数` : row.states.map(state => state.label).join(" / ")} | ${row.effect.text} |`),
+    "",
     "## 概率边界",
     "",
     `- 进入概率模型：${catalog.probabilityBoundary.entersShopModel.join("、")}`,
@@ -158,6 +195,9 @@ function run() {
   if (catalog.counts.openingEncounters !== 14) throw new Error("开场奇遇数量不符");
   if (catalog.counts.heroes < 60) throw new Error(`商店英雄数量异常，实际${catalog.counts.heroes}`);
   if (!catalog.guardians.some(row => row.name === "防御塔（经济）" && row.domain === "shop-state")) throw new Error("防御塔商店机制未识别");
+  const progressGuardians = new Set(catalog.guardianProgress.map(row => row.guardian));
+  const missingProgress = catalog.guardians.filter(row => row.requiresProgress && !progressGuardians.has(row.name));
+  if (missingProgress.length) throw new Error(`守护者进度模型缺失：${missingProgress.map(row => row.name).join("、")}`);
   console.log(`mechanism catalog generated: ${catalog.counts.openingEncounters} encounters, ${catalog.counts.guardians} guardians, ${catalog.counts.heroes} heroes`);
 }
 
