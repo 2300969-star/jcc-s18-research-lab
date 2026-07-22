@@ -128,6 +128,10 @@
   // 可出现的主C专属强化提供有限期权值；本局不可能出现时只关闭专属分支，不误杀基础阵容。
   const HERO_AUGMENT_OPTION_BONUS = 6;
   const HERO_AUGMENT_UNAVAILABLE_PENALTY = 6;
+  // 每次英雄强化展示3栏；每栏拥有3次独立重随。具体强化概率必须除以同费用标准名池，
+  // 不能把“本局抽到该费用桶”的概率直接当成某一张专属强化的出现概率。
+  const HERO_AUGMENT_OFFER_SLOTS = 3;
+  const HERO_AUGMENT_REROLLS_PER_SLOT = 3;
   // 已选英雄强化属于全局局面，而非某一条路线的局部标签。控制类效果采用保守代理，
   // 防止未经战斗回放校准的单个强化压过已握棋子与装备。
   const HERO_AUGMENT_CONTROL_PER_SECOND = 4;
@@ -423,12 +427,47 @@
     return Object.prototype.hasOwnProperty.call(priors, cost) ? Number(priors[cost]) || 0 : 1;
   }
 
-  function heroAugmentOptionExpectation(round, rows) {
-    const factors = (rows || []).map(row => heroAugmentCostFactor(round, Number(row.cost)));
-    const appearanceFactor = factors.length ? Math.max(...factors) : 0;
+  function normalizeHeroAugmentOffer(offer) {
+    if (!offer || !Array.isArray(offer.slots)) return null;
+    return {
+      round: normalizeHeroAugmentRound(offer.round),
+      status: offer.status === "selected" ? "selected" : "offered",
+      slots: offer.slots.slice(0, HERO_AUGMENT_OFFER_SLOTS).map((slot, index) => ({
+        slot: Number.isFinite(Number(slot && slot.slot)) ? Number(slot.slot) : index,
+        name: String(slot && slot.name || "").trim(),
+        seen: uniq([...(slot && slot.seen || []), slot && slot.name].filter(Boolean)),
+        rerollsRemaining: Number.isFinite(Number(slot && slot.rerollsRemaining))
+          ? clamp(Number(slot.rerollsRemaining), 0, HERO_AUGMENT_REROLLS_PER_SLOT)
+          : HERO_AUGMENT_REROLLS_PER_SLOT,
+        waiting: Boolean(slot && slot.waiting),
+      })),
+    };
+  }
+
+  function heroAugmentOptionExpectation(round, rows, selected, heroCatalog) {
+    const candidates = uniq((rows || []).map(row => row && row.name).filter(Boolean));
+    const catalog = (heroCatalog || []).filter(row => row && row.name && Number(row.cost));
+    const byCost = new Map();
+    catalog.forEach(row => byCost.set(Number(row.cost), (byCost.get(Number(row.cost)) || 0) + 1));
+    const perDraw = (rows || []).reduce((sum, row) => {
+      const pool = byCost.get(Number(row.cost)) || 0;
+      return sum + (pool ? heroAugmentCostFactor(round, Number(row.cost)) / pool : 0);
+    }, 0);
+    const offer = normalizeHeroAugmentOffer(selected && selected.heroAugmentOffer);
+    const shown = offer ? offer.slots.map(slot => slot.name).filter(Boolean) : [];
+    const offeredHit = shown.find(name => candidates.includes(name)) || "";
+    const remainingDraws = offer
+      ? offer.slots.reduce((sum, slot) => sum + (slot.waiting ? 0 : slot.rerollsRemaining), 0)
+      : HERO_AUGMENT_OFFER_SLOTS;
+    const appearanceFactor = offeredHit ? 1 : clamp(1 - Math.pow(1 - clamp(perDraw, 0, 1), remainingDraws), 0, 1);
     return {
       appearanceFactor,
       scoreDelta: HERO_AUGMENT_OPTION_BONUS * appearanceFactor,
+      offeredHit,
+      offer,
+      remainingDraws,
+      perDraw,
+      estimated: !offeredHit,
     };
   }
 
@@ -450,7 +489,7 @@
       + (Number(weights.mainCarryItem) || 0) * HERO_AUGMENT_CARRY_ITEM_EQUIVALENT);
   }
 
-  function heroAugmentDecision(t, selected) {
+  function heroAugmentDecision(t, selected, opts) {
     const round = normalizeHeroAugmentRound(selected && selected.heroAugmentRound);
     const costs = HERO_AUGMENT_ROUND_COSTS[round] || [];
     const plan = t && t.heroAugmentPlan || {};
@@ -468,7 +507,7 @@
     const traits = uniq(eligible.flatMap(row => row.traits || [])).slice(0, 3);
     const heroes = uniq(eligible.map(row => row.hero));
     const optionNames = uniq(candidates.map(row => row.name));
-    const expectation = heroAugmentOptionExpectation(round, eligible);
+    const expectation = heroAugmentOptionExpectation(round, eligible, selected, opts && opts.heroAugments);
     const base = {
       round,
       costs,
@@ -480,6 +519,8 @@
       eligible,
       required: !!required.length,
       appearanceFactor: expectation.appearanceFactor,
+      offeredHit: expectation.offeredHit,
+      remainingDraws: expectation.remainingDraws,
       scoreDelta: 0,
       hardBlock: false,
     };
@@ -525,11 +566,27 @@
       };
     }
     if (required.length) {
+      if (expectation.offeredHit) {
+        return {
+          ...base,
+          status: "offered",
+          scoreDelta: HERO_AUGMENT_OPTION_BONUS,
+          text: `当前候选已出现${expectation.offeredHit}，刚需分支可选`,
+        };
+      }
+      if (expectation.offer && expectation.remainingDraws === 0) {
+        return {
+          ...base,
+          status: "closed",
+          hardBlock: true,
+          text: `当前候选与重随机会均未出现${optionNames.join("/")}，刚需分支关闭`,
+        };
+      }
       if (expectation.appearanceFactor > 0 && expectation.appearanceFactor < 1) {
         return {
           ...base,
           status: "rare",
-          text: `等${round}强化决定：${heroes.join("/")}专属仅约${Math.round(expectation.appearanceFactor * 100)}%稀有出现，不作为预定线依据`,
+          text: `${expectation.offer ? `当前未出现，剩余${expectation.remainingDraws}次单栏重随` : `等${round}首组三栏`}：${heroes.join("/")}专属估计命中${(expectation.appearanceFactor * 100).toFixed(1)}%，不作为预定线依据`,
         };
       }
       return { ...base, status: "waiting", text: `等${round}强化决定：${heroes.join("/")}专属仍在费用池` };
@@ -543,13 +600,29 @@
       };
     }
     if (mainOptions.length) {
+      if (expectation.offeredHit) {
+        return {
+          ...base,
+          status: "offered",
+          scoreDelta: HERO_AUGMENT_OPTION_BONUS,
+          text: `当前候选已出现${expectation.offeredHit}，专属期权+${HERO_AUGMENT_OPTION_BONUS}分`,
+        };
+      }
+      if (expectation.offer && expectation.remainingDraws === 0) {
+        return {
+          ...base,
+          status: "base-only",
+          scoreDelta: -HERO_AUGMENT_UNAVAILABLE_PENALTY,
+          text: `当前候选与重随机会均未出现${optionNames.join("/")}，关闭专属期权，保留基础阵容`,
+        };
+      }
       if (expectation.appearanceFactor > 0 && expectation.appearanceFactor < 1) {
-        const expectedScore = Math.round(expectation.scoreDelta * 10) / 10;
+        const expectedScore = Math.round(expectation.scoreDelta * 100) / 100;
         return {
           ...base,
           status: "rare",
           scoreDelta: expectedScore,
-          text: `${round}稀有事件：${heroes.join("/")}专属约${Math.round(expectation.appearanceFactor * 100)}%可出现，期权+${expectedScore}分（不作为定线依据）`,
+          text: `${expectation.offer ? `当前未出现，剩余${expectation.remainingDraws}次单栏重随` : `${round}首组三栏`}：${heroes.join("/")}专属估计命中${(expectation.appearanceFactor * 100).toFixed(1)}%，期权+${expectedScore}分（不作为定线依据）`,
         };
       }
       return {
@@ -1369,7 +1442,7 @@
       evidence.push(`至尊计划：${primeRule.text || primeRule.holder}`);
     }
 
-    const heroAugment = heroAugmentDecision(t, selected);
+    const heroAugment = heroAugmentDecision(t, selected, opts);
     if (heroAugment) {
       if (heroAugment.scoreDelta > 0) {
         score += heroAugment.scoreDelta;
@@ -2939,22 +3012,45 @@
     const lowOptional = heroRoundTemplate("二费基础线", 2);
     const threeOptional = heroRoundTemplate("三费候选线", 3);
     const lowRequired = heroRoundTemplate("二费硬门槛", 2, true);
+    const heroProbabilityCatalog = [
+      lowOptional.heroAugmentPlan.options[0],
+      threeOptional.heroAugmentPlan.options[0],
+      ...Array.from({ length: 25 }, (_, i) => ({ name: `二费池${i}`, hero: `二费英雄${i}`, cost: 2 })),
+      ...Array.from({ length: 27 }, (_, i) => ({ name: `三费池${i}`, hero: `三费英雄${i}`, cost: 3 })),
+    ];
+    const heroRoundOpts = { heroAugments: heroProbabilityCatalog };
     const noRoundBefore = scoreTemplate(lowOptional, { units: [], items: [], augments: [], augmentCats: [] }, fallbackWeights, {});
     const noRoundAfter = scoreTemplate(lowOptional, { units: [], items: [], augments: [], augmentCats: [], heroAugmentRound: "unknown" }, fallbackWeights, {});
     assert(noRoundBefore.stageStrength === noRoundAfter.stageStrength, "未知英雄强化回合时计分必须逐值不变");
-    const lowAtFour = scoreTemplate(lowOptional, { units: [], items: [], augments: [], augmentCats: [], heroAugmentRound: "4-2" }, fallbackWeights, {});
-    const threeAtFour = scoreTemplate(threeOptional, { units: [], items: [], augments: [], augmentCats: [], heroAugmentRound: "4-2" }, fallbackWeights, {});
-    const hardAtFour = scoreTemplate(lowRequired, { units: [], items: [], augments: [], augmentCats: [], heroAugmentRound: "4-2" }, fallbackWeights, {});
+    const lowAtFour = scoreTemplate(lowOptional, { units: [], items: [], augments: [], augmentCats: [], heroAugmentRound: "4-2" }, fallbackWeights, heroRoundOpts);
+    const threeAtFour = scoreTemplate(threeOptional, { units: [], items: [], augments: [], augmentCats: [], heroAugmentRound: "4-2" }, fallbackWeights, heroRoundOpts);
+    const hardAtFour = scoreTemplate(lowRequired, { units: [], items: [], augments: [], augmentCats: [], heroAugmentRound: "4-2" }, fallbackWeights, heroRoundOpts);
     assert(lowAtFour.heroAugment.status === "base-only" && !lowAtFour.mechanicBlocked, "4-2应关闭二费专属分支但保留基础阵容");
-    assert(threeAtFour.heroAugment.status === "waiting" && threeAtFour.stageStrength > noRoundBefore.stageStrength, "4-2必须保留三费英雄强化并计入期权");
+    assert(threeAtFour.heroAugment.status === "rare" && threeAtFour.stageStrength > noRoundBefore.stageStrength, "4-2具体三费英雄强化应按三栏命中概率计入小额期权");
     assert(hardAtFour.heroAugment.status === "closed" && hardAtFour.stageStrength === 0, "4-2应硬关闭二费专属门槛路线");
-    const lowAtTwo = scoreTemplate(lowOptional, { units: [], items: [], augments: [], augmentCats: [], heroAugmentRound: "2-1" }, fallbackWeights, {});
-    const threeAtTwo = scoreTemplate(threeOptional, { units: [], items: [], augments: [], augmentCats: [], heroAugmentRound: "2-1" }, fallbackWeights, {});
-    assert(lowAtTwo.heroAugment.status === "waiting" && lowAtTwo.heroAugment.scoreDelta === HERO_AUGMENT_OPTION_BONUS,
-      "2-1二费专属必须保留完整期权值");
-    assert(threeAtTwo.heroAugment.status === "rare" && threeAtTwo.heroAugment.appearanceFactor === 0.05
-      && threeAtTwo.heroAugment.scoreDelta === 0.3 && /不作为定线依据/.test(threeAtTwo.heroAugment.text),
-      "2-1三费专属必须按5%稀有事件折现，不能领取完整+6期权");
+    const lowAtTwo = scoreTemplate(lowOptional, { units: [], items: [], augments: [], augmentCats: [], heroAugmentRound: "2-1" }, fallbackWeights, heroRoundOpts);
+    const threeAtTwo = scoreTemplate(threeOptional, { units: [], items: [], augments: [], augmentCats: [], heroAugmentRound: "2-1" }, fallbackWeights, heroRoundOpts);
+    assert(lowAtTwo.heroAugment.status === "rare" && lowAtTwo.heroAugment.appearanceFactor < 0.12,
+      "2-1具体二费专属必须除以同费用强化池，不能领取完整期权值");
+    assert(threeAtTwo.heroAugment.status === "rare" && threeAtTwo.heroAugment.appearanceFactor < 0.01
+      && threeAtTwo.heroAugment.scoreDelta < 0.1 && /不作为定线依据/.test(threeAtTwo.heroAugment.text),
+      "2-1具体三费专属必须同时折算5%费用事件与同费用强化池");
+    const offeredThree = scoreTemplate(threeOptional, {
+      units: [], items: [], augments: [], augmentCats: [], heroAugmentRound: "2-1",
+      heroAugmentOffer: { round: "2-1", slots: [
+        { slot: 0, name: "三费候选线专属", rerollsRemaining: 3 },
+        { slot: 1, name: "二费池0", rerollsRemaining: 3 },
+        { slot: 2, name: "二费池1", rerollsRemaining: 3 },
+      ] },
+    }, fallbackWeights, heroRoundOpts);
+    assert(offeredThree.heroAugment.status === "offered" && offeredThree.heroAugment.scoreDelta === HERO_AUGMENT_OPTION_BONUS,
+      "具体专属已在当前三栏出现时才领取完整期权值");
+    const exhaustedRequired = scoreTemplate(lowRequired, {
+      units: [], items: [], augments: [], augmentCats: [], heroAugmentRound: "2-1",
+      heroAugmentOffer: { round: "2-1", slots: [0, 1, 2].map((slot, i) => ({ slot, name: `二费池${i}`, rerollsRemaining: 0 })) },
+    }, fallbackWeights, heroRoundOpts);
+    assert(exhaustedRequired.heroAugment.status === "closed" && exhaustedRequired.mechanicBlocked,
+      "刚需专属在当前三栏与全部重随均未出现后必须关闭");
     const heroCatalog = [
       { name: "嗜火", hero: "安妮", cost: 2, traits: ["小天才", "福牛守护者", "灵能使"], effect: { grantedHero: "安妮", grantedCopies: 1, areaExpanded: true, stunSeconds: 2 } },
       { name: "无情连打", hero: "贾克斯", cost: 3, traits: ["战斗机甲", "斗士"], effect: { grantedHero: "贾克斯", grantedCopies: 1, areaExpanded: false, stunSeconds: 0 } },
@@ -3575,6 +3671,8 @@
     HERO_AUGMENT_RARE_COST_PRIORS,
     HERO_AUGMENT_ROUND_HINTS,
     HERO_AUGMENT_OPTION_BONUS,
+    HERO_AUGMENT_OFFER_SLOTS,
+    HERO_AUGMENT_REROLLS_PER_SLOT,
     HERO_AUGMENT_UNAVAILABLE_PENALTY,
     HERO_AUGMENT_CONTROL_CAP,
     DEFAULT_LEVEL,
@@ -3591,6 +3689,8 @@
     primeActionLine,
     activeTraitsForTemplate,
     heroAugmentDecision,
+    heroAugmentOptionExpectation,
+    normalizeHeroAugmentOffer,
     normalizeHeroAugmentRound,
     heroAugmentCostFactor,
     parseTraitsInText,

@@ -182,6 +182,11 @@ button, input { font:inherit; }
 .augCards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; min-height:0; }
 .augCard { border:2px solid var(--border); border-radius:16px; background:var(--surface); padding:18px; cursor:pointer; display:grid; gap:10px; align-content:start; }
 .augCard.best { border-color:var(--s2); background:color-mix(in srgb, var(--surface) 88%, var(--s2) 12%); }
+.augSelect { border:0; background:transparent; color:inherit; padding:0; text-align:left; cursor:pointer; display:grid; gap:10px; }
+.augSlotMeta { display:flex; align-items:center; justify-content:space-between; gap:8px; color:var(--muted); font-size:14px; font-weight:850; }
+.augReroll { min-height:44px; border:1px solid var(--border); border-radius:10px; background:var(--plane); color:var(--ink2); font-size:16px; font-weight:900; cursor:pointer; }
+.augReroll:disabled { opacity:.42; cursor:not-allowed; }
+.augWaiting { min-height:120px; display:grid; place-items:center; color:var(--s3); font-size:21px; font-weight:950; text-align:center; }
 .augName { font-size:28px; font-weight:950; }
 .augVerdict { font-size:19px; color:var(--ink2); }
 .augMechanic { font-size:17px; color:var(--ink); font-weight:800; }
@@ -378,6 +383,8 @@ let manualLockId = localStorage.getItem(LS + "manual-lock") || "";
 let pending = [];
 let unheard = [];
 let augChoices = null;
+let heroAugmentOffer = null;
+let pendingAugmentRerollSlot = -1;
 let lastExecutionId = "";
 let lastExecutionName = "";
 let lastExecutionFamily = "";
@@ -397,6 +404,10 @@ function load() {
   const heldItems = rows.filter(row => row && row.kind === "items" && row.holder);
   rows.filter(row => !(row && row.kind === "items" && row.holder)).forEach(row => addSignal(row, true));
   heldItems.forEach(row => addSignal(row, true));
+  try { heroAugmentOffer = normalizeHeroOffer(JSON.parse(localStorage.getItem(LS + "hero-augment-offer") || "null")); } catch (e) { heroAugmentOffer = null; }
+  if (heroAugmentOffer && heroAugmentOffer.status === "offered") {
+    augChoices = heroAugmentOffer.slots.filter(slot => slot.name).map(slot => ({ kind: "augments", value: slot.name, label: slot.name }));
+  }
 }
 function save() {
   localStorage.setItem(LS + "signals", JSON.stringify(signals));
@@ -407,6 +418,31 @@ function save() {
   localStorage.setItem(LS + "health", currentHealth);
   if (manualLockId) localStorage.setItem(LS + "manual-lock", manualLockId);
   else localStorage.removeItem(LS + "manual-lock");
+  if (heroAugmentOffer) localStorage.setItem(LS + "hero-augment-offer", JSON.stringify(heroAugmentOffer));
+  else localStorage.removeItem(LS + "hero-augment-offer");
+}
+function normalizeHeroOffer(offer) {
+  if (!offer || !Array.isArray(offer.slots)) return null;
+  return {
+    round: normalizeHeroAugmentRound(offer.round),
+    status: offer.status === "selected" ? "selected" : "offered",
+    slots: offer.slots.slice(0, 3).map((slot, index) => ({
+      slot: index,
+      name: HERO_AUGMENT_NAMES.has(slot && slot.name) ? slot.name : "",
+      seen: [...new Set([...(slot && slot.seen || []), slot && slot.name].filter(name => HERO_AUGMENT_NAMES.has(name)))],
+      rerollsRemaining: Number.isFinite(Number(slot && slot.rerollsRemaining)) ? Math.max(0, Math.min(3, Number(slot.rerollsRemaining))) : 3,
+      waiting: Boolean(slot && slot.waiting),
+    })),
+  };
+}
+function createHeroOffer(choices) {
+  const names = (choices || []).map(row => row && row.value).filter(name => HERO_AUGMENT_NAMES.has(name)).slice(0, 3);
+  if (currentHeroAugmentRound === "unknown" || names.length !== 3) return null;
+  return normalizeHeroOffer({
+    round: currentHeroAugmentRound,
+    status: "offered",
+    slots: names.map((name, slot) => ({ slot, name, seen: [name], rerollsRemaining: 3, waiting: false })),
+  });
 }
 function normalizeLevel(level) {
   return Math.max(MIN_LEVEL, Math.min(MAX_LEVEL, Number(level) || DEFAULT_LEVEL));
@@ -422,7 +458,13 @@ function normalizeHeroAugmentRound(value) {
   return MatcherCore.normalizeHeroAugmentRound ? MatcherCore.normalizeHeroAugmentRound(value) : (HERO_AUGMENT_CHOICES.includes(value) ? value : "unknown");
 }
 function setHeroAugmentRound(round, defer) {
-  currentHeroAugmentRound = normalizeHeroAugmentRound(round);
+  const next = normalizeHeroAugmentRound(round);
+  if (heroAugmentOffer && heroAugmentOffer.round !== next) {
+    heroAugmentOffer = null;
+    augChoices = null;
+    pendingAugmentRerollSlot = -1;
+  }
+  currentHeroAugmentRound = next;
   if (defer) return;
   save();
   render();
@@ -550,6 +592,7 @@ function addSignal(s, defer) {
     const changed = previous.some(row => row.value !== next.value);
     signals = signals.filter(row => row.kind !== "augments" || !HERO_AUGMENT_NAMES.has(row.value));
     signals.push(next);
+    if (heroAugmentOffer) heroAugmentOffer.status = "selected";
     augChoices = null;
     if (changed && !manualLockAcceptsHeroAugment(next.value)) manualLockId = "";
     if (!defer) save();
@@ -674,6 +717,8 @@ function clearGame() {
   pending = [];
   unheard = [];
   augChoices = null;
+  heroAugmentOffer = null;
+  pendingAugmentRerollSlot = -1;
   currentLevel = DEFAULT_LEVEL;
   currentHeroAugmentRound = "unknown";
   currentStage = "unknown";
@@ -693,6 +738,7 @@ function selectedObj() {
   const selected = MatcherCore.selectedFromSignals(signals);
   selected.level = currentLevel;
   selected.heroAugmentRound = currentHeroAugmentRound;
+  selected.heroAugmentOffer = heroAugmentOffer;
   selected.currentStage = currentStage;
   selected.currentGold = currentGold === "unknown" ? "unknown" : Number(currentGold);
   selected.health = currentHealth === "unknown" ? "unknown" : Number(currentHealth);
@@ -720,6 +766,8 @@ function applyParse(parsed) {
   stateRows.forEach(s => addSignal(s, true));
   if (parsed.augTriple && parsed.augTriple.length) {
     augChoices = parsed.augTriple;
+    const offer = createHeroOffer(parsed.augTriple);
+    if (offer) heroAugmentOffer = offer;
     pending = parsed.pending || [];
     unheard = parsed.unheard || [];
   } else {
@@ -741,7 +789,27 @@ function parseInput() {
     fast: compactParsed(parsed),
     ai: "-",
   };
-  applyParse(parsed);
+  if (pendingAugmentRerollSlot >= 0 && heroAugmentOffer) {
+    const replacement = [...(parsed.augTriple || []), ...(parsed.add || [])]
+      .find(row => row && row.kind === "augments" && HERO_AUGMENT_NAMES.has(row.value));
+    if (replacement) {
+      const slot = heroAugmentOffer.slots[pendingAugmentRerollSlot];
+      slot.name = replacement.value;
+      slot.seen = [...new Set([...(slot.seen || []), replacement.value])];
+      slot.waiting = false;
+      pendingAugmentRerollSlot = -1;
+      $("voiceInput").placeholder = "输入后按回车：来了个安妮还有波比拿了养刀";
+      augChoices = heroAugmentOffer.slots.filter(row => row.name).map(row => ({ kind: "augments", value: row.name, label: row.name }));
+      pending = parsed.pending || [];
+      unheard = parsed.unheard || [];
+      save();
+      render();
+    } else {
+      applyParse(parsed);
+    }
+  } else {
+    applyParse(parsed);
+  }
   if (parsed.clear) {
     input.value = "";
     return;
@@ -1474,7 +1542,11 @@ function augOptionInfo(sig) {
 function renderAugTriple() {
   $("routeView").classList.add("hidden");
   $("augView").classList.remove("hidden");
-  const rawRows = (augChoices || []).map(augOptionInfo);
+  const offerActive = heroAugmentOffer && heroAugmentOffer.status === "offered";
+  const displaySlots = offerActive
+    ? heroAugmentOffer.slots
+    : (augChoices || []).map((row, slot) => ({ slot, name: row.value, seen: [row.value], rerollsRemaining: 0, waiting: false }));
+  const rawRows = displaySlots.filter(slot => slot.name).map(slot => ({ ...augOptionInfo({ value: slot.name }), slot: slot.slot }));
   const decisionSignals = [
     ...signals,
     ...(currentStage !== "unknown" ? [{ kind: "stage", value: currentStage }] : []),
@@ -1486,30 +1558,54 @@ function renderAugTriple() {
     minGap: 2,
   });
   const rows = comparison.rows;
+  const rowByName = new Map(rows.map(row => [row.name, row]));
   const status = comparison.missing.length
     ? `信息不足，暂不可靠排序。还需补充：${comparison.missing.join("、")}。`
     : "当前只有路线匹配弱证据，尚无符文反事实模拟，因此暂不强行首推。";
   $("augView").innerHTML = `
     <div>
       <div class="routeName">符文三选一</div>
-      <div class="subRank">先比较符文对当前局面的边际价值；点击后才会正式加入信号池。</div>
+      <div class="subRank">先比较符文对当前局面的边际价值；点击选定后才会正式加入信号池。${offerActive ? "单栏重随会立即更新后续路线概率。" : ""}</div>
       <div class="augStatus">${esc(status)}</div>
     </div>
-    <div class="augCards">${rows.map(r => `
-      <button class="augCard ${comparison.recommended === r.name ? "best" : ""}" data-name="${esc(r.name)}">
-        <div class="augName">${esc(r.name)}</div>
-        <div class="augMechanic">机制：${esc(r.effect)}</div>
-        <div class="augVerdict">适合：${esc(r.fit)}</div>
-        ${r.missingLabels.length ? `<div class="augMissing">待补：${esc(r.missingLabels.join("、"))}</div>` : ""}
-        <div class="augEvidence">命中${r.routeHits}条路线偏好（仅为覆盖统计，不代表优劣，不参与排序）</div>
-      </button>`).join("")}</div>
+    <div class="augCards">${displaySlots.map(slot => {
+      const r = rowByName.get(slot.name);
+      if (!r) return `<div class="augCard"><div class="augSlotMeta"><span>第${slot.slot + 1}栏</span><span>剩余${slot.rerollsRemaining}次</span></div><div class="augWaiting">等待输入重随结果</div></div>`;
+      return `<div class="augCard ${comparison.recommended === r.name ? "best" : ""}">
+        <div class="augSlotMeta"><span>第${slot.slot + 1}栏</span>${offerActive ? `<span>单栏重随剩余${slot.rerollsRemaining}次</span>` : ""}</div>
+        <button class="augSelect" data-name="${esc(r.name)}">
+          <div class="augName">${esc(r.name)}</div>
+          <div class="augMechanic">机制：${esc(r.effect)}</div>
+          <div class="augVerdict">适合：${esc(r.fit)}</div>
+          ${r.missingLabels.length ? `<div class="augMissing">待补：${esc(r.missingLabels.join("、"))}</div>` : ""}
+          <div class="augEvidence">命中${r.routeHits}条路线偏好（仅为覆盖统计，不代表优劣，不参与排序）</div>
+        </button>
+        ${offerActive ? `<button class="augReroll" data-reroll="${slot.slot}" ${slot.rerollsRemaining <= 0 ? "disabled" : ""}>重随第${slot.slot + 1}栏</button>` : ""}
+      </div>`;
+    }).join("")}</div>
     <div></div>
     ${unheardHtml()}
   `;
-  $("augView").querySelectorAll(".augCard").forEach(btn => btn.addEventListener("click", () => {
+  $("augView").querySelectorAll(".augSelect").forEach(btn => btn.addEventListener("click", () => {
     addSignal({ kind: "augments", value: btn.dataset.name, label: btn.dataset.name });
     augChoices = null;
+    pendingAugmentRerollSlot = -1;
+    save();
     render();
+  }));
+  $("augView").querySelectorAll("[data-reroll]").forEach(btn => btn.addEventListener("click", () => {
+    const index = Number(btn.dataset.reroll);
+    const slot = heroAugmentOffer && heroAugmentOffer.slots[index];
+    if (!slot || slot.rerollsRemaining <= 0) return;
+    slot.rerollsRemaining -= 1;
+    slot.name = "";
+    slot.waiting = true;
+    pendingAugmentRerollSlot = index;
+    augChoices = heroAugmentOffer.slots.filter(row => row.name).map(row => ({ kind: "augments", value: row.name, label: row.name }));
+    $("voiceInput").placeholder = `输入重随后第${index + 1}栏的英雄强化`;
+    save();
+    render();
+    focusInput();
   }));
 }
 function renderLog() {
