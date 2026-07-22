@@ -423,7 +423,9 @@ function normalizeBoard(rows, fallbackNames, carryName) {
 }
 
 function buildStage(window, rows, fallbackNames, strategicCarry, carryHint) {
-  const board = normalizeBoard(rows, fallbackNames, carryHint || strategicCarry);
+  // earlyUnits/midUnits 可能是“可选留牌池”，不是能同时上场的棋盘；阶段画像必须服从人口上限。
+  const board = normalizeBoard(rows, fallbackNames, carryHint || strategicCarry)
+    .slice(0, Math.max(1, Number(window.levelMax) || 9));
   const names = board.map(unit => unit.name);
   const explicitCarry = board.find(unit => unit.carry) || board.find(unit => /主C|过渡C/.test(unit.role || ''));
   const executionCarry = carryHint || (explicitCarry && explicitCarry.name) || (names.includes(strategicCarry) ? strategicCarry : null);
@@ -1365,6 +1367,9 @@ function assertRouteProfiles(templatesIn) {
       if (!sameSet(unitNames, boardNames)) throw new Error(`${template.name} ${stage.key} units与board不一致`);
       if (unitNames.some(name => !heroByName(name))) throw new Error(`${template.name} ${stage.key}含非商店实体`);
       if (!(stage.levelMin <= stage.levelMax)) throw new Error(`${template.name} ${stage.key}等级范围无效`);
+      if (unitNames.length > Number(stage.levelMax || 9)) {
+        throw new Error(`${template.name} ${stage.key}棋盘人数超过阶段等级上限`);
+      }
       const expectedAssignments = stage.board.flatMap(unit => (unit.items || []).map((name, index) => ({
         name,
         holder: unit.name,

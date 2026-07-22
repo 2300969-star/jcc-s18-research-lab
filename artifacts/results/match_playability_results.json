@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-17T17:37:20.890Z",
+  "generated": "2026-07-22T16:11:47.669Z",
   "routeCount": 67,
   "checkpointCount": 402,
   "checkpoints": [
@@ -102,7 +102,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-1",
-            "decline": 0.2,
+            "decline": -0.1,
             "targetAdvantage": -19.8,
             "text": "小天才璐璐5小天才4吉祥物阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -145,7 +145,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-1",
-            "decline": 0.2,
+            "decline": -0.1,
             "targetAdvantage": -124.7,
             "text": "小天才璐璐5小天才4吉祥物阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -188,15 +188,15 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 15.3,
-            "targetAdvantage": -5.5,
+            "decline": 15.2,
+            "targetAdvantage": -25.1,
             "text": "小天才过渡 -> 贾克斯机甲阶段曲线稳定，保留转型选择权",
             "risky": false
           },
-          "targetId": "official-1288",
+          "targetId": "official-4524",
           "actions": [
             "不在6级硬D，先拉8再找瑟提",
-            "止损条件：4-1时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "止损条件：4-1时阶段分继续下滑且贾克斯已出现，再切兼容路线",
             "暂不定线：阶段曲线稳定，继续当前执行线"
           ],
           "impossibleTargets": [],
@@ -231,15 +231,15 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 15.3,
-            "targetAdvantage": -91.5,
+            "decline": 15.2,
+            "targetAdvantage": -83.4,
             "text": "小天才过渡 -> 贾克斯机甲阶段曲线稳定，保留转型选择权",
             "risky": false
           },
-          "targetId": "official-1288",
+          "targetId": "official-4524",
           "actions": [
             "不在7级硬D，先拉8再找瑟提",
-            "止损条件：4-1时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "止损条件：4-1时阶段分继续下滑且贾克斯已出现，再切兼容路线",
             "暂不定线：阶段曲线稳定，继续当前执行线"
           ],
           "impossibleTargets": [],
@@ -390,9 +390,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "3-1",
-            "decline": -0.6,
-            "targetAdvantage": 11.9,
-            "text": "福牛泰隆6福牛守护者3混沌战士下一阶段-0.6分、后期61.7分；预备转福牛混沌九五4福牛守护者3混沌战士2吉祥物",
+            "decline": -2.3,
+            "targetAdvantage": 12.4,
+            "text": "福牛泰隆6福牛守护者3混沌战士下一阶段-2.3分、后期61.7分；预备转福牛混沌九五4福牛守护者3混沌战士2吉祥物",
             "risky": true
           },
           "targetId": "official-1338",
@@ -433,8 +433,8 @@
           "warning": {
             "severity": "green",
             "deadline": "3-1",
-            "decline": -0.6,
-            "targetAdvantage": -233.8,
+            "decline": -2.3,
+            "targetAdvantage": -233.2,
             "text": "福牛泰隆6福牛守护者3混沌战士阶段曲线稳定，保留转型选择权",
             "risky": false
           },
@@ -476,9 +476,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -14.3,
+            "decline": -14.6,
             "targetAdvantage": -44.1,
-            "text": "小天才佐伊5小天才2福牛守护者下一阶段-14.3分、后期40分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "小天才佐伊5小天才2福牛守护者下一阶段-14.6分、后期40分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -519,9 +519,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -14.3,
+            "decline": -14.6,
             "targetAdvantage": -149.2,
-            "text": "小天才佐伊5小天才2福牛守护者下一阶段-14.3分、后期40分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "小天才佐伊5小天才2福牛守护者下一阶段-14.6分、后期40分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -678,9 +678,9 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": -41.3,
+            "decline": -42.4,
             "targetAdvantage": -33.6,
-            "text": "机甲德莱文 -> 贾克斯 -> 蕾欧娜下一阶段-41.3分、后期37分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "text": "机甲德莱文 -> 贾克斯 -> 蕾欧娜下一阶段-42.4分、后期37分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -721,9 +721,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "3-5",
-            "decline": -41.3,
+            "decline": -42.4,
             "targetAdvantage": -6.8,
-            "text": "机甲德莱文 -> 贾克斯 -> 蕾欧娜下一阶段-41.3分、后期37分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "text": "机甲德莱文 -> 贾克斯 -> 蕾欧娜下一阶段-42.4分、后期37分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -764,15 +764,15 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 15.3,
-            "targetAdvantage": -5.5,
+            "decline": 15.2,
+            "targetAdvantage": -25.1,
             "text": "小天才过渡 -> 贾克斯机甲阶段曲线稳定，保留转型选择权",
             "risky": false
           },
-          "targetId": "official-1288",
+          "targetId": "official-4524",
           "actions": [
             "不在6级硬D，先拉8再找瑟提",
-            "止损条件：4-1时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "止损条件：4-1时阶段分继续下滑且贾克斯已出现，再切兼容路线",
             "暂不定线：阶段曲线稳定，继续当前执行线"
           ],
           "impossibleTargets": [],
@@ -807,15 +807,15 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 15.3,
-            "targetAdvantage": -91.5,
+            "decline": 15.2,
+            "targetAdvantage": -83.4,
             "text": "小天才过渡 -> 贾克斯机甲阶段曲线稳定，保留转型选择权",
             "risky": false
           },
-          "targetId": "official-1288",
+          "targetId": "official-4524",
           "actions": [
             "不在7级硬D，先拉8再找瑟提",
-            "止损条件：4-1时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "止损条件：4-1时阶段分继续下滑且贾克斯已出现，再切兼容路线",
             "暂不定线：阶段曲线稳定，继续当前执行线"
           ],
           "impossibleTargets": [],
@@ -966,7 +966,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": 24.6,
+            "decline": 22.3,
             "targetAdvantage": 0,
             "text": "超英亚索6决斗大师3超级英雄3源计划激光特工阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -1009,7 +1009,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": 24.6,
+            "decline": 22.3,
             "targetAdvantage": 0,
             "text": "超英亚索6决斗大师3超级英雄3源计划激光特工阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -1052,9 +1052,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -0.7,
+            "decline": -0.8,
             "targetAdvantage": -46.2,
-            "text": "情报特工怪兽卡莎4情报特工3怪兽下一阶段-0.7分、后期21.2分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "情报特工怪兽卡莎4情报特工3怪兽下一阶段-0.8分、后期21.2分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -1095,9 +1095,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -0.7,
+            "decline": -0.8,
             "targetAdvantage": -233.5,
-            "text": "情报特工怪兽卡莎4情报特工3怪兽下一阶段-0.7分、后期21.2分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "情报特工怪兽卡莎4情报特工3怪兽下一阶段-0.8分、后期21.2分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -1254,7 +1254,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": 24.6,
+            "decline": 22.3,
             "targetAdvantage": 0,
             "text": "超英亚索6决斗大师3超级英雄3源计划激光特工阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -1297,7 +1297,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": 24.6,
+            "decline": 22.3,
             "targetAdvantage": 0,
             "text": "超英亚索6决斗大师3超级英雄3源计划激光特工阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -1542,9 +1542,9 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": -37.8,
-            "targetAdvantage": -9.7,
-            "text": "吉祥物爱心 -> 猫咪/超英法系下一阶段-37.8分、后期6.6分；预备转超英亚索6决斗大师3超级英雄3源计划激光特工",
+            "decline": -19.9,
+            "targetAdvantage": -13.7,
+            "text": "吉祥物爱心 -> 猫咪/超英法系下一阶段-19.9分、后期6.6分；预备转超英亚索6决斗大师3超级英雄3源计划激光特工",
             "risky": true
           },
           "targetId": "official-4546",
@@ -1557,11 +1557,6 @@
           "finite": true,
           "top3": [
             {
-              "id": "manual-mascot-heart",
-              "name": "吉祥物爱心 -> 猫咪/超英法系",
-              "score": 18
-            },
-            {
               "id": "official-1290",
               "name": "星守灵能塔利娅5星之守护者4灵能使",
               "score": 12
@@ -1569,6 +1564,11 @@
             {
               "id": "official-1378",
               "name": "95秘卫枪手3秘书卫士2福牛守护者",
+              "score": 11
+            },
+            {
+              "id": "official-1338",
+              "name": "福牛混沌九五4福牛守护者3混沌战士2吉祥物",
               "score": 11
             }
           ]
@@ -1585,9 +1585,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "3-5",
-            "decline": -37.8,
-            "targetAdvantage": -120.4,
-            "text": "吉祥物爱心 -> 猫咪/超英法系下一阶段-37.8分、后期6.6分；预备转超英亚索6决斗大师3超级英雄3源计划激光特工",
+            "decline": -19.9,
+            "targetAdvantage": -123.9,
+            "text": "吉祥物爱心 -> 猫咪/超英法系下一阶段-19.9分、后期6.6分；预备转超英亚索6决斗大师3超级英雄3源计划激光特工",
             "risky": true
           },
           "targetId": "official-4546",
@@ -1602,12 +1602,12 @@
             {
               "id": "manual-mascot-heart",
               "name": "吉祥物爱心 -> 猫咪/超英法系",
-              "score": 83
+              "score": 58
             },
             {
               "id": "official-1323",
               "name": "吉祥鸡牛猫队6吉祥物3超级英雄2爱心使者",
-              "score": 58
+              "score": 51
             },
             {
               "id": "official-1290",
@@ -1628,7 +1628,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": 8.6,
+            "decline": 8.4,
             "targetAdvantage": -57,
             "text": "超英猫咪3超级英雄3星之守护者2爱心使者阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -1671,7 +1671,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": 8.6,
+            "decline": 8.4,
             "targetAdvantage": -158.6,
             "text": "超英猫咪3超级英雄3星之守护者2爱心使者阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -1830,8 +1830,8 @@
           "warning": {
             "severity": "green",
             "deadline": "5-1",
-            "decline": 16.1,
-            "targetAdvantage": -27.9,
+            "decline": 15.1,
+            "targetAdvantage": -28,
             "text": "九五平民枪手3平民英雄2枪手2吉祥物阶段曲线稳定，保留转型选择权",
             "risky": false
           },
@@ -1873,8 +1873,8 @@
           "warning": {
             "severity": "green",
             "deadline": "5-1",
-            "decline": 16.1,
-            "targetAdvantage": -54.4,
+            "decline": 15.1,
+            "targetAdvantage": -54.5,
             "text": "九五平民枪手3平民英雄2枪手2吉祥物阶段曲线稳定，保留转型选择权",
             "risky": false
           },
@@ -1917,14 +1917,14 @@
             "severity": "green",
             "deadline": "4-1",
             "decline": 30.3,
-            "targetAdvantage": -30.5,
+            "targetAdvantage": -113.1,
             "text": "超英赛娜3平民英雄3超级英雄2斗士阶段曲线稳定，保留转型选择权",
             "risky": false
           },
-          "targetId": "official-1288",
+          "targetId": "official-1338",
           "actions": [
             "6级开始找墨菲特，只花到路线质量门槛",
-            "止损条件：4-1时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "止损条件：4-1时阶段分继续下滑且佛耶戈已出现，再切兼容路线",
             "暂不定线：阶段曲线稳定，继续当前执行线"
           ],
           "impossibleTargets": [],
@@ -1960,14 +1960,14 @@
             "severity": "green",
             "deadline": "4-1",
             "decline": 30.3,
-            "targetAdvantage": -96,
+            "targetAdvantage": -314.5,
             "text": "超英赛娜3平民英雄3超级英雄2斗士阶段曲线稳定，保留转型选择权",
             "risky": false
           },
-          "targetId": "official-1288",
+          "targetId": "official-1338",
           "actions": [
             "7级开始找墨菲特，只花到路线质量门槛",
-            "止损条件：4-1时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "止损条件：4-1时阶段分继续下滑且佛耶戈已出现，再切兼容路线",
             "暂不定线：阶段曲线稳定，继续当前执行线"
           ],
           "impossibleTargets": [],
@@ -2118,9 +2118,9 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": -41.3,
+            "decline": -42.4,
             "targetAdvantage": -35.5,
-            "text": "机甲德莱文 -> 贾克斯 -> 蕾欧娜下一阶段-41.3分、后期37分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "text": "机甲德莱文 -> 贾克斯 -> 蕾欧娜下一阶段-42.4分、后期37分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -2161,9 +2161,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "3-5",
-            "decline": -4.4,
-            "targetAdvantage": -104.8,
-            "text": "完美的日炎耀斑蕾欧娜机制路线下一阶段-4.4分、后期50.2分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": -5.1,
+            "targetAdvantage": -105.1,
+            "text": "完美的日炎耀斑蕾欧娜机制路线下一阶段-5.1分、后期50.2分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -2204,9 +2204,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -11.6,
+            "decline": -12.3,
             "targetAdvantage": -49.6,
-            "text": "完美的日炎耀斑蕾欧娜机制路线下一阶段-11.6分、后期50.2分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "text": "完美的日炎耀斑蕾欧娜机制路线下一阶段-12.3分、后期50.2分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -2247,9 +2247,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -11.6,
+            "decline": -12.3,
             "targetAdvantage": -115.1,
-            "text": "完美的日炎耀斑蕾欧娜机制路线下一阶段-11.6分、后期50.2分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "text": "完美的日炎耀斑蕾欧娜机制路线下一阶段-12.3分、后期50.2分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -2406,9 +2406,9 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": -11.5,
+            "decline": -12.9,
             "targetAdvantage": 0.4,
-            "text": "小天才佐伊5小天才2福牛守护者下一阶段-11.5分、后期40分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "小天才佐伊5小天才2福牛守护者下一阶段-12.9分、后期40分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -2449,8 +2449,8 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 15.8,
-            "targetAdvantage": -353.4,
+            "decline": 15.1,
+            "targetAdvantage": -352.9,
             "text": "小天才九五5小天才2福牛守护者2吉祥物阶段曲线稳定，保留转型选择权",
             "risky": false
           },
@@ -2492,7 +2492,7 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 26.3,
+            "decline": 26.2,
             "targetAdvantage": -102.6,
             "text": "小天才九五5小天才2福牛守护者2吉祥物阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -2535,9 +2535,9 @@
           "warning": {
             "severity": "red",
             "deadline": "4-1",
-            "decline": 26.3,
+            "decline": 26.2,
             "targetAdvantage": 38.8,
-            "text": "小天才九五5小天才2福牛守护者2吉祥物下一阶段+26.3分、后期63.9分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "小天才九五5小天才2福牛守护者2吉祥物下一阶段+26.2分、后期63.9分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -2694,9 +2694,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "3-1",
-            "decline": -0.6,
-            "targetAdvantage": 19.4,
-            "text": "福牛泰隆6福牛守护者3混沌战士下一阶段-0.6分、后期61.7分；预备转福牛混沌九五4福牛守护者3混沌战士2吉祥物",
+            "decline": -2.3,
+            "targetAdvantage": 19.9,
+            "text": "福牛泰隆6福牛守护者3混沌战士下一阶段-2.3分、后期61.7分；预备转福牛混沌九五4福牛守护者3混沌战士2吉祥物",
             "risky": true
           },
           "targetId": "official-1338",
@@ -2736,10 +2736,10 @@
           "deterministic": true,
           "warning": {
             "severity": "green",
-            "deadline": "4-2",
-            "decline": -10.1,
+            "deadline": "4-1",
+            "decline": -12,
             "targetAdvantage": 0,
-            "text": "95秘卫枪手3秘书卫士2福牛守护者下一阶段-10.1分、后期74.4分；继续观察同线升级",
+            "text": "95秘卫枪手3秘书卫士2福牛守护者下一阶段-12分、后期74.4分；继续观察同线升级",
             "risky": true
           },
           "targetId": "official-1378",
@@ -2778,17 +2778,17 @@
           "status": "committed",
           "deterministic": true,
           "warning": {
-            "severity": "green",
-            "deadline": "4-2",
-            "decline": 46.6,
+            "severity": "yellow",
+            "deadline": "4-1",
+            "decline": 46.5,
             "targetAdvantage": 9.4,
-            "text": "95秘卫枪手3秘书卫士2福牛守护者下一阶段+46.6分、后期74.4分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "95秘卫枪手3秘书卫士2福牛守护者下一阶段+46.5分、后期74.4分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
           "actions": [
-            "停止给莎弥拉追加装备或D牌；只留已出现的塔莉垭体系牌与共用散件，4-2复查转型",
-            "止损条件：4-2时阶段分继续下滑且塔莉垭已出现，再切兼容路线",
+            "停止给莎弥拉追加装备或D牌；只留已出现的塔莉垭体系牌与共用散件，4-1复查转型",
+            "止损条件：4-1时阶段分继续下滑且塔莉垭已出现，再切兼容路线",
             "3-2英雄强化已结算：评级与交火→莎弥拉4费专属"
           ],
           "impossibleTargets": [],
@@ -2821,17 +2821,17 @@
           "status": "committed",
           "deterministic": true,
           "warning": {
-            "severity": "yellow",
-            "deadline": "4-2",
-            "decline": 46.6,
+            "severity": "red",
+            "deadline": "4-1",
+            "decline": 46.5,
             "targetAdvantage": 202.6,
-            "text": "95秘卫枪手3秘书卫士2福牛守护者下一阶段+46.6分、后期74.4分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "95秘卫枪手3秘书卫士2福牛守护者下一阶段+46.5分、后期74.4分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
           "actions": [
-            "停止给莎弥拉追加装备或D牌；只留已出现的塔莉垭体系牌与共用散件，4-2复查转型",
-            "止损条件：4-2时阶段分继续下滑且塔莉垭已出现，再切兼容路线",
+            "停止给莎弥拉追加装备或D牌；只留已出现的塔莉垭体系牌与共用散件，4-1复查转型",
+            "止损条件：4-1时阶段分继续下滑且塔莉垭已出现，再切兼容路线",
             "3-2英雄强化已结算：评级与交火→莎弥拉4费专属"
           ],
           "impossibleTargets": [],
@@ -2864,12 +2864,12 @@
           "status": "committed",
           "deterministic": true,
           "warning": {
-            "severity": "green",
-            "deadline": "4-2",
+            "severity": "red",
+            "deadline": "4-1",
             "decline": 0,
             "targetAdvantage": 0,
-            "text": "95秘卫枪手3秘书卫士2福牛守护者阶段曲线稳定，保留转型选择权",
-            "risky": false
+            "text": "95秘卫枪手3秘书卫士2福牛守护者下一阶段+0分、后期74.4分；继续观察同线升级",
+            "risky": true
           },
           "targetId": "official-1378",
           "actions": [
@@ -2982,9 +2982,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 54.1,
-            "targetAdvantage": -37.2,
-            "text": "登神决斗天使6决斗大师3源计划下一阶段+54.1分、后期57.1分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": 55.5,
+            "targetAdvantage": -37.7,
+            "text": "登神决斗天使6决斗大师3源计划下一阶段+55.5分、后期57.1分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -3025,9 +3025,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "3-5",
-            "decline": -18.3,
+            "decline": -20.1,
             "targetAdvantage": -73.7,
-            "text": "扩散射击薇恩机制路线下一阶段-18.3分、后期14.2分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "text": "扩散射击薇恩机制路线下一阶段-20.1分、后期14.2分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -3069,14 +3069,14 @@
             "severity": "red",
             "deadline": "3-5",
             "decline": -28.6,
-            "targetAdvantage": -46.4,
-            "text": "扩散射击薇恩机制路线下一阶段-28.6分、后期14.2分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "targetAdvantage": -134.4,
+            "text": "扩散射击薇恩机制路线下一阶段-28.6分、后期14.2分；预备转福牛混沌九五4福牛守护者3混沌战士2吉祥物",
             "risky": true
           },
-          "targetId": "official-1288",
+          "targetId": "official-1338",
           "actions": [
-            "停止给薇恩追加装备或D牌；只留已出现的德莱文体系牌与共用散件，3-5复查转型",
-            "止损条件：3-5时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "停止给薇恩追加装备或D牌；只留已出现的佛耶戈体系牌与共用散件，3-5复查转型",
+            "止损条件：3-5时阶段分继续下滑且佛耶戈已出现，再切兼容路线",
             "3-2英雄强化已结算：扩散射击→薇恩3费专属"
           ],
           "impossibleTargets": [],
@@ -3112,14 +3112,14 @@
             "severity": "red",
             "deadline": "3-5",
             "decline": -28.6,
-            "targetAdvantage": -180.1,
-            "text": "扩散射击薇恩机制路线下一阶段-28.6分、后期14.2分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "targetAdvantage": -426.3,
+            "text": "扩散射击薇恩机制路线下一阶段-28.6分、后期14.2分；预备转福牛混沌九五4福牛守护者3混沌战士2吉祥物",
             "risky": true
           },
-          "targetId": "official-1288",
+          "targetId": "official-1338",
           "actions": [
-            "停止给薇恩追加装备或D牌；只留已出现的德莱文体系牌与共用散件，3-5复查转型",
-            "止损条件：3-5时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "停止给薇恩追加装备或D牌；只留已出现的佛耶戈体系牌与共用散件，3-5复查转型",
+            "止损条件：3-5时阶段分继续下滑且佛耶戈已出现，再切兼容路线",
             "3-2英雄强化已结算：扩散射击→薇恩3费专属"
           ],
           "impossibleTargets": [],
@@ -3270,9 +3270,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 37.4,
+            "decline": 34.9,
             "targetAdvantage": 0,
-            "text": "决斗剑姬6决斗大师2福牛守护者下一阶段+37.4分、后期70分；继续观察同线升级",
+            "text": "决斗剑姬6决斗大师2福牛守护者下一阶段+34.9分、后期70分；继续观察同线升级",
             "risky": true
           },
           "targetId": "official-4548",
@@ -3313,9 +3313,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "3-5",
-            "decline": -12.5,
+            "decline": -13.6,
             "targetAdvantage": -107.8,
-            "text": "无双挑战菲奥娜机制路线下一阶段-12.5分、后期33.3分；预备转决斗剑姬6决斗大师2福牛守护者",
+            "text": "无双挑战菲奥娜机制路线下一阶段-13.6分、后期33.3分；预备转决斗剑姬6决斗大师2福牛守护者",
             "risky": true
           },
           "targetId": "official-4548",
@@ -3357,14 +3357,14 @@
             "severity": "red",
             "deadline": "3-5",
             "decline": -26.8,
-            "targetAdvantage": -49,
-            "text": "无双挑战菲奥娜机制路线下一阶段-26.8分、后期33.3分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "targetAdvantage": -156.5,
+            "text": "无双挑战菲奥娜机制路线下一阶段-26.8分、后期33.3分；预备转福牛混沌九五4福牛守护者3混沌战士2吉祥物",
             "risky": true
           },
-          "targetId": "official-1288",
+          "targetId": "official-1338",
           "actions": [
-            "停止给菲奥娜追加装备或D牌；只留已出现的德莱文体系牌与共用散件，3-5复查转型",
-            "止损条件：3-5时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "停止给菲奥娜追加装备或D牌；只留已出现的佛耶戈体系牌与共用散件，3-5复查转型",
+            "止损条件：3-5时阶段分继续下滑且佛耶戈已出现，再切兼容路线",
             "3-2英雄强化已结算：无双挑战→菲奥娜2费专属"
           ],
           "impossibleTargets": [],
@@ -3400,14 +3400,14 @@
             "severity": "red",
             "deadline": "3-5",
             "decline": -26.8,
-            "targetAdvantage": -186.6,
-            "text": "无双挑战菲奥娜机制路线下一阶段-26.8分、后期33.3分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "targetAdvantage": -270.8,
+            "text": "无双挑战菲奥娜机制路线下一阶段-26.8分、后期33.3分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
-          "targetId": "official-1288",
+          "targetId": "official-1290",
           "actions": [
-            "停止给菲奥娜追加装备或D牌；只留已出现的德莱文体系牌与共用散件，3-5复查转型",
-            "止损条件：3-5时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "停止给菲奥娜追加装备或D牌；只留已出现的塔莉垭体系牌与共用散件，3-5复查转型",
+            "止损条件：3-5时阶段分继续下滑且塔莉垭已出现，再切兼容路线",
             "3-2英雄强化已结算：无双挑战→菲奥娜2费专属"
           ],
           "impossibleTargets": [],
@@ -3558,9 +3558,9 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": -41.3,
+            "decline": -42.4,
             "targetAdvantage": -35.5,
-            "text": "机甲德莱文 -> 贾克斯 -> 蕾欧娜下一阶段-41.3分、后期37分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "text": "机甲德莱文 -> 贾克斯 -> 蕾欧娜下一阶段-42.4分、后期37分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -3601,9 +3601,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "3-5",
-            "decline": -31.4,
+            "decline": -31.9,
             "targetAdvantage": -74.3,
-            "text": "宗师训练贾克斯机制路线下一阶段-31.4分、后期14.6分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "text": "宗师训练贾克斯机制路线下一阶段-31.9分、后期14.6分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -3645,14 +3645,14 @@
             "severity": "red",
             "deadline": "3-5",
             "decline": -30.5,
-            "targetAdvantage": -44.1,
-            "text": "宗师训练贾克斯机制路线下一阶段-30.5分、后期14.6分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "targetAdvantage": -104.9,
+            "text": "宗师训练贾克斯机制路线下一阶段-30.5分、后期14.6分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
-          "targetId": "official-1288",
+          "targetId": "official-1290",
           "actions": [
-            "停止给贾克斯追加装备或D牌；只留已出现的德莱文体系牌与共用散件，3-5复查转型",
-            "止损条件：3-5时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "停止给贾克斯追加装备或D牌；只留已出现的塔莉垭体系牌与共用散件，3-5复查转型",
+            "止损条件：3-5时阶段分继续下滑且塔莉垭已出现，再切兼容路线",
             "3-2英雄强化已结算：宗师训练→贾克斯3费专属"
           ],
           "impossibleTargets": [],
@@ -3688,14 +3688,14 @@
             "severity": "red",
             "deadline": "3-5",
             "decline": -30.5,
-            "targetAdvantage": -201.9,
-            "text": "宗师训练贾克斯机制路线下一阶段-30.5分、后期14.6分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "targetAdvantage": -277.1,
+            "text": "宗师训练贾克斯机制路线下一阶段-30.5分、后期14.6分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
-          "targetId": "official-1288",
+          "targetId": "official-1290",
           "actions": [
-            "停止给贾克斯追加装备或D牌；只留已出现的德莱文体系牌与共用散件，3-5复查转型",
-            "止损条件：3-5时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "停止给贾克斯追加装备或D牌；只留已出现的塔莉垭体系牌与共用散件，3-5复查转型",
+            "止损条件：3-5时阶段分继续下滑且塔莉垭已出现，再切兼容路线",
             "3-2英雄强化已结算：宗师训练→贾克斯3费专属"
           ],
           "impossibleTargets": [],
@@ -3825,10 +3825,10 @@
       "foresight": {
         "checkpointLevel": 5,
         "executionId": "meta-旺盛精力-悠米-6",
-        "targetId": "official-1288",
+        "targetId": "official-4546",
         "executionLateScore": 15.4,
-        "targetLateScore": 70.9,
-        "gain": 55.5,
+        "targetLateScore": 70.3,
+        "gain": 54.9,
         "certifiedUpgrade": true,
         "alreadyRobust": false
       },
@@ -3846,9 +3846,9 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": -37.8,
-            "targetAdvantage": -11.1,
-            "text": "吉祥物爱心 -> 猫咪/超英法系下一阶段-37.8分、后期6.6分；预备转超英亚索6决斗大师3超级英雄3源计划激光特工",
+            "decline": -19.9,
+            "targetAdvantage": -12.2,
+            "text": "吉祥物爱心 -> 猫咪/超英法系下一阶段-19.9分、后期6.6分；预备转超英亚索6决斗大师3超级英雄3源计划激光特工",
             "risky": true
           },
           "targetId": "official-4546",
@@ -3889,15 +3889,15 @@
           "warning": {
             "severity": "yellow",
             "deadline": "3-5",
-            "decline": -23.5,
-            "targetAdvantage": -97.6,
-            "text": "旺盛精力悠米机制路线下一阶段-23.5分、后期15.4分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": -23.9,
+            "targetAdvantage": -161,
+            "text": "旺盛精力悠米机制路线下一阶段-23.9分、后期15.4分；预备转超英亚索6决斗大师3超级英雄3源计划激光特工",
             "risky": true
           },
-          "targetId": "official-1288",
+          "targetId": "official-4546",
           "actions": [
-            "停止给悠米追加装备或D牌；只留已出现的德莱文体系牌与共用散件，3-5复查转型",
-            "止损条件：3-5时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "停止给悠米追加装备或D牌；只留已出现的亚索体系牌与共用散件，3-5复查转型",
+            "止损条件：3-5时阶段分继续下滑且亚索已出现，再切兼容路线",
             "3-2英雄强化已结算：旺盛精力→悠米2费专属"
           ],
           "impossibleTargets": [],
@@ -3906,7 +3906,7 @@
             {
               "id": "manual-mascot-heart",
               "name": "吉祥物爱心 -> 猫咪/超英法系",
-              "score": 37
+              "score": 31
             },
             {
               "id": "official-1323",
@@ -3932,9 +3932,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -31.9,
+            "decline": -32,
             "targetAdvantage": -109.2,
-            "text": "旺盛精力悠米机制路线下一阶段-31.9分、后期15.4分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "旺盛精力悠米机制路线下一阶段-32分、后期15.4分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -3975,9 +3975,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -31.9,
+            "decline": -32,
             "targetAdvantage": -249.4,
-            "text": "旺盛精力悠米机制路线下一阶段-31.9分、后期15.4分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "旺盛精力悠米机制路线下一阶段-32分、后期15.4分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -4134,9 +4134,9 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": -16.6,
+            "decline": -18.9,
             "targetAdvantage": -47.5,
-            "text": "幻灵厄运小姐5幻灵战队2淘气包2吉祥物下一阶段-16.6分、后期30.6分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "text": "幻灵厄运小姐5幻灵战队2淘气包2吉祥物下一阶段-18.9分、后期30.6分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -4177,7 +4177,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": 26.6,
+            "decline": 24.5,
             "targetAdvantage": 0,
             "text": "超级机甲德莱文5战斗机甲3超级英雄2斗士阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -4220,9 +4220,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -26.6,
+            "decline": -26.9,
             "targetAdvantage": -93.4,
-            "text": "姐妹金克丝机制路线下一阶段-26.6分、后期28.2分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "姐妹金克丝机制路线下一阶段-26.9分、后期28.2分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -4263,9 +4263,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -26.6,
+            "decline": -26.9,
             "targetAdvantage": -275.6,
-            "text": "姐妹金克丝机制路线下一阶段-26.6分、后期28.2分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "姐妹金克丝机制路线下一阶段-26.9分、后期28.2分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -4422,9 +4422,9 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": -41.3,
-            "targetAdvantage": -34.7,
-            "text": "机甲德莱文 -> 贾克斯 -> 蕾欧娜下一阶段-41.3分、后期37分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": -42.4,
+            "targetAdvantage": -34.6,
+            "text": "机甲德莱文 -> 贾克斯 -> 蕾欧娜下一阶段-42.4分、后期37分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -4465,9 +4465,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "3-5",
-            "decline": -2.2,
+            "decline": -2.4,
             "targetAdvantage": -89.9,
-            "text": "德莱文联盟德莱文机制路线下一阶段-2.2分、后期32.8分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "text": "德莱文联盟德莱文机制路线下一阶段-2.4分、后期32.8分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -4710,9 +4710,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 54.1,
-            "targetAdvantage": -37.2,
-            "text": "登神决斗天使6决斗大师3源计划下一阶段+54.1分、后期57.1分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": 55.5,
+            "targetAdvantage": -37.7,
+            "text": "登神决斗天使6决斗大师3源计划下一阶段+55.5分、后期57.1分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -4753,9 +4753,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "3-5",
-            "decline": -13.5,
+            "decline": -14.5,
             "targetAdvantage": -63.6,
-            "text": "星界屏障科加斯机制路线下一阶段-13.5分、后期9.6分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "text": "星界屏障科加斯机制路线下一阶段-14.5分、后期9.6分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -4796,9 +4796,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -37.9,
+            "decline": -38,
             "targetAdvantage": -103.4,
-            "text": "星界屏障科加斯机制路线下一阶段-37.9分、后期9.6分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "星界屏障科加斯机制路线下一阶段-38分、后期9.6分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -4839,9 +4839,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -37.9,
+            "decline": -38,
             "targetAdvantage": -272.5,
-            "text": "星界屏障科加斯机制路线下一阶段-37.9分、后期9.6分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "星界屏障科加斯机制路线下一阶段-38分、后期9.6分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -4998,9 +4998,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": -15.5,
-            "targetAdvantage": 3.8,
-            "text": "超英伊泽瑞尔4情报特工3超级英雄2斗士下一阶段-15.5分、后期25.2分；预备转超英亚索6决斗大师3超级英雄3源计划激光特工",
+            "decline": -17.4,
+            "targetAdvantage": 3.9,
+            "text": "超英伊泽瑞尔4情报特工3超级英雄2斗士下一阶段-17.4分、后期25.2分；预备转超英亚索6决斗大师3超级英雄3源计划激光特工",
             "risky": true
           },
           "targetId": "official-4546",
@@ -5041,9 +5041,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "3-5",
-            "decline": -25,
-            "targetAdvantage": -118.5,
-            "text": "咒能高涨伊泽瑞尔机制路线下一阶段-25分、后期22.3分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": -24.8,
+            "targetAdvantage": -118.8,
+            "text": "咒能高涨伊泽瑞尔机制路线下一阶段-24.8分、后期22.3分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -5084,9 +5084,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -35,
+            "decline": -35.4,
             "targetAdvantage": -124.8,
-            "text": "咒能高涨伊泽瑞尔机制路线下一阶段-35分、后期22.3分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "咒能高涨伊泽瑞尔机制路线下一阶段-35.4分、后期22.3分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -5127,9 +5127,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -35,
+            "decline": -35.4,
             "targetAdvantage": -264.6,
-            "text": "咒能高涨伊泽瑞尔机制路线下一阶段-35分、后期22.3分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "咒能高涨伊泽瑞尔机制路线下一阶段-35.4分、后期22.3分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -5286,9 +5286,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 54.1,
-            "targetAdvantage": -37.2,
-            "text": "登神决斗天使6决斗大师3源计划下一阶段+54.1分、后期57.1分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": 55.5,
+            "targetAdvantage": -37.7,
+            "text": "登神决斗天使6决斗大师3源计划下一阶段+55.5分、后期57.1分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -5329,9 +5329,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "3-5",
-            "decline": -15,
+            "decline": -16.7,
             "targetAdvantage": -64.4,
-            "text": "重甲龙龟拉莫斯机制路线下一阶段-15分、后期12.1分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "text": "重甲龙龟拉莫斯机制路线下一阶段-16.7分、后期12.1分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -5372,9 +5372,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -34,
+            "decline": -34.1,
             "targetAdvantage": -104.8,
-            "text": "重甲龙龟拉莫斯机制路线下一阶段-34分、后期12.1分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "重甲龙龟拉莫斯机制路线下一阶段-34.1分、后期12.1分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -5415,9 +5415,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -34,
+            "decline": -34.1,
             "targetAdvantage": -273.9,
-            "text": "重甲龙龟拉莫斯机制路线下一阶段-34分、后期12.1分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "重甲龙龟拉莫斯机制路线下一阶段-34.1分、后期12.1分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -5574,9 +5574,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "3-1",
-            "decline": -0.6,
-            "targetAdvantage": 19.4,
-            "text": "福牛泰隆6福牛守护者3混沌战士下一阶段-0.6分、后期61.7分；预备转福牛混沌九五4福牛守护者3混沌战士2吉祥物",
+            "decline": -2.3,
+            "targetAdvantage": 19.9,
+            "text": "福牛泰隆6福牛守护者3混沌战士下一阶段-2.3分、后期61.7分；预备转福牛混沌九五4福牛守护者3混沌战士2吉祥物",
             "risky": true
           },
           "targetId": "official-1338",
@@ -5618,7 +5618,7 @@
             "severity": "yellow",
             "deadline": "3-5",
             "decline": 1.3,
-            "targetAdvantage": -106.2,
+            "targetAdvantage": -106.5,
             "text": "适应性防守卡蜜尔机制路线下一阶段+1.3分、后期14.3分；预备转决斗剑姬6决斗大师2福牛守护者",
             "risky": true
           },
@@ -5660,9 +5660,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -44,
+            "decline": -45.2,
             "targetAdvantage": -111.4,
-            "text": "适应性防守卡蜜尔机制路线下一阶段-44分、后期14.3分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "适应性防守卡蜜尔机制路线下一阶段-45.2分、后期14.3分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -5703,9 +5703,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -44,
+            "decline": -45.2,
             "targetAdvantage": -252.2,
-            "text": "适应性防守卡蜜尔机制路线下一阶段-44分、后期14.3分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "适应性防守卡蜜尔机制路线下一阶段-45.2分、后期14.3分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -5841,10 +5841,10 @@
       "foresight": {
         "checkpointLevel": 5,
         "executionId": "meta-分享驭铁术-芮尔-13",
-        "targetId": "official-1288",
+        "targetId": "official-4546",
         "executionLateScore": 8,
-        "targetLateScore": 70.9,
-        "gain": 62.9,
+        "targetLateScore": 70.3,
+        "gain": 62.3,
         "certifiedUpgrade": true,
         "alreadyRobust": false
       },
@@ -5862,8 +5862,8 @@
           "warning": {
             "severity": "green",
             "deadline": "3-1",
-            "decline": 0.2,
-            "targetAdvantage": -12.9,
+            "decline": -0.1,
+            "targetAdvantage": -12.8,
             "text": "小天才璐璐5小天才4吉祥物阶段曲线稳定，保留转型选择权",
             "risky": false
           },
@@ -5905,15 +5905,15 @@
           "warning": {
             "severity": "yellow",
             "deadline": "3-5",
-            "decline": -14.7,
-            "targetAdvantage": -67.7,
-            "text": "分享驭铁术芮尔机制路线下一阶段-14.7分、后期8分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": -16.5,
+            "targetAdvantage": -130.2,
+            "text": "分享驭铁术芮尔机制路线下一阶段-16.5分、后期8分；预备转超英亚索6决斗大师3超级英雄3源计划激光特工",
             "risky": true
           },
-          "targetId": "official-1288",
+          "targetId": "official-4546",
           "actions": [
-            "停止给芮尔追加装备或D牌；只留已出现的德莱文体系牌与共用散件，3-5复查转型",
-            "止损条件：3-5时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "停止给芮尔追加装备或D牌；只留已出现的亚索体系牌与共用散件，3-5复查转型",
+            "止损条件：3-5时阶段分继续下滑且亚索已出现，再切兼容路线",
             "3-2英雄强化已结算：分享驭铁术→芮尔2费专属"
           ],
           "impossibleTargets": [],
@@ -6150,9 +6150,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 54.1,
-            "targetAdvantage": -37.2,
-            "text": "登神决斗天使6决斗大师3源计划下一阶段+54.1分、后期57.1分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": 55.5,
+            "targetAdvantage": -37.7,
+            "text": "登神决斗天使6决斗大师3源计划下一阶段+55.5分、后期57.1分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -6193,9 +6193,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "3-5",
-            "decline": -18,
-            "targetAdvantage": -99,
-            "text": "净化之金钟罩李青机制路线下一阶段-18分、后期18.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": -17.8,
+            "targetAdvantage": -99.2,
+            "text": "净化之金钟罩李青机制路线下一阶段-17.8分、后期18.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -6236,15 +6236,15 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -34.1,
-            "targetAdvantage": -30.4,
-            "text": "净化之金钟罩李青机制路线下一阶段-34.1分、后期18.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": -34.7,
+            "targetAdvantage": -138.3,
+            "text": "净化之金钟罩李青机制路线下一阶段-34.7分、后期18.7分；预备转福牛混沌九五4福牛守护者3混沌战士2吉祥物",
             "risky": true
           },
-          "targetId": "official-1288",
+          "targetId": "official-1338",
           "actions": [
-            "停止给李青追加装备或D牌；只留已出现的德莱文体系牌与共用散件，3-5复查转型",
-            "止损条件：3-5时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "停止给李青追加装备或D牌；只留已出现的佛耶戈体系牌与共用散件，3-5复查转型",
+            "止损条件：3-5时阶段分继续下滑且佛耶戈已出现，再切兼容路线",
             "3-2英雄强化已结算：净化之金钟罩→李青2费专属"
           ],
           "impossibleTargets": [],
@@ -6279,15 +6279,15 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -34.1,
-            "targetAdvantage": -176.3,
-            "text": "净化之金钟罩李青机制路线下一阶段-34.1分、后期18.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": -34.7,
+            "targetAdvantage": -423,
+            "text": "净化之金钟罩李青机制路线下一阶段-34.7分、后期18.7分；预备转福牛混沌九五4福牛守护者3混沌战士2吉祥物",
             "risky": true
           },
-          "targetId": "official-1288",
+          "targetId": "official-1338",
           "actions": [
-            "停止给李青追加装备或D牌；只留已出现的德莱文体系牌与共用散件，3-5复查转型",
-            "止损条件：3-5时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "停止给李青追加装备或D牌；只留已出现的佛耶戈体系牌与共用散件，3-5复查转型",
+            "止损条件：3-5时阶段分继续下滑且佛耶戈已出现，再切兼容路线",
             "3-2英雄强化已结算：净化之金钟罩→李青2费专属"
           ],
           "impossibleTargets": [],
@@ -6438,9 +6438,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": -15.5,
+            "decline": -17.4,
             "targetAdvantage": 5.7,
-            "text": "超英伊泽瑞尔4情报特工3超级英雄2斗士下一阶段-15.5分、后期25.2分；预备转超英亚索6决斗大师3超级英雄3源计划激光特工",
+            "text": "超英伊泽瑞尔4情报特工3超级英雄2斗士下一阶段-17.4分、后期25.2分；预备转超英亚索6决斗大师3超级英雄3源计划激光特工",
             "risky": true
           },
           "targetId": "official-4546",
@@ -6481,9 +6481,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": -15.5,
-            "targetAdvantage": -111,
-            "text": "超英伊泽瑞尔4情报特工3超级英雄2斗士下一阶段-15.5分、后期25.2分；预备转超英亚索6决斗大师3超级英雄3源计划激光特工",
+            "decline": -17.4,
+            "targetAdvantage": -110.9,
+            "text": "超英伊泽瑞尔4情报特工3超级英雄2斗士下一阶段-17.4分、后期25.2分；预备转超英亚索6决斗大师3超级英雄3源计划激光特工",
             "risky": true
           },
           "targetId": "official-4546",
@@ -6726,7 +6726,7 @@
           "warning": {
             "severity": "green",
             "deadline": "5-1",
-            "decline": 29.3,
+            "decline": 20.7,
             "targetAdvantage": 0,
             "text": "地下魔盗团转952吉祥物2秘术卫士阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -6769,9 +6769,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": -15.5,
-            "targetAdvantage": -113.4,
-            "text": "超英伊泽瑞尔4情报特工3超级英雄2斗士下一阶段-15.5分、后期25.2分；预备转超英亚索6决斗大师3超级英雄3源计划激光特工",
+            "decline": -17.4,
+            "targetAdvantage": -113.3,
+            "text": "超英伊泽瑞尔4情报特工3超级英雄2斗士下一阶段-17.4分、后期25.2分；预备转超英亚索6决斗大师3超级英雄3源计划激光特工",
             "risky": true
           },
           "targetId": "official-4546",
@@ -6812,9 +6812,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "4-1",
-            "decline": -6.1,
+            "decline": -6.2,
             "targetAdvantage": 38,
-            "text": "黑客贾克斯3战斗机甲2黑客2斗士下一阶段-6.1分、后期33分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "text": "黑客贾克斯3战斗机甲2黑客2斗士下一阶段-6.2分、后期33分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -6855,7 +6855,7 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": -6.1,
+            "decline": -6.2,
             "targetAdvantage": -82.4,
             "text": "黑客贾克斯3战斗机甲2黑客2斗士阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -7014,9 +7014,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "3-1",
-            "decline": -0.6,
-            "targetAdvantage": 11.9,
-            "text": "福牛泰隆6福牛守护者3混沌战士下一阶段-0.6分、后期61.7分；预备转福牛混沌九五4福牛守护者3混沌战士2吉祥物",
+            "decline": -2.3,
+            "targetAdvantage": 12.4,
+            "text": "福牛泰隆6福牛守护者3混沌战士下一阶段-2.3分、后期61.7分；预备转福牛混沌九五4福牛守护者3混沌战士2吉祥物",
             "risky": true
           },
           "targetId": "official-1338",
@@ -7057,8 +7057,8 @@
           "warning": {
             "severity": "green",
             "deadline": "3-1",
-            "decline": -0.6,
-            "targetAdvantage": -233.7,
+            "decline": -2.3,
+            "targetAdvantage": -233.2,
             "text": "福牛泰隆6福牛守护者3混沌战士阶段曲线稳定，保留转型选择权",
             "risky": false
           },
@@ -7100,7 +7100,7 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 26.3,
+            "decline": 26.2,
             "targetAdvantage": -102,
             "text": "小天才九五5小天才2福牛守护者2吉祥物阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -7143,9 +7143,9 @@
           "warning": {
             "severity": "red",
             "deadline": "4-1",
-            "decline": 26.3,
+            "decline": 26.2,
             "targetAdvantage": 37.2,
-            "text": "小天才九五5小天才2福牛守护者2吉祥物下一阶段+26.3分、后期63.9分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "小天才九五5小天才2福牛守护者2吉祥物下一阶段+26.2分、后期63.9分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -7302,7 +7302,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": 24.6,
+            "decline": 22.3,
             "targetAdvantage": 0,
             "text": "超英亚索6决斗大师3超级英雄3源计划激光特工阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -7345,7 +7345,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": 24.6,
+            "decline": 22.3,
             "targetAdvantage": 0,
             "text": "超英亚索6决斗大师3超级英雄3源计划激光特工阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -7389,14 +7389,14 @@
             "severity": "green",
             "deadline": "4-1",
             "decline": 30.3,
-            "targetAdvantage": -34.9,
+            "targetAdvantage": -116,
             "text": "超英赛娜3平民英雄3超级英雄2斗士阶段曲线稳定，保留转型选择权",
             "risky": false
           },
-          "targetId": "official-1288",
+          "targetId": "official-1338",
           "actions": [
             "6级开始找墨菲特，只花到路线质量门槛",
-            "止损条件：4-1时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "止损条件：4-1时阶段分继续下滑且佛耶戈已出现，再切兼容路线",
             "暂不定线：阶段曲线稳定，继续当前执行线"
           ],
           "impossibleTargets": [],
@@ -7432,14 +7432,14 @@
             "severity": "green",
             "deadline": "4-1",
             "decline": 30.3,
-            "targetAdvantage": -101.4,
+            "targetAdvantage": -317.5,
             "text": "超英赛娜3平民英雄3超级英雄2斗士阶段曲线稳定，保留转型选择权",
             "risky": false
           },
-          "targetId": "official-1288",
+          "targetId": "official-1338",
           "actions": [
             "7级开始找墨菲特，只花到路线质量门槛",
-            "止损条件：4-1时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "止损条件：4-1时阶段分继续下滑且佛耶戈已出现，再切兼容路线",
             "暂不定线：阶段曲线稳定，继续当前执行线"
           ],
           "impossibleTargets": [],
@@ -7590,9 +7590,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": -12.5,
+            "decline": -14.7,
             "targetAdvantage": 0,
-            "text": "超英希维尔4枪手3超级英雄2吉祥物下一阶段-12.5分、后期64.7分；继续观察同线升级",
+            "text": "超英希维尔4枪手3超级英雄2吉祥物下一阶段-14.7分、后期64.7分；继续观察同线升级",
             "risky": true
           },
           "targetId": "official-1328",
@@ -7633,9 +7633,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": -12.5,
+            "decline": -14.7,
             "targetAdvantage": 0,
-            "text": "超英希维尔4枪手3超级英雄2吉祥物下一阶段-12.5分、后期64.7分；继续观察同线升级",
+            "text": "超英希维尔4枪手3超级英雄2吉祥物下一阶段-14.7分、后期64.7分；继续观察同线升级",
             "risky": true
           },
           "targetId": "official-1328",
@@ -7676,9 +7676,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "4-1",
-            "decline": 32.3,
+            "decline": 32.2,
             "targetAdvantage": 0,
-            "text": "超英希维尔4枪手3超级英雄2吉祥物下一阶段+32.3分、后期64.7分；继续观察同线升级",
+            "text": "超英希维尔4枪手3超级英雄2吉祥物下一阶段+32.2分、后期64.7分；继续观察同线升级",
             "risky": true
           },
           "targetId": "official-1328",
@@ -7719,9 +7719,9 @@
           "warning": {
             "severity": "red",
             "deadline": "4-1",
-            "decline": 32.3,
+            "decline": 32.2,
             "targetAdvantage": 0,
-            "text": "超英希维尔4枪手3超级英雄2吉祥物下一阶段+32.3分、后期64.7分；继续观察同线升级",
+            "text": "超英希维尔4枪手3超级英雄2吉祥物下一阶段+32.2分、后期64.7分；继续观察同线升级",
             "risky": true
           },
           "targetId": "official-1328",
@@ -7878,9 +7878,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 46.2,
+            "decline": 44.1,
             "targetAdvantage": -54.9,
-            "text": "无情连打贾克斯5战队机甲4斗士2护卫下一阶段+46.2分、后期55.4分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "text": "无情连打贾克斯5战队机甲4斗士2护卫下一阶段+44.1分、后期55.4分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -7921,9 +7921,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 46.2,
+            "decline": 44.1,
             "targetAdvantage": 38.7,
-            "text": "无情连打贾克斯5战队机甲4斗士2护卫下一阶段+46.2分、后期55.4分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "text": "无情连打贾克斯5战队机甲4斗士2护卫下一阶段+44.1分、后期55.4分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -7964,15 +7964,15 @@
           "warning": {
             "severity": "yellow",
             "deadline": "4-1",
-            "decline": -18.3,
-            "targetAdvantage": -21.2,
-            "text": "无情连打贾克斯5战队机甲4斗士2护卫下一阶段-18.3分、后期55.4分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": -18.4,
+            "targetAdvantage": -119.4,
+            "text": "无情连打贾克斯5战队机甲4斗士2护卫下一阶段-18.4分、后期55.4分；预备转福牛混沌九五4福牛守护者3混沌战士2吉祥物",
             "risky": true
           },
-          "targetId": "official-1288",
+          "targetId": "official-1338",
           "actions": [
-            "停止给贾克斯追加装备或D牌；只留已出现的德莱文体系牌与共用散件，4-1复查转型",
-            "止损条件：4-1时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "停止给贾克斯追加装备或D牌；只留已出现的佛耶戈体系牌与共用散件，4-1复查转型",
+            "止损条件：4-1时阶段分继续下滑且佛耶戈已出现，再切兼容路线",
             "当前板继续保血；到4-1只在转型条件满足时换线"
           ],
           "impossibleTargets": [],
@@ -8007,15 +8007,15 @@
           "warning": {
             "severity": "red",
             "deadline": "4-1",
-            "decline": -18.3,
-            "targetAdvantage": -32.8,
-            "text": "无情连打贾克斯5战队机甲4斗士2护卫下一阶段-18.3分、后期55.4分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": -18.4,
+            "targetAdvantage": -271.4,
+            "text": "无情连打贾克斯5战队机甲4斗士2护卫下一阶段-18.4分、后期55.4分；预备转福牛混沌九五4福牛守护者3混沌战士2吉祥物",
             "risky": true
           },
-          "targetId": "official-1288",
+          "targetId": "official-1338",
           "actions": [
-            "停止给贾克斯追加装备或D牌；只留已出现的德莱文体系牌与共用散件，4-1复查转型",
-            "止损条件：4-1时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "停止给贾克斯追加装备或D牌；只留已出现的佛耶戈体系牌与共用散件，4-1复查转型",
+            "止损条件：4-1时阶段分继续下滑且佛耶戈已出现，再切兼容路线",
             "当前板继续保血；到4-1只在转型条件满足时换线"
           ],
           "impossibleTargets": [],
@@ -8166,9 +8166,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 46.2,
+            "decline": 44.1,
             "targetAdvantage": -56,
-            "text": "无情连打贾克斯5战队机甲4斗士2护卫下一阶段+46.2分、后期55.4分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "text": "无情连打贾克斯5战队机甲4斗士2护卫下一阶段+44.1分、后期55.4分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -8209,9 +8209,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 46.2,
+            "decline": 44.1,
             "targetAdvantage": 37.7,
-            "text": "无情连打贾克斯5战队机甲4斗士2护卫下一阶段+46.2分、后期55.4分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "text": "无情连打贾克斯5战队机甲4斗士2护卫下一阶段+44.1分、后期55.4分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -8252,9 +8252,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "4-1",
-            "decline": 22.3,
+            "decline": 22.2,
             "targetAdvantage": 24.3,
-            "text": "秘卫斗士贾克斯4斗士3秘术卫士3战斗机甲下一阶段+22.3分、后期54.8分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "text": "秘卫斗士贾克斯4斗士3秘术卫士3战斗机甲下一阶段+22.2分、后期54.8分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -8295,9 +8295,9 @@
           "warning": {
             "severity": "red",
             "deadline": "4-1",
-            "decline": 22.3,
+            "decline": 22.2,
             "targetAdvantage": 55.3,
-            "text": "秘卫斗士贾克斯4斗士3秘术卫士3战斗机甲下一阶段+22.3分、后期54.8分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "text": "秘卫斗士贾克斯4斗士3秘术卫士3战斗机甲下一阶段+22.2分、后期54.8分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -8454,7 +8454,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": 24.6,
+            "decline": 22.3,
             "targetAdvantage": 0,
             "text": "超英亚索6决斗大师3超级英雄3源计划激光特工阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -8497,7 +8497,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": 24.6,
+            "decline": 22.3,
             "targetAdvantage": 0,
             "text": "超英亚索6决斗大师3超级英雄3源计划激光特工阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -8540,9 +8540,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -0.7,
+            "decline": -0.8,
             "targetAdvantage": -79,
-            "text": "情报特工怪兽卡莎4情报特工3怪兽下一阶段-0.7分、后期21.2分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "情报特工怪兽卡莎4情报特工3怪兽下一阶段-0.8分、后期21.2分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -8583,9 +8583,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -0.7,
+            "decline": -0.8,
             "targetAdvantage": -252,
-            "text": "情报特工怪兽卡莎4情报特工3怪兽下一阶段-0.7分、后期21.2分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "情报特工怪兽卡莎4情报特工3怪兽下一阶段-0.8分、后期21.2分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -8742,9 +8742,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 36.7,
-            "targetAdvantage": -43.2,
-            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+36.7分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": 37.2,
+            "targetAdvantage": -43.5,
+            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+37.2分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -8785,9 +8785,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 36.7,
-            "targetAdvantage": 33.4,
-            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+36.7分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": 37.2,
+            "targetAdvantage": 33.2,
+            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+37.2分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -8826,18 +8826,18 @@
           "status": "planning",
           "deterministic": true,
           "warning": {
-            "severity": "green",
-            "deadline": "4-2",
-            "decline": 46.6,
+            "severity": "yellow",
+            "deadline": "4-1",
+            "decline": 46.5,
             "targetAdvantage": 4.8,
-            "text": "95秘卫枪手3秘书卫士2福牛守护者下一阶段+46.6分、后期74.4分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "95秘卫枪手3秘书卫士2福牛守护者下一阶段+46.5分、后期74.4分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
           "actions": [
-            "停止给莎弥拉追加装备或D牌；只留已出现的塔莉垭体系牌与共用散件，4-2复查转型",
-            "止损条件：4-2时阶段分继续下滑且塔莉垭已出现，再切兼容路线",
-            "当前板继续保血；到4-2只在转型条件满足时换线"
+            "停止给莎弥拉追加装备或D牌；只留已出现的塔莉垭体系牌与共用散件，4-1复查转型",
+            "止损条件：4-1时阶段分继续下滑且塔莉垭已出现，再切兼容路线",
+            "当前板继续保血；到4-1只在转型条件满足时换线"
           ],
           "impossibleTargets": [],
           "finite": true,
@@ -8869,18 +8869,18 @@
           "status": "planning",
           "deterministic": true,
           "warning": {
-            "severity": "yellow",
-            "deadline": "4-2",
-            "decline": 46.6,
+            "severity": "red",
+            "deadline": "4-1",
+            "decline": 46.5,
             "targetAdvantage": 199.1,
-            "text": "95秘卫枪手3秘书卫士2福牛守护者下一阶段+46.6分、后期74.4分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "95秘卫枪手3秘书卫士2福牛守护者下一阶段+46.5分、后期74.4分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
           "actions": [
-            "停止给莎弥拉追加装备或D牌；只留已出现的塔莉垭体系牌与共用散件，4-2复查转型",
-            "止损条件：4-2时阶段分继续下滑且塔莉垭已出现，再切兼容路线",
-            "当前板继续保血；到4-2只在转型条件满足时换线"
+            "停止给莎弥拉追加装备或D牌；只留已出现的塔莉垭体系牌与共用散件，4-1复查转型",
+            "止损条件：4-1时阶段分继续下滑且塔莉垭已出现，再切兼容路线",
+            "当前板继续保血；到4-1只在转型条件满足时换线"
           ],
           "impossibleTargets": [],
           "finite": true,
@@ -9030,9 +9030,9 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": -37.8,
-            "targetAdvantage": -12.7,
-            "text": "吉祥物爱心 -> 猫咪/超英法系下一阶段-37.8分、后期6.6分；预备转超英亚索6决斗大师3超级英雄3源计划激光特工",
+            "decline": -19.9,
+            "targetAdvantage": -13.7,
+            "text": "吉祥物爱心 -> 猫咪/超英法系下一阶段-19.9分、后期6.6分；预备转超英亚索6决斗大师3超级英雄3源计划激光特工",
             "risky": true
           },
           "targetId": "official-4546",
@@ -9073,9 +9073,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "3-5",
-            "decline": -37.8,
-            "targetAdvantage": -123.4,
-            "text": "吉祥物爱心 -> 猫咪/超英法系下一阶段-37.8分、后期6.6分；预备转超英亚索6决斗大师3超级英雄3源计划激光特工",
+            "decline": -19.9,
+            "targetAdvantage": -124.4,
+            "text": "吉祥物爱心 -> 猫咪/超英法系下一阶段-19.9分、后期6.6分；预备转超英亚索6决斗大师3超级英雄3源计划激光特工",
             "risky": true
           },
           "targetId": "official-4546",
@@ -9090,7 +9090,7 @@
             {
               "id": "manual-mascot-heart",
               "name": "吉祥物爱心 -> 猫咪/超英法系",
-              "score": 18
+              "score": 13
             },
             {
               "id": "official-1290",
@@ -9116,7 +9116,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": 8.6,
+            "decline": 8.4,
             "targetAdvantage": -57.2,
             "text": "超英猫咪3超级英雄3星之守护者2爱心使者阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -9159,7 +9159,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": 8.6,
+            "decline": 8.4,
             "targetAdvantage": -159,
             "text": "超英猫咪3超级英雄3星之守护者2爱心使者阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -9318,9 +9318,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 36.7,
-            "targetAdvantage": -38.9,
-            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+36.7分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": 37.2,
+            "targetAdvantage": -39,
+            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+37.2分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -9361,9 +9361,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 36.7,
-            "targetAdvantage": 39.1,
-            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+36.7分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": 37.2,
+            "targetAdvantage": 38.9,
+            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+37.2分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -9404,7 +9404,7 @@
           "warning": {
             "severity": "green",
             "deadline": "4-2",
-            "decline": 9.8,
+            "decline": 8.6,
             "targetAdvantage": 0,
             "text": "84机甲怪兽双子星3战斗机甲2护卫怪兽阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -9447,7 +9447,7 @@
           "warning": {
             "severity": "green",
             "deadline": "4-2",
-            "decline": 9.8,
+            "decline": 8.6,
             "targetAdvantage": 0,
             "text": "84机甲怪兽双子星3战斗机甲2护卫怪兽阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -9606,8 +9606,8 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": -3.6,
-            "targetAdvantage": -46.2,
+            "decline": -5.9,
+            "targetAdvantage": -46.4,
             "text": "单核克星维克兹6斗士2爱心使者2秘术卫士阶段曲线稳定，保留转型选择权",
             "risky": false
           },
@@ -9649,9 +9649,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "3-5",
-            "decline": -23.4,
-            "targetAdvantage": 44.4,
-            "text": "金钟罩李青4爱心使者3秘术卫士2AI程序下一阶段-23.4分、后期37.3分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": -25.3,
+            "targetAdvantage": 44.3,
+            "text": "金钟罩李青4爱心使者3秘术卫士2AI程序下一阶段-25.3分、后期37.3分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -9692,9 +9692,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -4.9,
+            "decline": -5,
             "targetAdvantage": -57.1,
-            "text": "金钟罩李青4爱心使者3秘术卫士2AI程序下一阶段-4.9分、后期37.3分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "金钟罩李青4爱心使者3秘术卫士2AI程序下一阶段-5分、后期37.3分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -9735,9 +9735,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -4.9,
+            "decline": -5,
             "targetAdvantage": -253.3,
-            "text": "金钟罩李青4爱心使者3秘术卫士2AI程序下一阶段-4.9分、后期37.3分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "金钟罩李青4爱心使者3秘术卫士2AI程序下一阶段-5分、后期37.3分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -9894,7 +9894,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": 24.6,
+            "decline": 22.3,
             "targetAdvantage": 0,
             "text": "超英亚索6决斗大师3超级英雄3源计划激光特工阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -9937,7 +9937,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": 24.6,
+            "decline": 22.3,
             "targetAdvantage": 0,
             "text": "超英亚索6决斗大师3超级英雄3源计划激光特工阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -9980,15 +9980,15 @@
           "warning": {
             "severity": "yellow",
             "deadline": "4-1",
-            "decline": -23.6,
-            "targetAdvantage": -33.2,
-            "text": "决斗薇恩6决斗大师3源计划激光特工下一阶段-23.6分、后期57.9分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": -23.7,
+            "targetAdvantage": -110.6,
+            "text": "决斗薇恩6决斗大师3源计划激光特工下一阶段-23.7分、后期57.9分；预备转福牛混沌九五4福牛守护者3混沌战士2吉祥物",
             "risky": true
           },
-          "targetId": "official-1288",
+          "targetId": "official-1338",
           "actions": [
-            "停止给薇恩追加装备或D牌；只留已出现的德莱文体系牌与共用散件，4-1复查转型",
-            "止损条件：4-1时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "停止给薇恩追加装备或D牌；只留已出现的佛耶戈体系牌与共用散件，4-1复查转型",
+            "止损条件：4-1时阶段分继续下滑且佛耶戈已出现，再切兼容路线",
             "当前板继续保血；到4-1只在转型条件满足时换线"
           ],
           "impossibleTargets": [],
@@ -10023,15 +10023,15 @@
           "warning": {
             "severity": "red",
             "deadline": "4-1",
-            "decline": -23.6,
-            "targetAdvantage": -116.9,
-            "text": "决斗薇恩6决斗大师3源计划激光特工下一阶段-23.6分、后期57.9分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": -23.7,
+            "targetAdvantage": -332.2,
+            "text": "决斗薇恩6决斗大师3源计划激光特工下一阶段-23.7分、后期57.9分；预备转福牛混沌九五4福牛守护者3混沌战士2吉祥物",
             "risky": true
           },
-          "targetId": "official-1288",
+          "targetId": "official-1338",
           "actions": [
-            "停止给薇恩追加装备或D牌；只留已出现的德莱文体系牌与共用散件，4-1复查转型",
-            "止损条件：4-1时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "停止给薇恩追加装备或D牌；只留已出现的佛耶戈体系牌与共用散件，4-1复查转型",
+            "止损条件：4-1时阶段分继续下滑且佛耶戈已出现，再切兼容路线",
             "当前板继续保血；到4-1只在转型条件满足时换线"
           ],
           "impossibleTargets": [],
@@ -10182,9 +10182,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "3-1",
-            "decline": -0.6,
-            "targetAdvantage": 6.5,
-            "text": "福牛泰隆6福牛守护者3混沌战士下一阶段-0.6分、后期61.7分；预备转福牛混沌九五4福牛守护者3混沌战士2吉祥物",
+            "decline": -2.3,
+            "targetAdvantage": 7,
+            "text": "福牛泰隆6福牛守护者3混沌战士下一阶段-2.3分、后期61.7分；预备转福牛混沌九五4福牛守护者3混沌战士2吉祥物",
             "risky": true
           },
           "targetId": "official-1338",
@@ -10225,8 +10225,8 @@
           "warning": {
             "severity": "green",
             "deadline": "3-1",
-            "decline": -0.6,
-            "targetAdvantage": -239.1,
+            "decline": -2.3,
+            "targetAdvantage": -238.6,
             "text": "福牛泰隆6福牛守护者3混沌战士阶段曲线稳定，保留转型选择权",
             "risky": false
           },
@@ -10470,7 +10470,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": 24.6,
+            "decline": 22.3,
             "targetAdvantage": 0,
             "text": "超英亚索6决斗大师3超级英雄3源计划激光特工阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -10513,7 +10513,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": 24.6,
+            "decline": 22.3,
             "targetAdvantage": 0,
             "text": "超英亚索6决斗大师3超级英雄3源计划激光特工阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -10556,7 +10556,7 @@
           "warning": {
             "severity": "green",
             "deadline": "5-1",
-            "decline": -6.5,
+            "decline": 5.2,
             "targetAdvantage": 0,
             "text": "灵风原计划7原计划2强袭枪手阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -10599,7 +10599,7 @@
           "warning": {
             "severity": "green",
             "deadline": "5-1",
-            "decline": -6.5,
+            "decline": 5.2,
             "targetAdvantage": 0,
             "text": "灵风原计划7原计划2强袭枪手阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -10737,10 +10737,10 @@
       "foresight": {
         "checkpointLevel": 5,
         "executionId": "official-1565",
-        "targetId": "official-1312",
+        "targetId": "official-1338",
         "executionLateScore": 24.5,
-        "targetLateScore": 59,
-        "gain": 34.5,
+        "targetLateScore": 76.5,
+        "gain": 52,
         "certifiedUpgrade": true,
         "alreadyRobust": false
       },
@@ -10758,15 +10758,15 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": -11.7,
-            "targetAdvantage": 2.8,
-            "text": "小天才安妮5小天才2灵能使2黑客下一阶段-11.7分、后期24.5分；预备转灵能佐伊4灵能使3小天才2AI程序",
+            "decline": -13.7,
+            "targetAdvantage": 19.3,
+            "text": "小天才安妮5小天才2灵能使2黑客下一阶段-13.7分、后期24.5分；预备转福牛混沌九五4福牛守护者3混沌战士2吉祥物",
             "risky": true
           },
-          "targetId": "official-1312",
+          "targetId": "official-1338",
           "actions": [
-            "保留当前两星板与共用散件；7级前不找佐伊，3-5复查能否转灵能佐伊4灵能使3小天才2AI程序",
-            "转型条件：升到7且见到佐伊；未满足则保留当前板，不为未来牌硬D",
+            "保留当前两星板与共用散件；8级前不找佛耶戈，3-5复查能否转福牛混沌九五4福牛守护者3混沌战士2吉祥物",
+            "转型条件：升到8且见到佛耶戈；未满足则保留当前板，不为未来牌硬D",
             "暂不定线：3级观察期：只给当前战力和战略候选，不锁终局"
           ],
           "impossibleTargets": [],
@@ -10801,15 +10801,15 @@
           "warning": {
             "severity": "yellow",
             "deadline": "3-5",
-            "decline": -11.7,
-            "targetAdvantage": -46.7,
-            "text": "小天才安妮5小天才2灵能使2黑客下一阶段-11.7分、后期24.5分；预备转灵能佐伊4灵能使3小天才2AI程序",
+            "decline": -13.7,
+            "targetAdvantage": -259,
+            "text": "小天才安妮5小天才2灵能使2黑客下一阶段-13.7分、后期24.5分；预备转福牛混沌九五4福牛守护者3混沌战士2吉祥物",
             "risky": true
           },
-          "targetId": "official-1312",
+          "targetId": "official-1338",
           "actions": [
-            "停止给乐芙兰追加装备或D牌；只留已出现的佐伊体系牌与共用散件，3-5复查转型",
-            "止损条件：3-5时阶段分继续下滑且佐伊已出现，再切兼容路线",
+            "停止给乐芙兰追加装备或D牌；只留已出现的佛耶戈体系牌与共用散件，3-5复查转型",
+            "止损条件：3-5时阶段分继续下滑且佛耶戈已出现，再切兼容路线",
             "当前板继续保血；到3-5只在转型条件满足时换线"
           ],
           "impossibleTargets": [],
@@ -11046,9 +11046,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 21.3,
-            "targetAdvantage": -11.4,
-            "text": "大闹天宫5战斗机甲3超级英雄2护卫下一阶段+21.3分、后期49.3分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": 20.4,
+            "targetAdvantage": -11.6,
+            "text": "大闹天宫5战斗机甲3超级英雄2护卫下一阶段+20.4分、后期49.3分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -11089,9 +11089,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "3-5",
-            "decline": -11.5,
-            "targetAdvantage": -164.5,
-            "text": "小天才佐伊5小天才2福牛守护者下一阶段-11.5分、后期40分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "decline": -12.9,
+            "targetAdvantage": -164.6,
+            "text": "小天才佐伊5小天才2福牛守护者下一阶段-12.9分、后期40分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -11132,9 +11132,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "4-1",
-            "decline": 21.1,
+            "decline": 21,
             "targetAdvantage": 3.3,
-            "text": "AI妖姬乐芙兰4AI程序3黑客2淘气包下一阶段+21.1分、后期54分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "AI妖姬乐芙兰4AI程序3黑客2淘气包下一阶段+21分、后期54分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -11175,9 +11175,9 @@
           "warning": {
             "severity": "red",
             "deadline": "4-1",
-            "decline": 21.1,
+            "decline": 21,
             "targetAdvantage": -166.1,
-            "text": "AI妖姬乐芙兰4AI程序3黑客2淘气包下一阶段+21.1分、后期54分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "AI妖姬乐芙兰4AI程序3黑客2淘气包下一阶段+21分、后期54分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -11334,9 +11334,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 36.7,
-            "targetAdvantage": -39.3,
-            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+36.7分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": 37.2,
+            "targetAdvantage": -39.5,
+            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+37.2分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -11377,9 +11377,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 36.7,
-            "targetAdvantage": 35.2,
-            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+36.7分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": 37.2,
+            "targetAdvantage": 34.9,
+            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+37.2分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -11420,9 +11420,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "4-1",
-            "decline": 32.3,
+            "decline": 32.2,
             "targetAdvantage": 0,
-            "text": "超英希维尔4枪手3超级英雄2吉祥物下一阶段+32.3分、后期64.7分；继续观察同线升级",
+            "text": "超英希维尔4枪手3超级英雄2吉祥物下一阶段+32.2分、后期64.7分；继续观察同线升级",
             "risky": true
           },
           "targetId": "official-1328",
@@ -11463,9 +11463,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "4-2",
-            "decline": 32.5,
+            "decline": 32.4,
             "targetAdvantage": 65.7,
-            "text": "怪兽平民4精英4精英战士2平民英雄2枪手下一阶段+32.5分、后期63.7分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "怪兽平民4精英4精英战士2平民英雄2枪手下一阶段+32.4分、后期63.7分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -11622,9 +11622,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 36.7,
-            "targetAdvantage": -42.7,
-            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+36.7分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": 37.2,
+            "targetAdvantage": -42.9,
+            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+37.2分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -11665,9 +11665,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 36.7,
-            "targetAdvantage": 33.4,
-            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+36.7分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": 37.2,
+            "targetAdvantage": 33.2,
+            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+37.2分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -11708,9 +11708,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": 21.1,
+            "decline": 21,
             "targetAdvantage": 29.8,
-            "text": "怪兽厄运小姐8怪兽1精英战士下一阶段+21.1分、后期44.9分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "怪兽厄运小姐8怪兽1精英战士下一阶段+21分、后期44.9分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -11751,9 +11751,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": 21.1,
+            "decline": 21,
             "targetAdvantage": -78.1,
-            "text": "怪兽厄运小姐8怪兽1精英战士下一阶段+21.1分、后期44.9分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "怪兽厄运小姐8怪兽1精英战士下一阶段+21分、后期44.9分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -11910,9 +11910,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 36.7,
-            "targetAdvantage": -39.8,
-            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+36.7分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": 37.2,
+            "targetAdvantage": -40.1,
+            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+37.2分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -11953,9 +11953,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 36.7,
-            "targetAdvantage": 37,
-            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+36.7分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": 37.2,
+            "targetAdvantage": 36.7,
+            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+37.2分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -11991,21 +11991,21 @@
           "strategicId": "official-1571",
           "committedId": "",
           "executionId": "official-1378",
-          "status": "observing",
+          "status": "planning",
           "deterministic": true,
           "warning": {
-            "severity": "green",
-            "deadline": "4-2",
-            "decline": 46.6,
+            "severity": "yellow",
+            "deadline": "4-1",
+            "decline": 46.5,
             "targetAdvantage": -4.3,
-            "text": "95秘卫枪手3秘书卫士2福牛守护者阶段曲线稳定，保留转型选择权",
-            "risky": false
+            "text": "95秘卫枪手3秘书卫士2福牛守护者下一阶段+46.5分、后期74.4分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "risky": true
           },
           "targetId": "official-1290",
           "actions": [
-            "不在6级硬D，先拉8再找艾克",
-            "止损条件：4-2时阶段分继续下滑且塔莉垭已出现，再切兼容路线",
-            "暂不定线：阶段曲线稳定，继续当前执行线"
+            "停止给莎弥拉追加装备或D牌；只留已出现的塔莉垭体系牌与共用散件，4-1复查转型",
+            "止损条件：4-1时阶段分继续下滑且塔莉垭已出现，再切兼容路线",
+            "当前板继续保血；到4-1只在转型条件满足时换线"
           ],
           "impossibleTargets": [],
           "finite": true,
@@ -12037,18 +12037,18 @@
           "status": "planning",
           "deterministic": true,
           "warning": {
-            "severity": "yellow",
-            "deadline": "4-2",
-            "decline": 46.6,
+            "severity": "red",
+            "deadline": "4-1",
+            "decline": 46.5,
             "targetAdvantage": 193.8,
-            "text": "95秘卫枪手3秘书卫士2福牛守护者下一阶段+46.6分、后期74.4分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "95秘卫枪手3秘书卫士2福牛守护者下一阶段+46.5分、后期74.4分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
           "actions": [
-            "停止给莎弥拉追加装备或D牌；只留已出现的塔莉垭体系牌与共用散件，4-2复查转型",
-            "止损条件：4-2时阶段分继续下滑且塔莉垭已出现，再切兼容路线",
-            "当前板继续保血；到4-2只在转型条件满足时换线"
+            "停止给莎弥拉追加装备或D牌；只留已出现的塔莉垭体系牌与共用散件，4-1复查转型",
+            "止损条件：4-1时阶段分继续下滑且塔莉垭已出现，再切兼容路线",
+            "当前板继续保血；到4-1只在转型条件满足时换线"
           ],
           "impossibleTargets": [],
           "finite": true,
@@ -12080,12 +12080,12 @@
           "status": "observing",
           "deterministic": true,
           "warning": {
-            "severity": "green",
-            "deadline": "4-2",
+            "severity": "red",
+            "deadline": "4-1",
             "decline": 0,
             "targetAdvantage": 0,
-            "text": "95秘卫枪手3秘书卫士2福牛守护者阶段曲线稳定，保留转型选择权",
-            "risky": false
+            "text": "95秘卫枪手3秘书卫士2福牛守护者下一阶段+0分、后期74.4分；继续观察同线升级",
+            "risky": true
           },
           "targetId": "official-1378",
           "actions": [
@@ -12123,12 +12123,12 @@
           "status": "observing",
           "deterministic": true,
           "warning": {
-            "severity": "green",
-            "deadline": "4-2",
+            "severity": "red",
+            "deadline": "4-1",
             "decline": 0,
             "targetAdvantage": 0,
-            "text": "95秘卫枪手3秘书卫士2福牛守护者阶段曲线稳定，保留转型选择权",
-            "risky": false
+            "text": "95秘卫枪手3秘书卫士2福牛守护者下一阶段+0分、后期74.4分；继续观察同线升级",
+            "risky": true
           },
           "targetId": "official-1378",
           "actions": [
@@ -12173,7 +12173,7 @@
         "决斗",
         "决斗"
       ],
-      "firstRiskLevel": 6,
+      "firstRiskLevel": null,
       "foresight": {
         "checkpointLevel": 5,
         "executionId": "official-1257",
@@ -12198,8 +12198,8 @@
           "warning": {
             "severity": "green",
             "deadline": "3-1",
-            "decline": 23.8,
-            "targetAdvantage": -6.1,
+            "decline": 23.9,
+            "targetAdvantage": -6.2,
             "text": "超英艾希5激光特工3超级英雄2决斗大师阶段曲线稳定，保留转型选择权",
             "risky": false
           },
@@ -12241,8 +12241,8 @@
           "warning": {
             "severity": "green",
             "deadline": "3-1",
-            "decline": 23.8,
-            "targetAdvantage": -62.5,
+            "decline": 23.9,
+            "targetAdvantage": -62.8,
             "text": "超英艾希5激光特工3超级英雄2决斗大师阶段曲线稳定，保留转型选择权",
             "risky": false
           },
@@ -12279,21 +12279,21 @@
           "strategicId": "official-1571",
           "committedId": "",
           "executionId": "official-1257",
-          "status": "planning",
+          "status": "observing",
           "deterministic": true,
           "warning": {
-            "severity": "red",
+            "severity": "green",
             "deadline": "3-1",
-            "decline": 0.7,
-            "targetAdvantage": 10.1,
-            "text": "超英艾希5激光特工3超级英雄2决斗大师下一阶段+0.7分、后期33.3分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
-            "risky": true
+            "decline": 0.3,
+            "targetAdvantage": -82.5,
+            "text": "超英艾希5激光特工3超级英雄2决斗大师阶段曲线稳定，保留转型选择权",
+            "risky": false
           },
-          "targetId": "official-1288",
+          "targetId": "official-1338",
           "actions": [
-            "停止给艾希追加装备或D牌；只留已出现的德莱文体系牌与共用散件，3-1复查转型",
-            "止损条件：3-1时阶段分继续下滑且德莱文已出现，再切兼容路线",
-            "当前板继续保血；到3-1只在转型条件满足时换线"
+            "6级开始找普朗克，只花到路线质量门槛",
+            "止损条件：3-1时阶段分继续下滑且佛耶戈已出现，再切兼容路线",
+            "暂不定线：阶段曲线稳定，继续当前执行线"
           ],
           "impossibleTargets": [],
           "finite": true,
@@ -12327,15 +12327,15 @@
           "warning": {
             "severity": "green",
             "deadline": "3-1",
-            "decline": 0.7,
-            "targetAdvantage": -65.1,
+            "decline": 0.3,
+            "targetAdvantage": -296.5,
             "text": "超英艾希5激光特工3超级英雄2决斗大师阶段曲线稳定，保留转型选择权",
             "risky": false
           },
-          "targetId": "official-1288",
+          "targetId": "official-1338",
           "actions": [
             "7级开始找普朗克，只花到路线质量门槛",
-            "止损条件：3-1时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "止损条件：3-1时阶段分继续下滑且佛耶戈已出现，再切兼容路线",
             "暂不定线：阶段曲线稳定，继续当前执行线"
           ],
           "impossibleTargets": [],
@@ -12486,8 +12486,8 @@
           "warning": {
             "severity": "green",
             "deadline": "5-1",
-            "decline": 16.1,
-            "targetAdvantage": -27.9,
+            "decline": 15.1,
+            "targetAdvantage": -28,
             "text": "九五平民枪手3平民英雄2枪手2吉祥物阶段曲线稳定，保留转型选择权",
             "risky": false
           },
@@ -12529,8 +12529,8 @@
           "warning": {
             "severity": "green",
             "deadline": "5-1",
-            "decline": 16.1,
-            "targetAdvantage": -53.9,
+            "decline": 15.1,
+            "targetAdvantage": -54.1,
             "text": "九五平民枪手3平民英雄2枪手2吉祥物阶段曲线稳定，保留转型选择权",
             "risky": false
           },
@@ -12572,7 +12572,7 @@
           "warning": {
             "severity": "green",
             "deadline": "5-1",
-            "decline": 7.8,
+            "decline": 7.6,
             "targetAdvantage": -77,
             "text": "九五平民枪手3平民英雄2枪手2吉祥物阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -12615,9 +12615,9 @@
           "warning": {
             "severity": "green",
             "deadline": "5-1",
-            "decline": 7.8,
+            "decline": 7.6,
             "targetAdvantage": 109.6,
-            "text": "九五平民枪手3平民英雄2枪手2吉祥物下一阶段+7.8分、后期50.8分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "九五平民枪手3平民英雄2枪手2吉祥物下一阶段+7.6分、后期50.8分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -12774,7 +12774,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": 26.6,
+            "decline": 24.5,
             "targetAdvantage": 0,
             "text": "超级机甲德莱文5战斗机甲3超级英雄2斗士阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -12817,7 +12817,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": 26.6,
+            "decline": 24.5,
             "targetAdvantage": 0,
             "text": "超级机甲德莱文5战斗机甲3超级英雄2斗士阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -13062,9 +13062,9 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": -11.5,
+            "decline": -12.9,
             "targetAdvantage": 4.2,
-            "text": "小天才佐伊5小天才2福牛守护者下一阶段-11.5分、后期40分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "小天才佐伊5小天才2福牛守护者下一阶段-12.9分、后期40分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -13105,7 +13105,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-1",
-            "decline": 0.2,
+            "decline": -0.1,
             "targetAdvantage": -120.1,
             "text": "小天才璐璐5小天才4吉祥物阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -13148,9 +13148,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "4-1",
-            "decline": 47.2,
+            "decline": 47,
             "targetAdvantage": 0,
-            "text": "星守灵能塔利娅5星之守护者4灵能使下一阶段+47.2分、后期87分；继续观察同线升级",
+            "text": "星守灵能塔利娅5星之守护者4灵能使下一阶段+47分、后期87分；继续观察同线升级",
             "risky": true
           },
           "targetId": "official-1290",
@@ -13350,7 +13350,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": 24.6,
+            "decline": 22.3,
             "targetAdvantage": 0,
             "text": "超英亚索6决斗大师3超级英雄3源计划激光特工阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -13393,7 +13393,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": 24.6,
+            "decline": 22.3,
             "targetAdvantage": 0,
             "text": "超英亚索6决斗大师3超级英雄3源计划激光特工阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -13638,7 +13638,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-1",
-            "decline": 0.2,
+            "decline": -0.1,
             "targetAdvantage": -19.8,
             "text": "小天才璐璐5小天才4吉祥物阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -13681,7 +13681,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-1",
-            "decline": 0.2,
+            "decline": -0.1,
             "targetAdvantage": -122.3,
             "text": "小天才璐璐5小天才4吉祥物阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -13724,7 +13724,7 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 5,
+            "decline": 4.5,
             "targetAdvantage": -44.2,
             "text": "灵能佐伊4灵能使3小天才2AI程序阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -13767,7 +13767,7 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 5,
+            "decline": 4.5,
             "targetAdvantage": -86.9,
             "text": "灵能佐伊4灵能使3小天才2AI程序阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -13926,9 +13926,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "3-1",
-            "decline": -0.6,
-            "targetAdvantage": 15.3,
-            "text": "福牛泰隆6福牛守护者3混沌战士下一阶段-0.6分、后期61.7分；预备转福牛混沌九五4福牛守护者3混沌战士2吉祥物",
+            "decline": -2.3,
+            "targetAdvantage": 15.9,
+            "text": "福牛泰隆6福牛守护者3混沌战士下一阶段-2.3分、后期61.7分；预备转福牛混沌九五4福牛守护者3混沌战士2吉祥物",
             "risky": true
           },
           "targetId": "official-1338",
@@ -13969,9 +13969,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-1",
-            "decline": -8.7,
-            "targetAdvantage": -63.6,
-            "text": "超英泰隆3超级英雄3混沌战士4福牛守护者下一阶段-8.7分、后期40分；预备转超英亚索6决斗大师3超级英雄3源计划激光特工",
+            "decline": -9.1,
+            "targetAdvantage": -63.7,
+            "text": "超英泰隆3超级英雄3混沌战士4福牛守护者下一阶段-9.1分、后期40分；预备转超英亚索6决斗大师3超级英雄3源计划激光特工",
             "risky": true
           },
           "targetId": "official-4546",
@@ -14214,9 +14214,9 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": -11.5,
+            "decline": -12.9,
             "targetAdvantage": 4.2,
-            "text": "小天才佐伊5小天才2福牛守护者下一阶段-11.5分、后期40分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "小天才佐伊5小天才2福牛守护者下一阶段-12.9分、后期40分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -14257,8 +14257,8 @@
           "warning": {
             "severity": "green",
             "deadline": "3-1",
-            "decline": 0.2,
-            "targetAdvantage": -120.6,
+            "decline": -0.1,
+            "targetAdvantage": -120.5,
             "text": "小天才璐璐5小天才4吉祥物阶段曲线稳定，保留转型选择权",
             "risky": false
           },
@@ -14502,9 +14502,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 36.7,
-            "targetAdvantage": -43.2,
-            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+36.7分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": 37.2,
+            "targetAdvantage": -43.5,
+            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+37.2分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -14545,9 +14545,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 36.7,
-            "targetAdvantage": 33.4,
-            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+36.7分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": 37.2,
+            "targetAdvantage": 33.2,
+            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+37.2分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -14588,7 +14588,7 @@
           "warning": {
             "severity": "green",
             "deadline": "4-2",
-            "decline": 22.4,
+            "decline": 21.1,
             "targetAdvantage": 0,
             "text": "福牛混沌九五4福牛守护者3混沌战士2吉祥物阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -14631,7 +14631,7 @@
           "warning": {
             "severity": "green",
             "deadline": "4-2",
-            "decline": 22.4,
+            "decline": 21.1,
             "targetAdvantage": 0,
             "text": "福牛混沌九五4福牛守护者3混沌战士2吉祥物阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -14790,8 +14790,8 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": -3.6,
-            "targetAdvantage": -47.6,
+            "decline": -5.9,
+            "targetAdvantage": -47.7,
             "text": "单核克星维克兹6斗士2爱心使者2秘术卫士阶段曲线稳定，保留转型选择权",
             "risky": false
           },
@@ -14833,9 +14833,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": -3.6,
-            "targetAdvantage": 4.7,
-            "text": "单核克星维克兹6斗士2爱心使者2秘术卫士下一阶段-3.6分、后期50.5分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": -5.9,
+            "targetAdvantage": 4.5,
+            "text": "单核克星维克兹6斗士2爱心使者2秘术卫士下一阶段-5.9分、后期50.5分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -14876,7 +14876,7 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 12.2,
+            "decline": 11.9,
             "targetAdvantage": -63.6,
             "text": "单核克星维克兹6斗士2爱心使者2秘术卫士阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -14919,7 +14919,7 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 12.2,
+            "decline": 11.9,
             "targetAdvantage": -244,
             "text": "单核克星维克兹6斗士2爱心使者2秘术卫士阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -15078,9 +15078,9 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": -11.5,
+            "decline": -12.9,
             "targetAdvantage": 4.2,
-            "text": "小天才佐伊5小天才2福牛守护者下一阶段-11.5分、后期40分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "小天才佐伊5小天才2福牛守护者下一阶段-12.9分、后期40分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -15121,7 +15121,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-1",
-            "decline": 0.2,
+            "decline": -0.1,
             "targetAdvantage": -120.1,
             "text": "小天才璐璐5小天才4吉祥物阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -15366,7 +15366,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-1",
-            "decline": -3.9,
+            "decline": -4.7,
             "targetAdvantage": -13.9,
             "text": "超英露露3超级英雄5吉祥物2爱心使者阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -15409,7 +15409,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-1",
-            "decline": -3.9,
+            "decline": -4.7,
             "targetAdvantage": -138.2,
             "text": "超英露露3超级英雄5吉祥物2爱心使者阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -15452,7 +15452,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-1",
-            "decline": 8.5,
+            "decline": 8.4,
             "targetAdvantage": -84.6,
             "text": "超英露露3超级英雄5吉祥物2爱心使者阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -15495,7 +15495,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-1",
-            "decline": 8.5,
+            "decline": 8.4,
             "targetAdvantage": -87,
             "text": "超英露露3超级英雄5吉祥物2爱心使者阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -15654,9 +15654,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 36.7,
-            "targetAdvantage": -42.7,
-            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+36.7分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": 37.2,
+            "targetAdvantage": -42.9,
+            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+37.2分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -15697,9 +15697,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 54.1,
-            "targetAdvantage": 39.6,
-            "text": "登神决斗天使6决斗大师3源计划下一阶段+54.1分、后期57.1分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": 55.5,
+            "targetAdvantage": 39,
+            "text": "登神决斗天使6决斗大师3源计划下一阶段+55.5分、后期57.1分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -15933,18 +15933,18 @@
         {
           "level": 3,
           "stage": "2-5",
-          "currentId": "manual-mascot-heart",
+          "currentId": "official-1323",
           "strategicId": "official-1571",
           "committedId": "",
-          "executionId": "manual-mascot-heart",
+          "executionId": "official-1323",
           "status": "observing",
           "deterministic": true,
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": -37.8,
-            "targetAdvantage": -9.7,
-            "text": "吉祥物爱心 -> 猫咪/超英法系下一阶段-37.8分、后期6.6分；预备转超英亚索6决斗大师3超级英雄3源计划激光特工",
+            "decline": -4.6,
+            "targetAdvantage": -5,
+            "text": "吉祥鸡牛猫队6吉祥物3超级英雄2爱心使者下一阶段-4.6分、后期8.8分；预备转超英亚索6决斗大师3超级英雄3源计划激光特工",
             "risky": true
           },
           "targetId": "official-4546",
@@ -15985,9 +15985,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "3-5",
-            "decline": -4.2,
+            "decline": -4.6,
             "targetAdvantage": -106,
-            "text": "吉祥鸡牛猫队6吉祥物3超级英雄2爱心使者下一阶段-4.2分、后期8.8分；预备转超英亚索6决斗大师3超级英雄3源计划激光特工",
+            "text": "吉祥鸡牛猫队6吉祥物3超级英雄2爱心使者下一阶段-4.6分、后期8.8分；预备转超英亚索6决斗大师3超级英雄3源计划激光特工",
             "risky": true
           },
           "targetId": "official-4546",
@@ -16028,9 +16028,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -10.8,
+            "decline": -10.9,
             "targetAdvantage": -57.1,
-            "text": "吉祥鸡牛猫队6吉祥物3超级英雄2爱心使者下一阶段-10.8分、后期8.8分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "吉祥鸡牛猫队6吉祥物3超级英雄2爱心使者下一阶段-10.9分、后期8.8分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -16071,9 +16071,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -10.8,
+            "decline": -10.9,
             "targetAdvantage": -142.3,
-            "text": "吉祥鸡牛猫队6吉祥物3超级英雄2爱心使者下一阶段-10.8分、后期8.8分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "吉祥鸡牛猫队6吉祥物3超级英雄2爱心使者下一阶段-10.9分、后期8.8分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -16230,9 +16230,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 54.1,
-            "targetAdvantage": -48.5,
-            "text": "登神决斗天使6决斗大师3源计划下一阶段+54.1分、后期57.1分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": 55.5,
+            "targetAdvantage": -49,
+            "text": "登神决斗天使6决斗大师3源计划下一阶段+55.5分、后期57.1分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -16273,9 +16273,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 54.1,
-            "targetAdvantage": 41.3,
-            "text": "登神决斗天使6决斗大师3源计划下一阶段+54.1分、后期57.1分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": 55.5,
+            "targetAdvantage": 40.7,
+            "text": "登神决斗天使6决斗大师3源计划下一阶段+55.5分、后期57.1分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -16316,9 +16316,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "4-1",
-            "decline": -10.6,
+            "decline": -12.4,
             "targetAdvantage": -61.2,
-            "text": "登神决斗天使6决斗大师3源计划下一阶段-10.6分、后期57.1分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "登神决斗天使6决斗大师3源计划下一阶段-12.4分、后期57.1分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -16359,9 +16359,9 @@
           "warning": {
             "severity": "red",
             "deadline": "4-1",
-            "decline": -10.6,
+            "decline": -12.4,
             "targetAdvantage": -176.9,
-            "text": "登神决斗天使6决斗大师3源计划下一阶段-10.6分、后期57.1分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "登神决斗天使6决斗大师3源计划下一阶段-12.4分、后期57.1分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -16518,9 +16518,9 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": -11.5,
-            "targetAdvantage": 0.5,
-            "text": "小天才佐伊5小天才2福牛守护者下一阶段-11.5分、后期40分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "decline": -12.9,
+            "targetAdvantage": 0.4,
+            "text": "小天才佐伊5小天才2福牛守护者下一阶段-12.9分、后期40分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -16561,9 +16561,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "3-5",
-            "decline": -11.5,
-            "targetAdvantage": -168.3,
-            "text": "小天才佐伊5小天才2福牛守护者下一阶段-11.5分、后期40分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "decline": -12.9,
+            "targetAdvantage": -168.4,
+            "text": "小天才佐伊5小天才2福牛守护者下一阶段-12.9分、后期40分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -16604,9 +16604,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -14.3,
+            "decline": -14.6,
             "targetAdvantage": -41.4,
-            "text": "小天才佐伊5小天才2福牛守护者下一阶段-14.3分、后期40分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "小天才佐伊5小天才2福牛守护者下一阶段-14.6分、后期40分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -16647,9 +16647,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -14.3,
+            "decline": -14.6,
             "targetAdvantage": -146.3,
-            "text": "小天才佐伊5小天才2福牛守护者下一阶段-14.3分、后期40分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "小天才佐伊5小天才2福牛守护者下一阶段-14.6分、后期40分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -16806,7 +16806,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-1",
-            "decline": 0.2,
+            "decline": -0.1,
             "targetAdvantage": -20.2,
             "text": "小天才璐璐5小天才4吉祥物阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -16849,7 +16849,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-1",
-            "decline": 0.2,
+            "decline": -0.1,
             "targetAdvantage": -124.1,
             "text": "小天才璐璐5小天才4吉祥物阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -17094,8 +17094,8 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": -3.3,
-            "targetAdvantage": -5.1,
+            "decline": -4.6,
+            "targetAdvantage": -5,
             "text": "超英赛娜3平民英雄3超级英雄2斗士阶段曲线稳定，保留转型选择权",
             "risky": false
           },
@@ -17137,9 +17137,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": -12.5,
+            "decline": -14.7,
             "targetAdvantage": 0,
-            "text": "超英希维尔4枪手3超级英雄2吉祥物下一阶段-12.5分、后期64.7分；继续观察同线升级",
+            "text": "超英希维尔4枪手3超级英雄2吉祥物下一阶段-14.7分、后期64.7分；继续观察同线升级",
             "risky": true
           },
           "targetId": "official-1328",
@@ -17181,14 +17181,14 @@
             "severity": "green",
             "deadline": "4-1",
             "decline": 30.3,
-            "targetAdvantage": -16.3,
+            "targetAdvantage": -105.7,
             "text": "超英赛娜3平民英雄3超级英雄2斗士阶段曲线稳定，保留转型选择权",
             "risky": false
           },
-          "targetId": "official-1288",
+          "targetId": "official-1338",
           "actions": [
             "不在6级硬D，先拉8再找瑟庄妮",
-            "止损条件：4-1时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "止损条件：4-1时阶段分继续下滑且佛耶戈已出现，再切兼容路线",
             "暂不定线：阶段曲线稳定，继续当前执行线"
           ],
           "impossibleTargets": [],
@@ -17224,14 +17224,14 @@
             "severity": "green",
             "deadline": "4-1",
             "decline": 30.3,
-            "targetAdvantage": -95,
+            "targetAdvantage": -321.2,
             "text": "超英赛娜3平民英雄3超级英雄2斗士阶段曲线稳定，保留转型选择权",
             "risky": false
           },
-          "targetId": "official-1288",
+          "targetId": "official-1338",
           "actions": [
             "不在7级硬D，先拉8再找瑟庄妮",
-            "止损条件：4-1时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "止损条件：4-1时阶段分继续下滑且佛耶戈已出现，再切兼容路线",
             "暂不定线：阶段曲线稳定，继续当前执行线"
           ],
           "impossibleTargets": [],
@@ -17382,9 +17382,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 36.7,
-            "targetAdvantage": -39.3,
-            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+36.7分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": 37.2,
+            "targetAdvantage": -39.5,
+            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+37.2分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -17425,9 +17425,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 36.7,
-            "targetAdvantage": 35.2,
-            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+36.7分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": 37.2,
+            "targetAdvantage": 34.9,
+            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+37.2分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -17469,14 +17469,14 @@
             "severity": "yellow",
             "deadline": "4-1",
             "decline": 21.1,
-            "targetAdvantage": 55.2,
-            "text": "6斗拉面贾克斯6斗士3战斗机甲3护卫下一阶段+21.1分、后期56.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "targetAdvantage": 71.3,
+            "text": "6斗拉面贾克斯6斗士3战斗机甲3护卫下一阶段+21.1分、后期56.7分；预备转机甲秘术枪手3战斗机甲2枪手2吉祥物",
             "risky": true
           },
-          "targetId": "official-1288",
+          "targetId": "official-1571",
           "actions": [
-            "停止给贾克斯追加装备或D牌；只留已出现的德莱文体系牌与共用散件，4-1复查转型",
-            "止损条件：4-1时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "保留当前两星板与共用散件；9级前不找厄加特，4-1复查能否转机甲秘术枪手3战斗机甲2枪手2吉祥物",
+            "转型条件：升到9且见到厄加特；未满足则保留当前板，不为未来牌硬D",
             "当前板继续保血；到4-1只在转型条件满足时换线"
           ],
           "impossibleTargets": [],
@@ -17512,14 +17512,14 @@
             "severity": "green",
             "deadline": "4-1",
             "decline": 21.1,
-            "targetAdvantage": -140.4,
+            "targetAdvantage": -482.3,
             "text": "6斗拉面贾克斯6斗士3战斗机甲3护卫阶段曲线稳定，保留转型选择权",
             "risky": false
           },
-          "targetId": "official-1288",
+          "targetId": "official-1571",
           "actions": [
             "7级开始找锐雯，只花到路线质量门槛",
-            "止损条件：4-1时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "止损条件：4-1时阶段分继续下滑且厄加特已出现，再切兼容路线",
             "暂不定线：阶段曲线稳定，继续当前执行线"
           ],
           "impossibleTargets": [],
@@ -17670,9 +17670,9 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": -16.6,
+            "decline": -18.9,
             "targetAdvantage": -41.4,
-            "text": "幻灵厄运小姐5幻灵战队2淘气包2吉祥物下一阶段-16.6分、后期30.6分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "text": "幻灵厄运小姐5幻灵战队2淘气包2吉祥物下一阶段-18.9分、后期30.6分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -17713,9 +17713,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "3-5",
-            "decline": -16.6,
-            "targetAdvantage": 237.3,
-            "text": "幻灵厄运小姐5幻灵战队2淘气包2吉祥物下一阶段-16.6分、后期30.6分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": -18.9,
+            "targetAdvantage": 237.4,
+            "text": "幻灵厄运小姐5幻灵战队2淘气包2吉祥物下一阶段-18.9分、后期30.6分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -17958,9 +17958,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 21.3,
-            "targetAdvantage": -9.9,
-            "text": "大闹天宫5战斗机甲3超级英雄2护卫下一阶段+21.3分、后期49.3分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": 20.4,
+            "targetAdvantage": -10,
+            "text": "大闹天宫5战斗机甲3超级英雄2护卫下一阶段+20.4分、后期49.3分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -18001,9 +18001,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 21.3,
-            "targetAdvantage": -4.1,
-            "text": "大闹天宫5战斗机甲3超级英雄2护卫下一阶段+21.3分、后期49.3分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": 20.4,
+            "targetAdvantage": -4.3,
+            "text": "大闹天宫5战斗机甲3超级英雄2护卫下一阶段+20.4分、后期49.3分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -18044,9 +18044,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "4-1",
-            "decline": -11.5,
+            "decline": -12,
             "targetAdvantage": 10.9,
-            "text": "大闹天宫5战斗机甲3超级英雄2护卫下一阶段-11.5分、后期49.3分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "text": "大闹天宫5战斗机甲3超级英雄2护卫下一阶段-12分、后期49.3分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -18087,9 +18087,9 @@
           "warning": {
             "severity": "red",
             "deadline": "4-1",
-            "decline": -11.5,
+            "decline": -12,
             "targetAdvantage": 11.4,
-            "text": "大闹天宫5战斗机甲3超级英雄2护卫下一阶段-11.5分、后期49.3分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "text": "大闹天宫5战斗机甲3超级英雄2护卫下一阶段-12分、后期49.3分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -18246,9 +18246,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 36.7,
-            "targetAdvantage": -38.7,
-            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+36.7分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": 37.2,
+            "targetAdvantage": -39,
+            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+37.2分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -18289,9 +18289,9 @@
           "warning": {
             "severity": "green",
             "deadline": "4-1",
-            "decline": 36.7,
-            "targetAdvantage": 34.3,
-            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+36.7分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": 37.2,
+            "targetAdvantage": 34,
+            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段+37.2分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -18332,15 +18332,15 @@
           "warning": {
             "severity": "yellow",
             "deadline": "4-1",
-            "decline": -9.8,
-            "targetAdvantage": -10.6,
-            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段-9.8分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": -10.6,
+            "targetAdvantage": -94.6,
+            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段-10.6分、后期44.7分；预备转福牛混沌九五4福牛守护者3混沌战士2吉祥物",
             "risky": true
           },
-          "targetId": "official-1288",
+          "targetId": "official-1338",
           "actions": [
-            "停止给雷克顿追加装备或D牌；只留已出现的德莱文体系牌与共用散件，4-1复查转型",
-            "止损条件：4-1时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "停止给雷克顿追加装备或D牌；只留已出现的佛耶戈体系牌与共用散件，4-1复查转型",
+            "止损条件：4-1时阶段分继续下滑且佛耶戈已出现，再切兼容路线",
             "当前板继续保血；到4-1只在转型条件满足时换线"
           ],
           "impossibleTargets": [],
@@ -18375,15 +18375,15 @@
           "warning": {
             "severity": "red",
             "deadline": "4-1",
-            "decline": -9.8,
-            "targetAdvantage": -15.9,
-            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段-9.8分、后期44.7分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": -10.6,
+            "targetAdvantage": -235.8,
+            "text": "怒之领域6斗士3源计划激光特工2爱心使者下一阶段-10.6分、后期44.7分；预备转福牛混沌九五4福牛守护者3混沌战士2吉祥物",
             "risky": true
           },
-          "targetId": "official-1288",
+          "targetId": "official-1338",
           "actions": [
-            "停止给雷克顿追加装备或D牌；只留已出现的德莱文体系牌与共用散件，4-1复查转型",
-            "止损条件：4-1时阶段分继续下滑且德莱文已出现，再切兼容路线",
+            "停止给雷克顿追加装备或D牌；只留已出现的佛耶戈体系牌与共用散件，4-1复查转型",
+            "止损条件：4-1时阶段分继续下滑且佛耶戈已出现，再切兼容路线",
             "当前板继续保血；到4-1只在转型条件满足时换线"
           ],
           "impossibleTargets": [],
@@ -18534,7 +18534,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": 24.6,
+            "decline": 22.3,
             "targetAdvantage": 0,
             "text": "超英亚索6决斗大师3超级英雄3源计划激光特工阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -18577,7 +18577,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": 24.6,
+            "decline": 22.3,
             "targetAdvantage": 0,
             "text": "超英亚索6决斗大师3超级英雄3源计划激光特工阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -18620,9 +18620,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -10.7,
+            "decline": -10.8,
             "targetAdvantage": 0,
-            "text": "超英亚索6决斗大师3超级英雄3源计划激光特工下一阶段-10.7分、后期70.3分；继续观察同线升级",
+            "text": "超英亚索6决斗大师3超级英雄3源计划激光特工下一阶段-10.8分、后期70.3分；继续观察同线升级",
             "risky": true
           },
           "targetId": "official-4546",
@@ -18663,9 +18663,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -10.7,
+            "decline": -10.8,
             "targetAdvantage": 0,
-            "text": "超英亚索6决斗大师3超级英雄3源计划激光特工下一阶段-10.7分、后期70.3分；继续观察同线升级",
+            "text": "超英亚索6决斗大师3超级英雄3源计划激光特工下一阶段-10.8分、后期70.3分；继续观察同线升级",
             "risky": true
           },
           "targetId": "official-4546",
@@ -18822,7 +18822,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": 24.6,
+            "decline": 22.3,
             "targetAdvantage": 0,
             "text": "超英亚索6决斗大师3超级英雄3源计划激光特工阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -18865,7 +18865,7 @@
           "warning": {
             "severity": "green",
             "deadline": "3-5",
-            "decline": 24.6,
+            "decline": 22.3,
             "targetAdvantage": 0,
             "text": "超英亚索6决斗大师3超级英雄3源计划激光特工阶段曲线稳定，保留转型选择权",
             "risky": false
@@ -19078,14 +19078,14 @@
       "executionChanges": 2,
       "oscillations": 0,
       "executionFamilies": [
-        "决斗",
+        "魔盗经济",
         "姐妹·金克丝",
         "姐妹·金克丝",
         "姐妹·金克丝",
         "超英赌低费",
         "超英赌低费"
       ],
-      "firstRiskLevel": 5,
+      "firstRiskLevel": 3,
       "foresight": {
         "checkpointLevel": 5,
         "executionId": "meta-姐妹-金克丝-7",
@@ -19101,25 +19101,25 @@
         {
           "level": 3,
           "stage": "2-5",
-          "currentId": "official-1257",
+          "currentId": "official-1256",
           "strategicId": "official-1571",
           "committedId": "",
-          "executionId": "official-1257",
+          "executionId": "official-1256",
           "status": "observing",
           "deterministic": true,
           "warning": {
             "severity": "green",
-            "deadline": "3-1",
-            "decline": 23.8,
-            "targetAdvantage": -1.8,
-            "text": "超英艾希5激光特工3超级英雄2决斗大师阶段曲线稳定，保留转型选择权",
-            "risky": false
+            "deadline": "4-1",
+            "decline": -17.4,
+            "targetAdvantage": 6.4,
+            "text": "超英伊泽瑞尔4情报特工3超级英雄2斗士下一阶段-17.4分、后期25.2分；预备转超英亚索6决斗大师3超级英雄3源计划激光特工",
+            "risky": true
           },
           "targetId": "official-4546",
           "actions": [
-            "不在3级硬D，先拉5再找普朗克",
-            "止损条件：3-1时阶段分继续下滑且亚索已出现，再切兼容路线",
-            "专属分支关闭：艾希1费强化不在3-2费用池，保留基础阵容"
+            "停止给伊泽瑞尔追加装备或D牌；只留已出现的亚索体系牌与共用散件，4-1复查转型",
+            "止损条件：4-1时阶段分继续下滑且亚索已出现，再切兼容路线",
+            "3-2英雄强化：前一轮优先激活地下魔盗团/情报特工，等伊泽瑞尔专属"
           ],
           "impossibleTargets": [],
           "finite": true,
@@ -19153,9 +19153,9 @@
           "warning": {
             "severity": "yellow",
             "deadline": "3-5",
-            "decline": -19.2,
-            "targetAdvantage": -65.9,
-            "text": "姐妹金克丝机制路线下一阶段-19.2分、后期28.2分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
+            "decline": -20,
+            "targetAdvantage": -64.8,
+            "text": "姐妹金克丝机制路线下一阶段-20分、后期28.2分；预备转超级机甲德莱文5战斗机甲3超级英雄2斗士",
             "risky": true
           },
           "targetId": "official-1288",
@@ -19168,11 +19168,6 @@
           "finite": true,
           "top3": [
             {
-              "id": "official-4576",
-              "name": "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
-              "score": 124
-            },
-            {
               "id": "official-1290",
               "name": "星守灵能塔利娅5星之守护者4灵能使",
               "score": 12
@@ -19180,6 +19175,11 @@
             {
               "id": "official-1378",
               "name": "95秘卫枪手3秘书卫士2福牛守护者",
+              "score": 11
+            },
+            {
+              "id": "official-1338",
+              "name": "福牛混沌九五4福牛守护者3混沌战士2吉祥物",
               "score": 11
             }
           ]
@@ -19196,9 +19196,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -26.6,
+            "decline": -26.9,
             "targetAdvantage": -98.6,
-            "text": "姐妹金克丝机制路线下一阶段-26.6分、后期28.2分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "姐妹金克丝机制路线下一阶段-26.9分、后期28.2分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
@@ -19239,9 +19239,9 @@
           "warning": {
             "severity": "red",
             "deadline": "3-5",
-            "decline": -26.6,
+            "decline": -26.9,
             "targetAdvantage": -272.2,
-            "text": "姐妹金克丝机制路线下一阶段-26.6分、后期28.2分；预备转星守灵能塔利娅5星之守护者4灵能使",
+            "text": "姐妹金克丝机制路线下一阶段-26.9分、后期28.2分；预备转星守灵能塔利娅5星之守护者4灵能使",
             "risky": true
           },
           "targetId": "official-1290",
