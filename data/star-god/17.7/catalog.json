@@ -4,10 +4,14 @@
   "source": {
     "edition": "17.17.7",
     "displayPatch": "17.7",
+    "currentClientPatch": "17.7b",
     "setId": "17",
     "sourceTime": "2026-07-17 17:15:02",
     "baseUrl": "https://game.gtimg.cn/images/lol/act/jkzlk/js/17/17.17.7-S18",
-    "lineupUrl": "https://game.gtimg.cn/images/lol/act/jkzlkauto/json/lineupJson/m18/11/17/lineup_detail_total.json"
+    "lineupUrl": "https://game.gtimg.cn/images/lol/act/jkzlkauto/json/lineupJson/m18/11/17/lineup_detail_total.json",
+    "modeRuleUrl": "https://apps.apple.com/cn/app/%E9%87%91%E9%93%B2%E9%93%B2%E4%B9%8B%E6%88%98/id1478101301",
+    "currentPatchUrl": "https://www.taptap.cn/app/176937/topic?group_label_id=3108882",
+    "freshness": "17.7b客户端已上线；星神官方资料仍为17.17.7快照"
   },
   "summary": {
     "gods": 9,

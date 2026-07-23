@@ -24,6 +24,7 @@
     hpFloor: 12,
     mainGodOption: 3,
   });
+  const OFFERED_GOD_COUNT = 2;
 
   const COMPONENT_DIRECTION = Object.freeze({
     拳套: "physical",
@@ -56,6 +57,10 @@
   function round(value, digits = 1) {
     const scale = 10 ** digits;
     return Math.round((Number(value) + Number.EPSILON) * scale) / scale;
+  }
+
+  function sanitizeOfferedGodIds(values) {
+    return [...new Set((values || []).map(Number).filter(Number.isFinite))].slice(0, OFFERED_GOD_COUNT);
   }
 
   function createState(overrides = {}) {
@@ -444,6 +449,62 @@
       .sort((a, b) => b.total - a.total || a.name.localeCompare(b.name, "zh-CN"));
   }
 
+  function evaluateGodOffer(blessings, state, godId, blessingId) {
+    const candidates = (blessings || [])
+      .filter(row => Number(row.stage) === Number(state.stage))
+      .filter(row => Number(row.godId) === Number(godId))
+      .filter(row => !row.mainGod);
+    if (!candidates.length) return null;
+
+    const exact = blessingId == null ? null : candidates.find(row => Number(row.id) === Number(blessingId));
+    if (exact) {
+      const result = evaluateBlessing(exact, state);
+      return {
+        ...result,
+        offerMode: "exact",
+        candidateCount: 1,
+        range: { min: result.total, max: result.total },
+      };
+    }
+
+    const evaluated = candidates.map(row => evaluateBlessing(row, state));
+    const partKeys = ["combat", "economy", "flexibility", "delay", "risk", "commitment"];
+    const average = values => round(values.reduce((sum, value) => sum + value, 0) / values.length);
+    const totals = evaluated.map(row => row.total);
+    return {
+      blessingId: null,
+      godId: Number(godId),
+      godName: evaluated[0].godName,
+      name: "待录本轮实际赐福",
+      stage: Number(state.stage),
+      mainGod: false,
+      total: average(totals),
+      parts: Object.fromEntries(partKeys.map(key => [key, average(evaluated.map(row => row.parts[key]))])),
+      notes: [
+        `未录具体赐福，按${evaluated.length}项简单均值预估`,
+        `价值范围${Math.min(...totals)}-${Math.max(...totals)}`,
+      ],
+      coverage: "estimate",
+      description: "请录入游戏中这位星神当前展示的具体赐福后再做实战选择。",
+      offerMode: "average",
+      candidateCount: evaluated.length,
+      range: { min: Math.min(...totals), max: Math.max(...totals) },
+    };
+  }
+
+  function rankGodOffers(blessings, state, offeredGodIds = [], selectedBlessingIds = {}) {
+    const ids = sanitizeOfferedGodIds(offeredGodIds);
+    return ids
+      .map(godId => {
+        const blessingId = selectedBlessingIds instanceof Map
+          ? selectedBlessingIds.get(godId)
+          : selectedBlessingIds[godId] ?? selectedBlessingIds[String(godId)];
+        return evaluateGodOffer(blessings, state, godId, blessingId);
+      })
+      .filter(Boolean)
+      .sort((a, b) => b.total - a.total || a.godName.localeCompare(b.godName, "zh-CN"));
+  }
+
   function mainGodProjection(blessings, state) {
     if (!state.currentMainGod) return null;
     const blessing = (blessings || []).find(row => row.mainGod && Number(row.godId) === Number(state.currentMainGod));
@@ -488,6 +549,19 @@
     if (evaluateBlessing(ekko, low).total >= evaluateBlessing(ekko, high).total) throw new Error("艾克延迟奖励必须受生存折现");
     const state = recordChoice(recordChoice(createState(), { stage: 2, godId: 4, blessingId: 1 }), { stage: 3, godId: 4, blessingId: 2 });
     if (state.currentMainGod !== 4) throw new Error("重复选择同一星神后必须识别主神");
+    if (sanitizeOfferedGodIds([2, 3, 4]).join(",") !== "2,3") throw new Error("本局候选星神必须严格限制为2位");
+    const offers = [
+      { id: 10, godId: 2, godName: "奥瑞利安·索尔", stage: 2, name: "低值", description: "获得2金币", mechanism: "economy" },
+      { id: 11, godId: 2, godName: "奥瑞利安·索尔", stage: 2, name: "高值", description: "获得20金币", mechanism: "economy" },
+      { id: 12, godId: 3, godName: "亚索", stage: 2, name: "宇宙格", description: "获得一个强化格", mechanism: "painted-hex" },
+    ];
+    const estimated = rankGodOffers(offers, createState({ stage: 2 }), [2, 3]);
+    const asolEstimate = estimated.find(row => row.godId === 2);
+    if (asolEstimate.offerMode !== "average" || asolEstimate.total >= evaluateBlessing(offers[1], createState({ stage: 2 })).total) {
+      throw new Error("未录具体赐福时禁止用同神最佳奖励冒充实战价值");
+    }
+    const exactOffers = rankGodOffers(offers, createState({ stage: 2 }), [2, 3], { 2: 10, 3: 12 });
+    if (exactOffers.length !== 2 || exactOffers.some(row => row.offerMode !== "exact")) throw new Error("两份实际赐福必须精确比较");
     return true;
   }
 
@@ -498,10 +572,12 @@
 
   return {
     MODEL,
+    OFFERED_GOD_COUNT,
     COMPONENT_DIRECTION,
     DIRECTION_LABELS,
     clamp,
     round,
+    sanitizeOfferedGodIds,
     createState,
     deriveMainGod,
     recordChoice,
@@ -510,6 +586,8 @@
     completionProbability,
     evaluateBlessing,
     rankBlessings,
+    evaluateGodOffer,
+    rankGodOffers,
     mainGodProjection,
     recommendByGod,
     assertCore,

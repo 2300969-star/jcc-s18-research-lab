@@ -4,6 +4,7 @@
   "target": {
     "game": "金铲铲之战",
     "displayPatch": "17.7",
+    "currentClientPatch": "17.7b",
     "dataEdition": "17.17.7",
     "season": "S18",
     "modeId": "17",
@@ -43,12 +44,48 @@
         "stages",
         "god-recommendations"
       ]
+    },
+    {
+      "id": "official-current-client-patch",
+      "tier": "A",
+      "title": "17.7b客户端更新公告",
+      "source": "https://www.taptap.cn/app/176937/topic?group_label_id=3108882",
+      "appliesTo": [
+        "client-patch-status"
+      ]
+    },
+    {
+      "id": "official-star-god-mode-rules",
+      "tier": "A",
+      "title": "星神赛季官方玩法说明",
+      "source": "https://apps.apple.com/cn/app/%E9%87%91%E9%93%B2%E9%93%B2%E4%B9%8B%E6%88%98/id1478101301",
+      "appliesTo": [
+        "offer-pair",
+        "selection-rounds",
+        "main-god",
+        "treasure-round"
+      ]
     }
   ],
   "mechanics": {
+    "offerPair": {
+      "status": "confirmed",
+      "evidenceIds": [
+        "official-star-god-mode-rules",
+        "official-star-god-catalog"
+      ],
+      "value": {
+        "godsPerGame": 2,
+        "choosePerRound": 1,
+        "samePairThroughoutGame": true,
+        "exactBlessingMustBeObserved": true
+      },
+      "notes": "决策时只比较本局固定出现的两位星神及本轮实际展示的两份赐福；未录具体赐福时只能做同神赐福均值预估。"
+    },
     "selectionRounds": {
       "status": "confirmed",
       "evidenceIds": [
+        "official-star-god-mode-rules",
         "official-star-god-catalog"
       ],
       "value": [
@@ -60,6 +97,7 @@
     "mainGod": {
       "status": "confirmed",
       "evidenceIds": [
+        "official-star-god-mode-rules",
         "official-star-god-catalog"
       ],
       "value": {
@@ -92,6 +130,20 @@
           "B": 6
         }
       }
+    },
+    "patchFreshness": {
+      "status": "version-dependent",
+      "evidenceIds": [
+        "official-star-god-catalog",
+        "official-current-client-patch"
+      ],
+      "value": {
+        "currentClientPatch": "17.7b",
+        "starGodSnapshotPatch": "17.7",
+        "starGodDataEdition": "17.17.7",
+        "newerStarGodEndpointPublished": false
+      },
+      "notes": "17.7b公告更新的是英雄联盟传奇·海克斯典籍；截至构建时，腾讯星神资料端仍只发布17.17.7快照。"
     },
     "featherKnightBalance": {
       "status": "unverified",

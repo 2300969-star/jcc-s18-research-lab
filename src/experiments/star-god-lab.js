@@ -171,6 +171,9 @@ function assertResult(result, catalog) {
   if (catalog.summary.heroes !== 63) throw new Error(`可玩英雄应为63，实际${catalog.summary.heroes}`);
   if (result.byGod.length !== 9 || result.byGod.some(row => row.samples <= 0)) throw new Error("九位星神没有全部进入模拟");
   if (JSON.stringify(result).match(/NaN|Infinity/)) throw new Error("结果中禁止NaN/Infinity");
+  if (catalog.source.currentClientPatch !== "17.7b" || catalog.source.displayPatch !== "17.7") {
+    throw new Error("必须明确区分当前客户端版本与星神数据快照版本");
+  }
 
   const blessing = name => catalog.blessings.find(row => row.name === name);
   const soraka = blessing("12小小英雄生命值");
@@ -187,6 +190,11 @@ function assertResult(result, catalog) {
   if (kaylePhysical <= kayleMagic) throw new Error("凯尔装备方向没有影响选择");
   const greed = catalog.blessings.find(row => row.name === "贪婪之宝箱");
   if (Core.evaluateBlessing(greed, { sharedChoiceCount: 1 }).total <= Core.evaluateBlessing(greed, { sharedChoiceCount: 6 }).total) throw new Error("阿狸共选人数没有进入模型");
+  const offeredGodIds = catalog.gods.slice(0, 3).map(god => god.id);
+  const twoGods = Core.sanitizeOfferedGodIds(offeredGodIds);
+  if (twoGods.length !== 2) throw new Error("实战候选必须限制为本局固定两位星神");
+  const estimatedOffers = Core.rankGodOffers(catalog.blessings, Core.createState({ stage: 2 }), twoGods);
+  if (estimatedOffers.length !== 2 || estimatedOffers.some(row => row.offerMode !== "average")) throw new Error("未录具体赐福时必须使用同神均值预估");
   return true;
 }
 
@@ -202,6 +210,8 @@ function report(result) {
     `- 虚拟状态：${result.samples}个，固定随机种子 ${result.seed}，覆盖2-4/3-4/4-4、四档血量、四档经济、六种阵容方向。`,
     `- 价值函数：\`${result.formula}\`。`,
     "- 官方阵容只用于外部先验对照，不直接决定模型排序。",
+    "- 客户端当前为17.7b；腾讯星神资料端仍为17.17.7快照，两者在页面中分开标示。",
+    "- 实战只比较本局固定两位星神；未录眼前具体赐福时按同神可用赐福简单均值预估，禁止拿该神最优赐福冒充当前选项。",
     "",
     "## 九神总体敏感性",
     "",

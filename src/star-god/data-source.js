@@ -6,9 +6,12 @@ const { dataPath, publicPath, ensureOutputDirs } = require("../lib/project-paths
 
 const EDITION = "17.17.7";
 const DISPLAY_PATCH = "17.7";
+const CURRENT_CLIENT_PATCH = "17.7b";
 const SET_ID = "17";
 const SOURCE_BASE = `https://game.gtimg.cn/images/lol/act/jkzlk/js/17/${EDITION}-S18`;
 const LINEUP_SOURCE = "https://game.gtimg.cn/images/lol/act/jkzlkauto/json/lineupJson/m18/11/17/lineup_detail_total.json";
+const MODE_RULE_SOURCE = "https://apps.apple.com/cn/app/%E9%87%91%E9%93%B2%E9%93%B2%E4%B9%8B%E6%88%98/id1478101301";
+const CURRENT_PATCH_SOURCE = "https://www.taptap.cn/app/176937/topic?group_label_id=3108882";
 const FILES = ["god", "chess", "race", "job", "equip", "hex", "galaxy", "trait"];
 
 const TYPE_LABELS = Object.freeze({
@@ -185,6 +188,7 @@ function buildRuleset(catalog) {
     target: {
       game: "金铲铲之战",
       displayPatch: DISPLAY_PATCH,
+      currentClientPatch: CURRENT_CLIENT_PATCH,
       dataEdition: EDITION,
       season: "S18",
       modeId: SET_ID,
@@ -207,16 +211,41 @@ function buildRuleset(catalog) {
         source: LINEUP_SOURCE,
         appliesTo: ["lineups", "stages", "god-recommendations"],
       },
+      {
+        id: "official-current-client-patch",
+        tier: "A",
+        title: "17.7b客户端更新公告",
+        source: CURRENT_PATCH_SOURCE,
+        appliesTo: ["client-patch-status"],
+      },
+      {
+        id: "official-star-god-mode-rules",
+        tier: "A",
+        title: "星神赛季官方玩法说明",
+        source: MODE_RULE_SOURCE,
+        appliesTo: ["offer-pair", "selection-rounds", "main-god", "treasure-round"],
+      },
     ],
     mechanics: {
+      offerPair: {
+        status: "confirmed",
+        evidenceIds: ["official-star-god-mode-rules", "official-star-god-catalog"],
+        value: {
+          godsPerGame: 2,
+          choosePerRound: 1,
+          samePairThroughoutGame: true,
+          exactBlessingMustBeObserved: true,
+        },
+        notes: "决策时只比较本局固定出现的两位星神及本轮实际展示的两份赐福；未录具体赐福时只能做同神赐福均值预估。",
+      },
       selectionRounds: {
         status: "confirmed",
-        evidenceIds: ["official-star-god-catalog"],
+        evidenceIds: ["official-star-god-mode-rules", "official-star-god-catalog"],
         value: ["2-4", "3-4", "4-4"],
       },
       mainGod: {
         status: "confirmed",
-        evidenceIds: ["official-star-god-catalog"],
+        evidenceIds: ["official-star-god-mode-rules", "official-star-god-catalog"],
         value: {
           repeatedGodBecomesMain: true,
           treasureRound: "4-7",
@@ -227,6 +256,17 @@ function buildRuleset(catalog) {
         status: "confirmed",
         evidenceIds: ["official-star-god-catalog", "official-star-god-lineups"],
         value: catalog.summary,
+      },
+      patchFreshness: {
+        status: "version-dependent",
+        evidenceIds: ["official-star-god-catalog", "official-current-client-patch"],
+        value: {
+          currentClientPatch: CURRENT_CLIENT_PATCH,
+          starGodSnapshotPatch: DISPLAY_PATCH,
+          starGodDataEdition: EDITION,
+          newerStarGodEndpointPublished: false,
+        },
+        notes: "17.7b公告更新的是英雄联盟传奇·海克斯典籍；截至构建时，腾讯星神资料端仍只发布17.17.7快照。",
       },
       featherKnightBalance: {
         status: "unverified",
@@ -286,10 +326,14 @@ async function buildCatalog() {
     source: {
       edition: EDITION,
       displayPatch: DISPLAY_PATCH,
+      currentClientPatch: CURRENT_CLIENT_PATCH,
       setId: SET_ID,
       sourceTime: payloads.god.time || "",
       baseUrl: SOURCE_BASE,
       lineupUrl: LINEUP_SOURCE,
+      modeRuleUrl: MODE_RULE_SOURCE,
+      currentPatchUrl: CURRENT_PATCH_SOURCE,
+      freshness: "17.7b客户端已上线；星神官方资料仍为17.17.7快照",
     },
     summary: {
       gods: gods.length,
@@ -369,9 +413,12 @@ if (require.main === module) {
 module.exports = {
   EDITION,
   DISPLAY_PATCH,
+  CURRENT_CLIENT_PATCH,
   SET_ID,
   SOURCE_BASE,
   LINEUP_SOURCE,
+  MODE_RULE_SOURCE,
+  CURRENT_PATCH_SOURCE,
   classifyBlessing,
   normalizeGods,
   normalizeHeroes,

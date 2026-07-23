@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="data:,">
-<title>星神决策实验台 17.7</title>
+<title>星神决策实验台 · 17.7b客户端</title>
 <style>
 :root {
   --bg:#f6f7f5; --surface:#ffffff; --ink:#11120f; --ink2:#4f524c; --muted:#81857d;
@@ -32,10 +32,19 @@ button { color:inherit; }
 .brand { min-width:0; }
 .brand h1 { margin:0; font-size:26px; line-height:1.2; }
 .brand p { margin:5px 0 0; color:var(--muted); font-size:13px; }
+.patch-note { color:var(--amber); font-weight:750; }
 .top-actions { display:flex; gap:8px; flex:none; }
 .btn { min-height:42px; border:1px solid var(--line); border-radius:8px; background:var(--surface); padding:8px 14px; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; justify-content:center; }
 .btn:hover { border-color:var(--green); }
 .btn.primary { background:var(--green); color:#fff; border-color:var(--green); font-weight:750; }
+.btn:disabled { opacity:.45; cursor:not-allowed; }
+.quick-start { margin-bottom:18px; padding:14px 16px; box-shadow:none; }
+.quick-start-head { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:10px; }
+.quick-start-head strong { font-size:15px; }
+.quick-start-head span { color:var(--muted); font-size:12px; }
+.quick-steps { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; }
+.quick-step { min-width:0; padding:9px 10px; border-left:3px solid var(--green); background:var(--green2); border-radius:6px; color:var(--ink2); font-size:12px; }
+.quick-step b { display:block; color:var(--ink); margin-bottom:2px; }
 .workspace { display:grid; grid-template-columns:minmax(360px,.86fr) minmax(0,1.5fr); gap:18px; align-items:start; }
 .surface { background:var(--surface); border:1px solid var(--line); border-radius:8px; box-shadow:var(--shadow); }
 .control-panel { padding:18px; position:sticky; top:14px; }
@@ -57,6 +66,12 @@ button { color:inherit; }
 .god-btn span { min-width:0; font-size:12px; font-weight:750; overflow-wrap:anywhere; }
 .god-btn.active { border-color:var(--green); background:var(--green2); box-shadow:inset 0 0 0 1px var(--green); }
 .god-btn:disabled { opacity:.45; cursor:not-allowed; }
+.offer-help { margin:8px 0 0; color:var(--muted); font-size:11px; }
+.blessing-offers { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-top:10px; }
+.blessing-offer { border:1px solid var(--line); border-radius:8px; padding:9px; background:var(--bg); min-width:0; }
+.blessing-offer label { display:block; color:var(--ink2); font-size:12px; font-weight:800; margin-bottom:5px; }
+.blessing-offer select { width:100%; min-height:42px; border:1px solid var(--line); border-radius:7px; background:var(--surface); color:var(--ink); padding:7px 8px; }
+.blessing-offer small { display:block; color:var(--muted); margin-top:5px; min-height:17px; overflow-wrap:anywhere; }
 .history { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
 .history select { width:100%; min-height:40px; border:1px solid var(--line); border-radius:7px; background:var(--bg); color:var(--ink); padding:6px 8px; }
 .main { min-width:0; }
@@ -120,7 +135,9 @@ button { color:inherit; }
   .topbar { align-items:flex-start; }
   .brand h1 { font-size:21px; }
   .top-actions .btn:first-child { display:none; }
+  .quick-steps { grid-template-columns:repeat(2,minmax(0,1fr)); }
   .god-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .blessing-offers { grid-template-columns:1fr; }
   .decision { padding:17px; }
   .decision h2 { font-size:25px; }
   .score { font-size:32px; }
@@ -134,13 +151,26 @@ button { color:inherit; }
   <header class="topbar">
     <div class="brand">
       <h1>星神决策实验台</h1>
-      <p>17.7独立规则集 · 9位星神 · 110个唯一赐福 · 确定性状态价值模型</p>
+      <p><span class="patch-note">客户端17.7b</span> · 星神官方快照17.7（7月17日）· 9位星神 · 110个唯一赐福</p>
     </div>
     <div class="top-actions">
       <a class="btn" href="index.html">返回研究面板</a>
       <button class="btn" id="themeBtn" type="button">切换明暗</button>
     </div>
   </header>
+
+  <section class="surface quick-start">
+    <div class="quick-start-head">
+      <strong>第一次玩就按这四步</strong>
+      <span>星神只改变资源与节奏，不会替你锁死阵容</span>
+    </div>
+    <div class="quick-steps">
+      <div class="quick-step"><b>1 · 点本局两位星神</b>这对星神会贯穿2-4、3-4、4-4</div>
+      <div class="quick-step"><b>2 · 填当前状态</b>血量、金币、等级和阵容方向</div>
+      <div class="quick-step"><b>3 · 录眼前两张赐福</b>必须按客户端实际文字选择，不猜最好奖励</div>
+      <div class="quick-step"><b>4 · 选择后记入历史</b>重复追随同一神，4-7形成主神</div>
+    </div>
+  </section>
 
   <div class="workspace">
     <aside class="surface control-panel">
@@ -182,12 +212,14 @@ button { color:inherit; }
       </section>
 
       <section class="control-group">
-        <div class="group-label"><span>本轮实际出现的星神</span><span id="offerCount">未限定</span></div>
+        <div class="group-label"><span>本局固定出现的两位星神</span><span id="offerCount">0/2</span></div>
         <div class="god-grid" id="godGrid"></div>
+        <p class="offer-help">只点游戏开局展示的两位；切换轮次不会清空。要换人先取消一位。</p>
+        <div class="blessing-offers" id="blessingOffers"></div>
       </section>
 
       <section class="control-group">
-        <div class="group-label"><span>历史选择</span><button class="btn" id="clearHistory" type="button">清空</button></div>
+        <div class="group-label"><span>三轮追随历史</span><button class="btn" id="clearHistory" type="button">新的一局</button></div>
         <div class="history">
           <select id="history2" aria-label="2-4选择"></select>
           <select id="history3" aria-label="3-4选择"></select>
@@ -203,7 +235,7 @@ button { color:inherit; }
       <div class="section-band">
         <div>
           <h2>同场候选</h2>
-          <p>只对本轮实际出现的星神比较；未点选时显示全池研究排序</p>
+          <p>录入具体赐福后精确比较；未录时只显示同神可用赐福的保守均值</p>
         </div>
         <p id="candidateCount"></p>
       </div>
@@ -236,24 +268,35 @@ button { color:inherit; }
   const $ = id => document.getElementById(id);
   const fields = ["hp", "gold", "level", "streak", "direction", "shared", "traits", "refreshes"];
   const selectedGods = new Set();
+  const emptyStageMap = () => ({ 2: {}, 3: {}, 4: {} });
 
   function safeState() {
     let stored = {};
     try { stored = JSON.parse(localStorage.getItem(STORAGE) || "{}"); } catch (_) {}
+    const blessingChoices = emptyStageMap();
+    [2, 3, 4].forEach(stage => Object.assign(blessingChoices[stage], stored.blessingChoices?.[stage] || {}));
     return {
       stage: Number(stored.stage || 2),
       history: stored.history || { 2: "", 3: "", 4: "" },
+      chosenBlessings: stored.chosenBlessings || { 2: "", 3: "", 4: "" },
+      blessingChoices,
+      offeredGodIds: Core.sanitizeOfferedGodIds(stored.offeredGodIds || []),
       values: stored.values || {},
     };
   }
 
   const uiState = safeState();
+  uiState.offeredGodIds.forEach(id => selectedGods.add(id));
 
   function persist() {
     uiState.values = Object.fromEntries(fields.map(id => [id, $(id).value]));
+    uiState.offeredGodIds = [...selectedGods];
     localStorage.setItem(STORAGE, JSON.stringify({
       stage: uiState.stage,
       history: uiState.history,
+      chosenBlessings: uiState.chosenBlessings,
+      blessingChoices: uiState.blessingChoices,
+      offeredGodIds: uiState.offeredGodIds,
       values: uiState.values,
     }));
   }
@@ -292,18 +335,58 @@ button { color:inherit; }
 
   function renderGods() {
     $("godGrid").innerHTML = data.gods.map(god => `
-      <button class="god-btn ${selectedGods.has(god.id) ? "active" : ""}" data-id="${god.id}" type="button">
+      <button class="god-btn ${selectedGods.has(god.id) ? "active" : ""}" data-id="${god.id}" type="button" ${!selectedGods.has(god.id) && selectedGods.size >= Core.OFFERED_GOD_COUNT ? "disabled" : ""}>
         <img src="${icon(god.id)}" alt="">
         <span>${god.name}</span>
       </button>
     `).join("");
     $("godGrid").querySelectorAll("button").forEach(button => button.addEventListener("click", () => {
       const id = Number(button.dataset.id);
-      if (selectedGods.has(id)) selectedGods.delete(id);
-      else if (selectedGods.size < 3) selectedGods.add(id);
+      if (selectedGods.has(id)) {
+        selectedGods.delete(id);
+        [2, 3, 4].forEach(stage => delete uiState.blessingChoices[stage][id]);
+      } else if (selectedGods.size < Core.OFFERED_GOD_COUNT) {
+        selectedGods.add(id);
+      }
       render();
     }));
-    $("offerCount").textContent = selectedGods.size ? `已选${selectedGods.size}/3` : "未限定";
+    $("offerCount").textContent = `${selectedGods.size}/${Core.OFFERED_GOD_COUNT}`;
+  }
+
+  function currentBlessingChoices() {
+    return uiState.blessingChoices[uiState.stage] || {};
+  }
+
+  function renderBlessingOffers() {
+    if (selectedGods.size !== Core.OFFERED_GOD_COUNT) {
+      $("blessingOffers").innerHTML = `<div class="empty" style="grid-column:1/-1;padding:20px 12px">先点满本局固定两位星神，再录本轮实际赐福。</div>`;
+      return;
+    }
+    const choices = currentBlessingChoices();
+    $("blessingOffers").innerHTML = [...selectedGods].map(godId => {
+      const god = data.gods.find(row => row.id === godId);
+      const options = data.blessings
+        .filter(row => row.godId === godId && row.stage === uiState.stage && !row.mainGod);
+      const selected = options.find(row => String(row.id) === String(choices[godId] || ""));
+      return `
+        <div class="blessing-offer">
+          <label for="blessing-${godId}">${god.name} · ${uiState.stage}-4实际赐福</label>
+          <select id="blessing-${godId}" data-god-id="${godId}">
+            <option value="">请选择游戏中显示的赐福</option>
+            ${options.map(row => `<option value="${row.id}" ${selected && row.id === selected.id ? "selected" : ""}>${row.name}</option>`).join("")}
+          </select>
+          <small>${selected ? selected.description : `未录时仅按${options.length}项赐福均值预估，不可直接执行`}</small>
+        </div>
+      `;
+    }).join("");
+    $("blessingOffers").querySelectorAll("select").forEach(select => {
+      select.onchange = () => {
+        const godId = Number(select.dataset.godId);
+        if (select.value) uiState.blessingChoices[uiState.stage][godId] = Number(select.value);
+        else delete uiState.blessingChoices[uiState.stage][godId];
+        render();
+      };
+    });
   }
 
   function renderHistory() {
@@ -316,6 +399,7 @@ button { color:inherit; }
       select.title = `${stage}-4历史选择`;
       select.onchange = () => {
         uiState.history[stage] = select.value;
+        uiState.chosenBlessings[stage] = "";
         persist();
         render();
       };
@@ -353,10 +437,13 @@ button { color:inherit; }
     return action;
   }
 
-  function renderDecision(rankings, state) {
+  function renderDecision(rankings, state, exactReady) {
     const top = rankings[0];
     if (!top) {
-      $("decision").innerHTML = `<div class="empty">当前条件没有可用赐福，请检查轮次或星神选择。</div>`;
+      const message = selectedGods.size < Core.OFFERED_GOD_COUNT
+        ? "先点出游戏开局展示的两位星神。它们会固定贯穿三次星神领域。"
+        : "当前条件没有可用赐福，请检查轮次与本轮实际赐福。";
+      $("decision").innerHTML = `<div class="empty">${message}</div>`;
       return;
     }
     const second = rankings[1];
@@ -365,28 +452,31 @@ button { color:inherit; }
     $("decision").innerHTML = `
       <div class="decision-head">
         <div>
-          <div class="eyebrow">此刻优先 · ${top.godName}${top.mainGod ? "主神恩赐" : ""}</div>
-          <h2>${top.name}</h2>
-          <p class="desc">${decisionText(top, state)}。${top.description}</p>
+          <div class="eyebrow">${exactReady ? "实战结论" : "均值预估，不可直接执行"} · ${top.godName}</div>
+          <h2>${exactReady ? top.name : `${top.godName}暂优`}</h2>
+          <p class="desc">${exactReady ? `${decisionText(top, state)}。${top.description}` : "两张实际赐福尚未录全。当前只按该神本阶段可出现赐福的简单均值比较，不会用最好奖励冒充你眼前的选项。"}</p>
         </div>
-        <div class="score">${top.total}<small>${second ? `领先${Core.round(top.total - second.total)}分` : "唯一候选"}</small></div>
+        <div class="score">${top.total}<small>${second ? `${exactReady ? "领先" : "均值领先"}${Core.round(top.total - second.total)}分` : "唯一候选"}</small></div>
       </div>
       <div class="dimension-grid">${partsMarkup(top)}</div>
       <div class="notes">${top.notes.map(note => `<span class="note">${note}</span>`).join("") || `<span class="note">按通用价值模型估计</span>`}</div>
       <div class="decision-actions">
-        <button class="btn primary" id="recordChoice" type="button">记为${uiState.stage}-4已选</button>
+        <button class="btn primary" id="recordChoice" type="button" ${exactReady ? "" : "disabled"}>${exactReady ? `记为${uiState.stage}-4已选` : "先录两张实际赐福"}</button>
         <span class="main-god">${mainGod ? `4-7主神收益：${mainGod.name} · ${mainProjection ? `${mainProjection.name}（模型值${mainProjection.total}）` : "待确认"}` : "重复选择同一星神后，4-7形成主神路线"}</span>
       </div>
     `;
-    $("recordChoice").onclick = () => {
-      uiState.history[uiState.stage] = String(top.godId);
-      persist();
-      render();
-    };
+    if (exactReady) {
+      $("recordChoice").onclick = () => {
+        uiState.history[uiState.stage] = String(top.godId);
+        uiState.chosenBlessings[uiState.stage] = String(top.blessingId);
+        persist();
+        render();
+      };
+    }
   }
 
   function renderSensitivity(top, state) {
-    if (!top) { $("sensitivity").innerHTML = ""; return; }
+    if (!top || top.offerMode !== "exact") { $("sensitivity").innerHTML = ""; return; }
     const blessing = data.blessings.find(row => row.id === top.blessingId && row.stage === top.stage);
     const variants = [
       ["生命-20", { hp: Math.max(1, state.hp - 20) }],
@@ -404,17 +494,21 @@ button { color:inherit; }
     const shown = rankings.slice(0, 8);
     const max = Math.max(1, ...shown.map(row => row.total));
     $("candidateCount").textContent = `显示${shown.length}/${rankings.length}`;
+    if (!shown.length) {
+      $("candidates").innerHTML = `<div class="empty" style="grid-column:1/-1">录入本局两位星神后，这里只显示真实同场候选。</div>`;
+      return;
+    }
     $("candidates").innerHTML = shown.map((row, index) => `
       <article class="candidate ${index === 0 ? "best" : ""}">
         <div class="candidate-head">
           <img src="${icon(row.godId)}" alt="">
-          <div class="candidate-title"><b>#${index + 1} ${row.godName} · ${row.name}</b><span>${row.mainGod ? "主神恩赐" : `第${row.stage}轮赐福`}</span></div>
+          <div class="candidate-title"><b>#${index + 1} ${row.godName} · ${row.name}</b><span>${row.offerMode === "average" ? `${row.candidateCount}项赐福均值，范围${row.range.min}-${row.range.max}` : `第${row.stage}轮实际赐福`}</span></div>
           <div class="candidate-score">${row.total}</div>
         </div>
         <div class="bar"><span style="width:${Math.max(2, row.total / max * 100)}%"></span></div>
         <div class="mini-parts"><span>战斗${row.parts.combat}</span><span>经济${row.parts.economy}</span><span>灵活${row.parts.flexibility}</span><span>风险-${Core.round(row.parts.risk + row.parts.commitment)}</span></div>
         <p>${row.notes.join("；") || row.description}</p>
-        <div class="coverage">${row.coverage === "modeled" ? "确定性算子已覆盖" : "部分覆盖，按保守值"}</div>
+        <div class="coverage">${row.offerMode === "average" ? "尚未录具体赐福，不形成执行建议" : row.coverage === "modeled" ? "确定性算子已覆盖" : "部分覆盖，按保守值"}</div>
       </article>
     `).join("");
   }
@@ -435,24 +529,37 @@ button { color:inherit; }
     persist();
     initializeControls();
     renderGods();
+    renderBlessingOffers();
     renderHistory();
     const state = currentState();
-    const rankings = Core.rankBlessings(data.blessings, state, [...selectedGods]);
-    renderDecision(rankings, state);
+    const choices = currentBlessingChoices();
+    const exactReady = selectedGods.size === Core.OFFERED_GOD_COUNT
+      && [...selectedGods].every(godId => data.blessings.some(row =>
+        row.godId === godId
+        && row.stage === uiState.stage
+        && !row.mainGod
+        && String(row.id) === String(choices[godId] || "")
+      ));
+    const rankings = selectedGods.size === Core.OFFERED_GOD_COUNT
+      ? Core.rankGodOffers(data.blessings, state, [...selectedGods], choices)
+      : [];
+    renderDecision(rankings, state, exactReady);
     renderSensitivity(rankings[0], state);
     renderCandidates(rankings);
     renderResearch();
-    $("sourceStatus").textContent = `${data.summary.uniqueBlessings}赐福 · ${results.samples}状态`;
+    $("sourceStatus").textContent = `${data.source.currentClientPatch || "17.7b"}客户端 · ${data.source.displayPatch}星神快照`;
   }
 
   fields.forEach(id => $(id).addEventListener("input", render));
   $("stageSegment").querySelectorAll("button").forEach(button => button.addEventListener("click", () => {
     uiState.stage = Number(button.dataset.stage);
-    selectedGods.clear();
     render();
   }));
   $("clearHistory").addEventListener("click", () => {
     uiState.history = { 2: "", 3: "", 4: "" };
+    uiState.chosenBlessings = { 2: "", 3: "", 4: "" };
+    uiState.blessingChoices = emptyStageMap();
+    selectedGods.clear();
     persist();
     render();
   });
