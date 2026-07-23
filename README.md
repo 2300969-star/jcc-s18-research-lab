@@ -12,7 +12,7 @@
 [![CI](https://img.shields.io/github/actions/workflow/status/2300969-star/jcc-s18-research-lab/ci.yml?style=flat-square&label=tests)](https://github.com/2300969-star/jcc-s18-research-lab/actions)
 [![license](https://img.shields.io/badge/code_license-MIT-f1e05a?style=flat-square)](LICENSE)
 
-[Research Dashboard](public/index.html) · [Match Mode](public/match.html) · [Methodology](docs/reports/版本路线认证实验.md) · [Event Model](docs/reports/统一事件模型实验.md) · [中文文档](#快速开始)
+[Research Dashboard](public/index.html) · [Match Mode](public/match.html) · [Star God Lab](public/star-god.html) · [Methodology](docs/reports/版本路线认证实验.md) · [Event Model](docs/reports/统一事件模型实验.md) · [中文文档](#快速开始)
 
 <img src="docs/images/frontend-dashboard.png" alt="JCC S18 Research Dashboard" width="920">
 
@@ -27,12 +27,13 @@ Official recommended lineups are treated as **baselines, not answers**. The proj
 - What should be played from the assets actually held at levels 1-9?
 - Which recommendation failures should become permanent regression fixtures?
 
-The browser application contains two working surfaces:
+The browser application contains three working surfaces:
 
 | Surface | Purpose |
 |---|---|
 | **Research Dashboard** | Version results, generated lineups, certified conditional routes, stage transitions, numerical audits, and experiment reports |
 | **Match Mode** | Fast Chinese signal parsing, persistent round/gold state, route-continuity management, honest augment comparison, hero-augment pruning, concrete actions, and optional LLM fallback |
+| **Star God Lab** | Independent 17.7 ruleset, nine-god state machine, blessing value decomposition, main-god history, and 5,400-state virtual sensitivity study |
 
 <details>
 <summary><strong>Match Mode preview / 比赛模式预览</strong></summary>
@@ -58,6 +59,18 @@ flowchart LR
 ```
 
 The LLM is deliberately outside the ranking loop. It may translate unrecognized Chinese speech into a closed vocabulary, but all lineup scoring, shop probability, equipment inference, augment operators, and recommendations remain deterministic.
+
+## Star God Mode / 星神玩法
+
+星神玩法使用独立的 `setId=17` 数据层，不与怪兽入侵的英雄、装备或比赛状态混用。构建脚本从腾讯官方资料规范化9位星神、110个唯一赐福、63个可玩英雄、34个羁绊、262件装备、277个强化、20个开场奇遇和44套前中后期阵容。
+
+模型把每个赐福拆成即时战力、经济、灵活性、延迟兑现、尾部风险和不可逆承诺，并对九位星神使用不同状态变量：索尔任务进度、亚索永久格、凯尔装备方向、阿狸共选人数、韦鲁斯费用结构、艾克生存折现、锤石随机尾部、索拉卡生命边际价值和伊芙琳卖血代价。
+
+```bash
+npm run build:star-god
+```
+
+交互入口为 [`public/star-god.html`](public/star-god.html)，研究报告见 [`docs/reports/星神玩法17.7研究.md`](docs/reports/星神玩法17.7研究.md)。羽饰骑士生命分档、普通4-7神之秘宝包池和当前牌库份数没有可靠证据，页面明确标为未自证，不用猜测值填补。
 
 ## Match Mode / 比赛模式
 
