@@ -1,0 +1,136 @@
+{
+  "schemaVersion": "0.1.0",
+  "rulesetId": "jcc-star-god-17.7",
+  "target": {
+    "game": "金铲铲之战",
+    "displayPatch": "17.7",
+    "dataEdition": "17.17.7",
+    "season": "S18",
+    "modeId": "17",
+    "modeKind": "other",
+    "researchedAt": "2026-07-17"
+  },
+  "statusLegend": [
+    "confirmed",
+    "version-dependent",
+    "unverified",
+    "conflict",
+    "deprecated"
+  ],
+  "evidence": [
+    {
+      "id": "official-star-god-catalog",
+      "tier": "A",
+      "title": "17.17.7 星神模式腾讯游戏资料快照",
+      "source": "https://game.gtimg.cn/images/lol/act/jkzlk/js/17/17.17.7-S18",
+      "appliesTo": [
+        "gods",
+        "blessings",
+        "roster",
+        "traits",
+        "items",
+        "augments",
+        "encounters"
+      ]
+    },
+    {
+      "id": "official-star-god-lineups",
+      "tier": "A",
+      "title": "17.17.7 星神模式官方阵容快照",
+      "source": "https://game.gtimg.cn/images/lol/act/jkzlkauto/json/lineupJson/m18/11/17/lineup_detail_total.json",
+      "appliesTo": [
+        "lineups",
+        "stages",
+        "god-recommendations"
+      ]
+    }
+  ],
+  "mechanics": {
+    "selectionRounds": {
+      "status": "confirmed",
+      "evidenceIds": [
+        "official-star-god-catalog"
+      ],
+      "value": [
+        "2-4",
+        "3-4",
+        "4-4"
+      ]
+    },
+    "mainGod": {
+      "status": "confirmed",
+      "evidenceIds": [
+        "official-star-god-catalog"
+      ],
+      "value": {
+        "repeatedGodBecomesMain": true,
+        "treasureRound": "4-7",
+        "mainBlessings": 9
+      }
+    },
+    "dataCoverage": {
+      "status": "confirmed",
+      "evidenceIds": [
+        "official-star-god-catalog",
+        "official-star-god-lineups"
+      ],
+      "value": {
+        "gods": 9,
+        "blessingRows": 141,
+        "uniqueBlessings": 110,
+        "mainGodBlessings": 9,
+        "heroes": 63,
+        "heroVariants": 427,
+        "traits": 34,
+        "items": 262,
+        "augments": 277,
+        "encounters": 20,
+        "lineups": 44,
+        "lineupQuality": {
+          "S": 15,
+          "A": 23,
+          "B": 6
+        }
+      }
+    },
+    "featherKnightBalance": {
+      "status": "unverified",
+      "evidenceIds": [],
+      "value": null,
+      "notes": "官方资料包含相关赐福文本，但未提供按生命值分档的完整奖池与概率。"
+    },
+    "ordinaryGodTreasure": {
+      "status": "unverified",
+      "evidenceIds": [],
+      "value": null,
+      "notes": "4-7普通神之秘宝的完整包池、重随次数和分布尚无可执行资料。"
+    }
+  },
+  "openQuestions": [
+    {
+      "id": "feather-knight-balance-table",
+      "question": "羽饰骑士按生命值平衡奖励的完整分档与概率是什么？",
+      "blocks": [
+        "精确生命值逆风价值",
+        "超级临别赠礼期望值"
+      ],
+      "preferredEvidence": "17.7客户端逐档录像或官方表格"
+    },
+    {
+      "id": "god-treasure-pool",
+      "question": "4-7普通神之秘宝的完整奖励包池与重随分布是什么？",
+      "blocks": [
+        "普通星神与主神的4-7价值差"
+      ],
+      "preferredEvidence": "官方规则说明或足量客户端样本"
+    },
+    {
+      "id": "current-shop-pool",
+      "question": "星神模式当前各费用商店概率与单卡牌池份数是什么？",
+      "blocks": [
+        "英雄复制与全费用商店的精确边际价值"
+      ],
+      "preferredEvidence": "17.7客户端商店概率与官方规则"
+    }
+  ]
+}
