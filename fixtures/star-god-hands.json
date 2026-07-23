@@ -1,0 +1,116 @@
+{
+  "version": "17.7",
+  "purpose": "星神比赛模式永久回归手牌。每个样本只约束可解释的角色结论，不把某一条模板名称写死。",
+  "hands": [
+    {
+      "id": "miss-fortune-carry",
+      "label": "两星女枪与完整启动装",
+      "state": {
+        "level": 7,
+        "hp": 68,
+        "gold": 32,
+        "units": [
+          { "name": "厄运小姐", "star": 2 },
+          { "name": "茂凯", "star": 2 }
+        ],
+        "items": ["朔极之矛", "暴风之剑", "拳套"]
+      },
+      "expect": {
+        "topCarry": "厄运小姐",
+        "topCarryWithin": 1,
+        "evidenceIncludes": ["主C厄运小姐本体在手", "主C核心装朔极之矛"]
+      }
+    },
+    {
+      "id": "kaisa-carry",
+      "label": "两星卡莎与三件主C装",
+      "state": {
+        "level": 7,
+        "hp": 72,
+        "gold": 35,
+        "units": [
+          { "name": "卡莎", "star": 2 },
+          { "name": "妮蔻", "star": 2 }
+        ],
+        "items": ["无尽之刃", "朔极之矛", "巨人捕手"]
+      },
+      "expect": {
+        "topCarry": "卡莎",
+        "topCarryWithin": 1,
+        "evidenceIncludes": ["主C卡莎本体在手", "主C核心装无尽之刃"]
+      }
+    },
+    {
+      "id": "diana-carry",
+      "label": "两星黛安娜战士三件套",
+      "state": {
+        "level": 7,
+        "hp": 61,
+        "gold": 28,
+        "units": [
+          { "name": "黛安娜", "star": 2 },
+          { "name": "亚托克斯", "star": 2 }
+        ],
+        "items": ["鬼索的狂暴之刃", "汲取剑", "泰坦的坚决"]
+      },
+      "expect": {
+        "topCarry": "黛安娜",
+        "topCarryWithin": 1,
+        "evidenceIncludes": ["主C黛安娜本体在手", "主C核心装鬼索的狂暴之刃"]
+      }
+    },
+    {
+      "id": "corki-carry",
+      "label": "两星库奇与双核心装",
+      "state": {
+        "level": 8,
+        "hp": 55,
+        "gold": 41,
+        "units": [
+          { "name": "库奇", "star": 2 },
+          { "name": "奥瑞利安·索尔", "star": 2 }
+        ],
+        "items": ["蓝霸符", "最后的轻语", "无尽之刃"]
+      },
+      "expect": {
+        "topCarry": "库奇",
+        "topCarryWithin": 1,
+        "evidenceIncludes": ["主C库奇本体在手", "主C核心装蓝霸符"]
+      }
+    },
+    {
+      "id": "immediate-craft",
+      "label": "女枪与可立即合成青龙刀的散件",
+      "state": {
+        "level": 6,
+        "hp": 79,
+        "gold": 24,
+        "units": [
+          { "name": "厄运小姐", "star": 2 }
+        ],
+        "items": ["暴风之剑", "女神之泪"]
+      },
+      "expect": {
+        "topCarry": "厄运小姐",
+        "topCarryWithin": 1,
+        "evidenceIncludes": ["暴风之剑+女神之泪→朔极之矛可立即合成"]
+      }
+    },
+    {
+      "id": "low-level-observe",
+      "label": "二级低信息不得锁终局",
+      "state": {
+        "level": 2,
+        "hp": 100,
+        "gold": 4,
+        "units": [
+          { "name": "潘森", "star": 1 }
+        ],
+        "items": ["反曲之弓"]
+      },
+      "expect": {
+        "mode": "observe"
+      }
+    }
+  ]
+}

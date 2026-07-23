@@ -377,6 +377,11 @@ function writeCatalog(catalog) {
     summary: catalog.summary,
     gods: catalog.gods,
     blessings: catalog.blessings,
+    heroes: catalog.heroes,
+    traits: catalog.traits,
+    items: catalog.items,
+    augments: catalog.augments,
+    encounters: catalog.encounters,
     lineups: catalog.lineups,
   };
   fs.writeFileSync(publicPath("star-god-data.js"), `window.STAR_GOD_DATA = ${JSON.stringify(publicCatalog)};\n`);

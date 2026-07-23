@@ -8,7 +8,7 @@
     "node": ">=18"
   },
   "scripts": {
-    "test": "node src/pipeline/mechanism-catalog.js && node public/shop-reachability.js && node public/signal-parser.js && node public/augment-advisor.js && node public/llm-lane.js && node public/decision-narrator.js && node public/matcher-core.js && node public/star-god-core.js && node src/star-god/state-model.js && node src/core/item-catalog.js && node src/core/event-model.js && node src/core/mechanic-profiles.js && node src/core/research-metrics.js && node src/sim/combat-engine.js",
+    "test": "node src/pipeline/mechanism-catalog.js && node public/shop-reachability.js && node public/signal-parser.js && node public/augment-advisor.js && node public/llm-lane.js && node public/decision-narrator.js && node public/matcher-core.js && node public/star-god-core.js && node public/star-god-match-core.js && node src/star-god/state-model.js && node src/star-god/lineup-model.js && node src/core/item-catalog.js && node src/core/event-model.js && node src/core/mechanic-profiles.js && node src/core/research-metrics.js && node src/sim/combat-engine.js",
     "build:model": "node src/core/model.js && node src/pipeline/search.js && node src/pipeline/teamsearch.js",
     "build:discovery": "node src/pipeline/discover.js && node src/pipeline/transition.js && node src/pipeline/numeric-lens.js && node src/pipeline/research-lab.js",
     "build:matcher": "node src/pipeline/stage2-matcher.js && node src/pipeline/route-certifier.js && node src/pipeline/forward-planning-lab.js && node src/pipeline/mechanism-overfit-lab.js && node src/pipeline/match-playability-lab.js",
@@ -20,7 +20,8 @@
     "build:transition-experiment": "node src/experiments/augment-transition-lab.js",
     "build:policy-compiler": "node src/experiments/strategy-policy-compiler.js",
     "build:event-model": "node src/experiments/event-model-lab.js",
-    "build:star-god": "node src/star-god/data-source.js && node src/experiments/star-god-lab.js",
+    "build:star-god": "node src/star-god/data-source.js && node src/star-god/lineup-model.js && node src/experiments/star-god-lab.js",
+    "build:star-match": "node src/star-god/lineup-model.js && node public/star-god-match-core.js",
     "audit": "node src/audit/audit.js",
     "figures": "node tools/generate-readme-figures.js",
     "research:community": "node src/pipeline/community-evidence.js",
