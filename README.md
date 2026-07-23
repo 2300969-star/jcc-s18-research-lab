@@ -12,7 +12,7 @@
 [![CI](https://img.shields.io/github/actions/workflow/status/2300969-star/jcc-s18-research-lab/ci.yml?style=flat-square&label=tests)](https://github.com/2300969-star/jcc-s18-research-lab/actions)
 [![license](https://img.shields.io/badge/code_license-MIT-f1e05a?style=flat-square)](LICENSE)
 
-[Research Dashboard](public/index.html) · [Match Mode](public/match.html) · [Star God Lab](public/star-god.html) · [Methodology](docs/reports/版本路线认证实验.md) · [Event Model](docs/reports/统一事件模型实验.md) · [中文文档](#快速开始)
+[Research Dashboard](public/index.html) · [Match Mode](public/match.html) · [Star God Match](public/star-god-match.html) · [Star God Lab](public/star-god.html) · [Methodology](docs/reports/版本路线认证实验.md) · [Event Model](docs/reports/统一事件模型实验.md) · [中文文档](#快速开始)
 
 <img src="docs/images/frontend-dashboard.png" alt="JCC S18 Research Dashboard" width="920">
 
@@ -66,11 +66,15 @@ The LLM is deliberately outside the ranking loop. It may translate unrecognized 
 
 模型把每个赐福拆成即时战力、经济、灵活性、延迟兑现、尾部风险和不可逆承诺，并对九位星神使用不同状态变量：索尔任务进度、亚索永久格、凯尔装备方向、阿狸共选人数、韦鲁斯费用结构、艾克生存折现、锤石随机尾部、索拉卡生命边际价值和伊芙琳卖血代价。
 
+星神比赛模式把44套官方前中后期阵容作为种子，不当作答案。构建期另外生成单槽反事实改良与束搜索候选；实时排序只读取当前棋子、星级、装备、已选赐福、等级和经济。同一最终状态必然得到同一结论，1至3级只给过渡，不锁终局。由于当前缺少星神模式独立牌库概率证据，界面中的缺口金额只按卡牌面值计算。
+
 ```bash
 npm run build:star-god
 ```
 
-交互入口为 [`public/star-god.html`](public/star-god.html)，研究报告见 [`docs/reports/星神玩法17.7研究.md`](docs/reports/星神玩法17.7研究.md)。羽饰骑士生命分档、普通4-7神之秘宝包池和当前牌库份数没有可靠证据，页面明确标为未自证，不用猜测值填补。
+比赛入口为 [`public/star-god-match.html`](public/star-god-match.html)，赐福实验入口为 [`public/star-god.html`](public/star-god.html)。研究报告见 [`docs/reports/星神阵容生成与比赛模式研究.md`](docs/reports/星神阵容生成与比赛模式研究.md) 与 [`docs/reports/星神玩法17.7研究.md`](docs/reports/星神玩法17.7研究.md)。羽饰骑士生命分档、普通4-7神之秘宝包池和当前牌库份数没有可靠证据，页面明确标为未自证，不用猜测值填补。
+
+<img src="artifacts/screenshots/star-god-match-1280.png" alt="星神比赛模式：资产、赐福、实时路线与换线雷达" width="920">
 
 ## Match Mode / 比赛模式
 
@@ -215,6 +219,7 @@ Open:
 
 - Dashboard: `http://127.0.0.1:8766/public/index.html`
 - Match Mode: `http://127.0.0.1:8766/public/match.html`
+- Star God Match: `http://127.0.0.1:8766/public/star-god-match.html`
 - Audit View: `http://127.0.0.1:8766/public/audit/index.html`
 
 ### 3. Optional LLM fallback

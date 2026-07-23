@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:,">
+<title>星神比赛模式 · 阵容决策</title>
+<style>
+:root {
+  color-scheme: light;
+  --bg:#f4f6f5; --surface:#fff; --surface2:#eef2ef; --text:#111815; --muted:#66706b;
+  --line:#d8dedb; --green:#008d61; --green2:#dff4eb; --blue:#1769c2; --amber:#bd7300;
+  --red:#c43c3c; --purple:#6954b8; --shadow:0 18px 48px rgba(20,35,28,.09);
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg:#080b09; --surface:#101512; --surface2:#151c18; --text:#f4f7f5; --muted:#98a39d;
+  --line:#29322d; --green:#32c995; --green2:#12362a; --blue:#66a8ef; --amber:#f1ad45;
+  --red:#ef6868; --purple:#a996ef; --shadow:none;
+}
+*{box-sizing:border-box} html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;letter-spacing:0}
+button,input,select{font:inherit;color:inherit} button{cursor:pointer}
+.app{max-width:1480px;margin:auto;padding:22px 28px 70px}
+.topbar{display:grid;grid-template-columns:minmax(320px,1fr) auto;gap:12px;align-items:center}
+.inputWrap{display:flex;gap:8px}
+.inputWrap input{width:100%;height:58px;border:2px solid var(--green);background:var(--surface);border-radius:7px;padding:0 18px;font-size:21px;outline:0}
+.btn{height:50px;border:1px solid var(--line);background:var(--surface);border-radius:7px;padding:0 16px;font-weight:700;white-space:nowrap}
+.btn.primary{background:var(--green);border-color:var(--green);color:#fff}.btn.danger{background:#e84e4e;border-color:#e84e4e;color:#fff}
+.toolbar{display:flex;gap:8px}.toolbar .btn{height:58px}
+.stateBand{margin-top:16px;border-block:1px solid var(--line);padding:14px 0;display:grid;gap:12px}
+.controlRow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.controlLabel{width:62px;color:var(--muted);font-weight:700}
+.seg{height:38px;border:1px solid var(--line);background:var(--surface);border-radius:20px;padding:0 13px;font-weight:650}
+.seg.active{background:var(--green);border-color:var(--green);color:#fff}.seg.round.active{background:var(--amber);border-color:var(--amber);color:#fff}
+.numberField{display:flex;align-items:center;gap:6px;color:var(--muted);font-weight:650}.numberField input{width:76px;height:38px;border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:0 10px}
+.signalRow{display:flex;align-items:flex-start;gap:10px}.chips{display:flex;gap:8px;flex-wrap:wrap;min-height:40px}.chip{height:40px;border:1px solid color-mix(in srgb,var(--green) 60%,var(--line));background:var(--surface);border-radius:20px;padding:0 13px;font-weight:650}.chip.item{border-color:color-mix(in srgb,var(--blue) 60%,var(--line))}.chip.blessing{border-color:color-mix(in srgb,var(--purple) 70%,var(--line));color:var(--purple)}
+.parseNote{min-height:20px;color:var(--amber);font-size:14px}.suggestions{display:flex;gap:6px;flex-wrap:wrap}.suggestion{border:1px dashed var(--line);background:transparent;border-radius:5px;padding:6px 10px;color:var(--muted)}
+.godBand{margin-top:16px;padding:16px 0;border-bottom:1px solid var(--line)}.godHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.godHead strong{font-size:17px}.godHead span{font-size:13px;color:var(--muted)}
+.godGrid{display:flex;gap:8px;flex-wrap:wrap}.godBtn{height:46px;border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:5px 12px;display:flex;align-items:center;gap:8px;font-weight:700}.godBtn img{width:30px;height:30px;object-fit:cover;border-radius:50%}.godBtn.active{border-color:var(--purple);box-shadow:inset 0 0 0 1px var(--purple)}.godBtn:disabled{opacity:.35;cursor:not-allowed}
+.godOffers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px}.godOffer{display:grid;grid-template-columns:120px minmax(0,1fr) auto;gap:8px;align-items:center;background:var(--surface2);padding:10px;border-radius:6px}.godOffer select{height:42px;border:1px solid var(--line);background:var(--surface);border-radius:5px;padding:0 10px;min-width:0}.chooseBlessing{height:42px;border:1px solid var(--purple);background:transparent;color:var(--purple);border-radius:5px;padding:0 12px;font-weight:750}.chooseBlessing.active{background:var(--purple);color:#fff}
+.decisionFlow{display:grid;grid-template-columns:1fr 56px 1.15fr 56px 1fr;align-items:stretch;margin-top:18px}.flowCard{min-height:150px;border:1px solid var(--line);background:var(--surface);padding:18px;border-radius:7px}.flowCard.current{border-color:var(--green);background:color-mix(in srgb,var(--green2) 45%,var(--surface))}.flowLabel{font-size:13px;color:var(--muted);font-weight:750}.flowCard h2{font-size:24px;margin:9px 0 8px;line-height:1.25}.flowCard p{margin:0;color:var(--muted);line-height:1.55}.arrow{display:flex;align-items:center;justify-content:center;color:var(--green);font-size:30px;font-weight:800}
+.actionBand{margin-top:12px;border-left:6px solid var(--green);background:var(--surface);padding:16px 18px;border-radius:6px}.actionHead{display:flex;align-items:center;justify-content:space-between;gap:12px}.modeBadge{display:inline-flex;align-items:center;height:32px;border-radius:16px;padding:0 12px;background:var(--green);color:#fff;font-weight:800}.modeBadge.observe{background:var(--amber)}.modeBadge.flex{background:var(--blue)}.actionHead p{margin:0;color:var(--muted)}
+.actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}.action{min-height:88px;border-top:3px solid var(--green);background:var(--surface2);padding:13px;border-radius:5px;font-size:18px;font-weight:700;line-height:1.45}.action b{display:block;color:var(--muted);font-size:12px;margin-bottom:5px}
+.sectionHead{display:flex;justify-content:space-between;align-items:end;margin-top:26px;margin-bottom:10px}.sectionHead h2{margin:0;font-size:23px}.sectionHead span{color:var(--muted);font-size:13px}
+.routeList{display:grid;gap:10px}.route{border:1px solid var(--line);background:var(--surface);border-radius:7px;padding:16px 18px;display:grid;grid-template-columns:minmax(0,1fr) 110px;gap:14px;position:relative}.route.top{border-color:var(--green);box-shadow:var(--shadow)}.routeMain{min-width:0}.routeTitle{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.routeTitle h3{font-size:21px;margin:0}.source{font-size:12px;border:1px solid var(--line);border-radius:12px;padding:3px 8px;color:var(--muted)}.source.model{border-color:var(--blue);color:var(--blue)}.routeMeta{margin-top:8px;color:var(--muted);line-height:1.5}.routeEvidence{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.evidence{background:var(--surface2);border-radius:4px;padding:5px 8px;font-size:13px}.breakdown{display:grid;grid-template-columns:repeat(5,minmax(80px,1fr));gap:6px;margin-top:11px}.metric{border-top:2px solid var(--line);padding-top:5px;color:var(--muted);font-size:12px}.metric strong{display:block;color:var(--text);font-size:15px;margin-top:2px}.routeScore{text-align:right;font-size:34px;font-weight:850;color:var(--green)}.routeScore small{display:block;font-size:12px;color:var(--muted);font-weight:600;margin-top:5px}.openRoute{align-self:end;height:38px;border:1px solid var(--green);background:transparent;color:var(--green);border-radius:5px;font-weight:750}
+.radar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.radarRow{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:13px 15px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px}.radarRow strong{display:block;margin-bottom:5px}.radarRow span{color:var(--muted);font-size:14px}.deficit{color:var(--amber)!important;font-weight:800}
+.empty{padding:24px;color:var(--muted);text-align:center;border:1px dashed var(--line);border-radius:6px}
+dialog{width:min(1180px,94vw);max-height:90vh;border:1px solid var(--line);border-radius:8px;padding:0;background:var(--surface);color:var(--text);box-shadow:0 24px 80px rgba(0,0,0,.35)}dialog::backdrop{background:rgba(0,0,0,.68)}.modalHead{position:sticky;top:0;background:var(--surface);z-index:2;padding:18px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:14px}.modalHead h2{margin:0;font-size:24px}.close{width:42px;height:42px;border:1px solid var(--line);background:var(--surface);border-radius:50%;font-size:22px}.modalBody{padding:18px 22px 28px}.stageTabs{display:flex;gap:7px;margin-bottom:14px}.stageTab{height:38px;border:1px solid var(--line);background:var(--surface2);border-radius:5px;padding:0 14px;font-weight:750}.stageTab.active{background:var(--green);border-color:var(--green);color:#fff}
+.boardWrap{display:grid;grid-template-columns:minmax(520px,1.4fr) minmax(280px,.8fr);gap:18px}.board{display:grid;grid-template-columns:repeat(7,1fr);grid-template-rows:repeat(4,94px);gap:7px;padding:12px;background:var(--bg);border:1px solid var(--line);border-radius:6px}.hex{border:1px dashed var(--line);border-radius:6px;padding:7px;font-size:12px;overflow:hidden}.hex.filled{border-style:solid;background:var(--surface2)}.hex.carry{border-color:var(--green);box-shadow:inset 0 0 0 1px var(--green)}.hex b{display:block;font-size:14px;margin-bottom:4px}.hex span{display:block;color:var(--muted);line-height:1.25}.detailAside h3{font-size:15px;margin:0 0 7px}.detailAside p{margin:0 0 16px;color:var(--muted);line-height:1.6}.traitTags{display:flex;gap:6px;flex-wrap:wrap}.traitTag{border:1px solid var(--line);border-radius:14px;padding:5px 9px;font-size:13px}
+@media(max-width:980px){.app{padding:14px}.topbar{grid-template-columns:1fr}.toolbar{overflow:auto}.decisionFlow{grid-template-columns:1fr}.arrow{height:34px;transform:rotate(90deg)}.actions,.godOffers,.radar{grid-template-columns:1fr}.route{grid-template-columns:1fr}.routeScore{text-align:left}.breakdown{grid-template-columns:repeat(2,1fr)}.boardWrap{grid-template-columns:1fr}.board{grid-template-rows:repeat(4,82px)}}
+</style>
+</head>
+<body>
+<main class="app">
+  <header class="topbar">
+    <div>
+      <div class="inputWrap">
+        <input id="signalInput" autocomplete="off" autofocus placeholder="输入棋子、星级、装备或赐福，按回车录入">
+        <button class="btn primary" id="addSignal" type="button">录入</button>
+      </div>
+      <div class="parseNote" id="parseNote"></div>
+      <div class="suggestions" id="suggestions"></div>
+    </div>
+    <nav class="toolbar">
+      <a class="btn" href="star-god.html" style="display:grid;place-items:center;text-decoration:none">赐福台</a>
+      <a class="btn" href="index.html" style="display:grid;place-items:center;text-decoration:none">研究面板</a>
+      <button class="btn" id="themeBtn" type="button">切换明暗</button>
+      <button class="btn danger" id="newGame" type="button">新的一局</button>
+    </nav>
+  </header>
+
+  <section class="stateBand">
+    <div class="controlRow"><span class="controlLabel">等级</span><div id="levels"></div></div>
+    <div class="controlRow">
+      <span class="controlLabel">回合</span><div id="rounds"></div>
+      <label class="numberField">血量 <input id="hp" type="number" min="1" max="100"></label>
+      <label class="numberField">金币 <input id="gold" type="number" min="0" max="200"></label>
+    </div>
+    <div class="signalRow"><span class="controlLabel">信号</span><div class="chips" id="chips"></div></div>
+  </section>
+
+  <section class="godBand">
+    <div class="godHead"><strong>本局两位星神与眼前赐福</strong><span id="godStatus">0/2 · 未录实际赐福时不进入阵容加分</span></div>
+    <div class="godGrid" id="godGrid"></div>
+    <div class="godOffers" id="godOffers"></div>
+  </section>
+
+  <section class="decisionFlow" id="decisionFlow"></section>
+  <section class="actionBand" id="actionBand"></section>
+
+  <div class="sectionHead"><h2>实时路线</h2><span>卡牌缺口只按面值，不使用未自证商店概率</span></div>
+  <section class="routeList" id="routeList"></section>
+
+  <div class="sectionHead"><h2>换线雷达</h2><span>新信号录入后重新计算，不继承输入顺序</span></div>
+  <section class="radar" id="radar"></section>
+</main>
+
+<dialog id="routeDialog">
+  <div class="modalHead"><div><div class="flowLabel" id="modalSource"></div><h2 id="modalTitle"></h2></div><button class="close" id="closeDialog" type="button">×</button></div>
+  <div class="modalBody">
+    <div class="stageTabs" id="stageTabs"></div>
+    <div class="boardWrap">
+      <div class="board" id="board"></div>
+      <aside class="detailAside" id="detailAside"></aside>
+    </div>
+  </div>
+</dialog>
+
+<script src="star-god-data.js"></script>
+<script src="star-god-lineup-data.js"></script>
+<script src="star-god-core.js"></script>
+<script src="star-god-match-core.js"></script>
+<script>
+(() => {
+  "use strict";
+  const catalog = window.STAR_GOD_DATA;
+  const routeData = window.STAR_GOD_LINEUP_DATA;
+  const Core = window.StarGodMatchCore;
+  const StarCore = window.StarGodCore;
+  if (!catalog || !routeData || !Core || !StarCore) throw new Error("星神比赛模式数据未载入");
+
+  const STORAGE = "jcc-star-match-state";
+  const ROUNDS = ["2-1","2-5","3-1","3-2","3-5","4-1","4-2","4-5","5-1","5-5","6-1"];
+  const $ = id => document.getElementById(id);
+  const defaultState = () => ({
+    level:3, round:"2-1", hp:100, gold:10, units:[], items:[], manualBlessings:[],
+    offeredGodIds:[], godStage:2, offerChoices:{2:{},3:{},4:{}}, chosenBlessings:{2:"",3:"",4:""},
+  });
+  let ui;
+  try { ui = { ...defaultState(), ...JSON.parse(localStorage.getItem(STORAGE) || "{}") }; }
+  catch { ui = defaultState(); }
+  ui.offerChoices = { 2:{},3:{},4:{}, ...(ui.offerChoices || {}) };
+  ui.chosenBlessings = { 2:"",3:"",4:"", ...(ui.chosenBlessings || {}) };
+  let currentResult = null;
+  let openRoute = null;
+  let openStage = "final";
+
+  function save(){ localStorage.setItem(STORAGE, JSON.stringify(ui)); }
+  function esc(value){ return String(value ?? "").replace(/[&<>"']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[char])); }
+  function stageFromRound(round){ const stage=Number(String(round).split("-")[0]); return stage<=2?2:stage===3?3:4; }
+  function chosenBlessingIds(){ return [...new Set([...Object.values(ui.chosenBlessings).filter(Boolean).map(Number),...(ui.manualBlessings||[]).map(Number)])]; }
+  function stateForCore(){ return Core.createState({level:ui.level,round:ui.round,hp:ui.hp,gold:ui.gold,units:ui.units,items:ui.items,blessings:chosenBlessingIds(),offeredGodIds:ui.offeredGodIds}); }
+
+  function renderControls(){
+    $("levels").innerHTML = Array.from({length:9},(_,i)=>`<button class="seg ${ui.level===i+1?"active":""}" data-level="${i+1}">${i+1}</button>`).join("");
+    $("levels").querySelectorAll("button").forEach(button=>button.onclick=()=>{ui.level=Number(button.dataset.level);render();});
+    $("rounds").innerHTML = ROUNDS.map(round=>`<button class="seg round ${ui.round===round?"active":""}" data-round="${round}">${round}</button>`).join("");
+    $("rounds").querySelectorAll("button").forEach(button=>button.onclick=()=>{ui.round=button.dataset.round;ui.godStage=stageFromRound(ui.round);render();});
+    $("hp").value=ui.hp;$("gold").value=ui.gold;
+  }
+
+  function renderChips(){
+    const unitHtml=ui.units.map(unit=>`<button class="chip" data-kind="unit" data-value="${esc(unit.name)}">${esc(unit.name)}·${unit.star}星 ×</button>`).join("");
+    const itemHtml=ui.items.map((name,index)=>`<button class="chip item" data-kind="item" data-index="${index}" data-value="${esc(name)}">${esc(name)} ×</button>`).join("");
+    const blessingHtml=chosenBlessingIds().map(id=>catalog.blessings.find(row=>Number(row.id)===Number(id))).filter(Boolean).map(row=>`<button class="chip blessing" data-kind="blessing" data-value="${row.id}">${esc(row.name)} ×</button>`).join("");
+    $("chips").innerHTML=unitHtml+itemHtml+blessingHtml||`<span style="color:var(--muted);padding:9px 0">尚未录入棋子、装备或已选赐福</span>`;
+    $("chips").querySelectorAll("button").forEach(button=>button.onclick=()=>{
+      if(button.dataset.kind==="unit")ui.units=ui.units.filter(row=>row.name!==button.dataset.value);
+      if(button.dataset.kind==="item")ui.items.splice(Number(button.dataset.index),1);
+      if(button.dataset.kind==="blessing"){ui.manualBlessings=(ui.manualBlessings||[]).filter(id=>String(id)!==button.dataset.value);for(const stage of [2,3,4])if(String(ui.chosenBlessings[stage])===button.dataset.value)ui.chosenBlessings[stage]="";}
+      render();
+    });
+  }
+
+  function addSignals(parsed){
+    for(const incoming of parsed.units){
+      const existing=ui.units.find(row=>row.name===incoming.name);
+      if(existing)existing.star=Math.max(existing.star,incoming.star); else ui.units.push(incoming);
+    }
+    ui.items=[...ui.items,...parsed.items];
+    ui.manualBlessings=[...new Set([...(ui.manualBlessings||[]),...(parsed.blessings||[]).map(Number)])];
+  }
+
+  function submitInput(){
+    const text=$("signalInput").value.trim(); if(!text)return;
+    const parsed=Core.parseSignals(text,catalog);
+    addSignals(parsed);
+    const count=parsed.units.length+parsed.items.length+parsed.blessings.length;
+    const blessingNames=(parsed.blessings||[]).map(id=>catalog.blessings.find(row=>Number(row.id)===Number(id))?.name).filter(Boolean);
+    $("parseNote").textContent=count?`已识别：${[...parsed.units.map(row=>`${row.name}${row.star}星`),...parsed.items,...blessingNames].join("、")}`:`没识别：${text}`;
+    $("signalInput").value="";$("suggestions").innerHTML="";
+    render();
+  }
+
+  function renderSuggestions(){
+    const q=$("signalInput").value.trim().toLowerCase();
+    if(!q){$("suggestions").innerHTML="";return;}
+    const candidates=[
+      ...catalog.heroes.map(row=>({kind:"unit",name:row.name})),
+      ...catalog.items.filter(row=>["基础装备","成型装备"].includes(row.type)).map(row=>({kind:"item",name:row.name})),
+      ...catalog.blessings.map(row=>({kind:"blessing",name:row.name,id:row.id})),
+    ].filter(row=>row.name.toLowerCase().includes(q)).slice(0,8);
+    $("suggestions").innerHTML=candidates.map((row,index)=>`<button class="suggestion" data-index="${index}">${esc(row.name)}</button>`).join("");
+    $("suggestions").querySelectorAll("button").forEach(button=>button.onclick=()=>{
+      const row=candidates[Number(button.dataset.index)];
+      if(row.kind==="unit")addSignals({units:[{name:row.name,star:1}],items:[]});
+      else if(row.kind==="item")addSignals({units:[],items:[row.name]});
+      else addSignals({units:[],items:[],blessings:[row.id]});
+      $("signalInput").value="";$("suggestions").innerHTML="";render();
+    });
+  }
+
+  function godIcon(id){return `assets/star-god/${id}.png`;}
+  function renderGods(){
+    $("godGrid").innerHTML=catalog.gods.map(god=>`<button class="godBtn ${ui.offeredGodIds.includes(god.id)?"active":""}" data-id="${god.id}" ${!ui.offeredGodIds.includes(god.id)&&ui.offeredGodIds.length>=2?"disabled":""}><img src="${godIcon(god.id)}" alt=""><span>${esc(god.name)}</span></button>`).join("");
+    $("godGrid").querySelectorAll("button").forEach(button=>button.onclick=()=>{
+      const id=Number(button.dataset.id);
+      if(ui.offeredGodIds.includes(id)){ui.offeredGodIds=ui.offeredGodIds.filter(value=>value!==id);for(const stage of [2,3,4]){if(String(ui.chosenBlessings[stage])===String(ui.offerChoices[stage][id]||""))ui.chosenBlessings[stage]="";delete ui.offerChoices[stage][id];}}
+      else if(ui.offeredGodIds.length<2)ui.offeredGodIds.push(id);
+      render();
+    });
+    const choices=ui.offerChoices[ui.godStage]||{};
+    if(ui.offeredGodIds.length!==2){$("godOffers").innerHTML="";$("godStatus").textContent=`${ui.offeredGodIds.length}/2 · 先录本局固定两位星神`;return;}
+    const godState=StarCore.createState({stage:ui.godStage,round:`${ui.godStage}-4`,level:ui.level,hp:ui.hp,gold:ui.gold});
+    const ranked=StarCore.rankGodOffers(catalog.blessings,godState,ui.offeredGodIds,choices);
+    const exact=ui.offeredGodIds.every(id=>choices[id]);
+    const recommended=exact?ranked[0]?.blessingId:null;
+    $("godStatus").textContent=`2/2 · 当前${ui.godStage}-4 · ${exact?`模型倾向${ranked[0]?.name||"待定"}`:"请录两张实际赐福"}`;
+    $("godOffers").innerHTML=ui.offeredGodIds.map(id=>{
+      const god=catalog.gods.find(row=>row.id===id);
+      const options=catalog.blessings.filter(row=>row.godId===id&&row.stage===ui.godStage&&!row.mainGod);
+      const selected=choices[id]||"";
+      const chosen=String(ui.chosenBlessings[ui.godStage])===String(selected)&&selected;
+      return `<div class="godOffer"><strong>${esc(god.name)}·${ui.godStage}-4</strong><select data-god="${id}"><option value="">录实际赐福</option>${options.map(row=>`<option value="${row.id}" ${String(row.id)===String(selected)?"selected":""}>${esc(row.name)}</option>`).join("")}</select><button class="chooseBlessing ${chosen?"active":""}" data-choose="${id}" ${!selected?"disabled":""}>${Number(selected)===Number(recommended)?"推荐 ":""}${chosen?"已选":"选择"}</button></div>`;
+    }).join("");
+    $("godOffers").querySelectorAll("select").forEach(select=>select.onchange=()=>{if(select.value)ui.offerChoices[ui.godStage][select.dataset.god]=Number(select.value);else delete ui.offerChoices[ui.godStage][select.dataset.god];render();});
+    $("godOffers").querySelectorAll("[data-choose]").forEach(button=>button.onclick=()=>{const id=button.dataset.choose;const value=ui.offerChoices[ui.godStage][id];if(value)ui.chosenBlessings[ui.godStage]=Number(value);render();});
+  }
+
+  function sourceLabel(route){return route.source==="official-seed"?"官方种子":route.source==="model-variant"?"反事实改良":"束搜索生成";}
+  function renderDecision(){
+    const top=currentResult.top;
+    if(!top){$("decisionFlow").innerHTML=`<div class="empty">暂无可计算路线</div>`;$("actionBand").innerHTML="";return;}
+    const board=ui.units.length?ui.units.map(row=>`${row.name}${row.star>1?`·${row.star}星`:""}`).join("、"):"尚未录入上场棋子";
+    $("decisionFlow").innerHTML=`
+      <article class="flowCard"><div class="flowLabel">当前资产</div><h2>${esc(board)}</h2><p>${ui.items.length?`装备：${ui.items.map(esc).join("、")}`:"装备尚未录入"}</p></article>
+      <div class="arrow">→</div>
+      <article class="flowCard current"><div class="flowLabel">当前判断</div><h2>${esc(currentResult.mode.label)} · ${esc(top.carry.name)}方向</h2><p>${esc(currentResult.mode.reason)}</p></article>
+      <div class="arrow">→</div>
+      <article class="flowCard"><div class="flowLabel">终局上限参考</div><h2>${esc(top.name)}</h2><p>${top.activeTraits.slice(0,4).map(row=>`${row.count}${row.name}`).join(" · ")}；研究分${top.researchScore}</p></article>`;
+    $("actionBand").innerHTML=`<div class="actionHead"><span class="modeBadge ${currentResult.mode.kind}">${esc(currentResult.mode.label)}</span><p>${esc(currentResult.mode.reason)}</p></div><div class="actions">${currentResult.actions.map((text,index)=>`<div class="action"><b>${index+1} · ${["现在做","装备/目标","运营节点"][index]||"动作"}</b>${esc(text)}</div>`).join("")}</div>`;
+  }
+
+  function metric(label,value,tone=""){return `<div class="metric" style="${tone?`border-color:${tone}`:""}">${label}<strong>${value>=0?"+":""}${value}</strong></div>`;}
+  function renderRoutes(){
+    const rows=currentResult.rows.slice(0,3);
+    $("routeList").innerHTML=rows.map((route,index)=>`
+      <article class="route ${index===0?"top":""}">
+        <div class="routeMain">
+          <div class="routeTitle"><h3>#${index+1} ${esc(route.name)}</h3><span class="source ${route.source!=="official-seed"?"model":""}">${sourceLabel(route)}</span><span class="source">主C ${esc(route.carry.name)}·目标${route.carry.targetStar}星</span></div>
+          <div class="routeMeta">当前阶段：${route.targetStage==="early"?"前期":route.targetStage==="middle"?"中期":"后期"} · 缺口卡面${route.gap.faceValue}金 · ${route.gap.gaps.slice(0,4).map(row=>`${row.name}${row.missing>1?`×${row.missing}`:""}`).join("、")||"阶段棋盘已齐"}</div>
+          <div class="routeEvidence">${(route.evidence.length?route.evidence:["暂无已握资产命中，当前主要为上限参考"]).slice(0,4).map(text=>`<span class="evidence">${esc(text)}</span>`).join("")}</div>
+          <div class="breakdown">${metric("棋子",route.parts.units,"var(--green)")}${metric("装备",route.parts.items,"var(--blue)")}${metric("赐福",route.parts.blessings,"var(--purple)")}${metric("研究先验",route.parts.researchPrior)}${metric("缺口",-route.parts.gapPenalty,"var(--red)")}</div>
+        </div>
+        <div style="display:grid"><div class="routeScore">${route.finalScore}<small>确定性路线分</small></div><button class="openRoute" data-route="${esc(route.id)}">前中后期阵容</button></div>
+      </article>`).join("");
+    $("routeList").querySelectorAll(".openRoute").forEach(button=>button.onclick=()=>showRoute(button.dataset.route));
+  }
+
+  function renderRadar(){
+    $("radar").innerHTML=currentResult.radar.length?currentResult.radar.map(row=>`<article class="radarRow"><div><strong>${esc(row.name)}</strong><span>${row.triggers.length?row.triggers.map(esc).join(" + "):"与当前路线高度共用，继续观察"}</span></div><span class="deficit">差${row.deficit}分</span></article>`).join(""):`<div class="empty">当前没有通过模型门槛的换线分支</div>`;
+  }
+
+  function renderBoard(route,stage){
+    const rows=route.stages[stage]||[];
+    const cells=Array.from({length:28},()=>null);
+    for(const row of rows){
+      let r=Number(row.position?.row)||((row.name===route.carry.name)?4:1);
+      let c=Number(row.position?.col)||1;r=Math.max(1,Math.min(4,r));c=Math.max(1,Math.min(7,c));
+      let index=(r-1)*7+(c-1);while(cells[index]&&index<cells.length-1)index+=1;cells[index]=row;
+    }
+    $("board").innerHTML=cells.map(row=>row?`<div class="hex filled ${row.name===route.carry.name?"carry":""}"><b>${row.name===route.carry.name?"主C ":""}${esc(row.name)}</b><span>${row.cost}费${row.items?.length?`<br>${row.items.map(esc).join("<br>")}`:""}</span></div>`:`<div class="hex"></div>`).join("");
+    $("detailAside").innerHTML=`<h3>激活羁绊</h3><div class="traitTags">${route.activeTraits.map(row=>`<span class="traitTag">${row.count}${esc(row.name)}</span>`).join("")}</div><h3 style="margin-top:18px">装备</h3><p>主C ${esc(route.carry.name)}：${route.carry.items.map(esc).join("、")||"按方向补装"}<br>主坦 ${esc(route.primaryTank?.name||"模型前排")}：${(route.primaryTank?.items||[]).map(esc).join("、")||"优先双抗与生命"}</p><h3>运营</h3><p>${esc(route.operation||"按阶段棋盘逐步替换，不提前锁死终局。")}</p><h3>站位</h3><p>${esc(route.positioning||"前排分散承伤，主C后排避开第一轮集火。")}</p>${route.modelChange?`<h3>模型改动</h3><p>${route.modelChange.kind==="single-slot"?`${esc(route.modelChange.removed)} → ${esc(route.modelChange.added)}，棋盘代理分+${route.modelChange.boardGain}`:`束宽${route.modelChange.beamWidth}的8人口搜索候选`}</p>`:""}`;
+  }
+
+  function showRoute(id){
+    openRoute=routeData.routes.find(row=>String(row.id)===String(id));if(!openRoute)return;openStage="final";
+    $("modalSource").textContent=`${sourceLabel(openRoute)} · 研究分${openRoute.researchScore}`;$("modalTitle").textContent=openRoute.name;
+    renderModal();$("routeDialog").showModal();
+  }
+  function renderModal(){
+    $("stageTabs").innerHTML=[["early","前期"],["middle","中期"],["final","后期"]].map(([key,label])=>`<button class="stageTab ${openStage===key?"active":""}" data-stage="${key}">${label} · ${openRoute.stages[key].length}人口</button>`).join("");
+    $("stageTabs").querySelectorAll("button").forEach(button=>button.onclick=()=>{openStage=button.dataset.stage;renderModal();});
+    renderBoard(openRoute,openStage);
+  }
+
+  function render(){
+    save();renderControls();renderChips();renderGods();
+    currentResult=Core.rankRoutes(routeData,stateForCore(),catalog);
+    renderDecision();renderRoutes();renderRadar();
+  }
+
+  $("addSignal").onclick=submitInput;$("signalInput").addEventListener("keydown",event=>{if(event.key==="Enter"){event.preventDefault();submitInput();}});$("signalInput").addEventListener("input",renderSuggestions);
+  $("hp").addEventListener("input",()=>{ui.hp=Math.max(1,Math.min(100,Number($("hp").value)||1));render();});$("gold").addEventListener("input",()=>{ui.gold=Math.max(0,Number($("gold").value)||0);render();});
+  $("themeBtn").onclick=()=>{document.documentElement.dataset.theme=document.documentElement.dataset.theme==="dark"?"light":"dark";};
+  $("newGame").onclick=()=>{ui=defaultState();localStorage.removeItem(STORAGE);$("parseNote").textContent="";render();$("signalInput").focus();};
+  $("closeDialog").onclick=()=>$("routeDialog").close();$("routeDialog").addEventListener("click",event=>{if(event.target===$("routeDialog"))$("routeDialog").close();});
+  render();
+})();
+</script>
+</body>
+</html>
