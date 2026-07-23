@@ -1,0 +1,4362 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-07-17 17:15:02",
+  "experiment": "star-god-state-value-v1",
+  "samples": 5400,
+  "seed": 170717,
+  "formula": "Q(a|s)=E[Σγ^(k-t)(ΔC+ΔE+ΔF)]−λ·CVaRα(L)−κ·Kcommit",
+  "catalog": {
+    "gods": 9,
+    "blessingRows": 141,
+    "uniqueBlessings": 110,
+    "mainGodBlessings": 9,
+    "heroes": 63,
+    "heroVariants": 427,
+    "traits": 34,
+    "items": 262,
+    "augments": 277,
+    "encounters": 20,
+    "lineups": 44,
+    "lineupQuality": {
+      "S": 15,
+      "A": 23,
+      "B": 6
+    }
+  },
+  "byGod": [
+    {
+      "name": "奥瑞利安·索尔",
+      "samples": 12630,
+      "mean": 10.5,
+      "p25": 5.5,
+      "p75": 15.4,
+      "wins": 628,
+      "winShare": 11.6
+    },
+    {
+      "name": "凯尔",
+      "samples": 36060,
+      "mean": 8.8,
+      "p25": 7,
+      "p75": 10.4,
+      "wins": 886,
+      "winShare": 16.4
+    },
+    {
+      "name": "亚索",
+      "samples": 28791,
+      "mean": 8.6,
+      "p25": 8,
+      "p75": 9.1,
+      "wins": 0,
+      "winShare": 0
+    },
+    {
+      "name": "阿狸",
+      "samples": 32298,
+      "mean": 8.4,
+      "p25": 6.5,
+      "p75": 10,
+      "wins": 454,
+      "winShare": 8.4
+    },
+    {
+      "name": "艾克",
+      "samples": 23430,
+      "mean": 8.4,
+      "p25": 3.6,
+      "p75": 11,
+      "wins": 956,
+      "winShare": 17.7
+    },
+    {
+      "name": "伊芙琳",
+      "samples": 28779,
+      "mean": 8.1,
+      "p25": 4.5,
+      "p75": 10.6,
+      "wins": 905,
+      "winShare": 16.8
+    },
+    {
+      "name": "索拉卡",
+      "samples": 30558,
+      "mean": 8,
+      "p25": 6.5,
+      "p75": 9.5,
+      "wins": 0,
+      "winShare": 0
+    },
+    {
+      "name": "韦鲁斯",
+      "samples": 30558,
+      "mean": 7.8,
+      "p25": 3,
+      "p75": 12,
+      "wins": 1571,
+      "winShare": 29.1
+    },
+    {
+      "name": "锤石",
+      "samples": 14421,
+      "mean": 5.1,
+      "p25": 4,
+      "p75": 6.5,
+      "wins": 0,
+      "winShare": 0
+    }
+  ],
+  "byStage": [
+    {
+      "stage": 2,
+      "topGods": [
+        {
+          "name": "凯尔",
+          "samples": 10746,
+          "mean": 10.4,
+          "p25": 7,
+          "p75": 10.4
+        },
+        {
+          "name": "亚索",
+          "samples": 10746,
+          "mean": 8.5,
+          "p25": 8,
+          "p75": 9.1
+        },
+        {
+          "name": "奥瑞利安·索尔",
+          "samples": 3582,
+          "mean": 7.5,
+          "p25": 2.7,
+          "p75": 12.3
+        },
+        {
+          "name": "索拉卡",
+          "samples": 8955,
+          "mean": 7.4,
+          "p25": 6,
+          "p75": 9
+        },
+        {
+          "name": "艾克",
+          "samples": 7164,
+          "mean": 7.1,
+          "p25": 0.4,
+          "p75": 11
+        }
+      ]
+    },
+    {
+      "stage": 3,
+      "topGods": [
+        {
+          "name": "奥瑞利安·索尔",
+          "samples": 3558,
+          "mean": 8.6,
+          "p25": 5.5,
+          "p75": 9.8
+        },
+        {
+          "name": "亚索",
+          "samples": 8895,
+          "mean": 8.6,
+          "p25": 8,
+          "p75": 9.1
+        },
+        {
+          "name": "韦鲁斯",
+          "samples": 12453,
+          "mean": 8.5,
+          "p25": 7,
+          "p75": 13
+        },
+        {
+          "name": "阿狸",
+          "samples": 14232,
+          "mean": 8.4,
+          "p25": 7.6,
+          "p75": 8.4
+        },
+        {
+          "name": "凯尔",
+          "samples": 10674,
+          "mean": 8.2,
+          "p25": 7,
+          "p75": 8.5
+        }
+      ]
+    },
+    {
+      "stage": 4,
+      "topGods": [
+        {
+          "name": "奥瑞利安·索尔",
+          "samples": 5490,
+          "mean": 13.7,
+          "p25": 10.6,
+          "p75": 17.8
+        },
+        {
+          "name": "阿狸",
+          "samples": 7320,
+          "mean": 10.9,
+          "p25": 10,
+          "p75": 11.5
+        },
+        {
+          "name": "伊芙琳",
+          "samples": 9150,
+          "mean": 10.7,
+          "p25": 9.2,
+          "p75": 12.4
+        },
+        {
+          "name": "艾克",
+          "samples": 9150,
+          "mean": 10.2,
+          "p25": 7,
+          "p75": 13.8
+        },
+        {
+          "name": "韦鲁斯",
+          "samples": 9150,
+          "mean": 9.2,
+          "p25": 4,
+          "p75": 13
+        }
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "2-4高血量物理开局",
+      "state": {
+        "stage": 2,
+        "round": "2-4",
+        "level": 5,
+        "hp": 96,
+        "gold": 20,
+        "experienceToLevel": 18,
+        "streak": 0,
+        "expectedRounds": 13,
+        "sharedChoiceCount": 1,
+        "boardStars": 8,
+        "distinctCompletedItems": 3,
+        "interestEarned": 4,
+        "refreshCount": 0,
+        "distinctTraits": 4,
+        "upgradeReady": false,
+        "componentDirection": "physical",
+        "ownedComponents": [],
+        "ownedCosts": [],
+        "godHistory": [],
+        "blessingHistory": [],
+        "paintedHexes": 0,
+        "currentMainGod": null
+      },
+      "top": [
+        {
+          "blessingId": 1710080,
+          "godId": 10,
+          "godName": "伊芙琳",
+          "name": "决赛圈胜负手",
+          "stage": 2,
+          "mainGod": false,
+          "total": 27.6,
+          "parts": {
+            "combat": 0,
+            "economy": 28.3,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0.8,
+            "commitment": 0
+          },
+          "notes": [
+            "即时3金币"
+          ],
+          "coverage": "modeled",
+          "description": "获得3金币。如果你在前4名，获得30额外金币。"
+        },
+        {
+          "blessingId": 1704050,
+          "godId": 4,
+          "godName": "凯尔",
+          "name": "锻造器转变",
+          "stage": 2,
+          "mainGod": false,
+          "total": 20.1,
+          "parts": {
+            "combat": 0,
+            "economy": 2,
+            "flexibility": 18.1,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [
+            "即时2金币",
+            "1件基础装备价值",
+            "装备供给具有后续复利"
+          ],
+          "coverage": "modeled",
+          "description": "每当你将要获得一个基础装备时，转而获得1个【基础装备锻造器】。获得2金币。"
+        },
+        {
+          "blessingId": 1707040,
+          "godId": 7,
+          "godName": "艾克",
+          "name": "随机神器",
+          "stage": 2,
+          "mainGod": false,
+          "total": 16.3,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 18.7,
+            "risk": 2.5,
+            "commitment": 0
+          },
+          "notes": [
+            "8回合延迟，存活率85%"
+          ],
+          "coverage": "modeled",
+          "description": "在8个回合后，获得1个随机神器。"
+        },
+        {
+          "blessingId": 1705080,
+          "godId": 5,
+          "godName": "阿狸",
+          "name": "贪婪之宝箱",
+          "stage": 2,
+          "mainGod": false,
+          "total": 13.5,
+          "parts": {
+            "combat": 0,
+            "economy": 14,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0.5,
+            "commitment": 0
+          },
+          "notes": [
+            "即时2金币",
+            "1人平分12金"
+          ],
+          "coverage": "modeled",
+          "description": "获得2金币，外加由选择这个的所有玩家平分12金币(向下取整)。"
+        },
+        {
+          "blessingId": 1706040,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "恋人",
+          "stage": 2,
+          "mainGod": false,
+          "total": 12,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 12,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "获得拥有一个相同羁绊的一个3费弈子和一个2费弈子。"
+        },
+        {
+          "blessingId": 1707010,
+          "godId": 7,
+          "godName": "艾克",
+          "name": "迅捷蟹派对",
+          "stage": 2,
+          "mainGod": false,
+          "total": 11,
+          "parts": {
+            "combat": 0,
+            "economy": 7,
+            "flexibility": 4,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "你的下一个PVE回合会被替换为带有额外战利品的迅捷蟹回合！"
+        },
+        {
+          "blessingId": 1703030,
+          "godId": 3,
+          "godName": "亚索",
+          "name": "增速格",
+          "stage": 2,
+          "mainGod": false,
+          "total": 10.9,
+          "parts": {
+            "combat": 12.4,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 1.5
+          },
+          "notes": [
+            "永久格强度×1.3"
+          ],
+          "coverage": "modeled",
+          "description": "将这个格子放在一个弈子上。这个格子中的友方弈子会获得30%攻击速度。 [消耗品-这个装备会在使用后消失。]"
+        },
+        {
+          "blessingId": 1704021,
+          "godId": 4,
+          "godName": "凯尔",
+          "name": "反曲之弓",
+          "stage": 2,
+          "mainGod": false,
+          "total": 10.4,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 10.4,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [
+            "反曲之弓→物理吻合"
+          ],
+          "coverage": "modeled",
+          "description": "获得1个【反曲之弓】。"
+        }
+      ],
+      "byGod": [
+        {
+          "blessingId": 1710080,
+          "godId": 10,
+          "godName": "伊芙琳",
+          "name": "决赛圈胜负手",
+          "stage": 2,
+          "mainGod": false,
+          "total": 27.6,
+          "parts": {
+            "combat": 0,
+            "economy": 28.3,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0.8,
+            "commitment": 0
+          },
+          "notes": [
+            "即时3金币"
+          ],
+          "coverage": "modeled",
+          "description": "获得3金币。如果你在前4名，获得30额外金币。"
+        },
+        {
+          "blessingId": 1704050,
+          "godId": 4,
+          "godName": "凯尔",
+          "name": "锻造器转变",
+          "stage": 2,
+          "mainGod": false,
+          "total": 20.1,
+          "parts": {
+            "combat": 0,
+            "economy": 2,
+            "flexibility": 18.1,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [
+            "即时2金币",
+            "1件基础装备价值",
+            "装备供给具有后续复利"
+          ],
+          "coverage": "modeled",
+          "description": "每当你将要获得一个基础装备时，转而获得1个【基础装备锻造器】。获得2金币。"
+        },
+        {
+          "blessingId": 1707040,
+          "godId": 7,
+          "godName": "艾克",
+          "name": "随机神器",
+          "stage": 2,
+          "mainGod": false,
+          "total": 16.3,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 18.7,
+            "risk": 2.5,
+            "commitment": 0
+          },
+          "notes": [
+            "8回合延迟，存活率85%"
+          ],
+          "coverage": "modeled",
+          "description": "在8个回合后，获得1个随机神器。"
+        },
+        {
+          "blessingId": 1705080,
+          "godId": 5,
+          "godName": "阿狸",
+          "name": "贪婪之宝箱",
+          "stage": 2,
+          "mainGod": false,
+          "total": 13.5,
+          "parts": {
+            "combat": 0,
+            "economy": 14,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0.5,
+            "commitment": 0
+          },
+          "notes": [
+            "即时2金币",
+            "1人平分12金"
+          ],
+          "coverage": "modeled",
+          "description": "获得2金币，外加由选择这个的所有玩家平分12金币(向下取整)。"
+        },
+        {
+          "blessingId": 1706040,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "恋人",
+          "stage": 2,
+          "mainGod": false,
+          "total": 12,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 12,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "获得拥有一个相同羁绊的一个3费弈子和一个2费弈子。"
+        },
+        {
+          "blessingId": 1703030,
+          "godId": 3,
+          "godName": "亚索",
+          "name": "增速格",
+          "stage": 2,
+          "mainGod": false,
+          "total": 10.9,
+          "parts": {
+            "combat": 12.4,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 1.5
+          },
+          "notes": [
+            "永久格强度×1.3"
+          ],
+          "coverage": "modeled",
+          "description": "将这个格子放在一个弈子上。这个格子中的友方弈子会获得30%攻击速度。 [消耗品-这个装备会在使用后消失。]"
+        },
+        {
+          "blessingId": 1709060,
+          "godId": 9,
+          "godName": "索拉卡",
+          "name": "索拉卡的拥抱",
+          "stage": 2,
+          "mainGod": false,
+          "total": 9,
+          "parts": {
+            "combat": 9,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [
+            "首个阵亡位获得下回合护盾"
+          ],
+          "coverage": "modeled",
+          "description": "在战斗开始时，为在上一场战斗中第一个阵亡的那个友军提供500到900护盾值，基于当前阶段。"
+        },
+        {
+          "blessingId": 1708010,
+          "godId": 8,
+          "godName": "锤石",
+          "name": "随机恩赐",
+          "stage": 2,
+          "mainGod": false,
+          "total": 6.5,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 9,
+            "delay": 0,
+            "risk": 2.5,
+            "commitment": 0
+          },
+          "notes": [
+            "跨星神随机池，按均值-CVaR估值"
+          ],
+          "coverage": "modeled",
+          "description": "从任一星神处获得一个随机恩赐，以及2金币。"
+        },
+        {
+          "blessingId": 1702040,
+          "godId": 2,
+          "godName": "奥瑞利安·索尔",
+          "name": "羁绊探险",
+          "stage": 2,
+          "mainGod": false,
+          "total": 5.5,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 4.9,
+            "delay": 3.2,
+            "risk": 2.6,
+            "commitment": 0
+          },
+          "notes": [
+            "任务完成率35%"
+          ],
+          "coverage": "modeled",
+          "description": "在一场玩家对战中登场6个非唯一羁绊后，获得1个随机【纹章】和1个【装备重铸器】。"
+        }
+      ]
+    },
+    {
+      "name": "3-4低血量止血",
+      "state": {
+        "stage": 3,
+        "round": "2-4",
+        "level": 7,
+        "hp": 24,
+        "gold": 28,
+        "experienceToLevel": 18,
+        "streak": -3,
+        "expectedRounds": 8,
+        "sharedChoiceCount": 1,
+        "boardStars": 8,
+        "distinctCompletedItems": 3,
+        "interestEarned": 4,
+        "refreshCount": 0,
+        "distinctTraits": 4,
+        "upgradeReady": false,
+        "componentDirection": "tank",
+        "ownedComponents": [],
+        "ownedCosts": [],
+        "godHistory": [],
+        "blessingHistory": [],
+        "paintedHexes": 0,
+        "currentMainGod": null
+      },
+      "top": [
+        {
+          "blessingId": 1705081,
+          "godId": 5,
+          "godName": "阿狸",
+          "name": "贪婪之宝箱+",
+          "stage": 3,
+          "mainGod": false,
+          "total": 18.5,
+          "parts": {
+            "combat": 0,
+            "economy": 19,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0.5,
+            "commitment": 0
+          },
+          "notes": [
+            "即时3金币",
+            "1人平分16金"
+          ],
+          "coverage": "modeled",
+          "description": "获得3金币，外加由选择这个的所有玩家平分16金币(向下取整)。"
+        },
+        {
+          "blessingId": 1706041,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "恋人+",
+          "stage": 3,
+          "mainGod": false,
+          "total": 14,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 14,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "获得拥有一个相同羁绊的一个4费弈子和一个3费弈子。"
+        },
+        {
+          "blessingId": 1706080,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "4费商店",
+          "stage": 3,
+          "mainGod": false,
+          "total": 13,
+          "parts": {
+            "combat": 0,
+            "economy": 13,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "你的下一次商店包含全4费弈子。你购买的第一个是免费的。"
+        },
+        {
+          "blessingId": 1709030,
+          "godId": 9,
+          "godName": "索拉卡",
+          "name": "赐福：体型",
+          "stage": 3,
+          "mainGod": false,
+          "total": 12,
+          "parts": {
+            "combat": 12,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "永久使一个弈子的生命值提升350并且体型提升20%。 [消耗品-这个装备会在使用后消失。]"
+        },
+        {
+          "blessingId": 1709060,
+          "godId": 9,
+          "godName": "索拉卡",
+          "name": "索拉卡的拥抱",
+          "stage": 3,
+          "mainGod": false,
+          "total": 12,
+          "parts": {
+            "combat": 12,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [
+            "首个阵亡位获得下回合护盾"
+          ],
+          "coverage": "modeled",
+          "description": "在战斗开始时，为在上一场战斗中第一个阵亡的那个友军提供500到900护盾值，基于当前阶段。"
+        },
+        {
+          "blessingId": 1705071,
+          "godId": 5,
+          "godName": "阿狸",
+          "name": "神圣投资+",
+          "stage": 3,
+          "mainGod": false,
+          "total": 11.8,
+          "parts": {
+            "combat": 0,
+            "economy": 11.8,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [
+            "即时6金币",
+            "最大利息上限产生复利"
+          ],
+          "coverage": "modeled",
+          "description": "你的最大利息提升1。获得6金币。"
+        },
+        {
+          "blessingId": 1707011,
+          "godId": 7,
+          "godName": "艾克",
+          "name": "迅捷蟹派对",
+          "stage": 3,
+          "mainGod": false,
+          "total": 11,
+          "parts": {
+            "combat": 0,
+            "economy": 7,
+            "flexibility": 4,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "你的下一个PVE回合会被替换为带有额外战利品的迅捷蟹回合！"
+        },
+        {
+          "blessingId": 1703060,
+          "godId": 3,
+          "godName": "亚索",
+          "name": "冰晶格",
+          "stage": 3,
+          "mainGod": false,
+          "total": 10.4,
+          "parts": {
+            "combat": 11.9,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 1.5
+          },
+          "notes": [
+            "永久格强度×1.25"
+          ],
+          "coverage": "modeled",
+          "description": "将这个格子放在一个弈子上。这个格子中的友方弈子在首次跌下40%生命值时，会被冻结1秒并治疗自身30%最大生命值。 [消耗品-这个装备会在使用后消失。]"
+        }
+      ],
+      "byGod": [
+        {
+          "blessingId": 1705081,
+          "godId": 5,
+          "godName": "阿狸",
+          "name": "贪婪之宝箱+",
+          "stage": 3,
+          "mainGod": false,
+          "total": 18.5,
+          "parts": {
+            "combat": 0,
+            "economy": 19,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0.5,
+            "commitment": 0
+          },
+          "notes": [
+            "即时3金币",
+            "1人平分16金"
+          ],
+          "coverage": "modeled",
+          "description": "获得3金币，外加由选择这个的所有玩家平分16金币(向下取整)。"
+        },
+        {
+          "blessingId": 1706041,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "恋人+",
+          "stage": 3,
+          "mainGod": false,
+          "total": 14,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 14,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "获得拥有一个相同羁绊的一个4费弈子和一个3费弈子。"
+        },
+        {
+          "blessingId": 1709030,
+          "godId": 9,
+          "godName": "索拉卡",
+          "name": "赐福：体型",
+          "stage": 3,
+          "mainGod": false,
+          "total": 12,
+          "parts": {
+            "combat": 12,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "永久使一个弈子的生命值提升350并且体型提升20%。 [消耗品-这个装备会在使用后消失。]"
+        },
+        {
+          "blessingId": 1707011,
+          "godId": 7,
+          "godName": "艾克",
+          "name": "迅捷蟹派对",
+          "stage": 3,
+          "mainGod": false,
+          "total": 11,
+          "parts": {
+            "combat": 0,
+            "economy": 7,
+            "flexibility": 4,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "你的下一个PVE回合会被替换为带有额外战利品的迅捷蟹回合！"
+        },
+        {
+          "blessingId": 1704025,
+          "godId": 4,
+          "godName": "凯尔",
+          "name": "负极斗篷",
+          "stage": 3,
+          "mainGod": false,
+          "total": 10.4,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 10.4,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [
+            "负极斗篷→前排吻合"
+          ],
+          "coverage": "modeled",
+          "description": "获得1个【负极斗篷】。"
+        },
+        {
+          "blessingId": 1703060,
+          "godId": 3,
+          "godName": "亚索",
+          "name": "冰晶格",
+          "stage": 3,
+          "mainGod": false,
+          "total": 10.4,
+          "parts": {
+            "combat": 11.9,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 1.5
+          },
+          "notes": [
+            "永久格强度×1.25"
+          ],
+          "coverage": "modeled",
+          "description": "将这个格子放在一个弈子上。这个格子中的友方弈子在首次跌下40%生命值时，会被冻结1秒并治疗自身30%最大生命值。 [消耗品-这个装备会在使用后消失。]"
+        },
+        {
+          "blessingId": 1710020,
+          "godId": 10,
+          "godName": "伊芙琳",
+          "name": "随机纹章",
+          "stage": 3,
+          "mainGod": false,
+          "total": 9,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 12,
+            "delay": 0,
+            "risk": 3,
+            "commitment": 0
+          },
+          "notes": [
+            "1个纹章价值",
+            "支付3生命"
+          ],
+          "coverage": "modeled",
+          "description": "获得1个随机纹章。失去3小小英雄生命值。"
+        },
+        {
+          "blessingId": 1708011,
+          "godId": 8,
+          "godName": "锤石",
+          "name": "随机恩赐",
+          "stage": 3,
+          "mainGod": false,
+          "total": 6.5,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 9,
+            "delay": 0,
+            "risk": 2.5,
+            "commitment": 0
+          },
+          "notes": [
+            "跨星神随机池，按均值-CVaR估值"
+          ],
+          "coverage": "modeled",
+          "description": "从任一星神处获得一个随机恩赐，以及3金币。"
+        },
+        {
+          "blessingId": 1702040,
+          "godId": 2,
+          "godName": "奥瑞利安·索尔",
+          "name": "羁绊探险",
+          "stage": 3,
+          "mainGod": false,
+          "total": 5.5,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 4.9,
+            "delay": 3.2,
+            "risk": 2.6,
+            "commitment": 0
+          },
+          "notes": [
+            "任务完成率35%"
+          ],
+          "coverage": "modeled",
+          "description": "在一场玩家对战中登场6个非唯一羁绊后，获得1个随机【纹章】和1个【装备重铸器】。"
+        }
+      ]
+    },
+    {
+      "name": "4-4高经济冲九",
+      "state": {
+        "stage": 4,
+        "round": "2-4",
+        "level": 8,
+        "hp": 70,
+        "gold": 52,
+        "experienceToLevel": 18,
+        "streak": 0,
+        "expectedRounds": 6,
+        "sharedChoiceCount": 1,
+        "boardStars": 8,
+        "distinctCompletedItems": 3,
+        "interestEarned": 4,
+        "refreshCount": 8,
+        "distinctTraits": 4,
+        "upgradeReady": false,
+        "componentDirection": "highCost",
+        "ownedComponents": [],
+        "ownedCosts": [],
+        "godHistory": [],
+        "blessingHistory": [],
+        "paintedHexes": 0,
+        "currentMainGod": null
+      },
+      "top": [
+        {
+          "blessingId": 1705082,
+          "godId": 5,
+          "godName": "阿狸",
+          "name": "贪婪之宝箱++",
+          "stage": 4,
+          "mainGod": false,
+          "total": 28.5,
+          "parts": {
+            "combat": 0,
+            "economy": 29,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0.5,
+            "commitment": 0
+          },
+          "notes": [
+            "即时4金币",
+            "1人平分25金"
+          ],
+          "coverage": "modeled",
+          "description": "获得4金币，外加由选择这个的所有玩家平分25金币(向下取整)。"
+        },
+        {
+          "blessingId": 1707041,
+          "godId": 7,
+          "godName": "艾克",
+          "name": "随机神器",
+          "stage": 4,
+          "mainGod": false,
+          "total": 18.3,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 19.9,
+            "risk": 1.6,
+            "commitment": 0
+          },
+          "notes": [
+            "5回合延迟，存活率90%"
+          ],
+          "coverage": "modeled",
+          "description": "在5个回合后，获得1个随机神器。"
+        },
+        {
+          "blessingId": 1702030,
+          "godId": 2,
+          "godName": "奥瑞利安·索尔",
+          "name": "等级探险",
+          "stage": 4,
+          "mainGod": false,
+          "total": 18.1,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 18,
+            "delay": 0.7,
+            "risk": 0.6,
+            "commitment": 0
+          },
+          "notes": [
+            "任务完成率90%"
+          ],
+          "coverage": "modeled",
+          "description": "在你到达9级时，获得20金币。"
+        },
+        {
+          "blessingId": 1702070,
+          "godId": 2,
+          "godName": "奥瑞利安·索尔",
+          "name": "刷新探险",
+          "stage": 4,
+          "mainGod": false,
+          "total": 17,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 17,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [
+            "任务完成率100%"
+          ],
+          "coverage": "modeled",
+          "description": "在刷新商店15次之后，获得2个【基础装备锻造器】。"
+        },
+        {
+          "blessingId": 1707070,
+          "godId": 7,
+          "godName": "艾克",
+          "name": "5费商店",
+          "stage": 4,
+          "mainGod": false,
+          "total": 16.1,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 16.9,
+            "risk": 0.8,
+            "commitment": 0
+          },
+          "notes": [
+            "3回合延迟，存活率94%"
+          ],
+          "coverage": "modeled",
+          "description": "在3回合后，获得一次免费商店刷新并且你的下一次商店包含所有5费弈子。"
+        },
+        {
+          "blessingId": 1706042,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "恋人++",
+          "stage": 4,
+          "mainGod": false,
+          "total": 16,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 16,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "获得拥有一个相同羁绊的一个5费弈子和一个4费弈子。"
+        },
+        {
+          "blessingId": 1710061,
+          "godId": 10,
+          "godName": "伊芙琳",
+          "name": "18金币",
+          "stage": 4,
+          "mainGod": false,
+          "total": 13,
+          "parts": {
+            "combat": 0,
+            "economy": 18,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 5
+          },
+          "notes": [
+            "即时18金币",
+            "锁商店2回合"
+          ],
+          "coverage": "modeled",
+          "description": "获得18金币。你无法购买弈子，持续2回合。"
+        },
+        {
+          "blessingId": 1706012,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "复制器大礼包",
+          "stage": 4,
+          "mainGod": false,
+          "total": 13,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 13,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [
+            "次级复制器",
+            "1个微型复制器"
+          ],
+          "coverage": "modeled",
+          "description": "获得4个【微型英雄复制器】和1个【次级英雄复制器】。"
+        }
+      ],
+      "byGod": [
+        {
+          "blessingId": 1705082,
+          "godId": 5,
+          "godName": "阿狸",
+          "name": "贪婪之宝箱++",
+          "stage": 4,
+          "mainGod": false,
+          "total": 28.5,
+          "parts": {
+            "combat": 0,
+            "economy": 29,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0.5,
+            "commitment": 0
+          },
+          "notes": [
+            "即时4金币",
+            "1人平分25金"
+          ],
+          "coverage": "modeled",
+          "description": "获得4金币，外加由选择这个的所有玩家平分25金币(向下取整)。"
+        },
+        {
+          "blessingId": 1707041,
+          "godId": 7,
+          "godName": "艾克",
+          "name": "随机神器",
+          "stage": 4,
+          "mainGod": false,
+          "total": 18.3,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 19.9,
+            "risk": 1.6,
+            "commitment": 0
+          },
+          "notes": [
+            "5回合延迟，存活率90%"
+          ],
+          "coverage": "modeled",
+          "description": "在5个回合后，获得1个随机神器。"
+        },
+        {
+          "blessingId": 1702030,
+          "godId": 2,
+          "godName": "奥瑞利安·索尔",
+          "name": "等级探险",
+          "stage": 4,
+          "mainGod": false,
+          "total": 18.1,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 18,
+            "delay": 0.7,
+            "risk": 0.6,
+            "commitment": 0
+          },
+          "notes": [
+            "任务完成率90%"
+          ],
+          "coverage": "modeled",
+          "description": "在你到达9级时，获得20金币。"
+        },
+        {
+          "blessingId": 1706042,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "恋人++",
+          "stage": 4,
+          "mainGod": false,
+          "total": 16,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 16,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "获得拥有一个相同羁绊的一个5费弈子和一个4费弈子。"
+        },
+        {
+          "blessingId": 1710061,
+          "godId": 10,
+          "godName": "伊芙琳",
+          "name": "18金币",
+          "stage": 4,
+          "mainGod": false,
+          "total": 13,
+          "parts": {
+            "combat": 0,
+            "economy": 18,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 5
+          },
+          "notes": [
+            "即时18金币",
+            "锁商店2回合"
+          ],
+          "coverage": "modeled",
+          "description": "获得18金币。你无法购买弈子，持续2回合。"
+        },
+        {
+          "blessingId": 1709030,
+          "godId": 9,
+          "godName": "索拉卡",
+          "name": "赐福：体型",
+          "stage": 4,
+          "mainGod": false,
+          "total": 12,
+          "parts": {
+            "combat": 12,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "永久使一个弈子的生命值提升350并且体型提升20%。 [消耗品-这个装备会在使用后消失。]"
+        },
+        {
+          "blessingId": 1703050,
+          "godId": 3,
+          "godName": "亚索",
+          "name": "风暴格",
+          "stage": 4,
+          "mainGod": false,
+          "total": 9.1,
+          "parts": {
+            "combat": 10.6,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 1.5
+          },
+          "notes": [
+            "永久格强度×1.12"
+          ],
+          "coverage": "modeled",
+          "description": "将这个格子放在一个弈子上。这个格子中的友方弈子首次用技能命中一个敌人时，会使该敌人晕眩1.75|2秒。 [消耗品-这个装备会在使用后消失。]"
+        },
+        {
+          "blessingId": 1708030,
+          "godId": 8,
+          "godName": "锤石",
+          "name": "掷骰子",
+          "stage": 4,
+          "mainGod": false,
+          "total": 8.7,
+          "parts": {
+            "combat": 0,
+            "economy": 10.5,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 1.8,
+            "commitment": 0
+          },
+          "notes": [
+            "3D6期望10.5金"
+          ],
+          "coverage": "modeled",
+          "description": "投掷3个骰子。获得相当于投掷结果总和的金币。"
+        },
+        {
+          "blessingId": 1704010,
+          "godId": 4,
+          "godName": "凯尔",
+          "name": "随机基础装备",
+          "stage": 4,
+          "mainGod": false,
+          "total": 8.5,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 8.5,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [
+            "1件基础装备价值"
+          ],
+          "coverage": "modeled",
+          "description": "获得1件随机基础装备。"
+        }
+      ]
+    },
+    {
+      "name": "4-4法系装备成型",
+      "state": {
+        "stage": 4,
+        "round": "2-4",
+        "level": 8,
+        "hp": 55,
+        "gold": 34,
+        "experienceToLevel": 18,
+        "streak": 0,
+        "expectedRounds": 6,
+        "sharedChoiceCount": 1,
+        "boardStars": 8,
+        "distinctCompletedItems": 7,
+        "interestEarned": 4,
+        "refreshCount": 0,
+        "distinctTraits": 4,
+        "upgradeReady": false,
+        "componentDirection": "magic",
+        "ownedComponents": [],
+        "ownedCosts": [],
+        "godHistory": [],
+        "blessingHistory": [],
+        "paintedHexes": 0,
+        "currentMainGod": null
+      },
+      "top": [
+        {
+          "blessingId": 1705082,
+          "godId": 5,
+          "godName": "阿狸",
+          "name": "贪婪之宝箱++",
+          "stage": 4,
+          "mainGod": false,
+          "total": 28.5,
+          "parts": {
+            "combat": 0,
+            "economy": 29,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0.5,
+            "commitment": 0
+          },
+          "notes": [
+            "即时4金币",
+            "1人平分25金"
+          ],
+          "coverage": "modeled",
+          "description": "获得4金币，外加由选择这个的所有玩家平分25金币(向下取整)。"
+        },
+        {
+          "blessingId": 1707041,
+          "godId": 7,
+          "godName": "艾克",
+          "name": "随机神器",
+          "stage": 4,
+          "mainGod": false,
+          "total": 18.3,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 19.9,
+            "risk": 1.6,
+            "commitment": 0
+          },
+          "notes": [
+            "5回合延迟，存活率90%"
+          ],
+          "coverage": "modeled",
+          "description": "在5个回合后，获得1个随机神器。"
+        },
+        {
+          "blessingId": 1702030,
+          "godId": 2,
+          "godName": "奥瑞利安·索尔",
+          "name": "等级探险",
+          "stage": 4,
+          "mainGod": false,
+          "total": 17.9,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 17.7,
+            "delay": 0.8,
+            "risk": 0.6,
+            "commitment": 0
+          },
+          "notes": [
+            "任务完成率89%"
+          ],
+          "coverage": "modeled",
+          "description": "在你到达9级时，获得20金币。"
+        },
+        {
+          "blessingId": 1707070,
+          "godId": 7,
+          "godName": "艾克",
+          "name": "5费商店",
+          "stage": 4,
+          "mainGod": false,
+          "total": 16.1,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 16.9,
+            "risk": 0.8,
+            "commitment": 0
+          },
+          "notes": [
+            "3回合延迟，存活率94%"
+          ],
+          "coverage": "modeled",
+          "description": "在3回合后，获得一次免费商店刷新并且你的下一次商店包含所有5费弈子。"
+        },
+        {
+          "blessingId": 1706042,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "恋人++",
+          "stage": 4,
+          "mainGod": false,
+          "total": 16,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 16,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "获得拥有一个相同羁绊的一个5费弈子和一个4费弈子。"
+        },
+        {
+          "blessingId": 1702070,
+          "godId": 2,
+          "godName": "奥瑞利安·索尔",
+          "name": "刷新探险",
+          "stage": 4,
+          "mainGod": false,
+          "total": 13.1,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 12.8,
+            "delay": 1.5,
+            "risk": 1.2,
+            "commitment": 0
+          },
+          "notes": [
+            "任务完成率76%"
+          ],
+          "coverage": "modeled",
+          "description": "在刷新商店15次之后，获得2个【基础装备锻造器】。"
+        },
+        {
+          "blessingId": 1710061,
+          "godId": 10,
+          "godName": "伊芙琳",
+          "name": "18金币",
+          "stage": 4,
+          "mainGod": false,
+          "total": 13,
+          "parts": {
+            "combat": 0,
+            "economy": 18,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 5
+          },
+          "notes": [
+            "即时18金币",
+            "锁商店2回合"
+          ],
+          "coverage": "modeled",
+          "description": "获得18金币。你无法购买弈子，持续2回合。"
+        },
+        {
+          "blessingId": 1706012,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "复制器大礼包",
+          "stage": 4,
+          "mainGod": false,
+          "total": 13,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 13,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [
+            "次级复制器",
+            "1个微型复制器"
+          ],
+          "coverage": "modeled",
+          "description": "获得4个【微型英雄复制器】和1个【次级英雄复制器】。"
+        }
+      ],
+      "byGod": [
+        {
+          "blessingId": 1705082,
+          "godId": 5,
+          "godName": "阿狸",
+          "name": "贪婪之宝箱++",
+          "stage": 4,
+          "mainGod": false,
+          "total": 28.5,
+          "parts": {
+            "combat": 0,
+            "economy": 29,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0.5,
+            "commitment": 0
+          },
+          "notes": [
+            "即时4金币",
+            "1人平分25金"
+          ],
+          "coverage": "modeled",
+          "description": "获得4金币，外加由选择这个的所有玩家平分25金币(向下取整)。"
+        },
+        {
+          "blessingId": 1707041,
+          "godId": 7,
+          "godName": "艾克",
+          "name": "随机神器",
+          "stage": 4,
+          "mainGod": false,
+          "total": 18.3,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 19.9,
+            "risk": 1.6,
+            "commitment": 0
+          },
+          "notes": [
+            "5回合延迟，存活率90%"
+          ],
+          "coverage": "modeled",
+          "description": "在5个回合后，获得1个随机神器。"
+        },
+        {
+          "blessingId": 1702030,
+          "godId": 2,
+          "godName": "奥瑞利安·索尔",
+          "name": "等级探险",
+          "stage": 4,
+          "mainGod": false,
+          "total": 17.9,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 17.7,
+            "delay": 0.8,
+            "risk": 0.6,
+            "commitment": 0
+          },
+          "notes": [
+            "任务完成率89%"
+          ],
+          "coverage": "modeled",
+          "description": "在你到达9级时，获得20金币。"
+        },
+        {
+          "blessingId": 1706042,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "恋人++",
+          "stage": 4,
+          "mainGod": false,
+          "total": 16,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 16,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "获得拥有一个相同羁绊的一个5费弈子和一个4费弈子。"
+        },
+        {
+          "blessingId": 1710061,
+          "godId": 10,
+          "godName": "伊芙琳",
+          "name": "18金币",
+          "stage": 4,
+          "mainGod": false,
+          "total": 13,
+          "parts": {
+            "combat": 0,
+            "economy": 18,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 5
+          },
+          "notes": [
+            "即时18金币",
+            "锁商店2回合"
+          ],
+          "coverage": "modeled",
+          "description": "获得18金币。你无法购买弈子，持续2回合。"
+        },
+        {
+          "blessingId": 1709030,
+          "godId": 9,
+          "godName": "索拉卡",
+          "name": "赐福：体型",
+          "stage": 4,
+          "mainGod": false,
+          "total": 12,
+          "parts": {
+            "combat": 12,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "永久使一个弈子的生命值提升350并且体型提升20%。 [消耗品-这个装备会在使用后消失。]"
+        },
+        {
+          "blessingId": 1703040,
+          "godId": 3,
+          "godName": "亚索",
+          "name": "星光格",
+          "stage": 4,
+          "mainGod": false,
+          "total": 10.9,
+          "parts": {
+            "combat": 12.4,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 1.5
+          },
+          "notes": [
+            "永久格强度×1.3"
+          ],
+          "coverage": "modeled",
+          "description": "将这个格子放在一个弈子上。这个格子中的友方弈子会获得3法力回复。 [消耗品-这个装备会在使用后消失。]"
+        },
+        {
+          "blessingId": 1704022,
+          "godId": 4,
+          "godName": "凯尔",
+          "name": "女神之泪",
+          "stage": 4,
+          "mainGod": false,
+          "total": 10.4,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 10.4,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [
+            "女神之泪→法系吻合"
+          ],
+          "coverage": "modeled",
+          "description": "获得1个【女神之泪】。"
+        },
+        {
+          "blessingId": 1708030,
+          "godId": 8,
+          "godName": "锤石",
+          "name": "掷骰子",
+          "stage": 4,
+          "mainGod": false,
+          "total": 8.7,
+          "parts": {
+            "combat": 0,
+            "economy": 10.5,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 1.8,
+            "commitment": 0
+          },
+          "notes": [
+            "3D6期望10.5金"
+          ],
+          "coverage": "modeled",
+          "description": "投掷3个骰子。获得相当于投掷结果总和的金币。"
+        }
+      ]
+    }
+  ],
+  "lineupEvidence": {
+    "byGod": [
+      {
+        "godId": 3,
+        "godName": "亚索",
+        "officialLineupMentions": 37
+      },
+      {
+        "godId": 6,
+        "godName": "韦鲁斯",
+        "officialLineupMentions": 30
+      },
+      {
+        "godId": 5,
+        "godName": "阿狸",
+        "officialLineupMentions": 24
+      },
+      {
+        "godId": 4,
+        "godName": "凯尔",
+        "officialLineupMentions": 23
+      },
+      {
+        "godId": 7,
+        "godName": "艾克",
+        "officialLineupMentions": 13
+      },
+      {
+        "godId": 8,
+        "godName": "锤石",
+        "officialLineupMentions": 3
+      },
+      {
+        "godId": 9,
+        "godName": "索拉卡",
+        "officialLineupMentions": 1
+      },
+      {
+        "godId": 2,
+        "godName": "奥瑞利安·索尔",
+        "officialLineupMentions": 0
+      },
+      {
+        "godId": 10,
+        "godName": "伊芙琳",
+        "officialLineupMentions": 0
+      }
+    ],
+    "topBlessings": [
+      {
+        "id": 1703020,
+        "name": "宇宙格",
+        "godName": "亚索",
+        "officialLineupMentions": 33
+      },
+      {
+        "id": 1703060,
+        "name": "冰晶格",
+        "godName": "亚索",
+        "officialLineupMentions": 24
+      },
+      {
+        "id": 1706011,
+        "name": "次级英雄复制器",
+        "godName": "韦鲁斯",
+        "officialLineupMentions": 22
+      },
+      {
+        "id": 1706090,
+        "name": "韦鲁斯的恩赐",
+        "godName": "韦鲁斯",
+        "officialLineupMentions": 22
+      },
+      {
+        "id": 1704010,
+        "name": "随机基础装备",
+        "godName": "凯尔",
+        "officialLineupMentions": 21
+      },
+      {
+        "id": 1703010,
+        "name": "烈阳格",
+        "godName": "亚索",
+        "officialLineupMentions": 17
+      },
+      {
+        "id": 1705012,
+        "name": "10金币",
+        "godName": "阿狸",
+        "officialLineupMentions": 16
+      },
+      {
+        "id": 1705050,
+        "name": "阿狸的恩赐",
+        "godName": "阿狸",
+        "officialLineupMentions": 13
+      },
+      {
+        "id": 1704023,
+        "name": "无用大棒",
+        "godName": "凯尔",
+        "officialLineupMentions": 13
+      },
+      {
+        "id": 1707051,
+        "name": "2个5费弈子",
+        "godName": "艾克",
+        "officialLineupMentions": 11
+      },
+      {
+        "id": 1707011,
+        "name": "迅捷蟹派对",
+        "godName": "艾克",
+        "officialLineupMentions": 11
+      },
+      {
+        "id": 1704026,
+        "name": "暴风大剑",
+        "godName": "凯尔",
+        "officialLineupMentions": 8
+      },
+      {
+        "id": 1705031,
+        "name": "5次刷新",
+        "godName": "阿狸",
+        "officialLineupMentions": 5
+      },
+      {
+        "id": 1706010,
+        "name": "次级英雄复制器",
+        "godName": "韦鲁斯",
+        "officialLineupMentions": 5
+      },
+      {
+        "id": 1705041,
+        "name": "联手致富+",
+        "godName": "阿狸",
+        "officialLineupMentions": 4
+      },
+      {
+        "id": 1706020,
+        "name": "现有的3费弈子",
+        "godName": "韦鲁斯",
+        "officialLineupMentions": 4
+      },
+      {
+        "id": 1705042,
+        "name": "联手致富++",
+        "godName": "阿狸",
+        "officialLineupMentions": 3
+      },
+      {
+        "id": 1708040,
+        "name": "锤石的恩赐",
+        "godName": "锤石",
+        "officialLineupMentions": 3
+      },
+      {
+        "id": 1708012,
+        "name": "随机恩赐",
+        "godName": "锤石",
+        "officialLineupMentions": 3
+      },
+      {
+        "id": 1707010,
+        "name": "迅捷蟹派对",
+        "godName": "艾克",
+        "officialLineupMentions": 2
+      }
+    ]
+  },
+  "stateSnapshots": [
+    {
+      "state": {
+        "stage": 2,
+        "round": "2-4",
+        "level": 4,
+        "hp": 21,
+        "gold": 55,
+        "experienceToLevel": 18,
+        "streak": 0,
+        "expectedRounds": 13,
+        "sharedChoiceCount": 3,
+        "boardStars": 8,
+        "distinctCompletedItems": 2,
+        "interestEarned": 6,
+        "refreshCount": 14,
+        "distinctTraits": 5,
+        "upgradeReady": true,
+        "componentDirection": "physical",
+        "ownedComponents": [],
+        "ownedCosts": [
+          5,
+          3,
+          5,
+          5,
+          1
+        ],
+        "godHistory": [],
+        "blessingHistory": [],
+        "paintedHexes": 0,
+        "currentMainGod": null
+      },
+      "top": [
+        {
+          "blessingId": 1704050,
+          "godId": 4,
+          "godName": "凯尔",
+          "name": "锻造器转变",
+          "stage": 2,
+          "mainGod": false,
+          "total": 20.1,
+          "parts": {
+            "combat": 0,
+            "economy": 2,
+            "flexibility": 18.1,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [
+            "即时2金币",
+            "1件基础装备价值",
+            "装备供给具有后续复利"
+          ],
+          "coverage": "modeled",
+          "description": "每当你将要获得一个基础装备时，转而获得1个【基础装备锻造器】。获得2金币。"
+        },
+        {
+          "blessingId": 1707020,
+          "godId": 7,
+          "godName": "艾克",
+          "name": "神圣干预",
+          "stage": 2,
+          "mainGod": false,
+          "total": 14,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 14,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "在跌至30玩家生命值之后，获得一个特殊的战利品法球。"
+        },
+        {
+          "blessingId": 1710080,
+          "godId": 10,
+          "godName": "伊芙琳",
+          "name": "决赛圈胜负手",
+          "stage": 2,
+          "mainGod": false,
+          "total": 12.1,
+          "parts": {
+            "combat": 0,
+            "economy": 15.1,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 3,
+            "commitment": 0
+          },
+          "notes": [
+            "即时3金币"
+          ],
+          "coverage": "modeled",
+          "description": "获得3金币。如果你在前4名，获得30额外金币。"
+        }
+      ]
+    },
+    {
+      "state": {
+        "stage": 4,
+        "round": "4-4",
+        "level": 7,
+        "hp": 49,
+        "gold": 39,
+        "experienceToLevel": 18,
+        "streak": -2,
+        "expectedRounds": 6,
+        "sharedChoiceCount": 5,
+        "boardStars": 8,
+        "distinctCompletedItems": 6,
+        "interestEarned": 6,
+        "refreshCount": 2,
+        "distinctTraits": 6,
+        "upgradeReady": false,
+        "componentDirection": "tank",
+        "ownedComponents": [],
+        "ownedCosts": [
+          3,
+          2,
+          3,
+          2,
+          3
+        ],
+        "godHistory": [],
+        "blessingHistory": [],
+        "paintedHexes": 0,
+        "currentMainGod": null
+      },
+      "top": [
+        {
+          "blessingId": 1702070,
+          "godId": 2,
+          "godName": "奥瑞利安·索尔",
+          "name": "刷新探险",
+          "stage": 4,
+          "mainGod": false,
+          "total": 17,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 17,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [
+            "任务完成率100%"
+          ],
+          "coverage": "modeled",
+          "description": "在刷新商店15次之后，获得2个【基础装备锻造器】。"
+        },
+        {
+          "blessingId": 1707041,
+          "godId": 7,
+          "godName": "艾克",
+          "name": "随机神器",
+          "stage": 4,
+          "mainGod": false,
+          "total": 16.3,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 18.7,
+            "risk": 2.5,
+            "commitment": 0
+          },
+          "notes": [
+            "5回合延迟，存活率85%"
+          ],
+          "coverage": "modeled",
+          "description": "在5个回合后，获得1个随机神器。"
+        },
+        {
+          "blessingId": 1706042,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "恋人++",
+          "stage": 4,
+          "mainGod": false,
+          "total": 16,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 16,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "获得拥有一个相同羁绊的一个5费弈子和一个4费弈子。"
+        }
+      ]
+    },
+    {
+      "state": {
+        "stage": 2,
+        "round": "2-4",
+        "level": 4,
+        "hp": 27,
+        "gold": 56,
+        "experienceToLevel": 18,
+        "streak": 0,
+        "expectedRounds": 13,
+        "sharedChoiceCount": 3,
+        "boardStars": 13,
+        "distinctCompletedItems": 9,
+        "interestEarned": 9,
+        "refreshCount": 11,
+        "distinctTraits": 4,
+        "upgradeReady": true,
+        "componentDirection": "tank",
+        "ownedComponents": [],
+        "ownedCosts": [
+          5,
+          2,
+          4
+        ],
+        "godHistory": [],
+        "blessingHistory": [],
+        "paintedHexes": 0,
+        "currentMainGod": null
+      },
+      "top": [
+        {
+          "blessingId": 1704050,
+          "godId": 4,
+          "godName": "凯尔",
+          "name": "锻造器转变",
+          "stage": 2,
+          "mainGod": false,
+          "total": 20.1,
+          "parts": {
+            "combat": 0,
+            "economy": 2,
+            "flexibility": 18.1,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [
+            "即时2金币",
+            "1件基础装备价值",
+            "装备供给具有后续复利"
+          ],
+          "coverage": "modeled",
+          "description": "每当你将要获得一个基础装备时，转而获得1个【基础装备锻造器】。获得2金币。"
+        },
+        {
+          "blessingId": 1707020,
+          "godId": 7,
+          "godName": "艾克",
+          "name": "神圣干预",
+          "stage": 2,
+          "mainGod": false,
+          "total": 14,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 14,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "在跌至30玩家生命值之后，获得一个特殊的战利品法球。"
+        },
+        {
+          "blessingId": 1710080,
+          "godId": 10,
+          "godName": "伊芙琳",
+          "name": "决赛圈胜负手",
+          "stage": 2,
+          "mainGod": false,
+          "total": 13.4,
+          "parts": {
+            "combat": 0,
+            "economy": 16.2,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 2.8,
+            "commitment": 0
+          },
+          "notes": [
+            "即时3金币"
+          ],
+          "coverage": "modeled",
+          "description": "获得3金币。如果你在前4名，获得30额外金币。"
+        }
+      ]
+    },
+    {
+      "state": {
+        "stage": 2,
+        "round": "2-4",
+        "level": 5,
+        "hp": 99,
+        "gold": 21,
+        "experienceToLevel": 18,
+        "streak": 3,
+        "expectedRounds": 13,
+        "sharedChoiceCount": 5,
+        "boardStars": 7,
+        "distinctCompletedItems": 4,
+        "interestEarned": 2,
+        "refreshCount": 1,
+        "distinctTraits": 3,
+        "upgradeReady": true,
+        "componentDirection": "physical",
+        "ownedComponents": [],
+        "ownedCosts": [
+          1,
+          2,
+          2
+        ],
+        "godHistory": [],
+        "blessingHistory": [],
+        "paintedHexes": 0,
+        "currentMainGod": null
+      },
+      "top": [
+        {
+          "blessingId": 1710080,
+          "godId": 10,
+          "godName": "伊芙琳",
+          "name": "决赛圈胜负手",
+          "stage": 2,
+          "mainGod": false,
+          "total": 29.5,
+          "parts": {
+            "combat": 0,
+            "economy": 30,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0.5,
+            "commitment": 0
+          },
+          "notes": [
+            "即时3金币"
+          ],
+          "coverage": "modeled",
+          "description": "获得3金币。如果你在前4名，获得30额外金币。"
+        },
+        {
+          "blessingId": 1704050,
+          "godId": 4,
+          "godName": "凯尔",
+          "name": "锻造器转变",
+          "stage": 2,
+          "mainGod": false,
+          "total": 20.1,
+          "parts": {
+            "combat": 0,
+            "economy": 2,
+            "flexibility": 18.1,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [
+            "即时2金币",
+            "1件基础装备价值",
+            "装备供给具有后续复利"
+          ],
+          "coverage": "modeled",
+          "description": "每当你将要获得一个基础装备时，转而获得1个【基础装备锻造器】。获得2金币。"
+        },
+        {
+          "blessingId": 1707040,
+          "godId": 7,
+          "godName": "艾克",
+          "name": "随机神器",
+          "stage": 2,
+          "mainGod": false,
+          "total": 16.3,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 18.7,
+            "risk": 2.5,
+            "commitment": 0
+          },
+          "notes": [
+            "8回合延迟，存活率85%"
+          ],
+          "coverage": "modeled",
+          "description": "在8个回合后，获得1个随机神器。"
+        }
+      ]
+    },
+    {
+      "state": {
+        "stage": 2,
+        "round": "2-4",
+        "level": 5,
+        "hp": 69,
+        "gold": 6,
+        "experienceToLevel": 18,
+        "streak": -3,
+        "expectedRounds": 13,
+        "sharedChoiceCount": 1,
+        "boardStars": 6,
+        "distinctCompletedItems": 9,
+        "interestEarned": 4,
+        "refreshCount": 1,
+        "distinctTraits": 6,
+        "upgradeReady": false,
+        "componentDirection": "economy",
+        "ownedComponents": [],
+        "ownedCosts": [
+          3,
+          4,
+          5,
+          2,
+          3
+        ],
+        "godHistory": [],
+        "blessingHistory": [],
+        "paintedHexes": 0,
+        "currentMainGod": null
+      },
+      "top": [
+        {
+          "blessingId": 1710080,
+          "godId": 10,
+          "godName": "伊芙琳",
+          "name": "决赛圈胜负手",
+          "stage": 2,
+          "mainGod": false,
+          "total": 22,
+          "parts": {
+            "combat": 0,
+            "economy": 23.6,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 1.6,
+            "commitment": 0
+          },
+          "notes": [
+            "即时3金币"
+          ],
+          "coverage": "modeled",
+          "description": "获得3金币。如果你在前4名，获得30额外金币。"
+        },
+        {
+          "blessingId": 1704050,
+          "godId": 4,
+          "godName": "凯尔",
+          "name": "锻造器转变",
+          "stage": 2,
+          "mainGod": false,
+          "total": 20.1,
+          "parts": {
+            "combat": 0,
+            "economy": 2,
+            "flexibility": 18.1,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [
+            "即时2金币",
+            "1件基础装备价值",
+            "装备供给具有后续复利"
+          ],
+          "coverage": "modeled",
+          "description": "每当你将要获得一个基础装备时，转而获得1个【基础装备锻造器】。获得2金币。"
+        },
+        {
+          "blessingId": 1707040,
+          "godId": 7,
+          "godName": "艾克",
+          "name": "随机神器",
+          "stage": 2,
+          "mainGod": false,
+          "total": 16.3,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 18.7,
+            "risk": 2.5,
+            "commitment": 0
+          },
+          "notes": [
+            "8回合延迟，存活率85%"
+          ],
+          "coverage": "modeled",
+          "description": "在8个回合后，获得1个随机神器。"
+        }
+      ]
+    },
+    {
+      "state": {
+        "stage": 3,
+        "round": "3-4",
+        "level": 7,
+        "hp": 30,
+        "gold": 13,
+        "experienceToLevel": 18,
+        "streak": 0,
+        "expectedRounds": 9,
+        "sharedChoiceCount": 4,
+        "boardStars": 6,
+        "distinctCompletedItems": 5,
+        "interestEarned": 9,
+        "refreshCount": 0,
+        "distinctTraits": 3,
+        "upgradeReady": true,
+        "componentDirection": "tank",
+        "ownedComponents": [],
+        "ownedCosts": [
+          3,
+          2,
+          3,
+          2
+        ],
+        "godHistory": [],
+        "blessingHistory": [],
+        "paintedHexes": 0,
+        "currentMainGod": null
+      },
+      "top": [
+        {
+          "blessingId": 1706041,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "恋人+",
+          "stage": 3,
+          "mainGod": false,
+          "total": 14,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 14,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "获得拥有一个相同羁绊的一个4费弈子和一个3费弈子。"
+        },
+        {
+          "blessingId": 1706080,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "4费商店",
+          "stage": 3,
+          "mainGod": false,
+          "total": 13,
+          "parts": {
+            "combat": 0,
+            "economy": 13,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "你的下一次商店包含全4费弈子。你购买的第一个是免费的。"
+        },
+        {
+          "blessingId": 1709030,
+          "godId": 9,
+          "godName": "索拉卡",
+          "name": "赐福：体型",
+          "stage": 3,
+          "mainGod": false,
+          "total": 12,
+          "parts": {
+            "combat": 12,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "永久使一个弈子的生命值提升350并且体型提升20%。 [消耗品-这个装备会在使用后消失。]"
+        }
+      ]
+    },
+    {
+      "state": {
+        "stage": 3,
+        "round": "3-4",
+        "level": 7,
+        "hp": 53,
+        "gold": 14,
+        "experienceToLevel": 18,
+        "streak": 2,
+        "expectedRounds": 9,
+        "sharedChoiceCount": 8,
+        "boardStars": 7,
+        "distinctCompletedItems": 9,
+        "interestEarned": 3,
+        "refreshCount": 3,
+        "distinctTraits": 3,
+        "upgradeReady": false,
+        "componentDirection": "economy",
+        "ownedComponents": [],
+        "ownedCosts": [
+          4,
+          1,
+          5,
+          2
+        ],
+        "godHistory": [],
+        "blessingHistory": [],
+        "paintedHexes": 0,
+        "currentMainGod": null
+      },
+      "top": [
+        {
+          "blessingId": 1706041,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "恋人+",
+          "stage": 3,
+          "mainGod": false,
+          "total": 14,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 14,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "获得拥有一个相同羁绊的一个4费弈子和一个3费弈子。"
+        },
+        {
+          "blessingId": 1706080,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "4费商店",
+          "stage": 3,
+          "mainGod": false,
+          "total": 13,
+          "parts": {
+            "combat": 0,
+            "economy": 13,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "你的下一次商店包含全4费弈子。你购买的第一个是免费的。"
+        },
+        {
+          "blessingId": 1709030,
+          "godId": 9,
+          "godName": "索拉卡",
+          "name": "赐福：体型",
+          "stage": 3,
+          "mainGod": false,
+          "total": 12,
+          "parts": {
+            "combat": 12,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "永久使一个弈子的生命值提升350并且体型提升20%。 [消耗品-这个装备会在使用后消失。]"
+        }
+      ]
+    },
+    {
+      "state": {
+        "stage": 3,
+        "round": "3-4",
+        "level": 7,
+        "hp": 99,
+        "gold": 39,
+        "experienceToLevel": 18,
+        "streak": -3,
+        "expectedRounds": 9,
+        "sharedChoiceCount": 7,
+        "boardStars": 9,
+        "distinctCompletedItems": 9,
+        "interestEarned": 8,
+        "refreshCount": 9,
+        "distinctTraits": 3,
+        "upgradeReady": true,
+        "componentDirection": "tank",
+        "ownedComponents": [],
+        "ownedCosts": [
+          4,
+          3,
+          1,
+          1,
+          1
+        ],
+        "godHistory": [],
+        "blessingHistory": [],
+        "paintedHexes": 0,
+        "currentMainGod": null
+      },
+      "top": [
+        {
+          "blessingId": 1706041,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "恋人+",
+          "stage": 3,
+          "mainGod": false,
+          "total": 14,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 14,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "获得拥有一个相同羁绊的一个4费弈子和一个3费弈子。"
+        },
+        {
+          "blessingId": 1706080,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "4费商店",
+          "stage": 3,
+          "mainGod": false,
+          "total": 13,
+          "parts": {
+            "combat": 0,
+            "economy": 13,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "你的下一次商店包含全4费弈子。你购买的第一个是免费的。"
+        },
+        {
+          "blessingId": 1709030,
+          "godId": 9,
+          "godName": "索拉卡",
+          "name": "赐福：体型",
+          "stage": 3,
+          "mainGod": false,
+          "total": 12,
+          "parts": {
+            "combat": 12,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "永久使一个弈子的生命值提升350并且体型提升20%。 [消耗品-这个装备会在使用后消失。]"
+        }
+      ]
+    },
+    {
+      "state": {
+        "stage": 2,
+        "round": "2-4",
+        "level": 4,
+        "hp": 23,
+        "gold": 32,
+        "experienceToLevel": 18,
+        "streak": 0,
+        "expectedRounds": 13,
+        "sharedChoiceCount": 4,
+        "boardStars": 13,
+        "distinctCompletedItems": 3,
+        "interestEarned": 2,
+        "refreshCount": 3,
+        "distinctTraits": 5,
+        "upgradeReady": false,
+        "componentDirection": "tank",
+        "ownedComponents": [],
+        "ownedCosts": [
+          1,
+          5,
+          3
+        ],
+        "godHistory": [],
+        "blessingHistory": [],
+        "paintedHexes": 0,
+        "currentMainGod": null
+      },
+      "top": [
+        {
+          "blessingId": 1704050,
+          "godId": 4,
+          "godName": "凯尔",
+          "name": "锻造器转变",
+          "stage": 2,
+          "mainGod": false,
+          "total": 20.1,
+          "parts": {
+            "combat": 0,
+            "economy": 2,
+            "flexibility": 18.1,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [
+            "即时2金币",
+            "1件基础装备价值",
+            "装备供给具有后续复利"
+          ],
+          "coverage": "modeled",
+          "description": "每当你将要获得一个基础装备时，转而获得1个【基础装备锻造器】。获得2金币。"
+        },
+        {
+          "blessingId": 1707020,
+          "godId": 7,
+          "godName": "艾克",
+          "name": "神圣干预",
+          "stage": 2,
+          "mainGod": false,
+          "total": 14,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 14,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "在跌至30玩家生命值之后，获得一个特殊的战利品法球。"
+        },
+        {
+          "blessingId": 1710080,
+          "godId": 10,
+          "godName": "伊芙琳",
+          "name": "决赛圈胜负手",
+          "stage": 2,
+          "mainGod": false,
+          "total": 12.5,
+          "parts": {
+            "combat": 0,
+            "economy": 15.5,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 2.9,
+            "commitment": 0
+          },
+          "notes": [
+            "即时3金币"
+          ],
+          "coverage": "modeled",
+          "description": "获得3金币。如果你在前4名，获得30额外金币。"
+        }
+      ]
+    },
+    {
+      "state": {
+        "stage": 4,
+        "round": "4-4",
+        "level": 8,
+        "hp": 35,
+        "gold": 36,
+        "experienceToLevel": 18,
+        "streak": 1,
+        "expectedRounds": 6,
+        "sharedChoiceCount": 2,
+        "boardStars": 9,
+        "distinctCompletedItems": 4,
+        "interestEarned": 0,
+        "refreshCount": 3,
+        "distinctTraits": 5,
+        "upgradeReady": false,
+        "componentDirection": "flexible",
+        "ownedComponents": [],
+        "ownedCosts": [
+          1,
+          4,
+          2,
+          2
+        ],
+        "godHistory": [],
+        "blessingHistory": [],
+        "paintedHexes": 0,
+        "currentMainGod": null
+      },
+      "top": [
+        {
+          "blessingId": 1702030,
+          "godId": 2,
+          "godName": "奥瑞利安·索尔",
+          "name": "等级探险",
+          "stage": 4,
+          "mainGod": false,
+          "total": 18,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 17.8,
+            "delay": 0.8,
+            "risk": 0.6,
+            "commitment": 0
+          },
+          "notes": [
+            "任务完成率89%"
+          ],
+          "coverage": "modeled",
+          "description": "在你到达9级时，获得20金币。"
+        },
+        {
+          "blessingId": 1702060,
+          "godId": 2,
+          "godName": "奥瑞利安·索尔",
+          "name": "低生命值探险",
+          "stage": 4,
+          "mainGod": false,
+          "total": 17.8,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 17.5,
+            "delay": 1.2,
+            "risk": 1,
+            "commitment": 0
+          },
+          "notes": [
+            "任务完成率84%"
+          ],
+          "coverage": "modeled",
+          "description": "你首次跌至30生命值时，获得21金币。"
+        },
+        {
+          "blessingId": 1702070,
+          "godId": 2,
+          "godName": "奥瑞利安·索尔",
+          "name": "刷新探险",
+          "stage": 4,
+          "mainGod": false,
+          "total": 17,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 17,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [
+            "任务完成率100%"
+          ],
+          "coverage": "modeled",
+          "description": "在刷新商店15次之后，获得2个【基础装备锻造器】。"
+        }
+      ]
+    },
+    {
+      "state": {
+        "stage": 4,
+        "round": "4-4",
+        "level": 7,
+        "hp": 94,
+        "gold": 36,
+        "experienceToLevel": 18,
+        "streak": -2,
+        "expectedRounds": 6,
+        "sharedChoiceCount": 4,
+        "boardStars": 7,
+        "distinctCompletedItems": 5,
+        "interestEarned": 6,
+        "refreshCount": 4,
+        "distinctTraits": 7,
+        "upgradeReady": false,
+        "componentDirection": "physical",
+        "ownedComponents": [],
+        "ownedCosts": [
+          5,
+          5,
+          2
+        ],
+        "godHistory": [],
+        "blessingHistory": [],
+        "paintedHexes": 0,
+        "currentMainGod": null
+      },
+      "top": [
+        {
+          "blessingId": 1707041,
+          "godId": 7,
+          "godName": "艾克",
+          "name": "随机神器",
+          "stage": 4,
+          "mainGod": false,
+          "total": 18.3,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 19.9,
+            "risk": 1.6,
+            "commitment": 0
+          },
+          "notes": [
+            "5回合延迟，存活率90%"
+          ],
+          "coverage": "modeled",
+          "description": "在5个回合后，获得1个随机神器。"
+        },
+        {
+          "blessingId": 1702070,
+          "godId": 2,
+          "godName": "奥瑞利安·索尔",
+          "name": "刷新探险",
+          "stage": 4,
+          "mainGod": false,
+          "total": 17,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 17,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [
+            "任务完成率100%"
+          ],
+          "coverage": "modeled",
+          "description": "在刷新商店15次之后，获得2个【基础装备锻造器】。"
+        },
+        {
+          "blessingId": 1707070,
+          "godId": 7,
+          "godName": "艾克",
+          "name": "5费商店",
+          "stage": 4,
+          "mainGod": false,
+          "total": 16.1,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 16.9,
+            "risk": 0.8,
+            "commitment": 0
+          },
+          "notes": [
+            "3回合延迟，存活率94%"
+          ],
+          "coverage": "modeled",
+          "description": "在3回合后，获得一次免费商店刷新并且你的下一次商店包含所有5费弈子。"
+        }
+      ]
+    },
+    {
+      "state": {
+        "stage": 3,
+        "round": "3-4",
+        "level": 6,
+        "hp": 20,
+        "gold": 28,
+        "experienceToLevel": 18,
+        "streak": 1,
+        "expectedRounds": 9,
+        "sharedChoiceCount": 6,
+        "boardStars": 13,
+        "distinctCompletedItems": 6,
+        "interestEarned": 0,
+        "refreshCount": 13,
+        "distinctTraits": 6,
+        "upgradeReady": false,
+        "componentDirection": "economy",
+        "ownedComponents": [],
+        "ownedCosts": [
+          2,
+          5,
+          1
+        ],
+        "godHistory": [],
+        "blessingHistory": [],
+        "paintedHexes": 0,
+        "currentMainGod": null
+      },
+      "top": [
+        {
+          "blessingId": 1706041,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "恋人+",
+          "stage": 3,
+          "mainGod": false,
+          "total": 14,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 14,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "获得拥有一个相同羁绊的一个4费弈子和一个3费弈子。"
+        },
+        {
+          "blessingId": 1706110,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "升星缘分",
+          "stage": 3,
+          "mainGod": false,
+          "total": 14,
+          "parts": {
+            "combat": 14,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "你的下一次商店全是2费弈子。你购买的第一个是免费的并且会升至2星。"
+        },
+        {
+          "blessingId": 1702040,
+          "godId": 2,
+          "godName": "奥瑞利安·索尔",
+          "name": "羁绊探险",
+          "stage": 3,
+          "mainGod": false,
+          "total": 12.3,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 12.1,
+            "delay": 0.7,
+            "risk": 0.5,
+            "commitment": 0
+          },
+          "notes": [
+            "任务完成率87%"
+          ],
+          "coverage": "modeled",
+          "description": "在一场玩家对战中登场6个非唯一羁绊后，获得1个随机【纹章】和1个【装备重铸器】。"
+        }
+      ]
+    },
+    {
+      "state": {
+        "stage": 2,
+        "round": "2-4",
+        "level": 5,
+        "hp": 87,
+        "gold": 38,
+        "experienceToLevel": 18,
+        "streak": 1,
+        "expectedRounds": 13,
+        "sharedChoiceCount": 7,
+        "boardStars": 8,
+        "distinctCompletedItems": 8,
+        "interestEarned": 0,
+        "refreshCount": 12,
+        "distinctTraits": 6,
+        "upgradeReady": true,
+        "componentDirection": "highCost",
+        "ownedComponents": [],
+        "ownedCosts": [
+          3,
+          5,
+          4,
+          4
+        ],
+        "godHistory": [],
+        "blessingHistory": [],
+        "paintedHexes": 0,
+        "currentMainGod": null
+      },
+      "top": [
+        {
+          "blessingId": 1710080,
+          "godId": 10,
+          "godName": "伊芙琳",
+          "name": "决赛圈胜负手",
+          "stage": 2,
+          "mainGod": false,
+          "total": 27.1,
+          "parts": {
+            "combat": 0,
+            "economy": 28,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0.8,
+            "commitment": 0
+          },
+          "notes": [
+            "即时3金币"
+          ],
+          "coverage": "modeled",
+          "description": "获得3金币。如果你在前4名，获得30额外金币。"
+        },
+        {
+          "blessingId": 1704050,
+          "godId": 4,
+          "godName": "凯尔",
+          "name": "锻造器转变",
+          "stage": 2,
+          "mainGod": false,
+          "total": 20.1,
+          "parts": {
+            "combat": 0,
+            "economy": 2,
+            "flexibility": 18.1,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [
+            "即时2金币",
+            "1件基础装备价值",
+            "装备供给具有后续复利"
+          ],
+          "coverage": "modeled",
+          "description": "每当你将要获得一个基础装备时，转而获得1个【基础装备锻造器】。获得2金币。"
+        },
+        {
+          "blessingId": 1707040,
+          "godId": 7,
+          "godName": "艾克",
+          "name": "随机神器",
+          "stage": 2,
+          "mainGod": false,
+          "total": 16.3,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 18.7,
+            "risk": 2.5,
+            "commitment": 0
+          },
+          "notes": [
+            "8回合延迟，存活率85%"
+          ],
+          "coverage": "modeled",
+          "description": "在8个回合后，获得1个随机神器。"
+        }
+      ]
+    },
+    {
+      "state": {
+        "stage": 4,
+        "round": "4-4",
+        "level": 7,
+        "hp": 59,
+        "gold": 10,
+        "experienceToLevel": 18,
+        "streak": -3,
+        "expectedRounds": 6,
+        "sharedChoiceCount": 1,
+        "boardStars": 11,
+        "distinctCompletedItems": 2,
+        "interestEarned": 8,
+        "refreshCount": 11,
+        "distinctTraits": 7,
+        "upgradeReady": true,
+        "componentDirection": "flexible",
+        "ownedComponents": [],
+        "ownedCosts": [
+          1,
+          5,
+          3
+        ],
+        "godHistory": [],
+        "blessingHistory": [],
+        "paintedHexes": 0,
+        "currentMainGod": null
+      },
+      "top": [
+        {
+          "blessingId": 1705082,
+          "godId": 5,
+          "godName": "阿狸",
+          "name": "贪婪之宝箱++",
+          "stage": 4,
+          "mainGod": false,
+          "total": 28.5,
+          "parts": {
+            "combat": 0,
+            "economy": 29,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0.5,
+            "commitment": 0
+          },
+          "notes": [
+            "即时4金币",
+            "1人平分25金"
+          ],
+          "coverage": "modeled",
+          "description": "获得4金币，外加由选择这个的所有玩家平分25金币(向下取整)。"
+        },
+        {
+          "blessingId": 1707041,
+          "godId": 7,
+          "godName": "艾克",
+          "name": "随机神器",
+          "stage": 4,
+          "mainGod": false,
+          "total": 18.3,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 19.9,
+            "risk": 1.6,
+            "commitment": 0
+          },
+          "notes": [
+            "5回合延迟，存活率90%"
+          ],
+          "coverage": "modeled",
+          "description": "在5个回合后，获得1个随机神器。"
+        },
+        {
+          "blessingId": 1702070,
+          "godId": 2,
+          "godName": "奥瑞利安·索尔",
+          "name": "刷新探险",
+          "stage": 4,
+          "mainGod": false,
+          "total": 16.3,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 16.2,
+            "delay": 0.3,
+            "risk": 0.2,
+            "commitment": 0
+          },
+          "notes": [
+            "任务完成率96%"
+          ],
+          "coverage": "modeled",
+          "description": "在刷新商店15次之后，获得2个【基础装备锻造器】。"
+        }
+      ]
+    },
+    {
+      "state": {
+        "stage": 3,
+        "round": "3-4",
+        "level": 7,
+        "hp": 62,
+        "gold": 57,
+        "experienceToLevel": 18,
+        "streak": 0,
+        "expectedRounds": 9,
+        "sharedChoiceCount": 5,
+        "boardStars": 10,
+        "distinctCompletedItems": 9,
+        "interestEarned": 5,
+        "refreshCount": 0,
+        "distinctTraits": 3,
+        "upgradeReady": false,
+        "componentDirection": "flexible",
+        "ownedComponents": [],
+        "ownedCosts": [
+          3,
+          4,
+          1,
+          3,
+          3,
+          2
+        ],
+        "godHistory": [],
+        "blessingHistory": [],
+        "paintedHexes": 0,
+        "currentMainGod": null
+      },
+      "top": [
+        {
+          "blessingId": 1706041,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "恋人+",
+          "stage": 3,
+          "mainGod": false,
+          "total": 14,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 14,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "获得拥有一个相同羁绊的一个4费弈子和一个3费弈子。"
+        },
+        {
+          "blessingId": 1706080,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "4费商店",
+          "stage": 3,
+          "mainGod": false,
+          "total": 13,
+          "parts": {
+            "combat": 0,
+            "economy": 13,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "你的下一次商店包含全4费弈子。你购买的第一个是免费的。"
+        },
+        {
+          "blessingId": 1709030,
+          "godId": 9,
+          "godName": "索拉卡",
+          "name": "赐福：体型",
+          "stage": 3,
+          "mainGod": false,
+          "total": 12,
+          "parts": {
+            "combat": 12,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "永久使一个弈子的生命值提升350并且体型提升20%。 [消耗品-这个装备会在使用后消失。]"
+        }
+      ]
+    },
+    {
+      "state": {
+        "stage": 3,
+        "round": "3-4",
+        "level": 6,
+        "hp": 50,
+        "gold": 30,
+        "experienceToLevel": 18,
+        "streak": -1,
+        "expectedRounds": 9,
+        "sharedChoiceCount": 8,
+        "boardStars": 13,
+        "distinctCompletedItems": 5,
+        "interestEarned": 2,
+        "refreshCount": 8,
+        "distinctTraits": 4,
+        "upgradeReady": true,
+        "componentDirection": "magic",
+        "ownedComponents": [],
+        "ownedCosts": [
+          2,
+          1,
+          2,
+          4,
+          4
+        ],
+        "godHistory": [],
+        "blessingHistory": [],
+        "paintedHexes": 0,
+        "currentMainGod": null
+      },
+      "top": [
+        {
+          "blessingId": 1706041,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "恋人+",
+          "stage": 3,
+          "mainGod": false,
+          "total": 14,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 14,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "获得拥有一个相同羁绊的一个4费弈子和一个3费弈子。"
+        },
+        {
+          "blessingId": 1706110,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "升星缘分",
+          "stage": 3,
+          "mainGod": false,
+          "total": 14,
+          "parts": {
+            "combat": 14,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "你的下一次商店全是2费弈子。你购买的第一个是免费的并且会升至2星。"
+        },
+        {
+          "blessingId": 1709030,
+          "godId": 9,
+          "godName": "索拉卡",
+          "name": "赐福：体型",
+          "stage": 3,
+          "mainGod": false,
+          "total": 12,
+          "parts": {
+            "combat": 12,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "永久使一个弈子的生命值提升350并且体型提升20%。 [消耗品-这个装备会在使用后消失。]"
+        }
+      ]
+    },
+    {
+      "state": {
+        "stage": 4,
+        "round": "4-4",
+        "level": 7,
+        "hp": 44,
+        "gold": 28,
+        "experienceToLevel": 18,
+        "streak": -2,
+        "expectedRounds": 6,
+        "sharedChoiceCount": 3,
+        "boardStars": 9,
+        "distinctCompletedItems": 2,
+        "interestEarned": 6,
+        "refreshCount": 10,
+        "distinctTraits": 8,
+        "upgradeReady": false,
+        "componentDirection": "economy",
+        "ownedComponents": [],
+        "ownedCosts": [
+          3,
+          2,
+          2
+        ],
+        "godHistory": [],
+        "blessingHistory": [],
+        "paintedHexes": 0,
+        "currentMainGod": null
+      },
+      "top": [
+        {
+          "blessingId": 1702070,
+          "godId": 2,
+          "godName": "奥瑞利安·索尔",
+          "name": "刷新探险",
+          "stage": 4,
+          "mainGod": false,
+          "total": 17,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 17,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [
+            "任务完成率100%"
+          ],
+          "coverage": "modeled",
+          "description": "在刷新商店15次之后，获得2个【基础装备锻造器】。"
+        },
+        {
+          "blessingId": 1706042,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "恋人++",
+          "stage": 4,
+          "mainGod": false,
+          "total": 16,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 16,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "获得拥有一个相同羁绊的一个5费弈子和一个4费弈子。"
+        },
+        {
+          "blessingId": 1702060,
+          "godId": 2,
+          "godName": "奥瑞利安·索尔",
+          "name": "低生命值探险",
+          "stage": 4,
+          "mainGod": false,
+          "total": 13.6,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 13.1,
+            "delay": 2.8,
+            "risk": 2.2,
+            "commitment": 0
+          },
+          "notes": [
+            "任务完成率62%"
+          ],
+          "coverage": "modeled",
+          "description": "你首次跌至30生命值时，获得21金币。"
+        }
+      ]
+    },
+    {
+      "state": {
+        "stage": 2,
+        "round": "2-4",
+        "level": 4,
+        "hp": 85,
+        "gold": 17,
+        "experienceToLevel": 18,
+        "streak": -1,
+        "expectedRounds": 13,
+        "sharedChoiceCount": 1,
+        "boardStars": 13,
+        "distinctCompletedItems": 9,
+        "interestEarned": 6,
+        "refreshCount": 2,
+        "distinctTraits": 8,
+        "upgradeReady": false,
+        "componentDirection": "tank",
+        "ownedComponents": [],
+        "ownedCosts": [
+          4,
+          2,
+          5
+        ],
+        "godHistory": [],
+        "blessingHistory": [],
+        "paintedHexes": 0,
+        "currentMainGod": null
+      },
+      "top": [
+        {
+          "blessingId": 1710080,
+          "godId": 10,
+          "godName": "伊芙琳",
+          "name": "决赛圈胜负手",
+          "stage": 2,
+          "mainGod": false,
+          "total": 25.3,
+          "parts": {
+            "combat": 0,
+            "economy": 26.4,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 1.1,
+            "commitment": 0
+          },
+          "notes": [
+            "即时3金币"
+          ],
+          "coverage": "modeled",
+          "description": "获得3金币。如果你在前4名，获得30额外金币。"
+        },
+        {
+          "blessingId": 1704050,
+          "godId": 4,
+          "godName": "凯尔",
+          "name": "锻造器转变",
+          "stage": 2,
+          "mainGod": false,
+          "total": 20.1,
+          "parts": {
+            "combat": 0,
+            "economy": 2,
+            "flexibility": 18.1,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [
+            "即时2金币",
+            "1件基础装备价值",
+            "装备供给具有后续复利"
+          ],
+          "coverage": "modeled",
+          "description": "每当你将要获得一个基础装备时，转而获得1个【基础装备锻造器】。获得2金币。"
+        },
+        {
+          "blessingId": 1707040,
+          "godId": 7,
+          "godName": "艾克",
+          "name": "随机神器",
+          "stage": 2,
+          "mainGod": false,
+          "total": 16.3,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 18.7,
+            "risk": 2.5,
+            "commitment": 0
+          },
+          "notes": [
+            "8回合延迟，存活率85%"
+          ],
+          "coverage": "modeled",
+          "description": "在8个回合后，获得1个随机神器。"
+        }
+      ]
+    },
+    {
+      "state": {
+        "stage": 2,
+        "round": "2-4",
+        "level": 4,
+        "hp": 35,
+        "gold": 29,
+        "experienceToLevel": 18,
+        "streak": 2,
+        "expectedRounds": 13,
+        "sharedChoiceCount": 1,
+        "boardStars": 10,
+        "distinctCompletedItems": 6,
+        "interestEarned": 1,
+        "refreshCount": 11,
+        "distinctTraits": 3,
+        "upgradeReady": false,
+        "componentDirection": "tank",
+        "ownedComponents": [],
+        "ownedCosts": [
+          2,
+          4,
+          1,
+          3,
+          3,
+          2,
+          5
+        ],
+        "godHistory": [],
+        "blessingHistory": [],
+        "paintedHexes": 0,
+        "currentMainGod": null
+      },
+      "top": [
+        {
+          "blessingId": 1704050,
+          "godId": 4,
+          "godName": "凯尔",
+          "name": "锻造器转变",
+          "stage": 2,
+          "mainGod": false,
+          "total": 20.1,
+          "parts": {
+            "combat": 0,
+            "economy": 2,
+            "flexibility": 18.1,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [
+            "即时2金币",
+            "1件基础装备价值",
+            "装备供给具有后续复利"
+          ],
+          "coverage": "modeled",
+          "description": "每当你将要获得一个基础装备时，转而获得1个【基础装备锻造器】。获得2金币。"
+        },
+        {
+          "blessingId": 1710080,
+          "godId": 10,
+          "godName": "伊芙琳",
+          "name": "决赛圈胜负手",
+          "stage": 2,
+          "mainGod": false,
+          "total": 17.8,
+          "parts": {
+            "combat": 0,
+            "economy": 20,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 2.2,
+            "commitment": 0
+          },
+          "notes": [
+            "即时3金币"
+          ],
+          "coverage": "modeled",
+          "description": "获得3金币。如果你在前4名，获得30额外金币。"
+        },
+        {
+          "blessingId": 1705080,
+          "godId": 5,
+          "godName": "阿狸",
+          "name": "贪婪之宝箱",
+          "stage": 2,
+          "mainGod": false,
+          "total": 13.5,
+          "parts": {
+            "combat": 0,
+            "economy": 14,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0.5,
+            "commitment": 0
+          },
+          "notes": [
+            "即时2金币",
+            "1人平分12金"
+          ],
+          "coverage": "modeled",
+          "description": "获得2金币，外加由选择这个的所有玩家平分12金币(向下取整)。"
+        }
+      ]
+    },
+    {
+      "state": {
+        "stage": 3,
+        "round": "3-4",
+        "level": 6,
+        "hp": 27,
+        "gold": 31,
+        "experienceToLevel": 18,
+        "streak": 2,
+        "expectedRounds": 9,
+        "sharedChoiceCount": 4,
+        "boardStars": 14,
+        "distinctCompletedItems": 6,
+        "interestEarned": 8,
+        "refreshCount": 11,
+        "distinctTraits": 7,
+        "upgradeReady": true,
+        "componentDirection": "magic",
+        "ownedComponents": [],
+        "ownedCosts": [
+          3,
+          1,
+          4
+        ],
+        "godHistory": [],
+        "blessingHistory": [],
+        "paintedHexes": 0,
+        "currentMainGod": null
+      },
+      "top": [
+        {
+          "blessingId": 1706041,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "恋人+",
+          "stage": 3,
+          "mainGod": false,
+          "total": 14,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 14,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "获得拥有一个相同羁绊的一个4费弈子和一个3费弈子。"
+        },
+        {
+          "blessingId": 1706110,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "升星缘分",
+          "stage": 3,
+          "mainGod": false,
+          "total": 14,
+          "parts": {
+            "combat": 14,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "你的下一次商店全是2费弈子。你购买的第一个是免费的并且会升至2星。"
+        },
+        {
+          "blessingId": 1702040,
+          "godId": 2,
+          "godName": "奥瑞利安·索尔",
+          "name": "羁绊探险",
+          "stage": 3,
+          "mainGod": false,
+          "total": 13.5,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 13.4,
+            "delay": 0.2,
+            "risk": 0.2,
+            "commitment": 0
+          },
+          "notes": [
+            "任务完成率96%"
+          ],
+          "coverage": "modeled",
+          "description": "在一场玩家对战中登场6个非唯一羁绊后，获得1个随机【纹章】和1个【装备重铸器】。"
+        }
+      ]
+    },
+    {
+      "state": {
+        "stage": 3,
+        "round": "3-4",
+        "level": 7,
+        "hp": 79,
+        "gold": 47,
+        "experienceToLevel": 18,
+        "streak": 2,
+        "expectedRounds": 9,
+        "sharedChoiceCount": 8,
+        "boardStars": 7,
+        "distinctCompletedItems": 8,
+        "interestEarned": 1,
+        "refreshCount": 9,
+        "distinctTraits": 6,
+        "upgradeReady": false,
+        "componentDirection": "highCost",
+        "ownedComponents": [],
+        "ownedCosts": [
+          3,
+          1,
+          2
+        ],
+        "godHistory": [],
+        "blessingHistory": [],
+        "paintedHexes": 0,
+        "currentMainGod": null
+      },
+      "top": [
+        {
+          "blessingId": 1706041,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "恋人+",
+          "stage": 3,
+          "mainGod": false,
+          "total": 14,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 14,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "获得拥有一个相同羁绊的一个4费弈子和一个3费弈子。"
+        },
+        {
+          "blessingId": 1706080,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "4费商店",
+          "stage": 3,
+          "mainGod": false,
+          "total": 13,
+          "parts": {
+            "combat": 0,
+            "economy": 13,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "你的下一次商店包含全4费弈子。你购买的第一个是免费的。"
+        },
+        {
+          "blessingId": 1702040,
+          "godId": 2,
+          "godName": "奥瑞利安·索尔",
+          "name": "羁绊探险",
+          "stage": 3,
+          "mainGod": false,
+          "total": 12.3,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 12.1,
+            "delay": 0.7,
+            "risk": 0.5,
+            "commitment": 0
+          },
+          "notes": [
+            "任务完成率87%"
+          ],
+          "coverage": "modeled",
+          "description": "在一场玩家对战中登场6个非唯一羁绊后，获得1个随机【纹章】和1个【装备重铸器】。"
+        }
+      ]
+    },
+    {
+      "state": {
+        "stage": 2,
+        "round": "2-4",
+        "level": 5,
+        "hp": 29,
+        "gold": 43,
+        "experienceToLevel": 18,
+        "streak": -1,
+        "expectedRounds": 13,
+        "sharedChoiceCount": 5,
+        "boardStars": 7,
+        "distinctCompletedItems": 6,
+        "interestEarned": 5,
+        "refreshCount": 15,
+        "distinctTraits": 8,
+        "upgradeReady": false,
+        "componentDirection": "magic",
+        "ownedComponents": [],
+        "ownedCosts": [
+          2,
+          1,
+          4,
+          1,
+          1,
+          5
+        ],
+        "godHistory": [],
+        "blessingHistory": [],
+        "paintedHexes": 0,
+        "currentMainGod": null
+      },
+      "top": [
+        {
+          "blessingId": 1704050,
+          "godId": 4,
+          "godName": "凯尔",
+          "name": "锻造器转变",
+          "stage": 2,
+          "mainGod": false,
+          "total": 20.1,
+          "parts": {
+            "combat": 0,
+            "economy": 2,
+            "flexibility": 18.1,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [
+            "即时2金币",
+            "1件基础装备价值",
+            "装备供给具有后续复利"
+          ],
+          "coverage": "modeled",
+          "description": "每当你将要获得一个基础装备时，转而获得1个【基础装备锻造器】。获得2金币。"
+        },
+        {
+          "blessingId": 1707020,
+          "godId": 7,
+          "godName": "艾克",
+          "name": "神圣干预",
+          "stage": 2,
+          "mainGod": false,
+          "total": 14,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 14,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "在跌至30玩家生命值之后，获得一个特殊的战利品法球。"
+        },
+        {
+          "blessingId": 1710080,
+          "godId": 10,
+          "godName": "伊芙琳",
+          "name": "决赛圈胜负手",
+          "stage": 2,
+          "mainGod": false,
+          "total": 13.8,
+          "parts": {
+            "combat": 0,
+            "economy": 16.5,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 2.7,
+            "commitment": 0
+          },
+          "notes": [
+            "即时3金币"
+          ],
+          "coverage": "modeled",
+          "description": "获得3金币。如果你在前4名，获得30额外金币。"
+        }
+      ]
+    },
+    {
+      "state": {
+        "stage": 3,
+        "round": "3-4",
+        "level": 7,
+        "hp": 70,
+        "gold": 49,
+        "experienceToLevel": 18,
+        "streak": -2,
+        "expectedRounds": 9,
+        "sharedChoiceCount": 3,
+        "boardStars": 14,
+        "distinctCompletedItems": 5,
+        "interestEarned": 1,
+        "refreshCount": 11,
+        "distinctTraits": 7,
+        "upgradeReady": false,
+        "componentDirection": "highCost",
+        "ownedComponents": [],
+        "ownedCosts": [
+          1,
+          2,
+          3
+        ],
+        "godHistory": [],
+        "blessingHistory": [],
+        "paintedHexes": 0,
+        "currentMainGod": null
+      },
+      "top": [
+        {
+          "blessingId": 1706041,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "恋人+",
+          "stage": 3,
+          "mainGod": false,
+          "total": 14,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 14,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "获得拥有一个相同羁绊的一个4费弈子和一个3费弈子。"
+        },
+        {
+          "blessingId": 1702040,
+          "godId": 2,
+          "godName": "奥瑞利安·索尔",
+          "name": "羁绊探险",
+          "stage": 3,
+          "mainGod": false,
+          "total": 13.5,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 13.4,
+            "delay": 0.2,
+            "risk": 0.2,
+            "commitment": 0
+          },
+          "notes": [
+            "任务完成率96%"
+          ],
+          "coverage": "modeled",
+          "description": "在一场玩家对战中登场6个非唯一羁绊后，获得1个随机【纹章】和1个【装备重铸器】。"
+        },
+        {
+          "blessingId": 1706080,
+          "godId": 6,
+          "godName": "韦鲁斯",
+          "name": "4费商店",
+          "stage": 3,
+          "mainGod": false,
+          "total": 13,
+          "parts": {
+            "combat": 0,
+            "economy": 13,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [],
+          "coverage": "modeled",
+          "description": "你的下一次商店包含全4费弈子。你购买的第一个是免费的。"
+        }
+      ]
+    },
+    {
+      "state": {
+        "stage": 2,
+        "round": "2-4",
+        "level": 5,
+        "hp": 95,
+        "gold": 17,
+        "experienceToLevel": 18,
+        "streak": 3,
+        "expectedRounds": 13,
+        "sharedChoiceCount": 6,
+        "boardStars": 15,
+        "distinctCompletedItems": 9,
+        "interestEarned": 6,
+        "refreshCount": 12,
+        "distinctTraits": 6,
+        "upgradeReady": true,
+        "componentDirection": "economy",
+        "ownedComponents": [],
+        "ownedCosts": [
+          3,
+          2,
+          2,
+          5,
+          1
+        ],
+        "godHistory": [],
+        "blessingHistory": [],
+        "paintedHexes": 0,
+        "currentMainGod": null
+      },
+      "top": [
+        {
+          "blessingId": 1710080,
+          "godId": 10,
+          "godName": "伊芙琳",
+          "name": "决赛圈胜负手",
+          "stage": 2,
+          "mainGod": false,
+          "total": 29.5,
+          "parts": {
+            "combat": 0,
+            "economy": 30,
+            "flexibility": 0,
+            "delay": 0,
+            "risk": 0.5,
+            "commitment": 0
+          },
+          "notes": [
+            "即时3金币"
+          ],
+          "coverage": "modeled",
+          "description": "获得3金币。如果你在前4名，获得30额外金币。"
+        },
+        {
+          "blessingId": 1704050,
+          "godId": 4,
+          "godName": "凯尔",
+          "name": "锻造器转变",
+          "stage": 2,
+          "mainGod": false,
+          "total": 20.1,
+          "parts": {
+            "combat": 0,
+            "economy": 2,
+            "flexibility": 18.1,
+            "delay": 0,
+            "risk": 0,
+            "commitment": 0
+          },
+          "notes": [
+            "即时2金币",
+            "1件基础装备价值",
+            "装备供给具有后续复利"
+          ],
+          "coverage": "modeled",
+          "description": "每当你将要获得一个基础装备时，转而获得1个【基础装备锻造器】。获得2金币。"
+        },
+        {
+          "blessingId": 1707040,
+          "godId": 7,
+          "godName": "艾克",
+          "name": "随机神器",
+          "stage": 2,
+          "mainGod": false,
+          "total": 16.3,
+          "parts": {
+            "combat": 0,
+            "economy": 0,
+            "flexibility": 0,
+            "delay": 18.7,
+            "risk": 2.5,
+            "commitment": 0
+          },
+          "notes": [
+            "8回合延迟，存活率85%"
+          ],
+          "coverage": "modeled",
+          "description": "在8个回合后，获得1个随机神器。"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "羽饰骑士按生命值分档奖励表未公开，因此相关赐福只保留低置信度价值。",
+    "普通4-7神之秘宝包池未公开，不与主神恩赐做精确差值。",
+    "官方阵容只作为选择先验，不参与状态价值公式的强制排序。",
+    "商店牌池份数未证实，英雄复制与全费用商店采用卡面价值而非伪精确抽卡金额。"
+  ]
+}
