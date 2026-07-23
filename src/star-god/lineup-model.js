@@ -453,7 +453,7 @@ function buildLineupModel(catalog = loadCatalog()) {
       clientPatch: catalog.source.currentClientPatch,
       starGodSnapshot: catalog.source.displayPatch,
       dataEdition: catalog.source.edition,
-      generatedAt: new Date().toISOString(),
+      generatedAt: catalog.generatedAt || catalog.source.sourceTime,
       officialLineupsAreSeeds: true,
       shopProbabilityUsed: false,
       missingGapDefinition: "仅按卡牌面值与缺失张数展示，不把概率倒数伪装成金币。",
