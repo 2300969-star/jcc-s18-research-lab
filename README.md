@@ -1,10 +1,10 @@
 <div align="center">
 
-# JCC S18 Research Lab
+# 金铲铲怪兽入侵 · S18 研究工程
 
-**A deterministic lineup discovery, simulation, and live decision system for Golden Spatula S18**
+**阵容发现、数值实验、虚拟实战与对局决策系统**
 
-**金铲铲之战「怪兽入侵」阵容发现、数值实验与对局决策研究系统**
+Golden Spatula S18 deterministic research lab
 
 [![version](https://img.shields.io/badge/version-17.17.7--S18-0969da?style=flat-square)](资源/游戏数据/chess.js)
 [![routes](https://img.shields.io/badge/evaluated_routes-67-8250df?style=flat-square)](生成产物/结果/route_certification_results.json)
@@ -12,28 +12,31 @@
 [![CI](https://img.shields.io/github/actions/workflow/status/2300969-star/jcc-s18-research-lab/ci.yml?style=flat-square&label=tests)](https://github.com/2300969-star/jcc-s18-research-lab/actions)
 [![license](https://img.shields.io/badge/code_license-MIT-f1e05a?style=flat-square)](LICENSE)
 
-[Research Dashboard](应用/前端/index.html) · [Match Mode](应用/前端/match.html) · [Star God Match](应用/前端/star-god-match.html) · [Star God Lab](应用/前端/star-god.html) · [Methodology](文档/研究报告/版本路线认证实验.md) · [Event Model](文档/研究报告/统一事件模型实验.md) · [中文文档](#快速开始)
+[快速开始](#快速开始) · [功能概览](#功能概览) · [比赛模式](#比赛模式) · [星神玩法](#星神玩法) · [研究图谱](#研究图谱) · [项目结构](#项目目录结构) · [研究报告](#研究报告)
 
 <img src="文档/图片/frontend-dashboard.png" alt="JCC S18 Research Dashboard" width="920">
 
 </div>
 
-## What This Project Does
+> 本仓库是可在本机运行的研究工程，不是在线网页。Clone 后运行 `npm run serve`，或在 macOS 双击根目录的 `启动前端.command`。
 
-Official recommended lineups are treated as **baselines, not answers**. The project reconstructs the current S18 environment from local game data and applies deterministic models to answer four questions:
+## 功能概览
 
-- Which units, items, traits, and augments form nonlinear value loops?
-- Which lineups remain strong under shop, economy, item, opponent, and transition uncertainty?
-- What should be played from the assets actually held at levels 1-9?
-- Which recommendation failures should become permanent regression fixtures?
+项目把官方推荐阵容当作**基线而不是答案**，从本地游戏数据重建当前 S18 环境，并用确定性模型回答四类问题：
 
-The browser application contains three working surfaces:
+- 哪些棋子、装备、羁绊和强化能形成非线性价值闭环？
+- 哪些阵容在商店、经济、装备、对手和转型不确定性下仍然稳健？
+- 1 至 9 级时，如何根据实际持有资产选择当前路线？
+- 哪些真实对局中的错误建议应沉淀为永久回归样本？
 
-| Surface | Purpose |
-|---|---|
-| **Research Dashboard** | Version results, generated lineups, certified conditional routes, stage transitions, numerical audits, and experiment reports |
-| **Match Mode** | Fast Chinese signal parsing, persistent round/gold state, route-continuity management, honest augment comparison, hero-augment pruning, concrete actions, and optional LLM fallback |
-| **Star God Lab** | Independent 17.7 ruleset, nine-god state machine, blessing value decomposition, main-god history, and 5,400-state virtual sensitivity study |
+浏览器端提供四个可直接使用的界面：
+
+| 界面 | 用途 | 本地入口 |
+|---|---|---|
+| **研究主界面** | 版本结果、生成阵容、路线认证、阶段转型、数值审计与实验报告 | [`应用/前端/index.html`](应用/前端/index.html) |
+| **比赛模式** | 中文信号录入、局面状态、路线连续性、符文比较、行动建议与赛后复盘 | [`应用/前端/match.html`](应用/前端/match.html) |
+| **星神比赛模式** | 当前资产、赐福、实时路线排序与换线判断 | [`应用/前端/star-god-match.html`](应用/前端/star-god-match.html) |
+| **星神实验室** | 九神状态机、赐福价值拆解与虚拟敏感性研究 | [`应用/前端/star-god.html`](应用/前端/star-god.html) |
 
 <details>
 <summary><strong>Match Mode preview / 比赛模式预览</strong></summary>
@@ -41,26 +44,26 @@ The browser application contains three working surfaces:
 <img src="文档/图片/match-mode.png" alt="JCC S18 Match Mode" width="920">
 </details>
 
-## Research Stack
+## 研究架构
 
 ```mermaid
 flowchart LR
-  A[Official local game data] --> B[Event-driven combat twin]
-  A --> C[Shop odds and economy model]
-  B --> D[Paired full-team virtual battles]
+  A["官方本地游戏数据"] --> B["事件驱动战斗孪生"]
+  A --> C["商店概率与经济模型"]
+  B --> D["成对全队虚拟实战"]
   C --> D
-  D --> E[Lineup search and transition solver]
-  E --> F[Robust score and CVaR]
-  F --> G[Bounded teacher-model distillation]
-  G --> K[Asset-role value matcher]
-  K --> H[Research Dashboard]
-  K --> I[Match Mode]
-  J[Optional LLM parser] -->|standardized signals only| K
+  D --> E["阵容搜索与转型求解"]
+  E --> F["稳健分数与 CVaR"]
+  F --> G["有界教师模型蒸馏"]
+  G --> K["资产角色价值匹配"]
+  K --> H["研究主界面"]
+  K --> I["比赛模式"]
+  J["可选 LLM 解析器"] -->|"只输出标准信号"| K
 ```
 
-The LLM is deliberately outside the ranking loop. It may translate unrecognized Chinese speech into a closed vocabulary, but all lineup scoring, shop probability, equipment inference, augment operators, and recommendations remain deterministic.
+LLM 被明确放在排序闭环之外，只能把本地解析器未识别的中文表达翻译成封闭词表。阵容评分、商店概率、装备推断、强化算子和最终建议仍由确定性模型完成。
 
-## Star God Mode / 星神玩法
+## 星神玩法
 
 星神玩法使用独立的 `setId=17` 数据层，不与怪兽入侵的英雄、装备或比赛状态混用。构建脚本从腾讯官方资料规范化9位星神、110个唯一赐福、63个可玩英雄、34个羁绊、262件装备、277个强化、20个开场奇遇和44套前中后期阵容。
 
@@ -76,7 +79,7 @@ npm run build:star-god
 
 <img src="生成产物/截图/star-god-match-1280.png" alt="星神比赛模式：资产、赐福、实时路线与换线雷达" width="920">
 
-## Match Mode / 比赛模式
+## 比赛模式
 
 比赛模式面向快速连续录入，而不是要求每次填写一张完整局面表。棋子、星级、装备、羁绊和符文可直接用自然中文输入；当前等级、强化回合、对局回合和金币档位也可通过页面快捷按钮维护。
 
@@ -108,92 +111,92 @@ npm run build:star-god
 
 机制取值、来源等级、已确认项和未知项见 [怪兽入侵机制知识审计](文档/研究报告/怪兽入侵机制知识审计.md)。规则集快照位于 [`资源/游戏数据/ruleset/monster-invasion-17.7.json`](资源/游戏数据/ruleset/monster-invasion-17.7.json)，本次更新的数值差分与重算结论见 [17.7 版本更新重算](文档/研究报告/17.7版本更新重算.md)。
 
-## Research Figures / 研究图谱
+## 研究图谱
 
-These figures are generated from the repository's deterministic outputs rather than drawn as presentation-only mockups. Run `npm run figures` after rebuilding the model to refresh every number shown below.
+以下图表直接从仓库中的确定性结果生成，不是只用于展示的示意图。模型重建后运行 `npm run figures`，即可刷新图中的全部数字。
 
-### Formula calculations / 公式计算
+### 公式计算
 
 <p align="center">
   <img src="文档/图片/research/formula-asset-value.svg" alt="Asset-role value formula" width="49%">
   <img src="文档/图片/research/formula-shop-odds.svg" alt="Shop odds and reachability formula" width="49%">
 </p>
 
-The first graph exposes the role coefficients used by Match Mode. The second graph maps the complete level 1-9 shop matrix and explains how an unavailable high-cost unit becomes a zero-value late target instead of a fake `999`-gold estimate.
+第一张图展示比赛模式使用的角色系数；第二张图覆盖 1 至 9 级完整商店矩阵，并说明当前等级无法出现的高费棋子为何应作为零价值远期目标，而不是伪造 `999` 金币估值。
 
 <p align="center">
   <img src="文档/图片/research/formula-augment-operator.svg" alt="Conditional augment operator formula" width="78%">
 </p>
 
-The augment graph separates hard hero-mechanism gates from soft combat, economy, and item operators. Soft bonuses must survive both the condition-lift cap and the evidence-level discount before entering a recommendation.
+强化图把英雄机制硬门槛与战斗、经济、装备软算子分开。软加成必须同时经过条件增益上限和证据等级折扣，才能进入建议。
 
-### Lineup derivation / 阵容推导
+### 阵容推导
 
 <p align="center">
   <img src="文档/图片/research/lineup-mecha-transition.svg" alt="Mecha carry transition derivation" width="49%">
   <img src="文档/图片/research/lineup-jinx-growth.svg" alt="Jinx sisters growth derivation" width="49%">
 </p>
 
-- **Mecha transition:** jointly optimizes stage strength, retained units, and item inheritance instead of scoring only the final board.
-- **Jinx sisters:** independently validates the AP stacking curve, missile breakpoints, and three candidate end-board shells.
+- **机甲转型：** 联合优化阶段战力、保留棋子和装备继承，而不是只给最终棋盘打分。
+- **姐妹金克丝：** 独立验证法强叠加曲线、导弹断点和三套候选终局外壳。
 
 <p align="center">
   <img src="文档/图片/research/lineup-solver-frontier.svg" alt="Lineup solver Pareto frontier" width="78%">
 </p>
 
-The solver frontier shows why the highest carry DPS is not automatically the best lineup. Orange points are non-dominated boards for carry output and frontline EHP; bubble size adds full-team value.
+求解前沿解释了主 C 输出最高为何不等于阵容最优。橙色点是在主 C 输出与前排有效生命维度上不被支配的棋盘，气泡大小进一步表示全队价值。
 
-### Model verification / 模型验算
+### 模型验算
 
 <p align="center">
   <img src="文档/图片/research/validation-certification.svg" alt="Route robustness certification" width="49%">
   <img src="文档/图片/research/validation-mecha-prime.svg" alt="Mecha Prime counterfactual experiment" width="49%">
 </p>
 
-The certification chart summarizes the current top ten under shared uncertainty samples. The Prime experiment fixes the board and items, changes only the Prime holder, and reruns the combat model to isolate causal impact.
+认证图汇总共享不确定性样本下的当前前十路线。至尊机甲实验固定棋盘和装备，只改变机甲选择者并重跑战斗模型，以隔离因果影响。
 
 <p align="center">
   <img src="文档/图片/research/validation-tier-correlation.svg" alt="Official tier and model score correlation" width="78%">
 </p>
 
-The validation boundary is intentionally visible: the current official-tier correlation is only `Spearman ρ = 0.234` across 45 lineups. The system therefore reports model evidence, not a claim that its ranking is already ground truth.
+验证边界会被明确展示：当前 45 套阵容与官方等级的相关性仅为 `Spearman ρ = 0.234`。因此系统报告的是模型证据，不宣称排序已经等同于真实环境结论。
 
-## Model Highlights
+## 模型重点
 
-### Asset-role value model
+### 资产角色价值模型
 
-Each held signal is valued by its role in a route rather than by flat checklist overlap:
+每个已持有信号按其在路线中的角色估值，而不是简单计算清单重合度：
 
 ```text
 route score = held role value + probability-discounted future value
             + augment operators + bounded virtual-battle prior
 ```
 
-- Main carry body and star level receive the highest unit value.
-- Completed items are valued by holder role; components are paired without double counting.
-- Missing units are discounted by level-specific shop odds and expected reroll gold.
-- Explicit trait counts are matched against activated end-board traits.
-- A fragile route can be downgraded when one low-probability component dominates the plan.
+- 主 C 本体和星级获得最高棋子价值。
+- 成装按持有者角色估值；散件配对时不重复计数。
+- 缺失棋子按当前等级商店概率和期望刷新金币折扣。
+- 已明确的羁绊数量与终局激活羁绊匹配。
+- 当一个低概率组件主导整套计划时，脆弱路线会被降级。
 
-### Conditional augment operators
+### 条件强化算子
 
-The condition lift is discounted by evidence level before entering Match Mode:
+条件增益在进入比赛模式前按证据等级折扣：
 
 ```text
 b = q_e × min(12, 0.5 × (conditional fitness - baseline robustness))
 q_e = { L2.5: 1.00, L2: 0.65, L1.5: 0.35 }
 ```
 
-- **Combat augments** scale with current board readiness.
-- **Economy augments** alter effective shop level, reroll cost, or copy requirements.
-- **Item augments** compensate missing carry items and decay after the build is complete.
-- **Hero augments** remain hard mechanism gates with explicit required units.
+- **战斗强化**随当前棋盘完成度缩放。
+- **经济强化**改变有效商店等级、刷新成本或追星副本需求。
+- **装备强化**补偿主 C 缺失装备，并在装备成型后衰减。
+- **英雄强化**保留为带明确棋子要求的机制硬门槛。
 
-### Digital-twin boundary
+### 数字孪生边界
 
-The event engine currently evaluates all **67 routes in 2,211 pairings and 26,532 side-swapped battles**. Every pairing reuses the same random seed after swapping sides, then reports win rate, health margin, lower-tail CVaR, and mechanism coverage. Unsupported mechanics shrink the Match Mode prior toward zero instead of being silently treated as verified. The executable hero-augment catalog currently covers **53 of 122** entries; the remaining mechanics stay discounted instead of receiving guessed values.
+事件引擎目前评估全部 **67 条路线、2,211 组对局和 26,532 场换边战斗**。每组对局换边后复用相同随机种子，再报告胜率、剩余生命差、下尾 CVaR 与机制覆盖率。未支持机制会让比赛模式先验向零收缩，不会被静默当成已验证。当前可执行英雄强化目录覆盖 **122 项中的 53 项**，其余机制保持折扣，不填入猜测值。
 
-The result is a **model-internal dominance claim**, not an observed ladder win rate. Public guides may seed candidate generation, but they do not calibrate ranking weights. The fast Match Mode model receives at most a bounded `±12` point prior from the event simulator:
+结果表达的是**模型内部优势**，不是实测排位胜率。公开攻略可以用于生成候选，但不能校准排序权重。快速比赛模型从事件模拟器获得的先验最多限制在 `±12` 分：
 
 ```text
 virtual prior = 12 × tanh((robust score - 50) / 18) × mechanism coverage
@@ -201,11 +204,7 @@ virtual prior = 12 × tanh((robust score - 50) / 18) × mechanism coverage
 
 ## 快速开始
 
-### 1. 本机一键启动
-
-macOS 直接双击项目根目录的 [`启动前端.command`](启动前端.command)。启动器会自动识别当前项目目录，启动本地服务并打开研究主界面。
-
-### 2. Clone and test
+### 1. 克隆并检查
 
 ```bash
 git clone https://github.com/2300969-star/jcc-s18-research-lab.git
@@ -213,32 +212,42 @@ cd jcc-s18-research-lab
 npm test
 ```
 
-No runtime package installation is required. The project uses Node.js built-ins and a static frontend.
+需要 Node.js 18 或更高版本。项目只使用 Node.js 内置模块和静态前端，无需执行 `npm install`。
 
-### 3. Start the dashboard manually
+### 2. macOS 一键启动
+
+在 Finder 中双击项目根目录的 [`启动前端.command`](启动前端.command)。启动器会自动识别自身所在的项目目录，启动本地前端与可选 LLM 代理，并用浏览器打开研究主界面。
+
+也可以在终端执行：
+
+```bash
+open 启动前端.command
+```
+
+### 3. 手动启动前端
 
 ```bash
 npm run serve
 ```
 
-Open:
+浏览器入口：
 
-- Dashboard: `http://127.0.0.1:8766/应用/前端/index.html`
-- Match Mode: `http://127.0.0.1:8766/应用/前端/match.html`
-- Star God Match: `http://127.0.0.1:8766/应用/前端/star-god-match.html`
-- Audit View: `http://127.0.0.1:8766/应用/前端/audit/index.html`
+- 研究主界面：`http://127.0.0.1:8766/应用/前端/index.html`
+- 比赛模式：`http://127.0.0.1:8766/应用/前端/match.html`
+- 星神比赛模式：`http://127.0.0.1:8766/应用/前端/star-god-match.html`
+- 审计界面：`http://127.0.0.1:8766/应用/前端/audit/index.html`
 
-### 4. Optional LLM fallback
+### 4. 可选 LLM 慢车道
 
 ```bash
 npm run proxy
 ```
 
-In Match Mode settings, use `http://127.0.0.1:8787/v1` and provide your own OpenAI-compatible API key. The key remains in browser `localStorage`; the proxy forwards it without persisting it.
+在比赛模式设置中填写 `http://127.0.0.1:8787/v1`，并使用自己的 OpenAI 兼容 API Key。Key 仅保留在浏览器 `localStorage` 中，本地代理只负责转发，不持久化保存。
 
-The local vocabulary parser always runs first. Without a key or network, the entire ranking system remains usable.
+本地封闭词表解析器始终优先运行；没有 Key 或网络时，完整确定性排序系统仍然可用。
 
-## Reproduce The Research
+## 复现实验
 
 ```bash
 npm run build:model        # combat model, item search, full-team search
@@ -252,13 +261,13 @@ npm run audit              # data, skill, item, and outlier audits
 npm run figures            # regenerate README research figures
 ```
 
-Run the complete deterministic pipeline:
+运行完整确定性流水线：
 
 ```bash
 npm run build
 ```
 
-Refresh upstream game data and regenerate all outputs:
+刷新上游游戏数据并重建全部产物：
 
 ```bash
 npm run update:data
@@ -296,7 +305,7 @@ npm run update:data
 
 详细职责、修改边界和常用入口见 [项目结构说明](文档/项目结构说明.md)。源码内部保留 `core/pipeline/experiments` 等通用模块名，便于 Node.js、CI 和公开仓库工具识别。
 
-## Selected Reports
+## 研究报告
 
 - [版本路线认证实验](文档/研究报告/版本路线认证实验.md)
 - [虚拟实战数字孪生](文档/研究报告/虚拟实战数字孪生.md)
@@ -309,14 +318,14 @@ npm run update:data
 - [数值与 Bug 审计](文档/研究报告/数值与Bug审计.md)
 - [17.7 版本更新重算](文档/研究报告/17.7版本更新重算.md)
 
-## Regression Philosophy
+## 回归原则
 
-When a real game disproves a recommendation, the preferred response is not an isolated score patch. Add the hand to [`工程/测试/样本/hands.json`](工程/测试/样本/hands.json), identify which assumption failed, and make the deterministic model pass both the new fixture and the existing suite.
+当真实对局推翻某条建议时，不应只做孤立的分数补丁。应把局面加入 [`工程/测试/样本/hands.json`](工程/测试/样本/hands.json)，定位失效假设，并让确定性模型同时通过新样本与既有测试套件。
 
-## Scope And Disclaimer
+## 范围与声明
 
-This repository is independent, non-commercial community research. It is not an official product and does not guarantee placement or win rate. Game data, names, trademarks, icons, and artwork belong to their respective owners and are not covered by the MIT code license. See [NOTICE.md](NOTICE.md).
+本仓库是独立、非商业的社区研究项目，并非官方产品，不保证名次或胜率。游戏数据、名称、商标、图标和美术素材归各自权利人所有，不包含在 MIT 代码许可证内，详见 [NOTICE.md](NOTICE.md)。
 
-## Contributing
+## 参与贡献
 
-Issues and pull requests are welcome when they include reproducible evidence. Read [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md), and the [Code of Conduct](CODE_OF_CONDUCT.md) before contributing.
+欢迎提交包含可复现证据的 Issue 与 Pull Request。参与前请阅读 [CONTRIBUTING.md](CONTRIBUTING.md)、[SECURITY.md](SECURITY.md) 和 [行为准则](CODE_OF_CONDUCT.md)。
