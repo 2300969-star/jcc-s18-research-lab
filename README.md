@@ -6,15 +6,15 @@
 
 **金铲铲之战「怪兽入侵」阵容发现、数值实验与对局决策研究系统**
 
-[![version](https://img.shields.io/badge/version-17.17.7--S18-0969da?style=flat-square)](data/chess.js)
-[![routes](https://img.shields.io/badge/evaluated_routes-67-8250df?style=flat-square)](artifacts/results/route_certification_results.json)
-[![virtual battles](https://img.shields.io/badge/paired_virtual_battles-26%2C532-1f883d?style=flat-square)](docs/reports/虚拟实战数字孪生.md)
+[![version](https://img.shields.io/badge/version-17.17.7--S18-0969da?style=flat-square)](资源/游戏数据/chess.js)
+[![routes](https://img.shields.io/badge/evaluated_routes-67-8250df?style=flat-square)](生成产物/结果/route_certification_results.json)
+[![virtual battles](https://img.shields.io/badge/paired_virtual_battles-26%2C532-1f883d?style=flat-square)](文档/研究报告/虚拟实战数字孪生.md)
 [![CI](https://img.shields.io/github/actions/workflow/status/2300969-star/jcc-s18-research-lab/ci.yml?style=flat-square&label=tests)](https://github.com/2300969-star/jcc-s18-research-lab/actions)
 [![license](https://img.shields.io/badge/code_license-MIT-f1e05a?style=flat-square)](LICENSE)
 
-[Research Dashboard](public/index.html) · [Match Mode](public/match.html) · [Star God Match](public/star-god-match.html) · [Star God Lab](public/star-god.html) · [Methodology](docs/reports/版本路线认证实验.md) · [Event Model](docs/reports/统一事件模型实验.md) · [中文文档](#快速开始)
+[Research Dashboard](应用/前端/index.html) · [Match Mode](应用/前端/match.html) · [Star God Match](应用/前端/star-god-match.html) · [Star God Lab](应用/前端/star-god.html) · [Methodology](文档/研究报告/版本路线认证实验.md) · [Event Model](文档/研究报告/统一事件模型实验.md) · [中文文档](#快速开始)
 
-<img src="docs/images/frontend-dashboard.png" alt="JCC S18 Research Dashboard" width="920">
+<img src="文档/图片/frontend-dashboard.png" alt="JCC S18 Research Dashboard" width="920">
 
 </div>
 
@@ -38,7 +38,7 @@ The browser application contains three working surfaces:
 <details>
 <summary><strong>Match Mode preview / 比赛模式预览</strong></summary>
 <br>
-<img src="docs/images/match-mode.png" alt="JCC S18 Match Mode" width="920">
+<img src="文档/图片/match-mode.png" alt="JCC S18 Match Mode" width="920">
 </details>
 
 ## Research Stack
@@ -72,9 +72,9 @@ The LLM is deliberately outside the ranking loop. It may translate unrecognized 
 npm run build:star-god
 ```
 
-比赛入口为 [`public/star-god-match.html`](public/star-god-match.html)，赐福实验入口为 [`public/star-god.html`](public/star-god.html)。研究报告见 [`docs/reports/星神阵容生成与比赛模式研究.md`](docs/reports/星神阵容生成与比赛模式研究.md) 与 [`docs/reports/星神玩法17.7研究.md`](docs/reports/星神玩法17.7研究.md)。羽饰骑士生命分档、普通4-7神之秘宝包池和当前牌库份数没有可靠证据，页面明确标为未自证，不用猜测值填补。
+比赛入口为 [`应用/前端/star-god-match.html`](应用/前端/star-god-match.html)，赐福实验入口为 [`应用/前端/star-god.html`](应用/前端/star-god.html)。研究报告见 [`文档/研究报告/星神阵容生成与比赛模式研究.md`](文档/研究报告/星神阵容生成与比赛模式研究.md) 与 [`文档/研究报告/星神玩法17.7研究.md`](文档/研究报告/星神玩法17.7研究.md)。羽饰骑士生命分档、普通4-7神之秘宝包池和当前牌库份数没有可靠证据，页面明确标为未自证，不用猜测值填补。
 
-<img src="artifacts/screenshots/star-god-match-1280.png" alt="星神比赛模式：资产、赐福、实时路线与换线雷达" width="920">
+<img src="生成产物/截图/star-god-match-1280.png" alt="星神比赛模式：资产、赐福、实时路线与换线雷达" width="920">
 
 ## Match Mode / 比赛模式
 
@@ -106,7 +106,7 @@ npm run build:star-god
 - 将“命中多少条路线偏好”标为覆盖统计，不参与排序；
 - 信息不足或证据未经验证时不默认标绿第一张，也不强行给出首推。
 
-机制取值、来源等级、已确认项和未知项见 [怪兽入侵机制知识审计](docs/reports/怪兽入侵机制知识审计.md)。规则集快照位于 [`data/ruleset/monster-invasion-17.7.json`](data/ruleset/monster-invasion-17.7.json)，本次更新的数值差分与重算结论见 [17.7 版本更新重算](docs/reports/17.7版本更新重算.md)。
+机制取值、来源等级、已确认项和未知项见 [怪兽入侵机制知识审计](文档/研究报告/怪兽入侵机制知识审计.md)。规则集快照位于 [`资源/游戏数据/ruleset/monster-invasion-17.7.json`](资源/游戏数据/ruleset/monster-invasion-17.7.json)，本次更新的数值差分与重算结论见 [17.7 版本更新重算](文档/研究报告/17.7版本更新重算.md)。
 
 ## Research Figures / 研究图谱
 
@@ -115,14 +115,14 @@ These figures are generated from the repository's deterministic outputs rather t
 ### Formula calculations / 公式计算
 
 <p align="center">
-  <img src="docs/images/research/formula-asset-value.svg" alt="Asset-role value formula" width="49%">
-  <img src="docs/images/research/formula-shop-odds.svg" alt="Shop odds and reachability formula" width="49%">
+  <img src="文档/图片/research/formula-asset-value.svg" alt="Asset-role value formula" width="49%">
+  <img src="文档/图片/research/formula-shop-odds.svg" alt="Shop odds and reachability formula" width="49%">
 </p>
 
 The first graph exposes the role coefficients used by Match Mode. The second graph maps the complete level 1-9 shop matrix and explains how an unavailable high-cost unit becomes a zero-value late target instead of a fake `999`-gold estimate.
 
 <p align="center">
-  <img src="docs/images/research/formula-augment-operator.svg" alt="Conditional augment operator formula" width="78%">
+  <img src="文档/图片/research/formula-augment-operator.svg" alt="Conditional augment operator formula" width="78%">
 </p>
 
 The augment graph separates hard hero-mechanism gates from soft combat, economy, and item operators. Soft bonuses must survive both the condition-lift cap and the evidence-level discount before entering a recommendation.
@@ -130,15 +130,15 @@ The augment graph separates hard hero-mechanism gates from soft combat, economy,
 ### Lineup derivation / 阵容推导
 
 <p align="center">
-  <img src="docs/images/research/lineup-mecha-transition.svg" alt="Mecha carry transition derivation" width="49%">
-  <img src="docs/images/research/lineup-jinx-growth.svg" alt="Jinx sisters growth derivation" width="49%">
+  <img src="文档/图片/research/lineup-mecha-transition.svg" alt="Mecha carry transition derivation" width="49%">
+  <img src="文档/图片/research/lineup-jinx-growth.svg" alt="Jinx sisters growth derivation" width="49%">
 </p>
 
 - **Mecha transition:** jointly optimizes stage strength, retained units, and item inheritance instead of scoring only the final board.
 - **Jinx sisters:** independently validates the AP stacking curve, missile breakpoints, and three candidate end-board shells.
 
 <p align="center">
-  <img src="docs/images/research/lineup-solver-frontier.svg" alt="Lineup solver Pareto frontier" width="78%">
+  <img src="文档/图片/research/lineup-solver-frontier.svg" alt="Lineup solver Pareto frontier" width="78%">
 </p>
 
 The solver frontier shows why the highest carry DPS is not automatically the best lineup. Orange points are non-dominated boards for carry output and frontline EHP; bubble size adds full-team value.
@@ -146,14 +146,14 @@ The solver frontier shows why the highest carry DPS is not automatically the bes
 ### Model verification / 模型验算
 
 <p align="center">
-  <img src="docs/images/research/validation-certification.svg" alt="Route robustness certification" width="49%">
-  <img src="docs/images/research/validation-mecha-prime.svg" alt="Mecha Prime counterfactual experiment" width="49%">
+  <img src="文档/图片/research/validation-certification.svg" alt="Route robustness certification" width="49%">
+  <img src="文档/图片/research/validation-mecha-prime.svg" alt="Mecha Prime counterfactual experiment" width="49%">
 </p>
 
 The certification chart summarizes the current top ten under shared uncertainty samples. The Prime experiment fixes the board and items, changes only the Prime holder, and reruns the combat model to isolate causal impact.
 
 <p align="center">
-  <img src="docs/images/research/validation-tier-correlation.svg" alt="Official tier and model score correlation" width="78%">
+  <img src="文档/图片/research/validation-tier-correlation.svg" alt="Official tier and model score correlation" width="78%">
 </p>
 
 The validation boundary is intentionally visible: the current official-tier correlation is only `Spearman ρ = 0.234` across 45 lineups. The system therefore reports model evidence, not a claim that its ranking is already ground truth.
@@ -201,7 +201,11 @@ virtual prior = 12 × tanh((robust score - 50) / 18) × mechanism coverage
 
 ## 快速开始
 
-### 1. Clone and test
+### 1. 本机一键启动
+
+macOS 直接双击项目根目录的 [`启动前端.command`](启动前端.command)。启动器会自动识别当前项目目录，启动本地服务并打开研究主界面。
+
+### 2. Clone and test
 
 ```bash
 git clone https://github.com/2300969-star/jcc-s18-research-lab.git
@@ -211,7 +215,7 @@ npm test
 
 No runtime package installation is required. The project uses Node.js built-ins and a static frontend.
 
-### 2. Start the dashboard
+### 3. Start the dashboard manually
 
 ```bash
 npm run serve
@@ -219,12 +223,12 @@ npm run serve
 
 Open:
 
-- Dashboard: `http://127.0.0.1:8766/public/index.html`
-- Match Mode: `http://127.0.0.1:8766/public/match.html`
-- Star God Match: `http://127.0.0.1:8766/public/star-god-match.html`
-- Audit View: `http://127.0.0.1:8766/public/audit/index.html`
+- Dashboard: `http://127.0.0.1:8766/应用/前端/index.html`
+- Match Mode: `http://127.0.0.1:8766/应用/前端/match.html`
+- Star God Match: `http://127.0.0.1:8766/应用/前端/star-god-match.html`
+- Audit View: `http://127.0.0.1:8766/应用/前端/audit/index.html`
 
-### 3. Optional LLM fallback
+### 4. Optional LLM fallback
 
 ```bash
 npm run proxy
@@ -260,45 +264,54 @@ Refresh upstream game data and regenerate all outputs:
 npm run update:data
 ```
 
-## Repository Layout
+## 项目目录结构
 
 ```text
 .
-├── src/
-│   ├── core/          # combat model, version context, mechanism profiles
-│   ├── sim/           # event-driven full-team combat twin
-│   ├── pipeline/      # discovery, transition, matcher, certification
-│   ├── experiments/   # focused counterfactual laboratories
-│   ├── audit/         # numerical and data-quality audits
-│   └── lib/           # shared project paths
-├── public/            # static dashboard, match mode, browser data, assets
-├── data/              # upstream game data snapshots
-├── artifacts/results/ # deterministic JSON outputs
-├── docs/
-│   ├── reports/       # generated and curated research reports
-│   ├── notes/         # extracted lineup details
-│   └── images/        # repository screenshots
-├── tests/fixtures/    # permanent regression hands
-├── tools/             # optional local services
-└── scripts/           # data refresh and maintenance entrypoints
+├── 启动前端.command          # macOS 一键启动入口
+├── 应用/
+│   └── 前端/                 # 静态主界面、比赛模式、浏览器数据和素材
+├── 工程/
+│   ├── 源码/
+│   │   ├── core/             # 核心模型与版本上下文
+│   │   ├── sim/              # 事件驱动战斗模拟
+│   │   ├── pipeline/         # 搜索、转型、匹配和认证流程
+│   │   ├── experiments/      # 专项反事实实验
+│   │   ├── audit/            # 数值与数据质量审计
+│   │   └── lib/              # 统一项目路径
+│   ├── 测试/
+│   │   └── 样本/             # 永久回归局面
+│   ├── 工具/                 # 本地代理和图表生成器
+│   └── 脚本/                 # 数据更新与维护入口
+├── 资源/
+│   └── 游戏数据/             # 腾讯游戏资料与版本化规则快照
+├── 文档/
+│   ├── 研究报告/             # 生成与人工维护的研究结论
+│   ├── 阵容资料/             # 官方阵容明细
+│   └── 图片/                 # README 图表和界面截图
+└── 生成产物/
+    ├── 结果/                 # 确定性 JSON 计算结果
+    └── 截图/                 # 浏览器验收截图
 ```
+
+详细职责、修改边界和常用入口见 [项目结构说明](文档/项目结构说明.md)。源码内部保留 `core/pipeline/experiments` 等通用模块名，便于 Node.js、CI 和公开仓库工具识别。
 
 ## Selected Reports
 
-- [版本路线认证实验](docs/reports/版本路线认证实验.md)
-- [虚拟实战数字孪生](docs/reports/虚拟实战数字孪生.md)
-- [社区公开样本证据审计](docs/reports/社区公开样本证据审计.md)
-- [元阵容自动求解](docs/reports/元阵容自动求解.md)
-- [阵容发现研究](docs/reports/阵容发现研究.md)
-- [姐妹无限金克丝实验](docs/reports/姐妹无限金克丝实验.md)
-- [机甲分叉实验](docs/reports/机甲分叉实验.md)
-- [至尊机甲实验](docs/reports/至尊机甲实验.md)
-- [数值与 Bug 审计](docs/reports/数值与Bug审计.md)
-- [17.7 版本更新重算](docs/reports/17.7版本更新重算.md)
+- [版本路线认证实验](文档/研究报告/版本路线认证实验.md)
+- [虚拟实战数字孪生](文档/研究报告/虚拟实战数字孪生.md)
+- [社区公开样本证据审计](文档/研究报告/社区公开样本证据审计.md)
+- [元阵容自动求解](文档/研究报告/元阵容自动求解.md)
+- [阵容发现研究](文档/研究报告/阵容发现研究.md)
+- [姐妹无限金克丝实验](文档/研究报告/姐妹无限金克丝实验.md)
+- [机甲分叉实验](文档/研究报告/机甲分叉实验.md)
+- [至尊机甲实验](文档/研究报告/至尊机甲实验.md)
+- [数值与 Bug 审计](文档/研究报告/数值与Bug审计.md)
+- [17.7 版本更新重算](文档/研究报告/17.7版本更新重算.md)
 
 ## Regression Philosophy
 
-When a real game disproves a recommendation, the preferred response is not an isolated score patch. Add the hand to [`tests/fixtures/hands.json`](tests/fixtures/hands.json), identify which assumption failed, and make the deterministic model pass both the new fixture and the existing suite.
+When a real game disproves a recommendation, the preferred response is not an isolated score patch. Add the hand to [`工程/测试/样本/hands.json`](工程/测试/样本/hands.json), identify which assumption failed, and make the deterministic model pass both the new fixture and the existing suite.
 
 ## Scope And Disclaimer
 

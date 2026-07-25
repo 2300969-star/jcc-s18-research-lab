@@ -1,0 +1,928 @@
+(function (root, factory) {
+  const api = factory(root);
+  if (typeof module === "object" && module.exports) module.exports = api;
+  root.SignalParser = api;
+})(typeof globalThis !== "undefined" ? globalThis : this, function (root) {
+  "use strict";
+
+  const FILLERS = [
+    "来了", "来个", "拿了", "拿到", "拿着", "一个", "还有", "然后", "以及", "给我", "看到",
+    "看见", "现在", "这把", "有个", "有一个", "帮我", "可以", "的话", "那个", "这个",
+    "我是", "我这边", "我现在", "这边", "已经", "开场", "嗯", "啊",
+  ];
+  const CLEAR_WORDS = ["重开", "新的一局", "新局", "清空", "重新开始"];
+  const REMOVE_WORDS = ["删掉", "去掉", "不要", "删除", "移除", "卖掉", "卖了", "清除"];
+  const UNDO_WORDS = ["撤销上一个", "撤销上一条", "退回上一个", "取消上一个"];
+
+  const HERO_ALIASES = {
+    艾希: ["寒冰", "冰弓", "冰霜射手"],
+    波比: ["锤妹", "圣锤"],
+    布里茨: ["机器人", "机器", "蒸汽机器人"],
+    加里奥: ["巨像", "正义巨像"],
+    凯尔: ["天使", "正义天使"],
+    拉克丝: ["光辉", "光女", "光辉女郎"],
+    雷克顿: ["鳄鱼", "怒之领域"],
+    璐璐: ["露露", "仙灵女巫"],
+    内瑟斯: ["狗头", "沙漠死神"],
+    普朗克: ["船长", "海洋之灾"],
+    塞拉斯: ["偷男", "解脱者"],
+    孙悟空: ["猴子", "悟空", "大圣", "齐天大圣"],
+    泰隆: ["男刀", "刀锋", "刀锋之影"],
+    安妮: ["火女", "黑暗之女"],
+    德莱文: ["荣耀行刑官"],
+    菲奥娜: ["剑姬", "女剑", "无双剑姬"],
+    金克丝: ["金克斯", "暴走萝莉"],
+    卡蜜尔: ["青钢影", "卡密尔", "卡米尔"],
+    李青: ["瞎子", "盲僧"],
+    墨菲特: ["石头人", "石头", "熔岩巨兽"],
+    芮尔: ["镕铁少女", "熔铁少女"],
+    蔚: ["皮城执法官", "执法官"],
+    希维尔: ["轮子妈", "战争女神"],
+    亚索: ["风男", "快乐风男", "托儿索", "疾风剑豪"],
+    伊泽瑞尔: ["ez", "黄毛", "小黄毛", "探险家"],
+    悠米: ["猫咪", "猫", "魔法猫咪"],
+    阿利斯塔: ["牛头", "老牛", "牛", "牛头酋长"],
+    贾克斯: ["武器", "武器人", "武器大师", "拉面"],
+    卡莎: ["虚空之女"],
+    科加斯: ["大虫子", "虫子", "虚空恐惧"],
+    拉莫斯: ["龙龟", "披甲龙龟"],
+    乐芙兰: ["妖姬", "诡术妖姬"],
+    莫甘娜: ["莫甘娜", "堕落天使"],
+    尼菈: ["尼拉"],
+    锐雯: ["瑞文", "瑞雯", "放逐之刃", "锐萌萌"],
+    赛娜: ["涤魂圣枪"],
+    娑娜: ["琴女", "琴瑟仙女"],
+    薇恩: ["vn", "维恩", "暗夜猎手"],
+    维克兹: ["大眼", "虚空之眼"],
+    佐伊: ["左移", "暮光星灵"],
+    艾克: ["时间刺客"],
+    "奥瑞利安 · 索尔": ["奥瑞利安索尔", "龙王", "龙神"],
+    卑尔维斯: ["女皇", "虚空女皇"],
+    厄运小姐: ["女枪", "赏金", "赏金猎人"],
+    佛耶戈: ["破败", "破败王", "破败之王"],
+    劫: ["影流", "影流之主"],
+    瑟提: ["腕豪"],
+    瑟庄妮: ["猪妹", "猪女", "瑟庄尼", "北地之怒"],
+    莎弥拉: ["莎米拉", "沙弥拉"],
+    索拉卡: ["奶妈", "众星之子"],
+    塔莉垭: ["岩雀"],
+    亚托克斯: ["剑魔", "暗裔剑魔"],
+    扎克: ["生化魔人"],
+    厄斐琉斯: ["月男", "月亮男", "残月之肃"],
+    厄加特: ["螃蟹", "无畏战车"],
+    费德提克: ["稻草人"],
+    迦娜: ["风女", "风暴之怒"],
+    蕾欧娜: ["日女", "曙光", "曙光女神"],
+    莫德凯撒: ["铁男", "金属大师"],
+    努努和威朗普: ["努努", "雪人", "雪原双子"],
+    辛德拉: ["球女", "暗黑元首"],
+    "训练假人？": ["假人", "训练假人", "木桩"],
+  };
+
+  const ITEM_ALIASES = {
+    鬼索的狂暴之刃: ["羊刀", "鬼索", "鬼锁", "养刀", "鬼索刀"],
+    疾射火炮: ["火炮", "双火炮"],
+    泰坦的坚决: ["泰坦", "泰坦甲"],
+    卢安娜的飓风: ["飓风", "大风"],
+    最后的轻语: ["轻语", "破甲", "破甲弓"],
+    锐利之刃: ["杀人剑"],
+    汲取剑: ["饮血", "饮血剑"],
+    珠光护手: ["法爆"],
+    班克斯的魔法帽: ["帽子"],
+    蓝霸符: ["蓝buff", "蓝霸服", "蓝buff符"],
+    朔极之矛: ["青龙刀", "朔极"],
+    离子火花: ["离子"],
+    日炎斗篷: ["日炎"],
+    狂徒铠甲: ["狂徒", "大肉"],
+    石像鬼石板甲: ["石像鬼", "板甲"],
+    巨龙之爪: ["龙牙", "龙爪"],
+    棘刺背心: ["反甲"],
+    圣盾使的誓约: ["鸟盾", "圣盾"],
+    斯塔缇克电刃: ["电刀", "静电", "电刃"],
+    海克斯科技枪刃: ["科技枪"],
+    巨人捕手: ["巨杀"],
+    水银: ["水银"],
+    无尽之刃: ["无尽"],
+    振奋盔甲: ["振奋"],
+    连指手套: ["连指", "手套神器"],
+    钢铁烈阳之匣: ["钢铁匣", "钢铁烈阳", "鸟盾"],
+    暴风之剑: ["大剑", "bf"],
+    反曲之弓: ["反曲弓", "攻速", "弓"],
+    无用大棒: ["大棒"],
+    女神之泪: ["眼泪", "泪滴"],
+    负极斗篷: ["魔抗", "斗篷"],
+    巨人腰带: ["腰带"],
+    金铲铲: ["铲子", "铲铲"],
+  };
+
+  const AUGMENT_ALIASES = {
+    高端购物: ["高端"],
+    光明圣物: ["光明神器", "光明装备", "光明武器"],
+    "升级咯！": ["升级咯", "升级吧", "升级了"],
+  };
+
+  const TRAIT_ALIASES = {
+    护卫: ["护卫"],
+    斗士: ["斗士"],
+    战斗机甲: ["机甲", "战斗机甲", "战队机甲"],
+    小天才: ["小天才", "小"],
+    福牛守护者: ["福牛", "福牛守护者"],
+    决斗大师: ["决斗", "决斗大师"],
+    秘术卫士: ["秘卫", "秘术", "秘术卫士", "秘书卫士"],
+    情报特工: ["情报", "情报特工"],
+    强袭枪手: ["枪手", "强袭枪手"],
+    超级英雄: ["超英", "超级英雄"],
+    星之守护者: ["星守", "星之守护者"],
+    "源计划：激光特工": ["源计划", "激光", "原计划", "源计划激光", "源计划特工", "激光特工", "源计划：激光特工"],
+    混沌战士: ["混沌", "混沌战士"],
+    爱心使者: ["爱心", "爱心使者"],
+    吉祥物: ["吉祥物"],
+    黑客: ["黑客"],
+    灵能使: ["灵能", "灵能使"],
+    精英战士: ["精英", "精英战士"],
+    平民英雄: ["平民", "平民英雄"],
+    地下魔盗团: ["魔盗", "地下魔盗", "地下魔盗团"],
+    幻灵战队: ["幻灵", "幻灵战队"],
+    怪兽: ["怪兽"],
+    AI程序: ["ai", "ai程序", "AI程序"],
+    淘气包: ["淘气包"],
+    气象主播: ["气象", "气象主播"],
+  };
+  const CN_NUMBERS = { 一: 1, 二: 2, 两: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9 };
+  const STAR_WORDS = [
+    ["一星", 1], ["1星", 1],
+    ["二星", 2], ["两星", 2], ["2星", 2],
+    ["三星", 3], ["3星", 3],
+  ];
+
+  const PINYIN = {
+    安: "an", 妮: "ni", 波: "bo", 比: "bi", 璐: "lu", 露: "lu", 佐: "zuo", 左: "zuo", 伊: "yi", 移: "yi",
+    羊: "yang", 养: "yang", 刀: "dao", 鬼: "gui", 索: "suo", 锁: "suo", 的: "de", 狂: "kuang", 暴: "bao", 之: "zhi", 刃: "ren",
+    男: "nan", 锋: "feng", 泰: "tai", 隆: "long", 瞎: "xia", 盲: "mang", 僧: "seng", 李: "li", 青: "qing",
+    琴: "qin", 女: "nv", 娑: "suo", 娜: "na", 武: "wu", 器: "qi", 贾: "jia", 克: "ke", 斯: "si",
+    火: "huo", 炮: "pao", 反: "fan", 曲: "qu", 弓: "gong", 眼: "yan", 泪: "lei", 大: "da", 棒: "bang",
+    无: "wu", 情: "qing", 连: "lian", 打: "da", 街: "jie", 区: "qu", 团: "tuan", 队: "dui", 建: "jian", 设: "she",
+    升: "sheng", 级: "ji", 咯: "lo", 高: "gao", 端: "duan", 购: "gou", 物: "wu", 对: "dui", 冲: "chong", 基: "ji", 金: "jin",
+    猴: "hou", 子: "zi", 孙: "sun", 悟: "wu", 空: "kong", 德: "de", 莱: "lai", 文: "wen",
+    佛: "fo", 耶: "ye", 戈: "ge", 阿: "a", 利: "li", 塔: "ta", 瑟: "se", 庄: "zhuang", 猪: "zhu", 妹: "mei",
+    蕾: "lei", 欧: "ou", 厄: "e", 加: "jia", 特: "te", 费: "fei", 稻: "dao", 草: "cao", 人: "ren",
+    护: "hu", 卫: "wei", 小: "xiao", 天: "tian", 才: "cai", 机: "ji", 甲: "jia", 战: "zhan", 斗: "dou",
+    福: "fu", 牛: "niu", 决: "jue", 秘: "mi", 术: "shu", 情: "qing", 报: "bao", 枪: "qiang", 超: "chao",
+    星: "xing", 守: "shou", 源: "yuan", 计: "ji", 划: "hua", 激: "ji", 光: "guang", 混: "hun", 沌: "dun",
+    爱: "ai", 心: "xin", 吉: "ji", 祥: "xiang", 黑: "hei", 客: "ke", 灵: "ling", 能: "neng", 平: "ping",
+    民: "min", 魔: "mo", 盗: "dao", 幻: "huan",
+  };
+
+  let cache = null;
+
+  function getMatcher() {
+    if (root && root.STAGE2_MATCHER) return root.STAGE2_MATCHER;
+    if (typeof require === "function") {
+      try { return require("../../生成产物/结果/stage2_matcher_results.json"); } catch (e) {}
+    }
+    return { options: {}, templates: [] };
+  }
+
+  function getMechanisms() {
+    if (root && root.JCC_MECHANISMS) return root.JCC_MECHANISMS;
+    if (typeof require === "function") {
+      try { return require("../../生成产物/结果/mechanism_catalog.json"); } catch (e) {}
+    }
+    return { openingEncounters: [], guardians: [] };
+  }
+
+  function norm(s) {
+    return String(s || "").toLowerCase().replace(/[\s,，、+＋/|;；:：!！?？。,.()（）\[\]【】·.\-_—>→]/g, "");
+  }
+
+  function stripFillers(text) {
+    let out = String(text || "");
+    FILLERS.sort((a, b) => b.length - a.length).forEach(w => { out = out.split(w).join(""); });
+    return out;
+  }
+
+  function mechanismStateSignal(guardian, status, label, progress, metric) {
+    return {
+      kind: "mechanismStates",
+      value: guardian,
+      guardian,
+      status,
+      progress: Number.isFinite(Number(progress)) ? Math.max(0, Number(progress)) : undefined,
+      metric,
+      label,
+    };
+  }
+
+  function parseMechanismStateText(text, currentSignals) {
+    let clean = norm(text);
+    const add = [];
+    const currentPoro = (currentSignals || []).find(row => row && row.kind === "monsters" && /^魄罗粉丝（(?:经济|战力)）$/.test(row.value));
+    const poroGuardian = currentPoro ? currentPoro.value : "魄罗粉丝（经济）";
+    const addState = (guardian, status, label, progress, metric) => {
+      if (!add.some(row => row.kind === "monsters" && row.value === guardian)) add.push({ kind: "monsters", value: guardian, label: guardian });
+      add.push(mechanismStateSignal(guardian, status, label, progress, metric));
+    };
+    const stateRules = [
+      { guardian: "防御塔（经济）", status: "building", label: "防御塔·建造中", forms: ["防御塔建造中", "经济防御塔建造中", "防御塔还没建好", "防御塔未建成"] },
+      { guardian: "防御塔（经济）", status: "built", label: "防御塔·已建成", forms: ["防御塔已经建成", "防御塔已建成", "防御塔建成", "防御塔建好了", "防御塔造好了", "经济防御塔已建成"] },
+      { guardian: "爆裂球果（经济）", status: "cooldown", label: "爆裂球果·冷却中", forms: ["爆裂球果冷却中", "球果冷却中", "球果已经用了", "球果已用", "球果没了"] },
+      { guardian: "爆裂球果（经济）", status: "available", label: "爆裂球果·可用", forms: ["爆裂球果可用", "球果可用", "球果好了", "球果长好了"] },
+      { guardian: poroGuardian, status: "collecting", label: "魄罗粉丝·积累中", forms: ["经济魄罗积累中", "魄罗观众席积累中"] },
+      { guardian: poroGuardian, status: "full", label: "魄罗粉丝·已满员", forms: ["经济魄罗满员", "魄罗粉丝满员", "魄罗观众席满了", "观众席满了", "魄罗满员"] },
+    ];
+    stateRules.forEach(rule => {
+      const form = rule.forms.find(value => clean.includes(value));
+      if (!form) return;
+      addState(rule.guardian, rule.status, rule.label);
+      clean = clean.replace(form, "");
+    });
+    const countValue = token => /^\d+$/.test(token) ? Number(token) : CN_NUMBERS[token];
+    const counters = [
+      { regex: /迅捷蟹(?:经济)?(?:成长)?(?:层数)?(\d{1,4}|[一二两三四五六七八九])层?/, guardian: "迅捷蟹（经济）", metric: "layers", status: "tracked", label: value => `迅捷蟹·${value}层` },
+      { regex: /阿木木(?:战力)?(?:买了|已有|有)?(\d{1,3}|[一二两三四五六七八九])封?情书/, guardian: "阿木木（战力）", metric: "letters", status: "tracked", label: value => `阿木木·${value}封情书` },
+    ];
+    counters.forEach(rule => {
+      const match = clean.match(rule.regex);
+      if (!match) return;
+      const value = countValue(match[1]);
+      addState(rule.guardian, rule.status, rule.label(value), value, rule.metric);
+      clean = clean.replace(match[0], "");
+    });
+    return { add, remaining: clean };
+  }
+
+  function toPinyin(s) {
+    return Array.from(String(s || "")).map(ch => {
+      if (/[a-z0-9]/i.test(ch)) return ch.toLowerCase();
+      return PINYIN[ch] || ch;
+    }).join("");
+  }
+
+  function editDistance(a, b) {
+    if (Math.abs(a.length - b.length) > 1) return 2;
+    const dp = Array.from({ length: a.length + 1 }, (_, i) => [i]);
+    for (let j = 1; j <= b.length; j++) dp[0][j] = j;
+    for (let i = 1; i <= a.length; i++) {
+      for (let j = 1; j <= b.length; j++) {
+        dp[i][j] = Math.min(
+          dp[i - 1][j] + 1,
+          dp[i][j - 1] + 1,
+          dp[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1),
+        );
+      }
+    }
+    return dp[a.length][b.length];
+  }
+
+  function buildVocab() {
+    if (cache) return cache;
+    const matcher = getMatcher();
+    const mechanisms = getMechanisms();
+    const entries = [];
+    const push = (kind, value, labels) => {
+      [value, ...(labels || [])].filter(Boolean).forEach(label => {
+        const n = norm(label);
+        if (!n) return;
+        entries.push({ kind, value, label, norm: n, py: toPinyin(n) });
+      });
+    };
+
+    const unitSearch = matcher.options.unitSearch || matcher.options.units || [];
+    unitSearch.forEach(x => push("units", x.name, [...(x.aliases || []), ...(HERO_ALIASES[x.name] || [])]));
+    const knownItems = new Set();
+    (matcher.options.items || []).forEach(x => {
+      knownItems.add(x.name);
+      push("items", x.name, ITEM_ALIASES[x.name] || []);
+    });
+    Object.keys(ITEM_ALIASES).filter(x => !knownItems.has(x)).forEach(x => push("items", x, ITEM_ALIASES[x]));
+    ((matcher.options.augmentSearch || matcher.options.augments) || []).forEach(x =>
+      push("augments", x.name, [...(x.aliases || []), ...(AUGMENT_ALIASES[x.name] || [])])
+    );
+    (matcher.options.augmentSignals || []).forEach(x => push("augmentCats", x, [`${x}符文`]));
+    const monsters = new Set();
+    (matcher.templates || []).forEach(t => (t.monsterPrefs || []).forEach(x => monsters.add(x)));
+    monsters.forEach(x => push("monsters", x, []));
+    (mechanisms.guardians || []).forEach(row => push("monsters", row.name, []));
+    (mechanisms.openingEncounters || []).forEach(row => push("encounters", row.name, []));
+
+    const seen = new Set();
+    const clean = entries.filter(e => {
+      const k = `${e.kind}|${e.value}|${e.norm}`;
+      if (seen.has(k)) return false;
+      seen.add(k);
+      return true;
+    }).sort((a, b) => b.norm.length - a.norm.length);
+    cache = {
+      entries: clean,
+      maxLen: Math.max(...clean.map(e => e.norm.length), 2),
+      traits: Object.entries(TRAIT_ALIASES).flatMap(([value, aliases]) =>
+        [value, ...(aliases || [])].map(label => ({ kind: "traits", value, label, norm: norm(label), py: toPinyin(norm(label)) }))
+      ).filter(x => x.norm).sort((a, b) => b.norm.length - a.norm.length),
+    };
+    return cache;
+  }
+
+  function parseNumberAt(text, i) {
+    const ch = text[i];
+    if (CN_NUMBERS[ch]) return { count: CN_NUMBERS[ch], len: 1 };
+    const m = text.slice(i).match(/^[1-9]/);
+    return m ? { count: Number(m[0]), len: m[0].length } : null;
+  }
+
+  function parseStarAt(text, i) {
+    const hit = STAR_WORDS.find(([word]) => text.startsWith(norm(word), i));
+    return hit ? { star: hit[1], len: norm(hit[0]).length } : null;
+  }
+
+  function parseLevelAt(text, i) {
+    let offset = 0;
+    let allowMissingSuffix = false;
+    if (text.startsWith("等级", i)) {
+      offset = 2;
+      allowMissingSuffix = true;
+    } else if (text.startsWith("已经", i)) {
+      offset = 2;
+    } else if (text.startsWith("我", i)) {
+      offset = 1;
+    } else if (["升", "上", "拉", "到"].includes(text[i])) {
+      offset = 1;
+      allowMissingSuffix = true;
+    }
+    const n = parseNumberAt(text, i + offset);
+    if (!n) return null;
+    const hasSuffix = text.startsWith("级", i + offset + n.len);
+    const hasPopulationSuffix = text.startsWith("人口", i + offset + n.len);
+    if (!hasSuffix && !hasPopulationSuffix && !allowMissingSuffix) return null;
+    if (n.count < 1 || n.count > 9) return null;
+    return {
+      entry: {
+        kind: "levels",
+        value: String(n.count),
+        label: `等级${n.count}`,
+        level: n.count,
+      },
+      len: offset + n.len + (hasSuffix ? 1 : (hasPopulationSuffix ? 2 : 0)),
+      method: "level",
+    };
+  }
+
+  function parseHeroRoundAt(text, i) {
+    const rest = text.slice(i);
+    const rows = [
+      { forms: ["二杠一", "21"], round: "2-1" },
+      { forms: ["三杠二", "32"], round: "3-2" },
+      { forms: ["四杠二", "42"], round: "4-2" },
+    ];
+    const row = rows.find(x => x.forms.some(form => rest.startsWith(form)));
+    if (!row) return null;
+    const form = row.forms.find(x => rest.startsWith(x));
+    return {
+      entry: { kind: "heroRounds", value: row.round, label: `英雄强化${row.round}`, round: row.round },
+      len: form.length,
+      method: "hero-round",
+    };
+  }
+
+  function findTraitAt(text, i) {
+    const n = parseNumberAt(text, i);
+    if (!n) return null;
+    const rest = text.slice(i + n.len);
+    const trait = buildVocab().traits.find(e => rest.startsWith(e.norm));
+    if (!trait) return null;
+    return {
+      entry: {
+        kind: "traits",
+        value: trait.value,
+        label: `${n.count}${trait.value}`,
+        count: n.count,
+      },
+      len: n.len + trait.norm.length,
+      method: "trait",
+    };
+  }
+
+  function findCountedItemAt(text, i) {
+    const n = parseNumberAt(text, i);
+    if (!n) return null;
+    const measure = ["把", "件", "个"].find(word => text.startsWith(word, i + n.len)) || "";
+    const item = findVocabAt(text, i + n.len + measure.length, "items");
+    if (!item) return null;
+    return {
+      entry: { ...item.entry, count: n.count, label: `${item.entry.value}×${n.count}` },
+      len: n.len + measure.length + item.len,
+      method: "item-count",
+    };
+  }
+
+  function bestCandidates(raw, kindFilter) {
+    const clean = norm(raw);
+    if (Array.from(clean).length < 2) return [];
+    const p = toPinyin(clean);
+    const entries = buildVocab().entries.filter(e => !kindFilter || e.kind === kindFilter);
+    const seen = new Set();
+    const rows = entries.map(e => ({
+      kind: e.kind,
+      value: e.value,
+      label: e.value,
+      distance: editDistance(p, e.py),
+    })).filter(x => x.distance <= 1).sort((a, b) => a.distance - b.distance || a.value.length - b.value.length)
+      .filter(x => {
+        const k = `${x.kind}|${x.value}`;
+        if (seen.has(k)) return false;
+        seen.add(k);
+        return true;
+      });
+    return rows.length <= 3 ? rows : [];
+  }
+
+  function findVocabAt(text, i, kindFilter) {
+    const { entries, maxLen } = buildVocab();
+    const max = Math.min(maxLen, text.length - i);
+    for (let len = max; len >= 1; len--) {
+      const piece = text.slice(i, i + len);
+      const literal = entries.find(e => (!kindFilter || e.kind === kindFilter) && e.norm === piece);
+      if (literal) return { entry: literal, len, method: "literal" };
+    }
+    for (let len = max; len >= 2; len--) {
+      const piece = text.slice(i, i + len);
+      const py = toPinyin(piece);
+      const exact = entries.find(e => (!kindFilter || e.kind === kindFilter) && e.py === py);
+      if (exact) return { entry: exact, len, method: "pinyin" };
+    }
+    for (let len = max; len >= 2; len--) {
+      const piece = text.slice(i, i + len);
+      const py = toPinyin(piece);
+      // 符文禁止 near 模糊入池：口语描述词（如"双法核"）会被错配成符文名（双排），
+      // 且符文信号直接改变打分；英雄/装备保留 near（反甲/石像鬼/帽子等依赖它）。
+      const nearRows = entries
+        .filter(e => (!kindFilter || e.kind === kindFilter) && e.kind !== "augments")
+        .map(e => ({ e, d: editDistance(py, e.py) }))
+        .filter(x => x.d <= 1)
+        .sort((a, b) => a.d - b.d || b.e.norm.length - a.e.norm.length);
+      const seen = new Set();
+      const unique = nearRows.filter(x => {
+        const k = `${x.e.kind}|${x.e.value}`;
+        if (seen.has(k)) return false;
+        seen.add(k);
+        return true;
+      });
+      if (unique.length === 1) return { entry: unique[0].e, len, method: "near" };
+    }
+    return null;
+  }
+
+  function findStarUnitAt(text, i) {
+    const prefix = parseStarAt(text, i);
+    if (prefix) {
+      const unit = findVocabAt(text, i + prefix.len, "units");
+      if (unit) {
+        return {
+          entry: { ...unit.entry, star: prefix.star, label: `${unit.entry.value}·${prefix.star}星` },
+          len: prefix.len + unit.len,
+          method: "star",
+        };
+      }
+    }
+    const unit = findVocabAt(text, i, "units");
+    if (!unit) return null;
+    const suffix = parseStarAt(text, i + unit.len);
+    if (!suffix) return null;
+    return {
+      entry: { ...unit.entry, star: suffix.star, label: `${unit.entry.value}·${suffix.star}星` },
+      len: unit.len + suffix.len,
+      method: "star",
+    };
+  }
+
+  function findMatchAt(text, i, kindFilter) {
+    if (!kindFilter) {
+      const heroRound = parseHeroRoundAt(text, i);
+      if (heroRound) return heroRound;
+      const level = parseLevelAt(text, i);
+      if (level) return level;
+      const countedItem = findCountedItemAt(text, i);
+      if (countedItem) return countedItem;
+      const starUnit = findStarUnitAt(text, i);
+      if (starUnit) return starUnit;
+      const trait = findTraitAt(text, i);
+      if (trait) return trait;
+    }
+    return findVocabAt(text, i, kindFilter);
+  }
+
+  function tokenize(text, kindFilter) {
+    const clean = norm(stripFillers(text));
+    const add = [];
+    const pending = [];
+    const unheard = [];
+    let unknown = "";
+    let i = 0;
+    const flush = () => {
+      if (!unknown) return;
+      if (Array.from(unknown).length >= 2) {
+        const candidates = bestCandidates(unknown, kindFilter);
+        if (candidates.length) pending.push({ raw: unknown, candidates });
+        else unheard.push(unknown);
+      }
+      unknown = "";
+    };
+    const CONNECTORS = ["一个", "这个", "那个", "个", "把", "件", "张"];
+    while (i < clean.length) {
+      // 量词/连接字黏在词头会挡住识别（"拿了个大风"剥掉填充词后剩"个大风"）：
+      // 若跳过连接字后紧跟可识别词，则消耗连接字
+      const conn = CONNECTORS.find(c => clean.startsWith(c, i));
+      if (conn && findMatchAt(clean, i + conn.length, kindFilter)) {
+        flush();
+        i += conn.length;
+        continue;
+      }
+      const hit = findMatchAt(clean, i, kindFilter);
+      if (hit) {
+        flush();
+        add.push({
+          kind: hit.entry.kind,
+          value: hit.entry.value,
+          label: hit.entry.label || (hit.entry.kind === "traits" ? hit.entry.label : hit.entry.value),
+          count: hit.entry.count,
+          star: hit.entry.star,
+          level: hit.entry.level,
+          via: hit.method,
+        });
+        i += hit.len;
+      } else {
+        unknown += clean[i];
+        i++;
+      }
+    }
+    flush();
+    const compact = [];
+    const seen = new Map();
+    add.forEach(row => {
+      const k = `${row.kind}|${row.value}`;
+      const previous = seen.get(k);
+      if (!previous) {
+        const copy = { ...row };
+        compact.push(copy);
+        seen.set(k, copy);
+        return;
+      }
+      if (row.kind === "items") {
+        previous.count = Math.min(9, (Number(previous.count) || 1) + (Number(row.count) || 1));
+        previous.label = `${previous.value}×${previous.count}`;
+      } else if (row.kind === "units" && Number(row.star) > Number(previous.star || 0)) {
+        previous.star = row.star;
+        previous.label = `${row.value}·${row.star}星`;
+      }
+    });
+    return {
+      add: compact,
+      pending: pending.filter(x => x.raw && x.candidates.length),
+      unheard: [...new Set(unheard)],
+    };
+  }
+
+  function normalizedCurrentSignal(row) {
+    if (!row) return null;
+    const kind = row.kind || row.type;
+    const value = row.value || row.name || row.label;
+    if (!kind || !value) return null;
+    return {
+      kind,
+      value,
+      label: row.label || value,
+      count: row.count,
+      star: row.star,
+      holder: row.holder,
+      equipped: row.equipped,
+      location: row.location,
+      commitmentType: row.commitmentType,
+      targetUnit: row.targetUnit,
+      gold: row.gold,
+      level: row.level,
+      round: row.round,
+      via: "correction",
+    };
+  }
+
+  function correctionResult(raw, currentSignals) {
+    const clean = String(raw || "").trim().replace(/\s+/g, "");
+    const result = { add: [], remove: [], pending: [], unheard: [] };
+    let match = clean.match(/^把?(.+?)(?:换成|改成)(.+)$/);
+    if (!match) match = clean.match(/^不是(.+?)(?:而是|是)(.+)$/);
+    if (match) {
+      const oldRows = tokenize(match[1]);
+      const newRows = tokenize(match[2]);
+      result.remove = oldRows.add;
+      result.add = newRows.add;
+      result.pending = [...oldRows.pending, ...newRows.pending];
+      result.unheard = [...oldRows.unheard, ...newRows.unheard];
+      return result;
+    }
+
+    match = clean.match(/^(?:刚才)?不是(.+)$/);
+    if (match) {
+      const oldRows = tokenize(match[1]);
+      result.remove = oldRows.add;
+      result.pending = oldRows.pending;
+      result.unheard = oldRows.unheard;
+      return result;
+    }
+
+    match = clean.match(/^说错了(?:是|改成)?(.+)$/);
+    if (match) {
+      const newRows = tokenize(match[1]);
+      result.add = newRows.add;
+      result.pending = newRows.pending;
+      result.unheard = newRows.unheard;
+      const firstKind = result.add[0] && result.add[0].kind;
+      const previous = [...(currentSignals || [])].reverse().map(normalizedCurrentSignal).find(x => x && (!firstKind || x.kind === firstKind));
+      if (previous && !result.add.some(x => x.kind === previous.kind && x.value === previous.value)) result.remove = [previous];
+      return result;
+    }
+
+    match = clean.match(/^(.+?)(?:不要了|卖掉了|卖了|没了)$/);
+    if (match) {
+      const oldRows = tokenize(match[1]);
+      result.remove = oldRows.add;
+      result.pending = oldRows.pending;
+      result.unheard = oldRows.unheard;
+      return result;
+    }
+    return null;
+  }
+
+  function parse(text, currentSignals) {
+    const raw = String(text || "").trim();
+    const out = { add: [], remove: [], clear: false, augTriple: [], pending: [], unheard: [] };
+    if (!raw) return out;
+    if (CLEAR_WORDS.some(w => raw.includes(w))) {
+      out.clear = true;
+      return out;
+    }
+    if (UNDO_WORDS.some(w => raw.includes(w))) {
+      const previous = [...(currentSignals || [])].reverse().map(normalizedCurrentSignal).find(Boolean);
+      if (previous) out.remove = [previous];
+      return out;
+    }
+
+    // 实际D牌支出是不可逆事件，必须先于“当前有多少金币”解析，避免同一个数字被状态语法抢走。
+    let decisionText = raw;
+    const spendPatterns = [
+      /(?:为|给)?(.+?)(?:D|d|搜)(?:了)?(\d{1,3})(?:金币|金|块)?/,
+      /(?:D|d|搜)(?:了)?(\d{1,3})(?:金币|金|块)?(?:追|找)(.+)/,
+    ];
+    for (const pattern of spendPatterns) {
+      const match = decisionText.match(pattern);
+      if (!match) continue;
+      const targetText = pattern === spendPatterns[0] ? match[1] : match[2];
+      const gold = Number(pattern === spendPatterns[0] ? match[2] : match[1]);
+      const target = tokenize(targetText, "units").add[0];
+      if (target && gold > 0) {
+        out.add.push({
+          kind: "commitments",
+          value: `D牌:${target.value}:${gold}`,
+          label: `为${target.value}D牌${gold}金`,
+          commitmentType: "d-spend",
+          targetUnit: target.value,
+          gold,
+        });
+        decisionText = decisionText.replace(match[0], "");
+      }
+      break;
+    }
+
+    const stagePattern = /(?:当前回合|现在|当前)?\s*([234])[-杠]([12])/;
+    const goldPattern = /(?:金币\s*(\d{1,3})|(?:有|现在)?\s*(\d{1,3})\s*(?:金币|块钱|块|金))/;
+    const stageMatch = decisionText.match(stagePattern);
+    if (stageMatch) out.add.push({ kind: "stage", value: `${stageMatch[1]}-${stageMatch[2]}`, label: `当前回合${stageMatch[1]}-${stageMatch[2]}` });
+    const goldMatch = decisionText.match(goldPattern);
+    if (goldMatch) {
+      const value = Number(goldMatch[1] || goldMatch[2]);
+      out.add.push({ kind: "gold", value, label: `${value}金币` });
+    }
+    // 状态片段已结构化，后续词表解析不再重复消费，避免“30金”误识别成英雄或没听懂文本。
+    decisionText = decisionText.replace(stagePattern, "").replace(goldPattern, "");
+
+    const corrected = correctionResult(decisionText, currentSignals);
+    if (corrected) {
+      Object.assign(out, corrected);
+      return out;
+    }
+
+    const located = decisionText.match(/^(?:备战席|板凳|场下)(.+)$/);
+    if (located) {
+      const got = tokenize(located[1]);
+      got.add.forEach(row => out.add.push(row.kind === "units" ? { ...row, location: "bench", label: `${row.label || row.value}·备战席` } : row));
+      out.pending = got.pending;
+      out.unheard = got.unheard;
+      return out;
+    }
+    const boarded = decisionText.match(/^(?:场上|上场)(.+)$/);
+    if (boarded) {
+      const got = tokenize(boarded[1]);
+      got.add.forEach(row => out.add.push(row.kind === "units" ? { ...row, location: "board", label: `${row.label || row.value}·场上` } : row));
+      out.pending = got.pending;
+      out.unheard = got.unheard;
+      return out;
+    }
+
+    const equipped = decisionText.match(/^(.+?)(?:带着|带了|带|装备了|装备|装上)(.+)$/);
+    if (equipped) {
+      const holderRows = tokenize(equipped[1]);
+      const assetRows = tokenize(equipped[2]);
+      const holder = holderRows.add.find(row => row.kind === "units");
+      const equippedItems = assetRows.add.filter(row => row.kind === "items");
+      if (holder && equippedItems.length) {
+        out.add.push(holder);
+        assetRows.add.filter(row => row.kind !== "items").forEach(row => out.add.push(row));
+        equippedItems.forEach(row => out.add.push({ ...row, holder: holder.value, equipped: true, label: `${holder.value}带${row.value}${Number(row.count) > 1 ? `×${row.count}` : ""}` }));
+        out.pending = [...holderRows.pending, ...assetRows.pending];
+        out.unheard = [...holderRows.unheard, ...assetRows.unheard];
+        return out;
+      }
+    }
+
+    // Natural speech often lists an offer as "来了A、来了B、来了C，选哪个".
+    // Treat it as a proposal only when the sentence has a choice cue or repeats "来了".
+    const offerCue = /三选一|三个(?:符文|海克斯)|选哪个|哪个好|怎么选|选什么|应该选|分别是/.test(decisionText);
+    const repeatedOffer = (decisionText.match(/来了/g) || []).length >= 2;
+    if (offerCue || repeatedOffer) {
+      const offerText = decisionText
+        .replace(/(?:这)?三个(?:符文|海克斯)(?:分别)?(?:是|有)?/g, "")
+        .replace(/(?:符文|海克斯)?三选一/g, "")
+        .replace(/(?:应该)?选哪个(?:符文|海克斯)?|哪个好|怎么选|选什么/g, "");
+      const got = tokenize(offerText, "augments");
+      if (got.add.length >= 2) {
+        out.augTriple = got.add.slice(0, 3);
+        out.pending = got.pending;
+        out.unheard = got.unheard;
+        return out;
+      }
+    }
+
+    const augCmd = decisionText.match(/(?:符文|海克斯)(.+)$/);
+    if (augCmd) {
+      const got = tokenize(augCmd[1], "augments");
+      out.augTriple = got.add.slice(0, 3);
+      out.pending = got.pending;
+      out.unheard = got.unheard;
+      return out;
+    }
+
+    const removeWord = REMOVE_WORDS.find(w => decisionText.includes(w));
+    if (removeWord) {
+      const target = decisionText.slice(decisionText.indexOf(removeWord) + removeWord.length);
+      const got = tokenize(target);
+      out.remove = got.add;
+      out.pending = got.pending;
+      out.unheard = got.unheard;
+      return out;
+    }
+
+    const mechanismState = parseMechanismStateText(decisionText, currentSignals);
+    out.add.push(...mechanismState.add);
+    decisionText = mechanismState.remaining;
+    const got = tokenize(decisionText);
+    out.add.push(...got.add);
+    out.pending = got.pending;
+    out.unheard = got.unheard;
+    return out;
+  }
+
+  function assertIncludes(rows, kind, value) {
+    if (!rows.some(x => x.kind === kind && x.value === value)) {
+      throw new Error(`断言失败：缺少 ${kind}:${value}，实际=${JSON.stringify(rows)}`);
+    }
+  }
+  function assertTrait(rows, count, value) {
+    if (!rows.some(x => x.kind === "traits" && x.value === value && x.count === count)) {
+      throw new Error(`断言失败：缺少 ${count}${value}，实际=${JSON.stringify(rows)}`);
+    }
+  }
+  function assertStar(rows, value, star) {
+    if (!rows.some(x => x.kind === "units" && x.value === value && x.star === star)) {
+      throw new Error(`断言失败：缺少 ${value}${star}星，实际=${JSON.stringify(rows)}`);
+    }
+  }
+  function assertLevel(rows, level) {
+    if (!rows.some(x => x.kind === "levels" && x.level === level)) {
+      throw new Error(`断言失败：缺少 等级${level}，实际=${JSON.stringify(rows)}`);
+    }
+  }
+
+  function runTests() {
+    const a = parse("来了个安妮还有波比拿了养刀", []);
+    assertIncludes(a.add, "units", "安妮");
+    assertIncludes(a.add, "units", "波比");
+    assertIncludes(a.add, "items", "鬼索的狂暴之刃");
+    if (a.pending.length) throw new Error("用例A不应有待确认：" + JSON.stringify(a.pending));
+
+    const b = parse("左移露露", []);
+    assertIncludes(b.add, "units", "佐伊");
+    assertIncludes(b.add, "units", "璐璐");
+
+    const c = parse("删掉波比", [{ kind: "units", value: "波比" }]);
+    assertIncludes(c.remove, "units", "波比");
+    if (!parse("新的一局", []).clear) throw new Error("新的一局应清空");
+
+    const d = parse("符文 无情连打 DD街区 团队建设", []);
+    if (d.augTriple.length !== 3) throw new Error("符文三选一失败：" + JSON.stringify(d));
+
+    const naturalOffer = parse("来了高端，来了光明神器，来了升级吧，应该选哪个符文", []);
+    if (naturalOffer.augTriple.length !== 3) throw new Error("自然口述符文三选一失败：" + JSON.stringify(naturalOffer));
+    assertIncludes(naturalOffer.augTriple, "augments", "高端购物");
+    assertIncludes(naturalOffer.augTriple, "augments", "光明圣物");
+    assertIncludes(naturalOffer.augTriple, "augments", "升级咯！");
+    if (naturalOffer.add.length) throw new Error("符文提案不应提前写入已选信号：" + JSON.stringify(naturalOffer));
+
+    const e = parse("鬼锁", []);
+    assertIncludes(e.add, "items", "鬼索的狂暴之刃");
+
+    const f = parse("我是三小凯尔两护卫", []);
+    assertTrait(f.add, 3, "小天才");
+    assertIncludes(f.add, "units", "凯尔");
+    assertTrait(f.add, 2, "护卫");
+    if (f.pending.length) throw new Error("羁绊用例不应有候选：" + JSON.stringify(f.pending));
+
+    const g = parse("来了个武器人两机甲", []);
+    assertIncludes(g.add, "units", "贾克斯");
+    assertTrait(g.add, 2, "战斗机甲");
+
+    const h = parse("破败拿了龙爪大肉", []);
+    assertIncludes(h.add, "units", "佛耶戈");
+    assertIncludes(h.add, "items", "巨龙之爪");
+    assertIncludes(h.add, "items", "狂徒铠甲");
+
+    const i = parse("轮子妈轻语", []);
+    assertIncludes(i.add, "units", "希维尔");
+    assertIncludes(i.add, "items", "最后的轻语");
+
+    const artifact = parse("连指手套", []);
+    assertIncludes(artifact.add, "items", "连指手套");
+    if (artifact.pending.length || artifact.unheard.length) throw new Error("神器标准名不应进入待确认或没听懂：" + JSON.stringify(artifact));
+
+    const j = parse("然后的话那个嗯", [{ kind: "units", value: "凯尔" }]);
+    if (j.add.length || j.pending.length || j.unheard.length) throw new Error("纯填充词应静默：" + JSON.stringify(j));
+
+    assertStar(parse("两星波比", []).add, "波比", 2);
+    assertStar(parse("波比三星", []).add, "波比", 3);
+    assertStar(parse("3星安妮", []).add, "安妮", 3);
+    assertLevel(parse("我6级", []).add, 6);
+    assertLevel(parse("三级", []).add, 3);
+    assertLevel(parse("等级2", []).add, 2);
+    assertLevel(parse("拉六", []).add, 6);
+    assertLevel(parse("已经八级", []).add, 8);
+    assertLevel(parse("八人口", []).add, 8);
+    const sold = parse("卖掉波比", [{ kind: "units", value: "波比" }]);
+    assertIncludes(sold.remove, "units", "波比");
+    const suffixSold = parse("波比不要了", [{ kind: "units", value: "波比" }]);
+    assertIncludes(suffixSold.remove, "units", "波比");
+    const replaced = parse("不是安妮是波比", [{ kind: "units", value: "安妮" }]);
+    assertIncludes(replaced.remove, "units", "安妮");
+    assertIncludes(replaced.add, "units", "波比");
+    const undo = parse("撤销上一个", [{ kind: "units", value: "安妮" }, { kind: "units", value: "波比" }]);
+    assertIncludes(undo.remove, "units", "波比");
+    const heroRound = parse("三杠二", []);
+    if (!heroRound.add.some(x => x.kind === "heroRounds" && x.value === "3-2")) throw new Error("三杠二应识别英雄强化回合");
+    const decisionState = parse("现在3-2，有35金币，来了高端，来了光明神器，来了升级吧，选哪个", []);
+    assertIncludes(decisionState.add, "stage", "3-2");
+    if (!decisionState.add.some(x => x.kind === "gold" && x.value === 35)) throw new Error("应识别当前金币");
+    if (decisionState.augTriple.length !== 3) throw new Error("状态与符文三选一应能同句录入");
+    if (decisionState.pending.length || decisionState.unheard.length) throw new Error("已识别的状态不应残留待确认或没听懂文本");
+    const stateOnly = parse("3杠2，30金", []);
+    if (stateOnly.add.some(x => x.kind === "units") || stateOnly.unheard.length) throw new Error("状态片段不应二次误识别");
+    const countedItem = parse("两把弓", []);
+    if (!countedItem.add.some(x => x.kind === "items" && x.value === "反曲之弓" && x.count === 2)) throw new Error("重复散件数量必须保留");
+    const equippedItem = parse("凯尔带羊刀", []);
+    if (!equippedItem.add.some(x => x.kind === "items" && x.value === "鬼索的狂暴之刃" && x.holder === "凯尔" && x.equipped)) throw new Error("成装必须记录实际持有者");
+    const benchedUnit = parse("备战席安妮", []);
+    if (!benchedUnit.add.some(x => x.kind === "units" && x.value === "安妮" && x.location === "bench")) throw new Error("备战席棋子必须与场上棋子区分");
+    const boardedUnit = parse("场上波比", []);
+    if (!boardedUnit.add.some(x => x.kind === "units" && x.value === "波比" && x.location === "board")) throw new Error("场上棋子必须记录位置");
+    const dSpend = parse("为凯尔D了20金", []);
+    if (!dSpend.add.some(x => x.kind === "commitments" && x.commitmentType === "d-spend" && x.targetUnit === "凯尔" && x.gold === 20)) throw new Error("实际D牌支出必须形成不可逆事件");
+    if (dSpend.add.some(x => x.kind === "gold")) throw new Error("D牌支出不得误记为当前金币");
+    const encounter = parse("开场金币订阅", []);
+    assertIncludes(encounter.add, "encounters", "金币订阅");
+    const guardian = parse("防御塔经济", []);
+    assertIncludes(guardian.add, "monsters", "防御塔（经济）");
+    const towerBuilt = parse("防御塔已建成", []);
+    assertIncludes(towerBuilt.add, "monsters", "防御塔（经济）");
+    if (!towerBuilt.add.some(x => x.kind === "mechanismStates" && x.value === "防御塔（经济）" && x.status === "built")) throw new Error("应识别防御塔已建成状态");
+    const fruitReady = parse("球果可用", []);
+    if (!fruitReady.add.some(x => x.kind === "mechanismStates" && x.value === "爆裂球果（经济）" && x.status === "available")) throw new Error("应识别球果可用状态");
+    const crabLayers = parse("迅捷蟹230层", []);
+    if (!crabLayers.add.some(x => x.kind === "mechanismStates" && x.metric === "layers" && x.progress === 230)) throw new Error("应识别迅捷蟹成长层数");
+    const amumuLetters = parse("阿木木3封情书", []);
+    if (!amumuLetters.add.some(x => x.kind === "mechanismStates" && x.metric === "letters" && x.progress === 3)) throw new Error("应识别阿木木情书数量");
+    const poroFull = parse("魄罗满员", []);
+    if (!poroFull.add.some(x => x.kind === "mechanismStates" && x.value === "魄罗粉丝（经济）" && x.status === "full")) throw new Error("应识别魄罗满员状态");
+    const battlePoroFull = parse("魄罗满员", [{ kind: "monsters", value: "魄罗粉丝（战力）" }]);
+    if (!battlePoroFull.add.some(x => x.kind === "mechanismStates" && x.value === "魄罗粉丝（战力）" && x.status === "full")) throw new Error("魄罗进度应沿用已选战力形态");
+    console.log("signal-parser assertions passed");
+  }
+
+  const api = { parse, tokenize, norm, toPinyin, buildVocab, runTests };
+  if (typeof module === "object" && module.exports && require.main === module) runTests();
+  return api;
+});

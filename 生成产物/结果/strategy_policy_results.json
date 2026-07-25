@@ -1,0 +1,4483 @@
+{
+  "generated": "2026-07-25T19:22:43.012Z",
+  "experiment": "strategy-policy-compiler-v1",
+  "constants": {
+    "MIN_UPLIFT_PCT": 5,
+    "MIN_PROFILE_CONFIDENCE": 0.6,
+    "MIN_ROUTE_SAMPLES": 5000,
+    "MAX_FAILURE_RATE": 5,
+    "MIN_ROUTE_ROBUSTNESS": 40,
+    "MIN_COVERAGE": 90,
+    "ONE_SIDED_Z95": 1.645
+  },
+  "coverage": {
+    "catalog": 122,
+    "numericProfiles": 53,
+    "conditionalRows": 31,
+    "compiled": 16,
+    "certified": 7
+  },
+  "plans": [
+    {
+      "id": "德莱文联盟|德莱文",
+      "source": "generic-policy-compiler",
+      "experiment": "all-hero-augment-policy-v1",
+      "augment": "德莱文联盟",
+      "baselineCarry": "贾克斯",
+      "strategicCarry": "德莱文",
+      "currentHolder": "贾克斯",
+      "requiredUnits": [
+        "德莱文"
+      ],
+      "certified": true,
+      "modelCoverage": {
+        "profileConfidence": 0.62,
+        "counterfactualUpliftPct": 5.9,
+        "routeSamples": 5000,
+        "routeRobustness": 44.7,
+        "opponents": 12,
+        "opponentSources": {
+          "official": 4,
+          "meta-solver": 4,
+          "research": 4
+        }
+      },
+      "evidenceCount": 6728,
+      "evidenceUnit": "模型样本/配对战斗",
+      "stages": [
+        {
+          "key": "1-5",
+          "label": "前期",
+          "levelMin": 1,
+          "levelMax": 5,
+          "baselineHolder": "贾克斯",
+          "targetPresent": true,
+          "targetStarThreshold": 1,
+          "certified": true,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 17.44,
+              "standardError": 1.729,
+              "lcb95": 14.59,
+              "probabilityPositive": 100,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 19.68,
+              "standardError": 2.231,
+              "lcb95": 16.01,
+              "probabilityPositive": 93.75,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 24.41,
+              "standardError": 2.145,
+              "lcb95": 20.88,
+              "probabilityPositive": 100,
+              "coverage": 100
+            }
+          ],
+          "inference": {
+            "star": 1,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 17.44,
+            "standardError": 1.729,
+            "lcb95": 14.59,
+            "probabilityPositive": 100,
+            "coverage": 100
+          },
+          "text": "德莱文1星转核通过：相对贾克斯 LCB 14.59"
+        },
+        {
+          "key": "6-7",
+          "label": "中期",
+          "levelMin": 6,
+          "levelMax": 7,
+          "baselineHolder": "菲奥娜",
+          "targetPresent": true,
+          "targetStarThreshold": 1,
+          "certified": true,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 10.47,
+              "standardError": 1.605,
+              "lcb95": 7.83,
+              "probabilityPositive": 83.33,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 17.03,
+              "standardError": 1.836,
+              "lcb95": 14.01,
+              "probabilityPositive": 100,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 24.38,
+              "standardError": 2.097,
+              "lcb95": 20.93,
+              "probabilityPositive": 100,
+              "coverage": 100
+            }
+          ],
+          "inference": {
+            "star": 1,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 10.47,
+            "standardError": 1.605,
+            "lcb95": 7.83,
+            "probabilityPositive": 83.33,
+            "coverage": 100
+          },
+          "text": "德莱文1星转核通过：相对菲奥娜 LCB 7.83"
+        },
+        {
+          "key": "8-9",
+          "label": "后期",
+          "levelMin": 8,
+          "levelMax": 9,
+          "baselineHolder": "菲奥娜",
+          "targetPresent": true,
+          "targetStarThreshold": 1,
+          "certified": true,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 3.19,
+              "standardError": 1.857,
+              "lcb95": 0.13,
+              "probabilityPositive": 66.67,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 9.33,
+              "standardError": 1.08,
+              "lcb95": 7.55,
+              "probabilityPositive": 91.67,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 18.98,
+              "standardError": 1.466,
+              "lcb95": 16.57,
+              "probabilityPositive": 97.92,
+              "coverage": 100
+            }
+          ],
+          "inference": {
+            "star": 1,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 3.19,
+            "standardError": 1.857,
+            "lcb95": 0.13,
+            "probabilityPositive": 66.67,
+            "coverage": 100
+          },
+          "text": "德莱文1星转核通过：相对菲奥娜 LCB 0.13"
+        }
+      ],
+      "holderRules": [
+        {
+          "when": {
+            "levelGte": 1,
+            "levelLte": 5,
+            "unit": "德莱文",
+            "starGte": 1,
+            "hasUnits": [
+              "德莱文"
+            ]
+          },
+          "holder": "德莱文",
+          "fromCarry": "贾克斯",
+          "certified": true,
+          "stageKey": "1-5",
+          "inference": {
+            "star": 1,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 17.44,
+            "standardError": 1.729,
+            "lcb95": 14.59,
+            "probabilityPositive": 100,
+            "coverage": 100
+          },
+          "text": "德莱文1星转核通过：相对贾克斯 LCB 14.59"
+        },
+        {
+          "when": {
+            "levelGte": 1,
+            "levelLte": 5
+          },
+          "holder": "贾克斯",
+          "fromCarry": "贾克斯",
+          "certified": false,
+          "stageKey": "1-5",
+          "inference": {
+            "star": 1,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 17.44,
+            "standardError": 1.729,
+            "lcb95": 14.59,
+            "probabilityPositive": 100,
+            "coverage": 100
+          },
+          "text": "德莱文1星转核通过：相对贾克斯 LCB 14.59"
+        },
+        {
+          "when": {
+            "levelGte": 6,
+            "levelLte": 7,
+            "unit": "德莱文",
+            "starGte": 1,
+            "hasUnits": [
+              "德莱文"
+            ]
+          },
+          "holder": "德莱文",
+          "fromCarry": "菲奥娜",
+          "certified": true,
+          "stageKey": "6-7",
+          "inference": {
+            "star": 1,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 10.47,
+            "standardError": 1.605,
+            "lcb95": 7.83,
+            "probabilityPositive": 83.33,
+            "coverage": 100
+          },
+          "text": "德莱文1星转核通过：相对菲奥娜 LCB 7.83"
+        },
+        {
+          "when": {
+            "levelGte": 6,
+            "levelLte": 7
+          },
+          "holder": "菲奥娜",
+          "fromCarry": "菲奥娜",
+          "certified": false,
+          "stageKey": "6-7",
+          "inference": {
+            "star": 1,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 10.47,
+            "standardError": 1.605,
+            "lcb95": 7.83,
+            "probabilityPositive": 83.33,
+            "coverage": 100
+          },
+          "text": "德莱文1星转核通过：相对菲奥娜 LCB 7.83"
+        },
+        {
+          "when": {
+            "levelGte": 8,
+            "levelLte": 9,
+            "unit": "德莱文",
+            "starGte": 1,
+            "hasUnits": [
+              "德莱文"
+            ]
+          },
+          "holder": "德莱文",
+          "fromCarry": "菲奥娜",
+          "certified": true,
+          "stageKey": "8-9",
+          "inference": {
+            "star": 1,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 3.19,
+            "standardError": 1.857,
+            "lcb95": 0.13,
+            "probabilityPositive": 66.67,
+            "coverage": 100
+          },
+          "text": "德莱文1星转核通过：相对菲奥娜 LCB 0.13"
+        },
+        {
+          "when": {
+            "levelGte": 8,
+            "levelLte": 9
+          },
+          "holder": "菲奥娜",
+          "fromCarry": "菲奥娜",
+          "certified": false,
+          "stageKey": "8-9",
+          "inference": {
+            "star": 1,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 3.19,
+            "standardError": 1.857,
+            "lcb95": 0.13,
+            "probabilityPositive": 66.67,
+            "coverage": 100
+          },
+          "text": "德莱文1星转核通过：相对菲奥娜 LCB 0.13"
+        }
+      ],
+      "handoff": {
+        "unit": "德莱文",
+        "starGte": 1
+      },
+      "handoffText": "1-5级：德莱文1星转核通过：相对贾克斯 LCB 14.59；6-7级：德莱文1星转核通过：相对菲奥娜 LCB 7.83；8-9级：德莱文1星转核通过：相对菲奥娜 LCB 0.13",
+      "terminalText": "德莱文1星转核通过：相对菲奥娜 LCB 0.13"
+    },
+    {
+      "id": "姐妹|金克丝",
+      "source": "generic-policy-compiler",
+      "experiment": "all-hero-augment-policy-v1",
+      "augment": "姐妹",
+      "baselineCarry": "德莱文",
+      "strategicCarry": "金克丝",
+      "currentHolder": "德莱文",
+      "requiredUnits": [
+        "金克丝",
+        "蔚"
+      ],
+      "certified": true,
+      "modelCoverage": {
+        "profileConfidence": 0.72,
+        "counterfactualUpliftPct": 13.1,
+        "routeSamples": 5000,
+        "routeRobustness": 44.7,
+        "opponents": 12,
+        "opponentSources": {
+          "official": 4,
+          "meta-solver": 4,
+          "research": 4
+        }
+      },
+      "evidenceCount": 6728,
+      "evidenceUnit": "模型样本/配对战斗",
+      "stages": [
+        {
+          "key": "1-5",
+          "label": "前期",
+          "levelMin": 1,
+          "levelMax": 5,
+          "baselineHolder": "德莱文",
+          "targetPresent": true,
+          "targetStarThreshold": 2,
+          "certified": true,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -4.92,
+              "standardError": 2.861,
+              "lcb95": -9.62,
+              "probabilityPositive": 64.58,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 3.55,
+              "standardError": 2.02,
+              "lcb95": 0.22,
+              "probabilityPositive": 72.92,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 12.41,
+              "standardError": 1.978,
+              "lcb95": 9.15,
+              "probabilityPositive": 89.58,
+              "coverage": 100
+            }
+          ],
+          "inference": {
+            "star": 2,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 3.55,
+            "standardError": 2.02,
+            "lcb95": 0.22,
+            "probabilityPositive": 72.92,
+            "coverage": 100
+          },
+          "text": "金克丝2星转核通过：相对德莱文 LCB 0.22"
+        },
+        {
+          "key": "6-7",
+          "label": "中期",
+          "levelMin": 6,
+          "levelMax": 7,
+          "baselineHolder": "凯尔",
+          "targetPresent": true,
+          "targetStarThreshold": 1,
+          "certified": true,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 8.61,
+              "standardError": 2.57,
+              "lcb95": 4.39,
+              "probabilityPositive": 77.08,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 8.53,
+              "standardError": 1.835,
+              "lcb95": 5.52,
+              "probabilityPositive": 70.83,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 16.89,
+              "standardError": 1.317,
+              "lcb95": 14.72,
+              "probabilityPositive": 95.83,
+              "coverage": 100
+            }
+          ],
+          "inference": {
+            "star": 1,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 8.61,
+            "standardError": 2.57,
+            "lcb95": 4.39,
+            "probabilityPositive": 77.08,
+            "coverage": 100
+          },
+          "text": "金克丝1星转核通过：相对凯尔 LCB 4.39"
+        },
+        {
+          "key": "8-9",
+          "label": "后期",
+          "levelMin": 8,
+          "levelMax": 9,
+          "baselineHolder": "凯尔",
+          "targetPresent": true,
+          "targetStarThreshold": 1,
+          "certified": true,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 12.41,
+              "standardError": 2.105,
+              "lcb95": 8.94,
+              "probabilityPositive": 77.08,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 9.73,
+              "standardError": 1.531,
+              "lcb95": 7.21,
+              "probabilityPositive": 85.42,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 10.33,
+              "standardError": 1.465,
+              "lcb95": 7.92,
+              "probabilityPositive": 91.67,
+              "coverage": 100
+            }
+          ],
+          "inference": {
+            "star": 1,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 12.41,
+            "standardError": 2.105,
+            "lcb95": 8.94,
+            "probabilityPositive": 77.08,
+            "coverage": 100
+          },
+          "text": "金克丝1星转核通过：相对凯尔 LCB 8.94"
+        }
+      ],
+      "holderRules": [
+        {
+          "when": {
+            "levelGte": 1,
+            "levelLte": 5,
+            "unit": "金克丝",
+            "starGte": 2,
+            "hasUnits": [
+              "金克丝",
+              "蔚"
+            ]
+          },
+          "holder": "金克丝",
+          "fromCarry": "德莱文",
+          "certified": true,
+          "stageKey": "1-5",
+          "inference": {
+            "star": 2,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 3.55,
+            "standardError": 2.02,
+            "lcb95": 0.22,
+            "probabilityPositive": 72.92,
+            "coverage": 100
+          },
+          "text": "金克丝2星转核通过：相对德莱文 LCB 0.22"
+        },
+        {
+          "when": {
+            "levelGte": 1,
+            "levelLte": 5
+          },
+          "holder": "德莱文",
+          "fromCarry": "德莱文",
+          "certified": false,
+          "stageKey": "1-5",
+          "inference": {
+            "star": 2,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 3.55,
+            "standardError": 2.02,
+            "lcb95": 0.22,
+            "probabilityPositive": 72.92,
+            "coverage": 100
+          },
+          "text": "金克丝2星转核通过：相对德莱文 LCB 0.22"
+        },
+        {
+          "when": {
+            "levelGte": 6,
+            "levelLte": 7,
+            "unit": "金克丝",
+            "starGte": 1,
+            "hasUnits": [
+              "金克丝",
+              "蔚"
+            ]
+          },
+          "holder": "金克丝",
+          "fromCarry": "凯尔",
+          "certified": true,
+          "stageKey": "6-7",
+          "inference": {
+            "star": 1,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 8.61,
+            "standardError": 2.57,
+            "lcb95": 4.39,
+            "probabilityPositive": 77.08,
+            "coverage": 100
+          },
+          "text": "金克丝1星转核通过：相对凯尔 LCB 4.39"
+        },
+        {
+          "when": {
+            "levelGte": 6,
+            "levelLte": 7
+          },
+          "holder": "凯尔",
+          "fromCarry": "凯尔",
+          "certified": false,
+          "stageKey": "6-7",
+          "inference": {
+            "star": 1,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 8.61,
+            "standardError": 2.57,
+            "lcb95": 4.39,
+            "probabilityPositive": 77.08,
+            "coverage": 100
+          },
+          "text": "金克丝1星转核通过：相对凯尔 LCB 4.39"
+        },
+        {
+          "when": {
+            "levelGte": 8,
+            "levelLte": 9,
+            "unit": "金克丝",
+            "starGte": 1,
+            "hasUnits": [
+              "金克丝",
+              "蔚"
+            ]
+          },
+          "holder": "金克丝",
+          "fromCarry": "凯尔",
+          "certified": true,
+          "stageKey": "8-9",
+          "inference": {
+            "star": 1,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 12.41,
+            "standardError": 2.105,
+            "lcb95": 8.94,
+            "probabilityPositive": 77.08,
+            "coverage": 100
+          },
+          "text": "金克丝1星转核通过：相对凯尔 LCB 8.94"
+        },
+        {
+          "when": {
+            "levelGte": 8,
+            "levelLte": 9
+          },
+          "holder": "凯尔",
+          "fromCarry": "凯尔",
+          "certified": false,
+          "stageKey": "8-9",
+          "inference": {
+            "star": 1,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 12.41,
+            "standardError": 2.105,
+            "lcb95": 8.94,
+            "probabilityPositive": 77.08,
+            "coverage": 100
+          },
+          "text": "金克丝1星转核通过：相对凯尔 LCB 8.94"
+        }
+      ],
+      "handoff": {
+        "unit": "金克丝",
+        "starGte": 1
+      },
+      "handoffText": "1-5级：金克丝2星转核通过：相对德莱文 LCB 0.22；6-7级：金克丝1星转核通过：相对凯尔 LCB 4.39；8-9级：金克丝1星转核通过：相对凯尔 LCB 8.94",
+      "terminalText": "金克丝1星转核通过：相对凯尔 LCB 8.94"
+    },
+    {
+      "id": "扩散射击|薇恩",
+      "source": "generic-policy-compiler",
+      "experiment": "all-hero-augment-policy-v1",
+      "augment": "扩散射击",
+      "baselineCarry": "凯尔",
+      "strategicCarry": "薇恩",
+      "currentHolder": "凯尔",
+      "requiredUnits": [
+        "薇恩"
+      ],
+      "certified": true,
+      "modelCoverage": {
+        "profileConfidence": 0.86,
+        "counterfactualUpliftPct": 16.4,
+        "routeSamples": 5000,
+        "routeRobustness": 58,
+        "opponents": 12,
+        "opponentSources": {
+          "official": 4,
+          "meta-solver": 4,
+          "research": 4
+        }
+      },
+      "evidenceCount": 6152,
+      "evidenceUnit": "模型样本/配对战斗",
+      "stages": [
+        {
+          "key": "1-5",
+          "label": "前期",
+          "levelMin": 1,
+          "levelMax": 5,
+          "baselineHolder": "凯尔",
+          "targetPresent": false,
+          "targetStarThreshold": null,
+          "certified": false,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [],
+          "text": "5级前薇恩不在阶段棋盘，继续凯尔代持"
+        },
+        {
+          "key": "6-7",
+          "label": "中期",
+          "levelMin": 6,
+          "levelMax": 7,
+          "baselineHolder": "德莱文",
+          "targetPresent": true,
+          "targetStarThreshold": 3,
+          "certified": true,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -16.76,
+              "standardError": 1.764,
+              "lcb95": -19.67,
+              "probabilityPositive": 2.08,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -5.81,
+              "standardError": 1.816,
+              "lcb95": -8.79,
+              "probabilityPositive": 33.33,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 4.41,
+              "standardError": 1.449,
+              "lcb95": 2.03,
+              "probabilityPositive": 62.5,
+              "coverage": 100
+            }
+          ],
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 4.41,
+            "standardError": 1.449,
+            "lcb95": 2.03,
+            "probabilityPositive": 62.5,
+            "coverage": 100
+          },
+          "text": "薇恩3星转核通过：相对德莱文 LCB 2.03"
+        },
+        {
+          "key": "8-9",
+          "label": "后期",
+          "levelMin": 8,
+          "levelMax": 9,
+          "baselineHolder": "德莱文",
+          "targetPresent": true,
+          "targetStarThreshold": null,
+          "certified": false,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -14.43,
+              "standardError": 1.994,
+              "lcb95": -17.7,
+              "probabilityPositive": 6.25,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -3.64,
+              "standardError": 1.531,
+              "lcb95": -6.16,
+              "probabilityPositive": 33.33,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -0.63,
+              "standardError": 0.988,
+              "lcb95": -2.25,
+              "probabilityPositive": 37.5,
+              "coverage": 100
+            }
+          ],
+          "inference": null,
+          "text": "薇恩转核未过稳健门槛，继续德莱文代持"
+        }
+      ],
+      "holderRules": [
+        {
+          "when": {
+            "levelGte": 1,
+            "levelLte": 5
+          },
+          "holder": "凯尔",
+          "fromCarry": "凯尔",
+          "certified": false,
+          "stageKey": "1-5",
+          "inference": null,
+          "text": "5级前薇恩不在阶段棋盘，继续凯尔代持"
+        },
+        {
+          "when": {
+            "levelGte": 6,
+            "levelLte": 7,
+            "unit": "薇恩",
+            "starGte": 3,
+            "hasUnits": [
+              "薇恩"
+            ]
+          },
+          "holder": "薇恩",
+          "fromCarry": "德莱文",
+          "certified": true,
+          "stageKey": "6-7",
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 4.41,
+            "standardError": 1.449,
+            "lcb95": 2.03,
+            "probabilityPositive": 62.5,
+            "coverage": 100
+          },
+          "text": "薇恩3星转核通过：相对德莱文 LCB 2.03"
+        },
+        {
+          "when": {
+            "levelGte": 6,
+            "levelLte": 7
+          },
+          "holder": "德莱文",
+          "fromCarry": "德莱文",
+          "certified": false,
+          "stageKey": "6-7",
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 4.41,
+            "standardError": 1.449,
+            "lcb95": 2.03,
+            "probabilityPositive": 62.5,
+            "coverage": 100
+          },
+          "text": "薇恩3星转核通过：相对德莱文 LCB 2.03"
+        },
+        {
+          "when": {
+            "levelGte": 8,
+            "levelLte": 9
+          },
+          "holder": "德莱文",
+          "fromCarry": "德莱文",
+          "certified": false,
+          "stageKey": "8-9",
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": -0.63,
+            "standardError": 0.988,
+            "lcb95": -2.25,
+            "probabilityPositive": 37.5,
+            "coverage": 100
+          },
+          "text": "薇恩转核未过稳健门槛，继续德莱文代持"
+        }
+      ],
+      "handoff": {
+        "unit": "薇恩",
+        "starGte": 3
+      },
+      "handoffText": "6-7级：薇恩3星转核通过：相对德莱文 LCB 2.03",
+      "terminalText": "薇恩转核未过稳健门槛，继续德莱文代持"
+    },
+    {
+      "id": "适应性防守|卡蜜尔",
+      "source": "generic-policy-compiler",
+      "experiment": "all-hero-augment-policy-v1",
+      "augment": "适应性防守",
+      "baselineCarry": "雷克顿",
+      "strategicCarry": "卡蜜尔",
+      "currentHolder": "雷克顿",
+      "requiredUnits": [
+        "卡蜜尔"
+      ],
+      "certified": true,
+      "modelCoverage": {
+        "profileConfidence": 0.62,
+        "counterfactualUpliftPct": 9.7,
+        "routeSamples": 5000,
+        "routeRobustness": 42.6,
+        "opponents": 12,
+        "opponentSources": {
+          "official": 4,
+          "meta-solver": 4,
+          "research": 4
+        }
+      },
+      "evidenceCount": 6728,
+      "evidenceUnit": "模型样本/配对战斗",
+      "stages": [
+        {
+          "key": "1-5",
+          "label": "前期",
+          "levelMin": 1,
+          "levelMax": 5,
+          "baselineHolder": "雷克顿",
+          "targetPresent": true,
+          "targetStarThreshold": 3,
+          "certified": true,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -14.65,
+              "standardError": 4.355,
+              "lcb95": -21.81,
+              "probabilityPositive": 33.33,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 0.69,
+              "standardError": 2.546,
+              "lcb95": -3.5,
+              "probabilityPositive": 60.42,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 12.38,
+              "standardError": 1.658,
+              "lcb95": 9.65,
+              "probabilityPositive": 83.33,
+              "coverage": 100
+            }
+          ],
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 12.38,
+            "standardError": 1.658,
+            "lcb95": 9.65,
+            "probabilityPositive": 83.33,
+            "coverage": 100
+          },
+          "text": "卡蜜尔3星转核通过：相对雷克顿 LCB 9.65"
+        },
+        {
+          "key": "6-7",
+          "label": "中期",
+          "levelMin": 6,
+          "levelMax": 7,
+          "baselineHolder": "德莱文",
+          "targetPresent": true,
+          "targetStarThreshold": null,
+          "certified": false,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -18.03,
+              "standardError": 2.423,
+              "lcb95": -22.02,
+              "probabilityPositive": 12.5,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -3.53,
+              "standardError": 2.33,
+              "lcb95": -7.37,
+              "probabilityPositive": 39.58,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -0.06,
+              "standardError": 1.359,
+              "lcb95": -2.29,
+              "probabilityPositive": 54.17,
+              "coverage": 100
+            }
+          ],
+          "inference": null,
+          "text": "卡蜜尔转核未过稳健门槛，继续德莱文代持"
+        },
+        {
+          "key": "8-9",
+          "label": "后期",
+          "levelMin": 8,
+          "levelMax": 9,
+          "baselineHolder": "德莱文",
+          "targetPresent": true,
+          "targetStarThreshold": null,
+          "certified": false,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -19.47,
+              "standardError": 2.931,
+              "lcb95": -24.3,
+              "probabilityPositive": 18.75,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -10.23,
+              "standardError": 1.738,
+              "lcb95": -13.09,
+              "probabilityPositive": 18.75,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -3.27,
+              "standardError": 0.873,
+              "lcb95": -4.7,
+              "probabilityPositive": 29.17,
+              "coverage": 100
+            }
+          ],
+          "inference": null,
+          "text": "卡蜜尔转核未过稳健门槛，继续德莱文代持"
+        }
+      ],
+      "holderRules": [
+        {
+          "when": {
+            "levelGte": 1,
+            "levelLte": 5,
+            "unit": "卡蜜尔",
+            "starGte": 3,
+            "hasUnits": [
+              "卡蜜尔"
+            ]
+          },
+          "holder": "卡蜜尔",
+          "fromCarry": "雷克顿",
+          "certified": true,
+          "stageKey": "1-5",
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 12.38,
+            "standardError": 1.658,
+            "lcb95": 9.65,
+            "probabilityPositive": 83.33,
+            "coverage": 100
+          },
+          "text": "卡蜜尔3星转核通过：相对雷克顿 LCB 9.65"
+        },
+        {
+          "when": {
+            "levelGte": 1,
+            "levelLte": 5
+          },
+          "holder": "雷克顿",
+          "fromCarry": "雷克顿",
+          "certified": false,
+          "stageKey": "1-5",
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 12.38,
+            "standardError": 1.658,
+            "lcb95": 9.65,
+            "probabilityPositive": 83.33,
+            "coverage": 100
+          },
+          "text": "卡蜜尔3星转核通过：相对雷克顿 LCB 9.65"
+        },
+        {
+          "when": {
+            "levelGte": 6,
+            "levelLte": 7
+          },
+          "holder": "德莱文",
+          "fromCarry": "德莱文",
+          "certified": false,
+          "stageKey": "6-7",
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": -0.06,
+            "standardError": 1.359,
+            "lcb95": -2.29,
+            "probabilityPositive": 54.17,
+            "coverage": 100
+          },
+          "text": "卡蜜尔转核未过稳健门槛，继续德莱文代持"
+        },
+        {
+          "when": {
+            "levelGte": 8,
+            "levelLte": 9
+          },
+          "holder": "德莱文",
+          "fromCarry": "德莱文",
+          "certified": false,
+          "stageKey": "8-9",
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": -3.27,
+            "standardError": 0.873,
+            "lcb95": -4.7,
+            "probabilityPositive": 29.17,
+            "coverage": 100
+          },
+          "text": "卡蜜尔转核未过稳健门槛，继续德莱文代持"
+        }
+      ],
+      "handoff": {
+        "unit": "卡蜜尔",
+        "starGte": 3
+      },
+      "handoffText": "1-5级：卡蜜尔3星转核通过：相对雷克顿 LCB 9.65",
+      "terminalText": "卡蜜尔转核未过稳健门槛，继续德莱文代持"
+    },
+    {
+      "id": "双重气泡|佐伊",
+      "source": "generic-policy-compiler",
+      "experiment": "all-hero-augment-policy-v1",
+      "augment": "双重气泡",
+      "baselineCarry": "璐璐",
+      "strategicCarry": "佐伊",
+      "currentHolder": "璐璐",
+      "requiredUnits": [
+        "佐伊"
+      ],
+      "certified": true,
+      "modelCoverage": {
+        "profileConfidence": 0.86,
+        "counterfactualUpliftPct": 26.2,
+        "routeSamples": 5000,
+        "routeRobustness": 68.1,
+        "opponents": 12,
+        "opponentSources": {
+          "official": 4,
+          "meta-solver": 4,
+          "research": 4
+        }
+      },
+      "evidenceCount": 6728,
+      "evidenceUnit": "模型样本/配对战斗",
+      "stages": [
+        {
+          "key": "1-5",
+          "label": "前期",
+          "levelMin": 1,
+          "levelMax": 5,
+          "baselineHolder": "璐璐",
+          "targetPresent": true,
+          "targetStarThreshold": 2,
+          "certified": true,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 0.72,
+              "standardError": 1.68,
+              "lcb95": -2.05,
+              "probabilityPositive": 47.92,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 8.69,
+              "standardError": 2.673,
+              "lcb95": 4.29,
+              "probabilityPositive": 72.92,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 6.21,
+              "standardError": 1.687,
+              "lcb95": 3.44,
+              "probabilityPositive": 68.75,
+              "coverage": 100
+            }
+          ],
+          "inference": {
+            "star": 2,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 8.69,
+            "standardError": 2.673,
+            "lcb95": 4.29,
+            "probabilityPositive": 72.92,
+            "coverage": 100
+          },
+          "text": "佐伊2星转核通过：相对璐璐 LCB 4.29"
+        },
+        {
+          "key": "6-7",
+          "label": "中期",
+          "levelMin": 6,
+          "levelMax": 7,
+          "baselineHolder": "悠米",
+          "targetPresent": true,
+          "targetStarThreshold": 1,
+          "certified": true,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 13.2,
+              "standardError": 2.213,
+              "lcb95": 9.56,
+              "probabilityPositive": 77.08,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 16.95,
+              "standardError": 2.007,
+              "lcb95": 13.65,
+              "probabilityPositive": 97.92,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 12.66,
+              "standardError": 1.322,
+              "lcb95": 10.49,
+              "probabilityPositive": 100,
+              "coverage": 100
+            }
+          ],
+          "inference": {
+            "star": 1,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 13.2,
+            "standardError": 2.213,
+            "lcb95": 9.56,
+            "probabilityPositive": 77.08,
+            "coverage": 100
+          },
+          "text": "佐伊1星转核通过：相对悠米 LCB 9.56"
+        },
+        {
+          "key": "8-9",
+          "label": "后期",
+          "levelMin": 8,
+          "levelMax": 9,
+          "baselineHolder": "悠米",
+          "targetPresent": true,
+          "targetStarThreshold": 1,
+          "certified": true,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 7.36,
+              "standardError": 1.014,
+              "lcb95": 5.69,
+              "probabilityPositive": 91.67,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 10.72,
+              "standardError": 1.084,
+              "lcb95": 8.93,
+              "probabilityPositive": 100,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 16.9,
+              "standardError": 1.383,
+              "lcb95": 14.62,
+              "probabilityPositive": 100,
+              "coverage": 100
+            }
+          ],
+          "inference": {
+            "star": 1,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 7.36,
+            "standardError": 1.014,
+            "lcb95": 5.69,
+            "probabilityPositive": 91.67,
+            "coverage": 100
+          },
+          "text": "佐伊1星转核通过：相对悠米 LCB 5.69"
+        }
+      ],
+      "holderRules": [
+        {
+          "when": {
+            "levelGte": 1,
+            "levelLte": 5,
+            "unit": "佐伊",
+            "starGte": 2,
+            "hasUnits": [
+              "佐伊"
+            ]
+          },
+          "holder": "佐伊",
+          "fromCarry": "璐璐",
+          "certified": true,
+          "stageKey": "1-5",
+          "inference": {
+            "star": 2,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 8.69,
+            "standardError": 2.673,
+            "lcb95": 4.29,
+            "probabilityPositive": 72.92,
+            "coverage": 100
+          },
+          "text": "佐伊2星转核通过：相对璐璐 LCB 4.29"
+        },
+        {
+          "when": {
+            "levelGte": 1,
+            "levelLte": 5
+          },
+          "holder": "璐璐",
+          "fromCarry": "璐璐",
+          "certified": false,
+          "stageKey": "1-5",
+          "inference": {
+            "star": 2,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 8.69,
+            "standardError": 2.673,
+            "lcb95": 4.29,
+            "probabilityPositive": 72.92,
+            "coverage": 100
+          },
+          "text": "佐伊2星转核通过：相对璐璐 LCB 4.29"
+        },
+        {
+          "when": {
+            "levelGte": 6,
+            "levelLte": 7,
+            "unit": "佐伊",
+            "starGte": 1,
+            "hasUnits": [
+              "佐伊"
+            ]
+          },
+          "holder": "佐伊",
+          "fromCarry": "悠米",
+          "certified": true,
+          "stageKey": "6-7",
+          "inference": {
+            "star": 1,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 13.2,
+            "standardError": 2.213,
+            "lcb95": 9.56,
+            "probabilityPositive": 77.08,
+            "coverage": 100
+          },
+          "text": "佐伊1星转核通过：相对悠米 LCB 9.56"
+        },
+        {
+          "when": {
+            "levelGte": 6,
+            "levelLte": 7
+          },
+          "holder": "悠米",
+          "fromCarry": "悠米",
+          "certified": false,
+          "stageKey": "6-7",
+          "inference": {
+            "star": 1,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 13.2,
+            "standardError": 2.213,
+            "lcb95": 9.56,
+            "probabilityPositive": 77.08,
+            "coverage": 100
+          },
+          "text": "佐伊1星转核通过：相对悠米 LCB 9.56"
+        },
+        {
+          "when": {
+            "levelGte": 8,
+            "levelLte": 9,
+            "unit": "佐伊",
+            "starGte": 1,
+            "hasUnits": [
+              "佐伊"
+            ]
+          },
+          "holder": "佐伊",
+          "fromCarry": "悠米",
+          "certified": true,
+          "stageKey": "8-9",
+          "inference": {
+            "star": 1,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 7.36,
+            "standardError": 1.014,
+            "lcb95": 5.69,
+            "probabilityPositive": 91.67,
+            "coverage": 100
+          },
+          "text": "佐伊1星转核通过：相对悠米 LCB 5.69"
+        },
+        {
+          "when": {
+            "levelGte": 8,
+            "levelLte": 9
+          },
+          "holder": "悠米",
+          "fromCarry": "悠米",
+          "certified": false,
+          "stageKey": "8-9",
+          "inference": {
+            "star": 1,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 7.36,
+            "standardError": 1.014,
+            "lcb95": 5.69,
+            "probabilityPositive": 91.67,
+            "coverage": 100
+          },
+          "text": "佐伊1星转核通过：相对悠米 LCB 5.69"
+        }
+      ],
+      "handoff": {
+        "unit": "佐伊",
+        "starGte": 1
+      },
+      "handoffText": "1-5级：佐伊2星转核通过：相对璐璐 LCB 4.29；6-7级：佐伊1星转核通过：相对悠米 LCB 9.56；8-9级：佐伊1星转核通过：相对悠米 LCB 5.69",
+      "terminalText": "佐伊1星转核通过：相对悠米 LCB 5.69"
+    },
+    {
+      "id": "无双挑战|菲奥娜",
+      "source": "generic-policy-compiler",
+      "experiment": "all-hero-augment-policy-v1",
+      "augment": "无双挑战",
+      "baselineCarry": "凯尔",
+      "strategicCarry": "菲奥娜",
+      "currentHolder": "凯尔",
+      "requiredUnits": [
+        "菲奥娜"
+      ],
+      "certified": true,
+      "modelCoverage": {
+        "profileConfidence": 0.86,
+        "counterfactualUpliftPct": 8.2,
+        "routeSamples": 5000,
+        "routeRobustness": 65.1,
+        "opponents": 12,
+        "opponentSources": {
+          "official": 4,
+          "meta-solver": 4,
+          "research": 4
+        }
+      },
+      "evidenceCount": 6728,
+      "evidenceUnit": "模型样本/配对战斗",
+      "stages": [
+        {
+          "key": "1-5",
+          "label": "前期",
+          "levelMin": 1,
+          "levelMax": 5,
+          "baselineHolder": "凯尔",
+          "targetPresent": true,
+          "targetStarThreshold": 2,
+          "certified": true,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -2.33,
+              "standardError": 1.541,
+              "lcb95": -4.86,
+              "probabilityPositive": 37.5,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 4.95,
+              "standardError": 1.995,
+              "lcb95": 1.66,
+              "probabilityPositive": 70.83,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 8.92,
+              "standardError": 1.326,
+              "lcb95": 6.74,
+              "probabilityPositive": 85.42,
+              "coverage": 100
+            }
+          ],
+          "inference": {
+            "star": 2,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 4.95,
+            "standardError": 1.995,
+            "lcb95": 1.66,
+            "probabilityPositive": 70.83,
+            "coverage": 100
+          },
+          "text": "菲奥娜2星转核通过：相对凯尔 LCB 1.66"
+        },
+        {
+          "key": "6-7",
+          "label": "中期",
+          "levelMin": 6,
+          "levelMax": 7,
+          "baselineHolder": "德莱文",
+          "targetPresent": true,
+          "targetStarThreshold": 3,
+          "certified": true,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -23.3,
+              "standardError": 2.422,
+              "lcb95": -27.28,
+              "probabilityPositive": 2.08,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -13.6,
+              "standardError": 1.656,
+              "lcb95": -16.32,
+              "probabilityPositive": 2.08,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 6.98,
+              "standardError": 1.351,
+              "lcb95": 4.76,
+              "probabilityPositive": 83.33,
+              "coverage": 100
+            }
+          ],
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 6.98,
+            "standardError": 1.351,
+            "lcb95": 4.76,
+            "probabilityPositive": 83.33,
+            "coverage": 100
+          },
+          "text": "菲奥娜3星转核通过：相对德莱文 LCB 4.76"
+        },
+        {
+          "key": "8-9",
+          "label": "后期",
+          "levelMin": 8,
+          "levelMax": 9,
+          "baselineHolder": "德莱文",
+          "targetPresent": true,
+          "targetStarThreshold": 3,
+          "certified": true,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -10.08,
+              "standardError": 1.729,
+              "lcb95": -12.92,
+              "probabilityPositive": 16.67,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -6.26,
+              "standardError": 0.846,
+              "lcb95": -7.65,
+              "probabilityPositive": 16.67,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 6.95,
+              "standardError": 1.099,
+              "lcb95": 5.14,
+              "probabilityPositive": 81.25,
+              "coverage": 100
+            }
+          ],
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 6.95,
+            "standardError": 1.099,
+            "lcb95": 5.14,
+            "probabilityPositive": 81.25,
+            "coverage": 100
+          },
+          "text": "菲奥娜3星转核通过：相对德莱文 LCB 5.14"
+        }
+      ],
+      "holderRules": [
+        {
+          "when": {
+            "levelGte": 1,
+            "levelLte": 5,
+            "unit": "菲奥娜",
+            "starGte": 2,
+            "hasUnits": [
+              "菲奥娜"
+            ]
+          },
+          "holder": "菲奥娜",
+          "fromCarry": "凯尔",
+          "certified": true,
+          "stageKey": "1-5",
+          "inference": {
+            "star": 2,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 4.95,
+            "standardError": 1.995,
+            "lcb95": 1.66,
+            "probabilityPositive": 70.83,
+            "coverage": 100
+          },
+          "text": "菲奥娜2星转核通过：相对凯尔 LCB 1.66"
+        },
+        {
+          "when": {
+            "levelGte": 1,
+            "levelLte": 5
+          },
+          "holder": "凯尔",
+          "fromCarry": "凯尔",
+          "certified": false,
+          "stageKey": "1-5",
+          "inference": {
+            "star": 2,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 4.95,
+            "standardError": 1.995,
+            "lcb95": 1.66,
+            "probabilityPositive": 70.83,
+            "coverage": 100
+          },
+          "text": "菲奥娜2星转核通过：相对凯尔 LCB 1.66"
+        },
+        {
+          "when": {
+            "levelGte": 6,
+            "levelLte": 7,
+            "unit": "菲奥娜",
+            "starGte": 3,
+            "hasUnits": [
+              "菲奥娜"
+            ]
+          },
+          "holder": "菲奥娜",
+          "fromCarry": "德莱文",
+          "certified": true,
+          "stageKey": "6-7",
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 6.98,
+            "standardError": 1.351,
+            "lcb95": 4.76,
+            "probabilityPositive": 83.33,
+            "coverage": 100
+          },
+          "text": "菲奥娜3星转核通过：相对德莱文 LCB 4.76"
+        },
+        {
+          "when": {
+            "levelGte": 6,
+            "levelLte": 7
+          },
+          "holder": "德莱文",
+          "fromCarry": "德莱文",
+          "certified": false,
+          "stageKey": "6-7",
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 6.98,
+            "standardError": 1.351,
+            "lcb95": 4.76,
+            "probabilityPositive": 83.33,
+            "coverage": 100
+          },
+          "text": "菲奥娜3星转核通过：相对德莱文 LCB 4.76"
+        },
+        {
+          "when": {
+            "levelGte": 8,
+            "levelLte": 9,
+            "unit": "菲奥娜",
+            "starGte": 3,
+            "hasUnits": [
+              "菲奥娜"
+            ]
+          },
+          "holder": "菲奥娜",
+          "fromCarry": "德莱文",
+          "certified": true,
+          "stageKey": "8-9",
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 6.95,
+            "standardError": 1.099,
+            "lcb95": 5.14,
+            "probabilityPositive": 81.25,
+            "coverage": 100
+          },
+          "text": "菲奥娜3星转核通过：相对德莱文 LCB 5.14"
+        },
+        {
+          "when": {
+            "levelGte": 8,
+            "levelLte": 9
+          },
+          "holder": "德莱文",
+          "fromCarry": "德莱文",
+          "certified": false,
+          "stageKey": "8-9",
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 6.95,
+            "standardError": 1.099,
+            "lcb95": 5.14,
+            "probabilityPositive": 81.25,
+            "coverage": 100
+          },
+          "text": "菲奥娜3星转核通过：相对德莱文 LCB 5.14"
+        }
+      ],
+      "handoff": {
+        "unit": "菲奥娜",
+        "starGte": 2
+      },
+      "handoffText": "1-5级：菲奥娜2星转核通过：相对凯尔 LCB 1.66；6-7级：菲奥娜3星转核通过：相对德莱文 LCB 4.76；8-9级：菲奥娜3星转核通过：相对德莱文 LCB 5.14",
+      "terminalText": "菲奥娜3星转核通过：相对德莱文 LCB 5.14"
+    },
+    {
+      "id": "咒能高涨|伊泽瑞尔",
+      "source": "generic-policy-compiler",
+      "experiment": "all-hero-augment-policy-v1",
+      "augment": "咒能高涨",
+      "baselineCarry": "德莱文",
+      "strategicCarry": "伊泽瑞尔",
+      "currentHolder": "德莱文",
+      "requiredUnits": [
+        "伊泽瑞尔"
+      ],
+      "certified": true,
+      "modelCoverage": {
+        "profileConfidence": 0.62,
+        "counterfactualUpliftPct": 27.7,
+        "routeSamples": 5000,
+        "routeRobustness": 66,
+        "opponents": 12,
+        "opponentSources": {
+          "official": 4,
+          "meta-solver": 4,
+          "research": 4
+        }
+      },
+      "evidenceCount": 6728,
+      "evidenceUnit": "模型样本/配对战斗",
+      "stages": [
+        {
+          "key": "1-5",
+          "label": "前期",
+          "levelMin": 1,
+          "levelMax": 5,
+          "baselineHolder": "德莱文",
+          "targetPresent": true,
+          "targetStarThreshold": 2,
+          "certified": true,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -0.6,
+              "standardError": 2.704,
+              "lcb95": -5.05,
+              "probabilityPositive": 58.33,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 4.88,
+              "standardError": 1.118,
+              "lcb95": 3.04,
+              "probabilityPositive": 70.83,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 3.52,
+              "standardError": 1.618,
+              "lcb95": 0.86,
+              "probabilityPositive": 81.25,
+              "coverage": 100
+            }
+          ],
+          "inference": {
+            "star": 2,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 4.88,
+            "standardError": 1.118,
+            "lcb95": 3.04,
+            "probabilityPositive": 70.83,
+            "coverage": 100
+          },
+          "text": "伊泽瑞尔2星转核通过：相对德莱文 LCB 3.04"
+        },
+        {
+          "key": "6-7",
+          "label": "中期",
+          "levelMin": 6,
+          "levelMax": 7,
+          "baselineHolder": "薇恩",
+          "targetPresent": true,
+          "targetStarThreshold": 1,
+          "certified": true,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 5.31,
+              "standardError": 1.585,
+              "lcb95": 2.71,
+              "probabilityPositive": 75,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 11.25,
+              "standardError": 2.29,
+              "lcb95": 7.48,
+              "probabilityPositive": 81.25,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 6.93,
+              "standardError": 2.027,
+              "lcb95": 3.6,
+              "probabilityPositive": 81.25,
+              "coverage": 100
+            }
+          ],
+          "inference": {
+            "star": 1,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 5.31,
+            "standardError": 1.585,
+            "lcb95": 2.71,
+            "probabilityPositive": 75,
+            "coverage": 100
+          },
+          "text": "伊泽瑞尔1星转核通过：相对薇恩 LCB 2.71"
+        },
+        {
+          "key": "8-9",
+          "label": "后期",
+          "levelMin": 8,
+          "levelMax": 9,
+          "baselineHolder": "薇恩",
+          "targetPresent": true,
+          "targetStarThreshold": 1,
+          "certified": true,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 8.3,
+              "standardError": 1.716,
+              "lcb95": 5.47,
+              "probabilityPositive": 64.58,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 11.16,
+              "standardError": 1.534,
+              "lcb95": 8.63,
+              "probabilityPositive": 93.75,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 8.31,
+              "standardError": 1.326,
+              "lcb95": 6.13,
+              "probabilityPositive": 85.42,
+              "coverage": 100
+            }
+          ],
+          "inference": {
+            "star": 1,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 8.3,
+            "standardError": 1.716,
+            "lcb95": 5.47,
+            "probabilityPositive": 64.58,
+            "coverage": 100
+          },
+          "text": "伊泽瑞尔1星转核通过：相对薇恩 LCB 5.47"
+        }
+      ],
+      "holderRules": [
+        {
+          "when": {
+            "levelGte": 1,
+            "levelLte": 5,
+            "unit": "伊泽瑞尔",
+            "starGte": 2,
+            "hasUnits": [
+              "伊泽瑞尔"
+            ]
+          },
+          "holder": "伊泽瑞尔",
+          "fromCarry": "德莱文",
+          "certified": true,
+          "stageKey": "1-5",
+          "inference": {
+            "star": 2,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 4.88,
+            "standardError": 1.118,
+            "lcb95": 3.04,
+            "probabilityPositive": 70.83,
+            "coverage": 100
+          },
+          "text": "伊泽瑞尔2星转核通过：相对德莱文 LCB 3.04"
+        },
+        {
+          "when": {
+            "levelGte": 1,
+            "levelLte": 5
+          },
+          "holder": "德莱文",
+          "fromCarry": "德莱文",
+          "certified": false,
+          "stageKey": "1-5",
+          "inference": {
+            "star": 2,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 4.88,
+            "standardError": 1.118,
+            "lcb95": 3.04,
+            "probabilityPositive": 70.83,
+            "coverage": 100
+          },
+          "text": "伊泽瑞尔2星转核通过：相对德莱文 LCB 3.04"
+        },
+        {
+          "when": {
+            "levelGte": 6,
+            "levelLte": 7,
+            "unit": "伊泽瑞尔",
+            "starGte": 1,
+            "hasUnits": [
+              "伊泽瑞尔"
+            ]
+          },
+          "holder": "伊泽瑞尔",
+          "fromCarry": "薇恩",
+          "certified": true,
+          "stageKey": "6-7",
+          "inference": {
+            "star": 1,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 5.31,
+            "standardError": 1.585,
+            "lcb95": 2.71,
+            "probabilityPositive": 75,
+            "coverage": 100
+          },
+          "text": "伊泽瑞尔1星转核通过：相对薇恩 LCB 2.71"
+        },
+        {
+          "when": {
+            "levelGte": 6,
+            "levelLte": 7
+          },
+          "holder": "薇恩",
+          "fromCarry": "薇恩",
+          "certified": false,
+          "stageKey": "6-7",
+          "inference": {
+            "star": 1,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 5.31,
+            "standardError": 1.585,
+            "lcb95": 2.71,
+            "probabilityPositive": 75,
+            "coverage": 100
+          },
+          "text": "伊泽瑞尔1星转核通过：相对薇恩 LCB 2.71"
+        },
+        {
+          "when": {
+            "levelGte": 8,
+            "levelLte": 9,
+            "unit": "伊泽瑞尔",
+            "starGte": 1,
+            "hasUnits": [
+              "伊泽瑞尔"
+            ]
+          },
+          "holder": "伊泽瑞尔",
+          "fromCarry": "薇恩",
+          "certified": true,
+          "stageKey": "8-9",
+          "inference": {
+            "star": 1,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 8.3,
+            "standardError": 1.716,
+            "lcb95": 5.47,
+            "probabilityPositive": 64.58,
+            "coverage": 100
+          },
+          "text": "伊泽瑞尔1星转核通过：相对薇恩 LCB 5.47"
+        },
+        {
+          "when": {
+            "levelGte": 8,
+            "levelLte": 9
+          },
+          "holder": "薇恩",
+          "fromCarry": "薇恩",
+          "certified": false,
+          "stageKey": "8-9",
+          "inference": {
+            "star": 1,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 8.3,
+            "standardError": 1.716,
+            "lcb95": 5.47,
+            "probabilityPositive": 64.58,
+            "coverage": 100
+          },
+          "text": "伊泽瑞尔1星转核通过：相对薇恩 LCB 5.47"
+        }
+      ],
+      "handoff": {
+        "unit": "伊泽瑞尔",
+        "starGte": 1
+      },
+      "handoffText": "1-5级：伊泽瑞尔2星转核通过：相对德莱文 LCB 3.04；6-7级：伊泽瑞尔1星转核通过：相对薇恩 LCB 2.71；8-9级：伊泽瑞尔1星转核通过：相对薇恩 LCB 5.47",
+      "terminalText": "伊泽瑞尔1星转核通过：相对薇恩 LCB 5.47"
+    },
+    {
+      "id": "分享驭铁术|芮尔",
+      "source": "generic-policy-compiler",
+      "experiment": "all-hero-augment-policy-v1",
+      "augment": "分享驭铁术",
+      "baselineCarry": "悠米",
+      "strategicCarry": "芮尔",
+      "currentHolder": "悠米",
+      "requiredUnits": [
+        "芮尔"
+      ],
+      "certified": false,
+      "modelCoverage": {
+        "profileConfidence": 0.86,
+        "counterfactualUpliftPct": 6.6,
+        "routeSamples": 5000,
+        "routeRobustness": 21.3,
+        "opponents": 12,
+        "opponentSources": {
+          "official": 4,
+          "meta-solver": 4,
+          "research": 4
+        }
+      },
+      "evidenceCount": 6728,
+      "evidenceUnit": "模型样本/配对战斗",
+      "stages": [
+        {
+          "key": "1-5",
+          "label": "前期",
+          "levelMin": 1,
+          "levelMax": 5,
+          "baselineHolder": "悠米",
+          "targetPresent": true,
+          "targetStarThreshold": null,
+          "certified": false,
+          "gate": {
+            "pass": false,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": false,
+              "robustness": false
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -18.5,
+              "standardError": 3.606,
+              "lcb95": -24.43,
+              "probabilityPositive": 16.67,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -6.71,
+              "standardError": 3.425,
+              "lcb95": -12.34,
+              "probabilityPositive": 31.25,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -1.89,
+              "standardError": 1.738,
+              "lcb95": -4.75,
+              "probabilityPositive": 58.33,
+              "coverage": 100
+            }
+          ],
+          "inference": null,
+          "text": "芮尔转核未过稳健门槛，继续悠米代持"
+        },
+        {
+          "key": "6-7",
+          "label": "中期",
+          "levelMin": 6,
+          "levelMax": 7,
+          "baselineHolder": "悠米",
+          "targetPresent": true,
+          "targetStarThreshold": null,
+          "certified": false,
+          "gate": {
+            "pass": false,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": false,
+              "robustness": false
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 3.13,
+              "standardError": 2.007,
+              "lcb95": -0.17,
+              "probabilityPositive": 54.17,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 4.91,
+              "standardError": 1.409,
+              "lcb95": 2.59,
+              "probabilityPositive": 64.58,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -0.19,
+              "standardError": 0.626,
+              "lcb95": -1.22,
+              "probabilityPositive": 56.25,
+              "coverage": 100
+            }
+          ],
+          "inference": null,
+          "text": "芮尔转核未过稳健门槛，继续悠米代持"
+        },
+        {
+          "key": "8-9",
+          "label": "后期",
+          "levelMin": 8,
+          "levelMax": 9,
+          "baselineHolder": "悠米",
+          "targetPresent": true,
+          "targetStarThreshold": null,
+          "certified": false,
+          "gate": {
+            "pass": false,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": false,
+              "robustness": false
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -0.75,
+              "standardError": 1.473,
+              "lcb95": -3.17,
+              "probabilityPositive": 50,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 5.45,
+              "standardError": 2.125,
+              "lcb95": 1.95,
+              "probabilityPositive": 56.25,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 3.58,
+              "standardError": 0.99,
+              "lcb95": 1.96,
+              "probabilityPositive": 81.25,
+              "coverage": 100
+            }
+          ],
+          "inference": null,
+          "text": "芮尔转核未过稳健门槛，继续悠米代持"
+        }
+      ],
+      "holderRules": [
+        {
+          "when": {
+            "levelGte": 1,
+            "levelLte": 5
+          },
+          "holder": "悠米",
+          "fromCarry": "悠米",
+          "certified": false,
+          "stageKey": "1-5",
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": -1.89,
+            "standardError": 1.738,
+            "lcb95": -4.75,
+            "probabilityPositive": 58.33,
+            "coverage": 100
+          },
+          "text": "芮尔转核未过稳健门槛，继续悠米代持"
+        },
+        {
+          "when": {
+            "levelGte": 6,
+            "levelLte": 7
+          },
+          "holder": "悠米",
+          "fromCarry": "悠米",
+          "certified": false,
+          "stageKey": "6-7",
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": -0.19,
+            "standardError": 0.626,
+            "lcb95": -1.22,
+            "probabilityPositive": 56.25,
+            "coverage": 100
+          },
+          "text": "芮尔转核未过稳健门槛，继续悠米代持"
+        },
+        {
+          "when": {
+            "levelGte": 8,
+            "levelLte": 9
+          },
+          "holder": "悠米",
+          "fromCarry": "悠米",
+          "certified": false,
+          "stageKey": "8-9",
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 3.58,
+            "standardError": 0.99,
+            "lcb95": 1.96,
+            "probabilityPositive": 81.25,
+            "coverage": 100
+          },
+          "text": "芮尔转核未过稳健门槛，继续悠米代持"
+        }
+      ],
+      "handoff": null,
+      "handoffText": "尚无芮尔稳健交接点",
+      "terminalText": "芮尔转核未过稳健门槛，继续悠米代持"
+    },
+    {
+      "id": "净化之金钟罩|李青",
+      "source": "generic-policy-compiler",
+      "experiment": "all-hero-augment-policy-v1",
+      "augment": "净化之金钟罩",
+      "baselineCarry": "凯尔",
+      "strategicCarry": "李青",
+      "currentHolder": "凯尔",
+      "requiredUnits": [
+        "李青"
+      ],
+      "certified": false,
+      "modelCoverage": {
+        "profileConfidence": 0.62,
+        "counterfactualUpliftPct": 5.4,
+        "routeSamples": 5000,
+        "routeRobustness": 20.2,
+        "opponents": 12,
+        "opponentSources": {
+          "official": 4,
+          "meta-solver": 4,
+          "research": 4
+        }
+      },
+      "evidenceCount": 6728,
+      "evidenceUnit": "模型样本/配对战斗",
+      "stages": [
+        {
+          "key": "1-5",
+          "label": "前期",
+          "levelMin": 1,
+          "levelMax": 5,
+          "baselineHolder": "凯尔",
+          "targetPresent": true,
+          "targetStarThreshold": null,
+          "certified": false,
+          "gate": {
+            "pass": false,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": false,
+              "robustness": false
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -9.36,
+              "standardError": 3.44,
+              "lcb95": -15.02,
+              "probabilityPositive": 39.58,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 5.38,
+              "standardError": 2.5,
+              "lcb95": 1.26,
+              "probabilityPositive": 66.67,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -0.77,
+              "standardError": 1.447,
+              "lcb95": -3.15,
+              "probabilityPositive": 52.08,
+              "coverage": 100
+            }
+          ],
+          "inference": null,
+          "text": "李青转核未过稳健门槛，继续凯尔代持"
+        },
+        {
+          "key": "6-7",
+          "label": "中期",
+          "levelMin": 6,
+          "levelMax": 7,
+          "baselineHolder": "德莱文",
+          "targetPresent": true,
+          "targetStarThreshold": null,
+          "certified": false,
+          "gate": {
+            "pass": false,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": false,
+              "robustness": false
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -15.25,
+              "standardError": 1.747,
+              "lcb95": -18.12,
+              "probabilityPositive": 8.33,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -14.92,
+              "standardError": 2.082,
+              "lcb95": -18.35,
+              "probabilityPositive": 12.5,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -10.3,
+              "standardError": 1.627,
+              "lcb95": -12.98,
+              "probabilityPositive": 25,
+              "coverage": 100
+            }
+          ],
+          "inference": null,
+          "text": "李青转核未过稳健门槛，继续德莱文代持"
+        },
+        {
+          "key": "8-9",
+          "label": "后期",
+          "levelMin": 8,
+          "levelMax": 9,
+          "baselineHolder": "德莱文",
+          "targetPresent": true,
+          "targetStarThreshold": null,
+          "certified": false,
+          "gate": {
+            "pass": false,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": false,
+              "robustness": false
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -14.5,
+              "standardError": 2.345,
+              "lcb95": -18.36,
+              "probabilityPositive": 20.83,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -6.68,
+              "standardError": 1.404,
+              "lcb95": -8.99,
+              "probabilityPositive": 20.83,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -5,
+              "standardError": 1.656,
+              "lcb95": -7.73,
+              "probabilityPositive": 20.83,
+              "coverage": 100
+            }
+          ],
+          "inference": null,
+          "text": "李青转核未过稳健门槛，继续德莱文代持"
+        }
+      ],
+      "holderRules": [
+        {
+          "when": {
+            "levelGte": 1,
+            "levelLte": 5
+          },
+          "holder": "凯尔",
+          "fromCarry": "凯尔",
+          "certified": false,
+          "stageKey": "1-5",
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": -0.77,
+            "standardError": 1.447,
+            "lcb95": -3.15,
+            "probabilityPositive": 52.08,
+            "coverage": 100
+          },
+          "text": "李青转核未过稳健门槛，继续凯尔代持"
+        },
+        {
+          "when": {
+            "levelGte": 6,
+            "levelLte": 7
+          },
+          "holder": "德莱文",
+          "fromCarry": "德莱文",
+          "certified": false,
+          "stageKey": "6-7",
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": -10.3,
+            "standardError": 1.627,
+            "lcb95": -12.98,
+            "probabilityPositive": 25,
+            "coverage": 100
+          },
+          "text": "李青转核未过稳健门槛，继续德莱文代持"
+        },
+        {
+          "when": {
+            "levelGte": 8,
+            "levelLte": 9
+          },
+          "holder": "德莱文",
+          "fromCarry": "德莱文",
+          "certified": false,
+          "stageKey": "8-9",
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": -5,
+            "standardError": 1.656,
+            "lcb95": -7.73,
+            "probabilityPositive": 20.83,
+            "coverage": 100
+          },
+          "text": "李青转核未过稳健门槛，继续德莱文代持"
+        }
+      ],
+      "handoff": null,
+      "handoffText": "尚无李青稳健交接点",
+      "terminalText": "李青转核未过稳健门槛，继续德莱文代持"
+    },
+    {
+      "id": "评级与交火|莎弥拉",
+      "source": "generic-policy-compiler",
+      "experiment": "all-hero-augment-policy-v1",
+      "augment": "评级与交火",
+      "baselineCarry": "卡蜜尔",
+      "strategicCarry": "莎弥拉",
+      "currentHolder": "卡蜜尔",
+      "requiredUnits": [
+        "莎弥拉"
+      ],
+      "certified": false,
+      "modelCoverage": {
+        "profileConfidence": 0.86,
+        "counterfactualUpliftPct": 6,
+        "routeSamples": 5000,
+        "routeRobustness": 39.7,
+        "opponents": 12,
+        "opponentSources": {
+          "official": 4,
+          "meta-solver": 4,
+          "research": 4
+        }
+      },
+      "evidenceCount": 5768,
+      "evidenceUnit": "模型样本/配对战斗",
+      "stages": [
+        {
+          "key": "1-5",
+          "label": "前期",
+          "levelMin": 1,
+          "levelMax": 5,
+          "baselineHolder": "卡蜜尔",
+          "targetPresent": false,
+          "targetStarThreshold": null,
+          "certified": false,
+          "gate": {
+            "pass": false,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": false,
+              "robustness": false
+            }
+          },
+          "inferenceByStar": [],
+          "text": "5级前莎弥拉不在阶段棋盘，继续卡蜜尔代持"
+        },
+        {
+          "key": "6-7",
+          "label": "中期",
+          "levelMin": 6,
+          "levelMax": 7,
+          "baselineHolder": "希维尔",
+          "targetPresent": true,
+          "targetStarThreshold": null,
+          "certified": false,
+          "gate": {
+            "pass": false,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": false,
+              "robustness": false
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -3.61,
+              "standardError": 2.245,
+              "lcb95": -7.3,
+              "probabilityPositive": 52.08,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 1.75,
+              "standardError": 1.454,
+              "lcb95": -0.64,
+              "probabilityPositive": 62.5,
+              "coverage": 100
+            }
+          ],
+          "inference": null,
+          "text": "莎弥拉转核未过稳健门槛，继续希维尔代持"
+        },
+        {
+          "key": "8-9",
+          "label": "后期",
+          "levelMin": 8,
+          "levelMax": 9,
+          "baselineHolder": "厄斐琉斯",
+          "targetPresent": true,
+          "targetStarThreshold": null,
+          "certified": false,
+          "gate": {
+            "pass": false,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": false,
+              "robustness": false
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 0.41,
+              "standardError": 1.08,
+              "lcb95": -1.37,
+              "probabilityPositive": 62.5,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 0.68,
+              "standardError": 1.062,
+              "lcb95": -1.07,
+              "probabilityPositive": 60.42,
+              "coverage": 100
+            }
+          ],
+          "inference": null,
+          "text": "莎弥拉转核未过稳健门槛，继续厄斐琉斯代持"
+        }
+      ],
+      "holderRules": [
+        {
+          "when": {
+            "levelGte": 1,
+            "levelLte": 5
+          },
+          "holder": "卡蜜尔",
+          "fromCarry": "卡蜜尔",
+          "certified": false,
+          "stageKey": "1-5",
+          "inference": null,
+          "text": "5级前莎弥拉不在阶段棋盘，继续卡蜜尔代持"
+        },
+        {
+          "when": {
+            "levelGte": 6,
+            "levelLte": 7
+          },
+          "holder": "希维尔",
+          "fromCarry": "希维尔",
+          "certified": false,
+          "stageKey": "6-7",
+          "inference": {
+            "star": 2,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 1.75,
+            "standardError": 1.454,
+            "lcb95": -0.64,
+            "probabilityPositive": 62.5,
+            "coverage": 100
+          },
+          "text": "莎弥拉转核未过稳健门槛，继续希维尔代持"
+        },
+        {
+          "when": {
+            "levelGte": 8,
+            "levelLte": 9
+          },
+          "holder": "厄斐琉斯",
+          "fromCarry": "厄斐琉斯",
+          "certified": false,
+          "stageKey": "8-9",
+          "inference": {
+            "star": 2,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 0.68,
+            "standardError": 1.062,
+            "lcb95": -1.07,
+            "probabilityPositive": 60.42,
+            "coverage": 100
+          },
+          "text": "莎弥拉转核未过稳健门槛，继续厄斐琉斯代持"
+        }
+      ],
+      "handoff": null,
+      "handoffText": "尚无莎弥拉稳健交接点",
+      "terminalText": "莎弥拉转核未过稳健门槛，继续厄斐琉斯代持"
+    },
+    {
+      "id": "完美的日炎耀斑|蕾欧娜",
+      "source": "generic-policy-compiler",
+      "experiment": "all-hero-augment-policy-v1",
+      "augment": "完美的日炎耀斑",
+      "baselineCarry": "德莱文",
+      "strategicCarry": "蕾欧娜",
+      "currentHolder": "德莱文",
+      "requiredUnits": [
+        "蕾欧娜"
+      ],
+      "certified": false,
+      "modelCoverage": {
+        "profileConfidence": 0.86,
+        "counterfactualUpliftPct": 47.9,
+        "routeSamples": 5000,
+        "routeRobustness": 98.8,
+        "opponents": 12,
+        "opponentSources": {
+          "official": 4,
+          "meta-solver": 4,
+          "research": 4
+        }
+      },
+      "evidenceCount": 5384,
+      "evidenceUnit": "模型样本/配对战斗",
+      "stages": [
+        {
+          "key": "1-5",
+          "label": "前期",
+          "levelMin": 1,
+          "levelMax": 5,
+          "baselineHolder": "德莱文",
+          "targetPresent": false,
+          "targetStarThreshold": null,
+          "certified": false,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [],
+          "text": "5级前蕾欧娜不在阶段棋盘，继续德莱文代持"
+        },
+        {
+          "key": "6-7",
+          "label": "中期",
+          "levelMin": 6,
+          "levelMax": 7,
+          "baselineHolder": "德莱文",
+          "targetPresent": false,
+          "targetStarThreshold": null,
+          "certified": false,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [],
+          "text": "7级前蕾欧娜不在阶段棋盘，继续德莱文代持"
+        },
+        {
+          "key": "8-9",
+          "label": "后期",
+          "levelMin": 8,
+          "levelMax": 9,
+          "baselineHolder": "佛耶戈",
+          "targetPresent": true,
+          "targetStarThreshold": null,
+          "certified": false,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 2.14,
+              "standardError": 1.451,
+              "lcb95": -0.25,
+              "probabilityPositive": 77.08,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 1.75,
+              "standardError": 1.502,
+              "lcb95": -0.72,
+              "probabilityPositive": 66.67,
+              "coverage": 100
+            }
+          ],
+          "inference": null,
+          "text": "蕾欧娜转核未过稳健门槛，继续佛耶戈代持"
+        }
+      ],
+      "holderRules": [
+        {
+          "when": {
+            "levelGte": 1,
+            "levelLte": 5
+          },
+          "holder": "德莱文",
+          "fromCarry": "德莱文",
+          "certified": false,
+          "stageKey": "1-5",
+          "inference": null,
+          "text": "5级前蕾欧娜不在阶段棋盘，继续德莱文代持"
+        },
+        {
+          "when": {
+            "levelGte": 6,
+            "levelLte": 7
+          },
+          "holder": "德莱文",
+          "fromCarry": "德莱文",
+          "certified": false,
+          "stageKey": "6-7",
+          "inference": null,
+          "text": "7级前蕾欧娜不在阶段棋盘，继续德莱文代持"
+        },
+        {
+          "when": {
+            "levelGte": 8,
+            "levelLte": 9
+          },
+          "holder": "佛耶戈",
+          "fromCarry": "佛耶戈",
+          "certified": false,
+          "stageKey": "8-9",
+          "inference": {
+            "star": 2,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 1.75,
+            "standardError": 1.502,
+            "lcb95": -0.72,
+            "probabilityPositive": 66.67,
+            "coverage": 100
+          },
+          "text": "蕾欧娜转核未过稳健门槛，继续佛耶戈代持"
+        }
+      ],
+      "handoff": null,
+      "handoffText": "尚无蕾欧娜稳健交接点",
+      "terminalText": "蕾欧娜转核未过稳健门槛，继续佛耶戈代持"
+    },
+    {
+      "id": "旺盛精力|悠米",
+      "source": "generic-policy-compiler",
+      "experiment": "all-hero-augment-policy-v1",
+      "augment": "旺盛精力",
+      "baselineCarry": "拉克丝",
+      "strategicCarry": "悠米",
+      "currentHolder": "拉克丝",
+      "requiredUnits": [
+        "悠米"
+      ],
+      "certified": false,
+      "modelCoverage": {
+        "profileConfidence": 0.86,
+        "counterfactualUpliftPct": 6.7,
+        "routeSamples": 5000,
+        "routeRobustness": 61.8,
+        "opponents": 12,
+        "opponentSources": {
+          "official": 4,
+          "meta-solver": 4,
+          "research": 4
+        }
+      },
+      "evidenceCount": 6728,
+      "evidenceUnit": "模型样本/配对战斗",
+      "stages": [
+        {
+          "key": "1-5",
+          "label": "前期",
+          "levelMin": 1,
+          "levelMax": 5,
+          "baselineHolder": "拉克丝",
+          "targetPresent": true,
+          "targetStarThreshold": null,
+          "certified": false,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -12.37,
+              "standardError": 2.064,
+              "lcb95": -15.76,
+              "probabilityPositive": 12.5,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -4.63,
+              "standardError": 1.868,
+              "lcb95": -7.7,
+              "probabilityPositive": 31.25,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -1.41,
+              "standardError": 1.707,
+              "lcb95": -4.21,
+              "probabilityPositive": 39.58,
+              "coverage": 100
+            }
+          ],
+          "inference": null,
+          "text": "悠米转核未过稳健门槛，继续拉克丝代持"
+        },
+        {
+          "key": "6-7",
+          "label": "中期",
+          "levelMin": 6,
+          "levelMax": 7,
+          "baselineHolder": "卡莎",
+          "targetPresent": true,
+          "targetStarThreshold": null,
+          "certified": false,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -3.72,
+              "standardError": 1.234,
+              "lcb95": -5.74,
+              "probabilityPositive": 29.17,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 0.09,
+              "standardError": 1.2,
+              "lcb95": -1.89,
+              "probabilityPositive": 52.08,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 1.74,
+              "standardError": 1.357,
+              "lcb95": -0.49,
+              "probabilityPositive": 54.17,
+              "coverage": 100
+            }
+          ],
+          "inference": null,
+          "text": "悠米转核未过稳健门槛，继续卡莎代持"
+        },
+        {
+          "key": "8-9",
+          "label": "后期",
+          "levelMin": 8,
+          "levelMax": 9,
+          "baselineHolder": "卡莎",
+          "targetPresent": true,
+          "targetStarThreshold": null,
+          "certified": false,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -6.68,
+              "standardError": 1.695,
+              "lcb95": -9.47,
+              "probabilityPositive": 20.83,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -3.06,
+              "standardError": 1.53,
+              "lcb95": -5.58,
+              "probabilityPositive": 56.25,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 0.96,
+              "standardError": 1.469,
+              "lcb95": -1.46,
+              "probabilityPositive": 52.08,
+              "coverage": 100
+            }
+          ],
+          "inference": null,
+          "text": "悠米转核未过稳健门槛，继续卡莎代持"
+        }
+      ],
+      "holderRules": [
+        {
+          "when": {
+            "levelGte": 1,
+            "levelLte": 5
+          },
+          "holder": "拉克丝",
+          "fromCarry": "拉克丝",
+          "certified": false,
+          "stageKey": "1-5",
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": -1.41,
+            "standardError": 1.707,
+            "lcb95": -4.21,
+            "probabilityPositive": 39.58,
+            "coverage": 100
+          },
+          "text": "悠米转核未过稳健门槛，继续拉克丝代持"
+        },
+        {
+          "when": {
+            "levelGte": 6,
+            "levelLte": 7
+          },
+          "holder": "卡莎",
+          "fromCarry": "卡莎",
+          "certified": false,
+          "stageKey": "6-7",
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 1.74,
+            "standardError": 1.357,
+            "lcb95": -0.49,
+            "probabilityPositive": 54.17,
+            "coverage": 100
+          },
+          "text": "悠米转核未过稳健门槛，继续卡莎代持"
+        },
+        {
+          "when": {
+            "levelGte": 8,
+            "levelLte": 9
+          },
+          "holder": "卡莎",
+          "fromCarry": "卡莎",
+          "certified": false,
+          "stageKey": "8-9",
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 0.96,
+            "standardError": 1.469,
+            "lcb95": -1.46,
+            "probabilityPositive": 52.08,
+            "coverage": 100
+          },
+          "text": "悠米转核未过稳健门槛，继续卡莎代持"
+        }
+      ],
+      "handoff": null,
+      "handoffText": "尚无悠米稳健交接点",
+      "terminalText": "悠米转核未过稳健门槛，继续卡莎代持"
+    },
+    {
+      "id": "无情连打|贾克斯",
+      "source": "augment-conditioned-transition-lab",
+      "experiment": "augment-conditioned-transition-v1",
+      "augment": "无情连打",
+      "baselineCarry": "德莱文",
+      "strategicCarry": "贾克斯",
+      "currentHolder": "德莱文",
+      "requiredUnits": [
+        "贾克斯"
+      ],
+      "certified": false,
+      "modelCoverage": {
+        "opponents": 12,
+        "opponentSources": {
+          "official": 4,
+          "meta-solver": 4,
+          "research": 4
+        },
+        "mechanismAblation": {
+          "samples": 96,
+          "battles": 384,
+          "plainMeanMargin": 0.358,
+          "augmentedMeanMargin": 0.453,
+          "meanDelta": 9.51,
+          "standardError": 1.87,
+          "lcb95": 6.43,
+          "probabilityPositive": 84.38
+        }
+      },
+      "evidenceCount": 5760,
+      "evidenceUnit": "条件化战斗",
+      "currentInference": {
+        "sampleCount": 134,
+        "meanDelta": -3,
+        "standardError": 1.473,
+        "lcb95": -5.43,
+        "probabilityPositive": 47.01
+      },
+      "handoffInference": {
+        "sampleCount": 106,
+        "meanDelta": -1.7,
+        "standardError": 1.401,
+        "lcb95": -4,
+        "probabilityPositive": 41.51
+      },
+      "handoff": {
+        "unit": "贾克斯",
+        "starGte": 2
+      },
+      "handoffText": "贾克斯达到2星后接管输出装与至尊机甲",
+      "terminalText": "贾克斯保留终局；蕾欧娜转核未过稳健门槛（LCB -1.45）",
+      "stages": [],
+      "holderRules": [
+        {
+          "when": {
+            "unit": "贾克斯",
+            "starGte": 2
+          },
+          "holder": "贾克斯",
+          "fromCarry": "德莱文",
+          "certified": false,
+          "stageKey": "handoff",
+          "inference": {
+            "sampleCount": 106,
+            "meanDelta": -1.7,
+            "standardError": 1.401,
+            "lcb95": -4,
+            "probabilityPositive": 41.51
+          },
+          "text": "贾克斯2星优势扩大（LCB -4）"
+        },
+        {
+          "when": {
+            "hasUnit": "德莱文"
+          },
+          "holder": "德莱文",
+          "fromCarry": "德莱文",
+          "certified": false,
+          "stageKey": "current",
+          "inference": {
+            "sampleCount": 134,
+            "meanDelta": -3,
+            "standardError": 1.473,
+            "lcb95": -5.43,
+            "probabilityPositive": 47.01
+          },
+          "text": "无情连打立即转贾克斯（LCB -5.43）"
+        },
+        {
+          "holder": "德莱文",
+          "fromCarry": "德莱文",
+          "certified": false,
+          "stageKey": "current",
+          "inference": {
+            "sampleCount": 134,
+            "meanDelta": -3,
+            "standardError": 1.473,
+            "lcb95": -5.43,
+            "probabilityPositive": 47.01
+          },
+          "text": "无情连打立即转贾克斯（LCB -5.43）"
+        }
+      ]
+    },
+    {
+      "id": "星界屏障|科加斯",
+      "source": "generic-policy-compiler",
+      "experiment": "all-hero-augment-policy-v1",
+      "augment": "星界屏障",
+      "baselineCarry": "凯尔",
+      "strategicCarry": "科加斯",
+      "currentHolder": "凯尔",
+      "requiredUnits": [
+        "科加斯"
+      ],
+      "certified": false,
+      "modelCoverage": {
+        "profileConfidence": 0.86,
+        "counterfactualUpliftPct": 9.4,
+        "routeSamples": 5000,
+        "routeRobustness": 8.2,
+        "opponents": 12,
+        "opponentSources": {
+          "official": 4,
+          "meta-solver": 4,
+          "research": 4
+        }
+      },
+      "evidenceCount": 6152,
+      "evidenceUnit": "模型样本/配对战斗",
+      "stages": [
+        {
+          "key": "1-5",
+          "label": "前期",
+          "levelMin": 1,
+          "levelMax": 5,
+          "baselineHolder": "凯尔",
+          "targetPresent": false,
+          "targetStarThreshold": null,
+          "certified": false,
+          "gate": {
+            "pass": false,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": false,
+              "robustness": false
+            }
+          },
+          "inferenceByStar": [],
+          "text": "5级前科加斯不在阶段棋盘，继续凯尔代持"
+        },
+        {
+          "key": "6-7",
+          "label": "中期",
+          "levelMin": 6,
+          "levelMax": 7,
+          "baselineHolder": "凯尔",
+          "targetPresent": true,
+          "targetStarThreshold": null,
+          "certified": false,
+          "gate": {
+            "pass": false,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": false,
+              "robustness": false
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -5.46,
+              "standardError": 2.75,
+              "lcb95": -9.98,
+              "probabilityPositive": 39.58,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 4.26,
+              "standardError": 2.609,
+              "lcb95": -0.03,
+              "probabilityPositive": 54.17,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 4.06,
+              "standardError": 1.632,
+              "lcb95": 1.38,
+              "probabilityPositive": 70.83,
+              "coverage": 100
+            }
+          ],
+          "inference": null,
+          "text": "科加斯转核未过稳健门槛，继续凯尔代持"
+        },
+        {
+          "key": "8-9",
+          "label": "后期",
+          "levelMin": 8,
+          "levelMax": 9,
+          "baselineHolder": "凯尔",
+          "targetPresent": true,
+          "targetStarThreshold": null,
+          "certified": false,
+          "gate": {
+            "pass": false,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": false,
+              "robustness": false
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -9.86,
+              "standardError": 1.765,
+              "lcb95": -12.77,
+              "probabilityPositive": 20.83,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -3.01,
+              "standardError": 1.875,
+              "lcb95": -6.1,
+              "probabilityPositive": 39.58,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 0.96,
+              "standardError": 1.337,
+              "lcb95": -1.24,
+              "probabilityPositive": 62.5,
+              "coverage": 100
+            }
+          ],
+          "inference": null,
+          "text": "科加斯转核未过稳健门槛，继续凯尔代持"
+        }
+      ],
+      "holderRules": [
+        {
+          "when": {
+            "levelGte": 1,
+            "levelLte": 5
+          },
+          "holder": "凯尔",
+          "fromCarry": "凯尔",
+          "certified": false,
+          "stageKey": "1-5",
+          "inference": null,
+          "text": "5级前科加斯不在阶段棋盘，继续凯尔代持"
+        },
+        {
+          "when": {
+            "levelGte": 6,
+            "levelLte": 7
+          },
+          "holder": "凯尔",
+          "fromCarry": "凯尔",
+          "certified": false,
+          "stageKey": "6-7",
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 4.06,
+            "standardError": 1.632,
+            "lcb95": 1.38,
+            "probabilityPositive": 70.83,
+            "coverage": 100
+          },
+          "text": "科加斯转核未过稳健门槛，继续凯尔代持"
+        },
+        {
+          "when": {
+            "levelGte": 8,
+            "levelLte": 9
+          },
+          "holder": "凯尔",
+          "fromCarry": "凯尔",
+          "certified": false,
+          "stageKey": "8-9",
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 0.96,
+            "standardError": 1.337,
+            "lcb95": -1.24,
+            "probabilityPositive": 62.5,
+            "coverage": 100
+          },
+          "text": "科加斯转核未过稳健门槛，继续凯尔代持"
+        }
+      ],
+      "handoff": null,
+      "handoffText": "尚无科加斯稳健交接点",
+      "terminalText": "科加斯转核未过稳健门槛，继续凯尔代持"
+    },
+    {
+      "id": "重甲龙龟|拉莫斯",
+      "source": "generic-policy-compiler",
+      "experiment": "all-hero-augment-policy-v1",
+      "augment": "重甲龙龟",
+      "baselineCarry": "凯尔",
+      "strategicCarry": "拉莫斯",
+      "currentHolder": "凯尔",
+      "requiredUnits": [
+        "拉莫斯"
+      ],
+      "certified": false,
+      "modelCoverage": {
+        "profileConfidence": 0.86,
+        "counterfactualUpliftPct": 7.3,
+        "routeSamples": 5000,
+        "routeRobustness": 13.6,
+        "opponents": 12,
+        "opponentSources": {
+          "official": 4,
+          "meta-solver": 4,
+          "research": 4
+        }
+      },
+      "evidenceCount": 6152,
+      "evidenceUnit": "模型样本/配对战斗",
+      "stages": [
+        {
+          "key": "1-5",
+          "label": "前期",
+          "levelMin": 1,
+          "levelMax": 5,
+          "baselineHolder": "凯尔",
+          "targetPresent": false,
+          "targetStarThreshold": null,
+          "certified": false,
+          "gate": {
+            "pass": false,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": false,
+              "robustness": false
+            }
+          },
+          "inferenceByStar": [],
+          "text": "5级前拉莫斯不在阶段棋盘，继续凯尔代持"
+        },
+        {
+          "key": "6-7",
+          "label": "中期",
+          "levelMin": 6,
+          "levelMax": 7,
+          "baselineHolder": "凯尔",
+          "targetPresent": true,
+          "targetStarThreshold": null,
+          "certified": false,
+          "gate": {
+            "pass": false,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": false,
+              "robustness": false
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -14.72,
+              "standardError": 2.949,
+              "lcb95": -19.57,
+              "probabilityPositive": 14.58,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -5.96,
+              "standardError": 2.548,
+              "lcb95": -10.16,
+              "probabilityPositive": 39.58,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 1.79,
+              "standardError": 1.679,
+              "lcb95": -0.97,
+              "probabilityPositive": 58.33,
+              "coverage": 100
+            }
+          ],
+          "inference": null,
+          "text": "拉莫斯转核未过稳健门槛，继续凯尔代持"
+        },
+        {
+          "key": "8-9",
+          "label": "后期",
+          "levelMin": 8,
+          "levelMax": 9,
+          "baselineHolder": "凯尔",
+          "targetPresent": true,
+          "targetStarThreshold": null,
+          "certified": false,
+          "gate": {
+            "pass": false,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": false,
+              "robustness": false
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -7.54,
+              "standardError": 1.121,
+              "lcb95": -9.38,
+              "probabilityPositive": 10.42,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -1.77,
+              "standardError": 1.943,
+              "lcb95": -4.97,
+              "probabilityPositive": 25,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -0.47,
+              "standardError": 1.142,
+              "lcb95": -2.35,
+              "probabilityPositive": 50,
+              "coverage": 100
+            }
+          ],
+          "inference": null,
+          "text": "拉莫斯转核未过稳健门槛，继续凯尔代持"
+        }
+      ],
+      "holderRules": [
+        {
+          "when": {
+            "levelGte": 1,
+            "levelLte": 5
+          },
+          "holder": "凯尔",
+          "fromCarry": "凯尔",
+          "certified": false,
+          "stageKey": "1-5",
+          "inference": null,
+          "text": "5级前拉莫斯不在阶段棋盘，继续凯尔代持"
+        },
+        {
+          "when": {
+            "levelGte": 6,
+            "levelLte": 7
+          },
+          "holder": "凯尔",
+          "fromCarry": "凯尔",
+          "certified": false,
+          "stageKey": "6-7",
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 1.79,
+            "standardError": 1.679,
+            "lcb95": -0.97,
+            "probabilityPositive": 58.33,
+            "coverage": 100
+          },
+          "text": "拉莫斯转核未过稳健门槛，继续凯尔代持"
+        },
+        {
+          "when": {
+            "levelGte": 8,
+            "levelLte": 9
+          },
+          "holder": "凯尔",
+          "fromCarry": "凯尔",
+          "certified": false,
+          "stageKey": "8-9",
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": -0.47,
+            "standardError": 1.142,
+            "lcb95": -2.35,
+            "probabilityPositive": 50,
+            "coverage": 100
+          },
+          "text": "拉莫斯转核未过稳健门槛，继续凯尔代持"
+        }
+      ],
+      "handoff": null,
+      "handoffText": "尚无拉莫斯稳健交接点",
+      "terminalText": "拉莫斯转核未过稳健门槛，继续凯尔代持"
+    },
+    {
+      "id": "宗师训练|贾克斯",
+      "source": "generic-policy-compiler",
+      "experiment": "all-hero-augment-policy-v1",
+      "augment": "宗师训练",
+      "baselineCarry": "德莱文",
+      "strategicCarry": "贾克斯",
+      "currentHolder": "德莱文",
+      "requiredUnits": [
+        "贾克斯"
+      ],
+      "certified": false,
+      "modelCoverage": {
+        "profileConfidence": 0.86,
+        "counterfactualUpliftPct": 5.5,
+        "routeSamples": 5000,
+        "routeRobustness": 51.8,
+        "opponents": 12,
+        "opponentSources": {
+          "official": 4,
+          "meta-solver": 4,
+          "research": 4
+        }
+      },
+      "evidenceCount": 6728,
+      "evidenceUnit": "模型样本/配对战斗",
+      "stages": [
+        {
+          "key": "1-5",
+          "label": "前期",
+          "levelMin": 1,
+          "levelMax": 5,
+          "baselineHolder": "德莱文",
+          "targetPresent": true,
+          "targetStarThreshold": null,
+          "certified": false,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -7.3,
+              "standardError": 1.348,
+              "lcb95": -9.52,
+              "probabilityPositive": 12.5,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -5,
+              "standardError": 1.539,
+              "lcb95": -7.53,
+              "probabilityPositive": 29.17,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -5.12,
+              "standardError": 1.374,
+              "lcb95": -7.38,
+              "probabilityPositive": 27.08,
+              "coverage": 100
+            }
+          ],
+          "inference": null,
+          "text": "贾克斯转核未过稳健门槛，继续德莱文代持"
+        },
+        {
+          "key": "6-7",
+          "label": "中期",
+          "levelMin": 6,
+          "levelMax": 7,
+          "baselineHolder": "璐璐",
+          "targetPresent": true,
+          "targetStarThreshold": null,
+          "certified": false,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -2.82,
+              "standardError": 1.326,
+              "lcb95": -5,
+              "probabilityPositive": 31.25,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 2.11,
+              "standardError": 1.325,
+              "lcb95": -0.07,
+              "probabilityPositive": 52.08,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 1.09,
+              "standardError": 1.224,
+              "lcb95": -0.93,
+              "probabilityPositive": 47.92,
+              "coverage": 100
+            }
+          ],
+          "inference": null,
+          "text": "贾克斯转核未过稳健门槛，继续璐璐代持"
+        },
+        {
+          "key": "8-9",
+          "label": "后期",
+          "levelMin": 8,
+          "levelMax": 9,
+          "baselineHolder": "璐璐",
+          "targetPresent": true,
+          "targetStarThreshold": null,
+          "certified": false,
+          "gate": {
+            "pass": true,
+            "checks": {
+              "numericMechanic": true,
+              "uplift": true,
+              "profileConfidence": true,
+              "routeSamples": true,
+              "failureRate": true,
+              "robustness": true
+            }
+          },
+          "inferenceByStar": [
+            {
+              "star": 1,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -0.84,
+              "standardError": 1.119,
+              "lcb95": -2.68,
+              "probabilityPositive": 37.5,
+              "coverage": 100
+            },
+            {
+              "star": 2,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": -0.98,
+              "standardError": 2.057,
+              "lcb95": -4.36,
+              "probabilityPositive": 47.92,
+              "coverage": 100
+            },
+            {
+              "star": 3,
+              "sampleCount": 48,
+              "battles": 192,
+              "meanDelta": 1.97,
+              "standardError": 1.58,
+              "lcb95": -0.63,
+              "probabilityPositive": 56.25,
+              "coverage": 100
+            }
+          ],
+          "inference": null,
+          "text": "贾克斯转核未过稳健门槛，继续璐璐代持"
+        }
+      ],
+      "holderRules": [
+        {
+          "when": {
+            "levelGte": 1,
+            "levelLte": 5
+          },
+          "holder": "德莱文",
+          "fromCarry": "德莱文",
+          "certified": false,
+          "stageKey": "1-5",
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": -5.12,
+            "standardError": 1.374,
+            "lcb95": -7.38,
+            "probabilityPositive": 27.08,
+            "coverage": 100
+          },
+          "text": "贾克斯转核未过稳健门槛，继续德莱文代持"
+        },
+        {
+          "when": {
+            "levelGte": 6,
+            "levelLte": 7
+          },
+          "holder": "璐璐",
+          "fromCarry": "璐璐",
+          "certified": false,
+          "stageKey": "6-7",
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 1.09,
+            "standardError": 1.224,
+            "lcb95": -0.93,
+            "probabilityPositive": 47.92,
+            "coverage": 100
+          },
+          "text": "贾克斯转核未过稳健门槛，继续璐璐代持"
+        },
+        {
+          "when": {
+            "levelGte": 8,
+            "levelLte": 9
+          },
+          "holder": "璐璐",
+          "fromCarry": "璐璐",
+          "certified": false,
+          "stageKey": "8-9",
+          "inference": {
+            "star": 3,
+            "sampleCount": 48,
+            "battles": 192,
+            "meanDelta": 1.97,
+            "standardError": 1.58,
+            "lcb95": -0.63,
+            "probabilityPositive": 56.25,
+            "coverage": 100
+          },
+          "text": "贾克斯转核未过稳健门槛，继续璐璐代持"
+        }
+      ],
+      "handoff": null,
+      "handoffText": "尚无贾克斯稳健交接点",
+      "terminalText": "贾克斯转核未过稳健门槛，继续璐璐代持"
+    }
+  ],
+  "uncompiled": [
+    {
+      "augment": "痛贯心灵",
+      "carry": "佛耶戈",
+      "reason": "未进入当前认证路线模板"
+    },
+    {
+      "augment": "能量网",
+      "carry": "娑娜",
+      "reason": "未进入当前认证路线模板"
+    },
+    {
+      "augment": "绝对堕落",
+      "carry": "费德提克",
+      "reason": "未进入当前认证路线模板"
+    },
+    {
+      "augment": "没那么重金属",
+      "carry": "莫德凯撒",
+      "reason": "未进入当前认证路线模板"
+    },
+    {
+      "augment": "猫之精准",
+      "carry": "悠米",
+      "reason": "未进入当前认证路线模板"
+    },
+    {
+      "augment": "岩雀",
+      "carry": "塔莉垭",
+      "reason": "未进入当前认证路线模板"
+    },
+    {
+      "augment": "夺影术",
+      "carry": "劫",
+      "reason": "未进入当前认证路线模板"
+    },
+    {
+      "augment": "装弹完毕",
+      "carry": "厄斐琉斯",
+      "reason": "未进入当前认证路线模板"
+    },
+    {
+      "augment": "多重射击",
+      "carry": "卡莎",
+      "reason": "未进入当前认证路线模板"
+    },
+    {
+      "augment": "天赋异禀",
+      "carry": "尼菈",
+      "reason": "未进入当前认证路线模板"
+    },
+    {
+      "augment": "巨无霸",
+      "carry": "阿利斯塔",
+      "reason": "未进入当前认证路线模板"
+    },
+    {
+      "augment": "坚守防线",
+      "carry": "芮尔",
+      "reason": "未进入当前认证路线模板"
+    },
+    {
+      "augment": "混响之刃",
+      "carry": "锐雯",
+      "reason": "未进入当前认证路线模板"
+    },
+    {
+      "augment": "群星依旧炸！",
+      "carry": "金克丝",
+      "reason": "未进入当前认证路线模板"
+    },
+    {
+      "augment": "不屈之劲",
+      "carry": "蔚",
+      "reason": "未进入当前认证路线模板"
+    },
+    {
+      "augment": "火热斗志",
+      "carry": "安妮",
+      "reason": "未进入当前认证路线模板"
+    }
+  ]
+}
