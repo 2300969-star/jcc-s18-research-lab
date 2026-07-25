@@ -239,10 +239,27 @@ button, input { font:inherit; }
 .testState { color:var(--muted); font-size:14px; font-weight:800; }
 .logPanel { position:fixed; right:16px; bottom:16px; z-index:7; width:min(660px, calc(100vw - 32px)); max-height:56vh; border:1px solid var(--border); border-radius:16px; background:var(--surface); box-shadow:0 18px 46px rgba(0,0,0,.25); overflow:hidden; }
 .logHead { min-height:48px; display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 14px; border-bottom:1px solid var(--border); font-weight:950; }
+.logHeadActions { display:flex; gap:7px; flex-wrap:wrap; justify-content:flex-end; }
 .logBody { max-height:calc(56vh - 48px); overflow:auto; padding:10px 14px; display:grid; gap:8px; font-size:14px; color:var(--ink2); }
 .logEntry { border:1px solid var(--grid); border-radius:10px; padding:8px 10px; display:grid; gap:3px; }
 .logRaw { color:var(--ink); font-weight:850; }
 .logMeta { color:var(--muted); }
+.reviewSummary { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:7px; }
+.reviewMetric { border:1px solid var(--grid); border-radius:8px; padding:8px; background:var(--plane); }
+.reviewMetric b { display:block; color:var(--ink); font-size:20px; line-height:1.1; }
+.reviewMetric span { color:var(--muted); font-size:12px; font-weight:850; }
+.reviewStage { border-left:4px solid var(--s2); padding:7px 9px; background:color-mix(in srgb,var(--surface) 90%,var(--s2) 10%); font-weight:850; }
+.reviewBoundary { color:var(--muted); font-size:12px; line-height:1.45; }
+.postgameForm { display:grid; gap:14px; }
+.postgameForm h2 { font-size:24px; }
+.postgameGrid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.postgameForm label { display:grid; gap:6px; color:var(--ink2); font-size:14px; font-weight:850; }
+.postgameForm select, .postgameForm input, .postgameForm textarea { width:100%; min-height:44px; border:1px solid var(--border); border-radius:8px; background:var(--plane); color:var(--ink); padding:8px 10px; font:inherit; outline:none; }
+.postgameForm textarea { min-height:96px; resize:vertical; }
+.postgameSnapshot { border:1px solid var(--grid); border-radius:8px; padding:9px 11px; background:var(--plane); color:var(--ink2); font-size:14px; }
+.postgameActions { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+.postgameActions .submit { background:var(--s2); border-color:var(--s2); color:#fff; }
+.dangerBtn { color:var(--s6); border-color:color-mix(in srgb,var(--s6) 60%,var(--border)); }
 dialog { border:1px solid var(--border); border-radius:16px; background:var(--surface); color:var(--ink);
   width:min(860px,94vw); max-height:88vh; padding:22px 24px; margin:auto; overflow:auto; box-shadow:0 20px 56px rgba(0,0,0,.34); }
 dialog::backdrop { background:rgba(0,0,0,.55); }
@@ -318,6 +335,7 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
   .pivotGo { transform:rotate(90deg); }
   .pivotMetrics { justify-items:start; grid-template-columns:repeat(3,auto); gap:8px; white-space:normal; }
   .evidenceSummary { display:none; }
+  .reviewSummary, .postgameGrid { grid-template-columns:1fr 1fr; }
 }
 </style>
 </head>
@@ -327,9 +345,9 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
   <div class="top">
     <input id="voiceInput" class="voice" autofocus placeholder="输入后按回车：来了个安妮还有波比拿了养刀">
     <button id="submitInput" class="bigBtn submit">录入</button>
-    <button id="newGame" class="bigBtn new">新的一局</button>
+    <button id="newGame" class="bigBtn new">结束本局</button>
     <button id="themeBtn" class="bigBtn theme">切换明暗</button>
-    <button id="logBtn" class="bigBtn theme">记录</button>
+    <button id="logBtn" class="bigBtn theme">复盘</button>
     <a href="index.html" id="homeBtn" class="bigBtn theme" style="text-decoration:none; display:inline-flex; align-items:center;">主界面</a>
     <span id="llmDot" class="llmDot fail" title="LLM慢车道"></span>
     <button id="settingsBtn" class="bigBtn settingsBtn" title="设置">⚙</button>
@@ -370,14 +388,52 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
     <span id="llmTestState" class="testState"></span>
   </div>
 </section>
-<section id="logPanel" class="logPanel hidden" aria-label="对局沟通记录">
+<section id="logPanel" class="logPanel hidden" aria-label="比赛复盘">
   <div class="logHead">
-    <span>对局沟通记录</span>
-    <button id="logClose" class="smallBtn">收起</button>
+    <span>比赛复盘</span>
+    <div class="logHeadActions">
+      <button id="logExport" class="smallBtn">导出</button>
+      <button id="logClose" class="smallBtn">收起</button>
+    </div>
   </div>
   <div id="logBody" class="logBody"></div>
 </section>
 <dialog id="routeDialog"><div id="routeDialogBody"></div></dialog>
+<dialog id="postgameDialog">
+  <form id="postgameForm" class="postgameForm">
+    <div class="detailHead"><h2>结束本局</h2><button id="postgameClose" class="closeX" type="button" aria-label="关闭">×</button></div>
+    <div id="postgameSnapshot" class="postgameSnapshot"></div>
+    <div class="postgameGrid">
+      <label>最终名次
+        <select id="postgamePlacement">
+          <option value="1">第1名</option><option value="2">第2名</option><option value="3">第3名</option><option value="4">第4名</option>
+          <option value="5">第5名</option><option value="6">第6名</option><option value="7">第7名</option><option value="8">第8名</option>
+        </select>
+      </label>
+      <label>结束回合
+        <input id="postgameRound" maxlength="12" placeholder="例如 6-3">
+      </label>
+      <label>建议执行程度
+        <select id="postgameAdherence">
+          <option value="unknown">未判断</option><option value="followed">基本执行</option><option value="partial">部分执行</option><option value="not-followed">没有执行</option>
+        </select>
+      </label>
+      <label>比赛模式判断
+        <select id="postgameVerdict">
+          <option value="not-judged">未判断</option><option value="correct">判断正确</option><option value="late">提醒太晚</option><option value="wrong-route">路线错误</option><option value="insufficient">信息不足</option>
+        </select>
+      </label>
+    </div>
+    <label>复盘备注
+      <textarea id="postgameNote" maxlength="2000" placeholder="记录触发点、未录信息或路线错误原因"></textarea>
+    </label>
+    <div class="postgameActions">
+      <button id="postgameDiscard" class="smallBtn dangerBtn" type="button">放弃记录并开新局</button>
+      <button id="postgameCancel" class="smallBtn" type="button">继续本局</button>
+      <button class="smallBtn submit" type="submit">保存复盘并开新局</button>
+    </div>
+  </form>
+</dialog>
 
 <script src="data.js?v=meta-20260712a"></script>
 <script src="stage2-matcher-data.js?v=hero-round-20260712a"></script>
@@ -385,6 +441,7 @@ dialog::backdrop { background:rgba(0,0,0,.55); }
 <script src="mechanism-data.js?v=guardian-progress-20260723"></script>
 <script src="shop-reachability.js?v=joint-shop-20260723a"></script>
 <script src="matcher-core.js?v=guardian-progress-20260723"></script>
+<script src="match-session-core.js?v=match-replay-20260724a"></script>
 <script src="signal-parser.js?v=guardian-progress-20260723"></script>
 <script src="augment-advisor.js?v=match-20260715a"></script>
 <script src="llm-lane.js?v=match-20260712b"></script>
@@ -396,6 +453,9 @@ const LLM_LS = "jcc-match-llm-";
 const UNHEARD_LOG_KEY = "jcc-match-unheard-log";
 const MATCH_LOG_KEY = "jcc-match-log";
 const MATCH_LOG_HISTORY_KEY = "jcc-match-log-history";
+const MATCH_SESSION_KEY = "jcc-match-active-session";
+const MATCH_SESSION_HISTORY_KEY = "jcc-match-session-history";
+const MATCH_SESSION_HISTORY_LIMIT = 100;
 const $ = id => document.getElementById(id);
 const esc = MatcherCore.escText;
 const UNIT_PRICES = Object.fromEntries((STAGE2_MATCHER.options.unitSearch || []).map(x => [x.name, x.price]));
@@ -446,6 +506,12 @@ let narrationTimer = null;
 let currentNarrationKey = "";
 const narrationCache = new Map();
 let isComposing = false;
+let activeMatchSession = null;
+let sessionCaptureReady = false;
+let sessionCaptureQueued = false;
+let sessionCaptureContext = null;
+let sessionCaptureSuspended = false;
+let sessionCaptureRunning = false;
 
 function load() {
   let rows = [];
@@ -460,7 +526,7 @@ function load() {
     augChoices = heroAugmentOffer.slots.filter(slot => slot.name).map(slot => ({ kind: "augments", value: slot.name, label: slot.name }));
   }
 }
-function save() {
+function save(snapshotMeta) {
   localStorage.setItem(LS + "signals", JSON.stringify(signals));
   localStorage.setItem(LS + "level", String(currentLevel));
   localStorage.setItem(LS + "hero-augment-round", currentHeroAugmentRound);
@@ -471,6 +537,7 @@ function save() {
   else localStorage.removeItem(LS + "manual-lock");
   if (heroAugmentOffer) localStorage.setItem(LS + "hero-augment-offer", JSON.stringify(heroAugmentOffer));
   else localStorage.removeItem(LS + "hero-augment-offer");
+  scheduleMatchSnapshot(snapshotMeta || sessionCaptureContext);
 }
 function normalizeHeroOffer(offer) {
   if (!offer || !Array.isArray(offer.slots)) return null;
@@ -729,6 +796,80 @@ function archiveMatchLog() {
   writeMatchHistory(history);
   writeMatchLog([]);
 }
+function readReplayHistory() {
+  try {
+    const rows = JSON.parse(localStorage.getItem(MATCH_SESSION_HISTORY_KEY) || "[]");
+    return Array.isArray(rows) ? rows.map(MatchSessionCore.normalizeSession).filter(Boolean) : [];
+  } catch (e) { return []; }
+}
+function writeReplayHistory(rows) {
+  const limited = (rows || []).slice(0, MATCH_SESSION_HISTORY_LIMIT);
+  try {
+    localStorage.setItem(MATCH_SESSION_HISTORY_KEY, JSON.stringify(limited));
+    return true;
+  } catch (error) {
+    showBanner("复盘存储已满，请先导出数据");
+    return false;
+  }
+}
+function loadActiveMatchSession() {
+  try {
+    activeMatchSession = MatchSessionCore.normalizeSession(JSON.parse(localStorage.getItem(MATCH_SESSION_KEY) || "null"));
+  } catch (e) { activeMatchSession = null; }
+}
+function persistActiveMatchSession() {
+  if (activeMatchSession && activeMatchSession.snapshots.length) localStorage.setItem(MATCH_SESSION_KEY, JSON.stringify(activeMatchSession));
+  else localStorage.removeItem(MATCH_SESSION_KEY);
+}
+function matchPatch() {
+  return String(STAGE2_MATCHER.version || STAGE2_MATCHER.patch || STAGE2_MATCHER.generated || "17.17.7-S18");
+}
+function scheduleMatchSnapshot(meta) {
+  if (!sessionCaptureReady || sessionCaptureSuspended) return;
+  if (meta && (meta.source || meta.raw)) sessionCaptureContext = { ...(sessionCaptureContext || {}), ...meta };
+  if (sessionCaptureQueued) return;
+  sessionCaptureQueued = true;
+  queueMicrotask(() => {
+    sessionCaptureQueued = false;
+    const context = sessionCaptureContext || {};
+    sessionCaptureContext = null;
+    captureMatchSnapshot(context);
+  });
+}
+function captureMatchSnapshot(meta = {}) {
+  if (!sessionCaptureReady || sessionCaptureSuspended || sessionCaptureRunning) return null;
+  sessionCaptureRunning = true;
+  try {
+    const ranked = rankedRoutes();
+    const snapshot = MatchSessionCore.createSnapshot({
+      at: new Date().toISOString(),
+      source: meta.source || "state-change",
+      raw: meta.raw || "",
+      state: {
+        level: currentLevel,
+        stage: currentStage,
+        gold: currentGold === "unknown" ? null : Number(currentGold),
+        health: currentHealth === "unknown" ? null : Number(currentHealth),
+        heroAugmentRound: currentHeroAugmentRound,
+        manualLockId,
+        augmentOffer: heroAugmentOffer || (augChoices && augChoices.length ? {
+          round: currentHeroAugmentRound,
+          status: "offered",
+          slots: augChoices.slice(0, 3).map((row, slot) => ({ slot, name: row.value, seen: [row.value], rerollsRemaining: 0, waiting: false })),
+        } : null),
+        signals,
+      },
+      ranked,
+    });
+    if (!snapshot.meaningful) return snapshot;
+    if (!activeMatchSession) activeMatchSession = MatchSessionCore.createSession({ patch: matchPatch() });
+    activeMatchSession = MatchSessionCore.appendSnapshot(activeMatchSession, snapshot);
+    persistActiveMatchSession();
+    return snapshot;
+  } finally {
+    sessionCaptureRunning = false;
+  }
+}
 function cancelPendingLlm() {
   llmSeq++;
   if (llmAbortController) llmAbortController.abort();
@@ -771,10 +912,11 @@ function appendMatchLog(entry) {
   writeMatchLog(rows);
   renderLog();
 }
-function clearGame() {
+function resetGameState() {
   cancelPendingLlm();
   cancelDecisionNarration();
   archiveMatchLog();
+  sessionCaptureSuspended = true;
   signals = [];
   pending = [];
   unheard = [];
@@ -793,8 +935,22 @@ function clearGame() {
   lastRenderedTop = null;
   expandedReachId = "";
   save();
+  sessionCaptureSuspended = false;
   render();
   focusInput();
+}
+function discardAndResetGame() {
+  activeMatchSession = null;
+  persistActiveMatchSession();
+  resetGameState();
+}
+function clearGame() {
+  captureMatchSnapshot({ source: "end-request" });
+  if (!activeMatchSession || !activeMatchSession.snapshots.length) {
+    discardAndResetGame();
+    return;
+  }
+  openPostgameDialog();
 }
 function selectedObj() {
   const selected = MatcherCore.selectedFromSignals(signals);
@@ -844,6 +1000,7 @@ function parseInput() {
   const input = $("voiceInput");
   const raw = input.value.trim();
   if (!raw) return;
+  sessionCaptureContext = { source: "input", raw };
   const parsed = SignalParser.parse(raw, signals);
   const round = {
     time: new Date().toLocaleTimeString("zh-CN", { hour12: false }),
@@ -1198,6 +1355,50 @@ function downloadText(filename, text) {
   a.download = filename;
   a.click();
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+function openPostgameDialog() {
+  captureMatchSnapshot({ source: "postgame-open" });
+  const snapshots = activeMatchSession && activeMatchSession.snapshots || [];
+  const final = snapshots[snapshots.length - 1];
+  const decision = final && final.decision || {};
+  $("postgameSnapshot").textContent = `${snapshots.length}个局面快照 · 当前${currentStage === "unknown" ? "回合未知" : currentStage} · 执行${decision.executionName || "尚未形成"}`;
+  $("postgamePlacement").value = "4";
+  $("postgameRound").value = currentStage === "unknown" ? "" : currentStage;
+  $("postgameAdherence").value = "unknown";
+  $("postgameVerdict").value = "not-judged";
+  $("postgameNote").value = "";
+  const dialog = $("postgameDialog");
+  if (!dialog.open) dialog.showModal();
+}
+function finishPostgame() {
+  captureMatchSnapshot({ source: "postgame-submit" });
+  if (!activeMatchSession || !activeMatchSession.snapshots.length) return false;
+  const finalized = MatchSessionCore.finalizeSession(activeMatchSession, {
+    placement: Number($("postgamePlacement").value),
+    finalRound: $("postgameRound").value,
+    adherence: $("postgameAdherence").value,
+    verdict: $("postgameVerdict").value,
+    note: $("postgameNote").value,
+  });
+  const history = readReplayHistory();
+  if (!writeReplayHistory([finalized, ...history])) {
+    activeMatchSession = finalized;
+    persistActiveMatchSession();
+    return false;
+  }
+  activeMatchSession = null;
+  persistActiveMatchSession();
+  $("postgameDialog").close();
+  resetGameState();
+  $("logPanel").classList.remove("hidden");
+  renderLog();
+  return true;
+}
+function downloadReplayBundle() {
+  captureMatchSnapshot({ source: "export" });
+  const bundle = MatchSessionCore.exportBundle(activeMatchSession, readReplayHistory());
+  const day = new Date().toISOString().slice(0, 10).replaceAll("-", "");
+  downloadText(`jcc-match-mode-replays-${day}.json`, JSON.stringify(bundle, null, 2));
 }
 function routeId(row) {
   return row && row.template && (row.template.id || row.template.name);
@@ -1842,19 +2043,59 @@ function renderAugTriple() {
     focusInput();
   }));
 }
+function adherenceLabel(value) {
+  return ({ followed: "基本执行", partial: "部分执行", "not-followed": "没有执行", unknown: "未判断" })[value] || "未判断";
+}
+function verdictLabel(value) {
+  return ({ correct: "判断正确", late: "提醒太晚", "wrong-route": "路线错误", insufficient: "信息不足", "not-judged": "未判断" })[value] || "未判断";
+}
 function renderLog() {
   const body = $("logBody");
   if (!body) return;
   const rows = readMatchLog();
-  const history = readMatchHistory();
-  body.innerHTML = rows.length ? rows.slice().reverse().map(r => `
+  const communicationHistory = readMatchHistory();
+  const replayHistory = readReplayHistory();
+  const summary = MatchSessionCore.summarizeSessions(replayHistory);
+  const currentSnapshots = activeMatchSession && activeMatchSession.snapshots || [];
+  const currentHtml = currentSnapshots.length ? currentSnapshots.slice(-6).reverse().map(snapshot => `
+    <div class="logEntry">
+      <div class="logMeta">${esc((snapshot.at || "").slice(11, 19))} ｜ ${esc(snapshot.state.stage || "unknown")} ｜ 等级${esc(snapshot.state.level)}</div>
+      <div class="logRaw">${esc(snapshot.decision.executionName || "信息不足，未形成执行路线")}</div>
+      <div>${esc(snapshot.state.signals.map(signal => signal.label || signal.value).slice(0, 10).join("、") || "仅状态信息")}</div>
+    </div>`).join("") : `<div class="logEntry"><div class="logRaw">本局尚未形成可回放快照</div></div>`;
+  const completedHtml = replayHistory.slice(0, 5).map(session => {
+    const quality = MatchSessionCore.sessionQuality(session);
+    const final = session.snapshots[session.snapshots.length - 1] || {};
+    return `<div class="logEntry">
+      <div class="logMeta">${esc((session.endedAt || session.startedAt || "").slice(0, 10))} ｜ 第${esc(session.outcome.placement)}名 ｜ ${quality.usable ? "可用样本" : "不计入校准"}</div>
+      <div class="logRaw">${esc(final.decision && final.decision.executionName || "未形成执行路线")}</div>
+      <div>执行：${esc(adherenceLabel(session.outcome.adherence))} ｜ 判断：${esc(verdictLabel(session.outcome.verdict))}${session.outcome.note ? ` ｜ ${esc(session.outcome.note)}` : ""}</div>
+    </div>`;
+  }).join("");
+  const communicationHtml = rows.length ? rows.slice(-5).reverse().map(r => `
     <div class="logEntry">
       <div class="logMeta">${esc(r.time || "-")} ｜ #1 ${esc(r.top || "-")}</div>
       <div class="logRaw">${esc(r.raw || "-")}</div>
       <div>快车道：${esc(r.fast || "-")}</div>
       <div>AI车道：${esc(r.ai || "-")}</div>
     </div>
-  `).join("") : `<div class="logEntry"><div class="logRaw">本局还没有沟通记录</div><div class="logMeta">已归档 ${history.length} 局历史，新的一局会清空当前记录。</div></div>`;
+  `).join("") : `<div class="logEntry"><div class="logMeta">本局没有沟通记录；历史归档${communicationHistory.length}局。</div></div>`;
+  body.innerHTML = `
+    <div class="reviewSummary">
+      <div class="reviewMetric"><b>${summary.completed}</b><span>已复盘</span></div>
+      <div class="reviewMetric"><b>${summary.usable}</b><span>可用样本</span></div>
+      <div class="reviewMetric"><b>${summary.judged}</b><span>明确判断</span></div>
+      <div class="reviewMetric"><b>${summary.failures}</b><span>失败样本</span></div>
+    </div>
+    <div class="reviewStage">${esc(summary.stage.label)} · ${esc(summary.stage.next)}</div>
+    ${summary.followed ? `<div class="reviewBoundary">基本执行样本前四：${summary.followedTop4}/${summary.followed}（${summary.followedTop4Rate}%）。这是观察统计，不代表建议造成了名次。</div>` : ""}
+    <div class="settingsActions"><button id="logFinish" class="smallBtn new">结束本局</button></div>
+    <div class="logRaw">本局局面</div>${currentHtml}
+    ${completedHtml ? `<div class="logRaw">最近复盘</div>${completedHtml}` : ""}
+    <div class="logRaw">本局输入</div>${communicationHtml}
+    <div class="reviewBoundary">合成回归不计入进度；名次不会自动判定模型对错，只有明确复盘标签会生成失败样本。</div>`;
+  const finish = $("logFinish");
+  if (finish) finish.addEventListener("click", clearGame);
 }
 function render() {
   renderLevel();
@@ -1916,6 +2157,17 @@ $("logClose").addEventListener("click", () => {
   $("logPanel").classList.add("hidden");
   focusInput();
 });
+$("logExport").addEventListener("click", downloadReplayBundle);
+$("postgameForm").addEventListener("submit", event => {
+  event.preventDefault();
+  finishPostgame();
+});
+$("postgameClose").addEventListener("click", () => $("postgameDialog").close());
+$("postgameCancel").addEventListener("click", () => $("postgameDialog").close());
+$("postgameDiscard").addEventListener("click", () => {
+  $("postgameDialog").close();
+  discardAndResetGame();
+});
 $("settingsClose").addEventListener("click", () => {
   saveSettingsPanel();
   $("settingsPanel").classList.add("hidden");
@@ -1938,7 +2190,9 @@ $("llmClearLog").addEventListener("click", () => {
   $("llmTestState").textContent = "日志已清空";
 });
 
+loadActiveMatchSession();
 load();
+sessionCaptureReady = true;
 render();
 focusInput();
 </script>
