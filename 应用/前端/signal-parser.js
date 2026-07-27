@@ -653,7 +653,7 @@
 
   function parse(text, currentSignals) {
     const raw = String(text || "").trim();
-    const out = { add: [], remove: [], clear: false, augTriple: [], pending: [], unheard: [] };
+    const out = { add: [], remove: [], clear: false, boardSnapshot: false, augTriple: [], pending: [], unheard: [] };
     if (!raw) return out;
     if (CLEAR_WORDS.some(w => raw.includes(w))) {
       out.clear = true;
@@ -691,21 +691,41 @@
       break;
     }
 
-    const stagePattern = /(?:当前回合|现在|当前)?\s*([234])[-杠]([12])/;
+    const stagePattern = /(?:当前回合|现在|当前)?\s*([2-6])[-杠]([125])/;
     const goldPattern = /(?:金币\s*(\d{1,3})|(?:有|现在)?\s*(\d{1,3})\s*(?:金币|块钱|块|金))/;
+    const healthPattern = /(?:血量\s*(\d{1,3})|(?:剩|还有|当前)?\s*(\d{1,3})\s*(?:血|生命值?))/;
     const stageMatch = decisionText.match(stagePattern);
-    if (stageMatch) out.add.push({ kind: "stage", value: `${stageMatch[1]}-${stageMatch[2]}`, label: `当前回合${stageMatch[1]}-${stageMatch[2]}` });
+    const stageValue = stageMatch ? `${stageMatch[1]}-${stageMatch[2]}` : "";
+    if (["2-1", "2-5", "3-1", "3-2", "3-5", "4-1", "4-2", "4-5", "5-1", "5-5", "6-1"].includes(stageValue)) {
+      out.add.push({ kind: "stage", value: stageValue, label: `当前回合${stageValue}` });
+    }
     const goldMatch = decisionText.match(goldPattern);
     if (goldMatch) {
       const value = Number(goldMatch[1] || goldMatch[2]);
       out.add.push({ kind: "gold", value, label: `${value}金币` });
     }
+    const healthMatch = decisionText.match(healthPattern);
+    if (healthMatch) {
+      const value = Number(healthMatch[1] || healthMatch[2]);
+      out.add.push({ kind: "health", value, label: `${value}血` });
+    }
     // 状态片段已结构化，后续词表解析不再重复消费，避免“30金”误识别成英雄或没听懂文本。
-    decisionText = decisionText.replace(stagePattern, "").replace(goldPattern, "");
+    decisionText = decisionText.replace(stagePattern, "").replace(goldPattern, "").replace(healthPattern, "")
+      .replace(/^[\s,，、;；]+|[\s,，、;；]+$/g, "");
 
     const corrected = correctionResult(decisionText, currentSignals);
     if (corrected) {
       Object.assign(out, corrected);
+      return out;
+    }
+
+    const boardSnapshot = decisionText.match(/^(?:当前阵容|当前上场|现在场上)(.+)$/);
+    if (boardSnapshot) {
+      const got = tokenize(boardSnapshot[1]);
+      got.add.forEach(row => out.add.push(row.kind === "units" ? { ...row, location: "board", label: `${row.label || row.value}·场上` } : row));
+      out.boardSnapshot = true;
+      out.pending = got.pending;
+      out.unheard = got.unheard;
       return out;
     }
 
@@ -891,6 +911,11 @@
     if (decisionState.pending.length || decisionState.unheard.length) throw new Error("已识别的状态不应残留待确认或没听懂文本");
     const stateOnly = parse("3杠2，30金", []);
     if (stateOnly.add.some(x => x.kind === "units") || stateOnly.unheard.length) throw new Error("状态片段不应二次误识别");
+    const completeState = parse("5-1，1血，50金，当前阵容牛头蔚艾克", []);
+    assertIncludes(completeState.add, "stage", "5-1");
+    if (!completeState.add.some(x => x.kind === "health" && x.value === 1)) throw new Error("应识别当前血量");
+    if (!completeState.add.some(x => x.kind === "gold" && x.value === 50)) throw new Error("应识别当前金币");
+    if (!completeState.boardSnapshot || completeState.add.filter(x => x.kind === "units").some(x => x.location !== "board")) throw new Error("当前阵容必须形成完整场上快照");
     const countedItem = parse("两把弓", []);
     if (!countedItem.add.some(x => x.kind === "items" && x.value === "反曲之弓" && x.count === 2)) throw new Error("重复散件数量必须保留");
     const equippedItem = parse("凯尔带羊刀", []);

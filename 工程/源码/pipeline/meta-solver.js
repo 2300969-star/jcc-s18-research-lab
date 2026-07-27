@@ -80,8 +80,17 @@ function conditionalCandidates() {
   const rows = [];
   const supported = profiles.filter(profile => profile.supported && profile.targets.length);
   for (const profile of supported) {
-    for (const target of profile.targets) {
-      const stage = stageForHero(target);
+    const activation = profile.targets[0];
+    const activationStage = stageForHero(activation);
+    const flexibleCarry = profile.coreDefining === false;
+    const carryNames = flexibleCarry && activationStage
+      ? [...new Set([
+        ...profile.targets,
+        ...(discovery.carryAtlas[activationStage] || []).slice(0, 8).map(row => row.carry),
+      ])]
+      : profile.targets;
+    for (const target of carryNames) {
+      const stage = flexibleCarry ? activationStage : stageForHero(target);
       if (!stage) continue;
       const required = profile.requiredUnits.filter(name => name !== target);
       const baseline = optimizer.optimizeScenario(stage, target, required, { id: `baseline-${profile.id}` })[0];
@@ -104,6 +113,9 @@ function conditionalCandidates() {
         stageRatio: pct(ratio),
         confidence: profile.confidence,
         basis: profile.basis,
+        mechanicRole: profile.strategicRole || 'carry',
+        coreDefining: profile.coreDefining !== false,
+        preferredRole: profile.preferredRole || 'mainCarry',
         requiredUnits: profile.requiredUnits,
         team: scenario.team,
         traits: scenario.traits,
@@ -382,9 +394,26 @@ function buildPresentation(row) {
 }
 
 function generatedRoutes(rows) {
-  return rows
-    .filter(row => row.upliftPct >= 5 && row.stageRatio >= 0.7 && row.confidence >= 0.6 && row.presentation)
-    .slice(0, 24)
+  const qualified = rows.filter(row => row.upliftPct >= 5 && row.stageRatio >= 0.7 && row.confidence >= 0.6 && row.presentation);
+  const groups = new Map();
+  qualified.forEach(row => {
+    if (!groups.has(row.augment)) groups.set(row.augment, []);
+    groups.get(row.augment).push(row);
+  });
+  // 先保留每个强化的一条代表路线；团队型强化优先选“启动棋子之外”的主C，
+  // 再用剩余名额保留少量备选，避免一个团队强化挤掉其他机制路线。
+  const primary = [...groups.values()].map(group => {
+    const first = group[0];
+    if (first.coreDefining !== false) return first;
+    const activation = first.requiredUnits[0];
+    return group.find(row => row.carry !== activation) || first;
+  });
+  const primaryKeys = new Set(primary.map(row => `${row.augment}|${row.carry}`));
+  const alternatives = qualified.filter(row => row.coreDefining === false && !primaryKeys.has(`${row.augment}|${row.carry}`));
+  const selected = [...primary, ...alternatives.slice(0, Math.max(0, 24 - primary.length))]
+    .sort((a, b) => b.score - a.score || a.augment.localeCompare(b.augment, 'zh-CN') || a.carry.localeCompare(b.carry, 'zh-CN'))
+    .slice(0, 24);
+  return selected
     .map((row, index) => {
       const [earlyStage, midStage] = row.presentation.stages;
       const names = row.team.map(x => x.name);
@@ -405,7 +434,10 @@ function generatedRoutes(rows) {
         augmentPrefs: [row.augment],
         augmentCats: ['英雄强化'],
         monsterPrefs: [],
-        route: [`拿到${row.augment}后锁定${row.requiredUnits.join('+')}`, `${row.level}级围绕${row.carry}完成算法棋盘`, `按来牌替换至${names.join('、')}`],
+        route: [row.coreDefining === false
+          ? `拿到${row.augment}后上${row.requiredUnits.join('+')}启动${row.mechanicRole === 'support' ? '团队增益' : '功能机制'}，主C继续按装备与星级选`
+          : `拿到${row.augment}后锁定${row.requiredUnits.join('+')}`,
+        `${row.level}级围绕${row.carry}完成算法棋盘`, `按来牌替换至${names.join('、')}`],
         boardNote: `算法自动生成；${row.basis}。`,
         officialText: {
           early: `硬门槛：${row.augment}+${row.requiredUnits.join('、')}。`,
@@ -423,9 +455,12 @@ function generatedRoutes(rows) {
         strengthPrior: row.stageRatio,
         mechanic: {
           type: 'meta-counterfactual',
+          strategicRole: row.mechanicRole || 'carry',
+          coreDefining: row.coreDefining !== false,
+          preferredRole: row.preferredRole || 'mainCarry',
           requiredAugment: row.augment,
           requiredUnits: row.requiredUnits,
-          targetUnits: [row.carry],
+          targetUnits: row.coreDefining === false ? row.requiredUnits : [row.carry],
           matchBonus: Math.max(12, Math.min(40, Math.round(row.upliftPct))),
           missingPenalty: 80,
           text: `${row.basis}；反事实+${row.upliftPct}%`,
@@ -551,8 +586,10 @@ for (let i = 1; i < stable.length; i++) {
 }
 const sisters = conditional.find(x => x.augment === '姐妹' && x.carry === '金克丝');
 if (!sisters || !sisters.team.some(x => x.name === '蔚')) throw new Error('姐妹场景没有由硬门槛推导出蔚');
-const sistersRoute = routes.find(x => x.name.includes('姐妹金克丝'));
+const sistersRoute = routes.find(x => x.family === '姐妹·金克丝');
 if (!sistersRoute || sistersRoute.coreUnits.join(',') !== sisters.team.map(x => x.name).join(',')) throw new Error('比赛路线必须来自元求解阵容');
+const grandmasterRows = conditional.filter(row => row.augment === '宗师训练');
+if (!grandmasterRows.length || grandmasterRows.every(row => row.carry === '贾克斯')) throw new Error('团队型宗师训练必须搜索贾克斯之外的主C');
 const presented = [...stable, ...conditional].filter(row => row.presentation);
 let duplicateAssignmentGroups = 0;
 for (const row of presented) {

@@ -1,6 +1,6 @@
 {
  "version": "17.17.7-S18",
- "generated": "2026-07-26",
+ "generated": "2026-07-27",
  "sampleSize": 5000,
  "seed": 20260712,
  "methodology": {
@@ -22,9 +22,43 @@
    "英雄专属": [
     {
      "category": "英雄专属",
+     "templateId": "meta-绝对堕落-蕾欧娜-1",
+     "templateName": "绝对堕落蕾欧娜机制路线",
+     "conditionScore": 98.7,
+     "fitGain": 0,
+     "evidenceLevel": "L2.5 模型扰动稳健",
+     "metrics": {
+      "meanUtility": 130.5,
+      "interval95": [
+       118.9,
+       141
+      ],
+      "cvar10": 120.3,
+      "top1Rate": 50.2,
+      "top5Rate": 96.8,
+      "topQuartileRate": 98.4,
+      "failureRate": 0,
+      "robustness": 98.7
+     },
+     "gates": [
+      {
+       "kind": "符文",
+       "value": "绝对堕落"
+      },
+      {
+       "kind": "棋子",
+       "value": "费德提克"
+      }
+     ],
+     "reasons": [
+      "专属机制按有/无强化反事实差分生成"
+     ]
+    },
+    {
+     "category": "英雄专属",
      "templateId": "meta-完美的日炎耀斑-蕾欧娜-0",
      "templateName": "完美的日炎耀斑蕾欧娜机制路线",
-     "conditionScore": 98.8,
+     "conditionScore": 97.8,
      "fitGain": 0,
      "evidenceLevel": "L2.5 模型扰动稳健",
      "metrics": {
@@ -34,11 +68,11 @@
        139.9
       ],
       "cvar10": 119.8,
-      "top1Rate": 84.6,
-      "top5Rate": 98.2,
-      "topQuartileRate": 98.2,
+      "top1Rate": 44.4,
+      "top5Rate": 95.1,
+      "topQuartileRate": 97.2,
       "failureRate": 0,
-      "robustness": 98.8
+      "robustness": 97.8
      },
      "gates": [
       {
@@ -56,66 +90,32 @@
     },
     {
      "category": "英雄专属",
-     "templateId": "meta-双重气泡-佐伊-1",
-     "templateName": "双重气泡佐伊机制路线",
-     "conditionScore": 68.1,
-     "fitGain": 0,
-     "evidenceLevel": "L2.5 模型扰动稳健",
-     "metrics": {
-      "meanUtility": 119.7,
-      "interval95": [
-       109.5,
-       130.1
-      ],
-      "cvar10": 110.4,
-      "top1Rate": 1,
-      "top5Rate": 56.4,
-      "topQuartileRate": 56.4,
-      "failureRate": 0.1,
-      "robustness": 68.1
-     },
-     "gates": [
-      {
-       "kind": "符文",
-       "value": "双重气泡"
-      },
-      {
-       "kind": "棋子",
-       "value": "佐伊"
-      }
-     ],
-     "reasons": [
-      "专属机制按有/无强化反事实差分生成"
-     ]
-    },
-    {
-     "category": "英雄专属",
-     "templateId": "meta-咒能高涨-伊泽瑞尔-10",
-     "templateName": "咒能高涨伊泽瑞尔机制路线",
-     "conditionScore": 66,
+     "templateId": "meta-绝对堕落-佛耶戈-3",
+     "templateName": "绝对堕落佛耶戈机制路线",
+     "conditionScore": 59.8,
      "fitGain": 0,
      "evidenceLevel": "L2 模型候选",
      "metrics": {
-      "meanUtility": 119.4,
+      "meanUtility": 120,
       "interval95": [
-       109,
-       130.4
+       108.7,
+       130.2
       ],
-      "cvar10": 109.9,
-      "top1Rate": 6,
-      "top5Rate": 53.5,
-      "topQuartileRate": 53.5,
-      "failureRate": 0.2,
-      "robustness": 66
+      "cvar10": 110,
+      "top1Rate": 1.1,
+      "top5Rate": 35.1,
+      "topQuartileRate": 47.3,
+      "failureRate": 0.6,
+      "robustness": 59.8
      },
      "gates": [
       {
        "kind": "符文",
-       "value": "咒能高涨"
+       "value": "绝对堕落"
       },
       {
        "kind": "棋子",
-       "value": "伊泽瑞尔"
+       "value": "费德提克"
       }
      ],
      "reasons": [
@@ -124,23 +124,23 @@
     },
     {
      "category": "英雄专属",
-     "templateId": "meta-无双挑战-菲奥娜-4",
+     "templateId": "meta-无双挑战-菲奥娜-14",
      "templateName": "无双挑战菲奥娜机制路线",
-     "conditionScore": 65.1,
+     "conditionScore": 59.6,
      "fitGain": 0,
      "evidenceLevel": "L2 模型候选",
      "metrics": {
       "meanUtility": 120.1,
       "interval95": [
-       108.9,
-       131.3
+       109.1,
+       131.2
       ],
-      "cvar10": 110.1,
-      "top1Rate": 1.5,
-      "top5Rate": 51.8,
-      "topQuartileRate": 51.8,
-      "failureRate": 0.2,
-      "robustness": 65.1
+      "cvar10": 110.3,
+      "top1Rate": 1,
+      "top5Rate": 32.8,
+      "topQuartileRate": 47.4,
+      "failureRate": 0.3,
+      "robustness": 59.6
      },
      "gates": [
       {
@@ -158,23 +158,91 @@
     },
     {
      "category": "英雄专属",
-     "templateId": "meta-旺盛精力-悠米-6",
-     "templateName": "旺盛精力悠米机制路线",
-     "conditionScore": 61.8,
+     "templateId": "meta-双重气泡-佐伊-4",
+     "templateName": "双重气泡佐伊机制路线",
+     "conditionScore": 56.7,
      "fitGain": 0,
      "evidenceLevel": "L2 模型候选",
      "metrics": {
-      "meanUtility": 119.1,
+      "meanUtility": 119.7,
+      "interval95": [
+       109.7,
+       130.1
+      ],
+      "cvar10": 110.5,
+      "top1Rate": 0.6,
+      "top5Rate": 29.2,
+      "topQuartileRate": 41.5,
+      "failureRate": 0.2,
+      "robustness": 56.7
+     },
+     "gates": [
+      {
+       "kind": "符文",
+       "value": "双重气泡"
+      },
+      {
+       "kind": "棋子",
+       "value": "佐伊"
+      }
+     ],
+     "reasons": [
+      "专属机制按有/无强化反事实差分生成"
+     ]
+    },
+    {
+     "category": "英雄专属",
+     "templateId": "meta-咒能高涨-伊泽瑞尔-17",
+     "templateName": "咒能高涨伊泽瑞尔机制路线",
+     "conditionScore": 53.9,
+     "fitGain": 0,
+     "evidenceLevel": "L2 模型候选",
+     "metrics": {
+      "meanUtility": 119.4,
+      "interval95": [
+       108.9,
+       130.5
+      ],
+      "cvar10": 109.9,
+      "top1Rate": 0.1,
+      "top5Rate": 24.9,
+      "topQuartileRate": 37.5,
+      "failureRate": 0.2,
+      "robustness": 53.9
+     },
+     "gates": [
+      {
+       "kind": "符文",
+       "value": "咒能高涨"
+      },
+      {
+       "kind": "棋子",
+       "value": "伊泽瑞尔"
+      }
+     ],
+     "reasons": [
+      "专属机制按有/无强化反事实差分生成"
+     ]
+    },
+    {
+     "category": "英雄专属",
+     "templateId": "meta-旺盛精力-佐伊-7",
+     "templateName": "旺盛精力佐伊机制路线",
+     "conditionScore": 51.1,
+     "fitGain": 0,
+     "evidenceLevel": "L2 模型候选",
+     "metrics": {
+      "meanUtility": 118.7,
       "interval95": [
        108.4,
-       130
+       128.9
       ],
-      "cvar10": 109.5,
-      "top1Rate": 2.7,
-      "top5Rate": 46.9,
-      "topQuartileRate": 46.9,
-      "failureRate": 0.4,
-      "robustness": 61.8
+      "cvar10": 109.4,
+      "top1Rate": 0.4,
+      "top5Rate": 20.8,
+      "topQuartileRate": 33.5,
+      "failureRate": 0.3,
+      "robustness": 51.1
      },
      "gates": [
       {
@@ -192,23 +260,125 @@
     },
     {
      "category": "英雄专属",
-     "templateId": "meta-扩散射击-薇恩-3",
-     "templateName": "扩散射击薇恩机制路线",
-     "conditionScore": 58,
+     "templateId": "meta-旺盛精力-德莱文-10",
+     "templateName": "旺盛精力德莱文机制路线",
+     "conditionScore": 50.6,
      "fitGain": 0,
      "evidenceLevel": "L2 模型候选",
      "metrics": {
+      "meanUtility": 118.8,
+      "interval95": [
+       108.1,
+       129.8
+      ],
+      "cvar10": 109,
+      "top1Rate": 0.7,
+      "top5Rate": 21.6,
+      "topQuartileRate": 32.6,
+      "failureRate": 0.7,
+      "robustness": 50.6
+     },
+     "gates": [
+      {
+       "kind": "符文",
+       "value": "旺盛精力"
+      },
+      {
+       "kind": "棋子",
+       "value": "悠米"
+      }
+     ],
+     "reasons": [
+      "专属机制按有/无强化反事实差分生成"
+     ]
+    },
+    {
+     "category": "英雄专属",
+     "templateId": "meta-姐妹-金克丝-21",
+     "templateName": "姐妹金克丝机制路线",
+     "conditionScore": 47,
+     "fitGain": 0,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "metrics": {
       "meanUtility": 118.1,
       "interval95": [
-       107.3,
-       128.9
+       107.5,
+       129.3
       ],
-      "cvar10": 108.4,
-      "top1Rate": 0.3,
-      "top5Rate": 41.9,
-      "topQuartileRate": 41.9,
+      "cvar10": 108.6,
+      "top1Rate": 0.5,
+      "top5Rate": 16.7,
+      "topQuartileRate": 26.7,
+      "failureRate": 0.6,
+      "robustness": 47
+     },
+     "gates": [
+      {
+       "kind": "符文",
+       "value": "姐妹"
+      },
+      {
+       "kind": "棋子",
+       "value": "金克丝+蔚"
+      }
+     ],
+     "reasons": [
+      "专属机制按有/无强化反事实差分生成"
+     ]
+    },
+    {
+     "category": "英雄专属",
+     "templateId": "meta-绝对堕落-佐伊-2",
+     "templateName": "绝对堕落佐伊机制路线",
+     "conditionScore": 46.8,
+     "fitGain": 0,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "metrics": {
+      "meanUtility": 117.9,
+      "interval95": [
+       107.7,
+       128.4
+      ],
+      "cvar10": 108.7,
+      "top1Rate": 0,
+      "top5Rate": 16.4,
+      "topQuartileRate": 26,
+      "failureRate": 0.6,
+      "robustness": 46.8
+     },
+     "gates": [
+      {
+       "kind": "符文",
+       "value": "绝对堕落"
+      },
+      {
+       "kind": "棋子",
+       "value": "费德提克"
+      }
+     ],
+     "reasons": [
+      "专属机制按有/无强化反事实差分生成"
+     ]
+    },
+    {
+     "category": "英雄专属",
+     "templateId": "meta-扩散射击-薇恩-9",
+     "templateName": "扩散射击薇恩机制路线",
+     "conditionScore": 46.7,
+     "fitGain": 0,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "metrics": {
+      "meanUtility": 118.1,
+      "interval95": [
+       107,
+       128.8
+      ],
+      "cvar10": 108.3,
+      "top1Rate": 0.1,
+      "top5Rate": 15.9,
+      "topQuartileRate": 26.8,
       "failureRate": 0.8,
-      "robustness": 58
+      "robustness": 46.7
      },
      "gates": [
       {
@@ -226,227 +396,23 @@
     },
     {
      "category": "英雄专属",
-     "templateId": "meta-姐妹-金克丝-7",
-     "templateName": "姐妹金克丝机制路线",
-     "conditionScore": 57,
+     "templateId": "meta-分享驭铁术-贾克斯-16",
+     "templateName": "分享驭铁术贾克斯机制路线",
+     "conditionScore": 45.2,
      "fitGain": 0,
-     "evidenceLevel": "L2 模型候选",
+     "evidenceLevel": "L1.5 高敏感假设",
      "metrics": {
-      "meanUtility": 118.2,
+      "meanUtility": 117.7,
       "interval95": [
-       107.7,
-       129.2
-      ],
-      "cvar10": 108.7,
-      "top1Rate": 1.1,
-      "top5Rate": 39.9,
-      "topQuartileRate": 39.9,
-      "failureRate": 0.5,
-      "robustness": 57
-     },
-     "gates": [
-      {
-       "kind": "符文",
-       "value": "姐妹"
-      },
-      {
-       "kind": "棋子",
-       "value": "金克丝+蔚"
-      }
-     ],
-     "reasons": [
-      "专属机制按有/无强化反事实差分生成"
-     ]
-    },
-    {
-     "category": "英雄专属",
-     "templateId": "meta-宗师训练-贾克斯-5",
-     "templateName": "宗师训练贾克斯机制路线",
-     "conditionScore": 51.8,
-     "fitGain": 0,
-     "evidenceLevel": "L2 模型候选",
-     "metrics": {
-      "meanUtility": 117.5,
-      "interval95": [
-       107.2,
+       107.5,
        127.9
       ],
-      "cvar10": 108.2,
-      "top1Rate": 1.8,
-      "top5Rate": 31.9,
-      "topQuartileRate": 31.9,
-      "failureRate": 0.9,
-      "robustness": 51.8
-     },
-     "gates": [
-      {
-       "kind": "符文",
-       "value": "宗师训练"
-      },
-      {
-       "kind": "棋子",
-       "value": "贾克斯"
-      }
-     ],
-     "reasons": [
-      "专属机制按有/无强化反事实差分生成"
-     ]
-    },
-    {
-     "category": "英雄专属",
-     "templateId": "meta-德莱文联盟-德莱文-8",
-     "templateName": "德莱文联盟德莱文机制路线",
-     "conditionScore": 44.7,
-     "fitGain": 0,
-     "evidenceLevel": "L1.5 高敏感假设",
-     "metrics": {
-      "meanUtility": 116.9,
-      "interval95": [
-       106.1,
-       128
-      ],
-      "cvar10": 107.3,
-      "top1Rate": 0.6,
-      "top5Rate": 21,
-      "topQuartileRate": 21,
-      "failureRate": 1.2,
-      "robustness": 44.7
-     },
-     "gates": [
-      {
-       "kind": "符文",
-       "value": "德莱文联盟"
-      },
-      {
-       "kind": "棋子",
-       "value": "德莱文"
-      }
-     ],
-     "reasons": [
-      "专属机制按有/无强化反事实差分生成"
-     ]
-    },
-    {
-     "category": "英雄专属",
-     "templateId": "official-4576",
-     "templateName": "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
-     "conditionScore": 44.7,
-     "fitGain": 0,
-     "evidenceLevel": "L1.5 高敏感假设",
-     "metrics": {
-      "meanUtility": 115.8,
-      "interval95": [
-       105.1,
-       126.8
-      ],
-      "cvar10": 106.2,
+      "cvar10": 108.5,
       "top1Rate": 0.1,
-      "top5Rate": 22.7,
-      "topQuartileRate": 22.7,
-      "failureRate": 2.5,
-      "robustness": 44.7
-     },
-     "gates": [
-      {
-       "kind": "符文",
-       "value": "姐妹"
-      },
-      {
-       "kind": "棋子",
-       "value": "金克丝+蔚"
-      }
-     ],
-     "reasons": [
-      "专属机制按有/无强化反事实差分生成"
-     ]
-    },
-    {
-     "category": "英雄专属",
-     "templateId": "meta-适应性防守-卡蜜尔-12",
-     "templateName": "适应性防守卡蜜尔机制路线",
-     "conditionScore": 42.6,
-     "fitGain": 0,
-     "evidenceLevel": "L1.5 高敏感假设",
-     "metrics": {
-      "meanUtility": 116.5,
-      "interval95": [
-       105.9,
-       127.7
-      ],
-      "cvar10": 106.9,
-      "top1Rate": 0.3,
-      "top5Rate": 18.2,
-      "topQuartileRate": 18.2,
-      "failureRate": 1.7,
-      "robustness": 42.6
-     },
-     "gates": [
-      {
-       "kind": "符文",
-       "value": "适应性防守"
-      },
-      {
-       "kind": "棋子",
-       "value": "卡蜜尔"
-      }
-     ],
-     "reasons": [
-      "专属机制按有/无强化反事实差分生成"
-     ]
-    },
-    {
-     "category": "英雄专属",
-     "templateId": "meta-评级与交火-莎弥拉-2",
-     "templateName": "评级与交火莎弥拉机制路线",
-     "conditionScore": 39.7,
-     "fitGain": 0,
-     "evidenceLevel": "L1.5 高敏感假设",
-     "metrics": {
-      "meanUtility": 114.3,
-      "interval95": [
-       102.9,
-       124.8
-      ],
-      "cvar10": 104.2,
-      "top1Rate": 0,
-      "top5Rate": 17.5,
-      "topQuartileRate": 17.5,
-      "failureRate": 5.3,
-      "robustness": 39.7
-     },
-     "gates": [
-      {
-       "kind": "符文",
-       "value": "评级与交火"
-      },
-      {
-       "kind": "棋子",
-       "value": "莎弥拉"
-      }
-     ],
-     "reasons": [
-      "专属机制按有/无强化反事实差分生成"
-     ]
-    },
-    {
-     "category": "英雄专属",
-     "templateId": "meta-分享驭铁术-芮尔-13",
-     "templateName": "分享驭铁术芮尔机制路线",
-     "conditionScore": 21.3,
-     "fitGain": 0,
-     "evidenceLevel": "L1.5 高敏感假设",
-     "metrics": {
-      "meanUtility": 109,
-      "interval95": [
-       98,
-       120.1
-      ],
-      "cvar10": 99,
-      "top1Rate": 0,
-      "top5Rate": 0.1,
-      "topQuartileRate": 0.1,
-      "failureRate": 25,
-      "robustness": 21.3
+      "top5Rate": 12.9,
+      "topQuartileRate": 24.2,
+      "failureRate": 0.5,
+      "robustness": 45.2
      },
      "gates": [
       {
@@ -464,32 +430,32 @@
     },
     {
      "category": "英雄专属",
-     "templateId": "meta-净化之金钟罩-李青-14",
-     "templateName": "净化之金钟罩李青机制路线",
-     "conditionScore": 20.2,
+     "templateId": "meta-透光屏障-佐伊-8",
+     "templateName": "透光屏障佐伊机制路线",
+     "conditionScore": 43.9,
      "fitGain": 0,
      "evidenceLevel": "L1.5 高敏感假设",
      "metrics": {
-      "meanUtility": 108.6,
+      "meanUtility": 117.4,
       "interval95": [
-       97.4,
-       120.2
+       107.3,
+       128
       ],
-      "cvar10": 98.3,
+      "cvar10": 108.3,
       "top1Rate": 0,
-      "top5Rate": 0.1,
-      "topQuartileRate": 0.1,
-      "failureRate": 27.6,
-      "robustness": 20.2
+      "top5Rate": 12.5,
+      "topQuartileRate": 21.6,
+      "failureRate": 0.7,
+      "robustness": 43.9
      },
      "gates": [
       {
        "kind": "符文",
-       "value": "净化之金钟罩"
+       "value": "透光屏障"
       },
       {
        "kind": "棋子",
-       "value": "李青"
+       "value": "拉克丝"
       }
      ],
      "reasons": [
@@ -498,32 +464,32 @@
     },
     {
      "category": "英雄专属",
-     "templateId": "meta-重甲龙龟-拉莫斯-11",
-     "templateName": "重甲龙龟拉莫斯机制路线",
-     "conditionScore": 13.6,
+     "templateId": "meta-旺盛精力-贾克斯-11",
+     "templateName": "旺盛精力贾克斯机制路线",
+     "conditionScore": 43.5,
      "fitGain": 0,
      "evidenceLevel": "L1.5 高敏感假设",
      "metrics": {
-      "meanUtility": 105.3,
+      "meanUtility": 117.3,
       "interval95": [
-       94.8,
-       115.5
+       107.2,
+       127.7
       ],
-      "cvar10": 95.9,
-      "top1Rate": 0,
-      "top5Rate": 0,
-      "topQuartileRate": 0,
-      "failureRate": 47.8,
-      "robustness": 13.6
+      "cvar10": 108.1,
+      "top1Rate": 0.3,
+      "top5Rate": 11.2,
+      "topQuartileRate": 21.5,
+      "failureRate": 0.7,
+      "robustness": 43.5
      },
      "gates": [
       {
        "kind": "符文",
-       "value": "重甲龙龟"
+       "value": "旺盛精力"
       },
       {
        "kind": "棋子",
-       "value": "拉莫斯"
+       "value": "悠米"
       }
      ],
      "reasons": [
@@ -532,23 +498,227 @@
     },
     {
      "category": "英雄专属",
-     "templateId": "meta-星界屏障-科加斯-9",
-     "templateName": "星界屏障科加斯机制路线",
-     "conditionScore": 8.2,
+     "templateId": "meta-宗师训练-德莱文-20",
+     "templateName": "宗师训练德莱文机制路线",
+     "conditionScore": 41.6,
      "fitGain": 0,
      "evidenceLevel": "L1.5 高敏感假设",
      "metrics": {
-      "meanUtility": 102.6,
+      "meanUtility": 117.2,
       "interval95": [
-       92.7,
-       112.9
+       106.4,
+       128.4
       ],
-      "cvar10": 93.7,
+      "cvar10": 107.6,
       "top1Rate": 0,
-      "top5Rate": 0,
-      "topQuartileRate": 0,
-      "failureRate": 67.2,
-      "robustness": 8.2
+      "top5Rate": 9.6,
+      "topQuartileRate": 18.6,
+      "failureRate": 1.1,
+      "robustness": 41.6
+     },
+     "gates": [
+      {
+       "kind": "符文",
+       "value": "宗师训练"
+      },
+      {
+       "kind": "棋子",
+       "value": "贾克斯"
+      }
+     ],
+     "reasons": [
+      "专属机制按有/无强化反事实差分生成"
+     ]
+    },
+    {
+     "category": "英雄专属",
+     "templateId": "meta-天赋异禀-佐伊-13",
+     "templateName": "天赋异禀佐伊机制路线",
+     "conditionScore": 41.2,
+     "fitGain": 0,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "metrics": {
+      "meanUtility": 116.8,
+      "interval95": [
+       106.6,
+       127.2
+      ],
+      "cvar10": 107.7,
+      "top1Rate": 0.1,
+      "top5Rate": 8.8,
+      "topQuartileRate": 17.5,
+      "failureRate": 0.8,
+      "robustness": 41.2
+     },
+     "gates": [
+      {
+       "kind": "符文",
+       "value": "天赋异禀"
+      },
+      {
+       "kind": "棋子",
+       "value": "尼菈"
+      }
+     ],
+     "reasons": [
+      "专属机制按有/无强化反事实差分生成"
+     ]
+    },
+    {
+     "category": "英雄专属",
+     "templateId": "meta-德莱文联盟-德莱文-15",
+     "templateName": "德莱文联盟德莱文机制路线",
+     "conditionScore": 40.3,
+     "fitGain": 0,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "metrics": {
+      "meanUtility": 116.9,
+      "interval95": [
+       106.3,
+       127.9
+      ],
+      "cvar10": 107.4,
+      "top1Rate": 0.1,
+      "top5Rate": 7.5,
+      "topQuartileRate": 16.9,
+      "failureRate": 1.5,
+      "robustness": 40.3
+     },
+     "gates": [
+      {
+       "kind": "符文",
+       "value": "德莱文联盟"
+      },
+      {
+       "kind": "棋子",
+       "value": "德莱文"
+      }
+     ],
+     "reasons": [
+      "专属机制按有/无强化反事实差分生成"
+     ]
+    },
+    {
+     "category": "英雄专属",
+     "templateId": "meta-正义距离-德莱文-12",
+     "templateName": "正义距离德莱文机制路线",
+     "conditionScore": 39.4,
+     "fitGain": 0,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "metrics": {
+      "meanUtility": 116.6,
+      "interval95": [
+       106,
+       127.8
+      ],
+      "cvar10": 107,
+      "top1Rate": 0.3,
+      "top5Rate": 8.4,
+      "topQuartileRate": 14.6,
+      "failureRate": 1.4,
+      "robustness": 39.4
+     },
+     "gates": [
+      {
+       "kind": "符文",
+       "value": "正义距离"
+      },
+      {
+       "kind": "棋子",
+       "value": "凯尔"
+      }
+     ],
+     "reasons": [
+      "专属机制按有/无强化反事实差分生成"
+     ]
+    },
+    {
+     "category": "英雄专属",
+     "templateId": "meta-适应性防守-卡蜜尔-19",
+     "templateName": "适应性防守卡蜜尔机制路线",
+     "conditionScore": 39.4,
+     "fitGain": 0,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "metrics": {
+      "meanUtility": 116.5,
+      "interval95": [
+       105.8,
+       127.4
+      ],
+      "cvar10": 106.9,
+      "top1Rate": 0.1,
+      "top5Rate": 7.8,
+      "topQuartileRate": 15.4,
+      "failureRate": 1.8,
+      "robustness": 39.4
+     },
+     "gates": [
+      {
+       "kind": "符文",
+       "value": "适应性防守"
+      },
+      {
+       "kind": "棋子",
+       "value": "卡蜜尔"
+      }
+     ],
+     "reasons": [
+      "专属机制按有/无强化反事实差分生成"
+     ]
+    },
+    {
+     "category": "英雄专属",
+     "templateId": "official-4576",
+     "templateName": "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
+     "conditionScore": 38.6,
+     "fitGain": 0,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "metrics": {
+      "meanUtility": 115.8,
+      "interval95": [
+       105.1,
+       126.8
+      ],
+      "cvar10": 106.2,
+      "top1Rate": 0.1,
+      "top5Rate": 8.6,
+      "topQuartileRate": 14.5,
+      "failureRate": 2.5,
+      "robustness": 38.6
+     },
+     "gates": [
+      {
+       "kind": "符文",
+       "value": "姐妹"
+      },
+      {
+       "kind": "棋子",
+       "value": "金克丝+蔚"
+      }
+     ],
+     "reasons": [
+      "专属机制按有/无强化反事实差分生成"
+     ]
+    },
+    {
+     "category": "英雄专属",
+     "templateId": "meta-星界屏障-德莱文-18",
+     "templateName": "星界屏障德莱文机制路线",
+     "conditionScore": 37.3,
+     "fitGain": 0,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "metrics": {
+      "meanUtility": 116.2,
+      "interval95": [
+       105.6,
+       127
+      ],
+      "cvar10": 106.7,
+      "top1Rate": 0,
+      "top5Rate": 4.2,
+      "topQuartileRate": 12.2,
+      "failureRate": 1.7,
+      "robustness": 37.3
      },
      "gates": [
       {
@@ -566,23 +736,57 @@
     },
     {
      "category": "英雄专属",
-     "templateId": "official-1589",
-     "templateName": "金钟罩李青4爱心使者3秘术卫士2AI程序",
-     "conditionScore": 2.8,
+     "templateId": "meta-评级与交火-莎弥拉-6",
+     "templateName": "评级与交火莎弥拉机制路线",
+     "conditionScore": 33.1,
      "fitGain": 0,
      "evidenceLevel": "L1.5 高敏感假设",
      "metrics": {
-      "meanUtility": 98.8,
+      "meanUtility": 114.2,
       "interval95": [
-       88.8,
-       108.8
+       103,
+       124.5
       ],
-      "cvar10": 89.9,
+      "cvar10": 104.3,
+      "top1Rate": 0,
+      "top5Rate": 3.5,
+      "topQuartileRate": 7.9,
+      "failureRate": 5.5,
+      "robustness": 33.1
+     },
+     "gates": [
+      {
+       "kind": "符文",
+       "value": "评级与交火"
+      },
+      {
+       "kind": "棋子",
+       "value": "莎弥拉"
+      }
+     ],
+     "reasons": [
+      "专属机制按有/无强化反事实差分生成"
+     ]
+    },
+    {
+     "category": "英雄专属",
+     "templateId": "meta-净化之金钟罩-李青-22",
+     "templateName": "净化之金钟罩李青机制路线",
+     "conditionScore": 20,
+     "fitGain": 0,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "metrics": {
+      "meanUtility": 108.6,
+      "interval95": [
+       97.3,
+       120.2
+      ],
+      "cvar10": 98.4,
       "top1Rate": 0,
       "top5Rate": 0,
       "topQuartileRate": 0,
-      "failureRate": 88.9,
-      "robustness": 2.8
+      "failureRate": 28.2,
+      "robustness": 20
      },
      "gates": [
       {
@@ -592,6 +796,40 @@
       {
        "kind": "棋子",
        "value": "李青"
+      }
+     ],
+     "reasons": [
+      "专属机制按有/无强化反事实差分生成"
+     ]
+    },
+    {
+     "category": "英雄专属",
+     "templateId": "meta-重甲龙龟-拉莫斯-23",
+     "templateName": "重甲龙龟拉莫斯机制路线",
+     "conditionScore": 13.4,
+     "fitGain": 0,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "metrics": {
+      "meanUtility": 105.3,
+      "interval95": [
+       94.9,
+       116.2
+      ],
+      "cvar10": 96,
+      "top1Rate": 0,
+      "top5Rate": 0,
+      "topQuartileRate": 0,
+      "failureRate": 48.8,
+      "robustness": 13.4
+     },
+     "gates": [
+      {
+       "kind": "符文",
+       "value": "重甲龙龟"
+      },
+      {
+       "kind": "棋子",
+       "value": "拉莫斯"
       }
      ],
      "reasons": [
@@ -921,38 +1159,6 @@
     },
     {
      "category": "战力",
-     "templateId": "official-4576",
-     "templateName": "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
-     "conditionScore": 74.8,
-     "conditionLift": 30.1,
-     "fitGain": 18.4,
-     "evidenceLevel": "L1.5 高敏感假设",
-     "metrics": {
-      "meanUtility": 115.8,
-      "interval95": [
-       105.1,
-       126.8
-      ],
-      "cvar10": 106.2,
-      "top1Rate": 0.1,
-      "top5Rate": 22.7,
-      "topQuartileRate": 22.7,
-      "failureRate": 2.5,
-      "robustness": 44.7
-     },
-     "gates": [
-      {
-       "kind": "符文",
-       "value": "公理圆弧II"
-      }
-     ],
-     "reasons": [
-      "回蓝命中法系施法轴",
-      "文本数值折算+8.4适配"
-     ]
-    },
-    {
-     "category": "战力",
      "templateId": "official-4548",
      "templateName": "决斗剑姬6决斗大师2福牛守护者",
      "conditionScore": 74.1,
@@ -981,6 +1187,38 @@
      "reasons": [
       "前排支持持续战触发",
       "文本数值折算+7适配"
+     ]
+    },
+    {
+     "category": "战力",
+     "templateId": "official-4576",
+     "templateName": "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
+     "conditionScore": 72,
+     "conditionLift": 33.4,
+     "fitGain": 18.4,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "metrics": {
+      "meanUtility": 115.8,
+      "interval95": [
+       105.1,
+       126.8
+      ],
+      "cvar10": 106.2,
+      "top1Rate": 0.1,
+      "top5Rate": 8.6,
+      "topQuartileRate": 14.5,
+      "failureRate": 2.5,
+      "robustness": 38.6
+     },
+     "gates": [
+      {
+       "kind": "符文",
+       "value": "公理圆弧II"
+      }
+     ],
+     "reasons": [
+      "回蓝命中法系施法轴",
+      "文本数值折算+8.4适配"
      ]
     },
     {
@@ -1991,38 +2229,6 @@
     },
     {
      "category": "经济",
-     "templateId": "official-4576",
-     "templateName": "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
-     "conditionScore": 71.8,
-     "conditionLift": 27.1,
-     "fitGain": 16.6,
-     "evidenceLevel": "L1.5 高敏感假设",
-     "metrics": {
-      "meanUtility": 115.8,
-      "interval95": [
-       105.1,
-       126.8
-      ],
-      "cvar10": 106.2,
-      "top1Rate": 0.1,
-      "top5Rate": 22.7,
-      "topQuartileRate": 22.7,
-      "failureRate": 2.5,
-      "robustness": 44.7
-     },
-     "gates": [
-      {
-       "kind": "符文",
-       "value": "快速思考"
-      }
-     ],
-     "reasons": [
-      "刷新经济适配金克丝3星",
-      "金币折算提升成型可达性"
-     ]
-    },
-    {
-     "category": "经济",
      "templateId": "official-1412",
      "templateName": "超英猫咪3超级英雄3星之守护者2爱心使者",
      "conditionScore": 71.7,
@@ -2114,6 +2320,38 @@
      ],
      "reasons": [
       "刷新经济适配贾克斯3星",
+      "金币折算提升成型可达性"
+     ]
+    },
+    {
+     "category": "经济",
+     "templateId": "official-4576",
+     "templateName": "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
+     "conditionScore": 68.7,
+     "conditionLift": 30.1,
+     "fitGain": 16.6,
+     "evidenceLevel": "L1.5 高敏感假设",
+     "metrics": {
+      "meanUtility": 115.8,
+      "interval95": [
+       105.1,
+       126.8
+      ],
+      "cvar10": 106.2,
+      "top1Rate": 0.1,
+      "top5Rate": 8.6,
+      "topQuartileRate": 14.5,
+      "failureRate": 2.5,
+      "robustness": 38.6
+     },
+     "gates": [
+      {
+       "kind": "符文",
+       "value": "快速思考"
+      }
+     ],
+     "reasons": [
+      "刷新经济适配金克丝3星",
       "金币折算提升成型可达性"
      ]
     },
@@ -2535,8 +2773,8 @@
      "category": "装备",
      "templateId": "official-4576",
      "templateName": "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
-     "conditionScore": 71.5,
-     "conditionLift": 26.8,
+     "conditionScore": 68.4,
+     "conditionLift": 29.8,
      "fitGain": 16.4,
      "evidenceLevel": "L1.5 高敏感假设",
      "metrics": {
@@ -2547,10 +2785,10 @@
       ],
       "cvar10": 106.2,
       "top1Rate": 0.1,
-      "top5Rate": 22.7,
-      "topQuartileRate": 22.7,
+      "top5Rate": 8.6,
+      "topQuartileRate": 14.5,
       "failureRate": 2.5,
-      "robustness": 44.7
+      "robustness": 38.6
      },
      "gates": [
       {
@@ -2951,6 +3189,40 @@
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
   {
+   "templateId": "meta-绝对堕落-蕾欧娜-1",
+   "templateName": "绝对堕落蕾欧娜机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L2.5 模型扰动稳健",
+   "priorPoints": 5,
+   "metrics": {
+    "meanUtility": 130.5,
+    "interval95": [
+     118.9,
+     141
+    ],
+    "cvar10": 120.3,
+    "top1Rate": 50.2,
+    "top5Rate": 96.8,
+    "topQuartileRate": 98.4,
+    "failureRate": 0,
+    "robustness": 98.7
+   },
+   "drivers": [
+    "转型重合22%",
+    "装备弹性96%",
+    "9级追蕾欧娜2星"
+   ],
+   "dependencies": [
+    "符文:绝对堕落",
+    "机制棋子:费德提克",
+    "蕾欧娜2星",
+    "三件套:朔极之矛+水银+鬼索的狂暴之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
    "templateId": "meta-完美的日炎耀斑-蕾欧娜-0",
    "templateName": "完美的日炎耀斑蕾欧娜机制路线",
    "peerGroup": "条件路线（已满足专属门槛）",
@@ -2965,11 +3237,11 @@
      139.9
     ],
     "cvar10": 119.8,
-    "top1Rate": 84.6,
-    "top5Rate": 98.2,
-    "topQuartileRate": 98.2,
+    "top1Rate": 44.4,
+    "top5Rate": 95.1,
+    "topQuartileRate": 97.2,
     "failureRate": 0,
-    "robustness": 98.8
+    "robustness": 97.8
    },
    "drivers": [
     "转型重合22%",
@@ -3145,108 +3417,6 @@
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
   {
-   "templateId": "meta-双重气泡-佐伊-1",
-   "templateName": "双重气泡佐伊机制路线",
-   "peerGroup": "条件路线（已满足专属门槛）",
-   "sampleSize": 5000,
-   "seed": 20260712,
-   "evidenceLevel": "L2.5 模型扰动稳健",
-   "priorPoints": 2,
-   "metrics": {
-    "meanUtility": 119.7,
-    "interval95": [
-     109.5,
-     130.1
-    ],
-    "cvar10": 110.4,
-    "top1Rate": 1,
-    "top5Rate": 56.4,
-    "topQuartileRate": 56.4,
-    "failureRate": 0.1,
-    "robustness": 68.1
-   },
-   "drivers": [
-    "转型重合67%",
-    "装备弹性86%",
-    "7级追佐伊3星"
-   ],
-   "dependencies": [
-    "符文:双重气泡",
-    "机制棋子:佐伊",
-    "佐伊3星",
-    "三件套:朔极之矛+鬼索的狂暴之刃+蓝霸符"
-   ],
-   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-  },
-  {
-   "templateId": "meta-咒能高涨-伊泽瑞尔-10",
-   "templateName": "咒能高涨伊泽瑞尔机制路线",
-   "peerGroup": "条件路线（已满足专属门槛）",
-   "sampleSize": 5000,
-   "seed": 20260712,
-   "evidenceLevel": "L2 模型候选",
-   "priorPoints": 2,
-   "metrics": {
-    "meanUtility": 119.4,
-    "interval95": [
-     109,
-     130.4
-    ],
-    "cvar10": 109.9,
-    "top1Rate": 6,
-    "top5Rate": 53.5,
-    "topQuartileRate": 53.5,
-    "failureRate": 0.2,
-    "robustness": 66
-   },
-   "drivers": [
-    "转型重合67%",
-    "装备弹性86%",
-    "6级追伊泽瑞尔3星"
-   ],
-   "dependencies": [
-    "符文:咒能高涨",
-    "机制棋子:伊泽瑞尔",
-    "伊泽瑞尔3星",
-    "三件套:泰坦的坚决+水银+鬼索的狂暴之刃"
-   ],
-   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-  },
-  {
-   "templateId": "meta-无双挑战-菲奥娜-4",
-   "templateName": "无双挑战菲奥娜机制路线",
-   "peerGroup": "条件路线（已满足专属门槛）",
-   "sampleSize": 5000,
-   "seed": 20260712,
-   "evidenceLevel": "L2 模型候选",
-   "priorPoints": 2,
-   "metrics": {
-    "meanUtility": 120.1,
-    "interval95": [
-     108.9,
-     131.3
-    ],
-    "cvar10": 110.1,
-    "top1Rate": 1.5,
-    "top5Rate": 51.8,
-    "topQuartileRate": 51.8,
-    "failureRate": 0.2,
-    "robustness": 65.1
-   },
-   "drivers": [
-    "转型重合67%",
-    "装备弹性86%",
-    "6级追菲奥娜3星"
-   ],
-   "dependencies": [
-    "符文:无双挑战",
-    "机制棋子:菲奥娜",
-    "菲奥娜3星",
-    "三件套:锐利之刃+鬼索的狂暴之刃+卢安娜的飓风"
-   ],
-   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-  },
-  {
    "templateId": "official-1379",
    "templateName": "怪兽厄运小姐8怪兽1精英战士",
    "peerGroup": "常规路线",
@@ -3311,36 +3481,70 @@
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
   {
-   "templateId": "meta-旺盛精力-悠米-6",
-   "templateName": "旺盛精力悠米机制路线",
+   "templateId": "meta-绝对堕落-佛耶戈-3",
+   "templateName": "绝对堕落佛耶戈机制路线",
    "peerGroup": "条件路线（已满足专属门槛）",
    "sampleSize": 5000,
    "seed": 20260712,
    "evidenceLevel": "L2 模型候选",
    "priorPoints": 1,
    "metrics": {
-    "meanUtility": 119.1,
+    "meanUtility": 120,
     "interval95": [
-     108.4,
-     130
+     108.7,
+     130.2
     ],
-    "cvar10": 109.5,
-    "top1Rate": 2.7,
-    "top5Rate": 46.9,
-    "topQuartileRate": 46.9,
-    "failureRate": 0.4,
-    "robustness": 61.8
+    "cvar10": 110,
+    "top1Rate": 1.1,
+    "top5Rate": 35.1,
+    "topQuartileRate": 47.3,
+    "failureRate": 0.6,
+    "robustness": 59.8
    },
    "drivers": [
-    "转型重合75%",
-    "装备弹性86%",
-    "6级追悠米3星"
+    "转型重合28%",
+    "装备弹性96%",
+    "8级追佛耶戈2星"
    ],
    "dependencies": [
-    "符文:旺盛精力",
-    "机制棋子:悠米",
-    "悠米3星",
-    "三件套:朔极之矛+班克斯的魔法帽+鬼索的狂暴之刃"
+    "符文:绝对堕落",
+    "机制棋子:费德提克",
+    "佛耶戈2星",
+    "三件套:朔极之矛+水银+鬼索的狂暴之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "meta-无双挑战-菲奥娜-14",
+   "templateName": "无双挑战菲奥娜机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L2 模型候选",
+   "priorPoints": 1,
+   "metrics": {
+    "meanUtility": 120.1,
+    "interval95": [
+     109.1,
+     131.2
+    ],
+    "cvar10": 110.3,
+    "top1Rate": 1,
+    "top5Rate": 32.8,
+    "topQuartileRate": 47.4,
+    "failureRate": 0.3,
+    "robustness": 59.6
+   },
+   "drivers": [
+    "转型重合67%",
+    "装备弹性86%",
+    "6级追菲奥娜3星"
+   ],
+   "dependencies": [
+    "符文:无双挑战",
+    "机制棋子:菲奥娜",
+    "菲奥娜3星",
+    "三件套:锐利之刃+鬼索的狂暴之刃+卢安娜的飓风"
    ],
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
@@ -3377,70 +3581,36 @@
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
   {
-   "templateId": "meta-扩散射击-薇恩-3",
-   "templateName": "扩散射击薇恩机制路线",
+   "templateId": "meta-双重气泡-佐伊-4",
+   "templateName": "双重气泡佐伊机制路线",
    "peerGroup": "条件路线（已满足专属门槛）",
    "sampleSize": 5000,
    "seed": 20260712,
    "evidenceLevel": "L2 模型候选",
    "priorPoints": 1,
    "metrics": {
-    "meanUtility": 118.1,
+    "meanUtility": 119.7,
     "interval95": [
-     107.3,
-     128.9
+     109.7,
+     130.1
     ],
-    "cvar10": 108.4,
-    "top1Rate": 0.3,
-    "top5Rate": 41.9,
-    "topQuartileRate": 41.9,
-    "failureRate": 0.8,
-    "robustness": 58
+    "cvar10": 110.5,
+    "top1Rate": 0.6,
+    "top5Rate": 29.2,
+    "topQuartileRate": 41.5,
+    "failureRate": 0.2,
+    "robustness": 56.7
    },
    "drivers": [
-    "转型重合75%",
+    "转型重合67%",
     "装备弹性86%",
-    "7级追薇恩3星"
+    "7级追佐伊3星"
    ],
    "dependencies": [
-    "符文:扩散射击",
-    "机制棋子:薇恩",
-    "薇恩3星",
-    "三件套:无尽之刃+泰坦的坚决+鬼索的狂暴之刃"
-   ],
-   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-  },
-  {
-   "templateId": "meta-姐妹-金克丝-7",
-   "templateName": "姐妹金克丝机制路线",
-   "peerGroup": "条件路线（已满足专属门槛）",
-   "sampleSize": 5000,
-   "seed": 20260712,
-   "evidenceLevel": "L2 模型候选",
-   "priorPoints": 1,
-   "metrics": {
-    "meanUtility": 118.2,
-    "interval95": [
-     107.7,
-     129.2
-    ],
-    "cvar10": 108.7,
-    "top1Rate": 1.1,
-    "top5Rate": 39.9,
-    "topQuartileRate": 39.9,
-    "failureRate": 0.5,
-    "robustness": 57
-   },
-   "drivers": [
-    "转型重合60%",
-    "装备弹性86%",
-    "6级追金克丝3星"
-   ],
-   "dependencies": [
-    "符文:姐妹",
-    "机制棋子:金克丝+蔚",
-    "金克丝3星",
-    "三件套:泰坦的坚决+水银+鬼索的狂暴之刃"
+    "符文:双重气泡",
+    "机制棋子:佐伊",
+    "佐伊3星",
+    "三件套:朔极之矛+鬼索的狂暴之刃+蓝霸符"
    ],
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
@@ -3541,6 +3711,40 @@
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
   {
+   "templateId": "meta-咒能高涨-伊泽瑞尔-17",
+   "templateName": "咒能高涨伊泽瑞尔机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L2 模型候选",
+   "priorPoints": 0,
+   "metrics": {
+    "meanUtility": 119.4,
+    "interval95": [
+     108.9,
+     130.5
+    ],
+    "cvar10": 109.9,
+    "top1Rate": 0.1,
+    "top5Rate": 24.9,
+    "topQuartileRate": 37.5,
+    "failureRate": 0.2,
+    "robustness": 53.9
+   },
+   "drivers": [
+    "转型重合67%",
+    "装备弹性86%",
+    "6级追伊泽瑞尔3星"
+   ],
+   "dependencies": [
+    "符文:咒能高涨",
+    "机制棋子:伊泽瑞尔",
+    "伊泽瑞尔3星",
+    "三件套:泰坦的坚决+水银+鬼索的狂暴之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
    "templateId": "manual-laser-duelist",
    "templateName": "源计划斗士/决斗 -> 卡莎/枪手/九五",
    "peerGroup": "常规路线",
@@ -3569,40 +3773,6 @@
    "dependencies": [
     "莎弥拉2星",
     "三件套:最后的轻语+卢安娜的飓风"
-   ],
-   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-  },
-  {
-   "templateId": "meta-宗师训练-贾克斯-5",
-   "templateName": "宗师训练贾克斯机制路线",
-   "peerGroup": "条件路线（已满足专属门槛）",
-   "sampleSize": 5000,
-   "seed": 20260712,
-   "evidenceLevel": "L2 模型候选",
-   "priorPoints": 0,
-   "metrics": {
-    "meanUtility": 117.5,
-    "interval95": [
-     107.2,
-     127.9
-    ],
-    "cvar10": 108.2,
-    "top1Rate": 1.8,
-    "top5Rate": 31.9,
-    "topQuartileRate": 31.9,
-    "failureRate": 0.9,
-    "robustness": 51.8
-   },
-   "drivers": [
-    "转型重合75%",
-    "装备弹性86%",
-    "7级追贾克斯3星"
-   ],
-   "dependencies": [
-    "符文:宗师训练",
-    "机制棋子:贾克斯",
-    "贾克斯3星",
-    "三件套:泰坦的坚决+水银+鬼索的狂暴之刃"
    ],
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
@@ -3639,6 +3809,40 @@
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
   {
+   "templateId": "meta-旺盛精力-佐伊-7",
+   "templateName": "旺盛精力佐伊机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L2 模型候选",
+   "priorPoints": 0,
+   "metrics": {
+    "meanUtility": 118.7,
+    "interval95": [
+     108.4,
+     128.9
+    ],
+    "cvar10": 109.4,
+    "top1Rate": 0.4,
+    "top5Rate": 20.8,
+    "topQuartileRate": 33.5,
+    "failureRate": 0.3,
+    "robustness": 51.1
+   },
+   "drivers": [
+    "转型重合67%",
+    "装备弹性86%",
+    "7级追佐伊3星"
+   ],
+   "dependencies": [
+    "符文:旺盛精力",
+    "机制棋子:悠米",
+    "佐伊3星",
+    "三件套:朔极之矛+鬼索的狂暴之刃+蓝霸符"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
    "templateId": "official-4548",
    "templateName": "决斗剑姬6决斗大师2福牛守护者",
    "peerGroup": "常规路线",
@@ -3667,6 +3871,142 @@
    "dependencies": [
     "菲奥娜3星",
     "三件套:泰坦的坚决+汲取剑+鬼索的狂暴之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "meta-旺盛精力-德莱文-10",
+   "templateName": "旺盛精力德莱文机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L2 模型候选",
+   "priorPoints": 0,
+   "metrics": {
+    "meanUtility": 118.8,
+    "interval95": [
+     108.1,
+     129.8
+    ],
+    "cvar10": 109,
+    "top1Rate": 0.7,
+    "top5Rate": 21.6,
+    "topQuartileRate": 32.6,
+    "failureRate": 0.7,
+    "robustness": 50.6
+   },
+   "drivers": [
+    "转型重合86%",
+    "装备弹性72%",
+    "6级追德莱文3星"
+   ],
+   "dependencies": [
+    "符文:旺盛精力",
+    "机制棋子:悠米",
+    "德莱文3星",
+    "三件套:最后的轻语+鬼索的狂暴之刃+卢安娜的飓风"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "meta-姐妹-金克丝-21",
+   "templateName": "姐妹金克丝机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": 0,
+   "metrics": {
+    "meanUtility": 118.1,
+    "interval95": [
+     107.5,
+     129.3
+    ],
+    "cvar10": 108.6,
+    "top1Rate": 0.5,
+    "top5Rate": 16.7,
+    "topQuartileRate": 26.7,
+    "failureRate": 0.6,
+    "robustness": 47
+   },
+   "drivers": [
+    "转型重合60%",
+    "装备弹性86%",
+    "6级追金克丝3星"
+   ],
+   "dependencies": [
+    "符文:姐妹",
+    "机制棋子:金克丝+蔚",
+    "金克丝3星",
+    "三件套:泰坦的坚决+水银+鬼索的狂暴之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "meta-绝对堕落-佐伊-2",
+   "templateName": "绝对堕落佐伊机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": 0,
+   "metrics": {
+    "meanUtility": 117.9,
+    "interval95": [
+     107.7,
+     128.4
+    ],
+    "cvar10": 108.7,
+    "top1Rate": 0,
+    "top5Rate": 16.4,
+    "topQuartileRate": 26,
+    "failureRate": 0.6,
+    "robustness": 46.8
+   },
+   "drivers": [
+    "转型重合24%",
+    "装备弹性96%",
+    "7级追佐伊3星"
+   ],
+   "dependencies": [
+    "符文:绝对堕落",
+    "机制棋子:费德提克",
+    "佐伊3星",
+    "三件套:朔极之矛+水银+鬼索的狂暴之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "meta-扩散射击-薇恩-9",
+   "templateName": "扩散射击薇恩机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": 0,
+   "metrics": {
+    "meanUtility": 118.1,
+    "interval95": [
+     107,
+     128.8
+    ],
+    "cvar10": 108.3,
+    "top1Rate": 0.1,
+    "top5Rate": 15.9,
+    "topQuartileRate": 26.8,
+    "failureRate": 0.8,
+    "robustness": 46.7
+   },
+   "drivers": [
+    "转型重合75%",
+    "装备弹性86%",
+    "7级追薇恩3星"
+   ],
+   "dependencies": [
+    "符文:扩散射击",
+    "机制棋子:薇恩",
+    "薇恩3星",
+    "三件套:无尽之刃+泰坦的坚决+鬼索的狂暴之刃"
    ],
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
@@ -3703,6 +4043,40 @@
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
   {
+   "templateId": "meta-分享驭铁术-贾克斯-16",
+   "templateName": "分享驭铁术贾克斯机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": 0,
+   "metrics": {
+    "meanUtility": 117.7,
+    "interval95": [
+     107.5,
+     127.9
+    ],
+    "cvar10": 108.5,
+    "top1Rate": 0.1,
+    "top5Rate": 12.9,
+    "topQuartileRate": 24.2,
+    "failureRate": 0.5,
+    "robustness": 45.2
+   },
+   "drivers": [
+    "转型重合67%",
+    "装备弹性86%",
+    "7级追贾克斯3星"
+   ],
+   "dependencies": [
+    "符文:分享驭铁术",
+    "机制棋子:芮尔",
+    "贾克斯3星",
+    "三件套:泰坦的坚决+水银+鬼索的狂暴之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
    "templateId": "official-1412",
    "templateName": "超英猫咪3超级英雄3星之守护者2爱心使者",
    "peerGroup": "常规路线",
@@ -3735,104 +4109,70 @@
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
   {
-   "templateId": "meta-德莱文联盟-德莱文-8",
-   "templateName": "德莱文联盟德莱文机制路线",
+   "templateId": "meta-透光屏障-佐伊-8",
+   "templateName": "透光屏障佐伊机制路线",
    "peerGroup": "条件路线（已满足专属门槛）",
    "sampleSize": 5000,
    "seed": 20260712,
    "evidenceLevel": "L1.5 高敏感假设",
    "priorPoints": -1,
    "metrics": {
-    "meanUtility": 116.9,
+    "meanUtility": 117.4,
     "interval95": [
-     106.1,
+     107.3,
      128
     ],
-    "cvar10": 107.3,
-    "top1Rate": 0.6,
-    "top5Rate": 21,
-    "topQuartileRate": 21,
-    "failureRate": 1.2,
-    "robustness": 44.7
+    "cvar10": 108.3,
+    "top1Rate": 0,
+    "top5Rate": 12.5,
+    "topQuartileRate": 21.6,
+    "failureRate": 0.7,
+    "robustness": 43.9
    },
    "drivers": [
     "转型重合60%",
-    "装备弹性72%",
-    "6级追德莱文3星"
-   ],
-   "dependencies": [
-    "符文:德莱文联盟",
-    "机制棋子:德莱文",
-    "德莱文3星",
-    "三件套:最后的轻语+鬼索的狂暴之刃+卢安娜的飓风"
-   ],
-   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-  },
-  {
-   "templateId": "official-4576",
-   "templateName": "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
-   "peerGroup": "条件路线（已满足专属门槛）",
-   "sampleSize": 5000,
-   "seed": 20260712,
-   "evidenceLevel": "L1.5 高敏感假设",
-   "priorPoints": -1,
-   "metrics": {
-    "meanUtility": 115.8,
-    "interval95": [
-     105.1,
-     126.8
-    ],
-    "cvar10": 106.2,
-    "top1Rate": 0.1,
-    "top5Rate": 22.7,
-    "topQuartileRate": 22.7,
-    "failureRate": 2.5,
-    "robustness": 44.7
-   },
-   "drivers": [
-    "转型重合82%",
     "装备弹性86%",
-    "6级追金克丝3星"
+    "7级追佐伊3星"
    ],
    "dependencies": [
-    "符文:姐妹",
-    "机制棋子:金克丝+蔚",
-    "金克丝3星",
-    "三件套:朔极之矛+珠光护手+巨人捕手"
+    "符文:透光屏障",
+    "机制棋子:拉克丝",
+    "佐伊3星",
+    "三件套:朔极之矛+鬼索的狂暴之刃+蓝霸符"
    ],
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
   {
-   "templateId": "meta-适应性防守-卡蜜尔-12",
-   "templateName": "适应性防守卡蜜尔机制路线",
+   "templateId": "meta-旺盛精力-贾克斯-11",
+   "templateName": "旺盛精力贾克斯机制路线",
    "peerGroup": "条件路线（已满足专属门槛）",
    "sampleSize": 5000,
    "seed": 20260712,
    "evidenceLevel": "L1.5 高敏感假设",
    "priorPoints": -1,
    "metrics": {
-    "meanUtility": 116.5,
+    "meanUtility": 117.3,
     "interval95": [
-     105.9,
+     107.2,
      127.7
     ],
-    "cvar10": 106.9,
+    "cvar10": 108.1,
     "top1Rate": 0.3,
-    "top5Rate": 18.2,
-    "topQuartileRate": 18.2,
-    "failureRate": 1.7,
-    "robustness": 42.6
+    "top5Rate": 11.2,
+    "topQuartileRate": 21.5,
+    "failureRate": 0.7,
+    "robustness": 43.5
    },
    "drivers": [
     "转型重合67%",
-    "装备弹性72%",
-    "6级追卡蜜尔3星"
+    "装备弹性86%",
+    "7级追贾克斯3星"
    ],
    "dependencies": [
-    "符文:适应性防守",
-    "机制棋子:卡蜜尔",
-    "卡蜜尔3星",
-    "三件套:最后的轻语+鬼索的狂暴之刃+卢安娜的飓风"
+    "符文:旺盛精力",
+    "机制棋子:悠米",
+    "贾克斯3星",
+    "三件套:泰坦的坚决+水银+鬼索的狂暴之刃"
    ],
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
@@ -3865,6 +4205,108 @@
    "dependencies": [
     "贾克斯3星",
     "三件套:泰坦的坚决+疾射火炮+鬼索的狂暴之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "meta-宗师训练-德莱文-20",
+   "templateName": "宗师训练德莱文机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -1,
+   "metrics": {
+    "meanUtility": 117.2,
+    "interval95": [
+     106.4,
+     128.4
+    ],
+    "cvar10": 107.6,
+    "top1Rate": 0,
+    "top5Rate": 9.6,
+    "topQuartileRate": 18.6,
+    "failureRate": 1.1,
+    "robustness": 41.6
+   },
+   "drivers": [
+    "转型重合75%",
+    "装备弹性72%",
+    "6级追德莱文3星"
+   ],
+   "dependencies": [
+    "符文:宗师训练",
+    "机制棋子:贾克斯",
+    "德莱文3星",
+    "三件套:最后的轻语+鬼索的狂暴之刃+卢安娜的飓风"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "meta-天赋异禀-佐伊-13",
+   "templateName": "天赋异禀佐伊机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -1,
+   "metrics": {
+    "meanUtility": 116.8,
+    "interval95": [
+     106.6,
+     127.2
+    ],
+    "cvar10": 107.7,
+    "top1Rate": 0.1,
+    "top5Rate": 8.8,
+    "topQuartileRate": 17.5,
+    "failureRate": 0.8,
+    "robustness": 41.2
+   },
+   "drivers": [
+    "转型重合60%",
+    "装备弹性86%",
+    "7级追佐伊3星"
+   ],
+   "dependencies": [
+    "符文:天赋异禀",
+    "机制棋子:尼菈",
+    "佐伊3星",
+    "三件套:朔极之矛+鬼索的狂暴之刃+蓝霸符"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "meta-德莱文联盟-德莱文-15",
+   "templateName": "德莱文联盟德莱文机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -1,
+   "metrics": {
+    "meanUtility": 116.9,
+    "interval95": [
+     106.3,
+     127.9
+    ],
+    "cvar10": 107.4,
+    "top1Rate": 0.1,
+    "top5Rate": 7.5,
+    "topQuartileRate": 16.9,
+    "failureRate": 1.5,
+    "robustness": 40.3
+   },
+   "drivers": [
+    "转型重合60%",
+    "装备弹性72%",
+    "6级追德莱文3星"
+   ],
+   "dependencies": [
+    "符文:德莱文联盟",
+    "机制棋子:德莱文",
+    "德莱文3星",
+    "三件套:最后的轻语+鬼索的狂暴之刃+卢安娜的飓风"
    ],
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
@@ -3933,35 +4375,137 @@
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
   {
-   "templateId": "meta-评级与交火-莎弥拉-2",
-   "templateName": "评级与交火莎弥拉机制路线",
+   "templateId": "meta-正义距离-德莱文-12",
+   "templateName": "正义距离德莱文机制路线",
    "peerGroup": "条件路线（已满足专属门槛）",
    "sampleSize": 5000,
    "seed": 20260712,
    "evidenceLevel": "L1.5 高敏感假设",
    "priorPoints": -1,
    "metrics": {
-    "meanUtility": 114.3,
+    "meanUtility": 116.6,
     "interval95": [
-     102.9,
-     124.8
+     106,
+     127.8
     ],
-    "cvar10": 104.2,
-    "top1Rate": 0,
-    "top5Rate": 17.5,
-    "topQuartileRate": 17.5,
-    "failureRate": 5.3,
-    "robustness": 39.7
+    "cvar10": 107,
+    "top1Rate": 0.3,
+    "top5Rate": 8.4,
+    "topQuartileRate": 14.6,
+    "failureRate": 1.4,
+    "robustness": 39.4
    },
    "drivers": [
-    "转型重合28%",
+    "转型重合60%",
     "装备弹性72%",
-    "8级追莎弥拉2星"
+    "6级追德莱文3星"
    ],
    "dependencies": [
-    "符文:评级与交火",
-    "机制棋子:莎弥拉",
-    "莎弥拉2星",
+    "符文:正义距离",
+    "机制棋子:凯尔",
+    "德莱文3星",
+    "三件套:最后的轻语+鬼索的狂暴之刃+卢安娜的飓风"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "meta-适应性防守-卡蜜尔-19",
+   "templateName": "适应性防守卡蜜尔机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -1,
+   "metrics": {
+    "meanUtility": 116.5,
+    "interval95": [
+     105.8,
+     127.4
+    ],
+    "cvar10": 106.9,
+    "top1Rate": 0.1,
+    "top5Rate": 7.8,
+    "topQuartileRate": 15.4,
+    "failureRate": 1.8,
+    "robustness": 39.4
+   },
+   "drivers": [
+    "转型重合67%",
+    "装备弹性72%",
+    "6级追卡蜜尔3星"
+   ],
+   "dependencies": [
+    "符文:适应性防守",
+    "机制棋子:卡蜜尔",
+    "卡蜜尔3星",
+    "三件套:最后的轻语+鬼索的狂暴之刃+卢安娜的飓风"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "official-4576",
+   "templateName": "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -1,
+   "metrics": {
+    "meanUtility": 115.8,
+    "interval95": [
+     105.1,
+     126.8
+    ],
+    "cvar10": 106.2,
+    "top1Rate": 0.1,
+    "top5Rate": 8.6,
+    "topQuartileRate": 14.5,
+    "failureRate": 2.5,
+    "robustness": 38.6
+   },
+   "drivers": [
+    "转型重合82%",
+    "装备弹性86%",
+    "6级追金克丝3星"
+   ],
+   "dependencies": [
+    "符文:姐妹",
+    "机制棋子:金克丝+蔚",
+    "金克丝3星",
+    "三件套:朔极之矛+珠光护手+巨人捕手"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "meta-星界屏障-德莱文-18",
+   "templateName": "星界屏障德莱文机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -1,
+   "metrics": {
+    "meanUtility": 116.2,
+    "interval95": [
+     105.6,
+     127
+    ],
+    "cvar10": 106.7,
+    "top1Rate": 0,
+    "top5Rate": 4.2,
+    "topQuartileRate": 12.2,
+    "failureRate": 1.7,
+    "robustness": 37.3
+   },
+   "drivers": [
+    "转型重合60%",
+    "装备弹性72%",
+    "6级追德莱文3星"
+   ],
+   "dependencies": [
+    "符文:星界屏障",
+    "机制棋子:科加斯",
+    "德莱文3星",
     "三件套:最后的轻语+鬼索的狂暴之刃+卢安娜的飓风"
    ],
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
@@ -3995,6 +4539,40 @@
    "dependencies": [
     "厄运小姐2星",
     "三件套:朔极之矛+珠光护手+班克斯的魔法帽"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "meta-评级与交火-莎弥拉-6",
+   "templateName": "评级与交火莎弥拉机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -2,
+   "metrics": {
+    "meanUtility": 114.2,
+    "interval95": [
+     103,
+     124.5
+    ],
+    "cvar10": 104.3,
+    "top1Rate": 0,
+    "top5Rate": 3.5,
+    "topQuartileRate": 7.9,
+    "failureRate": 5.5,
+    "robustness": 33.1
+   },
+   "drivers": [
+    "转型重合28%",
+    "装备弹性72%",
+    "8级追莎弥拉2星"
+   ],
+   "dependencies": [
+    "符文:评级与交火",
+    "机制棋子:莎弥拉",
+    "莎弥拉2星",
+    "三件套:最后的轻语+鬼索的狂暴之刃+卢安娜的飓风"
    ],
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
@@ -4287,40 +4865,6 @@
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
   {
-   "templateId": "meta-分享驭铁术-芮尔-13",
-   "templateName": "分享驭铁术芮尔机制路线",
-   "peerGroup": "条件路线（已满足专属门槛）",
-   "sampleSize": 5000,
-   "seed": 20260712,
-   "evidenceLevel": "L1.5 高敏感假设",
-   "priorPoints": -3,
-   "metrics": {
-    "meanUtility": 109,
-    "interval95": [
-     98,
-     120.1
-    ],
-    "cvar10": 99,
-    "top1Rate": 0,
-    "top5Rate": 0.1,
-    "topQuartileRate": 0.1,
-    "failureRate": 25,
-    "robustness": 21.3
-   },
-   "drivers": [
-    "转型重合75%",
-    "装备弹性86%",
-    "6级追芮尔3星"
-   ],
-   "dependencies": [
-    "符文:分享驭铁术",
-    "机制棋子:芮尔",
-    "芮尔3星",
-    "三件套:锐利之刃+鬼索的狂暴之刃+卢安娜的飓风"
-   ],
-   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-  },
-  {
    "templateId": "manual-duelist",
    "templateName": "决斗连胜 -> 薇恩/剑姬/劫",
    "peerGroup": "常规路线",
@@ -4385,7 +4929,7 @@
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
   {
-   "templateId": "meta-净化之金钟罩-李青-14",
+   "templateId": "meta-净化之金钟罩-李青-22",
    "templateName": "净化之金钟罩李青机制路线",
    "peerGroup": "条件路线（已满足专属门槛）",
    "sampleSize": 5000,
@@ -4395,15 +4939,15 @@
    "metrics": {
     "meanUtility": 108.6,
     "interval95": [
-     97.4,
+     97.3,
      120.2
     ],
-    "cvar10": 98.3,
+    "cvar10": 98.4,
     "top1Rate": 0,
-    "top5Rate": 0.1,
-    "topQuartileRate": 0.1,
-    "failureRate": 27.6,
-    "robustness": 20.2
+    "top5Rate": 0,
+    "topQuartileRate": 0,
+    "failureRate": 28.2,
+    "robustness": 20
    },
    "drivers": [
     "转型重合67%",
@@ -4675,40 +5219,6 @@
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
   {
-   "templateId": "meta-重甲龙龟-拉莫斯-11",
-   "templateName": "重甲龙龟拉莫斯机制路线",
-   "peerGroup": "条件路线（已满足专属门槛）",
-   "sampleSize": 5000,
-   "seed": 20260712,
-   "evidenceLevel": "L1.5 高敏感假设",
-   "priorPoints": -4,
-   "metrics": {
-    "meanUtility": 105.3,
-    "interval95": [
-     94.8,
-     115.5
-    ],
-    "cvar10": 95.9,
-    "top1Rate": 0,
-    "top5Rate": 0,
-    "topQuartileRate": 0,
-    "failureRate": 47.8,
-    "robustness": 13.6
-   },
-   "drivers": [
-    "转型重合60%",
-    "装备弹性86%",
-    "7级追拉莫斯3星"
-   ],
-   "dependencies": [
-    "符文:重甲龙龟",
-    "机制棋子:拉莫斯",
-    "拉莫斯3星",
-    "三件套:锐利之刃+鬼索的狂暴之刃+卢安娜的飓风"
-   ],
-   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-  },
-  {
    "templateId": "official-4533",
    "templateName": "超英赛娜3平民英雄3超级英雄2斗士",
    "peerGroup": "常规路线",
@@ -4737,6 +5247,40 @@
    "dependencies": [
     "赛娜3星",
     "三件套:最后的轻语+巨人捕手+卢安娜的飓风"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
+   "templateId": "meta-重甲龙龟-拉莫斯-23",
+   "templateName": "重甲龙龟拉莫斯机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -4,
+   "metrics": {
+    "meanUtility": 105.3,
+    "interval95": [
+     94.9,
+     116.2
+    ],
+    "cvar10": 96,
+    "top1Rate": 0,
+    "top5Rate": 0,
+    "topQuartileRate": 0,
+    "failureRate": 48.8,
+    "robustness": 13.4
+   },
+   "drivers": [
+    "转型重合60%",
+    "装备弹性86%",
+    "7级追拉莫斯3星"
+   ],
+   "dependencies": [
+    "符文:重甲龙龟",
+    "机制棋子:拉莫斯",
+    "拉莫斯3星",
+    "三件套:锐利之刃+鬼索的狂暴之刃+卢安娜的飓风"
    ],
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
@@ -4869,6 +5413,40 @@
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
   {
+   "templateId": "meta-绝对堕落-娑娜-5",
+   "templateName": "绝对堕落娑娜机制路线",
+   "peerGroup": "条件路线（已满足专属门槛）",
+   "sampleSize": 5000,
+   "seed": 20260712,
+   "evidenceLevel": "L1.5 高敏感假设",
+   "priorPoints": -4,
+   "metrics": {
+    "meanUtility": 104.2,
+    "interval95": [
+     94.2,
+     114.4
+    ],
+    "cvar10": 95.2,
+    "top1Rate": 0,
+    "top5Rate": 0,
+    "topQuartileRate": 0,
+    "failureRate": 55.4,
+    "robustness": 11.3
+   },
+   "drivers": [
+    "转型重合12%",
+    "装备弹性86%",
+    "7级追娑娜3星"
+   ],
+   "dependencies": [
+    "符文:绝对堕落",
+    "机制棋子:费德提克",
+    "娑娜3星",
+    "三件套:珠光护手+水银+鬼索的狂暴之刃"
+   ],
+   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
+  },
+  {
    "templateId": "official-1327",
    "templateName": "怪兽佐伊2黑客2淘气包怪兽",
    "peerGroup": "常规路线",
@@ -4929,40 +5507,6 @@
    "dependencies": [
     "乐芙兰3星",
     "三件套:蓝霸符+珠光护手+巨人捕手"
-   ],
-   "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
-  },
-  {
-   "templateId": "meta-星界屏障-科加斯-9",
-   "templateName": "星界屏障科加斯机制路线",
-   "peerGroup": "条件路线（已满足专属门槛）",
-   "sampleSize": 5000,
-   "seed": 20260712,
-   "evidenceLevel": "L1.5 高敏感假设",
-   "priorPoints": -4,
-   "metrics": {
-    "meanUtility": 102.6,
-    "interval95": [
-     92.7,
-     112.9
-    ],
-    "cvar10": 93.7,
-    "top1Rate": 0,
-    "top5Rate": 0,
-    "topQuartileRate": 0,
-    "failureRate": 67.2,
-    "robustness": 8.2
-   },
-   "drivers": [
-    "转型重合60%",
-    "装备弹性72%",
-    "7级追科加斯3星"
-   ],
-   "dependencies": [
-    "符文:星界屏障",
-    "机制棋子:科加斯",
-    "科加斯3星",
-    "三件套:最后的轻语+鬼索的狂暴之刃+卢安娜的飓风"
    ],
    "warning": "模型扰动样本，不是真实排位；未校准AOE、技能打断、逐格走位和公共牌库竞争。"
   },
@@ -5101,9 +5645,43 @@
   "英雄专属": [
    {
     "category": "英雄专属",
+    "templateId": "meta-绝对堕落-蕾欧娜-1",
+    "templateName": "绝对堕落蕾欧娜机制路线",
+    "conditionScore": 98.7,
+    "fitGain": 0,
+    "evidenceLevel": "L2.5 模型扰动稳健",
+    "metrics": {
+     "meanUtility": 130.5,
+     "interval95": [
+      118.9,
+      141
+     ],
+     "cvar10": 120.3,
+     "top1Rate": 50.2,
+     "top5Rate": 96.8,
+     "topQuartileRate": 98.4,
+     "failureRate": 0,
+     "robustness": 98.7
+    },
+    "gates": [
+     {
+      "kind": "符文",
+      "value": "绝对堕落"
+     },
+     {
+      "kind": "棋子",
+      "value": "费德提克"
+     }
+    ],
+    "reasons": [
+     "专属机制按有/无强化反事实差分生成"
+    ]
+   },
+   {
+    "category": "英雄专属",
     "templateId": "meta-完美的日炎耀斑-蕾欧娜-0",
     "templateName": "完美的日炎耀斑蕾欧娜机制路线",
-    "conditionScore": 98.8,
+    "conditionScore": 97.8,
     "fitGain": 0,
     "evidenceLevel": "L2.5 模型扰动稳健",
     "metrics": {
@@ -5113,11 +5691,11 @@
       139.9
      ],
      "cvar10": 119.8,
-     "top1Rate": 84.6,
-     "top5Rate": 98.2,
-     "topQuartileRate": 98.2,
+     "top1Rate": 44.4,
+     "top5Rate": 95.1,
+     "topQuartileRate": 97.2,
      "failureRate": 0,
-     "robustness": 98.8
+     "robustness": 97.8
     },
     "gates": [
      {
@@ -5135,66 +5713,32 @@
    },
    {
     "category": "英雄专属",
-    "templateId": "meta-双重气泡-佐伊-1",
-    "templateName": "双重气泡佐伊机制路线",
-    "conditionScore": 68.1,
-    "fitGain": 0,
-    "evidenceLevel": "L2.5 模型扰动稳健",
-    "metrics": {
-     "meanUtility": 119.7,
-     "interval95": [
-      109.5,
-      130.1
-     ],
-     "cvar10": 110.4,
-     "top1Rate": 1,
-     "top5Rate": 56.4,
-     "topQuartileRate": 56.4,
-     "failureRate": 0.1,
-     "robustness": 68.1
-    },
-    "gates": [
-     {
-      "kind": "符文",
-      "value": "双重气泡"
-     },
-     {
-      "kind": "棋子",
-      "value": "佐伊"
-     }
-    ],
-    "reasons": [
-     "专属机制按有/无强化反事实差分生成"
-    ]
-   },
-   {
-    "category": "英雄专属",
-    "templateId": "meta-咒能高涨-伊泽瑞尔-10",
-    "templateName": "咒能高涨伊泽瑞尔机制路线",
-    "conditionScore": 66,
+    "templateId": "meta-绝对堕落-佛耶戈-3",
+    "templateName": "绝对堕落佛耶戈机制路线",
+    "conditionScore": 59.8,
     "fitGain": 0,
     "evidenceLevel": "L2 模型候选",
     "metrics": {
-     "meanUtility": 119.4,
+     "meanUtility": 120,
      "interval95": [
-      109,
-      130.4
+      108.7,
+      130.2
      ],
-     "cvar10": 109.9,
-     "top1Rate": 6,
-     "top5Rate": 53.5,
-     "topQuartileRate": 53.5,
-     "failureRate": 0.2,
-     "robustness": 66
+     "cvar10": 110,
+     "top1Rate": 1.1,
+     "top5Rate": 35.1,
+     "topQuartileRate": 47.3,
+     "failureRate": 0.6,
+     "robustness": 59.8
     },
     "gates": [
      {
       "kind": "符文",
-      "value": "咒能高涨"
+      "value": "绝对堕落"
      },
      {
       "kind": "棋子",
-      "value": "伊泽瑞尔"
+      "value": "费德提克"
      }
     ],
     "reasons": [
@@ -5203,23 +5747,23 @@
    },
    {
     "category": "英雄专属",
-    "templateId": "meta-无双挑战-菲奥娜-4",
+    "templateId": "meta-无双挑战-菲奥娜-14",
     "templateName": "无双挑战菲奥娜机制路线",
-    "conditionScore": 65.1,
+    "conditionScore": 59.6,
     "fitGain": 0,
     "evidenceLevel": "L2 模型候选",
     "metrics": {
      "meanUtility": 120.1,
      "interval95": [
-      108.9,
-      131.3
+      109.1,
+      131.2
      ],
-     "cvar10": 110.1,
-     "top1Rate": 1.5,
-     "top5Rate": 51.8,
-     "topQuartileRate": 51.8,
-     "failureRate": 0.2,
-     "robustness": 65.1
+     "cvar10": 110.3,
+     "top1Rate": 1,
+     "top5Rate": 32.8,
+     "topQuartileRate": 47.4,
+     "failureRate": 0.3,
+     "robustness": 59.6
     },
     "gates": [
      {
@@ -5237,23 +5781,91 @@
    },
    {
     "category": "英雄专属",
-    "templateId": "meta-旺盛精力-悠米-6",
-    "templateName": "旺盛精力悠米机制路线",
-    "conditionScore": 61.8,
+    "templateId": "meta-双重气泡-佐伊-4",
+    "templateName": "双重气泡佐伊机制路线",
+    "conditionScore": 56.7,
     "fitGain": 0,
     "evidenceLevel": "L2 模型候选",
     "metrics": {
-     "meanUtility": 119.1,
+     "meanUtility": 119.7,
+     "interval95": [
+      109.7,
+      130.1
+     ],
+     "cvar10": 110.5,
+     "top1Rate": 0.6,
+     "top5Rate": 29.2,
+     "topQuartileRate": 41.5,
+     "failureRate": 0.2,
+     "robustness": 56.7
+    },
+    "gates": [
+     {
+      "kind": "符文",
+      "value": "双重气泡"
+     },
+     {
+      "kind": "棋子",
+      "value": "佐伊"
+     }
+    ],
+    "reasons": [
+     "专属机制按有/无强化反事实差分生成"
+    ]
+   },
+   {
+    "category": "英雄专属",
+    "templateId": "meta-咒能高涨-伊泽瑞尔-17",
+    "templateName": "咒能高涨伊泽瑞尔机制路线",
+    "conditionScore": 53.9,
+    "fitGain": 0,
+    "evidenceLevel": "L2 模型候选",
+    "metrics": {
+     "meanUtility": 119.4,
+     "interval95": [
+      108.9,
+      130.5
+     ],
+     "cvar10": 109.9,
+     "top1Rate": 0.1,
+     "top5Rate": 24.9,
+     "topQuartileRate": 37.5,
+     "failureRate": 0.2,
+     "robustness": 53.9
+    },
+    "gates": [
+     {
+      "kind": "符文",
+      "value": "咒能高涨"
+     },
+     {
+      "kind": "棋子",
+      "value": "伊泽瑞尔"
+     }
+    ],
+    "reasons": [
+     "专属机制按有/无强化反事实差分生成"
+    ]
+   },
+   {
+    "category": "英雄专属",
+    "templateId": "meta-旺盛精力-佐伊-7",
+    "templateName": "旺盛精力佐伊机制路线",
+    "conditionScore": 51.1,
+    "fitGain": 0,
+    "evidenceLevel": "L2 模型候选",
+    "metrics": {
+     "meanUtility": 118.7,
      "interval95": [
       108.4,
-      130
+      128.9
      ],
-     "cvar10": 109.5,
-     "top1Rate": 2.7,
-     "top5Rate": 46.9,
-     "topQuartileRate": 46.9,
-     "failureRate": 0.4,
-     "robustness": 61.8
+     "cvar10": 109.4,
+     "top1Rate": 0.4,
+     "top5Rate": 20.8,
+     "topQuartileRate": 33.5,
+     "failureRate": 0.3,
+     "robustness": 51.1
     },
     "gates": [
      {
@@ -5271,23 +5883,125 @@
    },
    {
     "category": "英雄专属",
-    "templateId": "meta-扩散射击-薇恩-3",
-    "templateName": "扩散射击薇恩机制路线",
-    "conditionScore": 58,
+    "templateId": "meta-旺盛精力-德莱文-10",
+    "templateName": "旺盛精力德莱文机制路线",
+    "conditionScore": 50.6,
     "fitGain": 0,
     "evidenceLevel": "L2 模型候选",
     "metrics": {
+     "meanUtility": 118.8,
+     "interval95": [
+      108.1,
+      129.8
+     ],
+     "cvar10": 109,
+     "top1Rate": 0.7,
+     "top5Rate": 21.6,
+     "topQuartileRate": 32.6,
+     "failureRate": 0.7,
+     "robustness": 50.6
+    },
+    "gates": [
+     {
+      "kind": "符文",
+      "value": "旺盛精力"
+     },
+     {
+      "kind": "棋子",
+      "value": "悠米"
+     }
+    ],
+    "reasons": [
+     "专属机制按有/无强化反事实差分生成"
+    ]
+   },
+   {
+    "category": "英雄专属",
+    "templateId": "meta-姐妹-金克丝-21",
+    "templateName": "姐妹金克丝机制路线",
+    "conditionScore": 47,
+    "fitGain": 0,
+    "evidenceLevel": "L1.5 高敏感假设",
+    "metrics": {
      "meanUtility": 118.1,
      "interval95": [
-      107.3,
-      128.9
+      107.5,
+      129.3
      ],
-     "cvar10": 108.4,
-     "top1Rate": 0.3,
-     "top5Rate": 41.9,
-     "topQuartileRate": 41.9,
+     "cvar10": 108.6,
+     "top1Rate": 0.5,
+     "top5Rate": 16.7,
+     "topQuartileRate": 26.7,
+     "failureRate": 0.6,
+     "robustness": 47
+    },
+    "gates": [
+     {
+      "kind": "符文",
+      "value": "姐妹"
+     },
+     {
+      "kind": "棋子",
+      "value": "金克丝+蔚"
+     }
+    ],
+    "reasons": [
+     "专属机制按有/无强化反事实差分生成"
+    ]
+   },
+   {
+    "category": "英雄专属",
+    "templateId": "meta-绝对堕落-佐伊-2",
+    "templateName": "绝对堕落佐伊机制路线",
+    "conditionScore": 46.8,
+    "fitGain": 0,
+    "evidenceLevel": "L1.5 高敏感假设",
+    "metrics": {
+     "meanUtility": 117.9,
+     "interval95": [
+      107.7,
+      128.4
+     ],
+     "cvar10": 108.7,
+     "top1Rate": 0,
+     "top5Rate": 16.4,
+     "topQuartileRate": 26,
+     "failureRate": 0.6,
+     "robustness": 46.8
+    },
+    "gates": [
+     {
+      "kind": "符文",
+      "value": "绝对堕落"
+     },
+     {
+      "kind": "棋子",
+      "value": "费德提克"
+     }
+    ],
+    "reasons": [
+     "专属机制按有/无强化反事实差分生成"
+    ]
+   },
+   {
+    "category": "英雄专属",
+    "templateId": "meta-扩散射击-薇恩-9",
+    "templateName": "扩散射击薇恩机制路线",
+    "conditionScore": 46.7,
+    "fitGain": 0,
+    "evidenceLevel": "L1.5 高敏感假设",
+    "metrics": {
+     "meanUtility": 118.1,
+     "interval95": [
+      107,
+      128.8
+     ],
+     "cvar10": 108.3,
+     "top1Rate": 0.1,
+     "top5Rate": 15.9,
+     "topQuartileRate": 26.8,
      "failureRate": 0.8,
-     "robustness": 58
+     "robustness": 46.7
     },
     "gates": [
      {
@@ -5305,227 +6019,23 @@
    },
    {
     "category": "英雄专属",
-    "templateId": "meta-姐妹-金克丝-7",
-    "templateName": "姐妹金克丝机制路线",
-    "conditionScore": 57,
+    "templateId": "meta-分享驭铁术-贾克斯-16",
+    "templateName": "分享驭铁术贾克斯机制路线",
+    "conditionScore": 45.2,
     "fitGain": 0,
-    "evidenceLevel": "L2 模型候选",
+    "evidenceLevel": "L1.5 高敏感假设",
     "metrics": {
-     "meanUtility": 118.2,
+     "meanUtility": 117.7,
      "interval95": [
-      107.7,
-      129.2
-     ],
-     "cvar10": 108.7,
-     "top1Rate": 1.1,
-     "top5Rate": 39.9,
-     "topQuartileRate": 39.9,
-     "failureRate": 0.5,
-     "robustness": 57
-    },
-    "gates": [
-     {
-      "kind": "符文",
-      "value": "姐妹"
-     },
-     {
-      "kind": "棋子",
-      "value": "金克丝+蔚"
-     }
-    ],
-    "reasons": [
-     "专属机制按有/无强化反事实差分生成"
-    ]
-   },
-   {
-    "category": "英雄专属",
-    "templateId": "meta-宗师训练-贾克斯-5",
-    "templateName": "宗师训练贾克斯机制路线",
-    "conditionScore": 51.8,
-    "fitGain": 0,
-    "evidenceLevel": "L2 模型候选",
-    "metrics": {
-     "meanUtility": 117.5,
-     "interval95": [
-      107.2,
+      107.5,
       127.9
      ],
-     "cvar10": 108.2,
-     "top1Rate": 1.8,
-     "top5Rate": 31.9,
-     "topQuartileRate": 31.9,
-     "failureRate": 0.9,
-     "robustness": 51.8
-    },
-    "gates": [
-     {
-      "kind": "符文",
-      "value": "宗师训练"
-     },
-     {
-      "kind": "棋子",
-      "value": "贾克斯"
-     }
-    ],
-    "reasons": [
-     "专属机制按有/无强化反事实差分生成"
-    ]
-   },
-   {
-    "category": "英雄专属",
-    "templateId": "meta-德莱文联盟-德莱文-8",
-    "templateName": "德莱文联盟德莱文机制路线",
-    "conditionScore": 44.7,
-    "fitGain": 0,
-    "evidenceLevel": "L1.5 高敏感假设",
-    "metrics": {
-     "meanUtility": 116.9,
-     "interval95": [
-      106.1,
-      128
-     ],
-     "cvar10": 107.3,
-     "top1Rate": 0.6,
-     "top5Rate": 21,
-     "topQuartileRate": 21,
-     "failureRate": 1.2,
-     "robustness": 44.7
-    },
-    "gates": [
-     {
-      "kind": "符文",
-      "value": "德莱文联盟"
-     },
-     {
-      "kind": "棋子",
-      "value": "德莱文"
-     }
-    ],
-    "reasons": [
-     "专属机制按有/无强化反事实差分生成"
-    ]
-   },
-   {
-    "category": "英雄专属",
-    "templateId": "official-4576",
-    "templateName": "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
-    "conditionScore": 44.7,
-    "fitGain": 0,
-    "evidenceLevel": "L1.5 高敏感假设",
-    "metrics": {
-     "meanUtility": 115.8,
-     "interval95": [
-      105.1,
-      126.8
-     ],
-     "cvar10": 106.2,
+     "cvar10": 108.5,
      "top1Rate": 0.1,
-     "top5Rate": 22.7,
-     "topQuartileRate": 22.7,
-     "failureRate": 2.5,
-     "robustness": 44.7
-    },
-    "gates": [
-     {
-      "kind": "符文",
-      "value": "姐妹"
-     },
-     {
-      "kind": "棋子",
-      "value": "金克丝+蔚"
-     }
-    ],
-    "reasons": [
-     "专属机制按有/无强化反事实差分生成"
-    ]
-   },
-   {
-    "category": "英雄专属",
-    "templateId": "meta-适应性防守-卡蜜尔-12",
-    "templateName": "适应性防守卡蜜尔机制路线",
-    "conditionScore": 42.6,
-    "fitGain": 0,
-    "evidenceLevel": "L1.5 高敏感假设",
-    "metrics": {
-     "meanUtility": 116.5,
-     "interval95": [
-      105.9,
-      127.7
-     ],
-     "cvar10": 106.9,
-     "top1Rate": 0.3,
-     "top5Rate": 18.2,
-     "topQuartileRate": 18.2,
-     "failureRate": 1.7,
-     "robustness": 42.6
-    },
-    "gates": [
-     {
-      "kind": "符文",
-      "value": "适应性防守"
-     },
-     {
-      "kind": "棋子",
-      "value": "卡蜜尔"
-     }
-    ],
-    "reasons": [
-     "专属机制按有/无强化反事实差分生成"
-    ]
-   },
-   {
-    "category": "英雄专属",
-    "templateId": "meta-评级与交火-莎弥拉-2",
-    "templateName": "评级与交火莎弥拉机制路线",
-    "conditionScore": 39.7,
-    "fitGain": 0,
-    "evidenceLevel": "L1.5 高敏感假设",
-    "metrics": {
-     "meanUtility": 114.3,
-     "interval95": [
-      102.9,
-      124.8
-     ],
-     "cvar10": 104.2,
-     "top1Rate": 0,
-     "top5Rate": 17.5,
-     "topQuartileRate": 17.5,
-     "failureRate": 5.3,
-     "robustness": 39.7
-    },
-    "gates": [
-     {
-      "kind": "符文",
-      "value": "评级与交火"
-     },
-     {
-      "kind": "棋子",
-      "value": "莎弥拉"
-     }
-    ],
-    "reasons": [
-     "专属机制按有/无强化反事实差分生成"
-    ]
-   },
-   {
-    "category": "英雄专属",
-    "templateId": "meta-分享驭铁术-芮尔-13",
-    "templateName": "分享驭铁术芮尔机制路线",
-    "conditionScore": 21.3,
-    "fitGain": 0,
-    "evidenceLevel": "L1.5 高敏感假设",
-    "metrics": {
-     "meanUtility": 109,
-     "interval95": [
-      98,
-      120.1
-     ],
-     "cvar10": 99,
-     "top1Rate": 0,
-     "top5Rate": 0.1,
-     "topQuartileRate": 0.1,
-     "failureRate": 25,
-     "robustness": 21.3
+     "top5Rate": 12.9,
+     "topQuartileRate": 24.2,
+     "failureRate": 0.5,
+     "robustness": 45.2
     },
     "gates": [
      {
@@ -5543,32 +6053,32 @@
    },
    {
     "category": "英雄专属",
-    "templateId": "meta-净化之金钟罩-李青-14",
-    "templateName": "净化之金钟罩李青机制路线",
-    "conditionScore": 20.2,
+    "templateId": "meta-透光屏障-佐伊-8",
+    "templateName": "透光屏障佐伊机制路线",
+    "conditionScore": 43.9,
     "fitGain": 0,
     "evidenceLevel": "L1.5 高敏感假设",
     "metrics": {
-     "meanUtility": 108.6,
+     "meanUtility": 117.4,
      "interval95": [
-      97.4,
-      120.2
+      107.3,
+      128
      ],
-     "cvar10": 98.3,
+     "cvar10": 108.3,
      "top1Rate": 0,
-     "top5Rate": 0.1,
-     "topQuartileRate": 0.1,
-     "failureRate": 27.6,
-     "robustness": 20.2
+     "top5Rate": 12.5,
+     "topQuartileRate": 21.6,
+     "failureRate": 0.7,
+     "robustness": 43.9
     },
     "gates": [
      {
       "kind": "符文",
-      "value": "净化之金钟罩"
+      "value": "透光屏障"
      },
      {
       "kind": "棋子",
-      "value": "李青"
+      "value": "拉克丝"
      }
     ],
     "reasons": [
@@ -5577,32 +6087,32 @@
    },
    {
     "category": "英雄专属",
-    "templateId": "meta-重甲龙龟-拉莫斯-11",
-    "templateName": "重甲龙龟拉莫斯机制路线",
-    "conditionScore": 13.6,
+    "templateId": "meta-旺盛精力-贾克斯-11",
+    "templateName": "旺盛精力贾克斯机制路线",
+    "conditionScore": 43.5,
     "fitGain": 0,
     "evidenceLevel": "L1.5 高敏感假设",
     "metrics": {
-     "meanUtility": 105.3,
+     "meanUtility": 117.3,
      "interval95": [
-      94.8,
-      115.5
+      107.2,
+      127.7
      ],
-     "cvar10": 95.9,
-     "top1Rate": 0,
-     "top5Rate": 0,
-     "topQuartileRate": 0,
-     "failureRate": 47.8,
-     "robustness": 13.6
+     "cvar10": 108.1,
+     "top1Rate": 0.3,
+     "top5Rate": 11.2,
+     "topQuartileRate": 21.5,
+     "failureRate": 0.7,
+     "robustness": 43.5
     },
     "gates": [
      {
       "kind": "符文",
-      "value": "重甲龙龟"
+      "value": "旺盛精力"
      },
      {
       "kind": "棋子",
-      "value": "拉莫斯"
+      "value": "悠米"
      }
     ],
     "reasons": [
@@ -5611,23 +6121,227 @@
    },
    {
     "category": "英雄专属",
-    "templateId": "meta-星界屏障-科加斯-9",
-    "templateName": "星界屏障科加斯机制路线",
-    "conditionScore": 8.2,
+    "templateId": "meta-宗师训练-德莱文-20",
+    "templateName": "宗师训练德莱文机制路线",
+    "conditionScore": 41.6,
     "fitGain": 0,
     "evidenceLevel": "L1.5 高敏感假设",
     "metrics": {
-     "meanUtility": 102.6,
+     "meanUtility": 117.2,
      "interval95": [
-      92.7,
-      112.9
+      106.4,
+      128.4
      ],
-     "cvar10": 93.7,
+     "cvar10": 107.6,
      "top1Rate": 0,
-     "top5Rate": 0,
-     "topQuartileRate": 0,
-     "failureRate": 67.2,
-     "robustness": 8.2
+     "top5Rate": 9.6,
+     "topQuartileRate": 18.6,
+     "failureRate": 1.1,
+     "robustness": 41.6
+    },
+    "gates": [
+     {
+      "kind": "符文",
+      "value": "宗师训练"
+     },
+     {
+      "kind": "棋子",
+      "value": "贾克斯"
+     }
+    ],
+    "reasons": [
+     "专属机制按有/无强化反事实差分生成"
+    ]
+   },
+   {
+    "category": "英雄专属",
+    "templateId": "meta-天赋异禀-佐伊-13",
+    "templateName": "天赋异禀佐伊机制路线",
+    "conditionScore": 41.2,
+    "fitGain": 0,
+    "evidenceLevel": "L1.5 高敏感假设",
+    "metrics": {
+     "meanUtility": 116.8,
+     "interval95": [
+      106.6,
+      127.2
+     ],
+     "cvar10": 107.7,
+     "top1Rate": 0.1,
+     "top5Rate": 8.8,
+     "topQuartileRate": 17.5,
+     "failureRate": 0.8,
+     "robustness": 41.2
+    },
+    "gates": [
+     {
+      "kind": "符文",
+      "value": "天赋异禀"
+     },
+     {
+      "kind": "棋子",
+      "value": "尼菈"
+     }
+    ],
+    "reasons": [
+     "专属机制按有/无强化反事实差分生成"
+    ]
+   },
+   {
+    "category": "英雄专属",
+    "templateId": "meta-德莱文联盟-德莱文-15",
+    "templateName": "德莱文联盟德莱文机制路线",
+    "conditionScore": 40.3,
+    "fitGain": 0,
+    "evidenceLevel": "L1.5 高敏感假设",
+    "metrics": {
+     "meanUtility": 116.9,
+     "interval95": [
+      106.3,
+      127.9
+     ],
+     "cvar10": 107.4,
+     "top1Rate": 0.1,
+     "top5Rate": 7.5,
+     "topQuartileRate": 16.9,
+     "failureRate": 1.5,
+     "robustness": 40.3
+    },
+    "gates": [
+     {
+      "kind": "符文",
+      "value": "德莱文联盟"
+     },
+     {
+      "kind": "棋子",
+      "value": "德莱文"
+     }
+    ],
+    "reasons": [
+     "专属机制按有/无强化反事实差分生成"
+    ]
+   },
+   {
+    "category": "英雄专属",
+    "templateId": "meta-正义距离-德莱文-12",
+    "templateName": "正义距离德莱文机制路线",
+    "conditionScore": 39.4,
+    "fitGain": 0,
+    "evidenceLevel": "L1.5 高敏感假设",
+    "metrics": {
+     "meanUtility": 116.6,
+     "interval95": [
+      106,
+      127.8
+     ],
+     "cvar10": 107,
+     "top1Rate": 0.3,
+     "top5Rate": 8.4,
+     "topQuartileRate": 14.6,
+     "failureRate": 1.4,
+     "robustness": 39.4
+    },
+    "gates": [
+     {
+      "kind": "符文",
+      "value": "正义距离"
+     },
+     {
+      "kind": "棋子",
+      "value": "凯尔"
+     }
+    ],
+    "reasons": [
+     "专属机制按有/无强化反事实差分生成"
+    ]
+   },
+   {
+    "category": "英雄专属",
+    "templateId": "meta-适应性防守-卡蜜尔-19",
+    "templateName": "适应性防守卡蜜尔机制路线",
+    "conditionScore": 39.4,
+    "fitGain": 0,
+    "evidenceLevel": "L1.5 高敏感假设",
+    "metrics": {
+     "meanUtility": 116.5,
+     "interval95": [
+      105.8,
+      127.4
+     ],
+     "cvar10": 106.9,
+     "top1Rate": 0.1,
+     "top5Rate": 7.8,
+     "topQuartileRate": 15.4,
+     "failureRate": 1.8,
+     "robustness": 39.4
+    },
+    "gates": [
+     {
+      "kind": "符文",
+      "value": "适应性防守"
+     },
+     {
+      "kind": "棋子",
+      "value": "卡蜜尔"
+     }
+    ],
+    "reasons": [
+     "专属机制按有/无强化反事实差分生成"
+    ]
+   },
+   {
+    "category": "英雄专属",
+    "templateId": "official-4576",
+    "templateName": "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
+    "conditionScore": 38.6,
+    "fitGain": 0,
+    "evidenceLevel": "L1.5 高敏感假设",
+    "metrics": {
+     "meanUtility": 115.8,
+     "interval95": [
+      105.1,
+      126.8
+     ],
+     "cvar10": 106.2,
+     "top1Rate": 0.1,
+     "top5Rate": 8.6,
+     "topQuartileRate": 14.5,
+     "failureRate": 2.5,
+     "robustness": 38.6
+    },
+    "gates": [
+     {
+      "kind": "符文",
+      "value": "姐妹"
+     },
+     {
+      "kind": "棋子",
+      "value": "金克丝+蔚"
+     }
+    ],
+    "reasons": [
+     "专属机制按有/无强化反事实差分生成"
+    ]
+   },
+   {
+    "category": "英雄专属",
+    "templateId": "meta-星界屏障-德莱文-18",
+    "templateName": "星界屏障德莱文机制路线",
+    "conditionScore": 37.3,
+    "fitGain": 0,
+    "evidenceLevel": "L1.5 高敏感假设",
+    "metrics": {
+     "meanUtility": 116.2,
+     "interval95": [
+      105.6,
+      127
+     ],
+     "cvar10": 106.7,
+     "top1Rate": 0,
+     "top5Rate": 4.2,
+     "topQuartileRate": 12.2,
+     "failureRate": 1.7,
+     "robustness": 37.3
     },
     "gates": [
      {
@@ -5645,23 +6359,57 @@
    },
    {
     "category": "英雄专属",
-    "templateId": "official-1589",
-    "templateName": "金钟罩李青4爱心使者3秘术卫士2AI程序",
-    "conditionScore": 2.8,
+    "templateId": "meta-评级与交火-莎弥拉-6",
+    "templateName": "评级与交火莎弥拉机制路线",
+    "conditionScore": 33.1,
     "fitGain": 0,
     "evidenceLevel": "L1.5 高敏感假设",
     "metrics": {
-     "meanUtility": 98.8,
+     "meanUtility": 114.2,
      "interval95": [
-      88.8,
-      108.8
+      103,
+      124.5
      ],
-     "cvar10": 89.9,
+     "cvar10": 104.3,
+     "top1Rate": 0,
+     "top5Rate": 3.5,
+     "topQuartileRate": 7.9,
+     "failureRate": 5.5,
+     "robustness": 33.1
+    },
+    "gates": [
+     {
+      "kind": "符文",
+      "value": "评级与交火"
+     },
+     {
+      "kind": "棋子",
+      "value": "莎弥拉"
+     }
+    ],
+    "reasons": [
+     "专属机制按有/无强化反事实差分生成"
+    ]
+   },
+   {
+    "category": "英雄专属",
+    "templateId": "meta-净化之金钟罩-李青-22",
+    "templateName": "净化之金钟罩李青机制路线",
+    "conditionScore": 20,
+    "fitGain": 0,
+    "evidenceLevel": "L1.5 高敏感假设",
+    "metrics": {
+     "meanUtility": 108.6,
+     "interval95": [
+      97.3,
+      120.2
+     ],
+     "cvar10": 98.4,
      "top1Rate": 0,
      "top5Rate": 0,
      "topQuartileRate": 0,
-     "failureRate": 88.9,
-     "robustness": 2.8
+     "failureRate": 28.2,
+     "robustness": 20
     },
     "gates": [
      {
@@ -5671,6 +6419,40 @@
      {
       "kind": "棋子",
       "value": "李青"
+     }
+    ],
+    "reasons": [
+     "专属机制按有/无强化反事实差分生成"
+    ]
+   },
+   {
+    "category": "英雄专属",
+    "templateId": "meta-重甲龙龟-拉莫斯-23",
+    "templateName": "重甲龙龟拉莫斯机制路线",
+    "conditionScore": 13.4,
+    "fitGain": 0,
+    "evidenceLevel": "L1.5 高敏感假设",
+    "metrics": {
+     "meanUtility": 105.3,
+     "interval95": [
+      94.9,
+      116.2
+     ],
+     "cvar10": 96,
+     "top1Rate": 0,
+     "top5Rate": 0,
+     "topQuartileRate": 0,
+     "failureRate": 48.8,
+     "robustness": 13.4
+    },
+    "gates": [
+     {
+      "kind": "符文",
+      "value": "重甲龙龟"
+     },
+     {
+      "kind": "棋子",
+      "value": "拉莫斯"
      }
     ],
     "reasons": [
@@ -6000,38 +6782,6 @@
    },
    {
     "category": "战力",
-    "templateId": "official-4576",
-    "templateName": "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
-    "conditionScore": 74.8,
-    "conditionLift": 30.1,
-    "fitGain": 18.4,
-    "evidenceLevel": "L1.5 高敏感假设",
-    "metrics": {
-     "meanUtility": 115.8,
-     "interval95": [
-      105.1,
-      126.8
-     ],
-     "cvar10": 106.2,
-     "top1Rate": 0.1,
-     "top5Rate": 22.7,
-     "topQuartileRate": 22.7,
-     "failureRate": 2.5,
-     "robustness": 44.7
-    },
-    "gates": [
-     {
-      "kind": "符文",
-      "value": "公理圆弧II"
-     }
-    ],
-    "reasons": [
-     "回蓝命中法系施法轴",
-     "文本数值折算+8.4适配"
-    ]
-   },
-   {
-    "category": "战力",
     "templateId": "official-4548",
     "templateName": "决斗剑姬6决斗大师2福牛守护者",
     "conditionScore": 74.1,
@@ -6060,6 +6810,38 @@
     "reasons": [
      "前排支持持续战触发",
      "文本数值折算+7适配"
+    ]
+   },
+   {
+    "category": "战力",
+    "templateId": "official-4576",
+    "templateName": "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
+    "conditionScore": 72,
+    "conditionLift": 33.4,
+    "fitGain": 18.4,
+    "evidenceLevel": "L1.5 高敏感假设",
+    "metrics": {
+     "meanUtility": 115.8,
+     "interval95": [
+      105.1,
+      126.8
+     ],
+     "cvar10": 106.2,
+     "top1Rate": 0.1,
+     "top5Rate": 8.6,
+     "topQuartileRate": 14.5,
+     "failureRate": 2.5,
+     "robustness": 38.6
+    },
+    "gates": [
+     {
+      "kind": "符文",
+      "value": "公理圆弧II"
+     }
+    ],
+    "reasons": [
+     "回蓝命中法系施法轴",
+     "文本数值折算+8.4适配"
     ]
    },
    {
@@ -7070,38 +7852,6 @@
    },
    {
     "category": "经济",
-    "templateId": "official-4576",
-    "templateName": "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
-    "conditionScore": 71.8,
-    "conditionLift": 27.1,
-    "fitGain": 16.6,
-    "evidenceLevel": "L1.5 高敏感假设",
-    "metrics": {
-     "meanUtility": 115.8,
-     "interval95": [
-      105.1,
-      126.8
-     ],
-     "cvar10": 106.2,
-     "top1Rate": 0.1,
-     "top5Rate": 22.7,
-     "topQuartileRate": 22.7,
-     "failureRate": 2.5,
-     "robustness": 44.7
-    },
-    "gates": [
-     {
-      "kind": "符文",
-      "value": "快速思考"
-     }
-    ],
-    "reasons": [
-     "刷新经济适配金克丝3星",
-     "金币折算提升成型可达性"
-    ]
-   },
-   {
-    "category": "经济",
     "templateId": "official-1412",
     "templateName": "超英猫咪3超级英雄3星之守护者2爱心使者",
     "conditionScore": 71.7,
@@ -7193,6 +7943,38 @@
     ],
     "reasons": [
      "刷新经济适配贾克斯3星",
+     "金币折算提升成型可达性"
+    ]
+   },
+   {
+    "category": "经济",
+    "templateId": "official-4576",
+    "templateName": "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
+    "conditionScore": 68.7,
+    "conditionLift": 30.1,
+    "fitGain": 16.6,
+    "evidenceLevel": "L1.5 高敏感假设",
+    "metrics": {
+     "meanUtility": 115.8,
+     "interval95": [
+      105.1,
+      126.8
+     ],
+     "cvar10": 106.2,
+     "top1Rate": 0.1,
+     "top5Rate": 8.6,
+     "topQuartileRate": 14.5,
+     "failureRate": 2.5,
+     "robustness": 38.6
+    },
+    "gates": [
+     {
+      "kind": "符文",
+      "value": "快速思考"
+     }
+    ],
+    "reasons": [
+     "刷新经济适配金克丝3星",
      "金币折算提升成型可达性"
     ]
    },
@@ -7614,8 +8396,8 @@
     "category": "装备",
     "templateId": "official-4576",
     "templateName": "超英姐妹金克丝3超级英雄3秘术卫士2斗士",
-    "conditionScore": 71.5,
-    "conditionLift": 26.8,
+    "conditionScore": 68.4,
+    "conditionLift": 29.8,
     "fitGain": 16.4,
     "evidenceLevel": "L1.5 高敏感假设",
     "metrics": {
@@ -7626,10 +8408,10 @@
      ],
      "cvar10": 106.2,
      "top1Rate": 0.1,
-     "top5Rate": 22.7,
-     "topQuartileRate": 22.7,
+     "top5Rate": 8.6,
+     "topQuartileRate": 14.5,
      "failureRate": 2.5,
-     "robustness": 44.7
+     "robustness": 38.6
     },
     "gates": [
      {

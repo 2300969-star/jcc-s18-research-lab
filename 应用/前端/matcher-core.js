@@ -60,6 +60,10 @@
     activeTraitPerUnit: 3,
     completedItem: 5,
     componentItem: 2,
+    heroAugmentUnitBonus: 10,
+    heroAugmentAreaBonus: 4,
+    heroAugmentControlPerSecond: 1.5,
+    heroAugmentControlCap: 6,
     boardLocationTieBreak: 1.5,
     benchLocationTieBreak: 0.5,
     beamWidth: 640,
@@ -107,6 +111,19 @@
     futureTransitionCap: 70,
     futureCompatibilityFloor: 0.3,
     futureTransitionPenalty: 0.35,
+  });
+  const ROUTE_STABILITY_MODEL = Object.freeze({
+    minimumLevel: 4,
+    normalSwitchMargin: 12,
+    emergencySwitchMargin: 6,
+    sameFamilySwitchMargin: 8,
+  });
+  const HEALTH_PRESSURE_MODEL = Object.freeze({
+    recentWindow: 3,
+    heavyLoss: 15,
+    severeLoss: 20,
+    earlyStabilizeHealth: 55,
+    streakStabilizeHealth: 60,
   });
   const ROUND_ORDER = ["2-1", "2-5", "3-1", "3-2", "3-5", "4-1", "4-2", "4-5", "5-1", "5-5", "6-1"];
   // 散件方向纯度达到 2/3 时，给同方向主C路线 10% 确定性加成。
@@ -510,13 +527,50 @@
     const state = selected && selected.heroAugment || {};
     const chosen = state.status === "resolved" && state.selected;
     if (!chosen || !chosen.name || !chosen.hero) return null;
+    const semantics = heroAugmentSemantics(chosen);
+    if (!semantics.coreDefining || semantics.preferredRole !== "mainCarry") return null;
     const mainCarry = routeMainCarry(t);
     if (!mainCarry || mainCarry !== chosen.hero) return null;
     const options = (t && t.heroAugmentPlan && t.heroAugmentPlan.options || [])
       .filter(row => row && row.name && row.hero);
+    const requiredNames = new Set(t && t.heroAugmentPlan && t.heroAugmentPlan.requiredNames || []);
+    if (requiredNames.size && !requiredNames.has(chosen.name)) return null;
     const option = options.find(row => row.name === chosen.name && row.hero === mainCarry);
     if (!option) return null;
     return { chosen, option, mainCarry };
+  }
+
+  function heroAugmentSemantics(chosen) {
+    if (chosen && chosen.strategicRole && typeof chosen.coreDefining === "boolean") {
+      return {
+        strategicRole: chosen.strategicRole,
+        coreDefining: chosen.coreDefining,
+        preferredRole: chosen.preferredRole || (chosen.coreDefining ? "mainCarry" : "utility"),
+        teamWide: Boolean(chosen.teamWide),
+      };
+    }
+    const desc = String(chosen && chosen.desc || "").replace(/\s+/g, " ");
+    if (!desc) return { strategicRole: "carry", coreDefining: true, preferredRole: "mainCarry", teamWide: false };
+    const teamWide = /你的弈子们|所有友军|全体友军|你的队伍|己方[^.。；]*弈子/.test(desc);
+    const allyAura = /(?:同一排|相距最近|邻格|附近)[^.。；]{0,24}(?:友军|友方英雄)|友军们?(?:会|获得|提供|免疫)/.test(desc);
+    const personalDamage = /技能伤害提升|多造成|造成[^.。；]{0,20}伤害|技能[^.。；]{0,30}(?:造成|弹射|发射|额外施放|更大|更广)|攻击[^.。；]{0,30}(?:造成|发射|附带)|普攻变为|真实伤害|真伤/.test(desc);
+    if (teamWide || (allyAura && !personalDamage)) return { strategicRole: "support", coreDefining: false, preferredRole: "support", teamWide: true };
+    if (/金币|利息|商店|刷新|免费|宝藏/.test(desc) && !personalDamage) {
+      return { strategicRole: "economy", coreDefining: false, preferredRole: "utility", teamWide: false };
+    }
+    if (/眩晕|晕眩|击飞|冰冷|破法|击退|免疫控制/.test(desc) && !personalDamage) {
+      return { strategicRole: "utility", coreDefining: false, preferredRole: "utility", teamWide: false };
+    }
+    const offense = personalDamage || /攻击速度|攻速|物理加成|法术加成|攻击力|伤害增幅|技能可以暴击|攻击距离|射程|全能汲取|斩杀|吞噬|消耗降低/.test(desc);
+    if (offense) return { strategicRole: "carry", coreDefining: true, preferredRole: "mainCarry", teamWide: false };
+    if (/额外生命值|最大生命值|护甲|魔法抗性|魔抗|护盾|伤害减免/.test(desc)) {
+      return { strategicRole: "frontline", coreDefining: true, preferredRole: "frontline", teamWide: false };
+    }
+    return { strategicRole: "utility", coreDefining: false, preferredRole: "utility", teamWide: false };
+  }
+
+  function heroAugmentStrategicRole(chosen) {
+    return heroAugmentSemantics(chosen).strategicRole;
   }
 
   function heroAugmentRoleContractValue(weights) {
@@ -532,10 +586,14 @@
     const requiredNames = new Set(plan.requiredNames || []);
     const required = options.filter(row => requiredNames.has(row.name));
     const mainCarry = plan.mainCarry || (profile(t).mainCarry || {}).name || "";
-    const mainOptions = options.filter(row => row.hero === mainCarry);
+    const mainOptions = options.filter(row => row.hero === mainCarry && heroAugmentSemantics(row).coreDefining
+      && heroAugmentSemantics(row).preferredRole === "mainCarry");
     const selectedAugments = new Set(selected && selected.augments || []);
     const globalHeroAugment = selected && selected.heroAugment || {};
-    const selectedHit = options.find(row => selectedAugments.has(row.name));
+    const selectedOption = options.find(row => selectedAugments.has(row.name));
+    const selectedHit = required.length
+      ? required.find(row => selectedAugments.has(row.name))
+      : selectedOption;
     const candidates = required.length ? required : (mainOptions.length ? mainOptions : options);
     const eligible = round === "unknown" ? [] : candidates.filter(row => costs.includes(Number(row.cost)));
     const excludedCosts = round === "unknown" ? [] : [1, 2, 3, 4, 5].filter(cost => !costs.includes(cost));
@@ -1233,12 +1291,29 @@
     const state = selected.heroAugment || {};
     const chosen = state.selected;
     const effect = chosen && chosen.effect || {};
-    if (state.status !== "resolved" || (!effect.stunSeconds && !effect.areaExpanded)) return null;
+    if (state.status !== "resolved" || !chosen) return null;
     const target = effect.grantedHero || chosen.hero;
     const unitMap = profileUnitMap(t);
     const routeUnit = unitMap.get(target);
     const activeTraits = activeTraitMap(t);
     const traitOverlap = (chosen.traits || []).filter(name => activeTraits.has(name)).length;
+    const strategicRole = heroAugmentStrategicRole(chosen);
+    if (strategicRole === "support") {
+      if (!routeUnit) return null;
+      const desc = String(chosen.desc || "");
+      const armor = Number((desc.match(/(\d+)护甲/) || [])[1]) || 0;
+      const attackSpeed = Number((desc.match(/(\d+)%攻击速度/) || [])[1]) || 0;
+      const damageReduction = Number((desc.match(/伤害降低(\d+)/) || [])[1]) || 0;
+      const statValue = armor / 10 + attackSpeed / 8 + damageReduction / 6;
+      const bonus = Math.max(4, Math.min(12, Math.round(4 + statValue + Math.min(2, traitOverlap))));
+      return {
+        bonus,
+        fit: 1,
+        strategicRole,
+        text: `${chosen.name}团队机制：${target}负责启动全队增益，路线主C仍按当前装备、星级与承接强度决定+${bonus}`,
+      };
+    }
+    if (!effect.stunSeconds && !effect.areaExpanded) return null;
     // 有该英雄在成型阵容最适配；只共享羁绊时保留小额兼容性，不把所有路线都抬高。
     const fit = clamp((routeUnit ? 0.62 : 0.16) + Math.min(0.24, traitOverlap * 0.08), 0, 1);
     if (fit <= 0.2) return null;
@@ -1251,6 +1326,7 @@
     return {
       bonus,
       fit,
+      strategicRole,
       text: `${chosen.name}机制：${target}${effect.areaExpanded ? "范围扩大" : ""}${controlSeconds ? `${effect.areaExpanded ? "、" : ""}群控${controlSeconds}秒` : ""}，${role}适配+${bonus}`,
     };
   }
@@ -2172,6 +2248,21 @@
     return thresholds;
   }
 
+  function heroAugmentBoardBonus(name, selected) {
+    const chosen = selected && selected.heroAugment && selected.heroAugment.selected;
+    if (!chosen) return 0;
+    const effect = chosen.effect || {};
+    const boundHero = effect.grantedHero || chosen.hero;
+    if (!boundHero || name !== boundHero) return 0;
+    const controlBonus = Math.min(
+      BOARD_SOLVER_MODEL.heroAugmentControlCap,
+      Math.max(0, Number(effect.stunSeconds) || 0) * BOARD_SOLVER_MODEL.heroAugmentControlPerSecond
+    );
+    return BOARD_SOLVER_MODEL.heroAugmentUnitBonus
+      + (effect.areaExpanded ? BOARD_SOLVER_MODEL.heroAugmentAreaBonus : 0)
+      + controlBonus;
+  }
+
   function evaluateBoardUnits(units, selected, opts, thresholds) {
     const itemRows = normalizeSelectedItems(selected);
     const itemByHolder = new Map();
@@ -2187,7 +2278,7 @@
       const location = unit.location === "board" ? BOARD_SOLVER_MODEL.boardLocationTieBreak
         : unit.location === "bench" ? BOARD_SOLVER_MODEL.benchLocationTieBreak : 0;
       unitScore += (BOARD_SOLVER_MODEL.baseUnit + cost * BOARD_SOLVER_MODEL.costWeight) * starFactor
-        + (itemByHolder.get(unit.name) || 0) + location;
+        + (itemByHolder.get(unit.name) || 0) + heroAugmentBoardBonus(unit.name, selected) + location;
       unitTraitsForBoard(unit.name, opts).forEach(trait => traitCounts.set(trait, (traitCounts.get(trait) || 0) + 1));
     });
     const activeTraits = [];
@@ -2251,6 +2342,187 @@
       capacity,
       bench: candidates.filter(unit => !chosenNames.has(unit.name)).map(unit => starLabel(unit.name, unit.star)),
     };
+  }
+
+  function compactAugmentName(value) {
+    return String(value || "").replace(/[\s!！?？。,.，、]/g, "");
+  }
+
+  function augmentCatalogRow(name, opts) {
+    const target = compactAugmentName(name);
+    return ((opts && opts.augmentCatalog) || []).find(row => {
+      if (!row) return false;
+      return [row.name, ...(row.aliases || [])].some(value => compactAugmentName(value) === target);
+    }) || null;
+  }
+
+  function contextualBoardRows(selected, board) {
+    const rows = board && Array.isArray(board.unitRows) && board.unitRows.length
+      ? board.unitRows : normalizeSelectedUnits(selected && selected.units || []);
+    return rows.map(unit => ({
+      name: unit.name,
+      star: Number(unit.star) || 1,
+      location: unit.location || "unknown",
+    })).sort((a, b) => stableCompare(a.name, b.name));
+  }
+
+  function contextualUnitRole(name, execution) {
+    const template = execution && execution.template;
+    if (!template) return "";
+    const row = (profile(template).units || []).find(unit => unit && unit.name === name);
+    return String(row && row.role || "");
+  }
+
+  function contextualUnitRows(selected, board, execution, opts, purpose) {
+    const carry = board && board.unitRows && board.unitRows.find(unit => starLabel(unit.name, unit.star) === board.carry);
+    const boardCarry = carry && carry.name || String(board && board.carry || "").replace(/·\d星$/, "");
+    const routeCarry = routeMainCarry(execution && execution.template);
+    const itemRows = normalizeSelectedItems(selected || {});
+    const rangedTraits = new Set(["强袭枪手", "情报特工", "灵能使", "精英战士", "枪神", "爱心使者"]);
+    const frontlineTraits = new Set(["斗士", "护卫", "秘术卫士", "吉祥物"]);
+    return contextualBoardRows(selected, board).map(unit => {
+      const role = contextualUnitRole(unit.name, execution);
+      const traits = unitTraitsForBoard(unit.name, opts || {});
+      const heldItems = itemRows.filter(item => item.holder === unit.name).map(item => canonicalItem(item.name));
+      const damageItems = heldItems.filter(item => ATTACK.includes(item) || AP.includes(item)).length;
+      const tankItems = heldItems.filter(item => TANK.includes(item)).length;
+      const isCarry = unit.name === boardCarry || unit.name === routeCarry;
+      const backlineRole = /mainCarry|subCarry|主C|后排输出|utility/.test(role);
+      const frontlineRole = /frontline|主坦|副坦|战士/.test(role);
+      const ranged = traits.filter(trait => rangedTraits.has(trait)).length;
+      const frontline = traits.filter(trait => frontlineTraits.has(trait)).length;
+      let score = unitPrice(unit.name, opts || {}) + unit.star * 1.5;
+      if (isCarry) score += purpose === "mana" ? 14 : 12;
+      if (backlineRole) score += purpose === "mana" ? 7 : 8;
+      if (frontlineRole) score -= purpose === "mana" ? 5 : 7;
+      score += ranged * (purpose === "mana" ? 2 : 4);
+      score -= frontline * (purpose === "mana" ? 1.5 : 3);
+      score += damageItems * (purpose === "mana" ? 4 : 3);
+      score -= tankItems * (purpose === "mana" ? 1 : 2);
+      return { ...unit, role, traits, heldItems, isCarry, frontlineRole, score };
+    }).sort((a, b) => b.score - a.score || b.star - a.star || stableCompare(a.name, b.name));
+  }
+
+  function positioningAugmentAdvice(name, desc, selected, board, execution, opts) {
+    const rearMatch = desc.match(/后\s*(\d+)\s*排/);
+    if (!rearMatch || !/攻击距离|射程/.test(desc)) return null;
+    const ranked = contextualUnitRows(selected, board, execution, opts, "position");
+    if (!ranked.length) return null;
+    const targets = ranked.filter(row => row.isCarry || row.score >= 7).slice(0, 3);
+    if (!targets.length) targets.push(ranked[0]);
+    const targetSet = new Set(targets.map(row => row.name));
+    const frontline = [...ranked].reverse().filter(row => !targetSet.has(row.name)
+      && (row.frontlineRole || row.traits.some(trait => ["斗士", "护卫"].includes(trait)))).slice(0, 2);
+    const attackSpeed = desc.match(/(\d+)%攻击速度/);
+    const benefit = ["无限攻击距离", attackSpeed ? `${attackSpeed[1]}%攻速` : "攻速收益"].join("和");
+    const frontlineText = frontline.length ? `；${frontline.map(row => row.name).join("、")}留前排承伤` : "";
+    return {
+      augment: name,
+      kind: "positioning",
+      title: "站位联动",
+      tone: "green",
+      targets: targets.map(row => row.name),
+      action: `${name}：把${targets.map(row => row.name).join("、")}放后${rearMatch[1]}排吃${benefit}${frontlineText}`,
+      reason: `只从当前最强板挑主C、持输出装或远程羁绊棋子，不把前排坦克后移。`,
+    };
+  }
+
+  function manaResetAugmentAdvice(name, desc, selected, board, execution, opts) {
+    const manaMatch = desc.match(/击败[^。；;]*回复\s*(\d+)\s*法力/);
+    if (!manaMatch) return null;
+    const ranked = contextualUnitRows(selected, board, execution, opts, "mana");
+    if (!ranked.length) return null;
+    const targets = ranked.filter(row => row.isCarry || row.score >= 5).slice(0, 3);
+    if (!targets.length) targets.push(ranked[0]);
+    const first = targets[0];
+    return {
+      augment: name,
+      kind: "mana-reset",
+      title: "击杀回蓝联动",
+      tone: "green",
+      targets: targets.map(row => row.name),
+      action: `${name}：当前最能兑现的是${targets.map(row => row.name).join("、")}；让${first.name}优先拿输出装并对位弱侧抢首杀，击杀回${manaMatch[1]}法力后连续开技能`,
+      reason: `按当前最强板的主C、输出装备、星级与进攻羁绊排序；该强化全队生效，但击杀者收益最高。`,
+    };
+  }
+
+  function interestAugmentAdvice(name, desc, selected, board) {
+    const interestMatch = desc.match(/最大利息提升至\s*(\d+)\s*金币/);
+    if (!interestMatch) return null;
+    const cap = Number(interestMatch[1]);
+    const targetGold = cap * 10;
+    const rawHealth = selected && selected.health;
+    const rawGold = selected && selected.gold;
+    const health = rawHealth === null || rawHealth === undefined || rawHealth === "" || rawHealth === "unknown" ? NaN : Number(rawHealth);
+    const gold = rawGold === null || rawGold === undefined || rawGold === "" || rawGold === "unknown" ? NaN : Number(rawGold);
+    const round = inferredRound(selected || {});
+    const roundIndex = ROUND_ORDER.indexOf(round);
+    const early = roundIndex < 0 || roundIndex <= ROUND_ORDER.indexOf("3-5");
+    const twoStars = contextualBoardRows(selected, board).filter(unit => unit.star >= 2).length;
+    const pressure = stabilizationPressure(selected || {});
+    const healthKnown = Number.isFinite(health);
+    const goldKnown = Number.isFinite(gold);
+    const stateText = `${round}、${healthKnown ? `${health}血` : "血量未知"}、${goldKnown ? `至少${gold}金` : "金币未知"}、当前板${twoStars ? `${twoStars}张两星` : "暂无两星"}`;
+    if (!healthKnown || !goldKnown) return {
+      augment: name,
+      kind: "economy",
+      title: "经济联动",
+      tone: "yellow",
+      targets: [],
+      action: `${name}：先补录${[!goldKnown ? "金币" : "", !healthKnown ? "血量" : ""].filter(Boolean).join("和")}，不能只因利息上限提高就默认存到${targetGold}`,
+      reason: `${stateText}；缺少保命与经济事实，暂不做存钱结论。`,
+    };
+    if (pressure.urgent) return {
+      augment: name,
+      kind: "economy",
+      title: "经济联动",
+      tone: "red",
+      targets: [],
+      action: `${name}：不建议硬存${targetGold}；先把金币花到${pressure.floor}补当前主C和前排两星`,
+      reason: `${stateText}；${pressure.reasons.slice(0, 3).join("；")}，此时下一轮战力高于多吃${cap}利息。`,
+    };
+    if (early && health >= 70 && twoStars >= 1 && gold >= 40 && pressure.recentLoss === 0) return {
+      augment: name,
+      kind: "economy",
+      title: "经济联动",
+      tone: "green",
+      targets: [],
+      action: `${name}：建议存钱；当前板能打且血量安全，只买对子和体系牌，先存到${targetGold}吃满${cap}利息`,
+      reason: `${stateText}；早期、高血、有两星质量，额外利息有兑现窗口。`,
+    };
+    if (twoStars === 0 && (!early || health < 70)) return {
+      augment: name,
+      kind: "economy",
+      title: "经济联动",
+      tone: "yellow",
+      targets: [],
+      action: `${name}：先稳板再存；小D到一张主C或前排两星，至少留${gold >= 50 ? 50 : Math.max(10, Math.floor(gold / 10) * 10)}金，质量形成后再追${targetGold}`,
+      reason: `${stateText}；当前板没有两星，直接贪满利息容易用血量换经济。`,
+    };
+    return {
+      augment: name,
+      kind: "economy",
+      title: "经济联动",
+      tone: "yellow",
+      targets: [],
+      action: `${name}：先保50利息，不为吃满${cap}利息硬存${targetGold}；场上核心未两星就小D稳板，稳住后再继续存`,
+      reason: `${stateText}；经济强化要服从当前血量和场面质量。`,
+    };
+  }
+
+  function contextualAugmentAdvice(selected, board, execution, opts) {
+    const rows = [];
+    uniq(selected && selected.augments || []).sort(stableCompare).forEach(selectedName => {
+      const catalog = augmentCatalogRow(selectedName, opts || {});
+      const name = catalog && catalog.name || selectedName;
+      const desc = String(catalog && (catalog.desc || catalog.description) || "");
+      if (!desc) return;
+      const advice = positioningAugmentAdvice(name, desc, selected, board, execution, opts)
+        || manaResetAugmentAdvice(name, desc, selected, board, execution, opts)
+        || interestAugmentAdvice(name, desc, selected, board);
+      if (advice) rows.push({ ...advice, desc });
+    });
+    return rows;
   }
 
   function routeCompatibilityWithBoard(template, board, level) {
@@ -2356,15 +2628,18 @@
     });
     const chosen = selected.heroAugment && selected.heroAugment.selected;
     const heroRoleContract = heroAugmentRoleContract(template, selected);
+    const heroSemantics = heroAugmentSemantics(chosen);
     const chosenFits = chosen && (heroRoleContract
       || (template.augmentPrefs || []).includes(chosen.name)
       || (template.mechanic && template.mechanic.requiredAugment === chosen.name)
       || (template.augmentTransitionPlan && template.augmentTransitionPlan.augment === chosen.name));
     if (chosenFits) {
-      const value = heroRoleContract ? heroAugmentRoleContractValue(w) : w.augment;
+      const support = !heroSemantics.coreDefining && !heroRoleContract;
+      const value = heroRoleContract ? heroAugmentRoleContractValue(w)
+        : support ? Math.max(1, Math.round(w.augment * 0.6)) : w.augment;
       points += value;
-      kinds.add("hero-augment");
-      evidence.push(`英雄强化${chosen.name}已落地${heroRoleContract ? `并确定主C${heroRoleContract.mainCarry}` : ""}+${value}`);
+      kinds.add(support ? "support-augment" : "hero-augment");
+      evidence.push(`英雄强化${chosen.name}已落地${heroRoleContract ? `并确定主C${heroRoleContract.mainCarry}` : support ? `，只确定${heroSemantics.strategicRole === "support" ? "团队增益" : heroSemantics.strategicRole === "economy" ? "经济" : "功能"}机制启动器` : ""}+${value}`);
     }
     if (row.strategyDecision && row.strategyDecision.switchCertified && chosenFits) {
       points += w.augment;
@@ -2426,6 +2701,146 @@
     if (ROUND_ORDER.includes(explicit)) return explicit;
     const level = clamp(Number(selected.level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
     return ({ 1: "2-1", 2: "2-1", 3: "2-5", 4: "3-2", 5: "3-5", 6: "4-1", 7: "4-2", 8: "4-5", 9: "5-1" })[level];
+  }
+
+  function deriveHealthTrend(snapshots, current) {
+    const points = [];
+    const pushPoint = row => {
+      const rawHealth = row && row.health;
+      if (rawHealth === null || rawHealth === undefined || rawHealth === "" || rawHealth === "unknown") return;
+      const health = Number(rawHealth);
+      if (!Number.isFinite(health)) return;
+      const stage = stableText(row && row.stage || "unknown").trim() || "unknown";
+      const previous = points[points.length - 1];
+      // 回合/金币/血量是分步录入的；同一血量的行政状态变化不是一场新战斗。
+      if (previous && previous.health === health) return;
+      points.push({ health: clamp(health, 0, 100), stage });
+    };
+    (snapshots || []).forEach(snapshot => pushPoint(snapshot && snapshot.state || snapshot));
+    pushPoint(current || {});
+    const latest = points[points.length - 1];
+    if (!latest) return {
+      observedStates: 0,
+      previousHealth: null,
+      recentLoss: 0,
+      largestRecentLoss: 0,
+      totalRecentLoss: 0,
+      consecutiveLosses: 0,
+    };
+    const deltas = [];
+    for (let index = 1; index < points.length; index++) {
+      deltas.push(Math.max(0, points[index - 1].health - points[index].health));
+    }
+    const window = deltas.slice(-HEALTH_PRESSURE_MODEL.recentWindow);
+    const currentStage = stableText(current && current.stage || latest.stage || "unknown").trim() || "unknown";
+    const lossStageIndex = ROUND_ORDER.indexOf(latest.stage);
+    const currentStageIndex = ROUND_ORDER.indexOf(currentStage);
+    const lossAge = lossStageIndex >= 0 && currentStageIndex >= 0 ? Math.max(0, currentStageIndex - lossStageIndex) : 0;
+    let consecutiveLosses = 0;
+    for (let index = deltas.length - 1; index >= 0; index--) {
+      if (deltas[index] <= 0) break;
+      consecutiveLosses++;
+    }
+    if (lossAge > 1) consecutiveLosses = 0;
+    const previous = points.length > 1 ? points[points.length - 2] : null;
+    const windowStart = points[Math.max(0, points.length - 1 - HEALTH_PRESSURE_MODEL.recentWindow)];
+    const recentLoss = lossAge <= 1 && deltas.length ? deltas[deltas.length - 1] : 0;
+    return {
+      observedStates: points.length,
+      previousHealth: previous ? previous.health : null,
+      previousStage: previous ? previous.stage : "unknown",
+      recentLoss,
+      largestRecentLoss: lossAge <= 1 && window.length ? Math.max(...window) : 0,
+      totalRecentLoss: lossAge <= 1 && windowStart ? Math.max(0, windowStart.health - latest.health) : 0,
+      consecutiveLosses,
+      currentStage,
+      lastHealthChangeStage: latest.stage,
+      lossAge,
+    };
+  }
+
+  function stabilizationPressure(selected) {
+    const rawHealth = selected && selected.health;
+    const rawGold = selected && selected.gold;
+    const health = rawHealth === null || rawHealth === undefined || rawHealth === "" || rawHealth === "unknown" ? NaN : Number(rawHealth);
+    const gold = rawGold === null || rawGold === undefined || rawGold === "" || rawGold === "unknown" ? NaN : Number(rawGold);
+    const trend = selected && selected.healthTrend || {};
+    const recentLoss = Math.max(0, Number(trend.recentLoss) || 0);
+    const totalRecentLoss = Math.max(recentLoss, Number(trend.totalRecentLoss) || 0);
+    const consecutiveLosses = Math.max(0, Number(trend.consecutiveLosses) || 0);
+    const round = inferredRound(selected || {});
+    const roundIndex = ROUND_ORDER.indexOf(round);
+    const reasons = [];
+    if (!Number.isFinite(health)) return {
+      level: "unknown", urgent: false, critical: false, score: 0, floor: null,
+      reasons: ["血量未录入"], recentLoss, totalRecentLoss, consecutiveLosses,
+    };
+
+    let score = 0;
+    if (health <= 20) { score += 7; reasons.push(`${health}血容错已极低`); }
+    else if (health <= 35) { score += 5; reasons.push(`${health}血已进入低容错`); }
+    else if (health <= 50) { score += 2; reasons.push(`${health}血容错偏低`); }
+    else if (health <= 65) score += 1;
+
+    if (recentLoss >= HEALTH_PRESSURE_MODEL.severeLoss) {
+      score += 4;
+      reasons.push(`上一检查点掉${recentLoss}血属于大入`);
+    } else if (recentLoss >= HEALTH_PRESSURE_MODEL.heavyLoss) {
+      score += 3;
+      reasons.push(`上一检查点掉${recentLoss}血`);
+    } else if (recentLoss >= 8) {
+      score += 2;
+      reasons.push(`最近一轮掉${recentLoss}血`);
+    }
+    if (consecutiveLosses >= 3) {
+      score += 3;
+      reasons.push(`已连续${consecutiveLosses}个检查点掉血`);
+    } else if (consecutiveLosses >= 2) {
+      score += 2;
+      reasons.push(`已连续${consecutiveLosses}个检查点掉血`);
+    }
+    if (totalRecentLoss >= 30) {
+      score += 2;
+      reasons.push(`近${HEALTH_PRESSURE_MODEL.recentWindow}个检查点累计掉${totalRecentLoss}血`);
+    }
+    if (roundIndex >= ROUND_ORDER.indexOf("4-1") && health <= 60) {
+      score += 1;
+      reasons.push(`${round}已进入中后期`);
+    }
+
+    const positioned = normalizeSelectedUnits(selected && selected.units || []).filter(unit => unit.location === "board");
+    const knownStars = positioned.filter(unit => Number(unit.star) > 0);
+    const twoStars = knownStars.filter(unit => Number(unit.star) >= 2).length;
+    if (knownStars.length >= 3 && twoStars / knownStars.length < 0.34) {
+      score += 2;
+      reasons.push(`场上${knownStars.length}张已录星级棋子仅${twoStars}张两星`);
+    } else if (knownStars.length >= 3 && twoStars / knownStars.length >= 0.67 && recentLoss === 0) {
+      score = Math.max(0, score - 1);
+    }
+
+    const critical = health <= 20 || (health <= 30 && recentLoss >= 10);
+    const urgent = critical || health <= 35
+      || (health <= HEALTH_PRESSURE_MODEL.earlyStabilizeHealth && recentLoss >= HEALTH_PRESSURE_MODEL.heavyLoss)
+      || (health <= HEALTH_PRESSURE_MODEL.streakStabilizeHealth && consecutiveLosses >= 2)
+      || (health <= 65 && score >= 7);
+    const level = critical ? "critical" : urgent ? "urgent" : score >= 4 ? "caution" : score >= 2 ? "watch" : "stable";
+    const floor = critical ? 0 : urgent ? (health <= 35 ? 10 : 20) : null;
+    if (urgent && Number.isFinite(gold) && gold >= 30) reasons.push(`手里${gold}金可以立即换成场上质量`);
+    return {
+      level,
+      urgent,
+      critical,
+      score,
+      floor,
+      reasons: uniq(reasons),
+      recentLoss,
+      totalRecentLoss,
+      consecutiveLosses,
+      round,
+      health,
+      gold: Number.isFinite(gold) ? gold : null,
+      board: { positioned: positioned.length, knownStars: knownStars.length, twoStars },
+    };
   }
 
   function forwardMetric(row, key) {
@@ -2539,6 +2954,12 @@
     const right = ROUND_ORDER.indexOf(target);
     if (left < 0 || right < 0) return 99;
     return right - left;
+  }
+
+  function nonPastCheckpoint(current, proposed) {
+    if (!ROUND_ORDER.includes(current)) return ROUND_ORDER.includes(proposed) ? proposed : "下一阶段";
+    if (!ROUND_ORDER.includes(proposed) || checkpointDistance(current, proposed) < 0) return current;
+    return proposed;
   }
 
   function carryName(row) {
@@ -2683,14 +3104,29 @@
     const decline = roundNumber((Number(next.calibratedScore) || 0) - (Number(now.calibratedScore) || 0), 1);
     const targetAdvantage = roundNumber((Number(target.planning && target.planning.value) || 0) - (Number(current.planning && current.planning.value) || 0), 1);
     const risky = Boolean(plan && (plan.falseCeiling || plan.steepDrop)) || decline <= -8 || targetAdvantage >= FORWARD_MODEL.switchMargin;
-    const deadline = plan && plan.warningStage || (stageKey === "1-5" ? "3-5" : stageKey === "6-7" ? "4-5" : "5-1");
-    const distance = checkpointDistance(inferredRound(selected), deadline);
+    const currentRound = inferredRound(selected);
+    const plannedDeadline = plan && plan.warningStage || (stageKey === "1-5" ? "3-5" : stageKey === "6-7" ? "4-5" : "5-1");
+    const deadline = nonPastCheckpoint(currentRound, plannedDeadline);
+    const distance = checkpointDistance(currentRound, deadline);
     const severity = !risky ? "green" : distance <= 0 ? "red" : distance <= 1 ? "yellow" : "green";
     const targetText = rowId(target) === rowId(current) ? "继续观察同线升级" : `预备转${target.template.name}`;
     const text = risky
       ? `${current.template.name}下一阶段${decline >= 0 ? "+" : ""}${decline}分、后期${late.calibratedScore}分；${targetText}`
       : `${current.template.name}阶段曲线稳定，保留转型选择权`;
     return { severity, deadline, decline, targetAdvantage, text, risky };
+  }
+
+  function hasIrreversibleExecutionEvidence(row) {
+    if (row && row.committed) return true;
+    const kinds = row && row.commitment && row.commitment.evidenceKinds || [];
+    return kinds.some(kind => ["key-item", "d-spend", "hero-augment"].includes(kind));
+  }
+
+  function supportAugmentExecutionEligible(row) {
+    const commitment = row && row.commitment || {};
+    const kinds = commitment.evidenceKinds || [];
+    if (!kinds.includes("support-augment")) return true;
+    return Number(commitment.rankGap) <= 8 || kinds.some(kind => ["key-item", "d-spend"].includes(kind));
   }
 
   function buildRollingPlan(rows, current, strategic, selected) {
@@ -2706,9 +3142,10 @@
     const transitionCost = Number(bestCandidate.planning.transitionCost) || 0;
     const switchGate = FORWARD_MODEL.switchMargin
       + Math.max(0, transitionCost - 40) * FORWARD_MODEL.transitionDeadbandRatio;
-    const irreversible = Boolean(bestCandidate.committed
-      || (bestCandidate.commitment && bestCandidate.commitment.evidenceKinds || []).some(kind => kind !== "core-upgrade"));
+    const irreversible = hasIrreversibleExecutionEvidence(bestCandidate);
+    const supportEligible = supportAugmentExecutionEligible(bestCandidate);
     const canExecuteCandidate = rowId(bestCandidate) !== rowId(current)
+      && supportEligible
       && (current.blocked || irreversible || (candidateGain >= switchGate
         && candidateReadiness >= FORWARD_MODEL.executionReadinessFloor
         && transitionCost <= FORWARD_MODEL.executionTransitionCap));
@@ -2759,7 +3196,7 @@
         : `止损条件：${warning.deadline}时阶段分继续下滑且${warningCarry}已出现，再切兼容路线`
       : warning.risky && planningBase.template.forwardPlan?.falseCeiling
         ? `上限结论：暂无模型认证的兼容升级线；停止追加追三，${warning.deadline}按新来牌重算`
-        : `转型触发：见到${carryName(target)}2星或凑出两件核心装；血量低于35则提前一回合`;
+        : `转型触发：见到${carryName(target)}2星或凑出两件核心装；出现大入、连续掉血或低容错时提前一回合`;
     return {
       stageKey,
       target,
@@ -2791,8 +3228,75 @@
     return "5-1";
   }
 
+  function emergencySpendingAction(selected) {
+    const pressure = stabilizationPressure(selected || {});
+    if (!pressure.urgent) return "";
+    const gold = Number(selected && selected.gold);
+    const floor = pressure.floor;
+    const prefix = pressure.critical ? "保命" : "提前止血";
+    const because = pressure.reasons.slice(0, 2).join("、");
+    if (Number.isFinite(gold) && gold > floor) {
+      return `${prefix}（${because}）：停止升人口，本回合把金币花到${floor}，优先补当前上场主C与前排两星`;
+    }
+    return `${prefix}（${because}）：不再升人口，卖掉无关备战席，只补当前上场两星与现有羁绊`;
+  }
+
+  function immediateExecutionAction(execution, current, selected) {
+    const emergency = emergencySpendingAction(selected);
+    if (emergency) return emergency;
+    const carry = carryName(execution);
+    const held = normalizeSelectedUnits(selected.units || []).find(unit => unit.name === carry);
+    const level = clamp(Number(selected.level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
+    if (!held) return "维持当前最强板，只买能直接升两星或补现有羁绊的牌，不为未持有主C硬D";
+    const star = Number(held.star) || 1;
+    if (star < 2) return `${level}级先补${carry}两星与前排质量，不为远期三星拆掉当前板`;
+    if (rowId(execution) !== rowId(current)) return `保留当前两星板过渡，${carry}已到两星后再按体系逐张换入`;
+    return `维持${execution.template.name}，金币优先换场上质量，不追无关三星`;
+  }
+
+  function executionAssetReadiness(row, selected) {
+    if (!row || !row.template) return { ready: false, carry: "", star: 0, equippedCore: 0 };
+    const carry = carryName(row);
+    const held = normalizeSelectedUnits(selected.units || []).find(unit => unit.name === carry);
+    const star = held ? Number(held.star) || 1 : 0;
+    const mainItems = new Set(uniq(((profile(row.template).mainCarry || {}).items || []).map(canonicalItem).filter(Boolean)));
+    const equippedCore = normalizeSelectedItems(selected).filter(item => item.holder === carry && mainItems.has(canonicalItem(item.name))).length;
+    const irreversible = Boolean(row.committed || (row.commitment && row.commitment.evidenceKinds || []).some(kind => kind !== "core-upgrade"));
+    return { ready: star >= 2 || equippedCore > 0 || irreversible, carry, star, equippedCore };
+  }
+
+  function stabilizeExecution(rows, proposed, selected, opts) {
+    const anchorId = opts && opts.executionAnchorId;
+    const level = clamp(Number(selected.level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
+    if (!anchorId || !proposed || level < ROUTE_STABILITY_MODEL.minimumLevel || opts && opts.manualLockId) {
+      return { row: proposed, held: false, reason: "no-anchor" };
+    }
+    const anchor = rows.find(row => rowId(row) === anchorId);
+    if (!anchor || anchor.mechanicBlocked) return { row: proposed, held: false, reason: "anchor-unavailable" };
+    if (rowId(anchor) === rowId(proposed)) return { row: proposed, held: false, reason: "same-route" };
+    const anchorScore = rowSortScore(anchor);
+    const proposedScore = rowSortScore(proposed);
+    const anchorAssets = executionAssetReadiness(anchor, selected);
+    const proposedAssets = executionAssetReadiness(proposed, selected);
+    if (proposedScore <= 0 && anchorScore > 0) return { row: anchor, held: true, reason: "reject-zero-score" };
+    if (anchor.blocked && proposedScore > 0 && proposedAssets.ready) return { row: proposed, held: false, reason: "anchor-quality-blocked" };
+    if (anchorScore <= 0 && proposedScore > 0 && proposedAssets.star > 0) return { row: proposed, held: false, reason: "replace-zero-score" };
+    if (anchorAssets.ready && !proposedAssets.ready) return { row: anchor, held: true, reason: "candidate-not-ready" };
+    if (!anchorAssets.star && proposedAssets.star > 0) return { row: proposed, held: false, reason: "new-carry-present" };
+    const anchorValue = Number((anchor.planning && anchor.planning.value) ?? anchor.executionValue) || 0;
+    const proposedValue = Number((proposed.planning && proposed.planning.value) ?? proposed.executionValue) || 0;
+    const emergency = stabilizationPressure(selected || {}).urgent;
+    const sameFamily = rowFamily(anchor) === rowFamily(proposed);
+    const margin = sameFamily ? ROUTE_STABILITY_MODEL.sameFamilySwitchMargin
+      : emergency ? ROUTE_STABILITY_MODEL.emergencySwitchMargin : ROUTE_STABILITY_MODEL.normalSwitchMargin;
+    if (!proposedAssets.ready || proposedValue - anchorValue < margin) {
+      return { row: anchor, held: true, reason: !proposedAssets.ready ? "candidate-not-ready" : "switch-margin" };
+    }
+    return { row: proposed, held: false, reason: "switch-evidence-met" };
+  }
+
   // 行动合同是展示层与讲解层共用的唯一事实源。LLM只能改写，不能生成决策。
-  function buildActionContract(execution, current, strategic, selected, forecast) {
+  function buildActionContract(execution, current, strategic, selected, forecast, opts) {
     if (!execution || !execution.template) return null;
     const level = clamp(Number(selected.level) || DEFAULT_LEVEL, MIN_LEVEL, MAX_LEVEL);
     const carry = carryName(execution);
@@ -2814,41 +3318,55 @@
       .sort((a, b) => (Number(b.star) || 1) - (Number(a.star) || 1) || stableCompare(a.name, b.name))
       .slice(0, 5)
       .map(unit => starLabel(unit.name, unit.star));
-    const primaryAction = forecast && forecast.action
-      ? forecast.action
-      : `维持${execution.template.name}，只补当前上场质量`;
-    const nowFacts = [primaryAction];
-    if (keepUnits.length && !/(只留|保留)/.test(primaryAction)) nowFacts.push(`保留已持有的${keepUnits.join("、")}`);
+    const primaryAction = immediateExecutionAction(execution, current, selected);
+    const currentBoard = current && current.currentBoardEvaluation || null;
+    const augmentAdvice = contextualAugmentAdvice(selected, currentBoard, execution, opts || {});
+    const nowFacts = [primaryAction, ...augmentAdvice.map(row => row.action)];
+    if (!augmentAdvice.length && keepUnits.length && !/(只留|保留)/.test(primaryAction)) nowFacts.push(`保留已持有的${keepUnits.join("、")}`);
 
-    const checkpoint = forecast && (forecast.nextCheck || forecast.warning && forecast.warning.deadline)
+    const currentRound = inferredRound(selected);
+    const proposedCheckpoint = forecast && (forecast.nextCheck || forecast.warning && forecast.warning.deadline)
       || actionCheckpoint(level, selected);
-    const checkFacts = [`${checkpoint}检查${carry}：目标${targetStar}星，当前${currentStar ? `${currentStar}星` : "未持有"}`];
-    if (itemGoal) {
+    const checkpoint = nonPastCheckpoint(currentRound, proposedCheckpoint);
+    const stabilization = stabilizationPressure(selected || {});
+    const emergency = stabilization.urgent;
+    const checkFacts = [!currentStar
+      ? `${checkpoint}检查现板：是否形成一张两星主C与两件同方向装备`
+      : `${checkpoint}检查${carry}：目标${targetStar}星，当前${currentStar}星`];
+    if (itemGoal && currentStar) {
       checkFacts.push(`核心装进度${heldCoreItems.length}/${itemGoal}${missingCoreItems.length ? `，缺${missingCoreItems.slice(0, 2).join("或")}` : "，已达到门槛"}`);
     }
-    const firstPivot = forecast && Array.isArray(forecast.pivotOptions) ? forecast.pivotOptions[0] : null;
-    if (firstPivot) checkFacts.push(`备选${firstPivot.name}：${firstPivot.unitTrigger}且${firstPivot.itemTrigger}`);
 
     const stayFacts = [];
-    if (forecast && forecast.stayCondition) stayFacts.push(forecast.stayCondition);
+    if (emergency) stayFacts.push(`${stabilization.reasons.slice(0, 3).join("；")}，不保50利息，不为未持有的远期主C拆板`);
+    else stayFacts.push(currentStar
+      ? `${carry}与两件核心装未同时形成前，保留当前最强板，不跨体系拆板`
+      : "两星主C与两件同方向装备未同时形成前，保留当前最强板，不跨体系拆板");
     const milestone = itemGoal ? `${carry}${targetStar}星且核心装达到${itemGoal}件` : `${carry}${targetStar}星`;
-    stayFacts.push(`达到${milestone}时继续投入；未达到前不追加不可逆成本`);
+    stayFacts.push(emergency
+      ? "本回合以打赢下一轮为唯一门槛，搜牌后立即换上最强两星组合"
+      : currentStar ? `达到${milestone}时继续投入；未达到前不追加不可逆成本`
+        : "两星主C与装备方向形成后再定线；此前不追加不可逆成本");
 
     const switchFacts = [];
-    if (forecast && (forecast.switchCondition || forecast.trigger)) switchFacts.push(forecast.switchCondition || forecast.trigger);
-    (forecast && forecast.pivotOptions || []).slice(0, 3).forEach(option => {
-      switchFacts.push(`${option.unitTrigger}+${option.itemTrigger}→${option.name}`);
-    });
+    if (emergency) switchFacts.push("本回合不跨体系转型；只用已持有棋子提升当前上场质量");
+    else {
+      if (forecast && (forecast.switchCondition || forecast.trigger)) switchFacts.push(forecast.switchCondition || forecast.trigger);
+      (forecast && forecast.pivotOptions || []).slice(0, 3).forEach(option => {
+        switchFacts.push(`${option.unitTrigger}+${option.itemTrigger}→${option.name}`);
+      });
+    }
     return {
       version: 1,
       routeId: rowId(execution),
       routeName: execution.template.name,
       strategicRouteId: strategic ? rowId(strategic) : "",
       checkpoint,
-      now: { facts: uniq(nowFacts).slice(0, 2) },
+      now: { facts: uniq(nowFacts).slice(0, 4) },
       check: { facts: uniq(checkFacts).slice(0, 3) },
       stay: { facts: uniq(stayFacts).slice(0, 2) },
       switchWhen: uniq(switchFacts).slice(0, 4),
+      augmentAdvice,
       facts: { level, carry, currentStar, targetStar, heldCoreItems, missingCoreItems, itemGoal, keepUnits },
     };
   }
@@ -2926,11 +3444,44 @@
       || (Number(b.top4Value) || 0) - (Number(a.top4Value) || 0)
       || rowSortScore(b) - rowSortScore(a)
       || stableCompare(a.template.name, b.template.name))[0];
+    const stateFreshness = selected && selected.stateFreshness;
+    if (stateFreshness && stateFreshness.status === "stale") {
+      current.currentBoard = true;
+      strategic.strategicLeader = true;
+      const decision = {
+        status: "state-stale",
+        level,
+        currentBoardId: rowId(current),
+        currentBoardName: "当前最强上场",
+        currentBoardScore: globalBoard.score,
+        currentBoardUnits: globalBoard.units,
+        currentBoardTraits: globalBoard.activeTraits,
+        currentBoardBench: globalBoard.bench,
+        currentBoardCarry: globalBoard.carry,
+        currentId: rowId(current),
+        currentName: current.template.name,
+        strategicId: rowId(strategic),
+        strategicName: strategic.template.name,
+        committedId: "",
+        committedName: "",
+        executionId: "",
+        executionName: "",
+        forecast: null,
+        actionContract: null,
+        sufficiency,
+        stateFreshness,
+        text: `状态过期：先更新${(stateFreshness.missing || []).join("、") || "局势"}`,
+      };
+      rows.forEach(row => { row.decision = decision; });
+      return decision;
+    }
     const bestExecutionValue = Math.max(...strategicPool.map(row => Number(row.executionValue) || 0));
+    const bestVisibleScore = Math.max(...strategicPool.map(row => rowSortScore(row)));
     rows.forEach(row => {
       const evidence = commitmentEvidence(row.template, row, selected, weights, opts);
       const cost = transitionCostFromAssets(row.template, selected, weights, opts);
       const strategicGap = Math.max(0, bestExecutionValue - (Number(row.executionValue) || 0));
+      const rankGap = Math.max(0, bestVisibleScore - rowSortScore(row));
       const support = evidence.points - cost.points - strategicGap;
       row.commitment = {
         evidence: evidence.points,
@@ -2939,6 +3490,7 @@
         transitionCost: cost.points,
         costRows: cost.costs,
         strategicGap,
+        rankGap,
         support,
         utility: rowSortScore(row) + evidence.points - cost.points,
         executionUtility: row.executionValue + support,
@@ -2950,6 +3502,9 @@
     const eligible = rows.filter(row => (row.feasible || (!row.mechanicBlocked && row.commitment.evidenceKinds.includes("hero-augment")))
       && (!row.terminalLimited || row.commitment.evidenceKinds.some(kind => kind !== "core-upgrade"))
       && row.commitment.evidence >= DECISION_MODEL.minimumCommitmentEvidence
+      && (!row.commitment.evidenceKinds.includes("support-augment")
+        || row.commitment.rankGap <= 8
+        || row.commitment.evidenceKinds.some(kind => ["key-item", "d-spend"].includes(kind)))
       && row.commitment.support > 0)
       .sort((a, b) => b.executionValue - a.executionValue
         || b.commitment.executionUtility - a.commitment.executionUtility
@@ -3004,6 +3559,12 @@
           : "阶段曲线稳定，继续当前执行线";
       }
     }
+    const stability = stabilizeExecution(rows, execution, selected, opts || {});
+    if (stability.row && rowId(stability.row) !== rowId(execution)) {
+      execution = stability.row;
+      status = "stable";
+      text = `保持当前执行线：新路线尚未达到切换门槛（${stability.reason}）`;
+    }
     execution.execution = true;
     const forecast = rolling ? {
       stageKey: rolling.stageKey,
@@ -3021,7 +3582,7 @@
       portfolio: rolling.portfolio,
       formula: `Q=${rolling.target.planning.current}×${FORWARD_MODEL.currentWeight}+${rolling.target.planning.next}×${FORWARD_MODEL.nextWeight}+${rolling.target.planning.terminal}×${FORWARD_MODEL.terminalWeight}-转型${rolling.target.planning.transitionCost}×${FORWARD_MODEL.transitionPenalty}-沉没${rolling.target.planning.sunkCost}×${FORWARD_MODEL.sunkAssetPenalty}-资源${rolling.target.planning.resourcePenalty}-尾险${rolling.target.planning.tailRisk}+期权${rolling.target.planning.optionValue}+连续性${rolling.target.planning.commitmentCredit}=${rolling.target.planning.value}`,
     } : null;
-    const actionContract = buildActionContract(execution, current, strategic, selected, forecast);
+    const actionContract = buildActionContract(execution, current, strategic, selected, forecast, opts);
     const decision = {
       status,
       level,
@@ -3050,8 +3611,10 @@
       executionWeights: execution.executionWeights,
       forecast,
       actionContract,
+      augmentAdvice: actionContract && actionContract.augmentAdvice || [],
       sufficiency,
       manualLockInvalid: Boolean(requestedManual && !manual),
+      stability: { anchorId: opts && opts.executionAnchorId || "", held: stability.held, reason: stability.reason },
       text,
     };
     rows.forEach(row => { row.decision = decision; });
@@ -3060,7 +3623,7 @@
 
   function operationalRow(rows) {
     const executionId = rows && rows.decision && rows.decision.executionId;
-    if (rows && rows.decision && rows.decision.status === "insufficient") return null;
+    if (rows && rows.decision && ["insufficient", "state-stale"].includes(rows.decision.status)) return null;
     return (rows || []).find(row => row && rowId(row) === executionId)
       || (rows || []).find(row => row && row.execution)
       || ((rows || [])[0] || null);
@@ -3557,9 +4120,23 @@
       "刚需专属在当前三栏与全部重随均未出现后必须关闭");
     const heroCatalog = [
       { name: "嗜火", hero: "安妮", cost: 2, traits: ["小天才", "福牛守护者", "灵能使"], effect: { grantedHero: "安妮", grantedCopies: 1, areaExpanded: true, stunSeconds: 2 } },
-      { name: "无情连打", hero: "贾克斯", cost: 3, traits: ["战斗机甲", "斗士"], effect: { grantedHero: "贾克斯", grantedCopies: 1, areaExpanded: false, stunSeconds: 0 } },
+      { name: "无情连打", hero: "贾克斯", cost: 3, traits: ["战斗机甲", "斗士"], desc: "提供1个【贾克斯】。每第三次攻击后，你最强大的那个【贾克斯】会获得可以叠加的12%攻击速度。", effect: { grantedHero: "贾克斯", grantedCopies: 1, areaExpanded: false, stunSeconds: 0 } },
+      { name: "宗师训练", hero: "贾克斯", cost: 3, traits: ["战斗机甲", "斗士"], desc: "提供1个【贾克斯】。当你派他上场时，你的弈子们会获得20护甲和12%攻击速度。", effect: { grantedHero: "贾克斯", grantedCopies: 1, areaExpanded: false, stunSeconds: 0 } },
       { name: "双重气泡", hero: "佐伊", cost: 3, traits: ["小天才", "淘气包", "黑客"], effect: { grantedHero: "佐伊", grantedCopies: 1, areaExpanded: false, stunSeconds: 0 } },
+      { name: "浪客之风", hero: "亚索", cost: 2, traits: ["决斗大师", "源计划：激光特工"], effect: { grantedHero: "亚索", grantedCopies: 1, areaExpanded: true, stunSeconds: 0 } },
     ];
+    const semanticCases = [
+      [{ desc: "提供1个【亚索】。你最强大的那个【亚索】的技能现在范围更广并且多造成30%伤害。" }, "carry", true],
+      [{ desc: "提供1个【亚索】。当你派他上场时，邻格没有友军的友军们会获30%攻击速度。" }, "support", false],
+      [{ desc: "提供1个【佐伊】。战斗环节开始时：她使4名生命值最低的敌人眩晕3秒。" }, "utility", false],
+      [{ desc: "提供1个【希维尔】。你最强大的那个【希维尔】每施放2次技能，就会掉落1金币。" }, "economy", false],
+      [{ desc: "提供1个【波比】。你最强大的那个【波比】获得180护甲。" }, "frontline", true],
+    ];
+    semanticCases.forEach(([chosen, role, coreDefining]) => {
+      const semantics = heroAugmentSemantics(chosen);
+      assert(semantics.strategicRole === role && semantics.coreDefining === coreDefining,
+        `英雄强化语义应分类为${role}/${coreDefining ? "核心承接" : "不定核"}`);
+    });
     const conflictForward = resolveGameState(selectedFromSignals([{ kind: "augments", value: "嗜火" }, { kind: "augments", value: "双重气泡" }]), heroCatalog);
     const conflictReverse = resolveGameState(selectedFromSignals([{ kind: "augments", value: "双重气泡" }, { kind: "augments", value: "嗜火" }]), heroCatalog);
     assert(conflictForward.heroAugment.status === "conflict" && conflictReverse.heroAugment.status === "conflict"
@@ -3582,6 +4159,37 @@
     assert(fireWithTwoStar.unitCopies["安妮"] === 4, "安妮二星加嗜火应按四张副本计算");
     const jaxAfterFire = scoreTemplate(threeOptional, fireState, fallbackWeights, { heroAugments: heroCatalog });
     assert(jaxAfterFire.heroAugment.status === "resolved" && jaxAfterFire.heroAugment.scoreDelta === 0, "已选嗜火后其他路线不得继续领取贾克斯期权");
+    const masterState = resolveGameState({
+      ...selectedFromSignals([{ kind: "units", value: "贾克斯" }, { kind: "augments", value: "宗师训练" }]),
+      heroAugmentRound: "3-2",
+    }, heroCatalog);
+    const relentlessRequired = {
+      ...heroRoundTemplate("无情连打刚需线", 3, true),
+      routeProfile: { mainCarry: { name: "贾克斯", starTarget: 3, items: [] }, units: [{ name: "贾克斯", role: "mainCarry", starTarget: 3, traits: ["战斗机甲", "斗士"] }], items: [], activeTraits: [] },
+      heroAugmentPlan: { mainCarry: "贾克斯", options: [heroCatalog[1], heroCatalog[2]], requiredNames: ["无情连打"] },
+    };
+    const wrongJaxAugment = scoreTemplate(relentlessRequired, masterState, fallbackWeights, { heroAugments: heroCatalog });
+    assert(wrongJaxAugment.mechanicBlocked && wrongJaxAugment.heroAugment.status === "closed",
+      "同为贾克斯强化也必须严格按强化名称关闭无情连打刚需线");
+    const masterSupportRoute = {
+      ...heroRoundTemplate("宗师团队增益线", 3),
+      routeProfile: {
+        mainCarry: { name: "德莱文", starTarget: 2, items: [] },
+        units: [{ name: "德莱文", role: "mainCarry", starTarget: 2, traits: ["战斗机甲"] }, { name: "贾克斯", role: "utility", starTarget: 2, traits: ["战斗机甲", "斗士"] }],
+        items: [], activeTraits: [],
+      },
+      heroAugmentPlan: { mainCarry: "德莱文", options: [heroCatalog[2]], requiredNames: [] },
+    };
+    const masterSupportScore = scoreTemplate(masterSupportRoute, masterState, fallbackWeights, { heroAugments: heroCatalog });
+    assert(masterSupportScore.heroMechanic && masterSupportScore.heroMechanic.strategicRole === "support"
+      && masterSupportScore.evidence.some(line => line.includes("路线主C仍按当前装备"))
+      && !masterSupportScore.evidence.some(line => line.includes("英雄强化定核")),
+    "宗师训练只能确定贾克斯为团队增益启动器，不能自动把贾克斯定为主C");
+    assert(!hasIrreversibleExecutionEvidence({ commitment: { evidenceKinds: ["core-upgrade", "support-augment"] } })
+      && hasIrreversibleExecutionEvidence({ commitment: { evidenceKinds: ["core-upgrade", "key-item"] } })
+      && !supportAugmentExecutionEligible({ commitment: { evidenceKinds: ["support-augment"], rankGap: 40 } })
+      && supportAugmentExecutionEligible({ commitment: { evidenceKinds: ["support-augment", "key-item"], rankGap: 40 } }),
+    "团队辅助强化不得绕过分差与承接门槛强行切执行线，真实核心装投入才算不可逆证据");
     const fireTemplate = {
       ...heroRoundTemplate("嗜火安妮线", 2),
       augmentPrefs: ["嗜火"],
@@ -3607,7 +4215,7 @@
         items: [],
         activeTraits: [{ name: "小天才", count: 3 }],
       },
-      heroAugmentPlan: { mainCarry: "佐伊", options: [heroCatalog[2]], requiredNames: [] },
+      heroAugmentPlan: { mainCarry: "佐伊", options: [heroCatalog[3]], requiredNames: [] },
     };
     const luluCarryTemplate = {
       ...heroRoundTemplate("璐璐主核线", 1),
@@ -3902,6 +4510,125 @@
     const solvedAfterRename = optimizeCurrentBoard(selectedFromSignals(boardSignals), boardOpts, renamedTemplates);
     assert(JSON.stringify(solvedForward) === JSON.stringify(solvedAfterRename),
       "路线名称与编号不得反向影响当前最强上场求解");
+    const yasuoBoardSignals = [
+      { kind: "levels", level: 4 },
+      { kind: "units", value: "希维尔", star: 2 },
+      { kind: "units", value: "布里茨" },
+      { kind: "units", value: "蔚" },
+      { kind: "units", value: "德莱文" },
+    ];
+    const yasuoBoardOpts = {
+      unitPrices: { 希维尔: 2, 布里茨: 1, 蔚: 2, 德莱文: 2, 亚索: 2 },
+      unitTraits: {},
+    };
+    const baseYasuoBoard = optimizeCurrentBoard(selectedFromSignals([
+      ...yasuoBoardSignals,
+      { kind: "units", value: "亚索" },
+    ]), yasuoBoardOpts, decisionTemplates);
+    const yasuoAugmentRaw = selectedFromSignals([
+      ...yasuoBoardSignals,
+      { kind: "augments", value: "浪客之风" },
+    ]);
+    yasuoAugmentRaw.heroAugmentRound = "2-1";
+    const yasuoAugmentBoard = optimizeCurrentBoard(resolveGameState(yasuoAugmentRaw, heroCatalog), yasuoBoardOpts, decisionTemplates);
+    const yasuoAugmentReverseRaw = selectedFromSignals([
+      { kind: "augments", value: "浪客之风" },
+      ...[...yasuoBoardSignals].reverse(),
+    ]);
+    yasuoAugmentReverseRaw.heroAugmentRound = "2-1";
+    const yasuoAugmentBoardReverse = optimizeCurrentBoard(resolveGameState(yasuoAugmentReverseRaw, heroCatalog), yasuoBoardOpts, decisionTemplates);
+    assert(yasuoAugmentBoard.units.some(name => name.startsWith("亚索")) && yasuoAugmentBoard.score > baseYasuoBoard.score,
+      "浪客之风的绑定亚索必须获得当前战力加成并进入4级最强板");
+    assert(JSON.stringify(yasuoAugmentBoard) === JSON.stringify(yasuoAugmentBoardReverse),
+      "英雄强化绑定棋子的当前板结论必须与输入顺序无关");
+    const contextualCatalog = [
+      { name: "万用瞄准镜 II", aliases: ["万用瞄准镜II"], desc: "在战斗环节开始时，你后2排的弈子们会获得无限攻击距离和25%攻击速度。" },
+      { name: "公理圆弧II", desc: "你的弈子们在击败时回复30法力值。" },
+      { name: "利滚利", desc: "获得12金币。你的最大利息提升至7金币。" },
+    ];
+    const contextualTemplate = {
+      id: "contextual-augment",
+      name: "强化联动测试线",
+      routeProfile: {
+        mainCarry: { name: "希维尔", items: [] },
+        units: [
+          { name: "希维尔", role: "mainCarry" },
+          { name: "德莱文", role: "subCarry" },
+          { name: "布里茨", role: "frontline" },
+          { name: "蔚", role: "frontline" },
+        ],
+      },
+    };
+    const contextualExecution = { template: contextualTemplate };
+    const contextualBoard = {
+      carry: "希维尔·2星",
+      unitRows: [
+        { name: "希维尔", star: 2 }, { name: "德莱文", star: 1 },
+        { name: "布里茨", star: 1 }, { name: "蔚", star: 1 },
+      ],
+    };
+    const contextualOpts = {
+      augmentCatalog: contextualCatalog,
+      unitPrices: { 希维尔: 2, 德莱文: 2, 布里茨: 1, 蔚: 2 },
+      unitTraits: {
+        希维尔: ["强袭枪手"], 德莱文: ["精英战士"],
+        布里茨: ["AI程序", "斗士"], 蔚: ["斗士", "秘术卫士"],
+      },
+    };
+    const scopeSelected = selectedFromSignals([
+      { kind: "augments", value: "万用瞄准镜II" },
+      ...contextualBoard.unitRows.map(unit => ({ kind: "units", value: unit.name, star: unit.star })),
+    ]);
+    const scopeAdvice = contextualAugmentAdvice(scopeSelected, contextualBoard, contextualExecution, contextualOpts)[0];
+    const scopeReverseAdvice = contextualAugmentAdvice(scopeSelected, {
+      ...contextualBoard, unitRows: [...contextualBoard.unitRows].reverse(),
+    }, contextualExecution, contextualOpts)[0];
+    assert(scopeAdvice && scopeAdvice.kind === "positioning"
+      && scopeAdvice.action.includes("希维尔、德莱文") && scopeAdvice.action.includes("后2排")
+      && !scopeAdvice.targets.includes("布里茨") && !scopeAdvice.targets.includes("蔚"),
+    "万用瞄准镜必须从当前最强板点名后排收益者，并把前排坦克排除在目标外");
+    assert(JSON.stringify(scopeAdvice) === JSON.stringify(scopeReverseAdvice),
+      "强化站位建议必须与当前板输入顺序无关");
+    const axiomSelected = selectedFromSignals([
+      { kind: "augments", value: "公理圆弧II" },
+      ...contextualBoard.unitRows.map(unit => ({ kind: "units", value: unit.name, star: unit.star })),
+      { kind: "items", value: "锐利之刃", holder: "希维尔", equipped: true },
+    ]);
+    const axiomAdvice = contextualAugmentAdvice(axiomSelected, contextualBoard, contextualExecution, contextualOpts)[0];
+    assert(axiomAdvice && axiomAdvice.kind === "mana-reset" && axiomAdvice.targets[0] === "希维尔"
+      && axiomAdvice.action.includes("德莱文") && axiomAdvice.action.includes("击杀回30法力")
+      && axiomAdvice.targets.every(name => contextualBoard.unitRows.some(unit => unit.name === name)),
+    "公理圆弧必须只从当前最强板列出适配击杀回蓝的英雄，并优先当前主C与输出装持有者");
+    const richSelected = {
+      ...selectedFromSignals([{ kind: "augments", value: "利滚利" }]),
+      stage: "2-5", level: 4, health: 100, gold: 50,
+    };
+    const richAdvice = contextualAugmentAdvice(richSelected, contextualBoard, contextualExecution, contextualOpts)[0];
+    assert(richAdvice && richAdvice.kind === "economy" && richAdvice.tone === "green"
+      && richAdvice.action.includes("建议存钱") && richAdvice.action.includes("存到70")
+      && richAdvice.reason.includes("1张两星"),
+    "利滚利必须在早期高血、已有两星稳板时明确建议存到70吃满利息");
+    const dyingRichAdvice = contextualAugmentAdvice({ ...richSelected, health: 20 }, contextualBoard, contextualExecution, contextualOpts)[0];
+    assert(dyingRichAdvice && dyingRichAdvice.tone === "red"
+      && dyingRichAdvice.action.includes("不建议硬存70") && dyingRichAdvice.action.includes("花到0"),
+    "利滚利不得覆盖残血保命逻辑，20血以下必须明确花钱而非贪利息");
+    const replayTrend = deriveHealthTrend([
+      { state: { stage: "3-5", health: 70 } },
+      { state: { stage: "4-1", health: 70 } },
+      { state: { stage: "4-1", health: 47 } },
+    ], { stage: "4-2", health: 47 });
+    const earlyStabilizeSelected = { ...richSelected, stage: "4-2", health: 47, gold: 50, healthTrend: replayTrend };
+    const earlyPressure = stabilizationPressure(earlyStabilizeSelected);
+    assert(stabilizationPressure(selectedFromSignals([])).level === "unknown",
+      "未录入血量时不得把null当成0血触发保命");
+    const earlyStabilizeAdvice = contextualAugmentAdvice(earlyStabilizeSelected, contextualBoard, contextualExecution, contextualOpts)[0];
+    assert(replayTrend.recentLoss === 23 && earlyPressure.urgent && earlyPressure.floor === 20
+      && earlyStabilizeAdvice.tone === "red" && earlyStabilizeAdvice.action.includes("花到20"),
+    "4-2仍有47血但刚掉23血时，必须结合掉血速度提前止血，不能等到35血");
+    const weakBoard = { carry: "希维尔", unitRows: contextualBoard.unitRows.map(unit => ({ ...unit, star: 1 })) };
+    const weakRichAdvice = contextualAugmentAdvice({ ...richSelected, stage: "4-1", health: 60 }, weakBoard, contextualExecution, contextualOpts)[0];
+    assert(weakRichAdvice && weakRichAdvice.tone === "yellow" && weakRichAdvice.action.includes("先稳板再存"),
+      "中期无两星质量时利滚利必须先稳板，不能机械建议存满70");
 
     const sunkRows = rank(decisionTemplates, selectedFromSignals([
       { kind: "levels", level: 4 },
@@ -4024,6 +4751,43 @@
       && actionContract.stay.facts.some(line => line.includes("不追加不可逆成本"))
       && actionContract.switchWhen.some(line => line.includes("兼容登顶转型线")),
     "行动合同必须把动作、检查、里程碑和转型触发结构化，供展示层与讲解层共用");
+    const forecastExecutionRow = forecastRows.find(row => rowId(row) === forecastRows.decision.executionId) || forecastRows[0];
+    const forecastStrategicRow = forecastRows.find(row => rowId(row) === forecastRows.decision.strategicId) || forecastRows[0];
+    const emergencyContract = buildActionContract(forecastExecutionRow, forecastExecutionRow, forecastStrategicRow, {
+      ...selectedFromSignals([{ kind: "levels", level: 8 }, { kind: "stage", value: "5-1" }, { kind: "health", value: 1 }, { kind: "gold", value: 50 }, { kind: "units", value: "P" }]),
+      level: 8, stage: "5-1", health: 1, gold: 50,
+    }, { ...forecastRows.decision.forecast, nextCheck: "4-1" });
+    assert(emergencyContract.checkpoint === "5-1"
+      && emergencyContract.now.facts[0].includes("把金币花到0")
+      && emergencyContract.stay.facts.every(line => !line.includes("稳血"))
+      && emergencyContract.switchWhen.every(line => !line.includes("转型触发")),
+    "残血行动合同必须立即花钱、消除过期检查点，并关闭跨体系转型");
+    const earlyStabilizeContract = buildActionContract(forecastExecutionRow, forecastExecutionRow, forecastStrategicRow, {
+      ...selectedFromSignals([{ kind: "levels", level: 7 }, { kind: "stage", value: "4-2" }, { kind: "health", value: 47 }, { kind: "gold", value: 50 }, { kind: "units", value: "P" }]),
+      level: 7, stage: "4-2", health: 47, gold: 50, healthTrend: replayTrend,
+    }, forecastRows.decision.forecast);
+    assert(earlyStabilizeContract.now.facts[0].includes("提前止血")
+      && earlyStabilizeContract.now.facts[0].includes("掉23血")
+      && earlyStabilizeContract.now.facts[0].includes("花到20"),
+    "行动合同必须把最近大入写入原因，并在47血时给出花到20的提前止血动作");
+    const staleRows = rank([forecastLow, forecastCap], {
+      ...selectedFromSignals(forecastSignals),
+      stateFreshness: { status: "stale", missing: ["血量", "金币"] },
+    }, fallbackWeights, 2, { operationalCommitment: true, unitPrices: { P: 1, Q: 4 } });
+    assert(staleRows.decision.status === "state-stale" && !staleRows.decision.executionId,
+      "局势状态过期时必须暂停执行建议");
+    const stableAnchor = {
+      template: { id: "稳定线", name: "稳定线", family: "稳定", routeProfile: { mainCarry: { name: "P", items: [] }, units: [{ name: "P", price: 2 }] } },
+      finalScore: 11, executionValue: 55, planning: { value: 55 }, feasible: true, blocked: true,
+    };
+    const zeroCandidate = {
+      template: { id: "零分新线", name: "零分新线", family: "新线", routeProfile: { mainCarry: { name: "Q", items: [] }, units: [{ name: "Q", price: 3 }] } },
+      finalScore: 0, executionValue: 60, planning: { value: 60 }, feasible: true,
+    };
+    const stabilized = stabilizeExecution([stableAnchor, zeroCandidate], zeroCandidate,
+      selectedFromSignals([{ kind: "levels", level: 8 }, { kind: "units", value: "P" }]), { executionAnchorId: "稳定线" });
+    assert(rowId(stabilized.row) === "稳定线" && stabilized.reason === "reject-zero-score",
+      "暂时质量红灯不得把已持有执行线切换成0分且主C未持有的新路线");
     const lockedForecast = rank([forecastLow, forecastCap], selectedFromSignals(forecastSignals), fallbackWeights, 2, { operationalCommitment: true, manualLockId: "前强后弱预警线", unitPrices: { P: 1, Q: 4 } });
     assert(lockedForecast.decision.status === "manual" && lockedForecast.decision.executionId === "前强后弱预警线", "手动锁定仍是滚动规划唯一绝对锁");
     assertNoBadNumbers(JSON.stringify(forecastRows.decision), "滚动前瞻不得输出999/Infinity/NaN");
@@ -4062,6 +4826,33 @@
       const forwardStateRows = require(path.join(rootDir, "工程", "测试", "样本", "forward-states.json"));
       const fixtureUnitPrices = Object.fromEntries((matcherData.options.unitSearch || []).map(x => [x.name, x.price]));
       const fixtureUnitTraits = Object.fromEntries((matcherData.options.unitSearch || []).map(x => [x.name, x.traits || []]));
+      const fullHeroCatalog = matcherData.options.heroAugments || [];
+      assert(fullHeroCatalog.length === 122
+        && fullHeroCatalog.every(row => row.strategicRole && typeof row.coreDefining === "boolean" && row.preferredRole),
+      "122条英雄强化必须全部携带战略角色、定核权限与承接位元数据");
+      fullHeroCatalog.forEach((augment, index) => {
+        const semanticTemplate = {
+          id: `semantic-${index}`,
+          name: `${augment.name}语义回归`,
+          quality: "B",
+          actions: {},
+          routeProfile: {
+            mainCarry: { name: augment.hero, starTarget: 2, items: [] },
+            units: [{ name: augment.hero, role: "mainCarry", starTarget: 2, traits: augment.traits || [] }],
+            items: [], activeTraits: [],
+          },
+          heroAugmentPlan: { mainCarry: augment.hero, options: [augment], requiredNames: [] },
+        };
+        const semanticState = resolveGameState({
+          ...selectedFromSignals([{ kind: "augments", value: augment.name }]),
+          heroAugmentRound: "unknown",
+        }, fullHeroCatalog);
+        const semanticScore = scoreTemplate(semanticTemplate, semanticState, matcherData.weights, { heroAugments: fullHeroCatalog });
+        const fixedMainCarry = semanticScore.evidence.some(line => line.includes("英雄强化定核"));
+        const shouldFixMainCarry = augment.coreDefining && augment.preferredRole === "mainCarry";
+        assert(fixedMainCarry === shouldFixMainCarry,
+          `${augment.name}定核权限错误：${augment.strategicRole}/${augment.preferredRole}/${augment.coreDefining}`);
+      });
       const bubbleSignals = [
         { kind: "levels", level: 1 },
         { kind: "units", value: "安妮", star: 2 },
@@ -4278,6 +5069,7 @@
     HERO_AUGMENT_REROLLS_PER_SLOT,
     BOARD_SOLVER_MODEL,
     SUFFICIENCY_MODEL,
+    HEALTH_PRESSURE_MODEL,
     HERO_AUGMENT_UNAVAILABLE_PENALTY,
     HERO_AUGMENT_CONTROL_CAP,
     DEFAULT_LEVEL,
@@ -4299,10 +5091,13 @@
     heroAugmentOptionExpectation,
     normalizeHeroAugmentOffer,
     optimizeCurrentBoard,
+    contextualAugmentAdvice,
     decisionSufficiency,
     buildActionContract,
     normalizeHeroAugmentRound,
     heroAugmentCostFactor,
+    deriveHealthTrend,
+    stabilizationPressure,
     parseTraitsInText,
     normalizeSelectedUnits,
     runTests,

@@ -126,6 +126,14 @@
       heroAugmentRound: clampText(input && input.heroAugmentRound || "unknown", 20) || "unknown",
       manualLockId: clampText(input && input.manualLockId, 160),
       augmentOffer: normalizeAugmentOffer(input && input.augmentOffer),
+      freshness: input && input.freshness ? {
+        status: input.freshness.status === "stale" ? "stale" : "fresh",
+        stage: clampText(input.freshness.stage || input.stage || "unknown", 20),
+        missing: [...new Set((input.freshness.missing || []).map(row => clampText(row, 40)).filter(Boolean))],
+        stageUpdatedAt: finite(input.freshness.stageUpdatedAt),
+        goldUpdatedAt: finite(input.freshness.goldUpdatedAt),
+        healthUpdatedAt: finite(input.freshness.healthUpdatedAt),
+      } : null,
       signals,
     };
   }
@@ -147,6 +155,11 @@
       executionFamily: clampText(decision.executionFamily || execution && execution.template && execution.template.family, 140),
       executionScore: routeScore(execution),
       forecastTargetId: clampText(decision.forecast && decision.forecast.targetId, 180),
+      stability: decision.stability ? {
+        anchorId: clampText(decision.stability.anchorId, 180),
+        held: Boolean(decision.stability.held),
+        reason: clampText(decision.stability.reason, 80),
+      } : null,
       actionContract: compactActionContract(decision.actionContract),
       top3: rows.slice(0, 3).map(row => ({ id: routeId(row), name: routeName(row), score: routeScore(row) })),
     };
@@ -241,14 +254,35 @@
   }
 
   function sessionQuality(session) {
-    const reasons = [];
-    if (!session || session.source !== "match-mode") reasons.push("not-real-match-mode");
-    if (!session || !session.outcome) reasons.push("missing-outcome");
+    const blockers = [];
+    const warnings = [];
+    if (!session || session.source !== "match-mode") blockers.push("not-real-match-mode");
+    if (!session || !session.outcome) blockers.push("missing-outcome");
     const snapshots = session && session.snapshots || [];
-    if (snapshots.length < 2) reasons.push("fewer-than-two-states");
-    if (!snapshots.some(row => row.state && row.state.signals && row.state.signals.length)) reasons.push("no-assets");
-    if (!snapshots.some(row => row.decision && row.decision.executionId)) reasons.push("no-execution-decision");
-    return { usable: reasons.length === 0, reasons };
+    if (snapshots.length < 2) blockers.push("fewer-than-two-states");
+    if (!snapshots.some(row => row.state && row.state.signals && row.state.signals.length)) blockers.push("no-assets");
+    if (!snapshots.some(row => row.decision && row.decision.executionId)) blockers.push("no-execution-decision");
+    const freshnessRows = snapshots.map((row, index) => ({ row, index }))
+      .filter(entry => entry.row.state && entry.row.state.freshness);
+    const staleRows = freshnessRows.filter(entry => entry.row.state.freshness.status === "stale");
+    if (staleRows.length) {
+      const lastFresh = freshnessRows.filter(entry => entry.row.state.freshness.status === "fresh").pop();
+      const lastStale = staleRows[staleRows.length - 1];
+      if (!lastFresh || lastFresh.index < lastStale.index) blockers.push("stale-decision-state");
+      else warnings.push("transient-stale-decision-state");
+    }
+    const knownStages = [...new Set(snapshots.map(row => row.state && row.state.stage).filter(stage => stage && stage !== "unknown"))];
+    const roundOrder = ["2-1", "2-5", "3-1", "3-2", "3-5", "4-1", "4-2", "4-5", "5-1", "5-5", "6-1"];
+    const orderedStages = knownStages.map(stage => roundOrder.indexOf(stage)).filter(index => index >= 0).sort((a, b) => a - b);
+    const hasRoundGap = orderedStages.some((index, position) => position > 0 && index - orderedStages[position - 1] > 2);
+    if (snapshots.length >= 4) {
+      if (hasRoundGap) warnings.push("missing-round-updates");
+      const allSignals = snapshots.flatMap(row => row.state && row.state.signals || []);
+      if (!allSignals.some(row => row.kind === "items")) warnings.push("no-item-data");
+      if (!allSignals.some(row => row.kind === "augments")) warnings.push("no-augment-data");
+      if (!allSignals.some(row => row.kind === "units" && ["board", "bench"].includes(row.location))) warnings.push("no-positioned-board");
+    }
+    return { usable: blockers.length === 0, reasons: blockers, blockers, warnings };
   }
 
   function calibrationStage(usable) {
@@ -321,6 +355,8 @@
     assert(!empty.meaningful && empty.state.gold === null && empty.state.health === null, "未知金币和血量不得被规范化为0");
     const offered = createSnapshot({ state: { level: 6, augmentOffer: { round: "3-2", status: "offered", slots: [{ name: "符文A", seen: ["符文A"], rerollsRemaining: 1 }] } }, ranked });
     assert(offered.meaningful && offered.state.augmentOffer.slots[0].name === "符文A", "三选一候选与重随状态必须进入比赛回放");
+    const stale = createSnapshot({ state: { level: 6, stage: "4-1", signals: [{ kind: "units", value: "安妮" }], freshness: { status: "stale", missing: ["金币", "血量"] } }, ranked });
+    assert(stale.state.freshness.status === "stale" && stale.state.freshness.missing.length === 2, "比赛回放必须保存局势新鲜度");
     let session = createSession({ id: "real-1", startedAt: "2026-07-24T00:00:00.000Z", patch: "test" });
     const first = createSnapshot({ at: "2026-07-24T00:01:00.000Z", state: { level: 4, stage: "3-1", signals: [{ kind: "units", value: "安妮" }] }, ranked });
     session = appendSnapshot(session, first);
@@ -330,6 +366,28 @@
     session = appendSnapshot(session, createSnapshot({ at: "2026-07-24T00:03:00.000Z", state: { level: 5, stage: "3-2", signals: [{ kind: "units", value: "安妮" }] }, ranked }));
     session = finalizeSession(session, { placement: 8, adherence: "followed", verdict: "not-judged" }, "2026-07-24T00:04:00.000Z");
     assert(sessionQuality(session).usable, "两状态、有资产、有执行结论的真实复盘应可用");
+    let transient = createSession({ id: "transient-stale", patch: "test" });
+    transient = appendSnapshot(transient, createSnapshot({
+      state: { level: 6, stage: "4-1", gold: 50, health: 70, signals: [{ kind: "units", value: "安妮" }], freshness: { status: "stale", missing: ["血量"] } }, ranked,
+    }));
+    transient = appendSnapshot(transient, createSnapshot({
+      state: { level: 7, stage: "4-2", gold: 50, health: 47, signals: [{ kind: "units", value: "安妮" }], freshness: { status: "fresh", missing: [] } }, ranked,
+    }));
+    transient = finalizeSession(transient, { placement: 8, adherence: "followed", verdict: "late" });
+    const transientQuality = sessionQuality(transient);
+    assert(transientQuality.usable && transientQuality.warnings.includes("transient-stale-decision-state")
+      && !transientQuality.reasons.includes("stale-decision-state"),
+      "依次更新回合、金币、血量产生的临时过期不得作废整局，后续fresh状态应恢复可用");
+    let persistent = createSession({ id: "persistent-stale", patch: "test" });
+    persistent = appendSnapshot(persistent, createSnapshot({
+      state: { level: 6, stage: "4-1", gold: 50, health: 70, signals: [{ kind: "units", value: "安妮" }], freshness: { status: "stale", missing: ["血量"] } }, ranked,
+    }));
+    persistent = appendSnapshot(persistent, createSnapshot({
+      state: { level: 7, stage: "4-2", gold: 50, health: 47, signals: [{ kind: "units", value: "安妮" }], freshness: { status: "stale", missing: ["血量"] } }, ranked,
+    }));
+    persistent = finalizeSession(persistent, { placement: 8, adherence: "followed", verdict: "late" });
+    assert(!sessionQuality(persistent).usable && sessionQuality(persistent).reasons.includes("stale-decision-state"),
+      "关键执行状态一直过期且没有后续fresh时仍必须排除");
     let summary = summarizeSessions([session]);
     assert(summary.usable === 1 && summary.failures === 0 && summary.followedTop4Rate === 0, "不能把第八名自动解释成模型失败");
     const failure = finalizeSession({ ...session, id: "real-2" }, { placement: 6, adherence: "followed", verdict: "wrong-route", note: "路线判断错误" });

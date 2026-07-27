@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const { ROOT, resultPath, reportPath, publicPath, ensureOutputDirs } = require('../lib/project-paths');
 const { buildItemCatalog, searchableItemRecords } = require('../core/item-catalog');
+const { profiles: heroMechanicProfiles, classifyAugmentSemantics } = require('../core/mechanic-profiles');
 
 const sourcePath = file => file.startsWith('资源/游戏数据/') ? path.join(ROOT, file) : resultPath(file);
 const read = file => JSON.parse(fs.readFileSync(sourcePath(file), 'utf8'));
@@ -40,6 +41,7 @@ const strategyPolicyResults = readOptional('strategy_policy_results.json') || nu
 const previousMatcherResults = readOptional('stage2_matcher_results.json') || null;
 const mechaPrimeNames = new Set(((mechaPrimeResults && mechaPrimeResults.mechaMembers) || []).map(x => x.name));
 const officialStageSources = new Map();
+const heroMechanicByName = new Map(heroMechanicProfiles.map(profile => [profile.augment, profile]));
 
 function isValidShopHero(hero) {
   const price = Number(hero && hero.price);
@@ -282,12 +284,21 @@ function buildHeroAugmentCatalog() {
     .filter(hex => hex && hex.name && String(hex.level) === '4')
     .map(hex => {
       const hero = heroFromAugment(hex);
+      const desc = hex.description || hex.desc || '';
+      const mechanic = heroMechanicByName.get(hex.name);
+      const semantics = mechanic || classifyAugmentSemantics(desc, hero, []);
       return {
         name: hex.name,
         hero,
         cost: priceOf(hero),
         traits: traitsForHero(hero),
-        desc: hex.description || hex.desc || '',
+        desc,
+        strategicRole: semantics.strategicRole,
+        coreDefining: Boolean(semantics.coreDefining),
+        preferredRole: semantics.preferredRole || 'utility',
+        teamWide: Boolean(semantics.teamWide),
+        mechanicSupported: Boolean(mechanic && mechanic.supported),
+        mechanicConfidence: Number(mechanic && mechanic.confidence) || 0,
         effect: heroAugmentEffect(hex, hero),
       };
     })
@@ -1425,6 +1436,9 @@ const coreAssertions = assertCoreData(templates);
 const routeProfileAssertions = assertRouteProfiles(templates);
 if (heroAugmentCatalog.length !== 122) throw new Error(`英雄强化目录应为122条，实际${heroAugmentCatalog.length}`);
 if (heroAugmentCatalog.some(row => !row.hero || !row.cost)) throw new Error('英雄强化目录存在未映射英雄或费用');
+if (heroAugmentCatalog.some(row => !row.strategicRole || typeof row.coreDefining !== 'boolean' || !row.preferredRole)) {
+  throw new Error('英雄强化目录缺少战略角色元数据');
+}
 if (heroAugmentCatalog.some(row => !row.effect)) {
   throw new Error('英雄强化目录必须携带局面效果');
 }
